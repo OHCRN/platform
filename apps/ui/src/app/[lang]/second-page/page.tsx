@@ -17,9 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ValidLanguage } from 'common/@types/localization';
+
 import Header from '@/app/components/Header';
 import Second from './Second';
-import { ValidLanguage } from '@/app/i18n/settings';
 
 export default async function Page({
   params: { lang },

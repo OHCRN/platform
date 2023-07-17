@@ -17,10 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const supportedLanguages = ['en', 'fr'] as const;
-export type ValidLanguage = (typeof supportedLanguages)[number];
-export const defaultLanguage: ValidLanguage = 'en';
+import { ValidLanguage } from 'common/@types/localization';
+import { ValidNamespace } from './types';
+
+export const supportedLanguages = ValidLanguage.options;
+export const defaultLanguage: ValidLanguage = ValidLanguage.enum.en;
 
 export const supportedNamespaces = ['common', 'header', 'second-page'] as const;
-export type ValidNamespace = (typeof supportedNamespaces)[number];
 export const defaultNS: ValidNamespace = 'common';

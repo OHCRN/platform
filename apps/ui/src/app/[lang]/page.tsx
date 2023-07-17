@@ -18,7 +18,7 @@
  */
 
 import Header from '../components/Header';
-import { ValidLanguage } from '../i18n/settings';
+import { ValidLanguage } from 'common/@types/localization';
 import HomeComponent from '../components/Home';
 
 export default async function Home({

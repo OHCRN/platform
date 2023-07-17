@@ -17,18 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {
-  ValidLanguage,
-  ValidNamespace,
-  defaultLanguage,
-  defaultNS,
-} from './settings';
+import { GetDictionary, GetTranslation } from './types';
+import { defaultLanguage, defaultNS } from './settings';
 
-type GetDictionary = {
-  [k in ValidLanguage]: (
-    namespace: ValidNamespace
-  ) => Promise<{ [k: string]: string }>;
-};
 // these will only reload on page refresh (server only) or lang change
 const dictionaries: GetDictionary = {
   en: (namespace) =>
@@ -40,13 +31,6 @@ const dictionaries: GetDictionary = {
       return module.default;
     }),
 };
-
-type GetTranslation = (
-  language: ValidLanguage,
-  namespace?: ValidNamespace
-) => Promise<
-  (k: string, params?: { [key: string]: string | number }) => string
->;
 
 export const getTranslation: GetTranslation = async (
   language = defaultLanguage,

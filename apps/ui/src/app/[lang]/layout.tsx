@@ -17,7 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage, supportedLanguages } from '../i18n/settings';
+import { ValidLanguage } from 'common/@types/localization';
+
+import { supportedLanguages } from '../i18n/settings';
 import '../globals.css';
 import { Montserrat } from 'next/font/google';
 

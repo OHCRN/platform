@@ -19,9 +19,9 @@
 
 import Link from 'next/link';
 import { User } from 'common';
+import { ValidLanguage } from 'common/@types/localization';
 
 import { getTranslation } from '../i18n';
-import { ValidLanguage } from '../i18n/settings';
 
 const user: User = {
   id: '1',

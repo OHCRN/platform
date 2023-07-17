@@ -16,10 +16,11 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import { ValidLanguage } from 'common/@types/localization';
 
 import { getTranslation } from '../i18n';
 import LanguageToggle from './LanguageToggle';
-import { ValidLanguage, supportedLanguages } from '../i18n/settings';
+import { supportedLanguages } from '../i18n/settings';
 
 export const getUnselectedLang = (lang: ValidLanguage): string => {
   return supportedLanguages.filter((l) => l !== lang)[0];

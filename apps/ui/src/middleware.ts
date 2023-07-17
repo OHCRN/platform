@@ -34,6 +34,7 @@ export const config = {
 export function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname;
+  // TODO: is it useful to do a redirect if the locale is not supported? i.e. `/es` would redirect to `/en`, and not 404
   const pathnameIsMissingLocale = supportedLanguages.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
