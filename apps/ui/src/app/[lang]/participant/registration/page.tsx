@@ -17,25 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { User } from 'common';
+import { ValidLanguage } from '@/i18n';
+import Registration from '.';
 
-import { ValidLanguage, getTranslation } from '@/i18n';
-
-const user: User = {
-  id: '1',
-  name: 'Homer Simpson',
-  email: 'homersimpson@example.com',
-};
-
-const HomeComponent = async ({ lang }: { lang: ValidLanguage }) => {
-  const translate = await getTranslation(lang);
-  return (
-    <div>
-      <h1>{translate('title')}</h1>
-      <p>{translate('sample-text')}</p>
-      <h2>{translate('greeting', { name: user.name })}</h2>
-    </div>
-  );
-};
-
-export default HomeComponent;
+export default async function Page({
+  params: { lang },
+}: {
+  params: { lang: ValidLanguage };
+}) {
+  return <Registration lang={lang} />;
+}

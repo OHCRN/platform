@@ -17,13 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Second from './Second';
 import { ValidLanguage } from '@/i18n';
+import ConsentForm from '.';
 
 export default async function Page({
   params: { lang },
 }: {
   params: { lang: ValidLanguage };
 }) {
-  return <Second lang={lang} />;
+  return <ConsentForm lang={lang} />;
 }
