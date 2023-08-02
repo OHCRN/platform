@@ -2,5 +2,10 @@
     "title": "OHCRN Patient Enrolment Portal",
     "greeting": "Hi there!",
     "to-second-page": "To second page",
-    "sample-text": "Sample text for the landing page."
+    "sample-text": "Sample text for the landing page.",
+    "home": "Homepage",
+    "participant-registration": "Participant Registration",
+    "dashboard": "Dashboard",
+    "consent-forms": "Consent Forms",
+    "clinician-registration": "Clinician Registration"
 }

@@ -17,10 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from '@/i18n';
+import Link from 'next/link';
 
-import Second from './Second';
+import { getTranslation, ValidLanguage } from '@/i18n';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <Second lang={lang} />;
-}
+const ConsentForms = async ({ lang }: { lang: ValidLanguage }) => {
+	const translate = await getTranslation(lang);
+	return (
+		<div>
+			<h2>{translate('consent-form')}</h2>
+			<Link href={`/${lang}`}>{translate('home')}</Link>
+		</div>
+	);
+};
+
+export default ConsentForms;

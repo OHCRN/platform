@@ -17,18 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
+import { ValidLanguage } from '@/i18n';
 
-import { getTranslation, ValidLanguage } from '@/i18n';
+import ParticipantRegistration from '.';
 
-const Second = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang, 'second-page');
-	return (
-		<div>
-			<h1>{translate('title')}</h1>
-			<Link href={`/${lang}`}>{translate('back-to-home')}</Link>
-		</div>
-	);
-};
-
-export default Second;
+export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	return <ParticipantRegistration lang={lang} />;
+}

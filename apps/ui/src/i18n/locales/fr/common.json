@@ -2,5 +2,10 @@
     "title": "Portail d'inscription des patients de l'OHRCN",
     "greeting": "Bonjour, {{ name }}!",
     "to-second-page": "Au deuxième page",
-    "sample-text": "Exemple de texte pour la page de destination."
+    "sample-text": "Exemple de texte pour la page de destination.",
+    "home": "Page d'accueil",
+    "participant-registration": "Inscription du participant",
+    "dashboard": "Tableau de bord",
+    "consent-forms": "Formulaires de consentement",
+    "clinician-registration": "Inscription du clinicien"
 }

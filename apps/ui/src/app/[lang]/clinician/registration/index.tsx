@@ -18,40 +18,17 @@
  */
 
 import Link from 'next/link';
-import { User } from 'common';
 
-import { ValidLanguage, getTranslation } from '@/i18n';
+import { getTranslation, ValidLanguage } from '@/i18n';
 
-const user: User = {
-	id: '1',
-	name: 'Homer Simpson',
-	email: 'homersimpson@example.com',
-};
-
-// TODO: for demo purposes only, routes will be constants and translated. Will be addressed in https://github.com/OHCRN/platform/issues/34
-const paths = [
-	{ path: '/participant/registration', name: 'participant-registration' },
-	{ path: '/clinician/registration', name: 'clinician-registration' },
-	{ path: '/participant/dashboard', name: 'dashboard' },
-	{ path: '/participant/consent-forms', name: 'consent-forms' },
-];
-
-const HomeComponent = async ({ lang }: { lang: ValidLanguage }) => {
+const ClinicianRegistration = async ({ lang }: { lang: ValidLanguage }) => {
 	const translate = await getTranslation(lang);
 	return (
 		<div>
-			<h1>{translate('title')}</h1>
-			<p>{translate('sample-text')}</p>
-			<h2>{translate('greeting', { name: user.name })}</h2>
-			<ul>
-				{paths.map(({ path, name }) => (
-					<li key={name}>
-						<Link href={path}>{translate(name)}</Link>
-					</li>
-				))}{' '}
-			</ul>
+			<h2>{translate('clinician-registration')}</h2>
+			<Link href={`/${lang}`}>{translate('home')}</Link>
 		</div>
 	);
 };
 
-export default HomeComponent;
+export default ClinicianRegistration;
