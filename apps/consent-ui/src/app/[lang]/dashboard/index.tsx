@@ -21,12 +21,12 @@ import Link from 'next/link';
 
 import { getTranslation, ValidLanguage } from '@/i18n';
 
-const Dashboard = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang);
+const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang);
 	return (
 		<div>
 			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${lang}`}>{translate('home')}</Link>
+			<Link href={`/${currentLang}`}>{translate('home')}</Link>
 		</div>
 	);
 };

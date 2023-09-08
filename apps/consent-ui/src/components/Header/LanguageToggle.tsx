@@ -27,15 +27,21 @@ import { ValidLanguage } from '@/i18n';
 import LocalizedLink from '@/components/Link/LocalizedLink';
 import { getLinkNameByPath, getUnselectedLang } from '@/components/Link/utils';
 
-function LanguageToggle({ lang, children }: { lang: ValidLanguage; children: ReactNode }) {
-	const langToSelect = getUnselectedLang(lang);
+function LanguageToggle({
+	currentLang,
+	children,
+}: {
+	currentLang: ValidLanguage;
+	children: ReactNode;
+}) {
+	const langToSelect = getUnselectedLang(currentLang);
 	const path = usePathname();
-	const linkName = getLinkNameByPath(path, lang);
+	const linkName = getLinkNameByPath(path, currentLang);
 
 	return (
 		<LocalizedLink
 			name={linkName}
-			lang={langToSelect}
+			linkLang={langToSelect}
 			role="button"
 			color="blue"
 			className={clsx(styles.base, styles.primary, styles.blue)}

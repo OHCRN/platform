@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import { ConsentCategory } from 'common';
 
-import { getTranslation, ValidLanguage } from '@/i18n';
+import { getTranslation, Translation, ValidLanguage } from '@/i18n';
 import LocalizedLink from '@/components/Link/LocalizedLink';
 import { RouteName } from '@/components/Link/types';
 
@@ -28,13 +28,13 @@ import { RouteName } from '@/components/Link/types';
 export const PathList = ({
 	section,
 	translate,
-	lang,
+	currentLang,
 }: {
 	section: ConsentCategory;
-	translate: any;
-	lang: ValidLanguage;
+	translate: Translation;
+	currentLang: ValidLanguage;
 }) => {
-	const paths: { name: RouteName; key?: string }[] = [
+	const paths: { name: RouteName; key: string }[] = [
 		{ name: 'consent-1', key: ConsentCategory.enum.INFORMED_CONSENT },
 		{ name: 'consent-2', key: ConsentCategory.enum.CONSENT_RELEASE_DATA },
 		{ name: 'consent-3', key: ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION },
@@ -45,7 +45,7 @@ export const PathList = ({
 		<ul>
 			{paths.map(({ name, key }) => (
 				<li key={name} className={key === section ? 'font-bold' : ''}>
-					<LocalizedLink name={name} lang={lang}>
+					<LocalizedLink name={name} linkLang={currentLang}>
 						{translate(key)}
 					</LocalizedLink>
 				</li>
@@ -54,21 +54,21 @@ export const PathList = ({
 	);
 };
 
-const ConsentForms = async ({
-	lang,
+const ConsentForm = async ({
+	currentLang,
 	section,
 }: {
-	lang: ValidLanguage;
+	currentLang: ValidLanguage;
 	section: ConsentCategory;
 }) => {
-	const translate = await getTranslation(lang);
+	const translate = await getTranslation(currentLang);
 	return (
 		<div>
 			<h2>{translate(section)}</h2>
-			<PathList section={section} translate={translate} lang={lang} />
-			<Link href={`/${lang}`}>{translate('home')}</Link>
+			<PathList section={section} translate={translate} currentLang={currentLang} />
+			<Link href={`/${currentLang}`}>{translate('home')}</Link>
 		</div>
 	);
 };
 
-export default ConsentForms;
+export default ConsentForm;
