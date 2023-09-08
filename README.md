@@ -21,17 +21,34 @@ The directory structure is as follows:
 
 ```
 .
+├── .vscode/                        ← Shared VSCode Settings
 ├── apps/
 │   ├── consent-api/                ← Consent Platform Node.js Express API
+│   │   └── src
+│   ├── consent-das/                ← Consent Data Access Service
 │   │   ├── prisma
 │   │   └── src
-│   └── consent-ui/                 ← Consent Platform Next.js UI
+│   ├── consent-ui/                 ← Consent Platform Next.js UI
+│   │   └── src
+│   ├── data-mapper/                ← Data Mapper Node.js Express API
+│   │   └── src
+│   ├── keys-das/                   ← Keys Data Access Service
+│   │   ├── prisma
+│   │   └── src
+│   ├── phi-das/                    ← PHI Data Access Service
+│   │   ├── prisma
+│   │   └── src
+│   └── pi-das/                     ← PI Data Access Service
+│       ├── prisma
 │       └── src
+├── docker-scripts/                 ← Docker Init Scripts
 └── packages/
-    ├── common/                     ← Shared TypeScript Type Definitions
+    ├── common/                     ← Shared Validation & Types
     │   └── src
-    └── config/
-        └── eslint-config-ohcrn     ← Custom ESLint Config for OHCRN
+    ├── config/
+    │   └── eslint-config-ohcrn     ← Shared ESLint Config
+    └── logger/                     ← Shared Logger
+        └── src
 ```
 
 ### Writing Commits
@@ -53,14 +70,31 @@ To keep commit messages consistent, we use [gitmoji](https://gitmoji.dev). To ea
 To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference.
 
 - In the [`/apps/consent-api/` folder](./apps/consent-api/), create an `.env` file
+- In the [`/apps/consent-das/` folder](./apps/consent-das/), create an `.env` file
 - In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create and `.env.local` file
+- In the [`/apps/data-mapper/` folder](./apps/data-mapper/), create an `.env` file
+- In the [`/apps/keys-das/` folder](./apps/keys-das/), create an `.env` file
+- In the [`/apps/phi-das/` folder](./apps/phi-das/), create an `.env` file
+- In the [`/apps/pi-das/` folder](./apps/pi-das/), create an `.env` file
 
 ## Environment Variables
 
-| Package | Name           | Description                                                                                                                                                                          | Type     | Required | Default |
-| ------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | -------- | ------- |
-| `api`   | `DATABASE_URL` | URL for the Postgres DB. Syntax should match `postgresql://USER:PASSWORD@HOST:PORT/DATABASE`. For local dev, the values should match what is used in the `docker-compose.yaml` file. | `string` | Required | -       |
-| `api`   | `PORT`         | the port number for the API service                                                                                                                                                  | `number` | Optional | `8080`  |
+| Package | Name | Description | Type | Required | Default |
+| - | - | - | - | - | - |
+| `consent-api` | `PORT` | Port number for the Consent API | `number` | Optional | `8080` |
+| `consent-das` | `DATABASE_URL` | URL for the Consent DB | `string` | Required | postgres://postgres:postgres@localhost:5432/consent_db |
+| `consent-das` | `PORT` | Port number for the Consent DAS | `number` | Optional | `8085` |
+| `data-mapper` | `PORT` | Port number for the Data Mapper | `number` | Optional | `8081` |
+| `data-mapper` | `PI_DAS_URL` | URL for the PI DAS | `string` | Optional | http://localhost:8082 |
+| `data-mapper` | `PHI_DAS_URL` | URL for the PHI DAS | `string` | Optional | http://localhost:8083 |
+| `data-mapper` | `KEYS_DAS_URL` | URL for the Keys DAS | `string` | Optional | http://localhost:8084 |
+| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS | `string` | Optional | http://localhost:8085 |
+| `keys-das` | `DATABASE_URL` | URL for the Keys DB | `string` | Required | postgres://postgres:postgres@localhost:5432/keys_db |
+| `keys-das` | `PORT` | Port number for the  Keys DAS | `number` | Optional | `8084` |
+| `phi-das` | `DATABASE_URL` | URL for the PHI DAS | `string` | Required | postgres://postgres:postgres@localhost:5432/phi_db |
+| `phi-das` | `PORT` | Port number for the  PHI DAS | `number` | Optional | `8083` |
+| `pi-das` | `DATABASE_URL` | URL for the PI DAS | `string` | Required | postgres://postgres:postgres@localhost:5432/pi_db |
+| `pi-das` | `PORT` | Port number for the PI DAS | `number` | Optional | `8082` |
 
 ## Setup
 
@@ -88,46 +122,79 @@ Please note that we are currently specifying versions of `@typescript-eslint/par
 
 ## Quickstart - DB, Migrations, and Local Servers
 
-This project uses [Postgres](https://www.postgresql.org/) and [Prisma](https://www.prisma.io/docs) for database management. A local postgres db is provided in the [docker-compose](./docker-compose.yaml). The Prisma client is initialized when the `@prisma/client` dependency is installed with `pnpm install`. You can get everything started via manually running [scripts](#with-packagejson-scripts) or using a [Make command](#using-the-makefile):
+This project uses [Postgres](https://www.postgresql.org/) and [Prisma](https://www.prisma.io/docs) for database management. Local postgres databases for each DAS are provided in the [docker-compose](./docker-compose.yaml). The Prisma Client must be generated before it can be used. You can get everything started by a) manually running [`package.json` scripts](#with-packagejson-scripts), or b) using a [`Make` command](#using-the-makefile):
+
+### With `package.json` Scripts
+
+> **Note**: Run all below commands from the project root folder.
+
+You can initialize the development Postgres DBs for each DAS by running the `docker-compose.yaml` file, with:
+
+```
+docker-compose up -d
+```
+
+Once the databases are ready, you will need to apply the Prisma schema migrations:
+
+```
+pnpm run migrate-dev
+```
 
 > **Note**: The `prisma migrate dev` command is for **development mode only** [(See docs reference)](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production#create-and-apply-migrations)
 
-### With package.json scripts
-
-> **Note**: Run all below commands from the root folder.
-
-You can initialize a development postgres DB by running the docker-compose.yaml file, with:
-
-`docker-compose up -d`
-
-Once the database is ready, you will need to apply the prisma schema migrations:
-
-`pnpm run migrate-dev`
-
 If successful, the script output should indicate which migrations have been applied, and you should see this message: `Your database is now in sync with your schema.`
 
-Once this is complete, you can start the local API and UI on their default ports:
+Running the migrations will also generate the Prisma Client for each DAS, as noted by the output message: `Generated Prisma Client (version number) to ./src/generated/client`. However, in the event that you only need to generate a new client, simply run:
 
-`pnpm run dev`
+```
+pnpm run generate
+```
 
-> **Note**: If you see a `'Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.'` message in the console when trying to run in dev, you may need to manually run the `pnpm run generate` script, and then start the local servers again. This script runs the `prisma generate` command.
+Before running the local UI, APIs, and DASes, please ensure you have built the shared packages:
 
-### Using the Makefile
+```
+pnpm run build
+```
 
-You can run all of the above steps with the `make start` command.
+If this is your first time running the DASes, you will likely want to see them with data. To do so, run the `seed` command:
 
-To shut down the docker-compose and remove any orphan containers, run `make stop`.
+```
+pnpm run seed
+```
 
-<!-- ### Starting local back-end services
+Once this is complete, you can start the local UI, APIs, and DASes on their default ports:
 
-A [docker-compose](https://docs.docker.com/compose/) setup is available in the [`compose`](./compose) folder.
-Navigate to `/compose` (`cd ./compose`) and Follow the instructions found in [`compose/README.md`](compose/README.md) to start a local cluster of Argo Platform micro services. -->
+```
+pnpm run dev
+```
 
-<!-- - Set up environment: copy `.env.schema` to `.env` and update environment accordingly. Out-of-the-box values are meant for local development. -->
+### Using the `Makefile`
 
-Verify everything is running correctly by navigating to [`http://localhost:3000`](http://localhost:3000) for the UI and [`http://localhost:8080`](http://localhost:8080/health) for the API.
+You can run all of the above steps with the `make start` command:
 
-### Dev commands:
+```
+make start
+```
 
-- `pnpm run dev` starts local dev servers for UI (localhost:3000) and API (localhost:8080)
-- `pnpm run build` builds type defs, production UI build, API build
+To shut down the docker-compose and remove any orphan containers, run `make stop`:
+
+```
+make stop
+```
+
+Verify everything is running correctly by navigating to [`http://localhost:3000`](http://localhost:3000) for the Consent UI and [`http://localhost:8080`](http://localhost:8080/health) for the Consent API.
+
+### Dev Commands:
+
+| Command | Description |
+| - | - |
+| `pnpm run dev` | starts local dev servers for each service |
+| `pnpm run build` | builds production Consent UI, API, DASes, Type defs, and Logger |
+| `pnpm run consent-ui-dev` | starts local Consent UI only |
+| `pnpm run consent-api-dev` | starts local Consent API only |
+| `pnpm run das-dev` | starts local DASes only |
+| `pnpm run data-mapper-dev` | starts local Data Mapper only |
+| `pnpm run migrate-dev` | runs migrations for the DASes |
+| `pnpm run generate` | generates Prisma Clients for the DASes |
+| `pnpm run seed` | seeds data into the DASes |
+| `pnpm run start` | runs migrations, then builds, then starts local dev servers |

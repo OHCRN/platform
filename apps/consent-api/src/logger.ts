@@ -17,10 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, ParticipantResponse, Participant, ConsentQuestion } from '@prisma/client';
+import createLogger from 'logger';
 
-console.log('Initializing prismaClient.ts');
-const prisma = new PrismaClient();
+const logger = createLogger('Consent-API');
 
-export { ParticipantResponse, Participant, ConsentQuestion };
-export default prisma;
+export default logger;

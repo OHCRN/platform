@@ -20,6 +20,7 @@
 import { Server } from 'http';
 
 import { getAppConfig } from './config';
+import logger from './logger';
 
 import App from './index';
 
@@ -28,11 +29,17 @@ let server: Server;
 
 (async () => {
 	const appConfig = getAppConfig();
-	console.log('Initializing server.ts');
+	logger.info('Initializing server.ts');
 
 	const app = App(appConfig);
 	const port = app.get('port');
 	server = app.listen(port, () => {
-		console.log(`Server listening on port ${port}`);
+		logger.info(`Server listening on port ${port}`);
+	});
+
+	process.on('SIGINT', () => {
+		logger.info('Process received SIGINT, shutting down server.ts');
+		server.close();
+		process.exit(0);
 	});
 })();
