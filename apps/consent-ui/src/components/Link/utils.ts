@@ -16,7 +16,7 @@ export const findRouteNameByPath = (
 };
 
 /**
- * Replaces the expected parameters in the url with those provided in the LocalizedLink params prop
+ * Finds the route name defined in routesByLocale.json by path value. If no name is found, returns 'home'
  * @param {string} path - the current path
  * @param {ValidLanguage} lang - the current language
  * @returns {RouteName} - the name of the route in the allowed routes, defined in routesByLocale.json
