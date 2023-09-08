@@ -17,32 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
-import clsx from 'clsx';
-
-import styles from '@/components/Button/Button.module.scss';
 import { ValidLanguage } from '@/i18n';
-import LocalizedLink from '@/components/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from '@/components/Link/utils';
 
-function LanguageToggle({ lang, children }: { lang: ValidLanguage; children: ReactNode }) {
-	const langToSelect = getUnselectedLang(lang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, lang);
+import ClinicianRegistration from '.';
 
-	return (
-		<LocalizedLink
-			name={linkName}
-			lang={langToSelect}
-			role="button"
-			color="blue"
-			className={clsx(styles.base, styles.primary, styles.blue)}
-		>
-			{children}
-		</LocalizedLink>
-	);
+export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	return <ClinicianRegistration currentLang={lang} />;
 }
-
-export default LanguageToggle;

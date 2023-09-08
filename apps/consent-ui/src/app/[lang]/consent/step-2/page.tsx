@@ -17,18 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
+import { ConsentCategory } from 'common';
 
-import { getTranslation, ValidLanguage } from '@/i18n';
+import { ValidLanguage } from '@/i18n';
 
-const ConsentForms = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang);
-	return (
-		<div>
-			<h2>{translate('consent-forms')}</h2>
-			<Link href={`/${lang}`}>{translate('home')}</Link>
-		</div>
-	);
-};
+import ConsentForms from '.';
 
-export default ConsentForms;
+export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	return <ConsentForms lang={lang} section={ConsentCategory.enum.CONSENT_RELEASE_DATA} />;
+}

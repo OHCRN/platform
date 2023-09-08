@@ -18,17 +18,27 @@
  */
 
 import Link from 'next/link';
+import { ConsentCategory } from 'common';
 
 import { getTranslation, ValidLanguage } from '@/i18n';
 
-const ClinicianRegistration = async ({ lang }: { lang: ValidLanguage }) => {
+import { PathList } from '../step-1';
+
+const ConsentForms = async ({
+	lang,
+	section,
+}: {
+	lang: ValidLanguage;
+	section: ConsentCategory;
+}) => {
 	const translate = await getTranslation(lang);
 	return (
 		<div>
-			<h2>{translate('clinician-registration')}</h2>
+			<h2>{translate(section)}</h2>
+			<PathList section={section} translate={translate} lang={lang} />
 			<Link href={`/${lang}`}>{translate('home')}</Link>
 		</div>
 	);
 };
 
-export default ClinicianRegistration;
+export default ConsentForms;

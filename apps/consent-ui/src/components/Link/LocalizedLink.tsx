@@ -17,32 +17,46 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
-import clsx from 'clsx';
+import Link from 'next/link';
+import urlJoin from 'url-join';
 
-import styles from '@/components/Button/Button.module.scss';
-import { ValidLanguage } from '@/i18n';
-import LocalizedLink from '@/components/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from '@/components/Link/utils';
+import routesByLocale from '@/i18n/routes/routesByLocale.json';
+import { defaultLanguage } from '@/i18n/settings';
 
-function LanguageToggle({ lang, children }: { lang: ValidLanguage; children: ReactNode }) {
-	const langToSelect = getUnselectedLang(lang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, lang);
+import { LocalizedLinkProps } from './types';
+import { addParamsToUrl } from './utils';
+
+const LocalizedLink = ({
+	name,
+	params,
+	lang,
+	className,
+	children,
+	...rest
+}: LocalizedLinkProps) => {
+	let locale = lang;
+	const localeRoutes = routesByLocale[lang];
+	if (!localeRoutes) {
+		console.error(`No routes found for locale "${lang}"`);
+		locale = defaultLanguage;
+	}
+
+	let routePath = localeRoutes[name];
+	if (!routePath) {
+		console.error(`No route found for name "${name}"`);
+		routePath = '/';
+	}
+
+	let href = routePath;
+	if (params) {
+		href = addParamsToUrl(href, params);
+	}
 
 	return (
-		<LocalizedLink
-			name={linkName}
-			lang={langToSelect}
-			role="button"
-			color="blue"
-			className={clsx(styles.base, styles.primary, styles.blue)}
-		>
+		<Link href={urlJoin(locale, href)} className={className} {...rest}>
 			{children}
-		</LocalizedLink>
+		</Link>
 	);
-}
+};
 
-export default LanguageToggle;
+export default LocalizedLink;

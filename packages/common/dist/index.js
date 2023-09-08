@@ -23,10 +23,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.ConsentCategory = exports.User = void 0;
 const z = __importStar(require("zod"));
 exports.User = z.object({
     id: z.string(),
     name: z.string(),
     email: z.string().email(),
 });
+const CONSENT_CATEGORIES = [
+    'INFORMED_CONSENT',
+    'CONSENT_RELEASE_DATA',
+    'CONSENT_RESEARCH_PARTICIPATION',
+    'CONSENT_RECONTACT',
+    'CONSENT_REVIEW_SIGN',
+];
+exports.ConsentCategory = z.enum(CONSENT_CATEGORIES);

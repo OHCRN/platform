@@ -1,0 +1,24 @@
+{
+	"en": {
+		"home": "/",
+		"invite": "/invite",
+		"register": "/register",
+		"dashboard": "/dashboard",
+		"consent-1": "/consent/step-1",
+		"consent-2": "/consent/step-2",
+		"consent-3": "/consent/step-3",
+		"consent-4": "/consent/step-4",
+		"consent-5": "/consent/step-5"
+	},
+	"fr": {
+		"home": "/",
+		"invite": "/invitation",
+		"register": "/inscription",
+		"dashboard": "/tableau-de-bord",
+		"consent-1": "/consentement/etape-1",
+		"consent-2": "/consentement/etape-2",
+		"consent-3": "/consentement/etape-3",
+		"consent-4": "/consentement/etape-4",
+		"consent-5": "/consentement/etape-5"
+	}
+}

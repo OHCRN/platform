@@ -17,10 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from '@/i18n';
+import Link from 'next/link';
+import { ConsentCategory } from 'common';
 
-import ClinicianRegistration from '.';
+import { getTranslation, ValidLanguage } from '@/i18n';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ClinicianRegistration lang={lang} />;
-}
+import { PathList } from '../step-1';
+
+const ConsentForms = async ({
+	lang,
+	section,
+}: {
+	lang: ValidLanguage;
+	section: ConsentCategory;
+}) => {
+	const translate = await getTranslation(lang);
+	return (
+		<div>
+			<h2>{translate(section)}</h2>
+			<PathList section={section} translate={translate} lang={lang} />
+
+			<Link href={`/${lang}`}>{translate('home')}</Link>
+		</div>
+	);
+};
+
+export default ConsentForms;
