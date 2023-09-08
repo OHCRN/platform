@@ -6,6 +6,7 @@
   "scripts": {
     "build": "pnpm -r run build",
     "das-dev": "pnpm --filter '*-das' run dev",
+    "data-mapper-dev": "pnpm --filter data-mapper run dev",
     "dev": "pnpm -r run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate-dev": "pnpm --filter '*-das' run migrate-dev",
