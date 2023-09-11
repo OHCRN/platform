@@ -47,8 +47,7 @@ export const AppConfigProvider = ({
 
 export const useAppConfigContext = () => {
 	const currentContext = useContext(AppConfigContext);
-	const defaultContext = useContext(DefaultAppConfigContext);
-	return process.env.NEXT_IS_BUILDING === 'true' ? defaultContext : currentContext;
+	return currentContext;
 };
 
 // without this component wrapping, we can't divide into Server + Client parts
