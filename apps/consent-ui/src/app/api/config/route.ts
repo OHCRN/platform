@@ -24,6 +24,6 @@ import getAppConfig from '@/getAppConfig';
 
 export async function GET() {
 	headers();
-	const appConfig = getAppConfig();
+	const appConfig = getAppConfig(process.env);
 	return NextResponse.json(appConfig);
 }

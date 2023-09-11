@@ -18,6 +18,7 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { AppConfig } from './config';
@@ -30,6 +31,16 @@ import ConsentCompletionRouter from './routers/consentCompletion';
 
 const App = (config: AppConfig) => {
 	const app = express();
+
+	if (process.env.NODE_ENV === 'development') {
+		app.use(
+			cors({
+				origin: 'http://localhost:3000',
+				optionsSuccessStatus: 200,
+			}),
+		);
+	}
+
 	app.set('port', config.port);
 	app.use(bodyParser.json());
 

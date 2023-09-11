@@ -21,17 +21,9 @@
 
 import { ReactNode, createContext, useContext } from 'react';
 
-import { AppConfig } from '@/getAppConfig';
+import { AppConfig, defaultAppConfig } from '@/getAppConfig';
 
-const defaultContextValues = {
-	BASE_URL: 'http://localhost:3000',
-	TEST_RUNTIME_VAR: 'testingtesting',
-	CONSENT_API_URL: 'http://localhost:8080',
-	FEATURE_FLAG: true,
-	NEXT_IS_BUILDING: false,
-};
-
-const AppConfigContext = createContext(defaultContextValues as AppConfig);
+const AppConfigContext = createContext(defaultAppConfig as AppConfig);
 
 export const AppConfigProvider = ({
 	children,

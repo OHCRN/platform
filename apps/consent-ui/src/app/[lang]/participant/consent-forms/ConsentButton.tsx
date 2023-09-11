@@ -24,27 +24,23 @@ import { useEffect, useState } from 'react';
 
 import { useAppConfigContext } from '@/components/AppConfig';
 import Button from '@/components/Button';
-import getAppConfig from '@/getAppConfig';
-
-const getConsentCompletionData = (): Promise<boolean> => {
-	const { CONSENT_API_URL } = getAppConfig();
-	const url = urlJoin(CONSENT_API_URL, 'consent-completion');
-	return fetch(url, { cache: 'no-store' })
-		.then((res) => res.json())
-		.then((data) => data.status === 'COMPLETE')
-		.catch((e: Error) => {
-			console.log(e);
-			return false;
-		});
-};
 
 const ConsentButton = () => {
 	const appConfig = useAppConfigContext();
 	const [isComplete, setIsComplete] = useState<boolean>(false);
 
 	useEffect(() => {
-		getConsentCompletionData().then((status: boolean) => setIsComplete(status));
-	}, []);
+		const url = urlJoin(appConfig.PLATFORM_API_URL, 'consent-completion');
+		fetch(url, { cache: 'no-store' })
+			.then((res) => res.json())
+			.then((data) => data.status === 'COMPLETE')
+			.then((status: boolean) => setIsComplete(status))
+			.catch((e: Error) => {
+				console.log(e);
+				setIsComplete(false);
+				return false;
+			});
+	}, [appConfig.PLATFORM_API_URL]);
 
 	return (
 		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>
