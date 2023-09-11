@@ -20,7 +20,7 @@
 import urlJoin from 'url-join';
 
 const BUILD_TIME_VARIABLES = {
-	RUNTIME_CONFIG_URL: urlJoin(process.env.BASE_URL || '', 'api', 'config'),
+	RUNTIME_CONFIG_URL: urlJoin(process.env.BASE_URL || 'http://localhost:3000', 'api', 'config'),
 };
 
 export async function getAppClientConfig() {
@@ -33,8 +33,8 @@ export async function getAppClientConfig() {
 	try {
 		const configResp = await fetch(BUILD_TIME_VARIABLES.RUNTIME_CONFIG_URL, {
 			next: { revalidate: 0 },
-		});
-		return await configResp.json();
+		}).then((resp) => resp.json());
+		return configResp;
 	} catch (e) {
 		if (process.env.NEXT_IS_BUILDING === 'true') {
 			console.log(

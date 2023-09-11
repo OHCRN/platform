@@ -18,10 +18,12 @@
  */
 
 import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
 
 import getAppConfig from '@/getAppConfig';
 
 export async function GET() {
+	headers();
 	const appConfig = getAppConfig();
 	return NextResponse.json(appConfig);
 }

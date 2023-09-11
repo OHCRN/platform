@@ -31,8 +31,7 @@ const defaultContextValues = {
 	NEXT_IS_BUILDING: false,
 };
 
-const AppConfigContext = createContext({} as AppConfig);
-const DefaultAppConfigContext = createContext(defaultContextValues as AppConfig);
+const AppConfigContext = createContext(defaultContextValues as AppConfig);
 
 export const AppConfigProvider = ({
 	children,
