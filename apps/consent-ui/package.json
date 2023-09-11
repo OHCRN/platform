@@ -8,7 +8,7 @@
 		"start": "next start",
 		"lint": "eslint .",
 		"test": "nyc mocha",
-		"test-runtime-vars": "next build && FEATURE_FLAG=true next start"
+		"test-runtime-vars": "next build && NEXT_IS_BUILDING=true next start"
 	},
 	"dependencies": {
 		"@types/react": "18.2.14",

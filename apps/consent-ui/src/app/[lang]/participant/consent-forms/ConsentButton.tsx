@@ -19,11 +19,33 @@
 
 'use client';
 
+import urlJoin from 'url-join';
+import { useEffect, useState } from 'react';
+
 import { useAppConfigContext } from '@/components/AppConfig';
 import Button from '@/components/Button';
+import getAppConfig from '@/getAppConfig';
 
-const ConsentButton = ({ isComplete }: { isComplete: boolean }) => {
+const getConsentCompletionData = (): Promise<boolean> => {
+	const { CONSENT_API_URL } = getAppConfig();
+	const url = urlJoin(CONSENT_API_URL, 'consent-completion');
+	return fetch(url, { cache: 'no-store' })
+		.then((res) => res.json())
+		.then((data) => data.status === 'COMPLETE')
+		.catch((e: Error) => {
+			console.log(e);
+			return false;
+		});
+};
+
+const ConsentButton = () => {
 	const appConfig = useAppConfigContext();
+	const [isComplete, setIsComplete] = useState<boolean>(false);
+
+	useEffect(() => {
+		getConsentCompletionData().then((status: boolean) => setIsComplete(status));
+	}, []);
+
 	return (
 		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>
 			{isComplete ? 'Download Consent PDF' : 'Complete Consent Forms'}

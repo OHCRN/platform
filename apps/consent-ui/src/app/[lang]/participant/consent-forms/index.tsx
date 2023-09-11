@@ -16,31 +16,13 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import urlJoin from 'url-join';
-
-import getAppConfig from '@/getAppConfig';
 
 import ConsentButton from './ConsentButton';
 
-const getConsentCompletionData = async () => {
-	// opt out of cache & memo
-	const { CONSENT_API_URL } = getAppConfig();
-	const url = urlJoin(CONSENT_API_URL, 'consent-completion');
-	return await fetch(url, { next: { revalidate: 0 } })
-		.then(async (res) => await res.json())
-		.catch((e: Error) => {
-			console.log(e);
-			return {};
-		});
-};
-
-const ConsentForms = async () => {
-	const consentCompetionData = await getConsentCompletionData();
-	const isComplete = consentCompetionData.status === 'COMPLETE';
-
+const ConsentForms = () => {
 	return (
 		<div>
-			<ConsentButton isComplete={isComplete} />
+			<ConsentButton />
 		</div>
 	);
 };
