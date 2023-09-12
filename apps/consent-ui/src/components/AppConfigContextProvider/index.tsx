@@ -35,8 +35,6 @@ export const AppConfigProvider = ({
 	return <AppConfigContext.Provider value={config}>{children}</AppConfigContext.Provider>;
 };
 
-// export const useAppConfigContext = () => useContext(AppConfigContext);
-
 export const useAppConfigContext = () => {
 	const currentContext = useContext(AppConfigContext);
 	return currentContext;

@@ -20,7 +20,11 @@
 import urlJoin from 'url-join';
 
 const BUILD_TIME_VARIABLES = {
-	RUNTIME_CONFIG_URL: urlJoin(process.env.BASE_URL || 'http://localhost:3000', 'api', 'config'),
+	RUNTIME_CONFIG_URL: urlJoin(
+		process.env.CONSENT_UI_URL || 'http://localhost:3000',
+		'api',
+		'config',
+	),
 };
 
 export async function getAppClientConfig() {
