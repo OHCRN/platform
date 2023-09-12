@@ -26,16 +26,16 @@ import styles from './PageLayout.module.scss';
 
 const PageLayout = async ({
 	children,
-	lang,
+	currentLang,
 }: {
 	children: React.ReactNode;
-	lang: ValidLanguage;
+	currentLang: ValidLanguage;
 }) => {
 	return (
 		<Container>
-			<Header lang={lang} />
+			<Header currentLang={currentLang} />
 			<main className={styles.main}>{children}</main>
-			<Footer lang={lang} />
+			<Footer currentLang={currentLang} />
 		</Container>
 	);
 };

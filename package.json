@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm -r --stream run build",
-    "dev": "pnpm -r --stream run dev",
+    "build": "pnpm -r run build",
+    "consent-ui-dev": "pnpm --filter consent-ui run dev",
+    "consent-api-dev": "pnpm --filter consent-api run dev",
+    "das-dev": "pnpm --filter '*-das' run dev",
+    "data-mapper-dev": "pnpm --filter data-mapper run dev",
+    "dev": "pnpm --parallel run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate-dev": "pnpm --filter consent-api run migrate-dev",
-    "generate": "pnpm --filter consent-api run generate",
-    "start": "pnpm run migrate-dev && pnpm run dev"
+    "migrate-dev": "pnpm --filter '*-das' run migrate-dev",
+    "generate": "pnpm --filter '*-das' run generate",
+    "seed": "pnpm --filter '*-das' run seed",
+    "start": "pnpm run migrate-dev && pnpm run build && pnpm run dev"
   },
   "keywords": [],
   "author": "",

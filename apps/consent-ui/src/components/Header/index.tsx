@@ -35,20 +35,20 @@ const icons: {
 	fr: OhcrnImage, // TODO: get FR icon
 };
 
-const Header = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang, 'header');
-	const langToSelect = getUnselectedLang(lang);
-	const icon = icons[lang || defaultLanguage];
+const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'header');
+	const langToSelect = getUnselectedLang(currentLang);
+	const icon = icons[currentLang || defaultLanguage];
 	return (
 		<header className={styles.header}>
 			<div>
-				<Link href={`/${lang}`}>
+				<Link href={`/${currentLang}`}>
 					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />
 				</Link>
 			</div>
 			<div className={styles.right}>
 				<div className={styles.headerItem}>
-					<LanguageToggle lang={lang}>
+					<LanguageToggle currentLang={currentLang}>
 						<span className={styles['toggle-full']}>{translate(langToSelect)}</span>
 						<span className={styles['toggle-abbr']}>{langToSelect}</span>
 					</LanguageToggle>

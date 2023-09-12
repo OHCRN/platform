@@ -22,6 +22,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { Version } from 'common/src/service/Health';
 
+import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
@@ -29,8 +30,8 @@ import getAPIVersion from '@/hooks/getAPIVersion';
 
 import styles from './Footer.module.scss';
 
-const Versions = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang, 'footer');
+const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'footer');
 
 	const { error, isLoading, response } = await getAPIVersion();
 	const apiVersionResponse: Version =
@@ -52,10 +53,8 @@ const Versions = async ({ lang }: { lang: ValidLanguage }) => {
 			</div>
 			<div className={styles.copyright}>
 				<span>{translate('copyright')} </span>
-				<span>
-					{/* TODO: fix hardcoded version */}
-					{translate('ohcrn-registry', { registryVersion: '0.1.0' })} -{' '}
-				</span>
+				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
+				{/* TODO: fix hardcoded version */}
 				<span>{translate('api', { apiVersion })}</span>
 			</div>
 		</div>
