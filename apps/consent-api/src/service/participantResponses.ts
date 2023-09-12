@@ -1,5 +1,3 @@
-import prisma from '../prismaClient';
-
 export const createResponse = async ({
 	consentQuestionId,
 	participantId,
@@ -15,9 +13,6 @@ export const createResponse = async ({
 		response,
 	};
 
-	const newResponse = await prisma.participantResponse.create({
-		data: updateObj,
-	});
-
-	return newResponse;
+	// TODO: POST to data-mapper, then return the result
+	return updateObj;
 };
