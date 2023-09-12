@@ -33,7 +33,15 @@ export const defaultAppConfig = {
 	TEST_RUNTIME_VAR: 'testingtesting',
 };
 
+/**
+ * returns app config env vars
+ * order of priority: server runtime > process.env build time > default
+ */
+
 const getAppConfig = (serverEnv: any): AppConfig => ({
+	/**
+	 * keep explicit style of: Server || Client to prevent errors with Next inlining build variables
+	 */
 	CONSENT_API_URL:
 		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
 	CONSENT_URL: serverEnv.CONSENT_URL || process.env.CONSENT_URL || defaultAppConfig.CONSENT_URL,
