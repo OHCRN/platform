@@ -1,0 +1,15 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../src/generated/client"
+}
+
+model OhipKey {
+  id                String @id @default(cuid())
+  participantId     String @unique
+  ohipPrivateKey    String @unique @default(cuid())
+}

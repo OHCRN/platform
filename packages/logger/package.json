@@ -1,7 +1,7 @@
 {
   "name": "logger",
   "version": "1.0.0",
-  "description": "OHRN Platform Logger",
+  "description": "OHCRN Platform Logger",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
