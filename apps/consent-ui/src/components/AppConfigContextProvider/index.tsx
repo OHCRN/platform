@@ -44,8 +44,12 @@ export const useAppConfigContext = () => {
 
 // without this component wrapping, we can't divide into Server + Client parts
 // a context provider, React.context etc needs to be a client component
-const AppConfig = ({ children, config }: { children: ReactNode; config: AppConfig }) => (
-	<AppConfigProvider config={config}>{children}</AppConfigProvider>
-);
+const AppConfigContextProvider = ({
+	children,
+	config,
+}: {
+	children: ReactNode;
+	config: AppConfig;
+}) => <AppConfigProvider config={config}>{children}</AppConfigProvider>;
 
-export default AppConfig;
+export default AppConfigContextProvider;

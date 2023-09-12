@@ -22,7 +22,7 @@
 import urlJoin from 'url-join';
 import { useEffect, useState } from 'react';
 
-import { useAppConfigContext } from '@/components/AppConfig';
+import { useAppConfigContext } from '@/components/AppConfigContextProvider';
 import Button from '@/components/Button';
 
 const ConsentButton = () => {
@@ -30,7 +30,7 @@ const ConsentButton = () => {
 	const [isComplete, setIsComplete] = useState<boolean>(false);
 
 	useEffect(() => {
-		const url = urlJoin(appConfig.PLATFORM_API_URL, 'consent-completion');
+		const url = urlJoin(appConfig.CONSENT_API_URL, 'consent-completion');
 		fetch(url, { cache: 'no-store' })
 			.then((res) => res.json())
 			.then((data) => data.status === 'COMPLETE')
@@ -40,7 +40,7 @@ const ConsentButton = () => {
 				setIsComplete(false);
 				return false;
 			});
-	}, [appConfig.PLATFORM_API_URL]);
+	}, [appConfig.CONSENT_API_URL]);
 
 	return (
 		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>

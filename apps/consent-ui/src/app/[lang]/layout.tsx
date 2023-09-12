@@ -22,8 +22,8 @@ import { Montserrat } from 'next/font/google';
 import { ValidLanguage } from '@/i18n';
 import { supportedLanguages } from '@/i18n/settings';
 import PageLayout from '@/components/PageLayout';
-import AppConfig from '@/components/AppConfig';
-import { getAppClientConfig } from '@/components/AppConfig/utils';
+import AppConfigContextProvider from '@/components/AppConfigContextProvider';
+import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
 
 import '../globals.css';
 
@@ -53,9 +53,9 @@ export default async function RootLayout({
 	return (
 		<html lang={lang}>
 			<body className={`${montserrat.className}`}>
-				<AppConfig config={appClientConfig}>
+				<AppConfigContextProvider config={appClientConfig}>
 					<PageLayout lang={lang}>{children}</PageLayout>
-				</AppConfig>
+				</AppConfigContextProvider>
 			</body>
 		</html>
 	);
