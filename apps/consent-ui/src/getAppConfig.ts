@@ -39,8 +39,18 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 		serverEnv.TEST_RUNTIME_VAR || process.env.TEST_RUNTIME_VAR || defaultAppConfig.TEST_RUNTIME_VAR,
 	PLATFORM_API_URL:
 		serverEnv.PLATFORM_API_URL || process.env.PLATFORM_API_URL || defaultAppConfig.PLATFORM_API_URL,
-	FEATURE_FLAG: serverEnv.FEATURE_FLAG === 'true' || process.env.FEATURE_FLAG === 'true',
-	NEXT_IS_BUILDING: serverEnv.FEATURE_FLAG === 'true' || process.env.NEXT_IS_BUILDING === 'true',
+	FEATURE_FLAG:
+		serverEnv.FEATURE_FLAG === 'false'
+			? false
+			: serverEnv.FEATURE_FLAG === 'true' ||
+			  process.env.FEATURE_FLAG === 'true' ||
+			  defaultAppConfig.FEATURE_FLAG,
+	NEXT_IS_BUILDING:
+		serverEnv.NEXT_IS_BUILDING === 'false'
+			? false
+			: serverEnv.NEXT_IS_BUILDING === 'true' ||
+			  process.env.NEXT_IS_BUILDING === 'true' ||
+			  defaultAppConfig.FEATURE_FLAG,
 });
 
 export default getAppConfig;
