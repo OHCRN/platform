@@ -24,6 +24,7 @@ import {
 	getParticipant,
 	getParticipants,
 } from '../service/search';
+import logger from '../logger';
 
 /**
  * @openapi
@@ -88,7 +89,7 @@ router.get('/:id', async (req, res) => {
 		const participant = await getParticipant(id);
 		res.status(200).send({ participant });
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 		res.status(404).send({ error: 'Participant not found' });
 	}
 });

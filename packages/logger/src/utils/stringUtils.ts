@@ -17,10 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, ParticipantResponse, Participant, ConsentQuestion } from '@prisma/client';
-
-console.log('Initializing prismaClient.ts');
-const prisma = new PrismaClient();
-
-export { ParticipantResponse, Participant, ConsentQuestion };
-export default prisma;
+/**
+ * Convert an unknown value into a string. Intended for parsing caught errors.
+ * @param input
+ * @returns
+ */
+export function unknownToString(input: unknown): string {
+	if (input instanceof Error) {
+		return input.message;
+	} else if (typeof input === 'object') {
+		return JSON.stringify(input);
+	} else {
+		return `${input}`;
+	}
+}
