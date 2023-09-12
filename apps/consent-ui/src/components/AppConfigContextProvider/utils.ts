@@ -32,7 +32,8 @@ export async function getAppClientConfig() {
 	// url cannot be root - will cause infinite loop
 	try {
 		const configResp = await fetch(BUILD_TIME_VARIABLES.RUNTIME_CONFIG_URL, {
-			next: { revalidate: 0 }, // cache no-store still not working
+			// this should fail during build
+			next: { revalidate: 0 }, // cache no-store still not working, throws "dynamic server usage" error
 		}).then((resp) => resp.json());
 		return configResp;
 	} catch (e) {
