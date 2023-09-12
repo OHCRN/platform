@@ -30,6 +30,7 @@ import '../globals.css';
 export const montserrat = Montserrat({
 	subsets: ['latin'],
 	variable: '--font-sans',
+	display: 'swap',
 });
 
 export async function generateStaticParams() {
@@ -54,7 +55,7 @@ export default async function RootLayout({
 		<html lang={lang}>
 			<body className={`${montserrat.className}`}>
 				<AppConfigContextProvider config={appClientConfig}>
-					<PageLayout lang={lang}>{children}</PageLayout>
+					<PageLayout currentLang={lang}>{children}</PageLayout>
 				</AppConfigContextProvider>
 			</body>
 		</html>

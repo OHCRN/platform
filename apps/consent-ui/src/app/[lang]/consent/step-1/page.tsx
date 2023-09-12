@@ -20,9 +20,8 @@
 import { ConsentCategory } from 'common';
 
 import { ValidLanguage } from '@/i18n';
-
-import ConsentForms from '.';
+import ConsentForm from '@/components/ConsentForm';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ConsentForms lang={lang} section={ConsentCategory.enum.INFORMED_CONSENT} />;
+	return <ConsentForm currentLang={lang} section={ConsentCategory.enum.INFORMED_CONSENT} />;
 }

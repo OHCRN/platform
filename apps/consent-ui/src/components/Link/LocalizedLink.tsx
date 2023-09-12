@@ -29,21 +29,23 @@ import { addParamsToUrl } from './utils';
 const LocalizedLink = ({
 	name,
 	params,
-	lang,
+	linkLang,
 	className,
 	children,
 	...rest
 }: LocalizedLinkProps) => {
-	let locale = lang;
-	const localeRoutes = routesByLocale[lang];
+	let locale = linkLang;
+	const localeRoutes = routesByLocale[linkLang];
 	if (!localeRoutes) {
-		console.error(`No routes found for locale "${lang}"`);
+		console.error(
+			`No routes found for locale "${locale}, setting to default "${defaultLanguage}".`,
+		);
 		locale = defaultLanguage;
 	}
 
 	let routePath = localeRoutes[name];
 	if (!routePath) {
-		console.error(`No route found for name "${name}"`);
+		console.error(`No route found for name "${name}", setting to root path.`);
 		routePath = '/';
 	}
 

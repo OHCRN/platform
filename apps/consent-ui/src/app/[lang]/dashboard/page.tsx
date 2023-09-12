@@ -22,5 +22,5 @@ import { ValidLanguage } from '@/i18n';
 import Dashboard from '.';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <Dashboard lang={lang} />;
+	return <Dashboard currentLang={lang} />;
 }

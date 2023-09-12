@@ -21,14 +21,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
 
+import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
 
 import styles from './Footer.module.scss';
 
-const Versions = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang, 'footer');
+const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'footer');
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>
@@ -44,10 +45,7 @@ const Versions = async ({ lang }: { lang: ValidLanguage }) => {
 			</div>
 			<div className={styles.copyright}>
 				<span>{translate('copyright')} </span>
-				<span>
-					{/* TODO: fix hardcoded version */}
-					{translate('ohcrn-registry', { registryVersion: '0.1.0' })} -{' '}
-				</span>
+				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
 				{/* TODO: fix hardcoded version */}
 				<span>{translate('api', { apiVersion: '0.1.0' })}</span>
 			</div>

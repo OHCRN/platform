@@ -25,8 +25,8 @@ import Links from './Links';
 import Right from './Right';
 import Left from './Left';
 
-const Footer = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang, 'footer');
+const Footer = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'footer');
 
 	return (
 		<footer className={styles.footer}>
@@ -35,7 +35,7 @@ const Footer = async ({ lang }: { lang: ValidLanguage }) => {
 				<Right translate={translate} />
 				<Links translate={translate} />
 			</div>
-			<Versions lang={lang} />
+			<Versions currentLang={currentLang} />
 		</footer>
 	);
 };
