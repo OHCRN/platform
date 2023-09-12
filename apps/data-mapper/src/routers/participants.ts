@@ -17,29 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Server } from 'http';
+import { Router } from 'express';
 
-import { getAppConfig } from './config';
-import logger from './logger';
+import { getParticipant } from '../service/search';
+import { createParticipant } from '../service/create';
+import logger from '../logger';
 
-import App from './index';
+const router = Router();
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let server: Server;
+// TODO: add proper JSDoc comments
+// get participant by id
+router.get('/:participantId', async (req, res) => {
+	logger.info('GET /participant/:participantId');
+	const { participantId } = req.params;
+	try {
+		const participant = await getParticipant(participantId);
+		res.status(200).send({ participant });
+	} catch (error) {
+		logger.error(error);
+		res.status(404).send({ error: 'Participant not found' });
+	}
+});
 
-(async () => {
-	const appConfig = getAppConfig();
-	logger.info('Initializing server.ts');
+// TODO: add proper JSDoc comments
+// create participant
+router.post('/', async (req, res) => {
+	logger.info('POST /participant');
+	const { name, email, ohipNumber, emailVerified } = req.body;
+	// TODO: add validation
+	try {
+		const participant = await createParticipant({ name, email, ohipNumber, emailVerified });
+		res.status(201).send({ participant });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ error: 'Error creating Participant' });
+	}
+});
 
-	const app = App(appConfig);
-	const port = app.get('port');
-	server = app.listen(port, () => {
-		logger.info(`Server listening on port ${port}`);
-	});
-
-	process.on('SIGINT', () => {
-		logger.info('Process received SIGINT, shutting down server.ts');
-		server.close();
-		process.exit(0);
-	});
-})();
+export default router;

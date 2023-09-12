@@ -17,10 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, ParticipantResponse, Participant, ConsentQuestion } from '@prisma/client';
+import express from 'express';
+import bodyParser from 'body-parser';
 
-console.log('Initializing prismaClient.ts');
-const prisma = new PrismaClient();
+import { AppConfig } from './config';
+import ParticipantsRouter from './routers/participants';
 
-export { ParticipantResponse, Participant, ConsentQuestion };
-export default prisma;
+const App = (config: AppConfig) => {
+	const app = express();
+	app.set('port', config.port);
+	app.use(bodyParser.json());
+
+	app.use('/participants', ParticipantsRouter);
+
+	return app;
+};
+
+export default App;

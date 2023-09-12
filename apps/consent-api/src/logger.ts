@@ -17,29 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Server } from 'http';
+import createLogger from 'logger';
 
-import { getAppConfig } from './config';
-import logger from './logger';
+const logger = createLogger('Consent-API');
 
-import App from './index';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let server: Server;
-
-(async () => {
-	const appConfig = getAppConfig();
-	logger.info('Initializing server.ts');
-
-	const app = App(appConfig);
-	const port = app.get('port');
-	server = app.listen(port, () => {
-		logger.info(`Server listening on port ${port}`);
-	});
-
-	process.on('SIGINT', () => {
-		logger.info('Process received SIGINT, shutting down server.ts');
-		server.close();
-		process.exit(0);
-	});
-})();
+export default logger;
