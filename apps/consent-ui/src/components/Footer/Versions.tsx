@@ -24,11 +24,19 @@ import clsx from 'clsx';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
+import getAPIVersion from '@/hooks/getAPIVersion';
+import { Version } from '@/../../packages/common/src/service/Health';
 
 import styles from './Footer.module.scss';
 
 const Versions = async ({ lang }: { lang: ValidLanguage }) => {
 	const translate = await getTranslation(lang, 'footer');
+
+	const { error, isLoading, response } = await getAPIVersion();
+	const apiVersionResponse: Version =
+		!error && !isLoading && response ? response.data : { version: '' };
+	const apiVersion = apiVersionResponse.version;
+
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>
@@ -48,8 +56,7 @@ const Versions = async ({ lang }: { lang: ValidLanguage }) => {
 					{/* TODO: fix hardcoded version */}
 					{translate('ohcrn-registry', { registryVersion: '0.1.0' })} -{' '}
 				</span>
-				{/* TODO: fix hardcoded version */}
-				<span>{translate('api', { apiVersion: '0.1.0' })}</span>
+				<span>{translate('api', { apiVersion })}</span>
 			</div>
 		</div>
 	);

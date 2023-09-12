@@ -16,57 +16,17 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import { getConfig } from '@/config';
 
-import { Router } from 'express';
-import { Version } from 'common/src/service/Health';
+const { NEXT_PUBLIC_CONSENT_API_URL } = getConfig();
 
-import { version } from '../../package.json';
+// API
+export const API_ROOTS = {
+	HEALTH: '/health',
+};
 
-/**
- * @openapi
- * tags:
- *   - name: Health
- *     description: Health check
- */
-
-const router = Router();
-
-/**
- * @openapi
- * /health:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API Health
- *     description: Verify API is running
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-	// TODO: add real health check
-	res.json({ message: `API is running.` });
-});
-
-/**
- * @openapi
- * /health/version:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API version
- *     description: Fetch current API version from consent-api's `package.json`
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/version', async (req, res) => {
-	const response: Version = { version };
-	res.json(response);
-});
-
-export default router;
+export const API = {
+	BASE_URL: NEXT_PUBLIC_CONSENT_API_URL,
+	HEALTH: API_ROOTS.HEALTH,
+	VERSION: API_ROOTS.HEALTH + '/version',
+};

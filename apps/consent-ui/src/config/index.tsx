@@ -17,56 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
-import { Version } from 'common/src/service/Health';
+type AppConfig = {
+	NEXT_PUBLIC_CONSENT_API_URL: string;
+};
 
-import { version } from '../../package.json';
-
-/**
- * @openapi
- * tags:
- *   - name: Health
- *     description: Health check
- */
-
-const router = Router();
-
-/**
- * @openapi
- * /health:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API Health
- *     description: Verify API is running
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-	// TODO: add real health check
-	res.json({ message: `API is running.` });
+export const getConfig = (): AppConfig => ({
+	NEXT_PUBLIC_CONSENT_API_URL: process.env.NEXT_PUBLIC_CONSENT_API_URL || 'http://localhost:8080',
 });
-
-/**
- * @openapi
- * /health/version:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API version
- *     description: Fetch current API version from consent-api's `package.json`
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/version', async (req, res) => {
-	const response: Version = { version };
-	res.json(response);
-});
-
-export default router;
