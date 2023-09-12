@@ -17,14 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import ConsentButton from './ConsentButton';
+import { ConsentCategory } from 'common';
 
-const ConsentForms = () => {
-	return (
-		<div>
-			<ConsentButton />
-		</div>
-	);
-};
+import { ValidLanguage } from '@/i18n';
 
-export default ConsentForms;
+import ConsentForms from '.';
+
+export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	return <ConsentForms lang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />;
+}

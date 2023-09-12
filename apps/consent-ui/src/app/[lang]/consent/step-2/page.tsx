@@ -17,8 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ConsentCategory } from 'common';
+
+import { ValidLanguage } from '@/i18n';
+
 import ConsentForms from '.';
 
-export default async function Page() {
-	return <ConsentForms />;
+export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	return <ConsentForms lang={lang} section={ConsentCategory.enum.CONSENT_RELEASE_DATA} />;
 }

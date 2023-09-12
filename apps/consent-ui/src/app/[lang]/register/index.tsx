@@ -17,32 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
-import clsx from 'clsx';
+import Link from 'next/link';
+import { getTranslation, ValidLanguage } from '@/i18n';
 
-import styles from '@/components/Button/Button.module.scss';
-import { ValidLanguage } from '@/i18n';
-import LocalizedLink from '@/components/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from '@/components/Link/utils';
+import ConsentButton from './ConsentButton';
 
-function LanguageToggle({ lang, children }: { lang: ValidLanguage; children: ReactNode }) {
-	const langToSelect = getUnselectedLang(lang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, lang);
-
+const ParticipantRegistration = async ({ lang }: { lang: ValidLanguage }) => {
+	const translate = await getTranslation(lang);
 	return (
-		<LocalizedLink
-			name={linkName}
-			lang={langToSelect}
-			role="button"
-			color="blue"
-			className={clsx(styles.base, styles.primary, styles.blue)}
-		>
-			{children}
-		</LocalizedLink>
+		<div>
+			<h2>{translate('register')}</h2>
+				<Link href={`/${lang}`}>{translate('home')}</Link>
+				<ConsentButton />
+		</div>
 	);
-}
+};
 
-export default LanguageToggle;
+export default ParticipantRegistration;
