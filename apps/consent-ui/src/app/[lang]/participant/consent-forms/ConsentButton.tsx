@@ -33,8 +33,7 @@ const ConsentButton = () => {
 		const url = urlJoin(appConfig.CONSENT_API_URL, 'consent-completion');
 		fetch(url, { cache: 'no-store' })
 			.then((res) => res.json())
-			.then((data) => data.status === 'COMPLETE')
-			.then((status: boolean) => setIsComplete(status))
+			.then((data) => setIsComplete(data.status === 'COMPLETE'))
 			.catch((e: Error) => {
 				console.log(e);
 				setIsComplete(false);
