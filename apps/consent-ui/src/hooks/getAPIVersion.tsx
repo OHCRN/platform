@@ -23,6 +23,7 @@ import { API, APIResponse } from '@/constants';
 
 const axiosInstance = axios.create({
 	validateStatus: (status: number) => status === 200,
+	baseURL: API.BASE_URL,
 });
 
 const getAPIVersion = async () => {
@@ -33,7 +34,7 @@ const getAPIVersion = async () => {
 	};
 
 	await axiosInstance
-		.get(API.VERSION, { baseURL: API.BASE_URL })
+		.get(API.VERSION)
 		.then((res: AxiosResponse | undefined) => {
 			apiResponse.response = res;
 		})

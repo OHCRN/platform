@@ -20,12 +20,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
+import { Version } from 'common/src/service/Health';
 
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
 import getAPIVersion from '@/hooks/getAPIVersion';
-import { Version } from '@/../../packages/common/src/service/Health';
 
 import styles from './Footer.module.scss';
 
