@@ -38,8 +38,8 @@ const paths: { name: RouteName; key?: string }[] = [
 	{ name: 'consent-1', key: 'consent' },
 ];
 
-const HomeComponent = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang);
+const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang);
 	return (
 		<div>
 			<h1>{translate('title')}</h1>
@@ -48,7 +48,7 @@ const HomeComponent = async ({ lang }: { lang: ValidLanguage }) => {
 			<ul>
 				{paths.map(({ name, key }) => (
 					<li key={name}>
-						<LocalizedLink name={name} lang={lang}>
+						<LocalizedLink name={name} linkLang={currentLang}>
 							{translate(key || name)}
 						</LocalizedLink>
 					</li>

@@ -21,5 +21,5 @@ import { ValidLanguage } from '@/i18n';
 import HomeComponent from '@/components/Home';
 
 export default async function Home({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <HomeComponent lang={lang} />;
+	return <HomeComponent currentLang={lang} />;
 }

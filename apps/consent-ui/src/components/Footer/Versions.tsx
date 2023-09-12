@@ -27,8 +27,8 @@ import { ValidLanguage, getTranslation } from '@/i18n';
 
 import styles from './Footer.module.scss';
 
-const Versions = async ({ lang }: { lang: ValidLanguage }) => {
-	const translate = await getTranslation(lang, 'footer');
+const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'footer');
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>
