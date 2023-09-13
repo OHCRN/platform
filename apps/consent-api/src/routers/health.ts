@@ -20,8 +20,9 @@
 import { Router } from 'express';
 import { Version } from 'common/src/service/Health';
 
-import { version } from '../../package.json';
+import logger from '@/logger';
 
+import { version } from '../../package.json';
 /**
  * @openapi
  * tags:
@@ -65,6 +66,7 @@ router.get('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/version', async (req, res) => {
+	logger.info(`GET /health/version`);
 	const response: Version = { version };
 	res.json(response);
 });
