@@ -20,23 +20,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
-import { Version } from 'common/src/service/Health';
+import { APIStatus } from 'common/src/service/Health';
 
 import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
-import getAPIVersion from '@/hooks/getAPIVersion';
+import getAPIStatus from '@/hooks/getAPIStatus';
 
 import styles from './Footer.module.scss';
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'footer');
 
-	const { error, isLoading, response } = await getAPIVersion();
-	const apiVersionResponse: Version =
-		!error && !isLoading && response ? response.data : { version: '' };
-	const apiVersion = apiVersionResponse.version;
+	const { error, isLoading, response } = await getAPIStatus();
+	const apiStatus: APIStatus = !error && !isLoading && response && response.data;
+	const apiVersion = apiStatus?.version || '';
 
 	return (
 		<div className={styles.versions}>
@@ -54,7 +53,6 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<div className={styles.copyright}>
 				<span>{translate('copyright')} </span>
 				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
-				{/* TODO: fix hardcoded version */}
 				<span>{translate('api', { apiVersion })}</span>
 			</div>
 		</div>

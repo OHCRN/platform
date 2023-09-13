@@ -22,7 +22,7 @@ import bodyParser from 'body-parser';
 
 import { AppConfig } from './config';
 import SwaggerRouter from './routers/swagger';
-import HealthRouter from './routers/health';
+import StatusRouter from './routers/status';
 import ParticipantRouter from './routers/participants';
 import ConsentQuestionRouter from './routers/consentQuestions';
 import ParticipantResponseRouter from './routers/participantResponses';
@@ -34,7 +34,7 @@ const App = (config: AppConfig) => {
 
 	// set up routers
 	app.use('/api-docs', SwaggerRouter);
-	app.use('/health', HealthRouter);
+	app.use('/status', StatusRouter);
 	app.use('/participants', ParticipantRouter);
 	app.use('/consent-questions', ConsentQuestionRouter);
 	app.use('/participant-responses', ParticipantResponseRouter);

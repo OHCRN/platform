@@ -17,36 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { Router } from 'express';
+import { APIStatus } from 'common/src/service/Health';
 
-import { API, APIResponse } from '@/constants';
+import { version } from '../../package.json';
 
-const axiosInstance = axios.create({
-	validateStatus: (status: number) => status === 200,
-	baseURL: API.BASE_URL,
+/**
+ * @openapi
+ * tags:
+ *   - name: Status
+ *     description: Health check
+ */
+
+const router = Router();
+
+/**
+ * @openapi
+ * /status:
+ *   get:
+ *     tags:
+ *       - Status
+ *     name: Check API Status
+ *     description: Verify API is running and fetch current version
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Server error
+ */
+router.get('/', async (req, res) => {
+	// TODO: add real health check
+	const response: APIStatus = { status: `API is healthy.`, version };
+	res.json(response);
 });
 
-const getAPIVersion = async () => {
-	const apiResponse: APIResponse = {
-		error: undefined,
-		isLoading: true,
-		response: undefined,
-	};
-
-	await axiosInstance
-		.get(API.VERSION)
-		.then((res: AxiosResponse | undefined) => {
-			apiResponse.response = res;
-		})
-		.catch((err: AxiosError | undefined) => {
-			apiResponse.error = err;
-			console.error('Unable to retrieve consent-api version number ⛔️');
-		})
-		.finally(() => {
-			apiResponse.isLoading = false;
-		});
-
-	return apiResponse;
-};
-
-export default getAPIVersion;
+export default router;

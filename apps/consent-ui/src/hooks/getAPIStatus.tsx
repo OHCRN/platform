@@ -17,56 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
-import { Version } from 'common/src/service/Health';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { version } from '../../package.json';
+import { API, APIResponse } from '@/constants';
 
-/**
- * @openapi
- * tags:
- *   - name: Health
- *     description: Health check
- */
-
-const router = Router();
-
-/**
- * @openapi
- * /health:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API Health
- *     description: Verify API is running
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-	// TODO: add real health check
-	res.json({ message: `API is running.` });
+const axiosInstance = axios.create({
+	validateStatus: (status: number) => status === 200,
+	baseURL: API.BASE_URL,
 });
 
-/**
- * @openapi
- * /health/version:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API version
- *     description: Fetch current API version from consent-api's `package.json`
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/version', async (req, res) => {
-	const response: Version = { version };
-	res.json(response);
-});
+const getAPIStatus = async () => {
+	const apiResponse: APIResponse = {
+		error: undefined,
+		isLoading: true,
+		response: undefined,
+	};
 
-export default router;
+	await axiosInstance
+		.get(API.STATUS)
+		.then((res: AxiosResponse | undefined) => {
+			apiResponse.response = res;
+		})
+		.catch((err: AxiosError | undefined) => {
+			apiResponse.error = err;
+			console.error('Unable to receive consent-api status ⛔️');
+		})
+		.finally(() => {
+			apiResponse.isLoading = false;
+		});
+
+	return apiResponse;
+};
+
+export default getAPIStatus;

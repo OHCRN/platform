@@ -21,12 +21,7 @@ import { getConfig } from '@/config';
 const { NEXT_PUBLIC_CONSENT_API_URL } = getConfig();
 
 // API
-export const API_ROOTS = {
-	HEALTH: '/health',
-};
-
 export const API = {
 	BASE_URL: NEXT_PUBLIC_CONSENT_API_URL,
-	HEALTH: API_ROOTS.HEALTH,
-	VERSION: API_ROOTS.HEALTH + '/version',
+	STATUS: '/status',
 };
