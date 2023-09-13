@@ -23,7 +23,7 @@ import { ReactNode, createContext, useContext } from 'react';
 
 import { AppConfig, defaultAppConfig } from '@/getAppConfig';
 
-const AppConfigContext = createContext(defaultAppConfig as AppConfig);
+const AppConfigContext = createContext(defaultAppConfig);
 
 export const AppConfigProvider = ({
 	children,

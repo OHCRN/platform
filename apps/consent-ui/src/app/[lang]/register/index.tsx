@@ -21,15 +21,12 @@ import Link from 'next/link';
 
 import { getTranslation, ValidLanguage } from '@/i18n';
 
-import ConsentButton from './ConsentButton';
-
 const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang);
 	return (
 		<div>
 			<h2>{translate('register')}</h2>
 			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-			<ConsentButton />
 		</div>
 	);
 };

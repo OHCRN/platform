@@ -21,7 +21,6 @@ export type AppConfig = {
 	CONSENT_API_URL: string;
 	CONSENT_URL: string;
 	FEATURE_FLAG: boolean;
-	NEXT_IS_BUILDING: boolean;
 	TEST_RUNTIME_VAR: string;
 };
 
@@ -29,7 +28,6 @@ export const defaultAppConfig = {
 	CONSENT_API_URL: 'http://localhost:8080',
 	CONSENT_URL: 'http://localhost:3000',
 	FEATURE_FLAG: true,
-	NEXT_IS_BUILDING: false,
 	TEST_RUNTIME_VAR: 'testingtesting',
 };
 
@@ -50,12 +48,6 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 			? false
 			: serverEnv.FEATURE_FLAG === 'true' ||
 			  process.env.FEATURE_FLAG === 'true' ||
-			  defaultAppConfig.FEATURE_FLAG,
-	NEXT_IS_BUILDING:
-		serverEnv.NEXT_IS_BUILDING === 'false'
-			? false
-			: serverEnv.NEXT_IS_BUILDING === 'true' ||
-			  process.env.NEXT_IS_BUILDING === 'true' ||
 			  defaultAppConfig.FEATURE_FLAG,
 	TEST_RUNTIME_VAR:
 		serverEnv.TEST_RUNTIME_VAR || process.env.TEST_RUNTIME_VAR || defaultAppConfig.TEST_RUNTIME_VAR,

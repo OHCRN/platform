@@ -37,7 +37,7 @@ export async function getAppClientConfig() {
 	try {
 		const configResp = await fetch(BUILD_TIME_VARIABLES.RUNTIME_CONFIG_URL, {
 			// this should fail during build
-			next: { revalidate: 0 }, // cache no-store still not working, throws "dynamic server usage" error
+			next: { revalidate: 0 },
 		}).then((resp) => resp.json());
 		return configResp;
 	} catch (e) {
