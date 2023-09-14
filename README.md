@@ -69,6 +69,7 @@ To keep commit messages consistent, we use [gitmoji](https://gitmoji.dev). To ea
 
 To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference.
 
+- In the [`./` project root folder](./), create an `.env` file copy of the root [`.env.schema`](./.env.schema) file
 - In the [`/apps/consent-api/` folder](./apps/consent-api/), create an `.env` file
 - In the [`/apps/consent-das/` folder](./apps/consent-das/), create an `.env` file
 - In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create and `.env.local` file
@@ -81,19 +82,21 @@ To run the setup locally, ensure you have provided the **required** environment 
 
 | Package | Name | Description | Type | Required | Default |
 | - | - | - | - | - | - |
+| `.` | `POSTGRES_USER` | Docker Postgres database user | `string` | Required | `8080` |
+| `.` | `POSTGRES_PASSWORD` | Docker Postgres database password | `string` | Required | `8080` |
 | `consent-api` | `PORT` | Port number for the Consent API | `number` | Optional | `8080` |
-| `consent-das` | `DATABASE_URL` | URL for the Consent DB | `string` | Required | postgres://postgres:postgres@localhost:5432/consent_db |
+| `consent-das` | `DATABASE_URL` | URL for the Consent DB | `string` | Required | `postgres://postgres:postgres@localhost:5432/consent_db` |
 | `consent-das` | `PORT` | Port number for the Consent DAS | `number` | Optional | `8085` |
 | `data-mapper` | `PORT` | Port number for the Data Mapper | `number` | Optional | `8081` |
-| `data-mapper` | `PI_DAS_URL` | URL for the PI DAS | `string` | Optional | http://localhost:8082 |
-| `data-mapper` | `PHI_DAS_URL` | URL for the PHI DAS | `string` | Optional | http://localhost:8083 |
-| `data-mapper` | `KEYS_DAS_URL` | URL for the Keys DAS | `string` | Optional | http://localhost:8084 |
-| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS | `string` | Optional | http://localhost:8085 |
-| `keys-das` | `DATABASE_URL` | URL for the Keys DB | `string` | Required | postgres://postgres:postgres@localhost:5432/keys_db |
+| `data-mapper` | `PI_DAS_URL` | URL for the PI DAS | `string` | Optional | `http://localhost:8082` |
+| `data-mapper` | `PHI_DAS_URL` | URL for the PHI DAS | `string` | Optional | `http://localhost:8083` |
+| `data-mapper` | `KEYS_DAS_URL` | URL for the Keys DAS | `string` | Optional | `http://localhost:8084` |
+| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS | `string` | Optional | `http://localhost:8085` |
+| `keys-das` | `DATABASE_URL` | URL for the Keys DB | `string` | Required | `postgres://postgres:postgres@localhost:5432/keys_db` |
 | `keys-das` | `PORT` | Port number for the  Keys DAS | `number` | Optional | `8084` |
-| `phi-das` | `DATABASE_URL` | URL for the PHI DAS | `string` | Required | postgres://postgres:postgres@localhost:5432/phi_db |
+| `phi-das` | `DATABASE_URL` | URL for the PHI DAS | `string` | Required | `postgres://postgres:postgres@localhost:5432/phi_db` |
 | `phi-das` | `PORT` | Port number for the  PHI DAS | `number` | Optional | `8083` |
-| `pi-das` | `DATABASE_URL` | URL for the PI DAS | `string` | Required | postgres://postgres:postgres@localhost:5432/pi_db |
+| `pi-das` | `DATABASE_URL` | URL for the PI DAS | `string` | Required | `postgres://postgres:postgres@localhost:5432/pi_db` |
 | `pi-das` | `PORT` | Port number for the PI DAS | `number` | Optional | `8082` |
 
 ## Setup
