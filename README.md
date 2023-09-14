@@ -142,6 +142,8 @@ pnpm run migrate-dev
 
 > **Note**: The `prisma migrate dev` command is for **development mode only** [(See docs reference)](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production#create-and-apply-migrations)
 
+> **Also note**: You will need to run `prisma migrate dev` (or `pnpm run migrate-dev`) within a specific DAS to create a migration first if you have made changes to that schema, for example: `cd apps/consent-das && pnpm run migrate-dev`
+
 If successful, the script output should indicate which migrations have been applied, and you should see this message: `Your database is now in sync with your schema.`
 
 Running the migrations will also generate the Prisma Client for each DAS, as noted by the output message: `Generated Prisma Client (version number) to ./src/generated/client`. However, in the event that you only need to generate a new client, simply run:
