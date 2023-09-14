@@ -17,42 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import HealthRouter from './routers/health';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
+import getAppConfig from '@/getAppConfig';
 
-const App = (config: AppConfig) => {
-	const app = express();
-
-	if (process.env.NODE_ENV === 'development') {
-		app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				optionsSuccessStatus: 200,
-			}),
-		);
-	}
-
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	// set up routers
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/health', HealthRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/consent-completion', ConsentCompletionRouter);
-
-	return app;
-};
-
-export default App;
+export async function GET() {
+	headers();
+	const appConfig = getAppConfig(process.env);
+	return NextResponse.json(appConfig);
+}
