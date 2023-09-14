@@ -1,4 +1,9 @@
-import prisma, { Participant, ConsentQuestion, ConsentCategory } from '../prismaClient';
+import prisma, {
+	Participant,
+	ConsentQuestion,
+	ConsentCategory,
+	ParticipantResponse,
+} from '../prismaClient';
 
 export const createParticipant = async ({
 	participantId,
@@ -35,6 +40,29 @@ export const createConsentQuestion = async ({
 			isActive,
 			createdAt,
 			category,
+		},
+	});
+	return result;
+};
+
+export const createParticipantResponse = async ({
+	participantId,
+	consentQuestionId,
+	response,
+	submittedAt,
+}: {
+	participantId: string;
+	consentQuestionId: string;
+	response: boolean;
+	submittedAt: Date;
+}): Promise<ParticipantResponse> => {
+	// TODO: add error handling
+	const result = await prisma.participantResponse.create({
+		data: {
+			participantId,
+			consentQuestionId,
+			response,
+			submittedAt,
 		},
 	});
 	return result;
