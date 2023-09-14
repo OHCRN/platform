@@ -17,42 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import urlJoin from 'url-join';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import HealthRouter from './routers/health';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
-
-const App = (config: AppConfig) => {
-	const app = express();
-
-	if (process.env.NODE_ENV === 'development') {
-		app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				optionsSuccessStatus: 200,
-			}),
-		);
-	}
-
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	// set up routers
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/health', HealthRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/consent-completion', ConsentCompletionRouter);
-
-	return app;
+const BUILD_TIME_VARIABLES = {
+	RUNTIME_CONFIG_URL: urlJoin(
+		process.env.CONSENT_UI_URL || 'http://localhost:3000',
+		'api',
+		'config',
+	),
 };
 
-export default App;
+export async function getAppClientConfig() {
+	// get environment variables for client components (AppConfig context provider)
+	// cache: "no-store" ensures it's run server side
+	// fetch isn't actually doing anything except forcing server side render
+	// it's a "blocking" data call
+	// this is a server component so we have full access to process.env and can get vars from here
+	// url cannot be root - will cause infinite loop
+	try {
+		const configResp = await fetch(BUILD_TIME_VARIABLES.RUNTIME_CONFIG_URL, {
+			// this should fail during build
+			next: { revalidate: 0 },
+		}).then((resp) => resp.json());
+		return configResp;
+	} catch (e) {
+		if (process.env.NEXT_IS_BUILDING === 'true') {
+			console.log(
+				"Failed to retrieve server runtime config. Colocated api route won't be available during build.",
+			);
+		} else {
+			console.error(e);
+		}
+		// AppConfigContextProvider will provide defaultAppConfig
+		return {};
+	}
+}
