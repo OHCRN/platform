@@ -3,7 +3,11 @@
   "compilerOptions": {
     "outDir": "dist",
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
   },
+  "exclude": ["node_modules"],
   "include": ["src"],
 }

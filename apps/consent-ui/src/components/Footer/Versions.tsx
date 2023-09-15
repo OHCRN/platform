@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
-import { APIStatus } from 'common/src/service/Health';
+import { APIStatus } from 'common/src/service/Status';
 
 import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';

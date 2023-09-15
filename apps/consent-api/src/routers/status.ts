@@ -18,9 +18,10 @@
  */
 
 import { Router } from 'express';
-import { APIStatus } from 'common/src/service/Health';
+import { APIStatus } from 'common/src/service/Status';
 
-import { version } from '../../package.json';
+import { version } from '@/../package.json';
+import logger from '@/logger';
 
 /**
  * @openapi
@@ -47,6 +48,7 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
 	// TODO: add real health check
+	logger.info(`GET /status`);
 	const response: APIStatus = { status: `API is healthy.`, version };
 	res.json(response);
 });
