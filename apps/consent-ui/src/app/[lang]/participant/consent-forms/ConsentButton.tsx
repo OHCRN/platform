@@ -17,10 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-type AppConfig = {
-	NEXT_PUBLIC_CONSENT_API_URL: string;
+'use client';
+
+import urlJoin from 'url-join';
+import { useEffect, useState } from 'react';
+
+import { useAppConfigContext } from '@/components/AppConfigContextProvider';
+import Button from '@/components/Button';
+
+const ConsentButton = () => {
+	const appConfig = useAppConfigContext();
+	const [isComplete, setIsComplete] = useState<boolean>(false);
+
+	useEffect(() => {
+		const url = urlJoin(appConfig.CONSENT_API_URL, 'consent-completion');
+		fetch(url, { cache: 'no-store' })
+			.then((res) => res.json())
+			.then((data) => setIsComplete(data.status === 'COMPLETE'))
+			.catch((e: Error) => {
+				console.log(e);
+				setIsComplete(false);
+				return false;
+			});
+	}, [appConfig.CONSENT_API_URL]);
+
+	return (
+		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>
+			{isComplete ? 'Download Consent PDF' : 'Complete Consent Forms'}
+			{appConfig.FEATURE_FLAG && ' 🔥'}
+		</Button>
+	);
 };
 
-export const getConfig = (): AppConfig => ({
-	NEXT_PUBLIC_CONSENT_API_URL: process.env.NEXT_PUBLIC_CONSENT_API_URL || 'http://localhost:8080',
-});
+export default ConsentButton;

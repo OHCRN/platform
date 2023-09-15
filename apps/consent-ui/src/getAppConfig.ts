@@ -17,58 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
-import { Version } from 'common/src/service/Health';
+export type AppConfig = {
+	CONSENT_API_URL: string;
+	CONSENT_URL: string;
+	FEATURE_FLAG: boolean;
+	TEST_RUNTIME_VAR: string;
+};
 
-import logger from '@/logger';
+export const defaultAppConfig = {
+	CONSENT_API_URL: 'http://localhost:8080',
+	CONSENT_URL: 'http://localhost:3000',
+	FEATURE_FLAG: true,
+	TEST_RUNTIME_VAR: 'testingtesting',
+};
 
-import { version } from '../../package.json';
 /**
- * @openapi
- * tags:
- *   - name: Health
- *     description: Health check
+ * returns app config env vars
+ * order of priority: server runtime > process.env build time > default
  */
 
-const router = Router();
-
-/**
- * @openapi
- * /health:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API Health
- *     description: Verify API is running
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-	// TODO: add real health check
-	res.json({ message: `API is running.` });
+const getAppConfig = (serverEnv: any): AppConfig => ({
+	/**
+	 * keep explicit style of: Server || Client to prevent errors with Next inlining build variables
+	 */
+	CONSENT_API_URL:
+		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
+	CONSENT_URL: serverEnv.CONSENT_URL || process.env.CONSENT_URL || defaultAppConfig.CONSENT_URL,
+	FEATURE_FLAG:
+		serverEnv.FEATURE_FLAG === 'false'
+			? false
+			: serverEnv.FEATURE_FLAG === 'true' ||
+			  process.env.FEATURE_FLAG === 'true' ||
+			  defaultAppConfig.FEATURE_FLAG,
+	TEST_RUNTIME_VAR:
+		serverEnv.TEST_RUNTIME_VAR || process.env.TEST_RUNTIME_VAR || defaultAppConfig.TEST_RUNTIME_VAR,
 });
 
-/**
- * @openapi
- * /health/version:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API version
- *     description: Fetch current API version from consent-api's `package.json`
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/version', async (req, res) => {
-	logger.info(`GET /health/version`);
-	const response: Version = { version };
-	res.json(response);
-});
-
-export default router;
+export default getAppConfig;

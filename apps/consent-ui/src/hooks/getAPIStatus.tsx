@@ -20,27 +20,31 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { API, APIResponse } from '@/constants';
+import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
+import getAppConfig from '@/getAppConfig';
 
 const axiosInstance = axios.create({
 	validateStatus: (status: number) => status === 200,
-	baseURL: API.BASE_URL,
 });
 
-const getAPIVersion = async () => {
+const getAPIStatus = async () => {
 	const apiResponse: APIResponse = {
 		error: undefined,
 		isLoading: true,
 		response: undefined,
 	};
 
+	const appClientConfig = await getAppClientConfig();
+	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
+
 	await axiosInstance
-		.get(API.VERSION)
+		.get(API.STATUS, { baseURL: CONSENT_API_URL })
 		.then((res: AxiosResponse | undefined) => {
 			apiResponse.response = res;
 		})
 		.catch((err: AxiosError | undefined) => {
 			apiResponse.error = err;
-			console.error('Unable to retrieve consent-api version number ⛔️');
+			console.error('Unable to receive consent-api status ⛔️');
 		})
 		.finally(() => {
 			apiResponse.isLoading = false;
@@ -49,4 +53,4 @@ const getAPIVersion = async () => {
 	return apiResponse;
 };
 
-export default getAPIVersion;
+export default getAPIStatus;
