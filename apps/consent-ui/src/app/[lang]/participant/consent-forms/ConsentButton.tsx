@@ -17,42 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+'use client';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import StatusRouter from './routers/status';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
+import urlJoin from 'url-join';
+import { useEffect, useState } from 'react';
 
-const App = (config: AppConfig) => {
-	const app = express();
+import { useAppConfigContext } from '@/components/AppConfigContextProvider';
+import Button from '@/components/Button';
 
-	if (process.env.NODE_ENV === 'development') {
-		app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				optionsSuccessStatus: 200,
-			}),
-		);
-	}
+const ConsentButton = () => {
+	const appConfig = useAppConfigContext();
+	const [isComplete, setIsComplete] = useState<boolean>(false);
 
-	app.set('port', config.port);
-	app.use(bodyParser.json());
+	useEffect(() => {
+		const url = urlJoin(appConfig.CONSENT_API_URL, 'consent-completion');
+		fetch(url, { cache: 'no-store' })
+			.then((res) => res.json())
+			.then((data) => setIsComplete(data.status === 'COMPLETE'))
+			.catch((e: Error) => {
+				console.log(e);
+				setIsComplete(false);
+				return false;
+			});
+	}, [appConfig.CONSENT_API_URL]);
 
-	// set up routers
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/status', StatusRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/consent-completion', ConsentCompletionRouter);
-
-	return app;
+	return (
+		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>
+			{isComplete ? 'Download Consent PDF' : 'Complete Consent Forms'}
+			{appConfig.FEATURE_FLAG && ' 🔥'}
+		</Button>
+	);
 };
 
-export default App;
+export default ConsentButton;

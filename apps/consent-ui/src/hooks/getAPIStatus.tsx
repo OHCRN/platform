@@ -20,10 +20,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { API, APIResponse } from '@/constants';
+import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
+import getAppConfig from '@/getAppConfig';
 
 const axiosInstance = axios.create({
 	validateStatus: (status: number) => status === 200,
-	baseURL: API.BASE_URL,
 });
 
 const getAPIStatus = async () => {
@@ -33,8 +34,11 @@ const getAPIStatus = async () => {
 		response: undefined,
 	};
 
+	const appClientConfig = await getAppClientConfig();
+	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
+
 	await axiosInstance
-		.get(API.STATUS)
+		.get(API.STATUS, { baseURL: CONSENT_API_URL })
 		.then((res: AxiosResponse | undefined) => {
 			apiResponse.response = res;
 		})

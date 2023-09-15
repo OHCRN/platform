@@ -17,10 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-type AppConfig = {
-	NEXT_PUBLIC_CONSENT_API_URL: string;
+export type AppConfig = {
+	CONSENT_API_URL: string;
+	CONSENT_URL: string;
+	FEATURE_FLAG: boolean;
+	TEST_RUNTIME_VAR: string;
 };
 
-export const getConfig = (): AppConfig => ({
-	NEXT_PUBLIC_CONSENT_API_URL: process.env.NEXT_PUBLIC_CONSENT_API_URL || 'http://localhost:8080',
+export const defaultAppConfig = {
+	CONSENT_API_URL: 'http://localhost:8080',
+	CONSENT_URL: 'http://localhost:3000',
+	FEATURE_FLAG: true,
+	TEST_RUNTIME_VAR: 'testingtesting',
+};
+
+/**
+ * returns app config env vars
+ * order of priority: server runtime > process.env build time > default
+ */
+
+const getAppConfig = (serverEnv: any): AppConfig => ({
+	/**
+	 * keep explicit style of: Server || Client to prevent errors with Next inlining build variables
+	 */
+	CONSENT_API_URL:
+		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
+	CONSENT_URL: serverEnv.CONSENT_URL || process.env.CONSENT_URL || defaultAppConfig.CONSENT_URL,
+	FEATURE_FLAG:
+		serverEnv.FEATURE_FLAG === 'false'
+			? false
+			: serverEnv.FEATURE_FLAG === 'true' ||
+			  process.env.FEATURE_FLAG === 'true' ||
+			  defaultAppConfig.FEATURE_FLAG,
+	TEST_RUNTIME_VAR:
+		serverEnv.TEST_RUNTIME_VAR || process.env.TEST_RUNTIME_VAR || defaultAppConfig.TEST_RUNTIME_VAR,
 });
+
+export default getAppConfig;
