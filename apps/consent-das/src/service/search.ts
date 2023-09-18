@@ -1,4 +1,4 @@
-import prisma, { Participant, ConsentQuestion } from '../prismaClient';
+import prisma, { Participant, ConsentQuestion, ConsentCategory } from '../prismaClient';
 
 export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
@@ -26,8 +26,14 @@ export const getConsentQuestion = async (id: string): Promise<ConsentQuestion> =
 	return result;
 };
 
-export const getConsentQuestions = async (): Promise<ConsentQuestion[]> => {
+export const getConsentQuestions = async (
+	category?: ConsentCategory,
+): Promise<ConsentQuestion[]> => {
 	// TODO: add error handling
-	const result = await prisma.consentQuestion.findMany();
+	const result = await prisma.consentQuestion.findMany({
+		where: {
+			AND: [{ category }], // returns all consent questions if category is undefined
+		},
+	});
 	return result;
 };
