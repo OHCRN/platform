@@ -1,9 +1,12 @@
 .main {
   background-color: theme('colors.grayscale.200');
-  height: inherit;
-  padding: 1rem 3rem;
+  height: fit-content;
   display: flex;
   justify-content: center;
+  
+  @media (min-width: theme('screens.lg')) {
+    height: inherit;
+  }
 }
 
 .content {

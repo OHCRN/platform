@@ -1,0 +1,96 @@
+.heroContainer {
+  position: relative;
+}
+
+.hero {
+  opacity: 0.99;
+  padding: theme('padding.md') theme('padding.sm');
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/landing-page.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: theme('colors.grayscale.100');
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  @media (min-width: theme('screens.md')) {
+    padding: theme('padding.md');
+  }
+
+  @media (min-width: theme('screens.lg')) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: theme('padding.lg');
+  }
+}
+
+.hero::before {
+  background: linear-gradient(270deg, theme('colors.other.400') 0%, theme('colors.secondary.500') 95.05%);
+  content: '';
+  opacity: 0.85;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -10;
+}
+
+.heroText {
+  font-size: theme('fontSize.lg');
+
+  * {
+    margin: 2rem 0;
+  }
+
+  h1 {
+    font-size: theme('fontSize.3xl');
+  }
+
+  .moreButton {
+    width: fit-content;
+    padding: theme('padding.button.base');
+  }
+}
+
+.card {
+  background-color: theme('colors.grayscale.100');
+  color: theme('colors.grayscale.700');
+  padding: theme('padding.sm');
+  height: fit-content;
+
+  @media (min-width: theme('screens.md')) {
+    padding: theme('padding.sm') theme('padding.md');
+  }
+
+  * {
+    margin: 0.75rem 0;
+  }
+
+  a {
+    color: theme('colors.secondary.500');
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.625rem;
+    text-decoration-line: underline;
+  }
+
+  .mobileCardBtn {
+    @media (min-width: theme('screens.md')) {
+      display: none;
+    }
+    border: 0.5px solid #286C77;
+    padding: 0 1rem;
+  }
+
+  .tabletCardBtn {
+    display: none;
+    @media (min-width: theme('screens.md')) {
+      display: flex;
+    }
+  }
+}

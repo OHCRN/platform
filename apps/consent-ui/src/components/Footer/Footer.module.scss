@@ -45,7 +45,8 @@
 
 .links {
   display: grid;
-  @apply grid-cols-2 col-span-2 row-span-1 gap-y-4 w-full order-3;
+  width: 100%;
+  @apply grid-cols-2 col-span-2 row-span-1 gap-y-4 order-3;
   font-weight: theme('fontWeight.bold');
   @media (min-width: theme('screens.md')) {
     @apply gap-y-0 order-2 col-span-2 row-span-1;
@@ -60,7 +61,8 @@
 .versions {
   @apply flex flex-col justify-center items-center gap-4 order-4 col-span-2 row-span-1 text-xs;
   @media (min-width: theme('screens.md')) {
-    @apply order-4 col-span-4 row-span-1 items-start w-full;
+    width: 100%;
+    @apply order-4 col-span-4 row-span-1 items-start;
   }
   @media (min-width: theme('screens.lg')) {
     @apply col-span-3 items-center;
@@ -70,10 +72,11 @@
 .copyright {
   text-align: center;
   @media (min-width: theme('screens.md')) {
-    @apply text-left;
+    text-align: left;
   }
   @media (min-width: theme('screens.lg')) {
-    @apply order-2 text-center;
+    text-align: center;
+    @apply order-2;
   }
 }
 
