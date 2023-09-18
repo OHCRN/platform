@@ -19,14 +19,11 @@
 
 // import { User } from 'common';
 
-import Link from 'next/link';
-
 import { ValidLanguage, getTranslation } from '@/i18n';
-// import PatientIcon from '@/assets/icons/family.svg';
 import LinkButton from '@/components/Button/LinkButton';
 
 import styles from './Home.module.scss';
-import CardButton from './CardButton/CardButton';
+import Card from './Card/Card';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'landing-page');
@@ -42,32 +39,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 						<b>{translate('more-about-ohcrn')}</b>
 					</LinkButton>
 				</div>
-				<div className={styles.card}>
-					<h3>{translate('join-ohcrn')}</h3>
-					<p>
-						<b>{translate('join-ohcrn-description')}</b>
-					</p>
-					{/* mobile view */}
-					<CardButton Icon={'icon'} classes={styles.mobileCardBtn}>
-						<Link href="#">{translate('participants-register-today')}</Link>
-					</CardButton>
-					<CardButton Icon={'icon'} classes={styles.mobileCardBtn}>
-						<Link href="#">{translate('clinicians-register-today')}</Link>
-					</CardButton>
-					{/* tablet/desktop view */}
-					<CardButton Icon={'icon'} classes={styles.tabletCardBtn}>
-						<span>
-							{translate('long-participants-register-today')}{' '}
-							<Link href="#">{translate('register-yourself-today')}</Link>
-						</span>
-					</CardButton>
-					<CardButton Icon={'icon'} classes={styles.tabletCardBtn}>
-						<span>
-							{translate('long-clinicians-register-today')}{' '}
-							<Link href="#">{translate('register-patient-today')}</Link>
-						</span>
-					</CardButton>
-				</div>
+				<Card currentLang={currentLang} />
 			</div>
 		</div>
 	);

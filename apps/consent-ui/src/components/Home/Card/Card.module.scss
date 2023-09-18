@@ -1,0 +1,44 @@
+.card {
+	background-color: theme('colors.grayscale.100');
+	color: theme('colors.grayscale.700');
+	padding: theme('padding.sm');
+	height: fit-content;
+  
+	@media (min-width: theme('screens.md')) {
+	  padding: theme('padding.sm') theme('padding.md');
+	}
+  
+	* {
+	  margin: 0.75rem 0;
+	}
+  
+	a {
+	  color: theme('colors.secondary.500');
+	  font-size: 1rem;
+	  font-weight: 700;
+	  line-height: 1.625rem;
+	  text-decoration-line: underline;
+	}
+  
+	.mobileCardBtn {
+	  @media (min-width: theme('screens.md')) {
+		display: none;
+	  }
+	  border: 0.5px solid #286C77;
+	  padding: 0 1rem;
+	  
+	  a {
+		display: inline-flex;
+		align-items: center;
+		gap: 1rem;
+	  }
+	}
+  
+	.tabletCardBtn {
+	  display: none;
+	  @media (min-width: theme('screens.md')) {
+		display: flex;
+	  }
+	}
+  }
+  

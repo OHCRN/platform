@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Image from 'next/image';
+
 import styles from './CardButton.module.scss';
 
 const CardButton = async ({
@@ -30,8 +32,7 @@ const CardButton = async ({
 }) => {
 	return (
 		<div className={styles.card + ' ' + classes}>
-			{/* <Icon /> */}
-			{Icon}
+			<Image src={Icon} alt="Icon" />
 			{children}
 		</div>
 	);
