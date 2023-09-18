@@ -18,6 +18,11 @@
 	  font-weight: 700;
 	  line-height: 1.625rem;
 	  text-decoration-line: underline;
+	  transition: color 200ms;
+	}
+
+	a:hover {
+		color:  theme('colors.secondary.400');
 	}
   
 	.mobileCardBtn {

@@ -17,10 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// import { User } from 'common';
-
 import { ValidLanguage, getTranslation } from '@/i18n';
 import LinkButton from '@/components/Button/LinkButton';
+import RightArrow from '@/components/icons/arrow';
 
 import styles from './Home.module.scss';
 import Card from './Card/Card';
@@ -37,6 +36,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					</p>
 					<LinkButton href="#" variant="secondary" className={styles.moreButton}>
 						<b>{translate('more-about-ohcrn')}</b>
+						<RightArrow />
 					</LinkButton>
 				</div>
 				<Card currentLang={currentLang} />

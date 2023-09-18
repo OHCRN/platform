@@ -54,5 +54,8 @@
   .moreButton {
     width: fit-content;
     padding: theme('padding.button.base');
+    display: inline-flex;
+    gap: 1rem;
+    color: white;
   }
 }

@@ -26,7 +26,7 @@ import { ValidLanguage, getTranslation } from '@/i18n';
 import PatientIcon from '@/public/family.svg';
 import DoctorIcon from '@/public/doctor.svg';
 import Chevron from '@/public/chevron.svg';
-import RightArrow from '@/public/arrow.svg';
+import RightArrow from '@/components/icons/arrow';
 
 import styles from './Card.module.scss';
 import CardButton from './CardButton';
@@ -43,13 +43,13 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<CardButton Icon={PatientIcon} classes={styles.mobileCardBtn}>
 				<Link href="#">
 					{translate('participants-register-today')}
-					<Image src={RightArrow} alt="Right Arrow" />
+					<RightArrow />
 				</Link>
 			</CardButton>
 			<CardButton Icon={DoctorIcon} classes={styles.mobileCardBtn}>
 				<Link href="#">
 					{translate('clinicians-register-today')}
-					<Image src={RightArrow} alt="Right Arrow" />
+					<RightArrow />
 				</Link>
 			</CardButton>
 			{/* tablet/desktop view */}
