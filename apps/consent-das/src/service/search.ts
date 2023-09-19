@@ -33,25 +33,38 @@ export const getConsentQuestions = async (): Promise<ConsentQuestion[]> => {
 };
 
 export const getParticipantResponse = async (
-	id: string,
 	participantId: string,
 	consentQuestionId: string,
 ): Promise<ParticipantResponse> => {
 	// TODO: add error handling
-	const result = await prisma.participantResponse.findUniqueOrThrow({
+	const result = await prisma.participantResponse.findFirstOrThrow({
 		where: {
-			id_participantId_consentQuestionId: {
-				id,
-				participantId,
-				consentQuestionId,
-			},
+			participantId,
+			consentQuestionId,
+		},
+		orderBy: {
+			// gets the most recently submitted response
+			submittedAt: 'desc',
 		},
 	});
 	return result;
 };
 
-export const getParticipantResponses = async (): Promise<ParticipantResponse[]> => {
+export const getParticipantResponses = async (
+	participantId: string,
+	consentQuestionId: string,
+	ascending?: boolean,
+): Promise<ParticipantResponse[]> => {
 	// TODO: add error handling
-	const result = await prisma.participantResponse.findMany();
+	const result = await prisma.participantResponse.findMany({
+		where: {
+			participantId,
+			consentQuestionId,
+		},
+		orderBy: {
+			// defaults to sort by most recently submitted responses first
+			submittedAt: ascending ? 'asc' : 'desc',
+		},
+	});
 	return result;
 };

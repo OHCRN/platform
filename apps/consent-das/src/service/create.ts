@@ -49,12 +49,10 @@ export const createParticipantResponse = async ({
 	participantId,
 	consentQuestionId,
 	response,
-	submittedAt,
 }: {
 	participantId: string;
 	consentQuestionId: string;
 	response: boolean;
-	submittedAt: Date;
 }): Promise<ParticipantResponse> => {
 	// TODO: add error handling
 	const result = await prisma.participantResponse.create({
@@ -62,7 +60,6 @@ export const createParticipantResponse = async ({
 			participantId,
 			consentQuestionId,
 			response,
-			submittedAt,
 		},
 	});
 	return result;
