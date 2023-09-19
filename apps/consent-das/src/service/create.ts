@@ -25,12 +25,10 @@ export const createParticipant = async ({
 export const createConsentQuestion = async ({
 	id,
 	isActive,
-	createdAt,
 	category,
 }: {
 	id: string;
 	isActive: boolean;
-	createdAt: Date;
 	category: ConsentCategory;
 }): Promise<ConsentQuestion> => {
 	// TODO: add error handling
@@ -38,7 +36,6 @@ export const createConsentQuestion = async ({
 		data: {
 			id,
 			isActive,
-			createdAt,
 			category,
 		},
 	});
