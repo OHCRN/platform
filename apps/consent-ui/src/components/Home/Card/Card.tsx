@@ -16,10 +16,6 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-// import { User } from 'common';
-
-import Link from 'next/link';
 import Image from 'next/image';
 
 import { ValidLanguage, getTranslation } from '@/i18n';
@@ -27,6 +23,7 @@ import PatientIcon from '@/public/family.svg';
 import DoctorIcon from '@/public/doctor.svg';
 import Chevron from '@/public/chevron.svg';
 import RightArrow from '@/components/icons/arrow';
+import LocalizedLink from '@/components/Link/LocalizedLink';
 
 import styles from './Card.module.scss';
 import CardButton from './CardButton';
@@ -41,29 +38,33 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			</p>
 			{/* mobile view */}
 			<CardButton Icon={PatientIcon} classes={styles.mobileCardBtn}>
-				<Link href="#">
+				<LocalizedLink name={'register'} linkLang={currentLang}>
 					{translate('participants-register-today')}
 					<RightArrow />
-				</Link>
+				</LocalizedLink>
 			</CardButton>
 			<CardButton Icon={DoctorIcon} classes={styles.mobileCardBtn}>
-				<Link href="#">
+				<LocalizedLink name={'invite'} linkLang={currentLang}>
 					{translate('clinicians-register-today')}
 					<RightArrow />
-				</Link>
+				</LocalizedLink>
 			</CardButton>
 			{/* tablet/desktop view */}
 			<CardButton Icon={PatientIcon} classes={styles.tabletCardBtn}>
 				<span>
 					{translate('long-participants-register-today')}{' '}
-					<Link href="#">{translate('register-yourself-today')}</Link>
+					<LocalizedLink name={'register'} linkLang={currentLang}>
+						{translate('register-yourself-today')}
+					</LocalizedLink>
 				</span>
 				<Image src={Chevron} alt="Chevron" />
 			</CardButton>
 			<CardButton Icon={DoctorIcon} classes={styles.tabletCardBtn}>
 				<span>
 					{translate('long-clinicians-register-today')}{' '}
-					<Link href="#">{translate('register-patient-today')}</Link>
+					<LocalizedLink name={'invite'} linkLang={currentLang}>
+						{translate('register-patient-today')}
+					</LocalizedLink>
 				</span>
 				<Image src={Chevron} alt="Chevron" />
 			</CardButton>

@@ -34,7 +34,11 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					<p>
 						<b>{translate('ohcrn-description')}</b>
 					</p>
-					<LinkButton href="#" variant="secondary" className={styles.moreButton}>
+					<LinkButton
+						href="https://oicr.on.ca/programs/ontario-hereditary-cancer-research-network/"
+						variant="secondary"
+						className={styles.moreButton}
+					>
 						<b>{translate('more-about-ohcrn')}</b>
 						<RightArrow />
 					</LinkButton>
