@@ -44,7 +44,7 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>
 			</div>
 			<div className={styles.copyright}>
-				<span>{translate('copyright')} </span>
+				<span>{translate('copyright', { year: new Date().getFullYear() })} </span>
 				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
 				{/* TODO: fix hardcoded version */}
 				<span>{translate('api', { apiVersion: '0.1.0' })}</span>

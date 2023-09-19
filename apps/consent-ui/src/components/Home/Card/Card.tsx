@@ -16,58 +16,72 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import Image from 'next/image';
 
 import { ValidLanguage, getTranslation } from '@/i18n';
-import PatientIcon from '@/public/family.svg';
-import DoctorIcon from '@/public/doctor.svg';
-import Chevron from '@/public/chevron.svg';
-import RightArrow from '@/components/icons/arrow';
-import LocalizedLink from '@/components/Link/LocalizedLink';
+import PatientIcon from '@/components/Icons/Family';
+import DoctorIcon from '@/components/Icons/Doctor';
+import RightArrow from '@/components/Icons/Arrow';
+import Chevron from '@/components/Icons/Chevron';
 
 import styles from './Card.module.scss';
-import CardButton from './CardButton';
+import CardLink from './CardLink';
 
 const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'landing-page');
 	return (
 		<div className={styles.card}>
-			<h3>{translate('join-ohcrn')}</h3>
+			<h2>{translate('join-ohcrn')}</h2>
 			<p>
 				<b>{translate('join-ohcrn-description')}</b>
 			</p>
 			{/* mobile view */}
-			<CardButton Icon={PatientIcon} classes={styles.mobileCardBtn}>
-				<LocalizedLink name={'register'} linkLang={currentLang}>
-					{translate('participants-register-today')}
-					<RightArrow />
-				</LocalizedLink>
-			</CardButton>
-			<CardButton Icon={DoctorIcon} classes={styles.mobileCardBtn}>
-				<LocalizedLink name={'invite'} linkLang={currentLang}>
-					{translate('clinicians-register-today')}
-					<RightArrow />
-				</LocalizedLink>
-			</CardButton>
+			<CardLink
+				path={'register'}
+				currentLang={currentLang}
+				Icon={PatientIcon}
+				classes={styles.mobileCardBtn}
+				iconClasses={styles.patientIcon}
+			>
+				<strong>{translate('participants-register-today')}</strong>
+				<RightArrow classes={styles.arrow} />
+			</CardLink>
+			<CardLink
+				path={'invite'}
+				currentLang={currentLang}
+				Icon={DoctorIcon}
+				classes={styles.mobileCardBtn}
+				iconClasses={styles.doctorIcon}
+			>
+				<strong>{translate('clinicians-register-today')}</strong>
+				<RightArrow classes={styles.arrow} />
+			</CardLink>
 			{/* tablet/desktop view */}
-			<CardButton Icon={PatientIcon} classes={styles.tabletCardBtn}>
+			<CardLink
+				path={'register'}
+				currentLang={currentLang}
+				Icon={PatientIcon}
+				classes={styles.tabletCardBtn}
+				iconClasses={styles.patientIcon}
+			>
 				<span>
 					{translate('long-participants-register-today')}{' '}
-					<LocalizedLink name={'register'} linkLang={currentLang}>
-						{translate('register-yourself-today')}
-					</LocalizedLink>
+					<strong>{translate('register-yourself-today')}</strong>
 				</span>
-				<Image src={Chevron} alt="Chevron" />
-			</CardButton>
-			<CardButton Icon={DoctorIcon} classes={styles.tabletCardBtn}>
+				<Chevron classes={styles.chevron} />
+			</CardLink>
+			<CardLink
+				path={'invite'}
+				currentLang={currentLang}
+				Icon={DoctorIcon}
+				classes={styles.tabletCardBtn}
+				iconClasses={styles.doctorIcon}
+			>
 				<span>
 					{translate('long-clinicians-register-today')}{' '}
-					<LocalizedLink name={'invite'} linkLang={currentLang}>
-						{translate('register-patient-today')}
-					</LocalizedLink>
+					<strong>{translate('register-patient-today')}</strong>
 				</span>
-				<Image src={Chevron} alt="Chevron" />
-			</CardButton>
+				<Chevron classes={styles.chevron} />
+			</CardLink>
 		</div>
 	);
 };

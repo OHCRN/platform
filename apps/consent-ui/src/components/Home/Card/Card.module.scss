@@ -3,6 +3,7 @@
 	color: theme('colors.grayscale.700');
 	padding: theme('padding.sm');
 	height: fit-content;
+	min-width: 45%;
   
 	@media (min-width: theme('screens.md')) {
 	  padding: theme('padding.sm') theme('padding.md');
@@ -11,8 +12,12 @@
 	* {
 	  margin: 0.75rem 0;
 	}
+
+	h2 {
+		font-size: theme('fontSize.xl');
+	}
   
-	a {
+	strong {
 	  color: theme('colors.secondary.500');
 	  font-size: 1rem;
 	  font-weight: 700;
@@ -21,7 +26,7 @@
 	  transition: color 200ms;
 	}
 
-	a:hover {
+	strong:hover {
 		color:  theme('colors.secondary.400');
 	}
   
@@ -37,12 +42,44 @@
 		align-items: center;
 		gap: 1rem;
 	  }
+	  .arrow {
+		width: 1rem;
+		height: 1rem;
+		color: theme('colors.secondary.500');
+	  }
+
+	  .doctorIcon {
+		color: theme('colors.secondary.500');
+		width: 3rem;
+	  }
+
+	  .patientIcon {
+		color: theme('colors.secondary.500');
+		width: 3rem;
+	  }
 	}
   
 	.tabletCardBtn {
 	  display: none;
 	  @media (min-width: theme('screens.md')) {
 		display: flex;
+	  }
+
+	  .doctorIcon {
+		color: theme('colors.secondary.500');
+		width: 8.5rem;
+		height: 4rem;
+	  }
+
+	  .patientIcon {
+		color: theme('colors.secondary.500');
+		width: 10rem;
+		height: 4rem;
+	  }
+
+	  .chevron {
+		color: theme('colors.secondary.500');
+		width: 3rem;
 	  }
 	}
   }

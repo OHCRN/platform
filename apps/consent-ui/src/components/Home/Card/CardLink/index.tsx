@@ -17,25 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Image from 'next/image';
+import LocalizedLink from '@/components/Link/LocalizedLink';
+import { RouteName } from '@/components/Link/types';
+import { ValidLanguage } from '@/i18n';
 
-import styles from './CardButton.module.scss';
+import styles from './CardLink.module.scss';
 
-const CardButton = async ({
+const CardLink = async ({
+	path,
+	currentLang,
 	Icon,
 	classes,
+	iconClasses,
 	children,
 }: {
+	path: RouteName;
+	currentLang: ValidLanguage;
 	Icon: any;
-	classes: string;
+	classes?: string;
+	iconClasses?: string;
 	children: React.ReactNode;
 }) => {
 	return (
-		<div className={styles.card + ' ' + classes}>
-			<Image src={Icon} alt="Icon" />
+		<LocalizedLink name={path} linkLang={currentLang} className={styles.card + ' ' + classes}>
+			<Icon classes={styles.icon + ' ' + iconClasses} />
 			{children}
-		</div>
+		</LocalizedLink>
 	);
 };
 
-export default CardButton;
+export default CardLink;

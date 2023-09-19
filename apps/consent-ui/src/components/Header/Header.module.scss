@@ -4,6 +4,9 @@
   @media (min-width: theme('screens.md')) {
     height: 5rem;
   }
+  @media (min-width: theme('screens.lg')) {
+    min-height: 10vh;
+  }
   background-color: theme('colors.grayscale.100');
   padding: 0.5rem 1rem;
   align-items: center;

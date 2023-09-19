@@ -17,9 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Image from 'next/image';
+
 import { ValidLanguage, getTranslation } from '@/i18n';
 import LinkButton from '@/components/Button/LinkButton';
-import RightArrow from '@/components/icons/arrow';
+import RightArrow from '@/components/Icons/Arrow';
+import LandingPageImage from '@/public/landing-page.png';
 
 import styles from './Home.module.scss';
 import Card from './Card/Card';
@@ -28,6 +31,12 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 	const translate = await getTranslation(currentLang, 'landing-page');
 	return (
 		<div className={styles.heroContainer}>
+			<Image
+				src={LandingPageImage}
+				alt={translate('hero-background-img-alt')}
+				className={styles.backgroundImg}
+			/>
+			<div className={styles.gradientOverlay}></div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
 					<h1>{translate('title')}</h1>
@@ -40,7 +49,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 						className={styles.moreButton}
 					>
 						<b>{translate('more-about-ohcrn')}</b>
-						<RightArrow />
+						<RightArrow classes={styles.arrow} />
 					</LinkButton>
 				</div>
 				<Card currentLang={currentLang} />

@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Icon() {
+function Arrow({ classes }: { classes?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" width="10" height="15" fill="none" viewBox="0 0 7 10">
+		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
 			<path
 				fill="currentColor"
 				fillRule="evenodd"
@@ -13,4 +13,4 @@ function Icon() {
 	);
 }
 
-export default Icon;
+export default Arrow;

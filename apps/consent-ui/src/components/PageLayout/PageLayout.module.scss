@@ -1,11 +1,10 @@
 .main {
   background-color: theme('colors.grayscale.200');
-  height: fit-content;
   display: flex;
   justify-content: center;
   
   @media (min-width: theme('screens.lg')) {
-    height: inherit;
+    min-height: 70vh;
   }
 }
 
