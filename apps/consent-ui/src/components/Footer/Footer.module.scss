@@ -9,11 +9,11 @@
   @apply gap-8 grid-cols-2 grid-rows-3;
   @media (min-width: theme('screens.md')) {
     font-size: theme('fontSize.sm');
-    @apply grid-cols-4 grid-rows-2 gap-y-4 gap-x-8;
-  }
-  @media (min-width: theme('screens.lg')) {
     height: 12rem;
     min-height: 20vh;
+    @apply grid-cols-4 grid-rows-2 gap-y-4 gap-x-8;
+  }
+  @media (min-width: theme('screens.xl')) {
     @apply grid-cols-5 grid-rows-2;
   }
 }
@@ -27,7 +27,7 @@
     flex-wrap: nowrap;
     @apply row-span-1;
   }
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     @apply row-span-2;
   }
 }
@@ -39,7 +39,7 @@
   @media (min-width: theme('screens.md')) {
     @apply order-3 row-span-1 justify-self-center;
   }
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     @apply row-span-2;
   }
 }
@@ -49,10 +49,13 @@
   width: 100%;
   @apply grid-cols-2 col-span-2 row-span-1 gap-y-4 order-3;
   font-weight: theme('fontWeight.bold');
+  @media (min-width: theme('screens.sm')) {
+    text-align: center;
+  }
   @media (min-width: theme('screens.md')) {
     @apply gap-y-0 order-2 col-span-2 row-span-1;
   }
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     @apply gap-8 col-span-3;
     display: flex;
     justify-content: center;
@@ -65,7 +68,7 @@
     width: 100%;
     @apply order-4 col-span-4 row-span-1 items-start;
   }
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     @apply col-span-3 items-center;
   }
 }
@@ -75,7 +78,7 @@
   @media (min-width: theme('screens.md')) {
     text-align: left;
   }
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     text-align: center;
     @apply order-2;
   }
@@ -83,13 +86,20 @@
 
 .credit {
   display: flex;
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     @apply order-1;
   }
 }
 
 .icon {
   margin-right: 1rem;
+}
+
+.mediaIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 .oicr {
@@ -115,7 +125,7 @@
 
 .overture {
   margin: 0 0.5rem 0 1rem;
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.xl')) {
     margin: 0 1rem;
   }
 }

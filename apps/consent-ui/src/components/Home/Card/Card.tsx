@@ -18,10 +18,10 @@
  */
 
 import { ValidLanguage, getTranslation } from '@/i18n';
-import PatientIcon from '@/components/Icons/Family';
-import DoctorIcon from '@/components/Icons/Doctor';
-import RightArrow from '@/components/Icons/Arrow';
-import Chevron from '@/components/Icons/Chevron';
+import PatientIcon from '@/components/SVGIcons/Family';
+import DoctorIcon from '@/components/SVGIcons/Doctor';
+import RightArrow from '@/components/SVGIcons/Arrow';
+import Chevron from '@/components/SVGIcons/Chevron';
 
 import styles from './Card.module.scss';
 import CardLink from './CardLink';

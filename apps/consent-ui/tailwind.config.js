@@ -43,11 +43,12 @@ module.exports = {
         base: '1.2rem 2.5rem',
       }
     },
-    breakpoints: {
-      sm: '480px',
-      md: '1024px',
+    extend: {
+      screens: {
+        sm: '480px',
+        md: '1024px',
+      },
     },
-    extend: {},
   },
   plugins: [],
 };

@@ -2,10 +2,7 @@
   background-color: theme('colors.grayscale.200');
   display: flex;
   justify-content: center;
-  
-  @media (min-width: theme('screens.lg')) {
-    min-height: 70vh;
-  }
+  min-height: 70vh;
 }
 
 .content {

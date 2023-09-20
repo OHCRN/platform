@@ -32,11 +32,11 @@
   flex-direction: column;
   gap: 4rem;
 
-  @media (min-width: theme('screens.md')) {
+  @media (min-width: theme('screens.sm')) {
     padding: theme('padding.md');
   }
 
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme('screens.md')) {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

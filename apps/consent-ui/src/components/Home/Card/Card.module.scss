@@ -5,7 +5,7 @@
 	height: fit-content;
 	min-width: 45%;
   
-	@media (min-width: theme('screens.md')) {
+	@media (min-width: theme('screens.sm')) {
 	  padding: theme('padding.sm') theme('padding.md');
 	}
   
@@ -31,7 +31,7 @@
 	}
   
 	.mobileCardBtn {
-	  @media (min-width: theme('screens.md')) {
+	  @media (min-width: theme('screens.sm')) {
 		display: none;
 	  }
 	  border: 0.5px solid #286C77;
@@ -61,7 +61,7 @@
   
 	.tabletCardBtn {
 	  display: none;
-	  @media (min-width: theme('screens.md')) {
+	  @media (min-width: theme('screens.sm')) {
 		display: flex;
 	  }
 
