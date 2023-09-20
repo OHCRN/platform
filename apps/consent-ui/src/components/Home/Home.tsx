@@ -23,6 +23,7 @@ import { ValidLanguage, getTranslation } from '@/i18n';
 import LinkButton from '@/components/Button/LinkButton';
 import RightArrow from '@/components/Icons/Arrow';
 import LandingPageImage from '@/public/landing-page.png';
+import { OHCRN_HOME_LINK } from '@/constants';
 
 import styles from './Home.module.scss';
 import Card from './Card/Card';
@@ -43,11 +44,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					<p>
 						<b>{translate('ohcrn-description')}</b>
 					</p>
-					<LinkButton
-						href="https://oicr.on.ca/programs/ontario-hereditary-cancer-research-network/"
-						variant="secondary"
-						className={styles.moreButton}
-					>
+					<LinkButton href={OHCRN_HOME_LINK} variant="secondary" className={styles.moreButton}>
 						<b>{translate('more-about-ohcrn')}</b>
 						<RightArrow classes={styles.arrow} />
 					</LinkButton>
