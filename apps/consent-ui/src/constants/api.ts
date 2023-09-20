@@ -16,13 +16,8 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 
-export interface APIResponse {
-	error: AxiosError | undefined;
-	isLoading: boolean;
-	response: AxiosResponse | undefined;
-}
-
-export * from './externalPaths';
-export * from './api';
+export const baseAPI = axios.create({
+	validateStatus: (status: number) => status === 200,
+});

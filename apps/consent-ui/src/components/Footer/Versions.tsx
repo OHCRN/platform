@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
-import { APIStatus } from 'common/src/service/Status';
+import { Suspense } from 'react';
 
 import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
@@ -30,13 +30,16 @@ import getAPIStatus from '@/hooks/getAPIStatus';
 
 import styles from './Footer.module.scss';
 
+// keep this in a separate component so the Versions component renders everything else
+// and isn't waiting on the getAPIStatus() Promise to resolve
+const APIVersion = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'footer');
+	const { version: apiVersion } = await getAPIStatus();
+	return <span>{translate('api', { apiVersion })}</span>;
+};
+
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'footer');
-
-	const { error, isLoading, response } = await getAPIStatus();
-	const apiStatus: APIStatus = !error && !isLoading && response && response.data;
-	const apiVersion = apiStatus?.version || '';
-
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>
@@ -53,7 +56,9 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<div className={styles.copyright}>
 				<span>{translate('copyright')} </span>
 				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
-				<span>{translate('api', { apiVersion })}</span>
+				<Suspense fallback={<span />}>
+					<APIVersion currentLang={currentLang} />
+				</Suspense>
 			</div>
 		</div>
 	);
