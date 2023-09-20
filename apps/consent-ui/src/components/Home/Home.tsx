@@ -21,7 +21,7 @@ import Image from 'next/image';
 
 import { ValidLanguage, getTranslation } from '@/i18n';
 import LinkButton from '@/components/Button/LinkButton';
-import RightArrow from '@/components/SVGIcons/Arrow';
+import RightArrow from '@/components/Icons/Arrow';
 import LandingPageImage from '@/public/landing-page.png';
 import { OHCRN_HOME_LINK } from '@/constants';
 
