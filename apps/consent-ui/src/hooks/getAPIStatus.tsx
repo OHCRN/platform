@@ -17,42 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import { AxiosError, AxiosResponse } from 'axios';
+import { APIStatus } from 'common/src/service/Status';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import StatusRouter from './routers/status';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
+import { API, baseAPI } from '@/constants';
+import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
+import getAppConfig from '@/getAppConfig';
 
-const App = (config: AppConfig) => {
-	const app = express();
+const getAPIStatus = async () => {
+	const appClientConfig = await getAppClientConfig();
+	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
 
-	if (process.env.NODE_ENV === 'development') {
-		app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				optionsSuccessStatus: 200,
-			}),
-		);
-	}
-
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	// set up routers
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/status', StatusRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/consent-completion', ConsentCompletionRouter);
-
-	return app;
+	return await baseAPI
+		.get(API.STATUS, { baseURL: CONSENT_API_URL })
+		.then((res: AxiosResponse<APIStatus>) => {
+			return res.data;
+		})
+		.catch((err: AxiosError<APIStatus>) => {
+			console.error('Unable to receive consent-api status ⛔️: ', err);
+			// we can decide on some custom error response, instead of just throwing an error and catching
+			// so we have something to display in the case of an error
+			const errorRes: APIStatus = {
+				version: '',
+				status: 'API fetch failed',
+			};
+			return errorRes;
+		});
 };
 
-export default App;
+export default getAPIStatus;

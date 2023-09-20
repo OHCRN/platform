@@ -20,13 +20,23 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
+import { Suspense } from 'react';
 
 import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
+import getAPIStatus from '@/hooks/getAPIStatus';
 
 import styles from './Footer.module.scss';
+
+// keep this in a separate component so the Versions component renders everything else
+// and isn't waiting on the getAPIStatus() Promise to resolve
+const APIVersion = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'footer');
+	const { version: apiVersion } = await getAPIStatus();
+	return <span>{translate('api', { apiVersion })}</span>;
+};
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'footer');
@@ -46,8 +56,9 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<div className={styles.copyright}>
 				<span>{translate('copyright', { year: new Date().getFullYear() })} </span>
 				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
-				{/* TODO: fix hardcoded version */}
-				<span>{translate('api', { apiVersion: '0.1.0' })}</span>
+				<Suspense fallback={<span />}>
+					<APIVersion currentLang={currentLang} />
+				</Suspense>
 			</div>
 		</div>
 	);

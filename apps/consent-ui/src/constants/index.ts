@@ -16,35 +16,13 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import { AxiosError, AxiosResponse } from 'axios';
 
-import { Router } from 'express';
+export interface APIResponse {
+	error: AxiosError | undefined;
+	isLoading: boolean;
+	response: AxiosResponse | undefined;
+}
 
-/**
- * @openapi
- * tags:
- *   - name: Health
- *     description: Health check
- */
-
-const router = Router();
-
-/**
- * @openapi
- * /health:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API Health
- *     description: Verify API is running
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-	// TODO: add real health check
-	res.json({ message: `API is running.` });
-});
-
-export default router;
+export * from './externalPaths';
+export * from './api';

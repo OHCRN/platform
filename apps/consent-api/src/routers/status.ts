@@ -17,42 +17,42 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import { Router } from 'express';
+// TODO: fix exports from common (e.g. import { APIStatus } from 'common' or 'common/service')
+import { APIStatus } from 'common/src/service/Status';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import StatusRouter from './routers/status';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
+import logger from '@/logger';
 
-const App = (config: AppConfig) => {
-	const app = express();
+import { version } from '../../package.json';
 
-	if (process.env.NODE_ENV === 'development') {
-		app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				optionsSuccessStatus: 200,
-			}),
-		);
-	}
+/**
+ * @openapi
+ * tags:
+ *   - name: Status
+ *     description: Health check
+ */
 
-	app.set('port', config.port);
-	app.use(bodyParser.json());
+const router = Router();
 
-	// set up routers
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/status', StatusRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/consent-completion', ConsentCompletionRouter);
+/**
+ * @openapi
+ * /status:
+ *   get:
+ *     tags:
+ *       - Status
+ *     name: Check API Status
+ *     description: Verify API is running and fetch current version
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Server error
+ */
+router.get('/', async (req, res) => {
+	// TODO: add real health check
+	logger.info(`GET /status`);
+	const response: APIStatus = { status: `API is healthy.`, version };
+	res.json(response);
+});
 
-	return app;
-};
-
-export default App;
+export default router;
