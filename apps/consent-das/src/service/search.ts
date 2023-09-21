@@ -1,3 +1,4 @@
+import { Prisma } from '../generated/client';
 import prisma, {
 	Participant,
 	ConsentQuestion,
@@ -67,7 +68,7 @@ export const getParticipantResponse = async (
 export const getParticipantResponses = async (
 	participantId: string,
 	consentQuestionId: string,
-	ascending?: boolean,
+	sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
 ): Promise<ParticipantResponse[]> => {
 	// TODO: add error handling
 	const result = await prisma.participantResponse.findMany({
@@ -77,7 +78,7 @@ export const getParticipantResponses = async (
 		},
 		orderBy: {
 			// defaults to sort by most recently submitted responses first
-			submittedAt: ascending ? 'asc' : 'desc',
+			submittedAt: sortOrder,
 		},
 	});
 	return result;
