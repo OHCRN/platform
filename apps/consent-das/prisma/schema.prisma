@@ -8,11 +8,21 @@ generator client {
   output   = "../src/generated/client"
 }
 
+enum ConsentGroup {
+  ADULT_CONSENT
+  ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER
+  GUARDIAN_CONSENT_OF_MINOR
+  GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT
+  YOUNG_ADULT_CONSENT
+}
+
 model Participant {
-  id                  String                @id @default(cuid())
-  participantId       String                @unique
-  emailVerified       Boolean               @default(false)
-  ParticipantResponse ParticipantResponse[]
+  id                               String                @id @default(cuid())
+  consentGroup                     ConsentGroup?
+  emailVerified                    Boolean               @default(false)
+  registeringOnBehalfOfSomeoneElse Boolean
+  registrantIdVerified             Boolean?
+  ParticipantResponse              ParticipantResponse[]
 }
 
 enum ConsentCategory {

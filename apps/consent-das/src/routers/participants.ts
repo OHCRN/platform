@@ -101,10 +101,16 @@ router.get('/:participantId', async (req, res) => {
 // TODO: add proper JSDoc comments
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { participantId, emailVerified } = req.body;
+	const { emailVerified, registeringOnBehalfOfSomeoneElse, consentGroup, registrantIdVerified } =
+		req.body;
 	// TODO: add validation
 	try {
-		const participant = await createParticipant({ participantId, emailVerified });
+		const participant = await createParticipant({
+			emailVerified,
+			registeringOnBehalfOfSomeoneElse,
+			consentGroup,
+			registrantIdVerified,
+		});
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
