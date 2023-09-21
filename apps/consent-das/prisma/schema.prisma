@@ -5,11 +5,40 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output = "../src/generated/client"
+  output   = "../src/generated/client"
 }
 
 model Participant {
-  id              String @id @default(cuid())
-  participantId   String @unique
-  emailVerified   Boolean @default(false)
+  id                  String                @id @default(cuid())
+  participantId       String                @unique
+  emailVerified       Boolean               @default(false)
+  ParticipantResponse ParticipantResponse[]
+}
+
+enum ConsentCategory {
+  INFORMED_CONSENT
+  CONSENT_RELEASE_DATA
+  CONSENT_RESEARCH_PARTICIPATION
+  CONSENT_RECONTACT
+  CONSENT_REVIEW_SIGN
+}
+
+model ConsentQuestion {
+  id                  String                @id
+  isActive            Boolean               @default(true)
+  createdAt           DateTime              @default(now())
+  category            ConsentCategory
+  ParticipantResponse ParticipantResponse[]
+}
+
+model ParticipantResponse {
+  id                String          @default(cuid())
+  participant       Participant     @relation(fields: [participantId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  participantId     String
+  consentQuestion   ConsentQuestion @relation(fields: [consentQuestionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  consentQuestionId String
+  response          Boolean
+  submittedAt       DateTime        @default(now())
+
+  @@id([id, participantId, consentQuestionId])
 }
