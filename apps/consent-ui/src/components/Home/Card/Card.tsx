@@ -36,7 +36,7 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			</p>
 			{/* mobile view */}
 			<CardLink
-				path={'register'}
+				name={'register'}
 				currentLang={currentLang}
 				Icon={PatientIcon}
 				classes={styles.mobileCardBtn}
@@ -46,7 +46,7 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				<RightArrow classes={styles.arrow} />
 			</CardLink>
 			<CardLink
-				path={'invite'}
+				name={'invite'}
 				currentLang={currentLang}
 				Icon={DoctorIcon}
 				classes={styles.mobileCardBtn}
@@ -57,7 +57,7 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			</CardLink>
 			{/* tablet/desktop view */}
 			<CardLink
-				path={'register'}
+				name={'register'}
 				currentLang={currentLang}
 				Icon={PatientIcon}
 				classes={styles.tabletCardBtn}
@@ -70,7 +70,7 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				<Chevron classes={styles.chevron} />
 			</CardLink>
 			<CardLink
-				path={'invite'}
+				name={'invite'}
 				currentLang={currentLang}
 				Icon={DoctorIcon}
 				classes={styles.tabletCardBtn}

@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import clsx from 'clsx';
+
 import LocalizedLink from '@/components/Link/LocalizedLink';
 import { RouteName } from '@/components/Link/types';
 import { ValidLanguage } from '@/i18n';
@@ -24,23 +26,23 @@ import { ValidLanguage } from '@/i18n';
 import styles from './CardLink.module.scss';
 
 const CardLink = async ({
-	path,
+	name,
 	currentLang,
 	Icon,
 	classes,
 	iconClasses,
 	children,
 }: {
-	path: RouteName;
+	name: RouteName;
 	currentLang: ValidLanguage;
-	Icon: any;
+	Icon: React.ComponentType<any>;
 	classes?: string;
 	iconClasses?: string;
 	children: React.ReactNode;
 }) => {
 	return (
-		<LocalizedLink name={path} linkLang={currentLang} className={styles.card + ' ' + classes}>
-			<Icon classes={styles.icon + ' ' + iconClasses} />
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.card, classes)}>
+			<Icon classes={clsx(styles.icon, iconClasses)} />
 			{children}
 		</LocalizedLink>
 	);

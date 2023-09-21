@@ -21,6 +21,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-left: 1rem;
   @apply col-span-1;
   @media (min-width: theme('screens.md')) {
     flex-wrap: nowrap;
@@ -34,9 +35,10 @@
 .right {
   align-items: center;
   justify-self: flex-end;
+  margin-right: 1rem;
   @apply row-span-1 order-2 col-span-1;
   @media (min-width: theme('screens.md')) {
-    @apply order-3 row-span-1 justify-self-center;
+    @apply order-3 row-span-1;
   }
   @media (min-width: theme('screens.xl')) {
     @apply row-span-2;
@@ -46,13 +48,15 @@
 .links {
   display: grid;
   width: 100%;
+  margin-left: 1rem;
   @apply grid-cols-2 col-span-2 row-span-1 gap-y-4 order-3;
   font-weight: theme('fontWeight.bold');
   @media (min-width: theme('screens.md')) {
+    margin-left: 0;
     @apply gap-y-4 order-2 col-span-2 row-span-2;
   }
   @media (min-width: theme('screens.xl')) {
-    @apply gap-8 col-span-3;
+    @apply gap-8 col-span-3 row-span-1;
     display: flex;
     justify-content: center;
   }
@@ -65,7 +69,7 @@
     @apply order-4 col-span-4 row-span-1 items-start;
   }
   @media (min-width: theme('screens.xl')) {
-    @apply col-span-5 items-center;
+    @apply col-span-3 items-center;
   }
 }
 
