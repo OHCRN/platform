@@ -22,6 +22,8 @@ import bodyParser from 'body-parser';
 
 import { AppConfig } from './config';
 import ParticipantRouter from './routers/participants';
+import ConsentQuestionRouter from './routers/consentQuestions';
+import ParticipantResponseRouter from './routers/participantResponses';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -29,6 +31,8 @@ const App = (config: AppConfig) => {
 	app.use(bodyParser.json());
 
 	app.use('/participants', ParticipantRouter);
+	app.use('/consent-questions', ConsentQuestionRouter);
+	app.use('/participant-responses', ParticipantResponseRouter);
 
 	return app;
 };

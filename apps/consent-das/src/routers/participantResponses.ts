@@ -19,16 +19,17 @@
 
 import { Router } from 'express';
 
-import { getParticipant, getParticipants } from '../service/search';
-import { createParticipant } from '../service/create';
+import { Prisma } from '../generated/client';
+import { getParticipantResponse, getParticipantResponses } from '../service/search';
+import { createParticipantResponse } from '../service/create';
 import logger from '../logger';
 
 // TODO: update JSDoc comments
 /**
  * @openapi
  * tags:
- *   - name: Participants
- *     description: Participant management
+ *   - name: Participant Responses
+ *     description: Participant response management
  */
 
 const router = Router();
@@ -36,78 +37,97 @@ const router = Router();
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants:
+ * /participant-responses/all/:participantId/:consentQuestionId:
  *   get:
  *     tags:
- *       - Participants
- *     name: Get All Participants
- *     description: Fetch participant list
+ *       - Participant Responses
+ *     produces: application/json
+ *     name: Get Participant Responses
+ *     description: Fetches list of Participant Responses by Consent Question ID and Participant ID, sorted by submittedAt date (defaults descending)
  *     security:
  *       - bearerAuth: []
  *     responses:
- *       200:
- *         description: The list of participants was successfully retrieved.
+ *       201:
+ *         description: The participant responses were successfully retrieved.
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
  *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
  */
-router.get('/', async (req, res) => {
-	logger.info('GET /participants');
+router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
+	logger.info('GET /participant-responses/all/:participantId/:consentQuestionId');
 	// TODO: add error handling
-	const participants = await getParticipants();
-	res.send({ participants: [participants] });
+	const { participantId, consentQuestionId } = req.params;
+	const { sort_order } = req.query;
+	const participant_responses = await getParticipantResponses(
+		participantId,
+		consentQuestionId,
+		sort_order as Prisma.SortOrder,
+	);
+	res.send({ participant_responses });
 });
 
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants/{id}:
+ * /participant-responses/:participantId/:consentQuestionId:
  *   get:
  *     tags:
  *       - Participants
- *     name: Get Participant by ID
- *     description: Fetch one participant
+ *     name: Get Participant Response by Consent Question ID and Participant ID
+ *     description: Fetch latest participant response
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
+ *      - name: participantId
  *        in: path
  *        description: Participant ID
  *        required: true
  *        schema:
  *          type: string
+ *      - name: consentQuestionId
+ *        in: path
+ *        description: Consent question ID
+ *        required: true
+ *        schema:
+ *          type: string
  *     responses:
  *       200:
- *         description: The participant was successfully retrieved.
+ *         description: The latest response was successfully retrieved.
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
  *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
  */
-router.get('/:participantId', async (req, res) => {
-	logger.info('GET /participants/:participantId');
-	const { participantId } = req.params;
+router.get('/:participantId/:consentQuestionId', async (req, res) => {
+	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
+	const { participantId, consentQuestionId } = req.params;
+	const { submitted_at } = req.query;
+	const submittedAt = submitted_at ? new Date(submitted_at as string) : undefined;
 	// TODO: add validation
 	try {
-		const participant = await getParticipant(participantId);
-		res.status(200).send({ participant });
+		const participant_response = await getParticipantResponse(
+			participantId,
+			consentQuestionId,
+			submittedAt,
+		);
+		res.status(200).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant not found' });
+		res.status(404).send({ error: 'Participant response not found' });
 	}
 });
 
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants:
+ * /participant-responses:
  *   post:
  *     tags:
- *       - Participants
+ *       - Participant Responses
  *     produces: application/json
- *     name: Create Participant
- *     description: Create a new participant
+ *     name: Create Participant Response
+ *     description: Create a new participant response
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -117,42 +137,34 @@ router.get('/:participantId', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               emailVerified:
+ *               participantId:
+ *                 type: string
+ *               consentQuestionId:
+ *                 type: string
+ *               response:
  *                 type: boolean
- *               registeringOnBehalfOfSomeoneElse:
- *                 type: boolean
- *               consentGroup:
- *                 type: Enum
- * 				   enum: [ADULT_CONSENT, ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER, GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, YOUNG_ADULT_CONSENT]
- *               registrantIdVerified:
- *                 	type: boolean
- * 			   required:
- *               - emailVerified
- *               - registeringOnBehalfOfSomeoneElse
  *     responses:
  *       201:
- *         description: The participant was successfully retrieved.
+ *         description: The participant response was successfully created.
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
  *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
  */
 router.post('/', async (req, res) => {
-	logger.info('POST /participants');
-	const { emailVerified, registeringOnBehalfOfSomeoneElse, consentGroup, registrantIdVerified } =
-		req.body;
+	logger.info('POST /participant-responses');
+	const { participantId, consentQuestionId, response } = req.body;
 	// TODO: add validation
 	try {
-		const participant = await createParticipant({
-			emailVerified,
-			registeringOnBehalfOfSomeoneElse,
-			consentGroup,
-			registrantIdVerified,
+		const participant_response = await createParticipantResponse({
+			participantId,
+			consentQuestionId,
+			response,
 		});
-		res.status(201).send({ participant });
+		res.status(201).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
+		res.status(500).send({ error: 'Error creating participant response' });
 	}
 });
 
