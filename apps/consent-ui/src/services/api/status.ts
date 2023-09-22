@@ -32,8 +32,6 @@ const getAPIStatus = async () => {
 		})
 		.catch((err: AxiosError<APIStatus>) => {
 			console.error('Unable to receive consent-api status ⛔️: ', err);
-			// we can decide on some custom error response, instead of just throwing an error and catching
-			// so we have something to display in the case of an error
 			const errorRes: APIStatus = {
 				version: '',
 				status: 'API fetch failed',
