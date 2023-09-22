@@ -21,3 +21,6 @@
 export const API = {
 	STATUS: '/status',
 };
+
+export const OHCRN_HOME_LINK =
+	'https://oicr.on.ca/programs/ontario-hereditary-cancer-research-network/';

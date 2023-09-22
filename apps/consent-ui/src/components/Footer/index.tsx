@@ -30,11 +30,9 @@ const Footer = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 
 	return (
 		<footer className={styles.footer}>
-			<div className={styles.top}>
-				<Left translate={translate} />
-				<Right translate={translate} />
-				<Links translate={translate} />
-			</div>
+			<Left translate={translate} />
+			<Links translate={translate} />
+			<Right translate={translate} />
 			<Versions currentLang={currentLang} />
 		</footer>
 	);

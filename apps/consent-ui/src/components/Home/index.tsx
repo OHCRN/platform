@@ -17,36 +17,42 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
 import Image from 'next/image';
 
-import { Translation } from '@/i18n';
-import OICRLogo from '@/public/oicr.svg';
-import InstagramLogo from '@/public/instagram.svg';
-import TwitterLogo from '@/public/twitter.svg';
+import { ValidLanguage, getTranslation } from '@/i18n';
+import LinkButton from '@/components/Button/LinkButton';
+import RightArrow from '@/components/Icons/Arrow';
+import LandingPageImage from '@/public/landing-page.png';
+import { OHCRN_HOME_LINK } from '@/constants';
 
-import styles from './Footer.module.scss';
+import styles from './Home.module.scss';
+import Card from './Card/Card';
 
-const Left = ({ translate }: { translate: Translation }) => {
+const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = await getTranslation(currentLang, 'landing-page');
 	return (
-		<div className={styles.left}>
-			<Link href="#" className={styles.icon}>
-				<Image src={OICRLogo} alt={translate('oicr-logo-alt')} className={styles.oicr} />
-			</Link>
-			<div className={styles.mediaIcons}>
-				<Link href="#" className={styles.icon}>
-					<Image
-						src={InstagramLogo}
-						alt={translate('instagram-logo-alt')}
-						className={styles.instagram}
-					/>
-				</Link>
-				<Link href="#" className={styles.icon}>
-					<Image src={TwitterLogo} alt={translate('twitter-logo-alt')} className={styles.twitter} />
-				</Link>
+		<div className={styles.heroContainer}>
+			<Image
+				src={LandingPageImage}
+				alt={translate('hero-background-img-alt')}
+				className={styles.backgroundImg}
+			/>
+			<div className={styles.gradientOverlay}></div>
+			<div className={styles.hero}>
+				<div className={styles.heroText}>
+					<h1>{translate('title')}</h1>
+					<p>
+						<b>{translate('ohcrn-description')}</b>
+					</p>
+					<LinkButton href={OHCRN_HOME_LINK} variant="secondary" className={styles.moreButton}>
+						<b>{translate('more-about-ohcrn')}</b>
+						<RightArrow classes={styles.arrow} />
+					</LinkButton>
+				</div>
+				<Card currentLang={currentLang} />
 			</div>
 		</div>
 	);
 };
 
-export default Left;
+export default HomeComponent;

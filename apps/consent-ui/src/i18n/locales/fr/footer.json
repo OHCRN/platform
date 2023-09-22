@@ -10,7 +10,7 @@
     "contact": "Contacter",
     "privacy": "Politique de Confidentialité",
     "terms": "Termes & Conditions",
-    "copyright": "Ontario Hereditary Cancer Research Network. Tous droits réservés.",
+    "copyright": "© {{ year }} Ontario Hereditary Cancer Research Network. Tous droits réservés.",
     "ohcrn-registry": "Registre OHCRN {{ registryVersion }}",
     "powered-by": "Propulsé par",
     "api": "API {{ apiVersion }}"
