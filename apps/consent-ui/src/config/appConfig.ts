@@ -53,4 +53,4 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 		serverEnv.TEST_RUNTIME_VAR || process.env.TEST_RUNTIME_VAR || defaultAppConfig.TEST_RUNTIME_VAR,
 });
 
-export default getAppConfig;
+export { getAppConfig };

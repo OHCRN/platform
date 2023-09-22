@@ -17,34 +17,4 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
-
-/**
- * @openapi
- * tags:
- *   - name: Health
- *     description: Health check
- */
-
-const router = Router();
-
-/**
- * @openapi
- * /health:
- *   get:
- *     tags:
- *       - Health
- *     name: Check API Health
- *     description: Verify API is running
- *     responses:
- *       200:
- *         description: OK
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-	// TODO: add real health check
-	res.json({ message: `API is running.` });
-});
-
-export default router;
+export * from './appConfig';

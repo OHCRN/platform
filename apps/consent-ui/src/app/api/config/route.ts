@@ -20,7 +20,7 @@
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 
-import getAppConfig from '@/getAppConfig';
+import { getAppConfig } from '@/config';
 
 export async function GET() {
 	headers();

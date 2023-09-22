@@ -16,43 +16,16 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import axios from 'axios';
 
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
+import { getAppConfig } from '@/config';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import StatusRouter from './routers/status';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
-
-const App = (config: AppConfig) => {
-	const app = express();
-
-	if (process.env.NODE_ENV === 'development') {
-		app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				optionsSuccessStatus: 200,
-			}),
-		);
-	}
-
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	// set up routers
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/status', StatusRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/consent-completion', ConsentCompletionRouter);
-
-	return app;
+export const getAxiosClient = async () => {
+	const appClientConfig = await getAppClientConfig();
+	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
+	return axios.create({
+		validateStatus: (status: number) => status === 200,
+		baseURL: CONSENT_API_URL,
+	});
 };
-
-export default App;
