@@ -17,13 +17,5 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
-
-import { getAppConfig } from '@/config';
-
-export async function GET() {
-	headers();
-	const appConfig = getAppConfig(process.env);
-	return NextResponse.json(appConfig);
-}
+export * from './axiosClient';
+export * from './status';

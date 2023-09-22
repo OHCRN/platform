@@ -17,32 +17,4 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'common/src/service/Status';
-
-import { API, baseAPI } from '@/constants';
-import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
-import getAppConfig from '@/getAppConfig';
-
-const getAPIStatus = async () => {
-	const appClientConfig = await getAppClientConfig();
-	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
-
-	return await baseAPI
-		.get(API.STATUS, { baseURL: CONSENT_API_URL })
-		.then((res: AxiosResponse<APIStatus>) => {
-			return res.data;
-		})
-		.catch((err: AxiosError<APIStatus>) => {
-			console.error('Unable to receive consent-api status ⛔️: ', err);
-			// we can decide on some custom error response, instead of just throwing an error and catching
-			// so we have something to display in the case of an error
-			const errorRes: APIStatus = {
-				version: '',
-				status: 'API fetch failed',
-			};
-			return errorRes;
-		});
-};
-
-export default getAPIStatus;
+export * from './appConfig';

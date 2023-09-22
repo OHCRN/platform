@@ -16,14 +16,16 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import axios from 'axios';
 
-import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
-
+import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
 import { getAppConfig } from '@/config';
 
-export async function GET() {
-	headers();
-	const appConfig = getAppConfig(process.env);
-	return NextResponse.json(appConfig);
-}
+export const getAxiosClient = async () => {
+	const appClientConfig = await getAppClientConfig();
+	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
+	return axios.create({
+		validateStatus: (status: number) => status === 200,
+		baseURL: CONSENT_API_URL,
+	});
+};

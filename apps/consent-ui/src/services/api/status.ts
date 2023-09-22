@@ -16,8 +16,30 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import axios from 'axios';
 
-export const baseAPI = axios.create({
-	validateStatus: (status: number) => status === 200,
-});
+import { AxiosError, AxiosResponse } from 'axios';
+import { APIStatus } from 'common/src/service/Status';
+
+import { API } from '@/constants';
+import { getAxiosClient } from '@/services/api';
+
+const getAPIStatus = async () => {
+	const axiosClient = await getAxiosClient();
+	return await axiosClient
+		.get(API.STATUS)
+		.then((res: AxiosResponse<APIStatus>) => {
+			return res.data;
+		})
+		.catch((err: AxiosError<APIStatus>) => {
+			console.error('Unable to receive consent-api status ⛔️: ', err);
+			// we can decide on some custom error response, instead of just throwing an error and catching
+			// so we have something to display in the case of an error
+			const errorRes: APIStatus = {
+				version: '',
+				status: 'API fetch failed',
+			};
+			return errorRes;
+		});
+};
+
+export { getAPIStatus };

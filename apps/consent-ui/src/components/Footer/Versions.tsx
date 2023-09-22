@@ -26,7 +26,7 @@ import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
-import getAPIStatus from '@/hooks/getAPIStatus';
+import { getAPIStatus } from '@/services/api';
 
 import styles from './Footer.module.scss';
 
