@@ -2,8 +2,12 @@
   "name": "common",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./service": "./dist/service/index.js",
+    "./entity": "./dist/entity/index.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "tsc",
     "test": "nyc mocha"
