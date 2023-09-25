@@ -168,6 +168,10 @@ router.post('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question's isActive field was successfully updated.
+ *       400:
+ *         description: The question's isActive field could not be updated.
+ *       404:
+ *         description: Invalid request body.
  *       500:
  *         description: The question's isActive field could not be updated.
  */
@@ -185,6 +189,8 @@ router.patch('/:id', async (req, res) => {
 			res
 				.status(400)
 				.send({ error: 'Invalid request body, could not set consent question isActive' });
+		} else if ((error as ErrorCallback).name == 'PrismaClientKnownRequestError') {
+			res.status(404).send({ error: 'Could not find consent question with specified ID' });
 		} else {
 			res.status(500).send({ error: 'Error updating consent question active state' });
 		}
