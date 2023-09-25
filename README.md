@@ -125,7 +125,7 @@ Please note that we are currently specifying versions of `@typescript-eslint/par
 To execute `rm -rf node_modules` on all repos in this monorepo:
 
 ```sh
-npm run reset-node-modules
+pnpm run reset-node-modules
 ```
 
 To remove cached dependencies from pnpm:
