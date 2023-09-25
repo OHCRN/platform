@@ -101,6 +101,8 @@ router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
  *     responses:
  *       200:
  *         description: The latest response was successfully retrieved.
+ *       400:
+ *         description: Invalid submitted_at date provided.
  *       404:
  *         description: Unable to find response for specified question ID and participant ID.
  *       500:
@@ -110,9 +112,9 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { submitted_at } = req.query;
-	const submittedAt = submitted_at ? new Date(submitted_at as string) : undefined;
 	// TODO: add validation
 	try {
+		const submittedAt = submitted_at ? new Date(submitted_at as string) : undefined;
 		const participant_response = await getParticipantResponse(
 			participantId,
 			consentQuestionId,
@@ -121,7 +123,9 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		res.status(200).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'NotFoundError') {
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res.status(400).send({ error: 'Invalid date: ' + submitted_at });
+		} else if ((error as ErrorCallback).name == 'NotFoundError') {
 			res.status(404).send({ error: 'Participant response not found' });
 		} else {
 			res.status(500).send({ error: 'Error retrieving participant responses' });
