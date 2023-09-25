@@ -122,7 +122,7 @@ Please note that we are currently specifying versions of `@typescript-eslint/par
 
 ### How to reset node_modules
 
-To execute `rm -rf node_modules` on all repos in this monorepo:
+To execute `rm -rf node_modules` on all repos in this monorepo & reinstall dependencies:
 
 ```sh
 pnpm run reset-node-modules
