@@ -63,18 +63,24 @@ const router = Router();
 router.get('/', async (req, res) => {
 	logger.info('GET /consent-questions');
 	const { category } = req.query;
+	let parsedCategory: ConsentCategory | undefined = undefined;
+
+	if (category) {
+		try {
+			parsedCategory = ConsentCategory.parse(category);
+		} catch (error) {
+			logger.error(error);
+			res.status(400).send({ error: 'Invalid consent question category' });
+			return;
+		}
+	}
+
 	try {
-		const questions = await getConsentQuestions(
-			category ? ConsentCategory.parse(category) : undefined,
-		);
+		const questions = await getConsentQuestions(parsedCategory);
 		res.send({ questions });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'ZodError') {
-			res.status(400).send({ error: 'Invalid consent question category' });
-		} else {
-			res.status(500).send({ error: 'Error retrieving consent questions' });
-		}
+		res.status(500).send({ error: 'Error retrieving consent questions' });
 	}
 });
 

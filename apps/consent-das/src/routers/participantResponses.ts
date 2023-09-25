@@ -57,20 +57,23 @@ router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/all/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
+
+	if (sort_order && sort_order != 'asc' && sort_order != 'desc') {
+		logger.error('Invalid sort order');
+		res.status(400).send({ error: 'Invalid sort order specified' });
+		return;
+	}
+
 	try {
 		const participant_responses = await getParticipantResponses(
 			participantId,
 			consentQuestionId,
-			sort_order as Prisma.SortOrder,
+			sort_order as Prisma.SortOrder | undefined,
 		);
 		res.status(200).send({ participant_responses });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res.status(400).send({ error: 'Invalid sort order specified' });
-		} else {
-			res.status(500).send({ error: 'Error retrieving participant responses' });
-		}
+		res.status(500).send({ error: 'Error retrieving participant responses' });
 	}
 });
 
@@ -112,9 +115,15 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { submitted_at } = req.query;
+	const submittedAt = submitted_at ? new Date(submitted_at as string) : undefined;
+
+	if (submittedAt && isNaN(submittedAt.getTime())) {
+		logger.error('Invalid submitted_at date parameter');
+		res.status(400).send({ error: 'Invalid date parameter' });
+		return;
+	}
 	// TODO: add validation
 	try {
-		const submittedAt = submitted_at ? new Date(submitted_at as string) : undefined;
 		const participant_response = await getParticipantResponse(
 			participantId,
 			consentQuestionId,
@@ -123,9 +132,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		res.status(200).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res.status(400).send({ error: 'Invalid date: ' + submitted_at });
-		} else if ((error as ErrorCallback).name == 'NotFoundError') {
+		if ((error as ErrorCallback).name == 'NotFoundError') {
 			res.status(404).send({ error: 'Participant response not found' });
 		} else {
 			res.status(500).send({ error: 'Error retrieving participant responses' });
