@@ -169,9 +169,9 @@ router.post('/', async (req, res) => {
  *       200:
  *         description: The question's isActive field was successfully updated.
  *       400:
- *         description: The question's isActive field could not be updated.
- *       404:
  *         description: Invalid request body.
+ *       404:
+ *         description: No question exists with the specified ID.
  *       500:
  *         description: The question's isActive field could not be updated.
  */
