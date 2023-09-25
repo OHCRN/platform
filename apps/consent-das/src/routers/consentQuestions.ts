@@ -149,6 +149,8 @@ router.post('/', async (req, res) => {
 		logger.error(error);
 		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
 			res.status(400).send({ error: 'Invalid request body, could not create consent question' });
+		} else if ((error as ErrorCallback).name == 'PrismaClientKnownRequestError') {
+			res.status(400).send({ error: 'Invalid consent question id, must be unique' });
 		} else {
 			res.status(500).send({ error: 'Error creating consent question' });
 		}
