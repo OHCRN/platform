@@ -120,6 +120,20 @@ In addition to downloading VS Code, please ensure that you have the following VS
 
 Please note that we are currently specifying versions of `@typescript-eslint/parser` and `eslint-plugin-import` in the `overrides` section of the root [`package.json` file](./package.json). This was done to avoid a conflict between the version used by the `eslint-config-next` plugin and our custom ESLint configuration.
 
+### How to reset node_modules
+
+To execute `rm -rf node_modules` on all repos in this monorepo:
+
+```sh
+npm run reset-node-modules
+```
+
+To remove cached dependencies from pnpm:
+
+```sh
+pnpm store prune
+```
+
 ## Quickstart - DB, Migrations, and Local Servers
 
 This project uses [Postgres](https://www.postgresql.org/) and [Prisma](https://www.prisma.io/docs) for database management. Local postgres databases for each DAS are provided in the [docker-compose](./docker-compose.yaml). The Prisma Client must be generated before it can be used. You can get everything started by a) manually running [`package.json` scripts](#with-packagejson-scripts), or b) using a [`Make` command](#using-the-makefile):
