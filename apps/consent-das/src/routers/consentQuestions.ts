@@ -18,8 +18,8 @@
  */
 
 import { Router } from 'express';
+import { ConsentCategory } from 'common';
 
-import { ConsentCategory } from '../prismaClient';
 import { updateConsentQuestionIsActive } from '../service/update';
 import { getConsentQuestion, getConsentQuestions } from '../service/search';
 import { createConsentQuestion } from '../service/create';
@@ -35,7 +35,6 @@ import logger from '../logger';
 
 const router = Router();
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /consent-questions:
@@ -56,20 +55,29 @@ const router = Router();
  *     responses:
  *       200:
  *         description: The list of questions was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       400:
+ *         description: The specified category was invalid.
+ *       500:
+ *         description: Could not fetch consent questions.
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /consent-questions');
 	const { category } = req.query;
-	// TODO: add error handling
-	const questions = await getConsentQuestions((category as ConsentCategory) || undefined);
-	res.send({ questions });
+	try {
+		const questions = await getConsentQuestions(
+			category ? ConsentCategory.parse(category) : undefined,
+		);
+		res.send({ questions });
+	} catch (error) {
+		logger.error(error);
+		if ((error as ErrorCallback).name == 'ZodError') {
+			res.status(400).send({ error: 'Invalid consent question category' });
+		} else {
+			res.status(500).send({ error: 'Error retrieving consent questions' });
+		}
+	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /consent-questions/{id}:
@@ -90,10 +98,10 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       404:
+ *         description: A question with the specified id could not be found.
+ *       500:
+ *         description: Error retrieving consent questions.
  */
 router.get('/:id', async (req, res) => {
 	logger.info('GET /consent-questions/:id');
@@ -104,11 +112,14 @@ router.get('/:id', async (req, res) => {
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Consent question not found' });
+		if ((error as ErrorCallback).name == 'NotFoundError') {
+			res.status(404).send({ error: 'Consent question not found' });
+		} else {
+			res.status(500).send({ error: 'Error retrieving consent questions' });
+		}
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /consent-questions/:
@@ -122,10 +133,10 @@ router.get('/:id', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question was successfully created.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       400:
+ *         description: The data provided for the consent question was incomplete or invalid.
+ *       500:
+ *         description: The question could not be created.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /consent-questions');
@@ -136,11 +147,14 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating consent question' });
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res.status(400).send({ error: 'Invalid request body, could not create consent question' });
+		} else {
+			res.status(500).send({ error: 'Error creating consent question' });
+		}
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /consent-questions/:id:
@@ -154,10 +168,8 @@ router.post('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question's isActive field was successfully updated.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: The question's isActive field could not be updated.
  */
 router.patch('/:id', async (req, res) => {
 	logger.info('PATCH /consent-questions/:id');
@@ -169,7 +181,13 @@ router.patch('/:id', async (req, res) => {
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error updating consent question active state' });
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res
+				.status(400)
+				.send({ error: 'Invalid request body, could not set consent question isActive' });
+		} else {
+			res.status(500).send({ error: 'Error updating consent question active state' });
+		}
 	}
 });
 

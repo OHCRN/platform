@@ -47,16 +47,18 @@ const router = Router();
  *     responses:
  *       200:
  *         description: The list of participants was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Error retrieving participants.
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /participants');
-	// TODO: add error handling
-	const participants = await getParticipants();
-	res.send({ participants: [participants] });
+	try {
+		const participants = await getParticipants();
+		res.send({ participants });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ error: 'Error retrieving participants' });
+	}
 });
 
 // TODO: update JSDoc comments
@@ -80,10 +82,10 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       404:
+ *         description: Could not find participant with specified ID.
+ *       500:
+ *         description: Error retrieving participant.
  */
 router.get('/:participantId', async (req, res) => {
 	logger.info('GET /participants/:participantId');
@@ -94,7 +96,11 @@ router.get('/:participantId', async (req, res) => {
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant not found' });
+		if ((error as ErrorCallback).name == 'NotFoundError') {
+			res.status(404).send({ error: 'Participant not found' });
+		} else {
+			res.status(500).send({ error: 'Error retrieving participant' });
+		}
 	}
 });
 
@@ -132,10 +138,10 @@ router.get('/:participantId', async (req, res) => {
  *     responses:
  *       201:
  *         description: The participant was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       400:
+ *         description: Invalid request body for creating participant.
+ *       500:
+ *         description: Error creating participant.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
@@ -152,7 +158,11 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res.status(400).send({ error: 'Invalid request body, could not create participant' });
+		} else {
+			res.status(500).send({ error: 'Error creating participant' });
+		}
 	}
 });
 

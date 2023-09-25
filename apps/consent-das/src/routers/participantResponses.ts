@@ -34,7 +34,6 @@ import logger from '../logger';
 
 const router = Router();
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participant-responses/all/:participantId/:consentQuestionId:
@@ -47,24 +46,32 @@ const router = Router();
  *     security:
  *       - bearerAuth: []
  *     responses:
- *       201:
+ *       200:
  *         description: The participant responses were successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       400:
+ *         description: Sort order specified was invalid.
+ *       500:
+ *         description: Could not retrieve participant responses.
  */
 router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/all/:participantId/:consentQuestionId');
-	// TODO: add error handling
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
-	const participant_responses = await getParticipantResponses(
-		participantId,
-		consentQuestionId,
-		sort_order as Prisma.SortOrder,
-	);
-	res.send({ participant_responses });
+	try {
+		const participant_responses = await getParticipantResponses(
+			participantId,
+			consentQuestionId,
+			sort_order as Prisma.SortOrder,
+		);
+		res.status(200).send({ participant_responses });
+	} catch (error) {
+		logger.error(error);
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res.status(400).send({ error: 'Invalid sort order specified' });
+		} else {
+			res.status(500).send({ error: 'Error retrieving participant responses' });
+		}
+	}
 });
 
 // TODO: update JSDoc comments
@@ -94,10 +101,10 @@ router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
  *     responses:
  *       200:
  *         description: The latest response was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       404:
+ *         description: Unable to find response for specified question ID and participant ID.
+ *       500:
+ *         description: Error retrieving participant responses.
  */
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
@@ -114,7 +121,11 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		res.status(200).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant response not found' });
+		if ((error as ErrorCallback).name == 'NotFoundError') {
+			res.status(404).send({ error: 'Participant response not found' });
+		} else {
+			res.status(500).send({ error: 'Error retrieving participant responses' });
+		}
 	}
 });
 
@@ -146,10 +157,8 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *     responses:
  *       201:
  *         description: The participant response was successfully created.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Unable to create participant response.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participant-responses');
@@ -164,7 +173,13 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant response' });
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res
+				.status(400)
+				.send({ error: 'Invalid request body, could not create participant response' });
+		} else {
+			res.status(500).send({ error: 'Error creating participant response' });
+		}
 	}
 });
 
