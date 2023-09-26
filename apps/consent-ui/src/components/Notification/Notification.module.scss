@@ -1,0 +1,42 @@
+.base {
+	border: 2px solid;
+}
+
+.container {
+	position: relative;
+	display: flex;
+	align-items: top;
+	padding: 8px;
+}
+
+.error {
+	background-color: theme('colors.error.100');
+	border-color: theme('colors.error.500');
+	.icon {
+		fill: theme('colors.error.500');
+	}
+}
+
+.info {
+	background-color: theme('colors.accent1.100');
+	border-color: theme('colors.accent1.400');
+	.icon {
+		fill: theme('colors.accent1.400');
+	}
+}
+
+.success {
+	background-color: theme('colors.primary.100');
+	border-color: theme('colors.primary.500');
+	.icon {
+		fill: theme('colors.primary.500');
+	}
+}
+
+.warning {
+	background-color: theme('colors.warning.100');
+	border-color: theme('colors.warning.300');
+	.icon {
+		fill: theme('colors.warning.600');
+	}
+}
