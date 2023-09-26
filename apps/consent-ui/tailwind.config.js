@@ -39,15 +39,18 @@ module.exports = {
       sm: '1rem',
       md: '3rem',
       lg: '5rem',
-      button: {
-        base: '1.2rem 2.5rem',
-      }
     },
     extend: {
       screens: {
         sm: '480px',
         md: '1024px',
       },
+      backgroundImage: (theme) => ({
+        gradient: {
+          forward: `linear-gradient(to right, ${theme('colors.primary.500')}, ${theme('colors.secondary.500')})`,
+          reverse: `linear-gradient(to left, ${theme('colors.primary.500')}, ${theme('colors.secondary.500')})`,
+        }
+      }),
     },
   },
   plugins: [],
