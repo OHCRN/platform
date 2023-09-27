@@ -61,22 +61,22 @@ const router = Router();
  *         description: Could not fetch consent questions.
  */
 router.get('/', async (req, res) => {
-	logger.info('GET /consent-questions');
+	logger.debug('GET /consent-questions');
 	const { category } = req.query;
-	let parsedCategory: ConsentCategory | undefined = undefined;
 
 	if (category) {
 		try {
-			parsedCategory = ConsentCategory.parse(category);
+			const questions = await getConsentQuestions(ConsentCategory.parse(category));
+			res.send({ questions });
 		} catch (error) {
 			logger.error(error);
-			res.status(400).send({ error: 'Invalid consent question category' });
+			res.status(500).send({ error: 'Error retrieving consent questions' });
 			return;
 		}
 	}
 
 	try {
-		const questions = await getConsentQuestions(parsedCategory);
+		const questions = await getConsentQuestions();
 		res.send({ questions });
 	} catch (error) {
 		logger.error(error);
@@ -110,7 +110,7 @@ router.get('/', async (req, res) => {
  *         description: Error retrieving consent questions.
  */
 router.get('/:id', async (req, res) => {
-	logger.info('GET /consent-questions/:id');
+	logger.debug('GET /consent-questions/:id');
 	const { id } = req.params;
 	// TODO: add validation
 	try {
@@ -118,11 +118,7 @@ router.get('/:id', async (req, res) => {
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'NotFoundError') {
-			res.status(404).send({ error: 'Consent question not found' });
-		} else {
-			res.status(500).send({ error: 'Error retrieving consent questions' });
-		}
+		res.status(500).send({ error: 'Error retrieving consent questions' });
 	}
 });
 
@@ -136,6 +132,20 @@ router.get('/:id', async (req, res) => {
  *     description: Create one consent question
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               isActive:
+ *                 type: boolean
+ *               category:
+ *                 type: Enum
+ * 				   enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
  *     responses:
  *       200:
  *         description: The question was successfully created.
@@ -145,7 +155,7 @@ router.get('/:id', async (req, res) => {
  *         description: The question could not be created.
  */
 router.post('/', async (req, res) => {
-	logger.info('POST /consent-questions');
+	logger.debug('POST /consent-questions');
 	const { id, isActive, category } = req.body;
 	// TODO: add validation
 	try {
@@ -153,13 +163,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res.status(400).send({ error: 'Invalid request body, could not create consent question' });
-		} else if ((error as ErrorCallback).name == 'PrismaClientKnownRequestError') {
-			res.status(400).send({ error: 'Invalid consent question id, must be unique' });
-		} else {
-			res.status(500).send({ error: 'Error creating consent question' });
-		}
+		res.status(500).send({ error: 'Error creating consent question' });
 	}
 });
 
@@ -173,6 +177,22 @@ router.post('/', async (req, res) => {
  *     description: Update consent question's isActive field by ID
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *      - name: id
+ *        in: path
+ *        description: Consent Question ID
+ *        required: true
+ *        schema:
+ *          type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               isActive:
+ *                 type: boolean
  *     responses:
  *       200:
  *         description: The question's isActive field was successfully updated.
@@ -184,7 +204,7 @@ router.post('/', async (req, res) => {
  *         description: The question's isActive field could not be updated.
  */
 router.patch('/:id', async (req, res) => {
-	logger.info('PATCH /consent-questions/:id');
+	logger.debug('PATCH /consent-questions/:id');
 	const { id } = req.params;
 	const { isActive } = req.body;
 	// TODO: add validation
@@ -193,15 +213,7 @@ router.patch('/:id', async (req, res) => {
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res
-				.status(400)
-				.send({ error: 'Invalid request body, could not set consent question isActive' });
-		} else if ((error as ErrorCallback).name == 'PrismaClientKnownRequestError') {
-			res.status(404).send({ error: 'Could not find consent question with specified ID' });
-		} else {
-			res.status(500).send({ error: 'Error updating consent question active state' });
-		}
+		res.status(500).send({ error: 'Error updating consent question active state' });
 	}
 });
 

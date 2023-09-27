@@ -44,27 +44,6 @@ export const getConsentQuestions = async (
 	return result;
 };
 
-export const getParticipantResponse = async (
-	participantId: string,
-	consentQuestionId: string,
-	submittedAt?: Date,
-): Promise<ParticipantResponse> => {
-	// TODO: add error handling
-	const result = await prisma.participantResponse.findFirstOrThrow({
-		where: {
-			participantId,
-			consentQuestionId,
-			// optionally searches by submittedAt date and will return none if no date exists
-			...(submittedAt && { submittedAt }),
-		},
-		orderBy: {
-			// gets the most recently submitted response
-			submittedAt: 'desc',
-		},
-	});
-	return result;
-};
-
 export const getParticipantResponses = async (
 	participantId: string,
 	consentQuestionId: string,

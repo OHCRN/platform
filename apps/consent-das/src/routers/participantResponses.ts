@@ -20,7 +20,7 @@
 import { Router } from 'express';
 
 import { Prisma } from '../generated/client';
-import { getParticipantResponse, getParticipantResponses } from '../service/search';
+import { getParticipantResponses } from '../service/search';
 import { createParticipantResponse } from '../service/create';
 import logger from '../logger';
 
@@ -36,7 +36,7 @@ const router = Router();
 
 /**
  * @openapi
- * /participant-responses/all/:participantId/:consentQuestionId:
+ * /participant-responses/:participantId/:consentQuestionId:
  *   get:
  *     tags:
  *       - Participant Responses
@@ -45,6 +45,19 @@ const router = Router();
  *     description: Fetches list of Participant Responses by Consent Question ID and Participant ID, sorted by submittedAt date (defaults descending)
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: consentQuestionId
+ *         in: path
+ *         description: Consent Question ID
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The participant responses were successfully retrieved.
@@ -53,16 +66,10 @@ const router = Router();
  *       500:
  *         description: Could not retrieve participant responses.
  */
-router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
-	logger.info('GET /participant-responses/all/:participantId/:consentQuestionId');
+router.get('/:participantId/:consentQuestionId', async (req, res) => {
+	logger.debug('GET /participant-responses/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
-
-	if (sort_order && sort_order != 'asc' && sort_order != 'desc') {
-		logger.error('Invalid sort order');
-		res.status(400).send({ error: 'Invalid sort order specified' });
-		return;
-	}
 
 	try {
 		const participant_responses = await getParticipantResponses(
@@ -74,69 +81,6 @@ router.get('/all/:participantId/:consentQuestionId', async (req, res) => {
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ error: 'Error retrieving participant responses' });
-	}
-});
-
-// TODO: update JSDoc comments
-/**
- * @openapi
- * /participant-responses/:participantId/:consentQuestionId:
- *   get:
- *     tags:
- *       - Participants
- *     name: Get Participant Response by Consent Question ID and Participant ID
- *     description: Fetch latest participant response
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *      - name: participantId
- *        in: path
- *        description: Participant ID
- *        required: true
- *        schema:
- *          type: string
- *      - name: consentQuestionId
- *        in: path
- *        description: Consent question ID
- *        required: true
- *        schema:
- *          type: string
- *     responses:
- *       200:
- *         description: The latest response was successfully retrieved.
- *       400:
- *         description: Invalid submitted_at date provided.
- *       404:
- *         description: Unable to find response for specified question ID and participant ID.
- *       500:
- *         description: Error retrieving participant responses.
- */
-router.get('/:participantId/:consentQuestionId', async (req, res) => {
-	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
-	const { participantId, consentQuestionId } = req.params;
-	const { submitted_at } = req.query;
-	const submittedAt = submitted_at ? new Date(submitted_at as string) : undefined;
-
-	if (submittedAt && isNaN(submittedAt.getTime())) {
-		logger.error('Invalid submitted_at date parameter');
-		res.status(400).send({ error: 'Invalid date parameter' });
-		return;
-	}
-	// TODO: add validation
-	try {
-		const participant_response = await getParticipantResponse(
-			participantId,
-			consentQuestionId,
-			submittedAt,
-		);
-		res.status(200).send({ participant_response });
-	} catch (error) {
-		logger.error(error);
-		if ((error as ErrorCallback).name == 'NotFoundError') {
-			res.status(404).send({ error: 'Participant response not found' });
-		} else {
-			res.status(500).send({ error: 'Error retrieving participant responses' });
-		}
 	}
 });
 
@@ -172,7 +116,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *         description: Unable to create participant response.
  */
 router.post('/', async (req, res) => {
-	logger.info('POST /participant-responses');
+	logger.debug('POST /participant-responses');
 	const { participantId, consentQuestionId, response } = req.body;
 	// TODO: add validation
 	try {
@@ -184,13 +128,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res
-				.status(400)
-				.send({ error: 'Invalid request body, could not create participant response' });
-		} else {
-			res.status(500).send({ error: 'Error creating participant response' });
-		}
+		res.status(500).send({ error: 'Error creating participant response' });
 	}
 });
 
