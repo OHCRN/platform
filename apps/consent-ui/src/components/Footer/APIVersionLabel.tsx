@@ -17,37 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export type AppConfig = {
-	CONSENT_API_URL: string;
-	CONSENT_UI_URL: string;
-	FEATURE_FLAG: boolean;
+import { getTranslation, ValidLanguage } from '@/i18n';
+
+const APIVersionLabel = async ({
+	apiVersion,
+	currentLang,
+}: {
+	apiVersion: string;
+	currentLang: ValidLanguage;
+}) => {
+	const translate = await getTranslation(currentLang, 'footer');
+	return <span>{translate('api', { apiVersion })}</span>;
 };
 
-export const defaultAppConfig = {
-	CONSENT_API_URL: 'http://localhost:8080',
-	CONSENT_UI_URL: 'http://localhost:3000',
-	FEATURE_FLAG: false,
-};
-
-/**
- * returns app config env vars
- * order of priority: server runtime > process.env build time > default
- */
-
-const getAppConfig = (serverEnv: any): AppConfig => ({
-	/**
-	 * keep explicit style of: Server || Client to prevent errors with Next inlining build variables
-	 */
-	CONSENT_API_URL:
-		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
-	CONSENT_UI_URL:
-		serverEnv.CONSENT_UI_URL || process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
-	FEATURE_FLAG:
-		serverEnv.FEATURE_FLAG === 'false'
-			? false
-			: serverEnv.FEATURE_FLAG === 'true' ||
-			  process.env.FEATURE_FLAG === 'true' ||
-			  defaultAppConfig.FEATURE_FLAG,
-});
-
-export { getAppConfig };
+export default APIVersionLabel;

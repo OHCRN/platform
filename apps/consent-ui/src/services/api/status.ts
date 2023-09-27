@@ -21,10 +21,9 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { APIStatus } from 'common/src/service/Status';
 
 import { API } from '@/constants';
-import { getAxiosClient } from '@/services/api';
+import { axiosClient } from '@/services/api';
 
 const getAPIStatus = async () => {
-	const axiosClient = await getAxiosClient();
 	return await axiosClient
 		.get(API.STATUS)
 		.then((res: AxiosResponse<APIStatus>) => {
@@ -33,7 +32,7 @@ const getAPIStatus = async () => {
 		.catch((err: AxiosError<APIStatus>) => {
 			console.error('Unable to receive consent-api status ⛔️: ', err);
 			const errorRes: APIStatus = {
-				version: '',
+				version: 'N/A',
 				status: 'API fetch failed',
 			};
 			return errorRes;
