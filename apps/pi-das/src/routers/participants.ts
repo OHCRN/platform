@@ -52,7 +52,7 @@ const router = Router();
  *         description: Error retrieving participants,
  */
 router.get('/', async (req, res) => {
-	logger.info('GET /participants');
+	logger.debug('GET /participants');
 	try {
 		const participants = await getParticipants();
 		res.send({ participants });
@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
  *         description: Error retrieving participant.
  */
 router.get('/:id', async (req, res) => {
-	logger.info('GET /participants/:id');
+	logger.debug('GET /participants/:id');
 	const { id } = req.params;
 	// TODO: add validation
 	try {
@@ -96,11 +96,7 @@ router.get('/:id', async (req, res) => {
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'NotFoundError') {
-			res.status(404).send({ error: 'Participant not found' });
-		} else {
-			res.status(500).send({ error: 'Error retrieving participant' });
-		}
+		res.status(500).send({ error: 'Error retrieving participant' });
 	}
 });
 
@@ -123,9 +119,8 @@ router.get('/:id', async (req, res) => {
  *         description: Error creating participant.
  */
 router.post('/', async (req, res) => {
-	logger.info('POST /participants');
+	logger.debug('POST /participants');
 	const {
-		id,
 		inviteId,
 		dateOfBirth,
 		emailAddress,
@@ -147,7 +142,6 @@ router.post('/', async (req, res) => {
 	// TODO: add validation
 	try {
 		const participant = await createParticipant({
-			id,
 			inviteId,
 			dateOfBirth,
 			emailAddress,
@@ -169,11 +163,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res.status(400).send({ error: 'Invalid request body, could not create participant' });
-		} else {
-			res.status(500).send({ error: 'Error creating participant' });
-		}
+		res.status(500).send({ error: 'Error creating participant' });
 	}
 });
 
@@ -196,7 +186,7 @@ router.post('/', async (req, res) => {
  *         description: Error updating participant.
  */
 router.patch('/:id', async (req, res) => {
-	logger.info('PATCH /participants/:id');
+	logger.debug('PATCH /participants/:id');
 	const { id } = req.params;
 	const {
 		inviteId,
@@ -242,11 +232,7 @@ router.patch('/:id', async (req, res) => {
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
-			res.status(400).send({ error: 'Invalid request body, could not create participant' });
-		} else {
-			res.status(500).send({ error: 'Error creating participant' });
-		}
+		res.status(500).send({ error: 'Error updating participant' });
 	}
 });
 

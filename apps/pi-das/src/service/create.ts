@@ -1,7 +1,6 @@
 import prisma, { Participant } from '../prismaClient';
 
 export const createParticipant = async ({
-	id,
 	inviteId,
 	dateOfBirth,
 	emailAddress,
@@ -20,7 +19,6 @@ export const createParticipant = async ({
 	mailingAddressPostalCode,
 	residentialPostalCode,
 }: {
-	id: string;
 	inviteId?: string;
 	dateOfBirth: string;
 	emailAddress: string;
@@ -42,7 +40,6 @@ export const createParticipant = async ({
 	// TODO: add error handling
 	const result = await prisma.participant.create({
 		data: {
-			id,
 			inviteId,
 			dateOfBirth,
 			emailAddress,
