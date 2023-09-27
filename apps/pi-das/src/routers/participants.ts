@@ -21,6 +21,7 @@ import { Router } from 'express';
 
 import { getParticipant, getParticipants } from '../service/search';
 import { createParticipant } from '../service/create';
+import { updateParticipant } from '../service/update';
 import logger from '../logger';
 
 // TODO: update JSDoc comments
@@ -47,16 +48,17 @@ const router = Router();
  *     responses:
  *       200:
  *         description: The list of participants was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Error retrieving participants,
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /participants');
-	// TODO: add error handling
-	const participants = await getParticipants();
-	res.send({ participants: [participants] });
+	try {
+		const participants = await getParticipants();
+		res.send({ participants });
+	} catch (error) {
+		res.status(500).send({ error: 'Error retrieving participants' });
+	}
 });
 
 // TODO: update JSDoc comments
@@ -80,10 +82,10 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       404:
+ *         description: The participant was not found.
+ *       500:
+ *         description: Error retrieving participant.
  */
 router.get('/:id', async (req, res) => {
 	logger.info('GET /participants/:id');
@@ -94,21 +96,157 @@ router.get('/:id', async (req, res) => {
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant not found' });
+		if ((error as ErrorCallback).name == 'NotFoundError') {
+			res.status(404).send({ error: 'Participant not found' });
+		} else {
+			res.status(500).send({ error: 'Error retrieving participant' });
+		}
 	}
 });
 
-// TODO: add proper JSDoc comments
+/**
+ * @openapi
+ * /participants/:
+ *   post:
+ *     tags:
+ *       - Participant
+ *     name: Create Participant
+ *     description: Create one participant
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The participant was successfully created.
+ *       400:
+ *         description: The data provided for the participant was incomplete or invalid.
+ *       500:
+ *         description: Error creating participant.
+ */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { name, email } = req.body;
+	const {
+		id,
+		inviteId,
+		dateOfBirth,
+		emailAddress,
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantOhipMiddleName,
+		phoneNumber,
+		participantPreferredName,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+		mailingAddressStreet,
+		mailingAddressCity,
+		mailingAddressProvince,
+		mailingAddressPostalCode,
+		residentialPostalCode,
+	} = req.body;
 	// TODO: add validation
 	try {
-		const participant = await createParticipant({ name, email });
+		const participant = await createParticipant({
+			id,
+			inviteId,
+			dateOfBirth,
+			emailAddress,
+			participantOhipFirstName,
+			participantOhipLastName,
+			participantOhipMiddleName,
+			phoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+			mailingAddressStreet,
+			mailingAddressCity,
+			mailingAddressProvince,
+			mailingAddressPostalCode,
+			residentialPostalCode,
+		});
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res.status(400).send({ error: 'Invalid request body, could not create participant' });
+		} else {
+			res.status(500).send({ error: 'Error creating participant' });
+		}
+	}
+});
+
+/**
+ * @openapi
+ * /participants/{id}:
+ *   patch:
+ *     tags:
+ *       - Participant
+ *     name: Update Participant
+ *     description: Update participant by ID
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The participant was successfully updated.
+ *       400:
+ *         description: The data provided for the participant was incomplete or invalid.
+ *       500:
+ *         description: Error updating participant.
+ */
+router.patch('/:id', async (req, res) => {
+	logger.info('PATCH /participants/:id');
+	const { id } = req.params;
+	const {
+		inviteId,
+		dateOfBirth,
+		emailAddress,
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantOhipMiddleName,
+		phoneNumber,
+		participantPreferredName,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+		mailingAddressStreet,
+		mailingAddressCity,
+		mailingAddressProvince,
+		mailingAddressPostalCode,
+		residentialPostalCode,
+	} = req.body;
+	// TODO: add validation
+	try {
+		const participant = await updateParticipant({
+			id,
+			inviteId,
+			dateOfBirth,
+			emailAddress,
+			participantOhipFirstName,
+			participantOhipLastName,
+			participantOhipMiddleName,
+			phoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+			mailingAddressStreet,
+			mailingAddressCity,
+			mailingAddressProvince,
+			mailingAddressPostalCode,
+			residentialPostalCode,
+		});
+		res.status(201).send({ participant });
+	} catch (error) {
+		logger.error(error);
+		if ((error as ErrorCallback).name == 'PrismaClientValidationError') {
+			res.status(400).send({ error: 'Invalid request body, could not create participant' });
+		} else {
+			res.status(500).send({ error: 'Error creating participant' });
+		}
 	}
 });
 

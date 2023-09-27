@@ -1,6 +1,6 @@
 import prisma, { Participant } from '../prismaClient';
 
-export const createParticipant = async ({
+export const updateParticipant = async ({
 	id,
 	inviteId,
 	dateOfBirth,
@@ -40,9 +40,11 @@ export const createParticipant = async ({
 	residentialPostalCode: string;
 }): Promise<Participant> => {
 	// TODO: add error handling
-	const result = await prisma.participant.create({
-		data: {
+	const result = await prisma.participant.update({
+		where: {
 			id,
+		},
+		data: {
 			inviteId,
 			dateOfBirth,
 			emailAddress,
