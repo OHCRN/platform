@@ -17,11 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, Participant } from './generated/client';
+import {
+	PrismaClient,
+	Participant,
+	ConsentQuestion,
+	ConsentCategory,
+	ParticipantResponse,
+} from './generated/client';
 import logger from './logger';
 
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();
 
-export { Participant };
+export { Participant, ConsentQuestion, ConsentCategory, ParticipantResponse };
 export default prisma;

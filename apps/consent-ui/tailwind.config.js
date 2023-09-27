@@ -35,11 +35,20 @@ module.exports = {
       ],
       lg: '0px 15px 10px -3px rgba(0, 0, 0, 0.1)',
     },
-    breakpoints: {
-      sm: '480px',
-      md: '1024px',
+    padding: {
+      sm: '1rem',
+      md: '3rem',
+      lg: '5rem',
+      button: {
+        base: '1.2rem 2.5rem',
+      }
     },
-    extend: {},
+    extend: {
+      screens: {
+        sm: '480px',
+        md: '1024px',
+      },
+    },
   },
   plugins: [],
 };

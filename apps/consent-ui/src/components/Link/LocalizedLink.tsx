@@ -53,9 +53,9 @@ const LocalizedLink = ({
 	if (params) {
 		href = addParamsToUrl(href, params);
 	}
-
+	const fullPath = `/${urlJoin(locale, href)}`;
 	return (
-		<Link href={urlJoin(locale, href)} className={className} {...rest}>
+		<Link href={fullPath} className={className} {...rest}>
 			{children}
 		</Link>
 	);

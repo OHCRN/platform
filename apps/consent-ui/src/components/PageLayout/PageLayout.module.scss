@@ -1,9 +1,8 @@
 .main {
   background-color: theme('colors.grayscale.200');
-  height: inherit;
-  padding: 1rem 3rem;
   display: flex;
   justify-content: center;
+  min-height: 70vh;
 }
 
 .content {

@@ -33,16 +33,18 @@ const Left = ({ translate }: { translate: Translation }) => {
 			<Link href="#" className={styles.icon}>
 				<Image src={OICRLogo} alt={translate('oicr-logo-alt')} className={styles.oicr} />
 			</Link>
-			<Link href="#" className={styles.icon}>
-				<Image
-					src={InstagramLogo}
-					alt={translate('instagram-logo-alt')}
-					className={styles.instagram}
-				/>
-			</Link>
-			<Link href="#" className={styles.icon}>
-				<Image src={TwitterLogo} alt={translate('twitter-logo-alt')} className={styles.twitter} />
-			</Link>
+			<div className={styles.mediaIcons}>
+				<Link href="#" className={styles.icon}>
+					<Image
+						src={InstagramLogo}
+						alt={translate('instagram-logo-alt')}
+						className={styles.instagram}
+					/>
+				</Link>
+				<Link href="#" className={styles.icon}>
+					<Image src={TwitterLogo} alt={translate('twitter-logo-alt')} className={styles.twitter} />
+				</Link>
+			</div>
 		</div>
 	);
 };

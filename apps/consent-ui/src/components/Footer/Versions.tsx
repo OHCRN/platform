@@ -20,12 +20,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
+import { Suspense } from 'react';
 
 import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
 
+import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
@@ -44,10 +46,11 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>
 			</div>
 			<div className={styles.copyright}>
-				<span>{translate('copyright')} </span>
+				<span>{translate('copyright', { year: new Date().getFullYear() })} </span>
 				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
-				{/* TODO: fix hardcoded version */}
-				<span>{translate('api', { apiVersion: '0.1.0' })}</span>
+				<Suspense fallback={<span />}>
+					<APIVersion currentLang={currentLang} />
+				</Suspense>
 			</div>
 		</div>
 	);

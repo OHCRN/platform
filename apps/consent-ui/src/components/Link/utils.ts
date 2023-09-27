@@ -36,7 +36,7 @@ export const getLinkNameByPath = (path: string, lang: ValidLanguage): RouteName 
 		const validRoute = RouteNameEnum.parse(result);
 		return validRoute;
 	} catch (e) {
-		console.error(`Invalid route name: ${result}`);
+		console.error(`Invalid route name: ${result} from path: "${path}"`);
 		return 'home';
 	}
 };

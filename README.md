@@ -2,8 +2,6 @@
 
 [![TypeScript](https://img.shields.io/badge/types-%20TypeScript-blue)](https://www.typescriptlang.org/)
 
-<!-- [![Prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://prettier.io/) -->
-
 <!-- | Release    | Build Status                                                                                                                                                                    |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Edge**   | [![Build Status](https://jenkins.qa.cancercollaboratory.org/buildStatus/icon?job=ARGO%2Fui%2Fdevelop)](https://jenkins.qa.cancercollaboratory.org/job/ARGO/job/ui/job/develop/) |
@@ -55,20 +53,11 @@ The directory structure is as follows:
 
 To keep commit messages consistent, we use [gitmoji](https://gitmoji.dev). To easily access emojis on Mac, press ctrl+cmd+space.
 
-<!--
-### Type checking
-
-- `npm run type-check`: trigger TypeScript type check for whole repo
-- `npm run type-check -- --watch`: runs the above with watch mode
-  - Any `npm run type-check` triggers `tsc`, so any flag layed out [here](https://www.typescriptlang.org/docs/handbook/compiler-options.html) can be used
-- If using [vscode](https://code.visualstudio.com/) (recommended), `tsc` can also be run as a task in the editor:
-  - `Cmd+Shift+B`, then select `tsc:build - tsconfig.json`
-  - This will report errors in vscode's `PROBLEMS` tab -->
-
 ## Local Development
 
 To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference.
 
+- In the [`./` project root folder](./), create an `.env` file copy of the root [`.env.schema`](./.env.schema) file
 - In the [`/apps/consent-api/` folder](./apps/consent-api/), create an `.env` file
 - In the [`/apps/consent-das/` folder](./apps/consent-das/), create an `.env` file
 - In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create and `.env.local` file
@@ -79,22 +68,26 @@ To run the setup locally, ensure you have provided the **required** environment 
 
 ## Environment Variables
 
-| Package | Name | Description | Type | Required | Default |
-| - | - | - | - | - | - |
-| `consent-api` | `PORT` | Port number for the Consent API | `number` | Optional | `8080` |
-| `consent-das` | `DATABASE_URL` | URL for the Consent DB | `string` | Required | postgres://postgres:postgres@localhost:5432/consent_db |
-| `consent-das` | `PORT` | Port number for the Consent DAS | `number` | Optional | `8085` |
-| `data-mapper` | `PORT` | Port number for the Data Mapper | `number` | Optional | `8081` |
-| `data-mapper` | `PI_DAS_URL` | URL for the PI DAS | `string` | Optional | http://localhost:8082 |
-| `data-mapper` | `PHI_DAS_URL` | URL for the PHI DAS | `string` | Optional | http://localhost:8083 |
-| `data-mapper` | `KEYS_DAS_URL` | URL for the Keys DAS | `string` | Optional | http://localhost:8084 |
-| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS | `string` | Optional | http://localhost:8085 |
-| `keys-das` | `DATABASE_URL` | URL for the Keys DB | `string` | Required | postgres://postgres:postgres@localhost:5432/keys_db |
-| `keys-das` | `PORT` | Port number for the  Keys DAS | `number` | Optional | `8084` |
-| `phi-das` | `DATABASE_URL` | URL for the PHI DAS | `string` | Required | postgres://postgres:postgres@localhost:5432/phi_db |
-| `phi-das` | `PORT` | Port number for the  PHI DAS | `number` | Optional | `8083` |
-| `pi-das` | `DATABASE_URL` | URL for the PI DAS | `string` | Required | postgres://postgres:postgres@localhost:5432/pi_db |
-| `pi-das` | `PORT` | Port number for the PI DAS | `number` | Optional | `8082` |
+| Package       | Name              | Description                       | Type     | Required | Default                                                  |
+| ------------- | ----------------- | --------------------------------- | -------- | -------- | -------------------------------------------------------- |
+| `.`           | `POSTGRES_USER`   | Docker Postgres database user     | `string` | Required | `postgres`                                               |
+| `.`           | `POSTGRES_USER`   | Docker Postgres database password | `string` | Required | `postgres`                                               |
+| `consent-api` | `PORT`            | Port number for the Consent API   | `number` | Optional | `8080`                                                   |
+| `consent-das` | `DATABASE_URL`    | URL for the Consent DB            | `string` | Required | `postgres://postgres:postgres@localhost:5432/consent_db` |
+| `consent-das` | `PORT`            | Port number for the Consent DAS   | `number` | Optional | `8085`                                                   |
+| `consent-ui`  | `CONSENT_API_URL` | URL for the Consent API           | `string` | Optional | `http://localhost:8080`                                  |
+| `consent-ui`  | `CONSENT_UI_URL`  | URL for the Consent UI            | `string` | Optional | `http://localhost:3000`                                  |
+| `data-mapper` | `PORT`            | Port number for the Data Mapper   | `number` | Optional | `8081`                                                   |
+| `data-mapper` | `PI_DAS_URL`      | URL for the PI DAS                | `string` | Optional | `http://localhost:8082`                                  |
+| `data-mapper` | `PHI_DAS_URL`     | URL for the PHI DAS               | `string` | Optional | `http://localhost:8083`                                  |
+| `data-mapper` | `KEYS_DAS_URL`    | URL for the Keys DAS              | `string` | Optional | `http://localhost:8084`                                  |
+| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS           | `string` | Optional | `http://localhost:8085`                                  |
+| `keys-das`    | `DATABASE_URL`    | URL for the Keys DB               | `string` | Required | `postgres://postgres:postgres@localhost:5432/keys_db`    |
+| `keys-das`    | `PORT`            | Port number for the Keys DAS      | `number` | Optional | `8084`                                                   |
+| `phi-das`     | `DATABASE_URL`    | URL for the PHI DAS               | `string` | Required | `postgres://postgres:postgres@localhost:5432/phi_db`     |
+| `phi-das`     | `PORT`            | Port number for the PHI DAS       | `number` | Optional | `8083`                                                   |
+| `pi-das`      | `DATABASE_URL`    | URL for the PI DAS                | `string` | Required | `postgres://postgres:postgres@localhost:5432/pi_db`      |
+| `pi-das`      | `PORT`            | Port number for the PI DAS        | `number` | Optional | `8082`                                                   |
 
 ## Setup
 
@@ -130,41 +123,43 @@ This project uses [Postgres](https://www.postgresql.org/) and [Prisma](https://w
 
 You can initialize the development Postgres DBs for each DAS by running the `docker-compose.yaml` file, with:
 
-```
+```sh
 docker-compose up -d
 ```
 
 Once the databases are ready, you will need to apply the Prisma schema migrations:
 
-```
+```sh
 pnpm run migrate-dev
 ```
 
 > **Note**: The `prisma migrate dev` command is for **development mode only** [(See docs reference)](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production#create-and-apply-migrations)
 
+> **Also note**: You will need to run `prisma migrate dev` (or `pnpm run migrate-dev`) within a specific DAS to create a migration first if you have made changes to that schema, for example: `cd apps/consent-das && pnpm run migrate-dev`
+
 If successful, the script output should indicate which migrations have been applied, and you should see this message: `Your database is now in sync with your schema.`
 
 Running the migrations will also generate the Prisma Client for each DAS, as noted by the output message: `Generated Prisma Client (version number) to ./src/generated/client`. However, in the event that you only need to generate a new client, simply run:
 
-```
+```sh
 pnpm run generate
 ```
 
 Before running the local UI, APIs, and DASes, please ensure you have built the shared packages:
 
-```
+```sh
 pnpm run build
 ```
 
 If this is your first time running the DASes, you will likely want to see them with data. To do so, run the `seed` command:
 
-```
+```sh
 pnpm run seed
 ```
 
 Once this is complete, you can start the local UI, APIs, and DASes on their default ports:
 
-```
+```sh
 pnpm run dev
 ```
 
@@ -172,29 +167,29 @@ pnpm run dev
 
 You can run all of the above steps with the `make start` command:
 
-```
+```sh
 make start
 ```
 
 To shut down the docker-compose and remove any orphan containers, run `make stop`:
 
-```
+```sh
 make stop
 ```
 
 Verify everything is running correctly by navigating to [`http://localhost:3000`](http://localhost:3000) for the Consent UI and [`http://localhost:8080`](http://localhost:8080/health) for the Consent API.
 
-### Dev Commands:
+### Dev Commands
 
-| Command | Description |
-| - | - |
-| `pnpm run dev` | starts local dev servers for each service |
-| `pnpm run build` | builds production Consent UI, API, DASes, Type defs, and Logger |
-| `pnpm run consent-ui-dev` | starts local Consent UI only |
-| `pnpm run consent-api-dev` | starts local Consent API only |
-| `pnpm run das-dev` | starts local DASes only |
-| `pnpm run data-mapper-dev` | starts local Data Mapper only |
-| `pnpm run migrate-dev` | runs migrations for the DASes |
-| `pnpm run generate` | generates Prisma Clients for the DASes |
-| `pnpm run seed` | seeds data into the DASes |
-| `pnpm run start` | runs migrations, then builds, then starts local dev servers |
+| Command                    | Description                                                     |
+| -------------------------- | --------------------------------------------------------------- |
+| `pnpm run dev`             | starts local dev servers for each service                       |
+| `pnpm run build`           | builds production Consent UI, API, DASes, Type defs, and Logger |
+| `pnpm run consent-ui-dev`  | starts local Consent UI only                                    |
+| `pnpm run consent-api-dev` | starts local Consent API only                                   |
+| `pnpm run das-dev`         | starts local DASes only                                         |
+| `pnpm run data-mapper-dev` | starts local Data Mapper only                                   |
+| `pnpm run migrate-dev`     | runs migrations for the DASes                                   |
+| `pnpm run generate`        | generates Prisma Clients for the DASes                          |
+| `pnpm run seed`            | seeds data into the DASes                                       |
+| `pnpm run start`           | runs migrations, then builds, then starts local dev servers     |

@@ -1,9 +1,6 @@
 .header {
-  height: 55px;
+  min-height: 10vh;
   @apply grid grid-cols-2;
-  @media (min-width: theme('screens.md')) {
-    height: 80px;
-  }
   background-color: theme('colors.grayscale.100');
   padding: 0.5rem 1rem;
   align-items: center;

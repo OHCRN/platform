@@ -16,11 +16,14 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 import { Montserrat } from 'next/font/google';
 
 import { ValidLanguage } from '@/i18n';
 import { supportedLanguages } from '@/i18n/settings';
 import PageLayout from '@/components/PageLayout';
+import AppConfigContextProvider from '@/components/AppConfigContextProvider';
+import { getClientAppConfig } from '@/config';
 
 import '../globals.css';
 
@@ -47,10 +50,13 @@ export default async function RootLayout({
 	children: React.ReactNode;
 	params: { lang: ValidLanguage };
 }) {
+	const clientAppConfig = await getClientAppConfig();
 	return (
 		<html lang={lang}>
 			<body className={`${montserrat.className}`}>
-				<PageLayout currentLang={lang}>{children}</PageLayout>
+				<AppConfigContextProvider config={clientAppConfig}>
+					<PageLayout currentLang={lang}>{children}</PageLayout>
+				</AppConfigContextProvider>
 			</body>
 		</html>
 	);
