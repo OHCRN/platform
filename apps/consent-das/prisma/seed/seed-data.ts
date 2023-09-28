@@ -4,17 +4,17 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksv45v6',
 		emailVerified: false,
-		registeringOnBehalfOfSomeoneElse: false,
+		isGuardian: false,
 	},
 	{
 		id: 'clmart1bi000108jn9vkwdumh',
 		emailVerified: false,
-		registeringOnBehalfOfSomeoneElse: false,
+		isGuardian: false,
 	},
 	{
 		id: 'clmart6nv000208jn9kf18da0',
 		emailVerified: false,
-		registeringOnBehalfOfSomeoneElse: false,
+		isGuardian: false,
 	},
 ];
 

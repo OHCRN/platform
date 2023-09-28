@@ -121,16 +121,16 @@ router.get('/:id', async (req, res) => {
  *             properties:
  *               emailVerified:
  *                 type: boolean
- *               registeringOnBehalfOfSomeoneElse:
+ *               isGuardian:
  *                 type: boolean
  *               consentGroup:
  *                 type: Enum
  * 				   enum: [ADULT_CONSENT, ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER, GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, YOUNG_ADULT_CONSENT]
- *               registrantIdVerified:
+ *               guardianIdVerified:
  *                 	type: boolean
  * 			   required:
  *               - emailVerified
- *               - registeringOnBehalfOfSomeoneElse
+ *               - isGuardian
  *     responses:
  *       201:
  *         description: The participant was successfully retrieved.
@@ -141,15 +141,14 @@ router.get('/:id', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.debug('POST /participants');
-	const { emailVerified, registeringOnBehalfOfSomeoneElse, consentGroup, registrantIdVerified } =
-		req.body;
+	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
 	// TODO: add validation
 	try {
 		const participant = await createParticipant({
 			emailVerified,
-			registeringOnBehalfOfSomeoneElse,
+			isGuardian,
 			consentGroup,
-			registrantIdVerified,
+			guardianIdVerified,
 		});
 		res.status(201).send({ participant });
 	} catch (error) {

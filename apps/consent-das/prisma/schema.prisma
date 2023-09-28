@@ -17,12 +17,12 @@ enum ConsentGroup {
 }
 
 model Participant {
-  id                               String                @id @default(cuid())
-  consentGroup                     ConsentGroup?
-  emailVerified                    Boolean               @default(false)
-  registeringOnBehalfOfSomeoneElse Boolean
-  registrantIdVerified             Boolean?
-  ParticipantResponse              ParticipantResponse[]
+  id                  String                @id @default(cuid())
+  consentGroup        ConsentGroup?
+  emailVerified       Boolean               @default(false)
+  isGuardian          Boolean
+  guardianIdVerified  Boolean?
+  ParticipantResponse ParticipantResponse[]
 }
 
 enum ConsentCategory {
