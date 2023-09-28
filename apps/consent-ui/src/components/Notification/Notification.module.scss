@@ -1,6 +1,6 @@
 .base {
 	border: 2px solid;
-	box-shadow: theme('boxShadow.sm');
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
 	margin-bottom: 15px;
 }
 
@@ -19,6 +19,9 @@
 	display: flex;
 	justify-content: center;
 	margin-bottom: 12px;
+	@media (min-width: theme('screens.md')) {
+		margin-bottom: 0;
+	}
 }
 
 .body {
@@ -37,6 +40,9 @@
 	a {
 		color: theme('colors.secondary.500');
 		text-decoration: underline;
+		&:hover {
+			color: theme('colors.secondary.400');
+		}
 	}
 }
 
