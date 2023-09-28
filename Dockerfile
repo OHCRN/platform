@@ -58,6 +58,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 USER ${APP_USER}
 
 RUN pnpm install --frozen-lockfile
+RUN pnpm run generate
 RUN pnpm run build
 
 #######################################################
