@@ -35,6 +35,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 			<Image
 				src={BackgroundImage}
 				alt={translate('hero-background-img-alt')}
+				priority
 				className={styles.backgroundImg}
 			/>
 			<div className={styles.gradientOverlay}></div>

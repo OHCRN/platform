@@ -91,10 +91,15 @@
   border-color: theme('colors.grayscale.800');
 }
 
-.primary:disabled, .primary.green:disabled, .secondary:disabled, .secondary.blue:disabled, .secondary.green:disabled {
-  background-color: theme('colors.grayscale.600');
-  border-color: theme('colors.grayscale.600');
-  color: theme('colors.grayscale.100');
+.primary,
+.secondary {
+
+  &:disabled,
+  &:disabled:hover {
+    background-color: theme('colors.grayscale.600');
+    border-color: theme('colors.grayscale.600');
+    color: theme('colors.grayscale.100');
+  }
 }
 
 // Icon buttons

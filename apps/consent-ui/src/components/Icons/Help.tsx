@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Help({ classes }: { classes?: string }) {
 	return (
 		<svg className={classes} viewBox="0 0 22 22" fill="none">

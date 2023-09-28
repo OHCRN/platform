@@ -24,7 +24,7 @@ import styles from './Button.module.scss';
 
 export type ButtonVariant = 'primary' | 'secondary';
 export type ButtonColor = 'default' | 'blue' | 'green';
-export type ButtonSize = 'default' | 'large';
+export type ButtonSize = 'base' | 'large';
 export type ButtonLayout = 'default' | 'icon';
 export interface ButtonProps {
 	children: ReactNode;
@@ -41,7 +41,7 @@ const Button = ({
 	onClick,
 	variant = 'primary',
 	color = 'default',
-	size = 'default',
+	size = 'base',
 	layout = 'default',
 	disabled = false,
 	className = '',
