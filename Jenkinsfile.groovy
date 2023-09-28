@@ -78,6 +78,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Build') {
+            steps {
+                container('docker') {
+                    // the network=host needed to download dependencies using the host network (since we are inside 'docker' container)
+                    sh "docker build --build-arg=COMMIT=${commit} --network=host -f Dockerfile . -t consent-ui:${commit}"
+                }
+            }
+        }
     }
 
     post {
