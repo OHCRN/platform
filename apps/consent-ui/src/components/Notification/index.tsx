@@ -26,10 +26,12 @@ import InfoCircle from '../Icons/InfoCircle';
 
 import styles from './Notification.module.scss';
 import DismissButton from './DismissButton';
+import ActionButton from './ActionButton';
 
 export type NotificationLevel = 'error' | 'info' | 'success' | 'warning';
 
 export interface NotificationProps {
+	actionText?: string;
 	className?: string;
 	level: NotificationLevel;
 	title: string | JSX.Element;
@@ -45,6 +47,7 @@ const notificationIcons: Record<NotificationLevel, JSX.Element> = {
 } as const;
 
 const Notification = ({
+	actionText,
 	className = '',
 	level,
 	title,
@@ -57,7 +60,12 @@ const Notification = ({
 				<div className={clsx(styles.icon)}>{notificationIcons[level]}</div>
 				<div className={clsx(styles.text)}>
 					<div className={clsx(styles.title)}>{title}</div>
-					<div className={clsx(styles.description)}>{description}</div>
+					{description && <div className={clsx(styles.description)}>{description}</div>}
+					{actionText && (
+						<div className={clsx(styles.action)}>
+							<ActionButton>{actionText}</ActionButton>
+						</div>
+					)}
 				</div>
 				{dismissable && <DismissButton className={clsx(styles['dismiss-button'])} />}
 			</div>
