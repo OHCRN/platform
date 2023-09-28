@@ -17,22 +17,54 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import bodyParser from 'body-parser';
+import { Router } from 'express';
+import { serve, setup } from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import OhipRouter from './routers/ohip';
+/**
+ * @openapi
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     Error:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *         message:
+ *           type: string
+ *       required:
+ *          - code
+ *          - message
+ */
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.port);
-	app.use(bodyParser.json());
+const options = swaggerJsdoc({
+	failOnErrors: true,
+	definition: {
+		openapi: '3.1.0',
+		info: {
+			title: 'OHCRN Keys DAS',
+			version: '1.0.0',
+			description: '',
+			license: {
+				name: 'APGL',
+				url: 'https://www.gnu.org/licenses/agpl-3.0.en.html',
+			},
+			servers: [
+				{
+					url: '/',
+				},
+			],
+		},
+	},
+	apis: ['./src/routers/*'],
+});
 
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/ohip', OhipRouter);
+const router = Router();
+router.use('/', serve, setup(options));
 
-	return app;
-};
-
-export default App;
+export default router;

@@ -25,6 +25,13 @@ import logger from '../logger';
 
 const router = Router();
 
+/**
+ * @openapi
+ * tags:
+ *   - name: Participants
+ *     description: Participant management
+ */
+
 // TODO: add proper JSDoc comments
 // get participant by id
 router.get('/:participantId', async (req, res) => {

@@ -23,8 +23,6 @@ import { APIStatus } from 'common/src/service/Status';
 
 import logger from '@/logger';
 
-import { version } from '../../package.json';
-
 /**
  * @openapi
  * tags:
@@ -51,7 +49,7 @@ const router = Router();
 router.get('/', async (req, res) => {
 	// TODO: add real health check
 	logger.info(`GET /status`);
-	const response: APIStatus = { status: `API is healthy.`, version };
+	const response: APIStatus = { status: `API is healthy.`, version: '0.1.0' };
 	res.json(response);
 });
 
