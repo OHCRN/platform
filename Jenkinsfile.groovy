@@ -43,8 +43,8 @@ pipeline {
 
     environment {
         containerRegistry = 'ghcr.io'
-        organization = 'overture-stack'
-        appName = 'lectern'
+        organization = 'ohcrn'
+        appName = 'consent-ui'
         gitHubRepo = "${organization}/${appName}"
         containerImageName = "${containerRegistry}/${gitHubRepo}"
 
@@ -109,27 +109,27 @@ pipeline {
                     withCredentials([
                         usernamePassword(
                             credentialsId:'OvertureBioGithub',
-                            passwordVariable: 'PASSWORD',
+                            passwordVariable: 'TOKEN',
                             usernameVariable: 'USERNAME',
                         )
                     ]) {
-                        sh "docker login ${gitHubRegistry} -u $USERNAME -p $PASSWORD"
+                        sh "echo $TOKEN | docker login ${containerRegistry} -u $USERNAME --password-stdin"
 
                         script {
                             if (env.BRANCH_NAME ==~ /(main)/) { // push latest and version tags
-                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:${version}"
-                                sh "docker push ${gitHubImageName}:${version}"
+                                sh "docker tag consent-ui:${commit} ${containerImageName}:${version}"
+                                sh "docker push ${containerImageName}:${version}"
 
-                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:latest"
-                                sh "docker push ${gitHubImageName}:latest"
+                                sh "docker tag consent-ui:${commit} ${containerImageName}:latest"
+                                sh "docker push ${containerImageName}:latest"
                             } else { // push commit tags
-                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:${commit}"
-                                sh "docker push ${gitHubImageName}:${commit}"
+                                sh "docker tag consent-ui:${commit} ${containerImageName}:${commit}"
+                                sh "docker push ${containerImageName}:${commit}"
                             }
 
                             if (env.BRANCH_NAME ==~ /(develop)/) { // push edge tag
-                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:edge"
-                                sh "docker push ${gitHubImageName}:edge"
+                                sh "docker tag consent-ui:${commit} ${containerImageName}:edge"
+                                sh "docker push ${containerImageName}:edge"
                             }
                         }
                     }
@@ -146,17 +146,17 @@ pipeline {
             }
             steps {
                 script {
-                // we don't want the build to be tagged as failed because it could not be deployed.
-                try {
-                    build(job: 'ohcrn/update-app-version', parameters: [
-                    string(name: 'BUILD_BRANCH', value: env.BRANCH_NAME),
-                    string(name: 'OHCRN_ENV', value: 'dev'),
-                    string(name: 'NEW_APP_VERSION', value: "${commit}"),
-                    string(name: 'TARGET_RELEASE', value: 'consent-ui'),
-                    ])
-                } catch (err) {
-                    echo 'The app built successfully, but could not be deployed'
-                }
+                    // we don't want the build to be tagged as failed because it could not be deployed.
+                    try {
+                        build(job: 'ohcrn/update-app-version', parameters: [
+                            string(name: 'BUILD_BRANCH', value: env.BRANCH_NAME),
+                            string(name: 'OHCRN_ENV', value: 'dev'),
+                            string(name: 'NEW_APP_VERSION', value: "${commit}"),
+                            string(name: 'TARGET_RELEASE', value: 'consent-ui'),
+                        ])
+                    } catch (err) {
+                        echo 'The app built successfully, but could not be deployed'
+                    }
                 }
             }
         }
