@@ -21,6 +21,7 @@ import { Router } from 'express';
 // TODO: fix exports from common (e.g. import { APIStatus } from 'common' or 'common/service')
 import { APIStatus } from 'common/src/service/Status';
 
+import { version } from '@/../../package.json';
 import logger from '@/logger';
 
 /**
@@ -49,7 +50,7 @@ const router = Router();
 router.get('/', async (req, res) => {
 	// TODO: add real health check
 	logger.info(`GET /status`);
-	const response: APIStatus = { status: `API is healthy.`, version: '0.1.0' };
+	const response: APIStatus = { status: `API is healthy.`, version };
 	res.json(response);
 });
 
