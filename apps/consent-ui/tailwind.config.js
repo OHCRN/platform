@@ -28,7 +28,7 @@ module.exports = {
 			header: '700',
 		},
 		dropShadow: {
-			sm: '0px 2px 4px 0px rgba(0, 0, 0, 0.26)',
+			sm: '0px 2px 4px 0px rgba(0, 0, 0, 0.15)',
 			base: ['0px 4px 6px -1px rgba(0, 0, 0, 0.1)', '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'],
 			lg: '0px 15px 10px -3px rgba(0, 0, 0, 0.1)',
 		},
