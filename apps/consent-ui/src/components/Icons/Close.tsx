@@ -19,17 +19,22 @@
 
 import React from 'react';
 
-function Arrow({ classes }: { classes?: string }) {
+function Close({ classes }: { classes?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
+		<svg
+			className={classes}
+			width="23"
+			height="20"
+			viewBox="0 0 23 20"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
 			<path
+				d="M17.5093 5.34175L16.2099 4.16675L11.0585 8.82508L5.90704 4.16675L4.60767 5.34175L9.7591 10.0001L4.60767 14.6584L5.90704 15.8334L11.0585 11.1751L16.2099 15.8334L17.5093 14.6584L12.3579 10.0001L17.5093 5.34175Z"
 				fill="currentColor"
-				fillRule="evenodd"
-				d="M.193.226a.714.714 0 00.033 1.01L4.24 5 .226 8.765a.714.714 0 10.977 1.042L6.33 5 1.203.193a.714.714 0 00-1.01.033z"
-				clipRule="evenodd"
-			></path>
+			/>
 		</svg>
 	);
 }
 
-export default Arrow;
+export default Close;

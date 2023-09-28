@@ -19,17 +19,43 @@
 
 import React from 'react';
 
-function Arrow({ classes }: { classes?: string }) {
+function InfoCircle({ classes }: { classes?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
-			<path
-				fill="currentColor"
-				fillRule="evenodd"
-				d="M.193.226a.714.714 0 00.033 1.01L4.24 5 .226 8.765a.714.714 0 10.977 1.042L6.33 5 1.203.193a.714.714 0 00-1.01.033z"
-				clipRule="evenodd"
-			></path>
+		<svg
+			className={classes}
+			width="24"
+			height="25"
+			viewBox="0 0 24 25"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<g clip-path="url(#clip0_34_3961)">
+				<rect
+					x="1"
+					y="1.50781"
+					width="22"
+					height="22"
+					rx="11"
+					stroke="currentColor"
+					stroke-width="2"
+				/>
+				<rect
+					x="13"
+					y="18"
+					width="2"
+					height="6"
+					transform="rotate(-180 13 18)"
+					fill="currentColor"
+				/>
+				<ellipse cx="12" cy="9" rx="1" ry="1" transform="rotate(-180 12 9)" fill="currentColor" />
+			</g>
+			<defs>
+				<clipPath id="clip0_34_3961">
+					<rect width="24" height="24" fill="white" transform="translate(0 0.507812)" />
+				</clipPath>
+			</defs>
 		</svg>
 	);
 }
 
-export default Arrow;
+export default InfoCircle;

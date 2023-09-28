@@ -19,17 +19,25 @@
 
 import React from 'react';
 
-function Arrow({ classes }: { classes?: string }) {
+function ExclamationTriangle({ classes }: { classes?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
+		<svg
+			className={classes}
+			width="25"
+			height="24"
+			viewBox="0 0 25 24"
+			xmlns="http://www.w3.org/2000/svg"
+		>
 			<path
+				fill-rule="evenodd"
+				clip-rule="evenodd"
+				d="M4.19493 23.4326C1.87902 23.4304 0.00215333 21.5535 0 19.2376C0.00084737 18.5073 0.192007 17.7898 0.554636 17.1558L9.29602 1.85644C9.9537 0.708278 11.1757 0 12.4988 0C13.822 0 15.044 0.708278 15.7017 1.85644L24.447 17.1558C25.1893 18.4545 25.184 20.0502 24.4329 21.3439C23.6818 22.6376 22.2987 23.4334 20.8028 23.4326H4.19493ZM11.3271 3.0204L2.5857 18.3198C2.25844 18.893 2.26115 19.5971 2.59279 20.1678C2.92443 20.7386 3.53485 21.0895 4.19493 21.089H20.8028C21.4628 21.0895 22.0733 20.7386 22.4049 20.1678C22.7365 19.5971 22.7392 18.893 22.412 18.3198L13.6706 3.0204C13.4312 2.59878 12.9837 2.3383 12.4988 2.3383C12.014 2.3383 11.5665 2.59878 11.3271 3.0204Z"
 				fill="currentColor"
-				fillRule="evenodd"
-				d="M.193.226a.714.714 0 00.033 1.01L4.24 5 .226 8.765a.714.714 0 10.977 1.042L6.33 5 1.203.193a.714.714 0 00-1.01.033z"
-				clipRule="evenodd"
-			></path>
+			/>
+			<rect x="11.3271" y="8.19971" width="2.34353" height="6.24942" fill="currentColor" />
+			<circle cx="12.4989" cy="17.5736" r="1.17177" fill="currentColor" />
 		</svg>
 	);
 }
 
-export default Arrow;
+export default ExclamationTriangle;

@@ -20,7 +20,12 @@
 import { JSX } from 'react';
 import clsx from 'clsx';
 
+import CheckmarkCircle from '../Icons/CheckmarkCircle';
+import ExclamationTriangle from '../Icons/ExclamationTriangle';
+import InfoCircle from '../Icons/InfoCircle';
+
 import styles from './Notification.module.scss';
+import DismissButton from './DismissButton';
 
 export type NotificationLevel = 'error' | 'info' | 'success' | 'warning';
 
@@ -33,10 +38,10 @@ export interface NotificationProps {
 }
 
 const notificationIcons: Record<NotificationLevel, JSX.Element> = {
-	error: <></>,
-	info: <></>,
-	success: <></>,
-	warning: <></>,
+	error: <ExclamationTriangle />,
+	info: <InfoCircle />,
+	success: <CheckmarkCircle />,
+	warning: <ExclamationTriangle />,
 } as const;
 
 const Notification = ({
@@ -48,13 +53,13 @@ const Notification = ({
 }: NotificationProps) => {
 	return (
 		<div className={clsx(styles.base, styles[level], styles[className])}>
-			<div className="container">
-				<div className="icon">{notificationIcons[level]}</div>
-				<div className="text">
-					<div className="title">{title}</div>
-					<div className="description">{description}</div>
+			<div className={clsx(styles.container)}>
+				<div className={clsx(styles.icon)}>{notificationIcons[level]}</div>
+				<div className={clsx(styles.text)}>
+					<div className={clsx(styles.title)}>{title}</div>
+					<div className={clsx(styles.description)}>{description}</div>
 				</div>
-				<div className="dismissButtonWrapper">{dismissable && 'x'}</div>
+				{dismissable && <DismissButton className={clsx(styles['dismiss-button'])} />}
 			</div>
 		</div>
 	);

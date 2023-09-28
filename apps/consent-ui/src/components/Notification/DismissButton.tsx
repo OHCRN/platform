@@ -17,8 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const DismissButton = () => {
-	return <div>x</div>;
+'use client';
+
+import Close from '../Icons/Close';
+
+const DismissButton = ({ className }: { className?: string }) => {
+	return (
+		<button>
+			<Close classes={className} />
+		</button>
+	);
 };
 
 export default DismissButton;
