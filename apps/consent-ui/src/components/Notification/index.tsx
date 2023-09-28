@@ -58,7 +58,7 @@ const Notification = ({
 		<div className={clsx(styles.base, styles[level], styles[className])}>
 			<div className={clsx(styles.container)}>
 				<div className={clsx(styles.icon)}>{notificationIcons[level]}</div>
-				<div className={clsx(styles.text)}>
+				<div className={clsx(styles.body)}>
 					<div className={clsx(styles.title)}>{title}</div>
 					{description && <div className={clsx(styles.description)}>{description}</div>}
 					{actionText && (
