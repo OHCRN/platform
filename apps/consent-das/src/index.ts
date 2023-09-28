@@ -19,12 +19,12 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import errorHandler from 'error-handler';
 
 import { AppConfig } from './config';
 import ParticipantRouter from './routers/participants';
 import ConsentQuestionRouter from './routers/consentQuestions';
 import ParticipantResponseRouter from './routers/participantResponses';
-import errorHandler from './errorHandler';
 
 const App = (config: AppConfig) => {
 	const app = express();
