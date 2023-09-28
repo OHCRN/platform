@@ -70,6 +70,14 @@ pipeline {
         timestamps()
     }
 
+    parameters {
+        choice(
+            name: 'POST_BUILD',
+            choices: ['Nothing', 'Publish only', 'Publish and Deploy'],
+            description: 'What to do after building the images'
+        )
+    }
+
     stages {
         stage('Prepare') {
             steps {
@@ -84,6 +92,71 @@ pipeline {
                 container('docker') {
                     // the network=host needed to download dependencies using the host network (since we are inside 'docker' container)
                     sh "docker build --build-arg=COMMIT=${commit} --network=host -f Dockerfile . -t consent-ui:${commit}"
+                }
+            }
+        }
+
+        stage('Publish Images') {
+            when {
+                anyOf {
+                    branch 'develop'
+                    branch 'main'
+                    expression { return params.POST_BUILD ==~ /.*Publish.*/ }
+                }
+            }
+            steps {
+                container('docker') {
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId:'OvertureBioGithub',
+                            passwordVariable: 'PASSWORD',
+                            usernameVariable: 'USERNAME',
+                        )
+                    ]) {
+                        sh "docker login ${gitHubRegistry} -u $USERNAME -p $PASSWORD"
+
+                        script {
+                            if (env.BRANCH_NAME ==~ /(main)/) { // push latest and version tags
+                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:${version}"
+                                sh "docker push ${gitHubImageName}:${version}"
+
+                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:latest"
+                                sh "docker push ${gitHubImageName}:latest"
+                            } else { // push commit tags
+                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:${commit}"
+                                sh "docker push ${gitHubImageName}:${commit}"
+                            }
+
+                            if (env.BRANCH_NAME ==~ /(develop)/) { // push edge tag
+                                sh "docker tag dms-ui:${commit} ${gitHubImageName}:edge"
+                                sh "docker push ${gitHubImageName}:edge"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to ohcrn-dev') {
+            when {
+                anyOf {
+                    branch 'develop'
+                    expression { return params.POST_BUILD ==~ /.*Deploy.*/ }
+                }
+            }
+            steps {
+                script {
+                // we don't want the build to be tagged as failed because it could not be deployed.
+                try {
+                    build(job: 'ohcrn/update-app-version', parameters: [
+                    string(name: 'BUILD_BRANCH', value: env.BRANCH_NAME),
+                    string(name: 'OHCRN_ENV', value: 'dev'),
+                    string(name: 'NEW_APP_VERSION', value: "${commit}"),
+                    string(name: 'TARGET_RELEASE', value: 'consent-ui'),
+                    ])
+                } catch (err) {
+                    echo 'The app built successfully, but could not be deployed'
+                }
                 }
             }
         }
