@@ -17,14 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import logger from '@/logger';
 import {
 	PrismaClient,
 	Participant,
 	ConsentQuestion,
 	ConsentCategory,
 	ParticipantResponse,
-} from './generated/client';
-import logger from './logger';
+} from '@/generated/client';
 
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();

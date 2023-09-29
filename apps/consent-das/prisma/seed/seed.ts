@@ -1,5 +1,5 @@
-import { PrismaClient } from '../../src/generated/client';
-import logger from '../../src/logger';
+import { PrismaClient } from '@/../../src/generated/client';
+import logger from '@/../../src/logger';
 
 import { consentQuestions, participants } from './seed-data';
 

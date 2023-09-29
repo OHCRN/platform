@@ -3,7 +3,7 @@ import prisma, {
 	ConsentQuestion,
 	ConsentCategory,
 	ParticipantResponse,
-} from '../prismaClient';
+} from '@/prismaClient';
 
 export const createParticipant = async ({
 	participantId,

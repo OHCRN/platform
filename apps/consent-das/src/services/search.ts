@@ -1,10 +1,10 @@
-import { Prisma } from '../generated/client';
 import prisma, {
 	Participant,
 	ConsentQuestion,
 	ParticipantResponse,
 	ConsentCategory,
-} from '../prismaClient';
+} from '@/prismaClient';
+import { Prisma } from '@/generated/client';
 
 export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
