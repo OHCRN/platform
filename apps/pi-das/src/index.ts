@@ -22,6 +22,7 @@ import bodyParser from 'body-parser';
 
 import { AppConfig } from './config';
 import ParticipantRouter from './routers/participants';
+import ClinicianInviteRouter from './routers/clinicianInvites';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -29,6 +30,7 @@ const App = (config: AppConfig) => {
 	app.use(bodyParser.json());
 
 	app.use('/participants', ParticipantRouter);
+	app.use('/clinician-invites', ClinicianInviteRouter);
 
 	return app;
 };

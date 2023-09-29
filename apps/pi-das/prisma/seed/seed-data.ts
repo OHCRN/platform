@@ -45,4 +45,23 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	},
 ];
 
-export { participants };
+const clinicianInvites = [
+	{
+		participantFirstName: 'Bruce',
+		participantLastName: 'Wayne',
+		participantEmailAddress: 'bruce.wayne@example.com',
+		participantPhoneNumber: '6475558123',
+	},
+	{
+		participantFirstName: 'Tim',
+		participantLastName: 'Drake',
+		participantEmailAddress: 'tim.drake@example.com',
+		participantPhoneNumber: '6475558123',
+		guardianName: 'Bruce Wayne',
+		guardianPhoneNumber: '6475558123',
+		guardianEmailAddress: 'bruce.wayne@example.com',
+		guardianRelationship: 'Stepfather',
+	},
+];
+
+export { participants, clinicianInvites };
