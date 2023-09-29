@@ -1,4 +1,4 @@
-import prisma, { Participant } from '../prismaClient';
+import prisma, { Participant } from '@/prismaClient';
 
 export const createParticipant = async ({
 	name,
