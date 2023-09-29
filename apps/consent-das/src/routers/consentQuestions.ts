@@ -159,7 +159,7 @@ router.post('/', async (req, res) => {
 	const { id, isActive, category } = req.body;
 	// TODO: add validation
 	try {
-		const question = await createConsentQuestion({ id, isActive, category });
+		const question = await createConsentQuestion({ consentQuestionId: id, isActive, category });
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
@@ -209,7 +209,7 @@ router.patch('/:id', async (req, res) => {
 	const { isActive } = req.body;
 	// TODO: add validation
 	try {
-		const question = await updateConsentQuestionIsActive({ id, isActive });
+		const question = await updateConsentQuestionIsActive({ consentQuestionId: id, isActive });
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);

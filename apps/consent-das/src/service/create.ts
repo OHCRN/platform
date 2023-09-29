@@ -30,18 +30,18 @@ export const createParticipant = async ({
 };
 
 export const createConsentQuestion = async ({
-	id,
+	consentQuestionId,
 	isActive,
 	category,
 }: {
-	id: string;
+	consentQuestionId: string;
 	isActive: boolean;
 	category: ConsentCategory;
 }): Promise<ConsentQuestion> => {
 	// TODO: add error handling
 	const result = await prisma.consentQuestion.create({
 		data: {
-			id,
+			id: consentQuestionId,
 			isActive,
 			category,
 		},

@@ -6,11 +6,11 @@ import prisma, {
 	ConsentCategory,
 } from '../prismaClient';
 
-export const getParticipant = async (id: string): Promise<Participant> => {
+export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.findUniqueOrThrow({
 		where: {
-			id,
+			id: participantId,
 		},
 	});
 	return result;
@@ -22,11 +22,11 @@ export const getParticipants = async (): Promise<Participant[]> => {
 	return result;
 };
 
-export const getConsentQuestion = async (id: string): Promise<ConsentQuestion> => {
+export const getConsentQuestion = async (consentQuestionId: string): Promise<ConsentQuestion> => {
 	// TODO: add error handling
 	const result = await prisma.consentQuestion.findUniqueOrThrow({
 		where: {
-			id,
+			id: consentQuestionId,
 		},
 	});
 	return result;
