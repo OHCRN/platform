@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 
-import { getOhipNumber, getOhipNumbers } from '../service/search';
-import { createOhipNumber } from '../service/create';
-import logger from '../logger';
+import { getOhipNumber, getOhipNumbers } from '@/services/search';
+import { createOhipNumber } from '@/services/create';
+import logger from '@/logger';
 
 const router = Router();
 

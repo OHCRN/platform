@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, Ohip } from './generated/client';
-import logger from './logger';
+import { PrismaClient, Ohip } from '@/generated/client';
+import logger from '@/logger';
 
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();
