@@ -95,7 +95,7 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
+ *      - name: consentQuestionId
  *        in: path
  *        description: Consent Question ID
  *        required: true
@@ -104,17 +104,15 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question was successfully retrieved.
- *       404:
- *         description: A question with the specified id could not be found.
  *       500:
  *         description: Error retrieving consent questions.
  */
-router.get('/:id', async (req, res) => {
-	logger.info('GET /consent-questions/:id');
-	const { id } = req.params;
+router.get('/:consentQuestionId', async (req, res) => {
+	logger.info('GET /consent-questions/:consentQuestionId');
+	const { consentQuestionId } = req.params;
 	// TODO: add validation
 	try {
-		const question = await getConsentQuestion(id);
+		const question = await getConsentQuestion(consentQuestionId);
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
@@ -139,7 +137,7 @@ router.get('/:id', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               id:
+ *               consentQuestionId:
  *                 type: string
  *               isActive:
  *                 type: boolean
@@ -149,17 +147,15 @@ router.get('/:id', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question was successfully created.
- *       400:
- *         description: The data provided for the consent question was incomplete or invalid.
  *       500:
  *         description: The question could not be created.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /consent-questions');
-	const { id, isActive, category } = req.body;
+	const { consentQuestionId, isActive, category } = req.body;
 	// TODO: add validation
 	try {
-		const question = await createConsentQuestion({ consentQuestionId: id, isActive, category });
+		const question = await createConsentQuestion({ consentQuestionId, isActive, category });
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
@@ -169,7 +165,7 @@ router.post('/', async (req, res) => {
 
 /**
  * @openapi
- * /consent-questions/:id:
+ * /consent-questions/{consentQuestionId}:
  *   patch:
  *     tags:
  *       - Consent Questions
@@ -178,7 +174,7 @@ router.post('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
+ *      - name: consentQuestionId
  *        in: path
  *        description: Consent Question ID
  *        required: true
@@ -196,20 +192,16 @@ router.post('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The question's isActive field was successfully updated.
- *       400:
- *         description: Invalid request body.
- *       404:
- *         description: No question exists with the specified ID.
  *       500:
  *         description: The question's isActive field could not be updated.
  */
-router.patch('/:id', async (req, res) => {
-	logger.info('PATCH /consent-questions/:id');
-	const { id } = req.params;
+router.patch('/:consentQuestionId', async (req, res) => {
+	logger.info('PATCH /consent-questions/:consentQuestionId');
+	const { consentQuestionId } = req.params;
 	const { isActive } = req.body;
 	// TODO: add validation
 	try {
-		const question = await updateConsentQuestionIsActive({ consentQuestionId: id, isActive });
+		const question = await updateConsentQuestionIsActive({ consentQuestionId, isActive });
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);

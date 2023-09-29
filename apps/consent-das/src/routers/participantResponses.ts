@@ -36,7 +36,7 @@ const router = Router();
 
 /**
  * @openapi
- * /participant-responses/:participantId/:consentQuestionId:
+ * /participant-responses/{participantId}/{consentQuestionId}:
  *   get:
  *     tags:
  *       - Participant Responses
@@ -61,8 +61,6 @@ const router = Router();
  *     responses:
  *       200:
  *         description: The participant responses were successfully retrieved.
- *       400:
- *         description: Sort order specified was invalid.
  *       500:
  *         description: Could not retrieve participant responses.
  */

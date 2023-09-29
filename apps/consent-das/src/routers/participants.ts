@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants/{id}:
+ * /participants/{participantId}:
  *   get:
  *     tags:
  *       - Participants
@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
+ *      - name: participantId
  *        in: path
  *        description: Participant ID
  *        required: true
@@ -82,17 +82,15 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
- *       404:
- *         description: Could not find participant with specified ID.
  *       500:
  *         description: Error retrieving participant.
  */
-router.get('/:id', async (req, res) => {
-	logger.info('GET /participants/:id');
-	const { id } = req.params;
+router.get('/:participantId', async (req, res) => {
+	logger.info('GET /participants/:participantId');
+	const { participantId } = req.params;
 	// TODO: add validation
 	try {
-		const participant = await getParticipant(id);
+		const participant = await getParticipant(participantId);
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
@@ -134,8 +132,6 @@ router.get('/:id', async (req, res) => {
  *     responses:
  *       201:
  *         description: The participant was successfully retrieved.
- *       400:
- *         description: Invalid request body for creating participant.
  *       500:
  *         description: Error creating participant.
  */
