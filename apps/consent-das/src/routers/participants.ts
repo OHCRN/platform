@@ -51,7 +51,7 @@ const router = Router();
  *         description: Error retrieving participants.
  */
 router.get('/', async (req, res) => {
-	logger.debug('GET /participants');
+	logger.info('GET /participants');
 	try {
 		const participants = await getParticipants();
 		res.send({ participants });
@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
  *         description: Error retrieving participant.
  */
 router.get('/:id', async (req, res) => {
-	logger.debug('GET /participants/:id');
+	logger.info('GET /participants/:id');
 	const { id } = req.params;
 	// TODO: add validation
 	try {
@@ -140,7 +140,7 @@ router.get('/:id', async (req, res) => {
  *         description: Error creating participant.
  */
 router.post('/', async (req, res) => {
-	logger.debug('POST /participants');
+	logger.info('POST /participants');
 	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
 	// TODO: add validation
 	try {

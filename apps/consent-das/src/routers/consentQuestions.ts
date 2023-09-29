@@ -61,7 +61,7 @@ const router = Router();
  *         description: Could not fetch consent questions.
  */
 router.get('/', async (req, res) => {
-	logger.debug('GET /consent-questions');
+	logger.info('GET /consent-questions');
 	const { category } = req.query;
 
 	if (category) {
@@ -110,7 +110,7 @@ router.get('/', async (req, res) => {
  *         description: Error retrieving consent questions.
  */
 router.get('/:id', async (req, res) => {
-	logger.debug('GET /consent-questions/:id');
+	logger.info('GET /consent-questions/:id');
 	const { id } = req.params;
 	// TODO: add validation
 	try {
@@ -155,7 +155,7 @@ router.get('/:id', async (req, res) => {
  *         description: The question could not be created.
  */
 router.post('/', async (req, res) => {
-	logger.debug('POST /consent-questions');
+	logger.info('POST /consent-questions');
 	const { id, isActive, category } = req.body;
 	// TODO: add validation
 	try {
@@ -204,7 +204,7 @@ router.post('/', async (req, res) => {
  *         description: The question's isActive field could not be updated.
  */
 router.patch('/:id', async (req, res) => {
-	logger.debug('PATCH /consent-questions/:id');
+	logger.info('PATCH /consent-questions/:id');
 	const { id } = req.params;
 	const { isActive } = req.body;
 	// TODO: add validation

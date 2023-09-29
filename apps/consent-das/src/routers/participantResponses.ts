@@ -67,7 +67,7 @@ const router = Router();
  *         description: Could not retrieve participant responses.
  */
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
-	logger.debug('GET /participant-responses/:participantId/:consentQuestionId');
+	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
 
@@ -116,7 +116,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *         description: Unable to create participant response.
  */
 router.post('/', async (req, res) => {
-	logger.debug('POST /participant-responses');
+	logger.info('POST /participant-responses');
 	const { participantId, consentQuestionId, response } = req.body;
 	// TODO: add validation
 	try {
