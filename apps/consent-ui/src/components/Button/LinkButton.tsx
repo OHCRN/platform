@@ -10,7 +10,7 @@ const LinkButton = ({
 	href,
 	variant = 'primary',
 	color = 'default',
-	size = 'default',
+	size = 'base',
 	layout = 'default',
 	children,
 	className = '',
