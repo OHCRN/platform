@@ -23,8 +23,8 @@ import {
 	getLatestParticipantResponseByParticipantIdAndQuestionId,
 	getParticipant,
 	getParticipants,
-} from '../service/search';
-import logger from '../logger';
+} from '@/services/search';
+import logger from '@/logger';
 
 /**
  * @openapi
