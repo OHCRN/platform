@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 
-import { getParticipant } from '../service/search';
-import { createParticipant } from '../service/create';
-import logger from '../logger';
+import { getParticipant } from '@/services/search';
+import { createParticipant } from '@/services/create';
+import logger from '@/logger';
 
 const router = Router();
 

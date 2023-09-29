@@ -1,7 +1,7 @@
 // TODO: fix urlJoin error
 // import urlJoin from 'url-join';
 
-import { getAppConfig } from '../config';
+import { getAppConfig } from '@/config';
 
 // PI-DAS
 // TODO: add Type instead of any
