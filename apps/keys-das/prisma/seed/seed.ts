@@ -1,5 +1,5 @@
-import { PrismaClient } from '../../src/generated/client';
-import logger from '../../src/logger';
+import { PrismaClient } from '@/../../src/generated/client';
+import logger from '@/../../src/logger';
 
 import { ohipKeys } from './seed-data';
 

@@ -1,4 +1,4 @@
-import prisma, { OhipKey } from '../prismaClient';
+import prisma, { OhipKey } from '@/prismaClient';
 
 export const getOhipKey = async (participantId: string): Promise<OhipKey> => {
 	// TODO: add error handling

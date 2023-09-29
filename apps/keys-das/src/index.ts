@@ -20,9 +20,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import OhipKeysRouter from './routers/ohipKeys';
+import { AppConfig } from '@/config';
+import SwaggerRouter from '@/routers/swagger';
+import OhipKeysRouter from '@/routers/ohipKeys';
 
 const App = (config: AppConfig) => {
 	const app = express();
