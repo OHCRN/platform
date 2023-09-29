@@ -82,8 +82,6 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
- *       404:
- *         description: The participant was not found.
  *       500:
  *         description: Error retrieving participant.
  */
@@ -113,8 +111,6 @@ router.get('/:id', async (req, res) => {
  *     responses:
  *       200:
  *         description: The participant was successfully created.
- *       400:
- *         description: The data provided for the participant was incomplete or invalid.
  *       500:
  *         description: Error creating participant.
  */
@@ -177,11 +173,16 @@ router.post('/', async (req, res) => {
  *     description: Update participant by ID
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *      - name: id
+ *        in: path
+ *        description: Participant ID
+ *        required: true
+ *        schema:
+ *          type: string
  *     responses:
  *       200:
  *         description: The participant was successfully updated.
- *       400:
- *         description: The data provided for the participant was incomplete or invalid.
  *       500:
  *         description: Error updating participant.
  */

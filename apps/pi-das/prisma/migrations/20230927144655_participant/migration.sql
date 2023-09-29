@@ -1,19 +1,3 @@
-/*
-  Warnings:
-
-  - The primary key for the `Participant` table will be changed. If it partially fails, the table could be left without primary key constraint.
-  - You are about to drop the column `email` on the `Participant` table. All the data in the column will be lost.
-  - You are about to drop the column `name` on the `Participant` table. All the data in the column will be lost.
-  - You are about to alter the column `id` on the `Participant` table. The data in that column could be lost. The data in that column will be cast from `Text` to `VarChar(64)`.
-  - A unique constraint covering the columns `[emailAddress]` on the table `Participant` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `dateOfBirth` to the `Participant` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `participantOhipFirstName` to the `Participant` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `participantOhipLastName` to the `Participant` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `participantPreferredName` to the `Participant` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `phoneNumber` to the `Participant` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `residentialPostalCode` to the `Participant` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- DropTable
 DROP TABLE "Participant";
 
