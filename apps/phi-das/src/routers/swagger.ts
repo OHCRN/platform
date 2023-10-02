@@ -17,13 +17,54 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
+import { Router } from 'express';
+import { serve, setup } from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 
-import { getAppConfig } from '@/config';
+/**
+ * @openapi
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     Error:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *         message:
+ *           type: string
+ *       required:
+ *          - code
+ *          - message
+ */
 
-export async function GET() {
-	headers();
-	const appConfig = getAppConfig(process.env);
-	return NextResponse.json(appConfig);
-}
+const options = swaggerJsdoc({
+	failOnErrors: true,
+	definition: {
+		openapi: '3.1.0',
+		info: {
+			title: 'OHCRN PHI DAS',
+			version: '1.0.0',
+			description: '',
+			license: {
+				name: 'APGL',
+				url: 'https://www.gnu.org/licenses/agpl-3.0.en.html',
+			},
+			servers: [
+				{
+					url: '/',
+				},
+			],
+		},
+	},
+	apis: ['./src/routers/*'],
+});
+
+const router = Router();
+router.use('/', serve, setup(options));
+
+export default router;

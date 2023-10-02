@@ -1,12 +1,14 @@
 .card {
 	background-color: theme('colors.grayscale.100');
-	color: theme('colors.grayscale.700');
+	color: theme('colors.grayscale.800');
 	padding: theme('padding.sm');
 	height: fit-content;
-	min-width: 45%;
   
 	@media (min-width: theme('screens.sm')) {
 	  padding: theme('padding.sm') theme('padding.md');
+	}
+	@media (min-width: theme('screens.md')) {
+	  max-width: 45rem;
 	}
   
 	* {

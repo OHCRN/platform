@@ -4,7 +4,7 @@
 
 :root {
   @apply h-full;
-  color: theme('colors.grayscale.700');
+  color: theme('colors.grayscale.800');
   font-size: theme('fontSize.base');
 }
 

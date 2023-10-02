@@ -2,39 +2,46 @@ import prisma, {
 	Participant,
 	ConsentQuestion,
 	ConsentCategory,
+	ConsentGroup,
 	ParticipantResponse,
 } from '../prismaClient';
 
 export const createParticipant = async ({
-	participantId,
 	emailVerified,
+	isGuardian,
+	consentGroup,
+	guardianIdVerified,
 }: {
-	participantId: string;
 	emailVerified: boolean;
+	isGuardian: boolean;
+	consentGroup?: ConsentGroup;
+	guardianIdVerified?: boolean;
 }): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.create({
 		data: {
-			participantId,
 			emailVerified,
+			isGuardian,
+			consentGroup,
+			guardianIdVerified,
 		},
 	});
 	return result;
 };
 
 export const createConsentQuestion = async ({
-	id,
+	consentQuestionId,
 	isActive,
 	category,
 }: {
-	id: string;
+	consentQuestionId: string;
 	isActive: boolean;
 	category: ConsentCategory;
 }): Promise<ConsentQuestion> => {
 	// TODO: add error handling
 	const result = await prisma.consentQuestion.create({
 		data: {
-			id,
+			id: consentQuestionId,
 			isActive,
 			category,
 		},

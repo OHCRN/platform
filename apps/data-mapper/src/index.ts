@@ -21,6 +21,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import { AppConfig } from './config';
+import SwaggerRouter from './routers/swagger';
 import ParticipantsRouter from './routers/participants';
 
 const App = (config: AppConfig) => {
@@ -28,6 +29,7 @@ const App = (config: AppConfig) => {
 	app.set('port', config.port);
 	app.use(bodyParser.json());
 
+	app.use('/api-docs', SwaggerRouter);
 	app.use('/participants', ParticipantsRouter);
 
 	return app;

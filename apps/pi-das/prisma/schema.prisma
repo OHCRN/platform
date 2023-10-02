@@ -9,8 +9,8 @@ generator client {
 }
 
 model Participant {
-  id                        String           @id @default(cuid()) @db.VarChar(64)
-  inviteId                  String?          @db.VarChar(64)
+  id                        String           @id @default(cuid())
+  inviteId                  String?
   clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   dateOfBirth               String           @db.Char(10)
   emailAddress              String           @unique
@@ -31,7 +31,7 @@ model Participant {
 }
 
 model ClinicianInvite {
-  id                       String        @id @default(cuid()) @db.VarChar(64)
+  id                       String        @id @default(cuid())
   participantFirstName     String
   participantLastName      String
   participantEmailAddress  String        @unique

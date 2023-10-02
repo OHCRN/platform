@@ -3,14 +3,14 @@ DROP TABLE "Participant";
 
 -- CreateTable
 CREATE TABLE "Participant" (
-  "id" VARCHAR(64) NOT NULL,
+  "id" TEXT NOT NULL,
   "dateOfBirth" CHAR(10) NOT NULL,
   "emailAddress" TEXT NOT NULL,
   "guardianEmailAddress" TEXT,
   "guardianName" TEXT,
   "guardianPhoneNumber" CHAR(10),
   "guardianRelationship" TEXT,
-  "inviteId" VARCHAR(64),
+  "inviteId" TEXT,
   "mailingAddressCity" TEXT,
   "mailingAddressPostalCode" CHAR(6),
   "mailingAddressProvince" TEXT,
@@ -27,7 +27,7 @@ CREATE TABLE "Participant" (
 
 -- CreateTable
 CREATE TABLE "ClinicianInvite" (
-    "id" VARCHAR(64) NOT NULL,
+    "id" TEXT NOT NULL,
     "participantFirstName" TEXT NOT NULL,
     "participantLastName" TEXT NOT NULL,
     "participantEmailAddress" TEXT NOT NULL,
