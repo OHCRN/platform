@@ -1,7 +1,7 @@
 import prisma, { Participant } from '../prismaClient';
 
 export const updateParticipant = async ({
-	id,
+	participantId,
 	inviteId,
 	dateOfBirth,
 	emailAddress,
@@ -20,7 +20,7 @@ export const updateParticipant = async ({
 	mailingAddressPostalCode,
 	residentialPostalCode,
 }: {
-	id: string;
+	participantId: string;
 	inviteId?: string;
 	dateOfBirth: string;
 	emailAddress: string;
@@ -42,7 +42,7 @@ export const updateParticipant = async ({
 	// TODO: add error handling
 	const result = await prisma.participant.update({
 		where: {
-			id,
+			id: participantId,
 		},
 		data: {
 			inviteId,

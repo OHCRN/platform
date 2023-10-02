@@ -19,6 +19,7 @@
     "@prisma/client": "^5.1.1",
     "body-parser": "^1.20.2",
     "common": "workspace:^",
+    "error-handler": "workspace:^",
     "express": "^4.18.2",
     "logger": "workspace:^"
   },

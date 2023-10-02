@@ -49,13 +49,13 @@ const router = Router();
  *       200:
  *         description: The list of participants was successfully retrieved.
  *       500:
- *         description: Error retrieving participants,
+ *         description: Error retrieving participants.
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /participants');
 	try {
 		const participants = await getParticipants();
-		res.send({ participants });
+		res.status(200).send({ participants });
 	} catch (error) {
 		res.status(500).send({ error: 'Error retrieving participants' });
 	}
@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants/{id}:
+ * /participants/{participantId}:
  *   get:
  *     tags:
  *       - Participants
@@ -73,24 +73,24 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
- *        in: path
- *        description: Participant ID
- *        required: true
- *        schema:
- *          type: string
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
  *       500:
  *         description: Error retrieving participant.
  */
-router.get('/:id', async (req, res) => {
-	logger.info('GET /participants/:id');
-	const { id } = req.params;
+router.get('/:participantId', async (req, res) => {
+	logger.info('GET /participants/:participantId');
+	const { participantId } = req.params;
 	// TODO: add validation
 	try {
-		const participant = await getParticipant(id);
+		const participant = await getParticipant(participantId);
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
@@ -108,8 +108,57 @@ router.get('/:id', async (req, res) => {
  *     description: Create one participant
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               inviteId:
+ *                 type: string
+ *               dateOfBirth:
+ *                 type: string
+ *                 format: date
+ *                 required: true
+ *               emailAddress:
+ *                 type: string
+ *                 format: email
+ *                 required: true
+ *               participantOhipFirstName:
+ *                 type: string
+ *                 required: true
+ *               participantOhipLastName:
+ *                 type: string
+ *                 required: true
+ *               phoneNumber:
+ *                 type: string
+ *               participantOhipMiddleName:
+ *                 type: string
+ *               participantPreferredName:
+ *                 type: string
+ *                 required: true
+ *               guardianName:
+ *                 type: string
+ *               guardianPhoneNumber:
+ *                 type: string
+ *               guardianEmailAddress:
+ *                 type: string
+ *               guardianRelationship:
+ *                 type: string
+ *               mailingAddressStreet:
+ *                 type: string
+ *               mailingAddressCity:
+ *                 type: string
+ *               mailingAddressProvince:
+ *                 type: string
+ *               mailingAddressPostalCode:
+ *                 type: string
+ *               residentialPostalCode:
+ *                 type: string
+ *                 required: true
  *     responses:
- *       200:
+ *       201:
  *         description: The participant was successfully created.
  *       500:
  *         description: Error creating participant.
@@ -165,7 +214,7 @@ router.post('/', async (req, res) => {
 
 /**
  * @openapi
- * /participants/{id}:
+ * /participants/{participantId}:
  *   patch:
  *     tags:
  *       - Participant
@@ -174,21 +223,64 @@ router.post('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
- *        in: path
- *        description: Participant ID
- *        required: true
- *        schema:
- *          type: string
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               inviteId:
+ *                 type: string
+ *               dateOfBirth:
+ *                 type: string
+ *                 format: date
+ *               emailAddress:
+ *                 type: string
+ *                 format: email
+ *               participantOhipFirstName:
+ *                 type: string
+ *               participantOhipLastName:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: string
+ *               participantOhipMiddleName:
+ *                 type: string
+ *               participantPreferredName:
+ *                 type: string
+ *               guardianName:
+ *                 type: string
+ *               guardianPhoneNumber:
+ *                 type: string
+ *               guardianEmailAddress:
+ *                 type: string
+ *               guardianRelationship:
+ *                 type: string
+ *               mailingAddressStreet:
+ *                 type: string
+ *               mailingAddressCity:
+ *                 type: string
+ *               mailingAddressProvince:
+ *                 type: string
+ *               mailingAddressPostalCode:
+ *                 type: string
+ *               residentialPostalCode:
+ *                 type: string
  *     responses:
  *       200:
  *         description: The participant was successfully updated.
  *       500:
  *         description: Error updating participant.
  */
-router.patch('/:id', async (req, res) => {
-	logger.info('PATCH /participants/:id');
-	const { id } = req.params;
+router.patch('/:participantId', async (req, res) => {
+	logger.info('PATCH /participants/:participantId');
+	const { participantId } = req.params;
 	const {
 		inviteId,
 		dateOfBirth,
@@ -211,7 +303,7 @@ router.patch('/:id', async (req, res) => {
 	// TODO: add validation
 	try {
 		const participant = await updateParticipant({
-			id,
+			participantId,
 			inviteId,
 			dateOfBirth,
 			emailAddress,
@@ -230,7 +322,7 @@ router.patch('/:id', async (req, res) => {
 			mailingAddressPostalCode,
 			residentialPostalCode,
 		});
-		res.status(201).send({ participant });
+		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ error: 'Error updating participant' });

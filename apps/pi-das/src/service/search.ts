@@ -1,10 +1,10 @@
 import prisma, { Participant } from '../prismaClient';
 
-export const getParticipant = async (id: string): Promise<Participant> => {
+export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.findUniqueOrThrow({
 		where: {
-			id,
+			id: participantId,
 		},
 	});
 	return result;
