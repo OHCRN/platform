@@ -21,37 +21,30 @@ import React from 'react';
 
 function InfoCircle({ classes }: { classes?: string }) {
 	return (
-		<svg
-			className={classes}
-			width="24"
-			height="25"
-			viewBox="0 0 24 25"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<g clip-path="url(#clip0_34_3961)">
+		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+			<g clipPath="url(#clip0_34_3961)">
 				<rect
-					x="1"
-					y="1.50781"
 					width="22"
 					height="22"
-					rx="11"
+					x="1"
+					y="1.508"
 					stroke="currentColor"
-					stroke-width="2"
-				/>
-				<rect
-					x="13"
-					y="18"
-					width="2"
-					height="6"
-					transform="rotate(-180 13 18)"
+					strokeWidth="2"
+					rx="11"
+				></rect>
+				<path fill="currentColor" d="M13 18H15V24H13z" transform="rotate(-180 13 18)"></path>
+				<ellipse
+					cx="12"
+					cy="9"
 					fill="currentColor"
-				/>
-				<ellipse cx="12" cy="9" rx="1" ry="1" transform="rotate(-180 12 9)" fill="currentColor" />
+					rx="1"
+					ry="1"
+					transform="rotate(-180 12 9)"
+				></ellipse>
 			</g>
 			<defs>
 				<clipPath id="clip0_34_3961">
-					<rect width="24" height="24" fill="white" transform="translate(0 0.507812)" />
+					<path fill="#fff" d="M0 0H24V24H0z" transform="translate(0 .508)"></path>
 				</clipPath>
 			</defs>
 		</svg>

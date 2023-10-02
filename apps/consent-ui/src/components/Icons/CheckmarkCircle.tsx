@@ -21,29 +21,14 @@ import React from 'react';
 
 function CheckmarkCircle({ classes }: { classes?: string }) {
 	return (
-		<svg
-			className={classes}
-			width="24"
-			height="25"
-			viewBox="0 0 24 25"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<g clip-path="url(#clip0_34_3952)">
-				<rect
-					x="1"
-					y="1.50781"
-					width="22"
-					height="22"
-					rx="11"
-					stroke="currentColor"
-					stroke-width="2"
-				/>
-				<path d="M17 8.50781L10 15.5078L7 12.5078" stroke="currentColor" stroke-width="2" />
+		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+			<g stroke="currentColor" strokeWidth="2" clipPath="url(#clip0_34_3952)">
+				<rect width="22" height="22" x="1" y="1.508" rx="11"></rect>
+				<path d="M17 8.508l-7 7-3-3"></path>
 			</g>
 			<defs>
 				<clipPath id="clip0_34_3952">
-					<rect width="24" height="24" fill="white" transform="translate(0 0.507812)" />
+					<path fill="#fff" d="M0 0H24V24H0z" transform="translate(0 .508)"></path>
 				</clipPath>
 			</defs>
 		</svg>
