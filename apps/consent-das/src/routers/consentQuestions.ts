@@ -130,7 +130,7 @@ router.get('/:consentQuestionId', async (req, res) => {
  *   post:
  *     tags:
  *       - Consent Questions
- *     summary: Create Consent Question
+ *     name: Create Consent Question
  *     description: Create one consent question
  *     security:
  *       - bearerAuth: []
