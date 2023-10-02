@@ -2,8 +2,6 @@
 
 [![TypeScript](https://img.shields.io/badge/types-%20TypeScript-blue)](https://www.typescriptlang.org/)
 
-<!-- [![Prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://prettier.io/) -->
-
 <!-- | Release    | Build Status                                                                                                                                                                    |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Edge**   | [![Build Status](https://jenkins.qa.cancercollaboratory.org/buildStatus/icon?job=ARGO%2Fui%2Fdevelop)](https://jenkins.qa.cancercollaboratory.org/job/ARGO/job/ui/job/develop/) |
@@ -55,20 +53,11 @@ The directory structure is as follows:
 
 To keep commit messages consistent, we use [gitmoji](https://gitmoji.dev). To easily access emojis on Mac, press ctrl+cmd+space.
 
-<!--
-### Type checking
-
-- `npm run type-check`: trigger TypeScript type check for whole repo
-- `npm run type-check -- --watch`: runs the above with watch mode
-  - Any `npm run type-check` triggers `tsc`, so any flag layed out [here](https://www.typescriptlang.org/docs/handbook/compiler-options.html) can be used
-- If using [vscode](https://code.visualstudio.com/) (recommended), `tsc` can also be run as a task in the editor:
-  - `Cmd+Shift+B`, then select `tsc:build - tsconfig.json`
-  - This will report errors in vscode's `PROBLEMS` tab -->
-
 ## Local Development
 
 To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference.
 
+- In the [`./` project root folder](./), create an `.env` file copy of the root [`.env.schema`](./.env.schema) file
 - In the [`/apps/consent-api/` folder](./apps/consent-api/), create an `.env` file
 - In the [`/apps/consent-das/` folder](./apps/consent-das/), create an `.env` file
 - In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create and `.env.local` file
@@ -79,22 +68,26 @@ To run the setup locally, ensure you have provided the **required** environment 
 
 ## Environment Variables
 
-| Package       | Name              | Description                     | Type     | Required | Default                                                |
-| ------------- | ----------------- | ------------------------------- | -------- | -------- | ------------------------------------------------------ |
-| `consent-api` | `PORT`            | Port number for the Consent API | `number` | Optional | `8080`                                                 |
-| `consent-das` | `DATABASE_URL`    | URL for the Consent DB          | `string` | Required | postgres://postgres:postgres@localhost:5432/consent_db |
-| `consent-das` | `PORT`            | Port number for the Consent DAS | `number` | Optional | `8085`                                                 |
-| `data-mapper` | `PORT`            | Port number for the Data Mapper | `number` | Optional | `8081`                                                 |
-| `data-mapper` | `PI_DAS_URL`      | URL for the PI DAS              | `string` | Optional | http://localhost:8082                                  |
-| `data-mapper` | `PHI_DAS_URL`     | URL for the PHI DAS             | `string` | Optional | http://localhost:8083                                  |
-| `data-mapper` | `KEYS_DAS_URL`    | URL for the Keys DAS            | `string` | Optional | http://localhost:8084                                  |
-| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS         | `string` | Optional | http://localhost:8085                                  |
-| `keys-das`    | `DATABASE_URL`    | URL for the Keys DB             | `string` | Required | postgres://postgres:postgres@localhost:5432/keys_db    |
-| `keys-das`    | `PORT`            | Port number for the Keys DAS    | `number` | Optional | `8084`                                                 |
-| `phi-das`     | `DATABASE_URL`    | URL for the PHI DAS             | `string` | Required | postgres://postgres:postgres@localhost:5432/phi_db     |
-| `phi-das`     | `PORT`            | Port number for the PHI DAS     | `number` | Optional | `8083`                                                 |
-| `pi-das`      | `DATABASE_URL`    | URL for the PI DAS              | `string` | Required | postgres://postgres:postgres@localhost:5432/pi_db      |
-| `pi-das`      | `PORT`            | Port number for the PI DAS      | `number` | Optional | `8082`                                                 |
+| Package       | Name              | Description                       | Type     | Required | Default                                                  |
+| ------------- | ----------------- | --------------------------------- | -------- | -------- | -------------------------------------------------------- |
+| `.`           | `POSTGRES_USER`   | Docker Postgres database user     | `string` | Required | `postgres`                                               |
+| `.`           | `POSTGRES_USER`   | Docker Postgres database password | `string` | Required | `postgres`                                               |
+| `consent-api` | `PORT`            | Port number for the Consent API   | `number` | Optional | `8080`                                                   |
+| `consent-das` | `DATABASE_URL`    | URL for the Consent DB            | `string` | Required | `postgres://postgres:postgres@localhost:5432/consent_db` |
+| `consent-das` | `PORT`            | Port number for the Consent DAS   | `number` | Optional | `8085`                                                   |
+| `consent-ui`  | `CONSENT_API_URL` | URL for the Consent API           | `string` | Optional | `http://localhost:8080`                                  |
+| `consent-ui`  | `CONSENT_UI_URL`  | URL for the Consent UI            | `string` | Optional | `http://localhost:3000`                                  |
+| `data-mapper` | `PORT`            | Port number for the Data Mapper   | `number` | Optional | `8081`                                                   |
+| `data-mapper` | `PI_DAS_URL`      | URL for the PI DAS                | `string` | Optional | `http://localhost:8082`                                  |
+| `data-mapper` | `PHI_DAS_URL`     | URL for the PHI DAS               | `string` | Optional | `http://localhost:8083`                                  |
+| `data-mapper` | `KEYS_DAS_URL`    | URL for the Keys DAS              | `string` | Optional | `http://localhost:8084`                                  |
+| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS           | `string` | Optional | `http://localhost:8085`                                  |
+| `keys-das`    | `DATABASE_URL`    | URL for the Keys DB               | `string` | Required | `postgres://postgres:postgres@localhost:5432/keys_db`    |
+| `keys-das`    | `PORT`            | Port number for the Keys DAS      | `number` | Optional | `8084`                                                   |
+| `phi-das`     | `DATABASE_URL`    | URL for the PHI DAS               | `string` | Required | `postgres://postgres:postgres@localhost:5432/phi_db`     |
+| `phi-das`     | `PORT`            | Port number for the PHI DAS       | `number` | Optional | `8083`                                                   |
+| `pi-das`      | `DATABASE_URL`    | URL for the PI DAS                | `string` | Required | `postgres://postgres:postgres@localhost:5432/pi_db`      |
+| `pi-das`      | `PORT`            | Port number for the PI DAS        | `number` | Optional | `8082`                                                   |
 
 ## Setup
 
@@ -186,7 +179,7 @@ make stop
 
 Verify everything is running correctly by navigating to [`http://localhost:3000`](http://localhost:3000) for the Consent UI and [`http://localhost:8080`](http://localhost:8080/health) for the Consent API.
 
-### Dev Commands:
+### Dev Commands
 
 | Command                    | Description                                                     |
 | -------------------------- | --------------------------------------------------------------- |

@@ -44,7 +44,7 @@ function LanguageToggle({
 			linkLang={langToSelect}
 			role="button"
 			color="blue"
-			className={clsx(styles.base, styles.primary, styles.blue)}
+			className={clsx(styles.base, styles.secondary, styles.blue)}
 		>
 			{children}
 		</LocalizedLink>

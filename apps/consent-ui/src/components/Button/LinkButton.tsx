@@ -4,12 +4,14 @@ import Link from 'next/link';
 
 import styles from './Button.module.scss';
 
-import { ButtonColor, ButtonVariant } from '.';
+import { ButtonColor, ButtonSize, ButtonVariant, ButtonLayout } from '.';
 
 const LinkButton = ({
 	href,
 	variant = 'primary',
 	color = 'default',
+	size = 'base',
+	layout = 'default',
 	children,
 	className = '',
 }: {
@@ -17,12 +19,21 @@ const LinkButton = ({
 	children: ReactNode;
 	variant?: ButtonVariant;
 	color?: ButtonColor;
+	size?: ButtonSize;
+	layout?: ButtonLayout;
 	className?: string;
 }) => {
 	return (
 		<Link
 			href={href}
-			className={clsx(styles.base, styles[variant], styles[color], className)}
+			className={clsx(
+				styles.base,
+				styles[variant],
+				styles[color],
+				styles[size],
+				styles[layout],
+				className,
+			)}
 			role="button"
 		>
 			{children}

@@ -47,22 +47,24 @@ const router = Router();
  *     responses:
  *       200:
  *         description: The list of participants was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Error retrieving participants.
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /participants');
-	// TODO: add error handling
-	const participants = await getParticipants();
-	res.send({ participants: [participants] });
+	try {
+		const participants = await getParticipants();
+		res.status(200).send({ participants });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ error: 'Error retrieving participants' });
+	}
 });
 
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants/{id}:
+ * /participants/{participantId}:
  *   get:
  *     tags:
  *       - Participants
@@ -71,7 +73,7 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
+ *      - name: participantId
  *        in: path
  *        description: Participant ID
  *        required: true
@@ -80,10 +82,8 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Error retrieving participant.
  */
 router.get('/:participantId', async (req, res) => {
 	logger.info('GET /participants/:participantId');
@@ -94,21 +94,62 @@ router.get('/:participantId', async (req, res) => {
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant not found' });
+		res.status(500).send({ error: 'Error retrieving participant' });
 	}
 });
 
-// TODO: add proper JSDoc comments
+// TODO: update JSDoc comments
+/**
+ * @openapi
+ * /participants:
+ *   post:
+ *     tags:
+ *       - Participants
+ *     produces: application/json
+ *     name: Create Participant
+ *     description: Create a new participant
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               emailVerified:
+ *                 type: boolean
+ *               isGuardian:
+ *                 type: boolean
+ *               consentGroup:
+ *                 type: Enum
+ * 				   enum: [ADULT_CONSENT, ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER, GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, YOUNG_ADULT_CONSENT]
+ *               guardianIdVerified:
+ *                 	type: boolean
+ * 			   required:
+ *               - emailVerified
+ *               - isGuardian
+ *     responses:
+ *       201:
+ *         description: The participant was successfully created.
+ *       500:
+ *         description: Error creating participant.
+ */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { participantId, emailVerified } = req.body;
+	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
 	// TODO: add validation
 	try {
-		const participant = await createParticipant({ participantId, emailVerified });
+		const participant = await createParticipant({
+			emailVerified,
+			isGuardian,
+			consentGroup,
+			guardianIdVerified,
+		});
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
+		res.status(500).send({ error: 'Error retrieving participant' });
 	}
 });
 

@@ -43,9 +43,12 @@ export const getTranslation: GetTranslation = async (
 		// .split('.')
 		// .reduce((obj, key) => obj && obj[key], dictionary);
 
-		if (!translation) {
+		// Use Object.hasOwn() to check instead of !translation to prevent false negatives for empty strings
+		if (!Object.hasOwn(dictionary, key)) {
 			// TODO: add error handling/default values for missing translations
-			console.error('Could not find translation');
+			console.error(
+				`Could not find "${language}" translation for key "${key}" in namespace "${namespace}"`,
+			);
 			return key;
 		}
 		// for interpolation

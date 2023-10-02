@@ -25,6 +25,13 @@ import logger from '../logger';
 
 const router = Router();
 
+/**
+ * @openapi
+ * tags:
+ *   - name: OHIP Keys
+ *     description: OHIP Key management
+ */
+
 // TODO: add proper JSDoc comments
 // get all ohip keys
 router.get('/', async (req, res) => {
