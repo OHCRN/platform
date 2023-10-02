@@ -50,8 +50,13 @@ const router = Router();
  *         in: query
  *         description: Consent question category
  *         schema:
- *            type: Enum
- *            enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
+ *           type: string
+ *           enum:
+ *             - INFORMED_CONSENT
+ *             - CONSENT_RELEASE_DATA
+ *             - CONSENT_RESEARCH_PARTICIPATION
+ *             - CONSENT_RECONTACT
+ *             - CONSENT_REVIEW_SIGN
  *     responses:
  *       200:
  *         description: The list of questions was successfully retrieved.
@@ -94,12 +99,12 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: consentQuestionId
- *        in: path
- *        description: Consent Question ID
- *        required: true
- *        schema:
- *          type: string
+ *       - name: consentQuestionId
+ *         in: path
+ *         description: Consent Question ID
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The question was successfully retrieved.
@@ -121,7 +126,7 @@ router.get('/:consentQuestionId', async (req, res) => {
 
 /**
  * @openapi
- * /consent-questions/:
+ * /consent-questions:
  *   post:
  *     tags:
  *       - Consent Questions
@@ -141,8 +146,8 @@ router.get('/:consentQuestionId', async (req, res) => {
  *               isActive:
  *                 type: boolean
  *               category:
- *                 type: Enum
- * 				   enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
+ *                 type: string
+ *                 enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
  *     responses:
  *       201:
  *         description: The question was successfully created.
@@ -168,17 +173,17 @@ router.post('/', async (req, res) => {
  *   patch:
  *     tags:
  *       - Consent Questions
- *     name: Create Consent Question
+ *     name: Update Consent Question
  *     description: Update consent question's isActive field by ID
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: consentQuestionId
- *        in: path
- *        description: Consent Question ID
- *        required: true
- *        schema:
- *          type: string
+ *       - name: consentQuestionId
+ *         in: path
+ *         description: Consent Question ID
+ *         required: true
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
