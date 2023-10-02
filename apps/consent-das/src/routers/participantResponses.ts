@@ -73,6 +73,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		const participant_responses = await getParticipantResponses(
 			participantId,
 			consentQuestionId,
+			// TODO: add validation in getParticipantResponses and fix `as Prisma.SortOrder`
 			sort_order as Prisma.SortOrder | undefined,
 		);
 		res.status(200).send({ participant_responses });

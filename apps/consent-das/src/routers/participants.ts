@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
 	logger.info('GET /participants');
 	try {
 		const participants = await getParticipants();
-		res.send({ participants });
+		res.status(200).send({ participants });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ error: 'Error retrieving participants' });
@@ -131,7 +131,7 @@ router.get('/:participantId', async (req, res) => {
  *               - isGuardian
  *     responses:
  *       201:
- *         description: The participant was successfully retrieved.
+ *         description: The participant was successfully created.
  *       500:
  *         description: Error creating participant.
  */

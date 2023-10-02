@@ -67,20 +67,19 @@ router.get('/', async (req, res) => {
 	if (category) {
 		try {
 			const questions = await getConsentQuestions(ConsentCategory.parse(category));
-			res.send({ questions });
+			res.status(200).send({ questions });
+		} catch (error) {
+			logger.error(error);
+			res.status(400).send({ error: 'Error retrieving consent questions' });
+		}
+	} else {
+		try {
+			const questions = await getConsentQuestions();
+			res.status(200).send({ questions });
 		} catch (error) {
 			logger.error(error);
 			res.status(500).send({ error: 'Error retrieving consent questions' });
-			return;
 		}
-	}
-
-	try {
-		const questions = await getConsentQuestions();
-		res.send({ questions });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving consent questions' });
 	}
 });
 
@@ -145,7 +144,7 @@ router.get('/:consentQuestionId', async (req, res) => {
  *                 type: Enum
  * 				   enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
  *     responses:
- *       200:
+ *       201:
  *         description: The question was successfully created.
  *       500:
  *         description: The question could not be created.
@@ -202,7 +201,7 @@ router.patch('/:consentQuestionId', async (req, res) => {
 	// TODO: add validation
 	try {
 		const question = await updateConsentQuestionIsActive({ consentQuestionId, isActive });
-		res.status(201).send({ question });
+		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ error: 'Error updating consent question active state' });
