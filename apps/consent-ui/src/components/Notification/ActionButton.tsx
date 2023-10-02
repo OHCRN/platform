@@ -19,11 +19,11 @@
 
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 
 import Button from '../Button';
 
-const ActionButton = ({ children, className }: PropsWithChildren<{ className?: string }>) => {
+const ActionButton = ({ children, className }: { children: ReactNode; className?: string }) => {
 	return (
 		<Button variant="primary" color="blue" className={className} onClick={() => {}}>
 			{children}
