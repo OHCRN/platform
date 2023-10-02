@@ -17,28 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import bodyParser from 'body-parser';
-import errorHandler from 'error-handler';
+import { NextFunction, Request, Response } from 'express';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
+/**
+ * Set default response for unhandled errors to be json instead of html.
+ * @param err
+ * @param _req
+ * @param res
+ * @param next
+ * @returns
+ */
+function errorHandler(err: unknown, _req: Request, res: Response, next: NextFunction): any {
+	if (res.headersSent) {
+		return next(err);
+	}
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-	app.use(errorHandler);
+	const defaultName = 'ServerError';
+	const error = err instanceof Error ? err.name || defaultName : defaultName;
 
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
+	const status = 500;
 
-	return app;
-};
+	const message = 'An error occurred.';
 
-export default App;
+	res.status(status).json({ error, message });
+
+	// Pass the error to any other error handlers, including express default.
+	next(err);
+}
+
+export default errorHandler;
