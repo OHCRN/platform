@@ -62,7 +62,7 @@ const router = Router();
  *       200:
  *         description: The participant responses were successfully retrieved.
  *       500:
- *         description: Could not retrieve participant responses.
+ *         description: Error retrieving participant responses.
  */
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
@@ -112,7 +112,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *       201:
  *         description: The participant response was successfully created.
  *       500:
- *         description: Unable to create participant response.
+ *         description: Error creating participant response.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participant-responses');

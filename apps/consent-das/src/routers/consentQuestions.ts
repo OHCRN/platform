@@ -58,7 +58,7 @@ const router = Router();
  *       400:
  *         description: The specified category was invalid.
  *       500:
- *         description: Could not fetch consent questions.
+ *         description: Error retrieving consent questions.
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /consent-questions');
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
 			res.status(200).send({ questions });
 		} catch (error) {
 			logger.error(error);
-			res.status(400).send({ error: 'Error retrieving consent questions' });
+			res.status(400).send({ error: 'The specified category was invalid' });
 		}
 	} else {
 		try {
@@ -147,7 +147,7 @@ router.get('/:consentQuestionId', async (req, res) => {
  *       201:
  *         description: The question was successfully created.
  *       500:
- *         description: The question could not be created.
+ *         description: Error creating consent question.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /consent-questions');
@@ -192,7 +192,7 @@ router.post('/', async (req, res) => {
  *       200:
  *         description: The question's isActive field was successfully updated.
  *       500:
- *         description: The question's isActive field could not be updated.
+ *         description: Error updating consent question active state.
  */
 router.patch('/:consentQuestionId', async (req, res) => {
 	logger.info('PATCH /consent-questions/:consentQuestionId');
