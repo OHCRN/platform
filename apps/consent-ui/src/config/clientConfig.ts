@@ -19,36 +19,45 @@
 
 import urlJoin from 'url-join';
 
+import { defaultAppConfig, getAppConfig } from '@/config';
+
 const BUILD_TIME_VARIABLES = {
-	RUNTIME_CONFIG_URL: urlJoin(
+	// Next.js local API route for the blocking data fetch
+	BLOCKING_FETCH_URL: urlJoin(
 		process.env.CONSENT_UI_URL || 'http://localhost:3000',
 		'api',
-		'config',
+		'status',
 	),
 };
 
-export async function getAppClientConfig() {
-	// get environment variables for client components (AppConfig context provider)
-	// cache: "no-store" ensures it's run server side
-	// fetch isn't actually doing anything except forcing server side render
-	// it's a "blocking" data call
-	// this is a server component so we have full access to process.env and can get vars from here
-	// url cannot be root - will cause infinite loop
+/**
+ * Get environment variables for Client Components (i.e. AppConfigContext)
+
+ * This is a workaround to expose runtime env vars to the client. We make
+ * a dummy fetch call which forces the code to be run server side, and
+ * then access and expose process.env to the client.
+ */
+export async function getClientAppConfig() {
 	try {
-		const configResp = await fetch(BUILD_TIME_VARIABLES.RUNTIME_CONFIG_URL, {
-			// this should fail during build
+		// Dummy fetch call to block the variables from being set at build time
+		const appConfig = await fetch(BUILD_TIME_VARIABLES.BLOCKING_FETCH_URL, {
+			// Opt-out of Next.js caching, forcing the fetch to run server side
+			// https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#opting-out-of-data-caching
 			next: { revalidate: 0 },
-		}).then((resp) => resp.json());
-		return configResp;
+		}).then(() => {
+			// Since this is a Server Component, we have access to process.env
+			// Take advantage of this to expose the env vars to the client
+			return getAppConfig(process.env);
+		});
+		return appConfig;
 	} catch (e) {
+		// Next.js local API is unavailable during build time
 		if (process.env.NEXT_IS_BUILDING === 'true') {
-			console.log(
-				"Failed to retrieve server runtime config. Colocated api route won't be available during build.",
-			);
+			console.log('Attempted to fetch server runtime config during build. Skipping...');
 		} else {
 			console.error(e);
 		}
-		// AppConfigContextProvider will provide defaultAppConfig
-		return {};
+		// Provide defaultAppConfig during builds
+		return defaultAppConfig;
 	}
 }

@@ -17,13 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
+'use client';
 
-import { getAppConfig } from '@/config';
+import { useEffect, useState } from 'react';
 
-export async function GET() {
-	headers();
-	const appConfig = getAppConfig(process.env);
-	return NextResponse.json(appConfig);
-}
+import { ValidLanguage } from '@/i18n';
+import { getAPIStatus } from '@/services/api';
+
+import APIVersionLabel from './APIVersionLabel';
+
+const APIVersion = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const [apiVersion, setApiVersion] = useState<string>('N/A');
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const { version } = await getAPIStatus();
+			setApiVersion(version);
+		};
+		fetchData();
+	}, []);
+
+	return <APIVersionLabel apiVersion={apiVersion} currentLang={currentLang} />;
+};
+
+export default APIVersion;
