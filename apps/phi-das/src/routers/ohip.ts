@@ -25,6 +25,13 @@ import logger from '../logger';
 
 const router = Router();
 
+/**
+ * @openapi
+ * tags:
+ *   - name: OHIP
+ *     description: OHIP data management
+ */
+
 // TODO: add proper JSDoc comments
 router.get('/', async (req, res) => {
 	logger.info('GET /ohip');
