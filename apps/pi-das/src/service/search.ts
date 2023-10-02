@@ -16,11 +16,11 @@ export const getParticipants = async (): Promise<Participant[]> => {
 	return result;
 };
 
-export const getClinicianInvite = async (id: string): Promise<ClinicianInvite> => {
+export const getClinicianInvite = async (inviteId: string): Promise<ClinicianInvite> => {
 	// TODO: add error handling
 	const result = await prisma.clinicianInvite.findUniqueOrThrow({
 		where: {
-			id,
+			id: inviteId,
 		},
 	});
 	return result;

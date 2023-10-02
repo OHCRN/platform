@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
 	logger.info('GET /clinician-invites');
 	try {
 		const invites = await getClinicianInvites();
-		res.send({ invites });
+		res.status(200).send({ invites });
 	} catch (error) {
 		res.status(500).send({ error: 'Error retrieving clinician invites' });
 	}
@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /clinician-invites/{id}:
+ * /clinician-invites/{inviteId}:
  *   get:
  *     tags:
  *       - Clinician Invites
@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
+ *      - name: inviteId
  *        in: path
  *        description: Invite ID
  *        required: true
@@ -84,12 +84,12 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Error retrieving clinician invite.
  */
-router.get('/:id', async (req, res) => {
-	logger.info('GET /clinician-invites/:id');
-	const { id } = req.params;
+router.get('/:inviteId', async (req, res) => {
+	logger.info('GET /clinician-invites/:inviteId');
+	const { inviteId } = req.params;
 	// TODO: add validation
 	try {
-		const invite = await getClinicianInvite(id);
+		const invite = await getClinicianInvite(inviteId);
 		res.status(200).send({ invite });
 	} catch (error) {
 		logger.error(error);
@@ -107,8 +107,39 @@ router.get('/:id', async (req, res) => {
  *     description: Create one clincian invite
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               participantFirstName:
+ *                 type: string
+ *                 required: true
+ *               participantLastName:
+ *                 type: string
+ *                 required: true
+ *               participantEmailAddress:
+ *                 type: string
+ *                 format: email
+ *                 required: true
+ *               participantPhoneNumber:
+ *                 type: string
+ *                 required: true
+ *               participantPreferredName:
+ *                 type: string
+ *               guardianName:
+ *                 type: string
+ *               guardianPhoneNumber:
+ *                 type: string
+ *               guardianEmailAddress:
+ *                 type: string
+ *                 format: email
+ *               guardianRelationship:
+ *                 type: string
  *     responses:
- *       200:
+ *       201:
  *         description: The clincian invite was successfully created.
  *       500:
  *         description: Error creating clincian invite.

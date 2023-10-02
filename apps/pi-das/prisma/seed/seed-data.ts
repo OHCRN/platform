@@ -45,7 +45,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	},
 ];
 
-const clinicianInvites = [
+const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		participantFirstName: 'Bruce',
 		participantLastName: 'Wayne',
