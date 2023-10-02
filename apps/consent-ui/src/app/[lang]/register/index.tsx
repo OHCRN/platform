@@ -20,6 +20,7 @@
 import Link from 'next/link';
 
 import { getTranslation, ValidLanguage } from '@/i18n';
+import ReCaptchaSubmit from '@/components/ReCaptchaSubmit';
 
 const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang);
@@ -27,6 +28,9 @@ const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLang
 		<div>
 			<h2>{translate('register')}</h2>
 			<Link href={`/${currentLang}`}>{translate('home')}</Link>
+			<form>
+				<ReCaptchaSubmit />
+			</form>
 		</div>
 	);
 };

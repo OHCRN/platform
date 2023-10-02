@@ -22,6 +22,8 @@ export type AppConfig = {
 	CONSENT_URL: string;
 	FEATURE_FLAG: boolean;
 	TEST_RUNTIME_VAR: string;
+	RECAPTCHA_SITE_KEY?: string;
+	RECAPTCHA_SECRET_KEY?: string;
 };
 
 export const defaultAppConfig = {
@@ -29,6 +31,8 @@ export const defaultAppConfig = {
 	CONSENT_URL: 'http://localhost:3000',
 	FEATURE_FLAG: true,
 	TEST_RUNTIME_VAR: 'testingtesting',
+	RECAPTCHA_SITE_KEY: undefined,
+	RECAPTCHA_SECRET_KEY: undefined,
 };
 
 /**
@@ -51,6 +55,14 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 			  defaultAppConfig.FEATURE_FLAG,
 	TEST_RUNTIME_VAR:
 		serverEnv.TEST_RUNTIME_VAR || process.env.TEST_RUNTIME_VAR || defaultAppConfig.TEST_RUNTIME_VAR,
+	RECAPTCHA_SITE_KEY:
+		serverEnv.RECAPTCHA_SITE_KEY ||
+		process.env.RECAPTCHA_SITE_KEY ||
+		defaultAppConfig.RECAPTCHA_SITE_KEY,
+	RECAPTCHA_SECRET_KEY:
+		serverEnv.RECAPTCHA_SECRET_KEY ||
+		process.env.RECAPTCHA_SECRET_KEY ||
+		defaultAppConfig.RECAPTCHA_SECRET_KEY,
 });
 
 export { getAppConfig };

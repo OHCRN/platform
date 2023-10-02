@@ -44,6 +44,7 @@ const Button = ({
 		<button
 			className={clsx(styles.base, styles[variant], styles[color], disabled, styles[className])}
 			onClick={onClick}
+			type="button"
 		>
 			{children}
 		</button>
