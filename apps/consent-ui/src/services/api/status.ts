@@ -18,7 +18,7 @@
  */
 
 import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'common/service';
+import { APIStatus } from 'common/services';
 
 import { API } from '@/constants';
 import { axiosClient } from '@/services/api';

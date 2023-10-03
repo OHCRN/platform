@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { APIStatus } from 'common/service';
+import { APIStatus } from 'common/services';
 
 import { version } from '@/../../package.json';
 import logger from '@/logger';

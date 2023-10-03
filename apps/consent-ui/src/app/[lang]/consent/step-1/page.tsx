@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'common/entity';
+import { ConsentCategory } from 'common/entities';
 
 import { ValidLanguage } from '@/i18n';
 import ConsentForm from '@/components/ConsentForm';

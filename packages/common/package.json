@@ -4,8 +4,8 @@
   "description": "",
   "exports": {
     ".": "./dist/index.js",
-    "./service": "./dist/service/index.js",
-    "./entity": "./dist/entity/index.js",
+    "./services": "./dist/services/index.js",
+    "./entities": "./dist/entities/index.js",
     "./package.json": "./package.json"
   },
   "scripts": {

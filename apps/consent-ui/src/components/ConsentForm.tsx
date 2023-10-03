@@ -18,7 +18,7 @@
  */
 
 import Link from 'next/link';
-import { ConsentCategory } from 'common';
+import { ConsentCategory } from 'common/entities';
 
 import { getTranslation, Translation, ValidLanguage } from '@/i18n';
 import LocalizedLink from '@/components/Link/LocalizedLink';

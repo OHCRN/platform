@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ConsentCategory } from 'common';
+import { ConsentCategory } from 'common/entities';
 
 import { updateConsentQuestionIsActive } from '../service/update';
 import { getConsentQuestion, getConsentQuestions } from '../service/search';
