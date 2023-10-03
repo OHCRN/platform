@@ -23,7 +23,6 @@ import { getParticipant, getParticipants } from '../service/search';
 import { createParticipant } from '../service/create';
 import logger from '../logger';
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * tags:
@@ -33,7 +32,6 @@ import logger from '../logger';
 
 const router = Router();
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participants:
@@ -61,7 +59,6 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participants/{participantId}:
@@ -98,7 +95,6 @@ router.get('/:participantId', async (req, res) => {
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participants:
@@ -154,7 +150,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving participant' });
+		res.status(500).send({ error: 'Error creating participant' });
 	}
 });
 

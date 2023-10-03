@@ -18,7 +18,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	},
 ];
 
-const consentQuestions = [
+const consentQuestions: Prisma.ConsentQuestionCreateInput[] = [
 	{
 		id: 'informed-consent__read-and-understand',
 		isActive: true,
@@ -61,4 +61,16 @@ const consentQuestions = [
 	},
 ];
 
-export { participants, consentQuestions };
+const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
+	{
+		clinicianFirstName: "Steven",
+		clinicianInstitutionalEmailAddress: "doctor.strange@example.com",
+		clinicianLastName: "Strange",
+		clinicianTitle: "Neurosurgeon",
+		consentGroup: "ADULT_CONSENT",
+		consentToBeContacted: true,
+		inviteSentDate: "2023-10-03",
+	}
+];
+
+export { participants, consentQuestions, clinicianInvites };

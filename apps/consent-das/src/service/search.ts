@@ -1,4 +1,4 @@
-import { Prisma } from '../generated/client';
+import { ClinicianInvite, Prisma } from '../generated/client';
 import prisma, {
 	Participant,
 	ConsentQuestion,
@@ -60,5 +60,21 @@ export const getParticipantResponses = async (
 			submittedAt: sortOrder,
 		},
 	});
+	return result;
+};
+
+export const getClinicianInvite = async (inviteId: string): Promise<ClinicianInvite> => {
+	// TODO: add error handling
+	const result = await prisma.clinicianInvite.findUniqueOrThrow({
+		where: {
+			id: inviteId,
+		},
+	});
+	return result;
+};
+
+export const getClinicianInvites = async (): Promise<ClinicianInvite[]> => {
+	// TODO: add error handling
+	const result = await prisma.clinicianInvite.findMany();
 	return result;
 };

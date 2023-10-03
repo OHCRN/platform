@@ -1,7 +1,7 @@
 import { PrismaClient } from '../../src/generated/client';
 import logger from '../../src/logger';
 
-import { consentQuestions, participants } from './seed-data';
+import { clinicianInvites, consentQuestions, participants } from './seed-data';
 
 const prisma = new PrismaClient();
 
@@ -16,6 +16,10 @@ const seed = async () => {
 		await prisma.consentQuestion.deleteMany({});
 		logger.info('Deleting existing consent questions...COMPLETE');
 
+		logger.info('Deleting existing clinician invites...');
+		await prisma.clinicianInvite.deleteMany({});
+		logger.info('Deleting existing clinician invites...COMPLETE');
+
 		logger.info('Creating new participants from seed data...');
 		await prisma.participant.createMany({
 			data: participants,
@@ -29,6 +33,13 @@ const seed = async () => {
 			skipDuplicates: true,
 		});
 		logger.info('Creating new consent questions from seed data...COMPLETE');
+
+		logger.info('Creating new clinician invites from seed data...');
+		await prisma.clinicianInvite.createMany({
+			data: clinicianInvites,
+			skipDuplicates: true,
+		});
+		logger.info('Creating new clinician invites from seed data...COMPLETE');
 	} catch (error) {
 		logger.error('Error seeding database: ', error);
 		await prisma.$disconnect();

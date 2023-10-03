@@ -52,3 +52,16 @@ model ParticipantResponse {
 
   @@id([id, participantId, consentQuestionId])
 }
+
+model ClinicianInvite {
+  id String @id @default(cuid())
+  clinicianFirstName String
+  clinicianInstitutionalEmailAddress String
+  clinicianLastName String
+  clinicianTitle String
+  consentGroup ConsentGroup
+  consentToBeContacted Boolean
+  inviteSentDate String? @db.Char(10)
+  inviteAcceptedDate String? @db.Char(10)
+  inviteAccepted Boolean?
+}
