@@ -11,7 +11,6 @@ generator client {
 model Participant {
   id                        String           @id @default(cuid())
   inviteId                  String?
-  clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   dateOfBirth               String           @db.Char(10)
   emailAddress              String           @unique
   participantOhipFirstName  String
@@ -30,16 +29,3 @@ model Participant {
   residentialPostalCode     String           @db.Char(6)
 }
 
-model ClinicianInvite {
-  id                       String        @id @default(cuid())
-  participantFirstName     String
-  participantLastName      String
-  participantEmailAddress  String        @unique
-  participantPhoneNumber   String        @db.Char(10)
-  participantPreferredName String?
-  guardianName             String?
-  guardianPhoneNumber      String?       @db.Char(10)
-  guardianEmailAddress     String?
-  guardianRelationship     String?
-  Participant              Participant[]
-}
