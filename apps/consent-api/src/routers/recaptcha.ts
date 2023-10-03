@@ -27,6 +27,11 @@ const router = Router();
 
 router.post('/', async (req, res) => {
 	const { recaptchaToken, inputData } = req.body;
+
+	if (!recaptchaToken) {
+		res.status(403).send('reCAPTCHA required');
+	}
+
 	try {
 		const recaptchaVerification = await axios.post(
 			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
@@ -35,7 +40,7 @@ router.post('/', async (req, res) => {
 			// do what the request was supposed to do
 			res.status(200).send({ message: 'reCAPTCHA verified', inputData });
 		} else {
-			res.status(500).send('reCAPTCHA failed');
+			res.status(403).send('reCAPTCHA failed');
 		}
 	} catch (error) {
 		console.error('reCAPTCHA error', error);
