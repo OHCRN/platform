@@ -18,7 +18,6 @@
  */
 
 import { Router } from 'express';
-// TODO: fix exports from common (e.g. import { APIStatus } from 'common' or 'common/service')
 import { APIStatus } from 'common/service';
 
 import { version } from '@/../../package.json';
