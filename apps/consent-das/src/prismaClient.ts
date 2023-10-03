@@ -22,6 +22,7 @@ import {
 	Participant,
 	ConsentQuestion,
 	ConsentCategory,
+	ConsentGroup,
 	ParticipantResponse,
 } from './generated/client';
 import logger from './logger';
@@ -29,5 +30,5 @@ import logger from './logger';
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();
 
-export { Participant, ConsentQuestion, ConsentCategory, ParticipantResponse };
+export { Participant, ConsentQuestion, ConsentCategory, ConsentGroup, ParticipantResponse };
 export default prisma;

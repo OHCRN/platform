@@ -55,7 +55,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</div>
 				{/* TODO: implement real help button, ticket TBD */}
 				<div className={styles.help}>
-					<HelpButton />
+					<HelpButton label={translate('help')} />
 				</div>
 				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 				{/* TODO: implement user menu, ticket TBD */}

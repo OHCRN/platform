@@ -23,7 +23,7 @@ import { ValidLanguage } from '@/i18n';
 import { supportedLanguages } from '@/i18n/settings';
 import PageLayout from '@/components/PageLayout';
 import AppConfigContextProvider from '@/components/AppConfigContextProvider';
-import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
+import { getClientAppConfig } from '@/config';
 
 import '../globals.css';
 
@@ -50,11 +50,11 @@ export default async function RootLayout({
 	children: React.ReactNode;
 	params: { lang: ValidLanguage };
 }) {
-	const appClientConfig = await getAppClientConfig();
+	const clientAppConfig = await getClientAppConfig();
 	return (
 		<html lang={lang}>
 			<body className={`${montserrat.className}`}>
-				<AppConfigContextProvider config={appClientConfig}>
+				<AppConfigContextProvider config={clientAppConfig}>
 					<PageLayout currentLang={lang}>{children}</PageLayout>
 				</AppConfigContextProvider>
 			</body>

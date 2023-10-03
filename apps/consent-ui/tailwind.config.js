@@ -39,15 +39,26 @@ module.exports = {
       sm: '1rem',
       md: '3rem',
       lg: '5rem',
-      button: {
-        base: '1.2rem 2.5rem',
-      }
     },
     extend: {
       screens: {
+        /* As per tailwind's mobile screen first responsive styling, these breakpoints indicate
+           min-width dimensions, see https://tailwindcss.com/docs/screens for more details.
+           Base styling is for mobile screens, and with our customized breakpoints screen sizes are:
+           - sm: tablet
+           - md: smaller desktop
+           - xl: normal desktop
+           - 2xl: wide desktop
+        */
         sm: '480px',
         md: '1024px',
       },
+      backgroundImage: (theme) => ({
+        gradient: {
+          forward: `linear-gradient(to right, ${theme('colors.primary.500')}, ${theme('colors.secondary.500')})`,
+          reverse: `linear-gradient(to left, ${theme('colors.primary.500')}, ${theme('colors.secondary.500')})`,
+        }
+      }),
     },
   },
   plugins: [],

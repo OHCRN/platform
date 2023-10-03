@@ -21,6 +21,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import { AppConfig } from './config';
+import SwaggerRouter from './routers/swagger';
 import OhipKeysRouter from './routers/ohipKeys';
 
 const App = (config: AppConfig) => {
@@ -28,6 +29,7 @@ const App = (config: AppConfig) => {
 	app.set('port', config.port);
 	app.use(bodyParser.json());
 
+	app.use('/api-docs', SwaggerRouter);
 	app.use('/ohip-keys', OhipKeysRouter);
 
 	return app;
