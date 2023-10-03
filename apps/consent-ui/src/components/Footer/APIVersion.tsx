@@ -17,38 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import urlJoin from 'url-join';
+'use client';
 
-const BUILD_TIME_VARIABLES = {
-	RUNTIME_CONFIG_URL: urlJoin(
-		process.env.CONSENT_UI_URL || 'http://localhost:3000',
-		'api',
-		'config',
-	),
+import { useEffect, useState } from 'react';
+
+import { ValidLanguage } from '@/i18n';
+import { getAPIStatus } from '@/services/api';
+
+import APIVersionLabel from './APIVersionLabel';
+
+const APIVersion = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const [apiVersion, setApiVersion] = useState<string>('N/A');
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const { version } = await getAPIStatus();
+			setApiVersion(version);
+		};
+		fetchData();
+	}, []);
+
+	return <APIVersionLabel apiVersion={apiVersion} currentLang={currentLang} />;
 };
 
-export async function getAppClientConfig() {
-	// get environment variables for client components (AppConfig context provider)
-	// cache: "no-store" ensures it's run server side
-	// fetch isn't actually doing anything except forcing server side render
-	// it's a "blocking" data call
-	// this is a server component so we have full access to process.env and can get vars from here
-	// url cannot be root - will cause infinite loop
-	try {
-		const configResp = await fetch(BUILD_TIME_VARIABLES.RUNTIME_CONFIG_URL, {
-			// this should fail during build
-			next: { revalidate: 0 },
-		}).then((resp) => resp.json());
-		return configResp;
-	} catch (e) {
-		if (process.env.NEXT_IS_BUILDING === 'true') {
-			console.log(
-				"Failed to retrieve server runtime config. Colocated api route won't be available during build.",
-			);
-		} else {
-			console.error(e);
-		}
-		// AppConfigContextProvider will provide defaultAppConfig
-		return {};
-	}
-}
+export default APIVersion;

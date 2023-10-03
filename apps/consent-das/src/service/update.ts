@@ -1,16 +1,16 @@
 import prisma, { ConsentQuestion } from '../prismaClient';
 
 export const updateConsentQuestionIsActive = async ({
-	id,
+	consentQuestionId,
 	isActive,
 }: {
-	id: string;
+	consentQuestionId: string;
 	isActive: boolean;
 }): Promise<ConsentQuestion> => {
 	// TODO: add error handling
 	const result = await prisma.consentQuestion.update({
 		where: {
-			id,
+			id: consentQuestionId,
 		},
 		data: {
 			isActive,

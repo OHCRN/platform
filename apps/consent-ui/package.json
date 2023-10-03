@@ -4,11 +4,11 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "NEXT_IS_BUILDING=true next build",
 		"start": "next start",
 		"lint": "eslint .",
 		"test": "nyc mocha",
-		"test-runtime-vars": "next build && FEATURE_FLAG=true next start"
+		"test-runtime-vars": "NEXT_IS_BUILDING=true next build && FEATURE_FLAG=true next start"
 	},
 	"dependencies": {
 		"@types/react": "18.2.14",

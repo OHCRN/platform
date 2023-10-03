@@ -24,11 +24,15 @@ import styles from './Button.module.scss';
 
 export type ButtonVariant = 'primary' | 'secondary';
 export type ButtonColor = 'default' | 'blue' | 'green';
+export type ButtonSize = 'base' | 'large';
+export type ButtonLayout = 'default' | 'icon';
 export interface ButtonProps {
 	children: ReactNode;
 	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
 	variant?: ButtonVariant;
 	color?: ButtonColor;
+	size?: ButtonSize;
+	layout?: ButtonLayout;
 	disabled?: boolean;
 	className?: string;
 }
@@ -37,12 +41,22 @@ const Button = ({
 	onClick,
 	variant = 'primary',
 	color = 'default',
+	size = 'base',
+	layout = 'default',
 	disabled = false,
 	className = '',
 }: ButtonProps) => {
 	return (
 		<button
-			className={clsx(styles.base, styles[variant], styles[color], disabled, styles[className])}
+			className={clsx(
+				styles.base,
+				styles[variant],
+				styles[color],
+				styles[size],
+				styles[layout],
+				className,
+			)}
+			disabled={disabled}
 			onClick={onClick}
 			type="button"
 		>
