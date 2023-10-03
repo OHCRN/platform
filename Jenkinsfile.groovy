@@ -4,7 +4,7 @@ kind: Pod
 spec:
   containers:
   - name: node
-    image: node:18.16.1-alpine
+    image: node:18
     tty: true
     env:
     - name: DOCKER_HOST
@@ -43,8 +43,8 @@ pipeline {
 
     environment {
         containerRegistry = 'ghcr.io'
-        organization = 'overture-stack'
-        appName = 'lectern'
+        organization = 'ohcrn'
+        appName = 'consent-ui'
         gitHubRepo = "${organization}/${appName}"
         containerImageName = "${containerRegistry}/${gitHubRepo}"
 
