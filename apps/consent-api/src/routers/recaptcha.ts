@@ -17,21 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
+import { Router } from 'express';
+import axios from 'axios';
 
-import { getTranslation, ValidLanguage } from '@/i18n';
+// TEST ENDPOINT
+// remove after adding an endpoint that uses recaptcha
 
-import RegistrationForm from './RegistrationForm';
+const router = Router();
 
-const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
-	return (
-		<div>
-			<h2>{translate('register')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-			<RegistrationForm />
-		</div>
-	);
-};
+router.post('/', async (req, res) => {
+	const { token, inputData } = req.body;
+	try {
+		const recaptchaVerification = await axios.post(
+			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${token}`,
+		);
+		if (recaptchaVerification.data.success) {
+			// do what the request was supposed to do
+			res.status(200).send('reCAPTCHA verified');
+		} else {
+			res.status(500).send('reCAPTCHA failed');
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Error verifying reCAPTCHA');
+	}
+});
 
-export default ParticipantRegistration;
+export default router;

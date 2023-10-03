@@ -17,51 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
-import { RefObject, SyntheticEvent, createRef } from 'react';
+import { RefObject, createRef } from 'react';
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { useAppConfigContext } from '../AppConfigContextProvider';
-import Button from '../Button';
+export type RecaptchaToken = string | null | undefined;
 
-export default function ReCaptchaSubmit() {
-	const appConfig = useAppConfigContext();
+// recaptcha token lasts 2 minutes. reset after 90 seconds.
+const resetDelay = 1.5 * 60 * 1000;
 
-	const recaptchaRef: RefObject<ReCAPTCHA> = createRef<ReCAPTCHA>();
+const useRecaptcha = () => {
+	const recaptchaCheckboxRef: RefObject<ReCAPTCHA> = createRef<ReCAPTCHA>();
 
-	function submitForm(recaptchaValue?: string | null) {
-		console.log('submitForm', recaptchaValue);
-	}
+	// check that token exists before submitting form
+	const getRecaptchaToken = (): RecaptchaToken => recaptchaCheckboxRef.current?.getValue();
 
-	function onChange(value?: string | null) {
-		console.log('Captcha onChange', value);
-	}
+	const resetRecaptcha = () => {
+		// reset after receiving API response (success or fail) for form submission
+		recaptchaCheckboxRef.current?.reset();
+	};
 
-	function handleSubmit(e: SyntheticEvent<HTMLElement, Event>) {
-		e.preventDefault();
-		console.log('handleSubmit');
-		const recaptchaValue: string | null | undefined = recaptchaRef.current?.getValue();
-		submitForm(recaptchaValue);
+	const onRecaptchaChange = (token?: RecaptchaToken) => {
+		// after user is verified by recaptcha,
+		// reset the checkbox shortly before the token expires
+		token && setTimeout(() => resetRecaptcha(), resetDelay);
+	};
 
-		// reset recaptcha on every submit
-		recaptchaRef.current?.reset();
-	}
+	return { getRecaptchaToken, onRecaptchaChange, recaptchaCheckboxRef, resetRecaptcha };
+};
 
-	return (
-		<>
-			{/* test form field */}
-			<label htmlFor="name">Name</label>
-			<input type="text" id="name" className="input" />
-			<br />
-			<br />
-			{appConfig.RECAPTCHA_SITE_KEY && (
-				<ReCAPTCHA ref={recaptchaRef} sitekey={appConfig.RECAPTCHA_SITE_KEY} onChange={onChange} />
-			)}
-			<br />
-			<br />
-			<Button onClick={handleSubmit}>Submit</Button>
-		</>
-	);
-}
+export default useRecaptcha;

@@ -17,21 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
+'use client';
 
-import { getTranslation, ValidLanguage } from '@/i18n';
+import { RefObject } from 'react';
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha';
 
-import RegistrationForm from './RegistrationForm';
+import { useAppConfigContext } from '../AppConfigContextProvider';
 
-const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
-	return (
-		<div>
-			<h2>{translate('register')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-			<RegistrationForm />
-		</div>
-	);
+const RecaptchaCheckbox = ({
+	onChange,
+	ref,
+}: {
+	onChange: () => void;
+	ref: RefObject<ReCAPTCHA>;
+}) => {
+	const { RECAPTCHA_SITE_KEY = '' } = useAppConfigContext();
+
+	return <ReCAPTCHA ref={ref} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />;
 };
 
-export default ParticipantRegistration;
+export default RecaptchaCheckbox;
