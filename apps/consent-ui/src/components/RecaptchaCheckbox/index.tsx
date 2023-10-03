@@ -27,14 +27,14 @@ import { useAppConfigContext } from '../AppConfigContextProvider';
 
 const RecaptchaCheckbox = ({
 	onChange,
-	ref,
+	recaptchaCheckboxRef,
 }: {
 	onChange: () => void;
-	ref: RefObject<ReCAPTCHA>;
+	recaptchaCheckboxRef: RefObject<ReCAPTCHA>;
 }) => {
 	const { RECAPTCHA_SITE_KEY = '' } = useAppConfigContext();
 
-	return <ReCAPTCHA ref={ref} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />;
+	return <ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />;
 };
 
 export default RecaptchaCheckbox;

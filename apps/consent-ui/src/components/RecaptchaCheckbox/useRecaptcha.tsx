@@ -17,17 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RefObject, createRef } from 'react';
+import { RefObject, createRef, useState } from 'react';
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
 export type RecaptchaToken = string | null | undefined;
 
-// recaptcha token lasts 2 minutes. reset after 90 seconds.
+// recaptcha token lasts 2 minutes.
+// reset after 90 seconds to avoid expiry issues.
 const resetDelay = 1.5 * 60 * 1000;
 
 const useRecaptcha = () => {
 	const recaptchaCheckboxRef: RefObject<ReCAPTCHA> = createRef<ReCAPTCHA>();
+	const [recaptchaError, setRecaptchaError] = useState('');
 
 	// check that token exists before submitting form
 	const getRecaptchaToken = (): RecaptchaToken => recaptchaCheckboxRef.current?.getValue();
@@ -43,7 +45,14 @@ const useRecaptcha = () => {
 		token && setTimeout(() => resetRecaptcha(), resetDelay);
 	};
 
-	return { getRecaptchaToken, onRecaptchaChange, recaptchaCheckboxRef, resetRecaptcha };
+	return {
+		getRecaptchaToken,
+		onRecaptchaChange,
+		recaptchaCheckboxRef,
+		recaptchaError,
+		resetRecaptcha,
+		setRecaptchaError,
+	};
 };
 
 export default useRecaptcha;

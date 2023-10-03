@@ -26,20 +26,20 @@ import axios from 'axios';
 const router = Router();
 
 router.post('/', async (req, res) => {
-	const { token, inputData } = req.body;
+	const { recaptchaToken, inputData } = req.body;
 	try {
 		const recaptchaVerification = await axios.post(
-			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${token}`,
+			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
 		);
 		if (recaptchaVerification.data.success) {
 			// do what the request was supposed to do
-			res.status(200).send('reCAPTCHA verified');
+			res.status(200).send({ message: 'reCAPTCHA verified', inputData });
 		} else {
 			res.status(500).send('reCAPTCHA failed');
 		}
 	} catch (error) {
-		console.error(error);
-		res.status(500).send('Error verifying reCAPTCHA');
+		console.error('reCAPTCHA error', error);
+		res.status(500).send('reCAPTCHA error');
 	}
 });
 

@@ -29,6 +29,7 @@ const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLang
 		<div>
 			<h2>{translate('register')}</h2>
 			<Link href={`/${currentLang}`}>{translate('home')}</Link>
+
 			<RegistrationForm />
 		</div>
 	);
