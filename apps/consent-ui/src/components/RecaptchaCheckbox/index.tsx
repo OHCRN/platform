@@ -32,9 +32,11 @@ const RecaptchaCheckbox = ({
 	onChange: () => void;
 	recaptchaCheckboxRef: RefObject<ReCAPTCHA>;
 }) => {
-	const { RECAPTCHA_SITE_KEY = '' } = useAppConfigContext();
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
 
-	return <ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />;
+	return RECAPTCHA_SITE_KEY ? (
+		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
+	) : null;
 };
 
 export default RecaptchaCheckbox;

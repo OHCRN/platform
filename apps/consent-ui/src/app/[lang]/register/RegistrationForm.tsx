@@ -57,13 +57,16 @@ const RegistrationForm = () => {
 					inputData: { name: nameVal },
 				})
 				.then(() => {
-					setSuccessMessage('Form submitted successsfully!');
+					setRecaptchaError('');
+					setSuccessMessage('Form submitted successfully!');
 				})
 				.catch((e) => {
 					console.error(e);
+					setSuccessMessage('');
 					setRecaptchaError('Form submission failed');
 				});
 		} else {
+			setSuccessMessage('');
 			setRecaptchaError('No token found');
 		}
 		resetRecaptcha();
@@ -88,7 +91,7 @@ const RegistrationForm = () => {
 				</div>
 			)}
 			<div style={{ margin: '25px 0' }}>
-				<label htmlFor="name">name:&nbsp;</label>
+				<label htmlFor="name">name:</label>
 				<input
 					id="name"
 					name="name"
@@ -96,7 +99,7 @@ const RegistrationForm = () => {
 					onChange={handleNameVal}
 					value={nameVal}
 					required
-					style={{ border: '1px solid grey' }}
+					style={{ marginLeft: 10, border: '1px solid grey' }}
 				/>
 			</div>
 			{recaptchaError && (
