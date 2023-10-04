@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
 	logger.info('GET /ohip-keys');
 	try {
 		const ohipKeys = await getOhipKeys();
-		res.status(200).send({ ohipKeys: [ohipKeys] });
+		res.status(200).send({ ohipKeys });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ error: 'Error retrieving OHIP keys' });

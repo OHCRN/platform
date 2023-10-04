@@ -91,7 +91,7 @@ router.get('/:participantId', async (req, res) => {
 		res.status(200).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving clinical profile keys' });
+		res.status(500).send({ error: 'Error retrieving clinical profile key' });
 	}
 });
 
