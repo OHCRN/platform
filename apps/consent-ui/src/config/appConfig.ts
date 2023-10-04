@@ -28,7 +28,7 @@ export const defaultAppConfig = {
 	CONSENT_API_URL: 'http://localhost:8080',
 	CONSENT_UI_URL: 'http://localhost:3000',
 	FEATURE_FLAG: false,
-  RECAPTCHA_SITE_KEY: undefined,
+	RECAPTCHA_SITE_KEY: undefined,
 };
 
 /**
