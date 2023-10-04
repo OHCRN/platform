@@ -2,11 +2,15 @@
   "name": "data-mapper",
   "version": "1.0.0",
   "description": "OHCRN Platform Data Mapper",
-  "main": "index.js",
+  "exports": "./index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "lint": "eslint ."
   },
   "keywords": [],
