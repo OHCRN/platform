@@ -30,8 +30,8 @@ import { useAppConfigContext } from '@/components/AppConfigContextProvider';
 
 const RegistrationForm = () => {
 	const appConfig = useAppConfigContext();
-	const [nameVal, setNameVal] = useState('');
-	const [successMessage, setSuccessMessage] = useState('');
+	const [nameValDemo, setNameValDemo] = useState('');
+	const [successMessageDemo, setSuccessMessageDemo] = useState('');
 
 	const {
 		getRecaptchaToken,
@@ -42,37 +42,37 @@ const RegistrationForm = () => {
 		setRecaptchaError,
 	} = useRecaptcha();
 
-	const handleNameVal = (e: any) => {
+	const handleNameValDemo = (e: any) => {
 		const nextName = e.target.value;
-		setNameVal(nextName);
+		setNameValDemo(nextName);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmitDemo = () => {
 		// for demo: assume form is valid & complete
 		const recaptchaToken = getRecaptchaToken();
 		if (recaptchaToken) {
 			axios
 				.post(urlJoin(appConfig.CONSENT_API_URL, 'recaptcha'), {
 					recaptchaToken,
-					inputData: { name: nameVal },
+					inputData: { name: nameValDemo },
 				})
 				.then(() => {
 					setRecaptchaError('');
-					setSuccessMessage('Form submitted successfully!');
+					setSuccessMessageDemo('Form submitted successfully!');
 				})
 				.catch((e) => {
 					console.error(e);
-					setSuccessMessage('');
+					setSuccessMessageDemo('');
 					setRecaptchaError('Form submission failed');
 				});
 		} else {
-			setSuccessMessage('');
+			setSuccessMessageDemo('');
 			setRecaptchaError('No token found');
 		}
 		resetRecaptcha();
 	};
 
-	const handleRecaptchaChange = () => {
+	const handleRecaptchaChangeDemo = () => {
 		// do something when user updates recaptcha:
 		// clear errors, validate form, etc
 
@@ -85,19 +85,19 @@ const RegistrationForm = () => {
 
 	return (
 		<form>
-			{successMessage && (
+			{successMessageDemo && (
 				<div style={{ border: '5px solid green', padding: 25, margin: '25px 0' }}>
-					{successMessage}
+					{successMessageDemo}
 				</div>
 			)}
 			<div style={{ margin: '25px 0' }}>
-				<label htmlFor="name">name:</label>
+				<label htmlFor="nameDemo">name:</label>
 				<input
-					id="name"
-					name="name"
+					id="nameDemo"
+					name="nameDemo"
 					type="text"
-					onChange={handleNameVal}
-					value={nameVal}
+					onChange={handleNameValDemo}
+					value={nameValDemo}
 					required
 					style={{ marginLeft: 10, border: '1px solid grey' }}
 				/>
@@ -109,11 +109,11 @@ const RegistrationForm = () => {
 			)}
 			<div style={{ margin: '25px 0' }}>
 				<RecaptchaCheckbox
-					onChange={handleRecaptchaChange}
+					onChange={handleRecaptchaChangeDemo}
 					recaptchaCheckboxRef={recaptchaCheckboxRef}
 				/>
 			</div>
-			<Button onClick={handleSubmit}>Submit</Button>
+			<Button onClick={handleSubmitDemo}>Submit</Button>
 		</form>
 	);
 };
