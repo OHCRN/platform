@@ -21,7 +21,7 @@ import axios from 'axios';
 
 export const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	if (!recaptchaToken) {
-		// token not required for development, but it'll be processed if provided
+		// token not required for dev, but will be processed if provided.
 		return process.env.NODE_ENV === 'development';
 	}
 
@@ -29,7 +29,6 @@ export const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 		const recaptchaVerification = await axios.post(
 			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
 		);
-		console.log('🔥🔥🔥', recaptchaVerification.data);
 		return !!recaptchaVerification.data.success;
 	} catch (error) {
 		console.error('reCAPTCHA error', error);

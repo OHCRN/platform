@@ -26,7 +26,7 @@ const router = Router();
 // TEST ENDPOINT
 // remove after adding an endpoint that uses recaptcha
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
 	const { recaptchaToken, inputData } = req.body;
 
 	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);

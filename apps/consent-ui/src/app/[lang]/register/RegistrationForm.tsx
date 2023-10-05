@@ -19,7 +19,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
@@ -47,7 +47,8 @@ const RegistrationForm = () => {
 		setNameValDemo(nextName);
 	};
 
-	const handleSubmitDemo = () => {
+	const handleSubmitDemo = (e: SyntheticEvent) => {
+		e.preventDefault();
 		// for demo: assume form is valid & complete
 		const recaptchaToken = getRecaptchaToken();
 		if (recaptchaToken) {
@@ -60,7 +61,7 @@ const RegistrationForm = () => {
 				})
 				.then(() => {
 					setRecaptchaError('');
-					resetRecaptcha(); // reset recaptcha on successful request
+					resetRecaptcha();
 					setSuccessMessageDemo('Form submitted successfully!');
 				})
 				.catch((e) => {
