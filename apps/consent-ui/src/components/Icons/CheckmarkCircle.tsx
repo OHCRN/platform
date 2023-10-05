@@ -19,17 +19,20 @@
 
 import React from 'react';
 
-function Arrow({ classes }: { classes?: string }) {
+function CheckmarkCircle({ classes }: { classes?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
-			<path
-				fill="currentColor"
-				fillRule="evenodd"
-				d="M.193.226a.714.714 0 00.033 1.01L4.24 5 .226 8.765a.714.714 0 10.977 1.042L6.33 5 1.203.193a.714.714 0 00-1.01.033z"
-				clipRule="evenodd"
-			></path>
+		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+			<g stroke="currentColor" strokeWidth="2" clipPath="url(#clip0_34_3952)">
+				<rect width="22" height="22" x="1" y="1.508" rx="11"></rect>
+				<path d="M17 8.508l-7 7-3-3"></path>
+			</g>
+			<defs>
+				<clipPath id="clip0_34_3952">
+					<path fill="#fff" d="M0 0H24V24H0z" transform="translate(0 .508)"></path>
+				</clipPath>
+			</defs>
 		</svg>
 	);
 }
 
-export default Arrow;
+export default CheckmarkCircle;
