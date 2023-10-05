@@ -22,13 +22,13 @@ export const updateParticipant = async ({
 }: {
 	participantId: string;
 	inviteId?: string;
-	dateOfBirth: string;
-	emailAddress: string;
-	participantOhipFirstName: string;
-	participantOhipLastName: string;
+	dateOfBirth?: Date;
+	emailAddress?: string;
+	participantOhipFirstName?: string;
+	participantOhipLastName?: string;
 	participantOhipMiddleName?: string;
-	phoneNumber: string;
-	participantPreferredName: string;
+	phoneNumber?: string;
+	participantPreferredName?: string;
 	guardianName?: string;
 	guardianPhoneNumber?: string;
 	guardianEmailAddress?: string;
@@ -37,7 +37,7 @@ export const updateParticipant = async ({
 	mailingAddressCity?: string;
 	mailingAddressProvince?: string;
 	mailingAddressPostalCode?: string;
-	residentialPostalCode: string;
+	residentialPostalCode?: string;
 }): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.update({

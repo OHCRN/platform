@@ -186,9 +186,10 @@ router.post('/', async (req, res) => {
 	} = req.body;
 	// TODO: add validation
 	try {
+		const parsedDateOfBirth = new Date(dateOfBirth);
 		const participant = await createParticipant({
 			inviteId,
-			dateOfBirth,
+			dateOfBirth: parsedDateOfBirth,
 			emailAddress,
 			participantOhipFirstName,
 			participantOhipLastName,
@@ -302,10 +303,11 @@ router.patch('/:participantId', async (req, res) => {
 	} = req.body;
 	// TODO: add validation
 	try {
+		const parsedDateOfBirth = dateOfBirth ? new Date(dateOfBirth) : undefined;
 		const participant = await updateParticipant({
 			participantId,
 			inviteId,
-			dateOfBirth,
+			dateOfBirth: parsedDateOfBirth,
 			emailAddress,
 			participantOhipFirstName,
 			participantOhipLastName,
