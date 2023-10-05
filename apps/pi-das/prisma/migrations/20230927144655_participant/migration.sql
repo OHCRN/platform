@@ -4,7 +4,7 @@ DROP TABLE "Participant";
 -- CreateTable
 CREATE TABLE "Participant" (
   "id" TEXT NOT NULL,
-  "dateOfBirth" CHAR(10) NOT NULL,
+  "dateOfBirth" TIMESTAMP(3) NOT NULL,
   "emailAddress" TEXT NOT NULL,
   "guardianEmailAddress" TEXT,
   "guardianName" TEXT,

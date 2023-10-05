@@ -11,7 +11,7 @@ generator client {
 model Participant {
   id                        String           @id @default(cuid())
   inviteId                  String?
-  dateOfBirth               String           @db.Char(10)
+  dateOfBirth               DateTime
   emailAddress              String           @unique
   participantOhipFirstName  String
   participantOhipLastName   String

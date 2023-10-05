@@ -3,7 +3,7 @@ import { Prisma } from '../../src/generated/client';
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
 		id: 'cllgostgz000008l3fk0wd8w0',
-		dateOfBirth: '1956-05-12',
+		dateOfBirth: new Date('1956-05-12'),
 		emailAddress: 'homer.simpson@example.com',
 		participantOhipFirstName: 'Homer',
 		participantOhipLastName: 'Simpson',
@@ -17,7 +17,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	},
 	{
 		id: 'cllgoufw3000208l3c6gyg9bh',
-		dateOfBirth: '1986-07-14',
+		dateOfBirth: new Date('1986-07-14'),
 		emailAddress: 'spongebob.squarepants@example.com',
 		participantOhipFirstName: 'Spongebob',
 		participantOhipLastName: 'Squarepants',
@@ -35,7 +35,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	},
 	{
 		id: 'cllgouzph000308l35o99bgqi',
-		dateOfBirth: '1954-04-29',
+		dateOfBirth: new Date('1954-04-29'),
 		emailAddress: 'jerry.seinfeld@example.com',
 		participantOhipFirstName: 'Jerry',
 		participantOhipLastName: 'Seinfeld',

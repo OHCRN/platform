@@ -20,7 +20,7 @@ export const createParticipant = async ({
 	residentialPostalCode,
 }: {
 	inviteId?: string;
-	dateOfBirth: string;
+	dateOfBirth: Date;
 	emailAddress: string;
 	participantOhipFirstName: string;
 	participantOhipLastName: string;
