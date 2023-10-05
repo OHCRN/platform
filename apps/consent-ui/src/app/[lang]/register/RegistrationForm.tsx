@@ -27,6 +27,7 @@ import Button from '@/components/Button';
 import useRecaptcha from '@/components/RecaptchaCheckbox/useRecaptcha';
 import RecaptchaCheckbox from '@/components/RecaptchaCheckbox';
 import { useAppConfigContext } from '@/components/AppConfigContextProvider';
+import Notification from '@/components/Notification';
 
 const RegistrationForm = () => {
 	const appConfig = useAppConfigContext();
@@ -67,11 +68,11 @@ const RegistrationForm = () => {
 				.catch((e) => {
 					console.error(e);
 					setSuccessMessageDemo('');
-					setRecaptchaError('Form submission failed');
+					setRecaptchaError('Something went wrong, please try again');
 				});
 		} else {
 			setSuccessMessageDemo('');
-			setRecaptchaError('No token found');
+			setRecaptchaError('Please complete captcha');
 		}
 	};
 
@@ -90,9 +91,7 @@ const RegistrationForm = () => {
 	return (
 		<form>
 			{successMessageDemo && (
-				<div style={{ border: '5px solid green', padding: 25, margin: '25px 0' }}>
-					{successMessageDemo}
-				</div>
+				<Notification level="success" variant="small" title={`${successMessageDemo}`} />
 			)}
 			<div style={{ margin: '25px 0' }}>
 				<label htmlFor="nameDemo">name:</label>
@@ -107,9 +106,7 @@ const RegistrationForm = () => {
 				/>
 			</div>
 			{recaptchaError && (
-				<div style={{ border: '5px solid red', padding: 25, margin: '25px 0' }}>
-					{recaptchaError}
-				</div>
+				<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
 			)}
 			<div style={{ margin: '25px 0' }}>
 				<RecaptchaCheckbox
