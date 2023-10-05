@@ -18,6 +18,7 @@
  */
 
 import { Router } from 'express';
+import { ConsentGroup } from 'common';
 
 import { getClinicianInvite, getClinicianInvites } from '../service/search';
 import { createClinicianInvite } from '../service/create';
@@ -133,6 +134,7 @@ router.get('/:inviteId', async (req, res) => {
  *                   - GUARDIAN_CONSENT_OF_MINOR
  *                   - GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT
  *                   - YOUNG_ADULT_CONSENT
+ *                 required: true
  *               consentToBeContacted:
  *                 type: boolean
  *                 required: true
@@ -165,15 +167,18 @@ router.post('/', async (req, res) => {
 	} = req.body;
 	// TODO: add validation
 	try {
+		const parsedInviteSentDate = inviteSentDate ? new Date(inviteSentDate) : undefined;
+		const parsedInviteAcceptedDate = inviteAcceptedDate ? new Date(inviteAcceptedDate) : undefined;
+		const parsedConsentGroup = ConsentGroup.parse(consentGroup);
 		const clinicianInvite = await createClinicianInvite({
 			clinicianFirstName,
 			clinicianInstitutionalEmailAddress,
 			clinicianLastName,
 			clinicianTitle,
-			consentGroup,
+			consentGroup: parsedConsentGroup,
 			consentToBeContacted,
-			inviteSentDate,
-			inviteAcceptedDate,
+			inviteSentDate: parsedInviteSentDate,
+			inviteAcceptedDate: parsedInviteAcceptedDate,
 			inviteAccepted,
 		});
 		res.status(201).send({ clinicianInvite });

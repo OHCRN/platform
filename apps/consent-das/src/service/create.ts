@@ -87,8 +87,8 @@ export const createClinicianInvite = async ({
 	clinicianTitle: string;
 	consentGroup: ConsentGroup;
 	consentToBeContacted: boolean;
-	inviteSentDate?: string;
-	inviteAcceptedDate?: string;
+	inviteSentDate?: Date;
+	inviteAcceptedDate?: Date;
 	inviteAccepted?: boolean;
 }): Promise<ClinicianInvite> => {
 	// TODO: add error handling

@@ -63,14 +63,14 @@ const consentQuestions: Prisma.ConsentQuestionCreateInput[] = [
 
 const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
-		clinicianFirstName: "Steven",
-		clinicianInstitutionalEmailAddress: "doctor.strange@example.com",
-		clinicianLastName: "Strange",
-		clinicianTitle: "Neurosurgeon",
-		consentGroup: "ADULT_CONSENT",
+		clinicianFirstName: 'Steven',
+		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
+		clinicianLastName: 'Strange',
+		clinicianTitle: 'Neurosurgeon',
+		consentGroup: 'ADULT_CONSENT',
 		consentToBeContacted: true,
-		inviteSentDate: "2023-10-03",
-	}
+		inviteSentDate: new Date('2023-10-03'),
+	},
 ];
 
 export { participants, consentQuestions, clinicianInvites };

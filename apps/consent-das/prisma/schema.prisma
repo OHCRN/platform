@@ -61,7 +61,7 @@ model ClinicianInvite {
   clinicianTitle String
   consentGroup ConsentGroup
   consentToBeContacted Boolean
-  inviteSentDate String? @db.Char(10)
-  inviteAcceptedDate String? @db.Char(10)
+  inviteSentDate DateTime?
+  inviteAcceptedDate DateTime?
   inviteAccepted Boolean?
 }
