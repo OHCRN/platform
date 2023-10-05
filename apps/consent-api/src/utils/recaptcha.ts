@@ -17,27 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
+import axios from 'axios';
 
-import { verifyRecaptcha } from '@/utils/recaptcha';
-
-const router = Router();
-
-// TEST ENDPOINT
-// remove after adding an endpoint that uses recaptcha
-
-router.get('/', async (req, res) => {
-	const { recaptchaToken, inputData } = req.body;
-
-	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-
-	if (recaptchaVerified) {
-		// handle API request here
-		res.status(200).send({ message: 'reCAPTCHA success', inputData });
-	} else {
-		// refuse API request, send back an error
-		res.status(500).send('reCAPTCHA error');
+export const verifyRecaptcha = async (recaptchaToken?: string | null) => {
+	if (!recaptchaToken) {
+		// token not required for development, but it'll be processed if provided
+		return process.env.NODE_ENV === 'development';
 	}
-});
 
-export default router;
+	try {
+		const recaptchaVerification = await axios.post(
+			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+		);
+		console.log('🔥🔥🔥', recaptchaVerification.data);
+		return !!recaptchaVerification.data.success;
+	} catch (error) {
+		console.error('reCAPTCHA error', error);
+		return false;
+	}
+};
