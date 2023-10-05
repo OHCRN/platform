@@ -18,7 +18,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 	},
 ];
 
-const consentQuestions: Prisma.ConsentQuestionCreateInput[] = [
+const consentQuestions = [
 	{
 		id: 'informed-consent__read-and-understand',
 		isActive: true,
