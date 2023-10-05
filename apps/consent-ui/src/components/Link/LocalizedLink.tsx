@@ -36,6 +36,7 @@ const LocalizedLink = ({
 	...rest
 }: LocalizedLinkProps) => {
 	let locale = linkLang;
+	// TODO: figure out better typing so "as" is not needed here
 	const localeRoutes = routesByLocale[linkLang as ValidLanguage];
 	if (!localeRoutes) {
 		console.error(
