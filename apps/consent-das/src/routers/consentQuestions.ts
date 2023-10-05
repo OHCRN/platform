@@ -147,7 +147,12 @@ router.get('/:consentQuestionId', async (req, res) => {
  *                 type: boolean
  *               category:
  *                 type: string
- *                 enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
+ *                 enum:
+ *                   - INFORMED_CONSENT
+ *                   - CONSENT_RELEASE_DATA
+ *                   - CONSENT_RESEARCH_PARTICIPATION
+ *                   - CONSENT_RECONTACT
+ *                   - CONSENT_REVIEW_SIGN
  *     responses:
  *       201:
  *         description: The question was successfully created.
