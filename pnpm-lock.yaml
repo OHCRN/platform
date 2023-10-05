@@ -99,7 +99,7 @@ importers:
         specifier: ^16.0.3
         version: 16.0.3
       eslint-config-ohcrn:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/config/eslint-config-ohcrn
       nodemon:
         specifier: ^2.0.22
@@ -136,7 +136,7 @@ importers:
         specifier: ^16.3.1
         version: 16.3.1
       eslint-config-ohcrn:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/config/eslint-config-ohcrn
       nodemon:
         specifier: ^3.0.1
@@ -181,7 +181,7 @@ importers:
         specifier: 3.3.2
         version: 3.3.2(ts-node@10.9.1)
       types:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/types
       url-join:
         specifier: ^5.0.0
@@ -197,7 +197,7 @@ importers:
         specifier: 13.4.12
         version: 13.4.12(eslint@8.40.0)(typescript@5.2.2)
       eslint-config-ohcrn:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/config/eslint-config-ohcrn
 
   apps/data-mapper:
@@ -339,7 +339,7 @@ importers:
         specifier: ^16.3.1
         version: 16.3.1
       eslint-config-ohcrn:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/config/eslint-config-ohcrn
       nodemon:
         specifier: ^3.0.1

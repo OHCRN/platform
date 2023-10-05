@@ -17,7 +17,7 @@
 		"autoprefixer": "10.4.14",
     "axios": "^1.5.0",
 		"clsx": "^2.0.0",
-		"types": "workspace:*",
+		"types": "workspace:^",
 		"next": "13.4.12",
 		"postcss": "8.4.23",
 		"react": "18.2.0",
@@ -30,6 +30,6 @@
 	"devDependencies": {
 		"eslint": "8.40.0",
 		"eslint-config-next": "13.4.12",
-		"eslint-config-ohcrn": "workspace:*"
+		"eslint-config-ohcrn": "workspace:^"
 	}
 }
