@@ -19,10 +19,10 @@
 
 import { Router } from 'express';
 
-import { Prisma } from '../generated/client';
-import { getParticipantResponses } from '../service/search';
-import { createParticipantResponse } from '../service/create';
-import logger from '../logger';
+import { Prisma } from '../generated/client/index.js';
+import { getParticipantResponses } from '../service/search.js';
+import { createParticipantResponse } from '../service/create.js';
+import logger from '../logger.js';
 
 // TODO: update JSDoc comments
 /**

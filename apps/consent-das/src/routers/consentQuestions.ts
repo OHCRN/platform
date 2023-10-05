@@ -18,12 +18,12 @@
  */
 
 import { Router } from 'express';
-import { ConsentCategory } from 'common';
+import { ConsentCategory } from 'types/entities';
 
-import { updateConsentQuestionIsActive } from '../service/update';
-import { getConsentQuestion, getConsentQuestions } from '../service/search';
-import { createConsentQuestion } from '../service/create';
-import logger from '../logger';
+import { updateConsentQuestionIsActive } from '../service/update.js';
+import { getConsentQuestion, getConsentQuestions } from '../service/search.js';
+import { createConsentQuestion } from '../service/create.js';
+import logger from '../logger.js';
 
 // TODO: update JSDoc comments
 /**

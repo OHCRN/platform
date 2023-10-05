@@ -73,9 +73,6 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      common:
-        specifier: workspace:*
-        version: link:../../packages/common
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -85,6 +82,9 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      types:
+        specifier: workspace:*
+        version: link:../../packages/types
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -116,9 +116,6 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      common:
-        specifier: workspace:^
-        version: link:../../packages/common
       error-handler:
         specifier: workspace:^
         version: link:../../packages/error-handler
@@ -128,6 +125,9 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -165,9 +165,6 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
-      common:
-        specifier: workspace:*
-        version: link:../../packages/common
       next:
         specifier: 13.4.12
         version: 13.4.12(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.64.0)
@@ -186,6 +183,9 @@ importers:
       tailwindcss:
         specifier: 3.3.2
         version: 3.3.2(ts-node@10.9.1)
+      types:
+        specifier: workspace:*
+        version: link:../../packages/types
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -208,15 +208,15 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      common:
-        specifier: workspace:^
-        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -248,15 +248,15 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      common:
-        specifier: workspace:^
-        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -285,15 +285,15 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      common:
-        specifier: workspace:^
-        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -322,15 +322,15 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      common:
-        specifier: workspace:^
-        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -350,12 +350,6 @@ importers:
       prisma:
         specifier: ^5.1.1
         version: 5.1.1
-
-  packages/common:
-    dependencies:
-      zod:
-        specifier: ^3.21.4
-        version: 3.21.4
 
   packages/config/eslint-config-ohcrn:
     devDependencies:
@@ -403,6 +397,12 @@ importers:
       eslint-config-ohcrn:
         specifier: workspace:^
         version: link:../config/eslint-config-ohcrn
+
+  packages/types:
+    dependencies:
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
 
 packages:
 

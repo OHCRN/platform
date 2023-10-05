@@ -1,4 +1,4 @@
-import prisma, { ConsentQuestion } from '../prismaClient';
+import prisma, { ConsentQuestion } from '../prismaClient.js';
 
 export const updateConsentQuestionIsActive = async ({
 	consentQuestionId,
