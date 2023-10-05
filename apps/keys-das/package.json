@@ -1,8 +1,8 @@
 {
   "name": "keys-das",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Keys Data Access Service",
-  "exports": "./index.js",
+  "exports": null,
   "type": "module",
   "engines": {
     "node": ">=18"

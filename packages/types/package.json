@@ -1,6 +1,6 @@
 {
   "name": "types",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "exports": {
     ".": "./dist/index.js",
@@ -9,6 +9,9 @@
     "./package.json": "./package.json"
   },
   "type": "module",
+  "engines": {
+		"node": ">=18"
+	},
   "scripts": {
     "build": "tsc",
     "test": "nyc mocha"

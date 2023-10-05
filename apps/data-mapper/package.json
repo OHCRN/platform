@@ -1,8 +1,8 @@
 {
   "name": "data-mapper",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "OHCRN Platform Data Mapper",
-  "exports": "./index.js",
+  "exports": null,
   "type": "module",
   "engines": {
     "node": ">=18"
