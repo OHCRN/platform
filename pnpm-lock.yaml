@@ -11,6 +11,13 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      swagger-jsdoc:
+        specifier: ^6.2.8
+        version: 6.2.8(openapi-types@12.1.3)
+      swagger-ui-express:
+        specifier: ^5.0.0
+        version: 5.0.0(express@4.18.2)
     devDependencies:
       '@types/chai':
         specifier: ^4.3.5
@@ -27,6 +34,12 @@ importers:
       '@types/sinon':
         specifier: ^10.0.15
         version: 10.0.15
+      '@types/swagger-jsdoc':
+        specifier: ^6.0.1
+        version: 6.0.1
+      '@types/swagger-ui-express':
+        specifier: ^4.1.4
+        version: 4.1.4
       chai:
         specifier: ^4.3.7
         version: 4.3.7
@@ -72,12 +85,6 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
-      swagger-jsdoc:
-        specifier: ^6.2.8
-        version: 6.2.8(openapi-types@12.1.3)
-      swagger-ui-express:
-        specifier: ^4.6.3
-        version: 4.6.3(express@4.18.2)
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -88,12 +95,6 @@ importers:
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.17
-      '@types/swagger-jsdoc':
-        specifier: ^6.0.1
-        version: 6.0.1
-      '@types/swagger-ui-express':
-        specifier: ^4.1.3
-        version: 4.1.3
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -115,6 +116,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      common:
+        specifier: workspace:^
+        version: link:../../packages/common
+      error-handler:
+        specifier: workspace:^
+        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -201,6 +208,9 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      common:
+        specifier: workspace:^
+        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -238,6 +248,9 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      common:
+        specifier: workspace:^
+        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -272,6 +285,9 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      common:
+        specifier: workspace:^
+        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -306,6 +322,9 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      common:
+        specifier: workspace:^
+        version: link:../../packages/common
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -361,6 +380,16 @@ importers:
       eslint-plugin-prettier:
         specifier: ^5.0.0
         version: 5.0.0(eslint-config-prettier@8.8.0)(eslint@8.40.0)(prettier@3.0.0)
+
+  packages/error-handler:
+    dependencies:
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.17
+        version: 4.17.17
 
   packages/logger:
     dependencies:
@@ -1071,8 +1100,8 @@ packages:
     resolution: {integrity: sha512-+MUpcbyxD528dECUBCEVm6abNuORdbuGjbrUdHDeAQ+rkPuo2a+L4N02WJHF3bonSSE6SJ3dUJwF2V6+cHnf0w==}
     dev: true
 
-  /@types/swagger-ui-express@4.1.3:
-    resolution: {integrity: sha512-jqCjGU/tGEaqIplPy3WyQg+Nrp6y80DCFnDEAvVKWkJyv0VivSSDCChkppHRHAablvInZe6pijDFMnavtN0vqA==}
+  /@types/swagger-ui-express@4.1.4:
+    resolution: {integrity: sha512-h6dfIPFveCJKpStDtjrB+4pig4DAf9Uu2Z51RB7Fj3s6AifexmqhZxBoG50K/k3Afz7wyXsIAY5ZIDTlC2VjrQ==}
     dependencies:
       '@types/express': 4.17.17
       '@types/serve-static': 1.15.1
@@ -1090,7 +1119,7 @@ packages:
     resolution: {integrity: sha512-rClGrMuyS/3j0ETa1Ui7s6GkLhfZGKZL3ZrChLeAiACBE/tRc1wq8SNZESUuluxhLj9FkUefRs2l6bCIArWBiQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
-      '@typescript-eslint/parser': 6.2.0
+      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
       eslint: ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
@@ -2218,7 +2247,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: ^2.27.5
+      eslint-plugin-import: '*'
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
       enhanced-resolve: 5.14.0
@@ -4812,18 +4841,18 @@ packages:
       - openapi-types
     dev: false
 
-  /swagger-ui-dist@5.1.0:
-    resolution: {integrity: sha512-c1KmAjuVODxw+vwkNLALQZrgdlBAuBbr2xSPfYrJgseEi7gFKcTvShysPmyuDI4kcUa1+5rFpjWvXdusKY74mg==}
+  /swagger-ui-dist@5.7.2:
+    resolution: {integrity: sha512-mVZc9QVQ6pTCV5crli3+Ng+DoMPwdtMHK8QLk2oX8Mtamp4D/hV+uYdC3lV0JZrDgpNEcjs0RrWTqMwwosuLPQ==}
     dev: false
 
-  /swagger-ui-express@4.6.3(express@4.18.2):
-    resolution: {integrity: sha512-CDje4PndhTD2HkgyKH3pab+LKspDeB/NhPN2OF1j+piYIamQqBYwAXWESOT1Yju2xFg51bRW9sUng2WxDjzArw==}
+  /swagger-ui-express@5.0.0(express@4.18.2):
+    resolution: {integrity: sha512-tsU9tODVvhyfkNSvf03E6FAk+z+5cU3lXAzMy6Pv4av2Gt2xA0++fogwC4qo19XuFf6hdxevPuVCSKFuMHJhFA==}
     engines: {node: '>= v0.10.32'}
     peerDependencies:
       express: '>=4.0.0 || >=5.0.0-beta'
     dependencies:
       express: 4.18.2
-      swagger-ui-dist: 5.1.0
+      swagger-ui-dist: 5.7.2
     dev: false
 
   /synckit@0.8.5:
@@ -5148,8 +5177,8 @@ packages:
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
-  /validator@13.9.0:
-    resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}
+  /validator@13.11.0:
+    resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}
     engines: {node: '>= 0.10'}
     dev: false
 
@@ -5359,7 +5388,7 @@ packages:
     dependencies:
       lodash.get: 4.4.2
       lodash.isequal: 4.5.0
-      validator: 13.9.0
+      validator: 13.11.0
     optionalDependencies:
       commander: 9.5.0
     dev: false

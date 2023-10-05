@@ -40,8 +40,6 @@ export const useAppConfigContext = () => {
 	return currentContext;
 };
 
-// without this component wrapping, we can't divide into Server + Client parts
-// a context provider, React.context etc needs to be a client component
 const AppConfigContextProvider = ({
 	children,
 	config,

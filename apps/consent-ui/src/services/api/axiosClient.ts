@@ -18,14 +18,16 @@
  */
 import axios from 'axios';
 
-import { getAppClientConfig } from '@/components/AppConfigContextProvider/utils';
 import { getAppConfig } from '@/config';
 
-export const getAxiosClient = async () => {
-	const appClientConfig = await getAppClientConfig();
-	const { CONSENT_API_URL } = getAppConfig(appClientConfig);
+const initAxiosClient = () => {
+	const { CONSENT_API_URL } = getAppConfig(process.env);
 	return axios.create({
 		validateStatus: (status: number) => status === 200,
 		baseURL: CONSENT_API_URL,
 	});
 };
+
+const axiosClient = initAxiosClient();
+
+export { axiosClient };

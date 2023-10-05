@@ -26,17 +26,9 @@ import packageJson from '@/../package.json';
 import GithubLogo from '@/public/github.svg';
 import OvertureLogo from '@/public/overture.svg';
 import { ValidLanguage, getTranslation } from '@/i18n';
-import { getAPIStatus } from '@/services/api';
 
+import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';
-
-// keep this in a separate component so the Versions component renders everything else
-// and isn't waiting on the getAPIStatus() Promise to resolve
-const APIVersion = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'footer');
-	const { version: apiVersion } = await getAPIStatus();
-	return <span>{translate('api', { apiVersion })}</span>;
-};
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'footer');
