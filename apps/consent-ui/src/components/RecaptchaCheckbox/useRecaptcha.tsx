@@ -22,13 +22,14 @@ import { RefObject, createRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 export type RecaptchaToken = string | null | undefined;
+export type RecaptchaCheckboxRef = RefObject<ReCAPTCHA>;
 
 // recaptcha token lasts 2 minutes.
 // reset after 90 seconds to avoid expiry issues.
 const resetDelay = 1.5 * 60 * 1000;
 
 const useRecaptcha = () => {
-	const recaptchaCheckboxRef: RefObject<ReCAPTCHA> = createRef<ReCAPTCHA>();
+	const recaptchaCheckboxRef: RecaptchaCheckboxRef = createRef<ReCAPTCHA>();
 	const [recaptchaError, setRecaptchaError] = useState('');
 
 	// check that token exists before submitting form

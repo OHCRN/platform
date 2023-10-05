@@ -51,6 +51,8 @@ const RegistrationForm = () => {
 		// for demo: assume form is valid & complete
 		const recaptchaToken = getRecaptchaToken();
 		if (recaptchaToken) {
+			// submit form data
+			// using "recaptcha" endpoint as an example only
 			axios
 				.post(urlJoin(appConfig.CONSENT_API_URL, 'recaptcha'), {
 					recaptchaToken,
@@ -58,6 +60,7 @@ const RegistrationForm = () => {
 				})
 				.then(() => {
 					setRecaptchaError('');
+					resetRecaptcha(); // reset recaptcha on successful request
 					setSuccessMessageDemo('Form submitted successfully!');
 				})
 				.catch((e) => {
@@ -69,14 +72,14 @@ const RegistrationForm = () => {
 			setSuccessMessageDemo('');
 			setRecaptchaError('No token found');
 		}
-		resetRecaptcha();
 	};
 
 	const handleRecaptchaChangeDemo = () => {
 		// do something when user updates recaptcha:
 		// clear errors, validate form, etc
 
-		// for demo: clear error message if there's a token.
+		// for demo: clear error message if there's a token
+		// after the user has interacted with recaptcha checkbox
 		const token = getRecaptchaToken();
 		token && setRecaptchaError('');
 

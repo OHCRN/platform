@@ -19,18 +19,19 @@
 
 'use client';
 
-import { RefObject } from 'react';
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useAppConfigContext } from '../AppConfigContextProvider';
+
+import { RecaptchaCheckboxRef } from './useRecaptcha';
 
 const RecaptchaCheckbox = ({
 	onChange,
 	recaptchaCheckboxRef,
 }: {
 	onChange: () => void;
-	recaptchaCheckboxRef: RefObject<ReCAPTCHA>;
+	recaptchaCheckboxRef: RecaptchaCheckboxRef;
 }) => {
 	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
 
