@@ -19,17 +19,19 @@
 
 import React from 'react';
 
-function Arrow({ classes }: { classes?: string }) {
+function ExclamationTriangle({ classes }: { classes?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
+		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 24">
 			<path
 				fill="currentColor"
 				fillRule="evenodd"
-				d="M.193.226a.714.714 0 00.033 1.01L4.24 5 .226 8.765a.714.714 0 10.977 1.042L6.33 5 1.203.193a.714.714 0 00-1.01.033z"
+				d="M4.195 23.433A4.199 4.199 0 010 19.238c0-.73.192-1.448.555-2.082l8.741-15.3a3.691 3.691 0 016.406 0l8.745 15.3a4.195 4.195 0 01-3.644 6.277H4.195zM11.327 3.02l-8.741 15.3a1.851 1.851 0 001.609 2.769h16.608a1.851 1.851 0 001.609-2.77L13.671 3.02a1.347 1.347 0 00-2.344 0z"
 				clipRule="evenodd"
 			></path>
+			<path fill="currentColor" d="M11.327 8.2H13.671V14.448999999999998H11.327z"></path>
+			<circle cx="12.499" cy="17.574" r="1.172" fill="currentColor"></circle>
 		</svg>
 	);
 }
 
-export default Arrow;
+export default ExclamationTriangle;

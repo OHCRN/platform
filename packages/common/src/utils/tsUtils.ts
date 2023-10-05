@@ -17,19 +17,34 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import React from 'react';
+/**
+ * Strip aliases out from the top level of the TS reported type.
+ * This will display type as an object with {key: value} pairs instead as an alias name.
+ */
+export type Clean<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
-function Arrow({ classes }: { classes?: string }) {
-	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
-			<path
-				fill="currentColor"
-				fillRule="evenodd"
-				d="M.193.226a.714.714 0 00.033 1.01L4.24 5 .226 8.765a.714.714 0 10.977 1.042L6.33 5 1.203.193a.714.714 0 00-1.01.033z"
-				clipRule="evenodd"
-			></path>
-		</svg>
-	);
-}
+/**
+ * Keys of an object type, as a union.
+ *
+ * Example:
+ * ```
+ * const model = { a: 'hello', b: 100};
+ * type ModelKeys = Keys<typeof model>; // "a" | "b"
+ * ```
+ */
+export type Keys<T> = T extends infer U ? keyof U : never;
 
-export default Arrow;
+/**
+ * Values of an object's property types, as a union.
+ * If the object is readonly (ie. `as const`) the values will be read as literals
+ *
+ * Example:
+ * ```
+ * const model = { a: 'hello', b: 100};
+ * type ModelValues = Values<typeof model>; // string | number
+ *
+ * const modelAsConst = { a: 'hello', b: 100} as const;
+ * type ModelAsConstValues = Values<typeof modelAsConst>; // 'hello' | 100
+ * ```
+ */
+export type Values<T> = T extends infer U ? U[keyof U] : never;
