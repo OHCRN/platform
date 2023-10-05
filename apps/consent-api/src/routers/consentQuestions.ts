@@ -49,8 +49,13 @@ const router = Router();
  *         in: query
  *         description: Consent question category
  *         schema:
- *            type: Enum
- *            enum: [INFORMED_CONSENT, CONSENT_RELEASE_DATA, CONSENT_RESEARCH_PARTICIPATION, CONSENT_RECONTACT, CONSENT_REVIEW_SIGN]
+ *            type: string
+ *            enum:
+ *              - INFORMED_CONSENT
+ *              - CONSENT_RELEASE_DATA
+ *              - CONSENT_RESEARCH_PARTICIPATION
+ *              - CONSENT_RECONTACT
+ *              - CONSENT_REVIEW_SIGN
  *     responses:
  *       200:
  *         description: The list of questions was successfully retrieved.
