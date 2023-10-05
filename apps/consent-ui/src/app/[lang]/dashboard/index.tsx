@@ -28,30 +28,6 @@ const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		<div>
 			<h2>{translate('dashboard')}</h2>
 			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-			<Notification
-				actionText="Minim veniam commodo"
-				dismissable
-				level="error"
-				title="Sint sit aute sunt non consequat."
-				description="Cillum incididunt cillum elit do ipsum sit deserunt anim ipsum et Lorem. Eu laborum veniam sint eiusmod dolor id laborum nostrud occaecat pariatur amet in."
-			/>
-			<Notification
-				level="info"
-				title="Sint sit aute sunt non consequat."
-				description={
-					<>
-						Cillum incididunt cillum elit do ipsum <b>sit deserunt</b> anim ipsum et Lorem. Eu
-						laborum veniam sint <a href="#">eiusmod dolor</a> id laborum nostrud occaecat pariatur
-						amet in.
-					</>
-				}
-			/>
-			<Notification dismissable level="success" title="Sint sit aute sunt non consequat." />
-			<Notification
-				actionText="Sit est commodo sunt"
-				level="warning"
-				title="Sint sit aute sunt non consequat."
-			/>
 		</div>
 	);
 };
