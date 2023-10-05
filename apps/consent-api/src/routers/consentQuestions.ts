@@ -23,7 +23,7 @@ import {
 	getConsentQuestion,
 	getConsentQuestions,
 	// getLatestParticipantResponseByParticipantIdAndQuestionId,
-} from '../service/search';
+} from '../service/search.js';
 
 const router = Router();
 
