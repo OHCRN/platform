@@ -20,38 +20,62 @@
 import Link from 'next/link';
 
 import { getTranslation, ValidLanguage } from '@/i18n';
-import Notification from '@/components/Notification';
 
 const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang);
 	return (
-		<div>
+		<div style={{ width: 500 }}>
 			<h2>{translate('dashboard')}</h2>
 			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-			<Notification
-				actionText="Minim veniam commodo"
-				dismissable
-				level="error"
-				title="Sint sit aute sunt non consequat."
-				description="Cillum incididunt cillum elit do ipsum sit deserunt anim ipsum et Lorem. Eu laborum veniam sint eiusmod dolor id laborum nostrud occaecat pariatur amet in."
-			/>
-			<Notification
-				level="info"
-				title="Sint sit aute sunt non consequat."
-				description={
-					<>
-						Cillum incididunt cillum elit do ipsum <b>sit deserunt</b> anim ipsum et Lorem. Eu
-						laborum veniam sint <a href="#">eiusmod dolor</a> id laborum nostrud occaecat pariatur
-						amet in.
-					</>
-				}
-			/>
-			<Notification dismissable level="success" title="Sint sit aute sunt non consequat." />
-			<Notification
-				actionText="Sit est commodo sunt"
-				level="warning"
-				title="Sint sit aute sunt non consequat."
-			/>
+			<p>Test out sticky header/footer</p>
+			<p>
+				Ad adipisicing laborum in sunt occaecat aliqua est excepteur. Excepteur qui eu consectetur
+				non est non anim ut magna sunt esse ullamco. Non non do proident et est adipisicing velit do
+				nostrud dolor commodo aute labore ex. Id do laborum aliqua consequat est magna culpa qui.
+				Magna in nulla eiusmod esse et laborum voluptate ad non occaecat in. Elit pariatur dolor
+				enim officia dolore minim excepteur est Lorem. Et elit officia ut culpa minim ad in sunt
+				magna aliqua. Minim ex ipsum laborum enim enim esse veniam dolor in. Irure ipsum dolor amet
+				nisi nostrud sint. Ut cupidatat labore ut labore. Cupidatat et in officia eiusmod tempor.
+				Lorem mollit proident aliquip consequat minim irure velit mollit eiusmod. Ex velit non aute
+				ea deserunt eiusmod dolor officia irure proident.
+			</p>
+			<p>
+				Nulla dolor eiusmod cupidatat do. Lorem labore aliquip elit incididunt proident. Cillum non
+				aliqua adipisicing nulla exercitation consectetur cupidatat. Proident reprehenderit fugiat
+				nostrud officia et. Enim esse sint veniam occaecat exercitation culpa cillum labore
+				consectetur laborum cupidatat. Dolor amet reprehenderit non excepteur proident occaecat
+				quis. Enim magna eu Lorem non enim.
+			</p>
+			<p>
+				Elit irure amet proident eu. Exercitation minim fugiat proident pariatur ut elit culpa
+				excepteur magna aliqua mollit labore. Qui elit duis amet incididunt anim ut consectetur
+				pariatur do ullamco laborum consequat. Quis magna deserunt do aliquip duis sint. Nostrud do
+				ad est pariatur consectetur. Eu anim occaecat sint aute labore pariatur excepteur tempor
+				qui. Id ut voluptate mollit in veniam mollit cillum fugiat do laboris fugiat. Magna ut
+				officia aliquip laborum nisi consequat nostrud sit quis ea quis cupidatat. Excepteur do
+				Lorem commodo ea consectetur sit ut anim. Incididunt adipisicing exercitation enim do nulla
+				irure. Mollit eiusmod laborum aliqua reprehenderit sit consequat exercitation nisi laborum
+				aute sunt velit.
+			</p>
+			<p>
+				Non sunt aliqua exercitation dolor voluptate excepteur nisi deserunt nisi ullamco. Aute et
+				duis anim non adipisicing ex. Magna adipisicing ex ad voluptate dolor consequat labore
+				ullamco velit minim in nostrud ex incididunt. Laborum nostrud dolore voluptate sint. Laboris
+				non ex ea velit. Aliquip adipisicing laborum laborum nulla elit enim magna culpa ut sunt
+				veniam. Id non ullamco deserunt irure.
+			</p>
+			<p>
+				Irure ut eiusmod nulla ea consectetur do ea. Voluptate cupidatat ea eiusmod elit officia
+				minim aute dolor non cupidatat reprehenderit sunt sint ad. Officia proident aliquip Lorem
+				culpa cillum culpa proident consequat fugiat fugiat quis deserunt cupidatat. Nostrud nostrud
+				proident irure qui ea voluptate dolore occaecat labore. Non occaecat exercitation elit
+				laborum eiusmod laboris.
+			</p>
+			<p>
+				Nulla quis amet fugiat enim qui et occaecat. Dolor ipsum et adipisicing qui consectetur ut.
+				Irure ipsum aliqua commodo et anim. Excepteur irure ullamco cupidatat mollit deserunt amet.
+				Esse officia aute ea deserunt in aliquip laboris reprehenderit duis.
+			</p>
 		</div>
 	);
 };
