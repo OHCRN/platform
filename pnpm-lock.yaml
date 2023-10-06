@@ -397,6 +397,9 @@ importers:
 
   packages/types:
     dependencies:
+      eslint-config-ohcrn:
+        specifier: workspace:^
+        version: link:../config/eslint-config-ohcrn
       zod:
         specifier: ^3.21.4
         version: 3.21.4

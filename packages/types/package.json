@@ -10,8 +10,8 @@
   },
   "type": "module",
   "engines": {
-		"node": ">=18"
-	},
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc",
     "test": "nyc mocha"
@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "eslint-config-ohcrn": "workspace:^",
     "zod": "^3.21.4"
   }
 }
