@@ -5,11 +5,50 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output = "../src/generated/client"
+  output   = "../src/generated/client"
 }
 
 model Ohip {
-  id                String @id @default(cuid())
-  ohipPrivateKey    String @unique
-  ohipNumber        String @unique
+  id             String @id @default(cuid())
+  ohipPrivateKey String @unique
+  ohipNumber     String @unique
+}
+
+enum BirthSex {
+  FEMALE
+  INTERSEX
+  MALE
+  PREFER_NOT_TO_ANSWER
+}
+
+enum Gender {
+  GENDER_FLUID
+  GENDER_QUEER
+  MAN
+  NON_BINARY
+  PREFER_NOT_TO_ANSWER
+  PREFER_TO_SELF_IDENTIFY
+  QUESTIONING
+  TRANSGENDER_MAN_TRANSMAN
+  TRANSGENDER_WOMAN_TRANSWOMAN
+  TWO_SPIRIT
+  WOMAN
+}
+
+enum HistoryOfCancer {
+  YES
+  NO
+  UNKNOWN
+}
+
+model ClinicalProfile {
+  id                    String          @id @default(cuid())
+  ancestry              String // TO DO change to country enum
+  birthSex              BirthSex
+  familyHistoryOfCancer HistoryOfCancer
+  gender                Gender?
+  geneticsClinicVisited String // TO DO change to clinics enum
+  historyOfCancer       HistoryOfCancer
+  participantId         String
+  selfIdentifiedGender  String?
 }
