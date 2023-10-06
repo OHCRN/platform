@@ -21,6 +21,7 @@ import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
+import packageJson from '../../package.json' assert { type: 'json' };
 /**
  * @openapi
  * components:
@@ -48,7 +49,7 @@ const options = swaggerJsdoc({
 		openapi: '3.1.0',
 		info: {
 			title: 'OHCRN Keys DAS',
-			version: '1.0.0',
+			version: packageJson.version,
 			description: '',
 			license: {
 				name: 'APGL',

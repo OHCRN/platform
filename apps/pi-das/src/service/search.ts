@@ -1,4 +1,4 @@
-import prisma, { Participant } from '../prismaClient';
+import prisma, { Participant } from '../prismaClient.js';
 
 export const getParticipant = async (id: string): Promise<Participant> => {
 	// TODO: add error handling

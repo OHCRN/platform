@@ -19,7 +19,7 @@
 
 import urlJoin from 'url-join';
 
-import { defaultAppConfig, getAppConfig } from '@/config';
+import { defaultAppConfig, getAppConfig } from 'src/config';
 
 const BUILD_TIME_VARIABLES = {
 	// Next.js local API route for the blocking data fetch

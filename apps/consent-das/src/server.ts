@@ -19,12 +19,11 @@
 
 import { Server } from 'http';
 
-import { getAppConfig } from './config';
-import logger from './logger';
+import { getAppConfig } from './config.js';
+import logger from './logger.js';
 
-import App from './index';
+import App from './index.js';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let server: Server;
 
 (async () => {

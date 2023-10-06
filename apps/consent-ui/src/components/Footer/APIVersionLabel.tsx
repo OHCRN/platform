@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getTranslation, ValidLanguage } from '@/i18n';
+import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const APIVersionLabel = async ({
 	apiVersion,

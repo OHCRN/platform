@@ -17,10 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from '@/i18n';
-import Container from '@/components/Container';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { ValidLanguage } from 'src/i18n';
+import Container from 'src/components/Container';
+import Header from 'src/components/Header';
+import Footer from 'src/components/Footer';
 
 import styles from './PageLayout.module.scss';
 
