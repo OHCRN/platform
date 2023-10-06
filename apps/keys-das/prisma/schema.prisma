@@ -9,7 +9,7 @@ generator client {
 }
 
 model OhipKey {
-  id                String @id @default(cuid())
+  id                String @id @default("")
   participantId     String @unique
   ohipPrivateKey    String @unique @default(cuid())
 }

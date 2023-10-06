@@ -60,10 +60,10 @@ router.get('/:participantId', async (req, res) => {
 // create ohip key
 router.post('/', async (req, res) => {
 	logger.info('POST /ohip-keys');
-	const { participantId } = req.body;
+	const { participantId, id } = req.body;
 	// TODO: add validation
 	try {
-		const ohipKey = await createOhipKey({ participantId });
+		const ohipKey = await createOhipKey({ participantId, id });
 		res.status(201).send({ ohipKey });
 	} catch (error) {
 		logger.error(error);

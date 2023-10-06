@@ -17,11 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { customAlphabet } from 'nanoid';
+import { IdAlphabet } from 'types/services';
+
 import { PrismaClient, OhipKey } from './generated/client/index.js';
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
-const prisma = new PrismaClient();
+const nanoid = customAlphabet(IdAlphabet);
+
+const prisma = new PrismaClient().$extends({
+	query: {
+		$allModels: {
+			async create({ args, query }) {
+				args.data = {
+					...args.data,
+					id: args.data.id || nanoid(),
+				};
+				return query(args);
+			},
+		},
+	},
+});
 
 export { OhipKey };
 export default prisma;
