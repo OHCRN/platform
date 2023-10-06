@@ -17,7 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import prisma, { ClinicalProfile, Ohip, HistoryOfCancer, Gender, BirthSex } from '../prismaClient';
+import { Ancestry, GeneticsClinic, HistoryOfCancer, Gender, BirthSex } from 'src/generated/client';
+
+import prisma, { ClinicalProfile, Ohip } from '../prismaClient';
 
 export const createOhipNumber = async ({
 	ohipPrivateKey,
@@ -50,8 +52,8 @@ export const createClinicalProfile = async ({
 	birthSex: BirthSex;
 	gender?: Gender;
 	selfIdentifiedGender?: string;
-	ancestry: string; // TO DO change to country enum
-	geneticsClinicVisited: string; // TO DO change to clinics enum
+	ancestry: Ancestry;
+	geneticsClinicVisited: GeneticsClinic;
 	historyOfCancer: HistoryOfCancer;
 	familyHistoryOfCancer: HistoryOfCancer;
 }): Promise<ClinicalProfile> => {

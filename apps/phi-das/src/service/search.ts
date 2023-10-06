@@ -35,7 +35,6 @@ export const getOhipNumbers = async (): Promise<Ohip[]> => {
 	return result;
 };
 
-// TO DO SAM after migration
 export const getClinicalProfile = async (
 	clinicalProfilePrivateKey: string,
 ): Promise<ClinicalProfile> => {
@@ -48,7 +47,6 @@ export const getClinicalProfile = async (
 	return result;
 };
 
-// TO DO SAM after migration
 export const getClinicalProfiles = async (): Promise<ClinicalProfile[]> => {
 	// TODO: add error handling
 	const result = await prisma.clinicalProfile.findMany();

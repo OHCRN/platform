@@ -31,7 +31,6 @@ const seed = async () => {
 		await prisma.ohip.deleteMany({});
 		logger.info('Deleting existing OHIP data...COMPLETE');
 
-		// TO DO SAM after migration
 		logger.info('Deleting existing clinical profiles...');
 		await prisma.clinicalProfile.deleteMany({});
 		logger.info('Deleting existing clinical profiles...COMPLETE');
@@ -43,7 +42,6 @@ const seed = async () => {
 		});
 		logger.info('Creating new OHIP data from seed data...COMPLETE');
 
-		// TO DO SAM after migration
 		logger.info('Creating new clinical profiles from seed data...');
 		await prisma.clinicalProfile.createMany({
 			data: clinicalProfiles,
