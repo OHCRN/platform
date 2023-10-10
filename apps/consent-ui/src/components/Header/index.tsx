@@ -19,11 +19,11 @@
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 
-import { ValidLanguage, getTranslation } from '@/i18n';
-import { defaultLanguage } from '@/i18n/settings';
-import LanguageToggle from '@/components/Header/LanguageToggle';
-import OhcrnImage from '@/public/ohcrn_large.svg';
-import { getUnselectedLang } from '@/components/Link/utils';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import { defaultLanguage } from 'src/i18n/settings';
+import LanguageToggle from 'src/components/Header/LanguageToggle';
+import OhcrnImage from 'src/public/ohcrn_large.svg';
+import { getUnselectedLang } from 'src/components/Link/utils';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
@@ -55,7 +55,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</div>
 				{/* TODO: implement real help button, ticket TBD */}
 				<div className={styles.help}>
-					<HelpButton />
+					<HelpButton label={translate('help')} />
 				</div>
 				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 				{/* TODO: implement user menu, ticket TBD */}

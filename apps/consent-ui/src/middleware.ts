@@ -19,7 +19,7 @@
 
 import { NextResponse, NextRequest } from 'next/server';
 
-import { defaultLanguage, supportedLanguages } from '@/i18n/settings';
+import { defaultLanguage, supportedLanguages } from 'src/i18n/settings';
 
 export const config = {
 	matcher: [

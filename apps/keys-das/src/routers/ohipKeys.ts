@@ -19,11 +19,18 @@
 
 import { Router } from 'express';
 
-import { getOhipKey, getOhipKeys } from '../service/search';
-import { createOhipKey } from '../service/create';
-import logger from '../logger';
+import { getOhipKey, getOhipKeys } from '../service/search.js';
+import { createOhipKey } from '../service/create.js';
+import logger from '../logger.js';
 
 const router = Router();
+
+/**
+ * @openapi
+ * tags:
+ *   - name: OHIP Keys
+ *     description: OHIP Key management
+ */
 
 // TODO: add proper JSDoc comments
 // get all ohip keys

@@ -1,13 +1,5 @@
 import * as z from 'zod';
 
-export const User = z.object({
-	id: z.string(),
-	name: z.string(),
-	email: z.string().email(),
-});
-
-export type User = z.infer<typeof User>;
-
 const CONSENT_CATEGORIES = [
 	'INFORMED_CONSENT',
 	'CONSENT_RELEASE_DATA',
@@ -18,3 +10,14 @@ const CONSENT_CATEGORIES = [
 
 export const ConsentCategory = z.enum(CONSENT_CATEGORIES);
 export type ConsentCategory = z.infer<typeof ConsentCategory>;
+
+const CONSENT_GROUPS = [
+	'ADULT_CONSENT',
+	'ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER',
+	'GUARDIAN_CONSENT_OF_MINOR',
+	'GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT',
+	'YOUNG_ADULT_CONSENT',
+] as const;
+
+export const ConsentGroup = z.enum(CONSENT_GROUPS);
+export type ConsentGroup = z.infer<typeof ConsentGroup>;

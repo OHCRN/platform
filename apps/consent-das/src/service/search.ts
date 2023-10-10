@@ -1,16 +1,16 @@
-import { Prisma } from '../generated/client';
+import { Prisma } from '../generated/client/index.js';
 import prisma, {
 	Participant,
 	ConsentQuestion,
 	ParticipantResponse,
 	ConsentCategory,
-} from '../prismaClient';
+} from '../prismaClient.js';
 
 export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.findUniqueOrThrow({
 		where: {
-			participantId,
+			id: participantId,
 		},
 	});
 	return result;
@@ -22,11 +22,11 @@ export const getParticipants = async (): Promise<Participant[]> => {
 	return result;
 };
 
-export const getConsentQuestion = async (id: string): Promise<ConsentQuestion> => {
+export const getConsentQuestion = async (consentQuestionId: string): Promise<ConsentQuestion> => {
 	// TODO: add error handling
 	const result = await prisma.consentQuestion.findUniqueOrThrow({
 		where: {
-			id,
+			id: consentQuestionId,
 		},
 	});
 	return result;
@@ -39,27 +39,6 @@ export const getConsentQuestions = async (
 	const result = await prisma.consentQuestion.findMany({
 		where: {
 			AND: [{ category }], // returns all consent questions if category is undefined
-		},
-	});
-	return result;
-};
-
-export const getParticipantResponse = async (
-	participantId: string,
-	consentQuestionId: string,
-	submittedAt?: Date,
-): Promise<ParticipantResponse> => {
-	// TODO: add error handling
-	const result = await prisma.participantResponse.findFirstOrThrow({
-		where: {
-			participantId,
-			consentQuestionId,
-			// optionally searches by submittedAt date and will return none if no date exists
-			...(submittedAt && { submittedAt }),
-		},
-		orderBy: {
-			// gets the most recently submitted response
-			submittedAt: 'desc',
 		},
 	});
 	return result;

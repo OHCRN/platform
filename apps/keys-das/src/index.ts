@@ -20,14 +20,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { AppConfig } from './config';
-import OhipKeysRouter from './routers/ohipKeys';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import OhipKeysRouter from './routers/ohipKeys.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
 	app.set('port', config.port);
 	app.use(bodyParser.json());
 
+	app.use('/api-docs', SwaggerRouter);
 	app.use('/ohip-keys', OhipKeysRouter);
 
 	return app;

@@ -20,14 +20,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { AppConfig } from './config';
-import ParticipantsRouter from './routers/participants';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import ParticipantsRouter from './routers/participants.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
 	app.set('port', config.port);
 	app.use(bodyParser.json());
 
+	app.use('/api-docs', SwaggerRouter);
 	app.use('/participants', ParticipantsRouter);
 
 	return app;

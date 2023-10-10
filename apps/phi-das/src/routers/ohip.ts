@@ -19,11 +19,18 @@
 
 import { Router } from 'express';
 
-import { getOhipNumber, getOhipNumbers } from '../service/search';
-import { createOhipNumber } from '../service/create';
-import logger from '../logger';
+import { getOhipNumber, getOhipNumbers } from '../service/search.js';
+import { createOhipNumber } from '../service/create.js';
+import logger from '../logger.js';
 
 const router = Router();
+
+/**
+ * @openapi
+ * tags:
+ *   - name: OHIP
+ *     description: OHIP data management
+ */
 
 // TODO: add proper JSDoc comments
 router.get('/', async (req, res) => {

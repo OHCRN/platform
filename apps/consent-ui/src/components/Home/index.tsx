@@ -19,11 +19,11 @@
 
 import Image from 'next/image';
 
-import { ValidLanguage, getTranslation } from '@/i18n';
-import LinkButton from '@/components/Button/LinkButton';
-import RightArrow from '@/components/Icons/Arrow';
-import LandingPageImage from '@/public/landing-page.png';
-import { OHCRN_HOME_LINK } from '@/constants';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import LinkButton from 'src/components/Button/LinkButton';
+import RightArrow from 'src/components/Icons/Arrow';
+import BackgroundImage from 'src/public/background.png';
+import { OHCRN_HOME_LINK } from 'src/constants';
 
 import styles from './Home.module.scss';
 import Card from './Card/Card';
@@ -33,8 +33,9 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 	return (
 		<div className={styles.heroContainer}>
 			<Image
-				src={LandingPageImage}
+				src={BackgroundImage}
 				alt={translate('hero-background-img-alt')}
+				priority
 				className={styles.backgroundImg}
 			/>
 			<div className={styles.gradientOverlay}></div>
@@ -44,9 +45,9 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					<p>
 						<b>{translate('ohcrn-description')}</b>
 					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="secondary" className={styles.moreButton}>
+					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" layout="icon">
 						<b>{translate('more-about-ohcrn')}</b>
-						<RightArrow classes={styles.arrow} />
+						<RightArrow />
 					</LinkButton>
 				</div>
 				<Card currentLang={currentLang} />

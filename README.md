@@ -41,11 +41,13 @@ The directory structure is as follows:
 │       └── src
 ├── docker-scripts/                 ← Docker Init Scripts
 └── packages/
-    ├── common/                     ← Shared Validation & Types
-    │   └── src
     ├── config/
     │   └── eslint-config-ohcrn     ← Shared ESLint Config
-    └── logger/                     ← Shared Logger
+    ├── error-handler/              ← Reusable Error Handler for APIs
+    │   └── src
+    ├── logger/                     ← Shared Logger
+    │   └── src
+    └── types/                      ← Shared Validation & Types
         └── src
 ```
 
@@ -55,12 +57,12 @@ To keep commit messages consistent, we use [gitmoji](https://gitmoji.dev). To ea
 
 ## Local Development
 
-To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference.
+To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference, which you can create a copy of and rename to `.env` unless otherwise specified.
 
 - In the [`./` project root folder](./), create an `.env` file copy of the root [`.env.schema`](./.env.schema) file
 - In the [`/apps/consent-api/` folder](./apps/consent-api/), create an `.env` file
 - In the [`/apps/consent-das/` folder](./apps/consent-das/), create an `.env` file
-- In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create and `.env.local` file
+- In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create an `.env.local` file
 - In the [`/apps/data-mapper/` folder](./apps/data-mapper/), create an `.env` file
 - In the [`/apps/keys-das/` folder](./apps/keys-das/), create an `.env` file
 - In the [`/apps/phi-das/` folder](./apps/phi-das/), create an `.env` file
@@ -73,6 +75,7 @@ To run the setup locally, ensure you have provided the **required** environment 
 | `.`           | `POSTGRES_USER`   | Docker Postgres database user     | `string` | Required | `postgres`                                               |
 | `.`           | `POSTGRES_USER`   | Docker Postgres database password | `string` | Required | `postgres`                                               |
 | `consent-api` | `PORT`            | Port number for the Consent API   | `number` | Optional | `8080`                                                   |
+| `consent-api` | `NODE_ENV`        | Node environment name             | `string` | Required | `development`                                            |
 | `consent-das` | `DATABASE_URL`    | URL for the Consent DB            | `string` | Required | `postgres://postgres:postgres@localhost:5432/consent_db` |
 | `consent-das` | `PORT`            | Port number for the Consent DAS   | `number` | Optional | `8085`                                                   |
 | `consent-ui`  | `CONSENT_API_URL` | URL for the Consent API           | `string` | Optional | `http://localhost:8080`                                  |
