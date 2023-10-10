@@ -20,9 +20,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import ParticipantsRouter from './routers/participants';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import ParticipantsRouter from './routers/participants.js';
 
 const App = (config: AppConfig) => {
 	const app = express();

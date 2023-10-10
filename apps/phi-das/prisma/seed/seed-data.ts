@@ -1,4 +1,4 @@
-import { Prisma } from '../../src/generated/client';
+import { Prisma } from '../../src/generated/client/index.js';
 
 const ohipData: Prisma.OhipCreateInput[] = [
 	{
