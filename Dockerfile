@@ -68,7 +68,7 @@ FROM base AS common
 
 ARG APP_USER
 ARG WORKDIR
-ARG COMMON_DIR=${WORKDIR}/packages/common
+ARG COMMON_DIR=${WORKDIR}/packages/types
 
 WORKDIR ${COMMON_DIR}
 
