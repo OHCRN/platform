@@ -20,7 +20,6 @@
 import Link from 'next/link';
 
 import { getTranslation, ValidLanguage } from '@/i18n';
-import Notification from '@/components/Notification';
 
 const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang);
