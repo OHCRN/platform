@@ -19,25 +19,17 @@
 
 import { Router } from 'express';
 
-import { verifyRecaptcha } from '@/utils/recaptcha';
+import { recaptchaMiddleware } from '@/utils/recaptcha';
 
 const router = Router();
 
 // TEST ENDPOINT
 // remove after adding an endpoint that uses recaptcha
 
-router.post('/', async (req, res) => {
-	const { recaptchaToken, inputData } = req.body;
+router.post('/', recaptchaMiddleware, async (req, res) => {
+	const { inputData } = req.body;
 
-	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-
-	if (recaptchaVerified) {
-		// handle API request here
-		res.status(200).send({ message: 'reCAPTCHA success', inputData });
-	} else {
-		// refuse API request, send back an error
-		res.status(500).send('reCAPTCHA error');
-	}
+	res.status(200).send({ message: 'reCAPTCHA success', inputData });
 });
 
 export default router;

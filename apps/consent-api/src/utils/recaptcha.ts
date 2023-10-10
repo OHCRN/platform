@@ -18,6 +18,7 @@
  */
 
 import axios from 'axios';
+import { Request, Response, NextFunction } from 'express';
 
 export const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	if (!recaptchaToken) {
@@ -33,5 +34,17 @@ export const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	} catch (error) {
 		console.error('reCAPTCHA error', error);
 		return false;
+	}
+};
+
+export const recaptchaMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+	const { recaptchaToken } = req.body;
+
+	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+
+	if (recaptchaVerified) {
+		next();
+	} else {
+		res.status(500).send('reCAPTCHA error');
 	}
 };
