@@ -97,6 +97,8 @@ To run the setup locally, ensure you have provided the **required** environment 
 - Install pnpm: `brew install pnpm`
 - Install dependencies: `pnpm install`
 
+> **Note:** This repo is using the LTS version of node (currently v18)
+
 ### VS Code Configuration
 
 [Visual Studio Code](https://code.visualstudio.com/) is the recommended code editor for this project. The monorepo contains a [`.vscode` directory](./.vscode/) with a [`settings.schema.json` file](./.vscode/settings.schema.json).
