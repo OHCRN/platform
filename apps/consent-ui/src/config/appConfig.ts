@@ -24,7 +24,7 @@ export type AppConfig = {
 	RECAPTCHA_SITE_KEY?: string;
 };
 
-export const defaultAppConfig = {
+export const defaultAppConfig: AppConfig = {
 	CONSENT_API_URL: 'http://localhost:8080',
 	CONSENT_UI_URL: 'http://localhost:3000',
 	FEATURE_FLAG: false,
