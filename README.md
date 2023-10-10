@@ -193,3 +193,10 @@ Verify everything is running correctly by navigating to [`http://localhost:3000`
 | `pnpm run generate`        | generates Prisma Clients for the DASes                          |
 | `pnpm run seed`            | seeds data into the DASes                                       |
 | `pnpm run start`           | runs migrations, then builds, then starts local dev servers     |
+
+## ReCAPTCHA
+
+In local dev, for consent UI & API:
+
+- Use [Google's test keys](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do) - secret key for API, site key for UI.
+- No ReCAPTCHA token is required for consent API, in development. If one isn't provided, the ReCAPTCHA verification process will be skipped. If you provide any token, the verification process will take place and verification will always be successful.
