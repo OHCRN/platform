@@ -1,7 +1,6 @@
-// TODO: fix urlJoin error
 // import urlJoin from 'url-join';
 
-import { getAppConfig } from '../config';
+import { getAppConfig } from '../config.js';
 
 // PI-DAS
 const createParticipantPiData = async ({

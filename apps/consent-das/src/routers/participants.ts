@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 
-import { getParticipant, getParticipants } from '../service/search';
-import { createParticipant } from '../service/create';
-import logger from '../logger';
+import { getParticipant, getParticipants } from '../service/search.js';
+import { createParticipant } from '../service/create.js';
+import logger from '../logger.js';
 
 // TODO: update JSDoc comments
 /**
@@ -73,12 +73,12 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: participantId
- *        in: path
- *        description: Participant ID
- *        required: true
- *        schema:
- *          type: string
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
@@ -122,11 +122,16 @@ router.get('/:participantId', async (req, res) => {
  *               isGuardian:
  *                 type: boolean
  *               consentGroup:
- *                 type: Enum
- * 				   enum: [ADULT_CONSENT, ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER, GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, YOUNG_ADULT_CONSENT]
+ *                 type: string
+ *                 enum:
+ *                   - ADULT_CONSENT
+ *                   - ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER
+ *                   - GUARDIAN_CONSENT_OF_MINOR
+ *                   - GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT
+ *                   - YOUNG_ADULT_CONSENT
  *               guardianIdVerified:
- *                 	type: boolean
- * 			   required:
+ *                 type: boolean
+ *             required:
  *               - emailVerified
  *               - isGuardian
  *     responses:

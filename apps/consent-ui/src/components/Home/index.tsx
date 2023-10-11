@@ -19,11 +19,11 @@
 
 import Image from 'next/image';
 
-import { ValidLanguage, getTranslation } from '@/i18n';
-import LinkButton from '@/components/Button/LinkButton';
-import RightArrow from '@/components/Icons/Arrow';
-import BackgroundImage from '@/public/background.png';
-import { OHCRN_HOME_LINK } from '@/constants';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import LinkButton from 'src/components/Button/LinkButton';
+import RightArrow from 'src/components/Icons/Arrow';
+import BackgroundImage from 'src/public/background.png';
+import { OHCRN_HOME_LINK } from 'src/constants';
 
 import styles from './Home.module.scss';
 import Card from './Card/Card';

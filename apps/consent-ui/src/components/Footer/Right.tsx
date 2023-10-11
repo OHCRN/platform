@@ -20,8 +20,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Translation } from '@/i18n';
-import ONGovtLogo from '@/public/on_govt.svg';
+import { Translation } from 'src/i18n';
+import ONGovtLogo from 'src/public/on_govt.svg';
 
 import styles from './Footer.module.scss';
 
