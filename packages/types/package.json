@@ -1,0 +1,26 @@
+{
+  "name": "types",
+  "version": "0.1.0",
+  "description": "",
+  "exports": {
+    ".": "./dist/index.js",
+    "./services": "./dist/services/index.js",
+    "./entities": "./dist/entities/index.js",
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "nyc mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint-config-ohcrn": "workspace:^",
+    "zod": "^3.21.4"
+  }
+}

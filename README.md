@@ -41,11 +41,13 @@ The directory structure is as follows:
 │       └── src
 ├── docker-scripts/                 ← Docker Init Scripts
 └── packages/
-    ├── common/                     ← Shared Validation & Types
-    │   └── src
     ├── config/
     │   └── eslint-config-ohcrn     ← Shared ESLint Config
-    └── logger/                     ← Shared Logger
+    ├── error-handler/              ← Reusable Error Handler for APIs
+    │   └── src
+    ├── logger/                     ← Shared Logger
+    │   └── src
+    └── types/                      ← Shared Validation & Types
         └── src
 ```
 
@@ -55,12 +57,12 @@ To keep commit messages consistent, we use [gitmoji](https://gitmoji.dev). To ea
 
 ## Local Development
 
-To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference.
+To run the setup locally, ensure you have provided the **required** environment variables, as described in [Environment Variables](#environment-variables). Each package has an `.env.schema` file for reference, which you can create a copy of and rename to `.env` unless otherwise specified.
 
 - In the [`./` project root folder](./), create an `.env` file copy of the root [`.env.schema`](./.env.schema) file
 - In the [`/apps/consent-api/` folder](./apps/consent-api/), create an `.env` file
 - In the [`/apps/consent-das/` folder](./apps/consent-das/), create an `.env` file
-- In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create and `.env.local` file
+- In the [`/apps/consent-ui/` folder](./apps/consent-ui/), create an `.env.local` file
 - In the [`/apps/data-mapper/` folder](./apps/data-mapper/), create an `.env` file
 - In the [`/apps/keys-das/` folder](./apps/keys-das/), create an `.env` file
 - In the [`/apps/phi-das/` folder](./apps/phi-das/), create an `.env` file

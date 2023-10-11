@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import clsx from 'clsx';
 
-import { Translation } from '@/i18n';
+import { Translation } from 'src/i18n';
 
 import styles from './Footer.module.scss';
 
