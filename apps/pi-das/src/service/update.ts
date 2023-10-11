@@ -1,4 +1,4 @@
-import prisma, { Participant } from '../prismaClient';
+import prisma, { Participant, Province } from '../prismaClient.js';
 
 export const updateParticipant = async ({
 	participantId,
@@ -35,7 +35,7 @@ export const updateParticipant = async ({
 	guardianRelationship?: string;
 	mailingAddressStreet?: string;
 	mailingAddressCity?: string;
-	mailingAddressProvince?: string;
+	mailingAddressProvince?: Province;
 	mailingAddressPostalCode?: string;
 	residentialPostalCode?: string;
 }): Promise<Participant> => {

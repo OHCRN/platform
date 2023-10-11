@@ -1,4 +1,4 @@
-import prisma, { Participant } from '../prismaClient.js';
+import prisma, { Participant, Province } from '../prismaClient.js';
 
 export const createParticipant = async ({
 	inviteId,
@@ -33,7 +33,7 @@ export const createParticipant = async ({
 	guardianRelationship?: string;
 	mailingAddressStreet?: string;
 	mailingAddressCity?: string;
-	mailingAddressProvince?: string;
+	mailingAddressProvince?: Province;
 	mailingAddressPostalCode?: string;
 	residentialPostalCode: string;
 }): Promise<Participant> => {

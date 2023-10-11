@@ -8,24 +8,39 @@ generator client {
   output   = "../src/generated/client"
 }
 
+enum Province {
+  ALBERTA
+  BRITISH_COLUMBIA
+  MANITOBA
+  NEW_BRUNSWICK
+  NEWFOUNDLAND_AND_LABRADOR
+  NORTHWEST_TERRITORIES
+  NOVA_SCOTIA
+  NUNAVUT
+  ONTARIO
+  PRINCE_EDWARD_ISLAND
+  QUEBEC
+  SASKATCHEWAN
+  YUKON
+}
+
 model Participant {
-  id                        String           @id @default(cuid())
+  id                        String    @id @default(cuid())
   inviteId                  String?
-  dateOfBirth               DateTime
-  emailAddress              String           @unique
+  dateOfBirth               DateTime  @db.Date
+  emailAddress              String    @unique
   participantOhipFirstName  String
   participantOhipLastName   String
   participantOhipMiddleName String?
-  phoneNumber               String           @db.Char(10)
+  phoneNumber               String    @db.Char(10)
   participantPreferredName  String
   guardianName              String?
-  guardianPhoneNumber       String?          @db.Char(10)
+  guardianPhoneNumber       String?   @db.Char(10)
   guardianEmailAddress      String?
   guardianRelationship      String?
   mailingAddressStreet      String?
   mailingAddressCity        String?
-  mailingAddressProvince    String?
-  mailingAddressPostalCode  String?          @db.Char(6)
-  residentialPostalCode     String           @db.Char(6)
+  mailingAddressProvince    Province?
+  mailingAddressPostalCode  String?   @db.Char(6)
+  residentialPostalCode     String    @db.Char(6)
 }
-
