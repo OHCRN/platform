@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 
-import { getClinicalProfileKey, getClinicalProfileKeys } from '../service/search';
-import { createClinicalProfileKey } from '../service/create';
-import logger from '../logger';
+import { getClinicalProfileKey, getClinicalProfileKeys } from '../service/search.js';
+import { createClinicalProfileKey } from '../service/create.js';
+import logger from '../logger.js';
 
 const router = Router();
 
