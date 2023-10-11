@@ -1,7 +1,7 @@
-import { PrismaClient } from '../../src/generated/client';
-import logger from '../../src/logger';
+import { PrismaClient } from '../../src/generated/client/index.js';
+import logger from '../../src/logger.js';
 
-import { clinicalProfileKeys, ohipKeys } from './seed-data';
+import { clinicalProfileKeys, ohipKeys } from './seed-data.js';
 
 const prisma = new PrismaClient();
 

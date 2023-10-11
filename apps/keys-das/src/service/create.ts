@@ -1,4 +1,4 @@
-import prisma, { OhipKey, ClinicalProfileKey } from '../prismaClient';
+import prisma, { OhipKey, ClinicalProfileKey } from '../prismaClient.js';
 
 export const createOhipKey = async ({
 	participantId,

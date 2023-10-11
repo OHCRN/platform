@@ -20,10 +20,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import OhipKeysRouter from './routers/ohipKeys';
-import ClinicalProfileKeysRouter from './routers/clinicalProfileKeys';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import OhipKeysRouter from './routers/ohipKeys.js';
+import ClinicalProfileKeysRouter from './routers/clinicalProfileKeys.js';
 
 const App = (config: AppConfig) => {
 	const app = express();

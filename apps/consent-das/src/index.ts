@@ -21,11 +21,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from 'error-handler';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import ParticipantRouter from './routers/participants.js';
+import ConsentQuestionRouter from './routers/consentQuestions.js';
+import ParticipantResponseRouter from './routers/participantResponses.js';
 
 const App = (config: AppConfig) => {
 	const app = express();

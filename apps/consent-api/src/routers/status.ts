@@ -18,11 +18,10 @@
  */
 
 import { Router } from 'express';
-// TODO: fix exports from common (e.g. import { APIStatus } from 'common' or 'common/service')
-import { APIStatus } from 'common/src/service/Status';
+import { APIStatus } from 'types/services';
 
-import { version } from '@/../../package.json';
-import logger from '@/logger';
+import packageJson from '../../package.json' assert { type: 'json' };
+import logger from '../logger.js';
 
 /**
  * @openapi
@@ -50,7 +49,7 @@ const router = Router();
 router.get('/', async (req, res) => {
 	// TODO: add real health check
 	logger.info(`GET /status`);
-	const response: APIStatus = { status: `API is healthy.`, version };
+	const response: APIStatus = { status: `API is healthy.`, version: packageJson.version };
 	res.json(response);
 });
 
