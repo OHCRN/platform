@@ -17,10 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient } from '../../src/generated/client';
-import logger from '../../src/logger';
+import { PrismaClient } from '../../src/generated/client/index.js';
+import logger from '../../src/logger.js';
 
-import { clinicalProfiles, ohipData } from './seed-data';
+import { clinicalProfiles, ohipData } from './seed-data.js';
 
 const prisma = new PrismaClient();
 

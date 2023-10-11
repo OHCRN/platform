@@ -24,7 +24,7 @@ import {
 	GeneticsClinic,
 	HistoryOfCancer,
 	Prisma,
-} from '../../src/generated/client';
+} from '../../src/generated/client/index.js';
 
 const ohipData: Prisma.OhipCreateInput[] = [
 	{

@@ -18,7 +18,7 @@
  */
 import axios from 'axios';
 
-import { getAppConfig } from '@/config';
+import { getAppConfig } from 'src/config';
 
 const initAxiosClient = () => {
 	const { CONSENT_API_URL } = getAppConfig(process.env);

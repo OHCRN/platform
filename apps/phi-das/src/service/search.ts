@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import prisma, { ClinicalProfile, Ohip } from '../prismaClient';
+import prisma, { ClinicalProfile, Ohip } from '../prismaClient.js';
 
 export const getOhipNumber = async (ohipPrivateKey: string): Promise<Ohip> => {
 	// TODO: add error handling

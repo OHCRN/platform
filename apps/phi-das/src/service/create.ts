@@ -17,9 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Ancestry, GeneticsClinic, HistoryOfCancer, Gender, BirthSex } from 'src/generated/client';
+import {
+	Ancestry,
+	GeneticsClinic,
+	HistoryOfCancer,
+	Gender,
+	BirthSex,
+} from 'src/generated/client/index.js';
 
-import prisma, { ClinicalProfile, Ohip } from '../prismaClient';
+import prisma, { ClinicalProfile, Ohip } from '../prismaClient.js';
 
 export const createOhipNumber = async ({
 	ohipPrivateKey,
