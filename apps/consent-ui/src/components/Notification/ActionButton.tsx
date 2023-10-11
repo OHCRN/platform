@@ -17,17 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+'use client';
 
-const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+import { ReactNode } from 'react';
+
+import Button from '../Button';
+
+const ActionButton = ({ children, className }: { children: ReactNode; className?: string }) => {
 	return (
-		<div>
-			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-		</div>
+		<Button variant="primary" color="blue" className={className} onClick={() => {}}>
+			{children}
+		</Button>
 	);
 };
 
-export default Dashboard;
+export default ActionButton;

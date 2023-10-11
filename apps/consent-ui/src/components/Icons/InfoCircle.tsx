@@ -17,17 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+import React from 'react';
 
-const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+function InfoCircle({ classes }: { classes?: string }) {
 	return (
-		<div>
-			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-		</div>
+		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+			<g clipPath="url(#clip0_34_3961)">
+				<rect
+					width="22"
+					height="22"
+					x="1"
+					y="1.508"
+					stroke="currentColor"
+					strokeWidth="2"
+					rx="11"
+				></rect>
+				<path fill="currentColor" d="M13 18H15V24H13z" transform="rotate(-180 13 18)"></path>
+				<ellipse
+					cx="12"
+					cy="9"
+					fill="currentColor"
+					rx="1"
+					ry="1"
+					transform="rotate(-180 12 9)"
+				></ellipse>
+			</g>
+			<defs>
+				<clipPath id="clip0_34_3961">
+					<path fill="#fff" d="M0 0H24V24H0z" transform="translate(0 .508)"></path>
+				</clipPath>
+			</defs>
+		</svg>
 	);
-};
+}
 
-export default Dashboard;
+export default InfoCircle;
