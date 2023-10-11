@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 
-import { getClinicianInvite, getClinicianInvites } from '../service/search';
-import { createClinicianInvite } from '../service/create';
-import logger from '../logger';
+import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
+import { createClinicianInvite } from '../service/create.js';
+import logger from '../logger.js';
 
 // TODO: update JSDoc comments
 /**
