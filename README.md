@@ -41,11 +41,13 @@ The directory structure is as follows:
 │       └── src
 ├── docker-scripts/                 ← Docker Init Scripts
 └── packages/
-    ├── common/                     ← Shared Validation & Types
-    │   └── src
     ├── config/
     │   └── eslint-config-ohcrn     ← Shared ESLint Config
-    └── logger/                     ← Shared Logger
+    ├── error-handler/              ← Reusable Error Handler for APIs
+    │   └── src
+    ├── logger/                     ← Shared Logger
+    │   └── src
+    └── types/                      ← Shared Validation & Types
         └── src
 ```
 

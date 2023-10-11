@@ -1,4 +1,4 @@
-import prisma, { Ohip } from '../prismaClient';
+import prisma, { Ohip } from '../prismaClient.js';
 
 export const createOhipNumber = async ({
 	ohipPrivateKey,

@@ -8,11 +8,27 @@ generator client {
   output   = "../src/generated/client"
 }
 
+enum Province {
+  ALBERTA
+  BRITISH_COLUMBIA
+  MANITOBA
+  NEW_BRUNSWICK
+  NEWFOUNDLAND_AND_LABRADOR
+  NORTHWEST_TERRITORIES
+  NOVA_SCOTIA
+  NUNAVUT
+  ONTARIO
+  PRINCE_EDWARD_ISLAND
+  QUEBEC
+  SASKATCHEWAN
+  YUKON
+}
+
 model Participant {
   id                        String           @id @default(cuid())
   inviteId                  String?
   clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  dateOfBirth               DateTime
+  dateOfBirth               DateTime         @db.Date
   emailAddress              String           @unique
   participantOhipFirstName  String
   participantOhipLastName   String
@@ -25,10 +41,11 @@ model Participant {
   guardianRelationship      String?
   mailingAddressStreet      String?
   mailingAddressCity        String?
-  mailingAddressProvince    String?
+  mailingAddressProvince    Province?
   mailingAddressPostalCode  String?          @db.Char(6)
   residentialPostalCode     String           @db.Char(6)
 }
+
 
 model ClinicianInvite {
   id                       String        @id @default(cuid())
@@ -43,3 +60,4 @@ model ClinicianInvite {
   guardianRelationship     String?
   Participant              Participant[]
 }
+

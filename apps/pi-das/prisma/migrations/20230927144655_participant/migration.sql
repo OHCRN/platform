@@ -1,10 +1,13 @@
 -- DropTable
 DROP TABLE "Participant";
 
+-- CreateEnum
+CREATE TYPE "Province" AS ENUM ('ALBERTA', 'BRITISH_COLUMBIA', 'MANITOBA', 'NEW_BRUNSWICK', 'NEWFOUNDLAND_AND_LABRADOR', 'NORTHWEST_TERRITORIES', 'NOVA_SCOTIA', 'NUNAVUT', 'ONTARIO', 'PRINCE_EDWARD_ISLAND', 'QUEBEC', 'SASKATCHEWAN', 'YUKON');
+
 -- CreateTable
 CREATE TABLE "Participant" (
   "id" TEXT NOT NULL,
-  "dateOfBirth" TIMESTAMP(3) NOT NULL,
+  "dateOfBirth" DATE NOT NULL,
   "emailAddress" TEXT NOT NULL,
   "guardianEmailAddress" TEXT,
   "guardianName" TEXT,
@@ -13,7 +16,7 @@ CREATE TABLE "Participant" (
   "inviteId" TEXT,
   "mailingAddressCity" TEXT,
   "mailingAddressPostalCode" CHAR(6),
-  "mailingAddressProvince" TEXT,
+  "mailingAddressProvince" "Province",
   "mailingAddressStreet" TEXT,
   "participantOhipFirstName" TEXT NOT NULL,
   "participantOhipLastName" TEXT NOT NULL,

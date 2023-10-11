@@ -21,10 +21,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from 'error-handler';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import ParticipantRouter from './routers/participants';
-import ClinicianInviteRouter from './routers/clinicianInvites';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import ParticipantRouter from './routers/participants.js';
+import ClinicianInviteRouter from './routers/clinicianInvites.js';
 
 const App = (config: AppConfig) => {
 	const app = express();

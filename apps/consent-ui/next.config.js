@@ -18,6 +18,8 @@ const nextConfig = {
 				})),
 		);
 	},
+	// use standalone build for Docker
+	output: process.env.BUILD_STANDALONE === 'true' ? 'standalone' : undefined,
 };
 
 module.exports = nextConfig;

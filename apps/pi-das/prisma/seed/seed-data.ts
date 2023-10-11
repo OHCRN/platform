@@ -1,4 +1,4 @@
-import { Prisma } from '../../src/generated/client';
+import { Prisma } from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
@@ -11,7 +11,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 		participantPreferredName: 'Homer',
 		mailingAddressStreet: '742 Evergreen Terrace',
 		mailingAddressCity: 'Springfield',
-		mailingAddressProvince: 'Ontario',
+		mailingAddressProvince: 'ONTARIO',
 		mailingAddressPostalCode: 'L5V1G3',
 		residentialPostalCode: 'L5V1G3',
 	},
@@ -29,7 +29,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 		guardianRelationship: 'Best Friend',
 		mailingAddressStreet: '123 Conch St',
 		mailingAddressCity: 'Bikini Bottom',
-		mailingAddressProvince: 'Nova Scotia',
+		mailingAddressProvince: 'NOVA_SCOTIA',
 		mailingAddressPostalCode: 'A1B2C3',
 		residentialPostalCode: 'A1B2C3',
 	},
