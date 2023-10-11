@@ -17,17 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+import React from 'react';
 
-const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+function Close({ classes }: { classes?: string }) {
 	return (
-		<div>
-			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-		</div>
+		<svg className={classes} viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M17.5093 5.34175L16.2099 4.16675L11.0585 8.82508L5.90704 4.16675L4.60767 5.34175L9.7591 10.0001L4.60767 14.6584L5.90704 15.8334L11.0585 11.1751L16.2099 15.8334L17.5093 14.6584L12.3579 10.0001L17.5093 5.34175Z"
+				fill="currentColor"
+			/>
+		</svg>
 	);
-};
+}
 
-export default Dashboard;
+export default Close;
