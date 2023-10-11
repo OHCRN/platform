@@ -4,7 +4,7 @@ import prisma, {
 	ConsentCategory,
 	ConsentGroup,
 	ParticipantResponse,
-} from '../prismaClient';
+} from '../prismaClient.js';
 
 export const createParticipant = async ({
 	emailVerified,

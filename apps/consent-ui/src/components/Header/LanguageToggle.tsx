@@ -22,10 +22,10 @@ import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
-import styles from '@/components/Button/Button.module.scss';
-import { ValidLanguage } from '@/i18n';
-import LocalizedLink from '@/components/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from '@/components/Link/utils';
+import styles from 'src/components/Button/Button.module.scss';
+import { ValidLanguage } from 'src/i18n';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
+import { getLinkNameByPath, getUnselectedLang } from 'src/components/Link/utils';
 
 function LanguageToggle({
 	currentLang,

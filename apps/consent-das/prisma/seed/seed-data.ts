@@ -1,4 +1,4 @@
-import { Prisma, ConsentCategory } from '../../src/generated/client';
+import { Prisma, ConsentCategory } from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
