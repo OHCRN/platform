@@ -104,7 +104,7 @@ router.get('/:inviteId', async (req, res) => {
  *     tags:
  *       - Participant
  *     name: Create Participant
- *     description: Create one clincian invite
+ *     description: Create one clinician invite
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -140,9 +140,9 @@ router.get('/:inviteId', async (req, res) => {
  *                 type: string
  *     responses:
  *       201:
- *         description: The clincian invite was successfully created.
+ *         description: The clinician invite was successfully created.
  *       500:
- *         description: Error creating clincian invite.
+ *         description: Error creating clinician invite.
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /clinician-invites');
@@ -173,7 +173,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ invite });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating clincian invite' });
+		res.status(500).send({ error: 'Error creating clinician invite' });
 	}
 });
 
