@@ -21,13 +21,13 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import { AppConfig } from './config';
-import SwaggerRouter from './routers/swagger';
-import StatusRouter from './routers/status';
-import ParticipantRouter from './routers/participants';
-import ConsentQuestionRouter from './routers/consentQuestions';
-import ParticipantResponseRouter from './routers/participantResponses';
-import ConsentCompletionRouter from './routers/consentCompletion';
+import { AppConfig } from './config.js';
+import SwaggerRouter from './routers/swagger.js';
+import StatusRouter from './routers/status.js';
+import ParticipantRouter from './routers/participants.js';
+import ConsentQuestionRouter from './routers/consentQuestions.js';
+import ParticipantResponseRouter from './routers/participantResponses.js';
+import ConsentCompletionRouter from './routers/consentCompletion.js';
 
 const App = (config: AppConfig) => {
 	const app = express();

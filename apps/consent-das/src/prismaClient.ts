@@ -25,8 +25,8 @@ import {
 	ConsentGroup,
 	ParticipantResponse,
 	ClinicianInvite,
-} from './generated/client';
-import logger from './logger';
+} from './generated/client/index.js';
+import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();

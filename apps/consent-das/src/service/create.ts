@@ -5,7 +5,7 @@ import prisma, {
 	ConsentGroup,
 	ParticipantResponse,
 	ClinicianInvite,
-} from '../prismaClient';
+} from '../prismaClient.js';
 
 export const createParticipant = async ({
 	emailVerified,

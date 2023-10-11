@@ -20,8 +20,9 @@
 import Link from 'next/link';
 import urlJoin from 'url-join';
 
-import routesByLocale from '@/i18n/routes/routesByLocale.json';
-import { defaultLanguage } from '@/i18n/settings';
+import { defaultLanguage } from 'src/i18n/settings';
+import routesByLocale from 'src/i18n/routes/routesByLocale.json';
+import { ValidLanguage } from 'src/i18n';
 
 import { LocalizedLinkProps } from './types';
 import { addParamsToUrl } from './utils';
@@ -35,7 +36,8 @@ const LocalizedLink = ({
 	...rest
 }: LocalizedLinkProps) => {
 	let locale = linkLang;
-	const localeRoutes = routesByLocale[linkLang];
+	// TODO: figure out better typing so "as" is not needed here
+	const localeRoutes = routesByLocale[linkLang as ValidLanguage];
 	if (!localeRoutes) {
 		console.error(
 			`No routes found for locale "${locale}, setting to default "${defaultLanguage}".`,
