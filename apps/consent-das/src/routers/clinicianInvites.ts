@@ -18,11 +18,11 @@
  */
 
 import { Router } from 'express';
-import { ConsentGroup } from 'common';
+import { ConsentGroup } from 'types/entities';
 
-import { getClinicianInvite, getClinicianInvites } from '../service/search';
-import { createClinicianInvite } from '../service/create';
-import logger from '../logger';
+import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
+import { createClinicianInvite } from '../service/create.js';
+import logger from '../logger.js';
 
 /**
  * @openapi
