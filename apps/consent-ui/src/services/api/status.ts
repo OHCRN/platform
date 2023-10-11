@@ -18,10 +18,10 @@
  */
 
 import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'common/src/service/Status';
+import { APIStatus } from 'types/services';
 
-import { API } from '@/constants';
-import { axiosClient } from '@/services/api';
+import { API } from 'src/constants';
+import { axiosClient } from 'src/services/api';
 
 const getAPIStatus = async () => {
 	return await axiosClient

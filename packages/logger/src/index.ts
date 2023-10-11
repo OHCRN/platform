@@ -19,8 +19,8 @@
 
 import { createLogger, LoggerOptions, transports, format } from 'winston';
 
-import { getAppConfig } from './config';
-import { unknownToString } from './utils/stringUtils';
+import { getAppConfig } from './config.js';
+import { unknownToString } from './utils/stringUtils.js';
 
 const { combine, timestamp, colorize, printf } = format;
 

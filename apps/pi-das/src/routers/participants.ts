@@ -19,10 +19,10 @@
 
 import { Router } from 'express';
 
-import { getParticipant, getParticipants } from '../service/search';
-import { createParticipant } from '../service/create';
-import { updateParticipant } from '../service/update';
-import logger from '../logger';
+import { getParticipant, getParticipants } from '../service/search.js';
+import { createParticipant } from '../service/create.js';
+import { updateParticipant } from '../service/update.js';
+import logger from '../logger.js';
 
 // TODO: update JSDoc comments
 /**
