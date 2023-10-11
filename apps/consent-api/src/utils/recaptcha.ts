@@ -17,8 +17,35 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// import createLogger from 'logger';
+import axios from 'axios';
+import { Request, Response, NextFunction } from 'express';
 
-// const logger = createLogger('Consent-API');
+const verifyRecaptcha = async (recaptchaToken?: string | null) => {
+	if (!recaptchaToken) {
+		// token not required for dev, but will be processed if provided.
+		return process.env.NODE_ENV === 'development';
+	}
 
-// export default logger;
+	try {
+		const recaptchaVerification = await axios.post(
+			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+		);
+		console.log('success?');
+		return !!recaptchaVerification.data.success;
+	} catch (error) {
+		console.error('reCAPTCHA error', error);
+		return false;
+	}
+};
+
+export const recaptchaMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+	const { recaptchaToken } = req.body;
+
+	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+
+	if (recaptchaVerified) {
+		next();
+	} else {
+		res.status(500).send('reCAPTCHA error');
+	}
+};

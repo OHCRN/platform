@@ -17,8 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// import createLogger from 'logger';
+import { Router } from 'express';
 
-// const logger = createLogger('Consent-API');
+import { recaptchaMiddleware } from '../utils/recaptcha.js';
 
-// export default logger;
+const router = Router();
+
+// TEST ENDPOINT
+// remove after adding an endpoint that uses recaptcha
+
+router.post('/', recaptchaMiddleware, async (req, res) => {
+	const { inputData } = req.body;
+
+	res.status(200).send({ message: 'reCAPTCHA success', inputData });
+});
+
+export default router;

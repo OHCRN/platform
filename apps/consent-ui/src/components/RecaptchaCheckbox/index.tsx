@@ -17,8 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// import createLogger from 'logger';
+'use client';
 
-// const logger = createLogger('Consent-API');
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha';
 
-// export default logger;
+import { useAppConfigContext } from '../AppConfigContextProvider';
+
+import { RecaptchaCheckboxRef } from './useRecaptcha';
+
+const RecaptchaCheckbox = ({
+	onChange,
+	recaptchaCheckboxRef,
+}: {
+	onChange: () => void;
+	recaptchaCheckboxRef: RecaptchaCheckboxRef;
+}) => {
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
+
+	return RECAPTCHA_SITE_KEY ? (
+		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
+	) : null;
+};
+
+export default RecaptchaCheckbox;
