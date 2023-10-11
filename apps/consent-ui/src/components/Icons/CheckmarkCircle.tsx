@@ -17,17 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+import React from 'react';
 
-const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+function CheckmarkCircle({ classes }: { classes?: string }) {
 	return (
-		<div>
-			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-		</div>
+		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+			<g stroke="currentColor" strokeWidth="2" clipPath="url(#clip0_34_3952)">
+				<rect width="22" height="22" x="1" y="1.508" rx="11"></rect>
+				<path d="M17 8.508l-7 7-3-3"></path>
+			</g>
+			<defs>
+				<clipPath id="clip0_34_3952">
+					<path fill="#fff" d="M0 0H24V24H0z" transform="translate(0 .508)"></path>
+				</clipPath>
+			</defs>
+		</svg>
 	);
-};
+}
 
-export default Dashboard;
+export default CheckmarkCircle;
