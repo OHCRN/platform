@@ -38,10 +38,13 @@ export const ClinicalProfile = z
 		selfIdentifiedGender: z.string().trim().optional(),
 	})
 	.refine((input) => {
-		const selfIdentifiedGenderCompleted =
+		// selfIdentifiedGender must be defined if
+		// Gender.PREFER_TO_SELF_IDENTIFY was selected
+		const validateSelfIdentifiedGender = !(
 			input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY &&
-			input.selfIdentifiedGender !== undefined;
-		return selfIdentifiedGenderCompleted;
+			input.selfIdentifiedGender === undefined
+		);
+		return validateSelfIdentifiedGender;
 	});
 
 export type ClinicalProfile = z.infer<typeof ClinicalProfile>;
