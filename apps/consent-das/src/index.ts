@@ -26,6 +26,7 @@ import SwaggerRouter from './routers/swagger.js';
 import ParticipantRouter from './routers/participants.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ParticipantResponseRouter from './routers/participantResponses.js';
+import ClinicianInviteRouter from './routers/clinicianInvites.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -37,6 +38,7 @@ const App = (config: AppConfig) => {
 	app.use('/participants', ParticipantRouter);
 	app.use('/consent-questions', ConsentQuestionRouter);
 	app.use('/participant-responses', ParticipantResponseRouter);
+	app.use('/clinician-invites', ClinicianInviteRouter);
 
 	return app;
 };

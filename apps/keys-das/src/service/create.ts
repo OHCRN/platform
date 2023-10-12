@@ -1,4 +1,4 @@
-import prisma, { OhipKey } from '../prismaClient.js';
+import prisma, { OhipKey, ClinicalProfileKey } from '../prismaClient.js';
 
 export const createOhipKey = async ({
 	participantId,
@@ -7,6 +7,20 @@ export const createOhipKey = async ({
 }): Promise<OhipKey> => {
 	// TODO: add error handling
 	const result = await prisma.ohipKey.create({
+		data: {
+			participantId,
+		},
+	});
+	return result;
+};
+
+export const createClinicalProfileKey = async ({
+	participantId,
+}: {
+	participantId: string;
+}): Promise<ClinicalProfileKey> => {
+	// TODO: add error handling
+	const result = await prisma.clinicalProfileKey.create({
 		data: {
 			participantId,
 		},
