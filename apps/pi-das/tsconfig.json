@@ -10,6 +10,6 @@
     "esm": true,
     "logError": true
   },
-  "include": ["src"],
+  "include": ["src", "prisma"],
   "exclude": ["node_modules"]
 }

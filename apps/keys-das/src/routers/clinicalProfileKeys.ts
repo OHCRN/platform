@@ -19,91 +19,90 @@
 
 import { Router } from 'express';
 
-import { getParticipant, getParticipants } from '../service/search.js';
-import { createParticipant } from '../service/create.js';
+import { getClinicalProfileKey, getClinicalProfileKeys } from '../service/search.js';
+import { createClinicalProfileKey } from '../service/create.js';
 import logger from '../logger.js';
-
-/**
- * @openapi
- * tags:
- *   - name: Participants
- *     description: Participant management
- */
 
 const router = Router();
 
 /**
  * @openapi
- * /participants:
+ * tags:
+ *   - name: Clinical Profile Keys
+ *     description: Clinical Profile Key management
+ */
+
+/**
+ * @openapi
+ * /clinical-profile-keys:
  *   get:
  *     tags:
- *       - Participants
- *     name: Get All Participants
- *     description: Fetch participant list
+ *       - Clinical Profile Keys
+ *     name: Get Clinical Profile Keys
+ *     description: Fetch clinical profile keys list.
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: The list of participants was successfully retrieved.
+ *         description: Clinical profile keys retrieved successfully.
  *       500:
- *         description: Error retrieving participants.
+ *         description: Error retrieving clinical profile keys.
  */
 router.get('/', async (req, res) => {
-	logger.info('GET /participants');
+	logger.info('GET /clinical-profile-keys');
 	try {
-		const participants = await getParticipants();
-		res.status(200).send({ participants });
+		const clinicalProfileKeys = await getClinicalProfileKeys();
+		res.status(200).send({ clinicalProfileKeys });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving participants' });
+		res.status(500).send({ error: 'Error retrieving clinical profile keys' });
 	}
 });
 
 /**
  * @openapi
- * /participants/{participantId}:
+ * /clinical-profile-keys/{participantId}:
  *   get:
  *     tags:
- *       - Participants
- *     name: Get Participant by ID
- *     description: Fetch one participant
+ *       - Clinical Profile Keys
+ *     name: Get Clinical Profile Key by Participant ID
+ *     description: Fetch clinical profile key for a specific participant.
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - name: participantId
  *         in: path
- *         description: Participant ID
+ *         description: Participant's ID.
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: The participant was successfully retrieved.
+ *         description: Clinical profile key retrieved successfully.
  *       500:
- *         description: Error retrieving participant.
+ *         description: Error retrieving clinical profile key.
  */
 router.get('/:participantId', async (req, res) => {
-	logger.info('GET /participants/:participantId');
+	logger.info('GET /clinical-profile-keys/:participantId');
 	const { participantId } = req.params;
 	// TODO: add validation
 	try {
-		const participant = await getParticipant(participantId);
-		res.status(200).send({ participant });
+		const clinicalProfileKey = await getClinicalProfileKey(participantId);
+		res.status(200).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving participant' });
+		res.status(500).send({ error: 'Error retrieving clinical profile key' });
 	}
 });
 
 /**
  * @openapi
- * /participants:
+ * /clinical-profile-keys:
  *   post:
  *     tags:
- *       - Participants
- *     produces: application/json
- *     name: Create Participant
- *     description: Create a new participant
+ *       - Clinical Profile Keys
+ *     name: Create Clinical Profile Key
+ *     description: Create a clinical profile key for a participant.
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -113,44 +112,24 @@ router.get('/:participantId', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               emailVerified:
- *                 type: boolean
- *               isGuardian:
- *                 type: boolean
- *               consentGroup:
+ *               participantId:
  *                 type: string
- *                 enum:
- *                   - ADULT_CONSENT
- *                   - ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER
- *                   - GUARDIAN_CONSENT_OF_MINOR
- *                   - GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT
- *                   - YOUNG_ADULT_CONSENT
- *               guardianIdVerified:
- *                 type: boolean
- *             required:
- *               - emailVerified
- *               - isGuardian
  *     responses:
  *       201:
- *         description: The participant was successfully created.
+ *         description: Clinical profile key created successfully.
  *       500:
- *         description: Error creating participant.
+ *         description: Error creating clinical profile key.
  */
 router.post('/', async (req, res) => {
-	logger.info('POST /participants');
-	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
+	logger.info('POST /clinical-profile-keys');
+	const { participantId } = req.body;
 	// TODO: add validation
 	try {
-		const participant = await createParticipant({
-			emailVerified,
-			isGuardian,
-			consentGroup,
-			guardianIdVerified,
-		});
-		res.status(201).send({ participant });
+		const clinicalProfileKey = await createClinicalProfileKey({ participantId });
+		res.status(201).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
+		res.status(500).send({ error: 'Error creating clinical profile key' });
 	}
 });
 
