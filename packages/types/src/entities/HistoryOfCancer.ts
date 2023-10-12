@@ -17,12 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './User.js';
+import * as z from 'zod';
+
+const HISTORY_OF_CANCER = ['YES', 'NO', 'UNKNOWN'] as const;
+
+export const HistoryOfCancer = z.enum(HISTORY_OF_CANCER);
+export type HistoryOfCancer = z.infer<typeof HistoryOfCancer>;

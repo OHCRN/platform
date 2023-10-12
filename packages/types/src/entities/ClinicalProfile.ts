@@ -17,12 +17,31 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './User.js';
+import * as z from 'zod';
+
+import { Ancestry } from './Ancestry.js';
+import { BirthSex } from './BirthSex.js';
+import { Gender } from './Gender.js';
+import { GeneticsClinic } from './GeneticsClinic.js';
+import { HistoryOfCancer } from './HistoryOfCancer.js';
+
+export const ClinicalProfile = z
+	.object({
+		id: z.string().trim(),
+		ancestry: Ancestry,
+		birthSex: BirthSex,
+		familyHistoryOfCancer: HistoryOfCancer,
+		gender: Gender.optional(),
+		geneticsClinicVisited: GeneticsClinic,
+		historyOfCancer: HistoryOfCancer,
+		participantId: z.string().trim(),
+		selfIdentifiedGender: z.string().trim().optional(),
+	})
+	.refine((input) => {
+		const selfIdentifiedGenderCompleted =
+			input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY &&
+			input.selfIdentifiedGender !== undefined;
+		return selfIdentifiedGenderCompleted;
+	});
+
+export type ClinicalProfile = z.infer<typeof ClinicalProfile>;

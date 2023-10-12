@@ -17,12 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './User.js';
+import * as z from 'zod';
+
+const GENDER = [
+	'GENDER_FLUID',
+	'GENDER_QUEER',
+	'MAN',
+	'NON_BINARY',
+	'PREFER_NOT_TO_ANSWER',
+	'PREFER_TO_SELF_IDENTIFY',
+	'QUESTIONING',
+	'TRANSGENDER_MAN_TRANSMAN',
+	'TRANSGENDER_WOMAN_TRANSWOMAN',
+	'TWO_SPIRIT',
+	'WOMAN',
+] as const;
+
+export const Gender = z.enum(GENDER);
+export type Gender = z.infer<typeof Gender>;
