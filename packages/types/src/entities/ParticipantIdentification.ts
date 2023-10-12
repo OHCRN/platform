@@ -1,28 +1,12 @@
 import * as z from 'zod';
 
-import { ConsentGroup } from './ConsentCategory.js';
-
-const PROVINCES = [
-	'ALBERTA',
-	'BRITISH_COLUMBIA',
-	'MANITOBA',
-	'NEW_BRUNSWICK',
-	'NEWFOUNDLAND_AND_LABRADOR',
-	'NORTHWEST_TERRITORIES',
-	'NOVA_SCOTIA',
-	'NUNAVUT',
-	'ONTARIO',
-	'PRINCE_EDWARD_ISLAND',
-	'QUEBEC',
-	'SASKATCHEWAN',
-	'YUKON',
-] as const;
-
-export const Province = z.enum(PROVINCES);
-export type Province = z.infer<typeof Province>;
+import { ConsentGroup } from './ConsentGroup.js';
+import { Province } from './Province.js';
 
 export const ParticipantIdentification = z.object({
+	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
 	id: z.string().cuid(),
+	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
 	inviteId: z.string().cuid().optional(),
 	ohipNumber: z.string().regex(/[0-9]{10}/),
 	participantPreferredName: z.string().regex(/^[A-Za-z\s]+$/),
