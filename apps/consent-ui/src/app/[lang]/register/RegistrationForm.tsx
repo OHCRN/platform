@@ -90,7 +90,7 @@ const RegistrationForm = () => {
 	return (
 		<form>
 			{successMessageDemo && (
-				<Notification level="success" variant="small" title={`${successMessageDemo}`} />
+				<Notification level="success" variant="small" title={successMessageDemo} />
 			)}
 			<div style={{ margin: '25px 0' }}>
 				<label htmlFor="nameDemo">name:</label>
