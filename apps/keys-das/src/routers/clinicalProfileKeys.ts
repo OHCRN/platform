@@ -19,8 +19,8 @@
 
 import { Router } from 'express';
 
-import { getOhipKey, getOhipKeys } from '../service/search.js';
-import { createOhipKey } from '../service/create.js';
+import { getClinicalProfileKey, getClinicalProfileKeys } from '../service/search.js';
+import { createClinicalProfileKey } from '../service/create.js';
 import logger from '../logger.js';
 
 const router = Router();
@@ -28,45 +28,45 @@ const router = Router();
 /**
  * @openapi
  * tags:
- *   - name: OHIP Keys
- *     description: OHIP Key management
+ *   - name: Clinical Profile Keys
+ *     description: Clinical Profile Key management
  */
 
 /**
  * @openapi
- * /ohip-keys:
+ * /clinical-profile-keys:
  *   get:
  *     tags:
- *       - OHIP Keys
- *     name: Get OHIP Keys
- *     description: Fetch OHIP keys list.
+ *       - Clinical Profile Keys
+ *     name: Get Clinical Profile Keys
+ *     description: Fetch clinical profile keys list.
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: OHIP keys retrieved successfully.
+ *         description: Clinical profile keys retrieved successfully.
  *       500:
- *         description: Error retrieving OHIP keys.
+ *         description: Error retrieving clinical profile keys.
  */
 router.get('/', async (req, res) => {
-	logger.info('GET /ohip-keys');
+	logger.info('GET /clinical-profile-keys');
 	try {
-		const ohipKeys = await getOhipKeys();
-		res.status(200).send({ ohipKeys });
+		const clinicalProfileKeys = await getClinicalProfileKeys();
+		res.status(200).send({ clinicalProfileKeys });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving OHIP keys' });
+		res.status(500).send({ error: 'Error retrieving clinical profile keys' });
 	}
 });
 
 /**
  * @openapi
- * /ohip-keys/{participantId}:
+ * /clinical-profile-keys/{participantId}:
  *   get:
  *     tags:
- *       - OHIP Keys
- *     name: Get OHIP Key by Participant ID
- *     description: Fetch OHIP key for a specific participant.
+ *       - Clinical Profile Keys
+ *     name: Get Clinical Profile Key by Participant ID
+ *     description: Fetch clinical profile key for a specific participant.
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -78,31 +78,31 @@ router.get('/', async (req, res) => {
  *           type: string
  *     responses:
  *       200:
- *         description: OHIP key retrieved successfully.
+ *         description: Clinical profile key retrieved successfully.
  *       500:
- *         description: Error retrieving OHIP key.
+ *         description: Error retrieving clinical profile key.
  */
 router.get('/:participantId', async (req, res) => {
-	logger.info('GET /ohip-keys/:participantId');
+	logger.info('GET /clinical-profile-keys/:participantId');
 	const { participantId } = req.params;
 	// TODO: add validation
 	try {
-		const ohipKey = await getOhipKey(participantId);
-		res.status(200).send({ ohipKey });
+		const clinicalProfileKey = await getClinicalProfileKey(participantId);
+		res.status(200).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving OHIP key' });
+		res.status(500).send({ error: 'Error retrieving clinical profile key' });
 	}
 });
 
 /**
  * @openapi
- * /ohip-keys:
+ * /clinical-profile-keys:
  *   post:
  *     tags:
- *       - OHIP Keys
- *     name: Create OHIP Key
- *     description: Create an OHIP key for a participant.
+ *       - Clinical Profile Keys
+ *     name: Create Clinical Profile Key
+ *     description: Create a clinical profile key for a participant.
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -116,20 +116,20 @@ router.get('/:participantId', async (req, res) => {
  *                 type: string
  *     responses:
  *       201:
- *         description: OHIP key created successfully.
+ *         description: Clinical profile key created successfully.
  *       500:
- *         description: Error creating OHIP key.
+ *         description: Error creating clinical profile key.
  */
 router.post('/', async (req, res) => {
-	logger.info('POST /ohip-keys');
+	logger.info('POST /clinical-profile-keys');
 	const { participantId } = req.body;
 	// TODO: add validation
 	try {
-		const ohipKey = await createOhipKey({ participantId });
-		res.status(201).send({ ohipKey });
+		const clinicalProfileKey = await createClinicalProfileKey({ participantId });
+		res.status(201).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating OHIP Key' });
+		res.status(500).send({ error: 'Error creating clinical profile key' });
 	}
 });
 
