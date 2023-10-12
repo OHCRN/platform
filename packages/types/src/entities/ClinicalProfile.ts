@@ -27,14 +27,15 @@ import { HistoryOfCancer } from './HistoryOfCancer.js';
 
 export const ClinicalProfile = z
 	.object({
-		id: z.string().trim(),
+		clinicalProfilePrivateKey: z.string().trim(),
 		ancestry: Ancestry,
 		birthSex: BirthSex,
 		familyHistoryOfCancer: HistoryOfCancer,
 		gender: Gender.optional(),
 		geneticsClinicVisited: GeneticsClinic,
 		historyOfCancer: HistoryOfCancer,
-		participantId: z.string().trim(),
+		// TODO: change from .cuid() to nanoid regex once nanoid is implemented
+		participantId: z.string().cuid(),
 		selfIdentifiedGender: z.string().trim().optional(),
 	})
 	.refine((input) => {
