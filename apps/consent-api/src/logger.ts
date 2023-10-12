@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// import createLogger from 'logger';
+import createLogger from 'logger';
 
-// const logger = createLogger('Consent-API');
+const logger = createLogger('Consent-API');
 
-// export default logger;
+export default logger;
