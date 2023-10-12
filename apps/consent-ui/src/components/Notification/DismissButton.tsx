@@ -17,17 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+'use client';
 
-const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+import Close from '../Icons/Close';
+
+const DismissButton = ({ className }: { className?: string }) => {
 	return (
-		<div>
-			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
-		</div>
+		<button>
+			<Close classes={className} />
+		</button>
 	);
 };
 
-export default Dashboard;
+export default DismissButton;
