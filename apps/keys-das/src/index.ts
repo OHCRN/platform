@@ -23,6 +23,7 @@ import bodyParser from 'body-parser';
 import { AppConfig } from './config.js';
 import SwaggerRouter from './routers/swagger.js';
 import OhipKeysRouter from './routers/ohipKeys.js';
+import ClinicalProfileKeysRouter from './routers/clinicalProfileKeys.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -31,6 +32,7 @@ const App = (config: AppConfig) => {
 
 	app.use('/api-docs', SwaggerRouter);
 	app.use('/ohip-keys', OhipKeysRouter);
+	app.use('/clinical-profile-keys', ClinicalProfileKeysRouter);
 
 	return app;
 };
