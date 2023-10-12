@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 
-import { getClinicalProfile, getClinicalProfiles } from '../service/search';
-import { createClinicalProfile } from '../service/create';
-import logger from '../logger';
+import { getClinicalProfile, getClinicalProfiles } from '../service/search.js';
+import { createClinicalProfile } from '../service/create.js';
+import logger from '../logger.js';
 
 // TODO: update JSDoc comments
 /**
