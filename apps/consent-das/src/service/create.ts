@@ -87,7 +87,7 @@ export const createClinicianInvite = async ({
 	clinicianTitle: string;
 	consentGroup: ConsentGroup;
 	consentToBeContacted: boolean;
-	inviteSentDate?: Date;
+	inviteSentDate: Date;
 	inviteAcceptedDate?: Date;
 	inviteAccepted?: boolean;
 }): Promise<ClinicianInvite> => {
