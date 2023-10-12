@@ -331,6 +331,9 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      error-handler:
+        specifier: workspace:^
+        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -1134,7 +1137,7 @@ packages:
     resolution: {integrity: sha512-rClGrMuyS/3j0ETa1Ui7s6GkLhfZGKZL3ZrChLeAiACBE/tRc1wq8SNZESUuluxhLj9FkUefRs2l6bCIArWBiQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
-      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
+      '@typescript-eslint/parser': 6.2.0
       eslint: ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
@@ -2318,7 +2321,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: '*'
+      eslint-plugin-import: ^2.27.5
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
       enhanced-resolve: 5.14.0

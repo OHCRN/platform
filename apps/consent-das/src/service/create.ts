@@ -4,6 +4,7 @@ import prisma, {
 	ConsentCategory,
 	ConsentGroup,
 	ParticipantResponse,
+	ClinicianInvite,
 } from '../prismaClient.js';
 
 export const createParticipant = async ({
@@ -64,6 +65,44 @@ export const createParticipantResponse = async ({
 			participantId,
 			consentQuestionId,
 			response,
+		},
+	});
+	return result;
+};
+
+export const createClinicianInvite = async ({
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitle,
+	consentGroup,
+	consentToBeContacted,
+	inviteSentDate,
+	inviteAcceptedDate,
+	inviteAccepted,
+}: {
+	clinicianFirstName: string;
+	clinicianInstitutionalEmailAddress: string;
+	clinicianLastName: string;
+	clinicianTitle: string;
+	consentGroup: ConsentGroup;
+	consentToBeContacted: boolean;
+	inviteSentDate?: Date;
+	inviteAcceptedDate?: Date;
+	inviteAccepted?: boolean;
+}): Promise<ClinicianInvite> => {
+	// TODO: add error handling
+	const result = await prisma.clinicianInvite.create({
+		data: {
+			clinicianFirstName,
+			clinicianInstitutionalEmailAddress,
+			clinicianLastName,
+			clinicianTitle,
+			consentGroup,
+			consentToBeContacted,
+			inviteSentDate,
+			inviteAcceptedDate,
+			inviteAccepted,
 		},
 	});
 	return result;

@@ -21,6 +21,7 @@ import { Router } from 'express';
 
 import { getParticipant, getParticipants } from '../service/search.js';
 import { createParticipant } from '../service/create.js';
+import { updateParticipant } from '../service/update.js';
 import logger from '../logger.js';
 
 // TODO: update JSDoc comments
@@ -47,22 +48,23 @@ const router = Router();
  *     responses:
  *       200:
  *         description: The list of participants was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Error retrieving participants.
  */
 router.get('/', async (req, res) => {
 	logger.info('GET /participants');
-	// TODO: add error handling
-	const participants = await getParticipants();
-	res.send({ participants: [participants] });
+	try {
+		const participants = await getParticipants();
+		res.status(200).send({ participants });
+	} catch (error) {
+		res.status(500).send({ error: 'Error retrieving participants' });
+	}
 });
 
 // TODO: update JSDoc comments
 /**
  * @openapi
- * /participants/{id}:
+ * /participants/{participantId}:
  *   get:
  *     tags:
  *       - Participants
@@ -71,44 +73,261 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *      - name: id
- *        in: path
- *        description: Participant ID
- *        required: true
- *        schema:
- *          type: string
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The participant was successfully retrieved.
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Error retrieving participant.
  */
-router.get('/:id', async (req, res) => {
-	logger.info('GET /participants/:id');
-	const { id } = req.params;
+router.get('/:participantId', async (req, res) => {
+	logger.info('GET /participants/:participantId');
+	const { participantId } = req.params;
 	// TODO: add validation
 	try {
-		const participant = await getParticipant(id);
+		const participant = await getParticipant(participantId);
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant not found' });
+		res.status(500).send({ error: 'Error retrieving participant' });
 	}
 });
 
-// TODO: add proper JSDoc comments
+/**
+ * @openapi
+ * /participants/:
+ *   post:
+ *     tags:
+ *       - Participant
+ *     name: Create Participant
+ *     description: Create one participant
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               inviteId:
+ *                 type: string
+ *               dateOfBirth:
+ *                 type: string
+ *                 format: date
+ *                 required: true
+ *               emailAddress:
+ *                 type: string
+ *                 format: email
+ *                 required: true
+ *               participantOhipFirstName:
+ *                 type: string
+ *                 required: true
+ *               participantOhipLastName:
+ *                 type: string
+ *                 required: true
+ *               phoneNumber:
+ *                 type: string
+ *               participantOhipMiddleName:
+ *                 type: string
+ *               participantPreferredName:
+ *                 type: string
+ *                 required: true
+ *               guardianName:
+ *                 type: string
+ *               guardianPhoneNumber:
+ *                 type: string
+ *               guardianEmailAddress:
+ *                 type: string
+ *               guardianRelationship:
+ *                 type: string
+ *               mailingAddressStreet:
+ *                 type: string
+ *               mailingAddressCity:
+ *                 type: string
+ *               mailingAddressProvince:
+ *                 type: string
+ *               mailingAddressPostalCode:
+ *                 type: string
+ *               residentialPostalCode:
+ *                 type: string
+ *                 required: true
+ *     responses:
+ *       201:
+ *         description: The participant was successfully created.
+ *       500:
+ *         description: Error creating participant.
+ */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { name, email } = req.body;
+	const {
+		inviteId,
+		dateOfBirth,
+		emailAddress,
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantOhipMiddleName,
+		phoneNumber,
+		participantPreferredName,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+		mailingAddressStreet,
+		mailingAddressCity,
+		mailingAddressProvince,
+		mailingAddressPostalCode,
+		residentialPostalCode,
+	} = req.body;
 	// TODO: add validation
 	try {
-		const participant = await createParticipant({ name, email });
+		const parsedDateOfBirth = new Date(dateOfBirth);
+		const participant = await createParticipant({
+			inviteId,
+			dateOfBirth: parsedDateOfBirth,
+			emailAddress,
+			participantOhipFirstName,
+			participantOhipLastName,
+			participantOhipMiddleName,
+			phoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+			mailingAddressStreet,
+			mailingAddressCity,
+			mailingAddressProvince,
+			mailingAddressPostalCode,
+			residentialPostalCode,
+		});
 		res.status(201).send({ participant });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ error: 'Error creating participant' });
+	}
+});
+
+/**
+ * @openapi
+ * /participants/{participantId}:
+ *   patch:
+ *     tags:
+ *       - Participant
+ *     name: Update Participant
+ *     description: Update participant by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               inviteId:
+ *                 type: string
+ *               dateOfBirth:
+ *                 type: string
+ *                 format: date
+ *               emailAddress:
+ *                 type: string
+ *                 format: email
+ *               participantOhipFirstName:
+ *                 type: string
+ *               participantOhipLastName:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: string
+ *               participantOhipMiddleName:
+ *                 type: string
+ *               participantPreferredName:
+ *                 type: string
+ *               guardianName:
+ *                 type: string
+ *               guardianPhoneNumber:
+ *                 type: string
+ *               guardianEmailAddress:
+ *                 type: string
+ *               guardianRelationship:
+ *                 type: string
+ *               mailingAddressStreet:
+ *                 type: string
+ *               mailingAddressCity:
+ *                 type: string
+ *               mailingAddressProvince:
+ *                 type: string
+ *               mailingAddressPostalCode:
+ *                 type: string
+ *               residentialPostalCode:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: The participant was successfully updated.
+ *       500:
+ *         description: Error updating participant.
+ */
+router.patch('/:participantId', async (req, res) => {
+	logger.info('PATCH /participants/:participantId');
+	const { participantId } = req.params;
+	const {
+		inviteId,
+		dateOfBirth,
+		emailAddress,
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantOhipMiddleName,
+		phoneNumber,
+		participantPreferredName,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+		mailingAddressStreet,
+		mailingAddressCity,
+		mailingAddressProvince,
+		mailingAddressPostalCode,
+		residentialPostalCode,
+	} = req.body;
+	// TODO: add validation
+	try {
+		const parsedDateOfBirth = dateOfBirth ? new Date(dateOfBirth) : undefined;
+		const participant = await updateParticipant({
+			participantId,
+			inviteId,
+			dateOfBirth: parsedDateOfBirth,
+			emailAddress,
+			participantOhipFirstName,
+			participantOhipLastName,
+			participantOhipMiddleName,
+			phoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+			mailingAddressStreet,
+			mailingAddressCity,
+			mailingAddressProvince,
+			mailingAddressPostalCode,
+			residentialPostalCode,
+		});
+		res.status(200).send({ participant });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ error: 'Error updating participant' });
 	}
 });
 

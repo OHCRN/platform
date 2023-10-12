@@ -17,11 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, OhipKey } from './generated/client/index.js';
+import { PrismaClient, OhipKey, ClinicalProfileKey } from './generated/client/index.js';
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();
 
-export { OhipKey };
+export { OhipKey, ClinicalProfileKey };
 export default prisma;

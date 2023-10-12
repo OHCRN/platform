@@ -24,11 +24,19 @@ import {
 	ConsentCategory,
 	ConsentGroup,
 	ParticipantResponse,
+	ClinicianInvite,
 } from './generated/client/index.js';
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
 const prisma = new PrismaClient();
 
-export { Participant, ConsentQuestion, ConsentCategory, ConsentGroup, ParticipantResponse };
+export {
+	Participant,
+	ConsentQuestion,
+	ConsentCategory,
+	ConsentGroup,
+	ParticipantResponse,
+	ClinicianInvite,
+};
 export default prisma;
