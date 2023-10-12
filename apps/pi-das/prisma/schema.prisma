@@ -5,11 +5,42 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output = "../src/generated/client"
+  output   = "../src/generated/client"
+}
+
+enum Province {
+  ALBERTA
+  BRITISH_COLUMBIA
+  MANITOBA
+  NEW_BRUNSWICK
+  NEWFOUNDLAND_AND_LABRADOR
+  NORTHWEST_TERRITORIES
+  NOVA_SCOTIA
+  NUNAVUT
+  ONTARIO
+  PRINCE_EDWARD_ISLAND
+  QUEBEC
+  SASKATCHEWAN
+  YUKON
 }
 
 model Participant {
-  id       String @id @default(cuid())
-  name     String
-  email    String @unique
+  id                        String    @id @default(cuid())
+  inviteId                  String?
+  dateOfBirth               DateTime  @db.Date
+  emailAddress              String    @unique
+  participantOhipFirstName  String
+  participantOhipLastName   String
+  participantOhipMiddleName String?
+  phoneNumber               String    @db.Char(10)
+  participantPreferredName  String
+  guardianName              String?
+  guardianPhoneNumber       String?   @db.Char(10)
+  guardianEmailAddress      String?
+  guardianRelationship      String?
+  mailingAddressStreet      String?
+  mailingAddressCity        String?
+  mailingAddressProvince    Province?
+  mailingAddressPostalCode  String?   @db.Char(6)
+  residentialPostalCode     String    @db.Char(6)
 }

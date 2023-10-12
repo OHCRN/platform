@@ -19,6 +19,7 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import errorHandler from 'error-handler';
 
 import { AppConfig } from './config.js';
 import SwaggerRouter from './routers/swagger.js';
@@ -28,6 +29,7 @@ const App = (config: AppConfig) => {
 	const app = express();
 	app.set('port', config.port);
 	app.use(bodyParser.json());
+	app.use(errorHandler);
 
 	app.use('/api-docs', SwaggerRouter);
 	app.use('/participants', ParticipantRouter);

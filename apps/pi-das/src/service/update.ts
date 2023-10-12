@@ -1,6 +1,7 @@
 import prisma, { Participant, Province } from '../prismaClient.js';
 
-export const createParticipant = async ({
+export const updateParticipant = async ({
+	participantId,
 	inviteId,
 	dateOfBirth,
 	emailAddress,
@@ -19,14 +20,15 @@ export const createParticipant = async ({
 	mailingAddressPostalCode,
 	residentialPostalCode,
 }: {
+	participantId: string;
 	inviteId?: string;
-	dateOfBirth: Date;
-	emailAddress: string;
-	participantOhipFirstName: string;
-	participantOhipLastName: string;
+	dateOfBirth?: Date;
+	emailAddress?: string;
+	participantOhipFirstName?: string;
+	participantOhipLastName?: string;
 	participantOhipMiddleName?: string;
-	phoneNumber: string;
-	participantPreferredName: string;
+	phoneNumber?: string;
+	participantPreferredName?: string;
 	guardianName?: string;
 	guardianPhoneNumber?: string;
 	guardianEmailAddress?: string;
@@ -35,10 +37,13 @@ export const createParticipant = async ({
 	mailingAddressCity?: string;
 	mailingAddressProvince?: Province;
 	mailingAddressPostalCode?: string;
-	residentialPostalCode: string;
+	residentialPostalCode?: string;
 }): Promise<Participant> => {
 	// TODO: add error handling
-	const result = await prisma.participant.create({
+	const result = await prisma.participant.update({
+		where: {
+			id: participantId,
+		},
 		data: {
 			inviteId,
 			dateOfBirth,
