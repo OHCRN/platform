@@ -4,6 +4,7 @@ import prisma, {
 	ConsentQuestion,
 	ParticipantResponse,
 	ConsentCategory,
+	ClinicianInvite,
 } from '../prismaClient.js';
 
 export const getParticipant = async (participantId: string): Promise<Participant> => {
@@ -60,5 +61,21 @@ export const getParticipantResponses = async (
 			submittedAt: sortOrder,
 		},
 	});
+	return result;
+};
+
+export const getClinicianInvite = async (inviteId: string): Promise<ClinicianInvite> => {
+	// TODO: add error handling
+	const result = await prisma.clinicianInvite.findUniqueOrThrow({
+		where: {
+			id: inviteId,
+		},
+	});
+	return result;
+};
+
+export const getClinicianInvites = async (): Promise<ClinicianInvite[]> => {
+	// TODO: add error handling
+	const result = await prisma.clinicianInvite.findMany();
 	return result;
 };

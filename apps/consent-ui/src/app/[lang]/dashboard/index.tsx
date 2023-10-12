@@ -18,7 +18,6 @@
  */
 
 import Link from 'next/link';
-
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
