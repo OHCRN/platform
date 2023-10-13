@@ -18,7 +18,6 @@
  */
 
 import { Router } from 'express';
-import { ConsentGroup } from 'types/entities';
 
 import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
@@ -170,13 +169,12 @@ router.post('/', async (req, res) => {
 	try {
 		const parsedInviteSentDate = new Date(inviteSentDate);
 		const parsedInviteAcceptedDate = inviteAcceptedDate ? new Date(inviteAcceptedDate) : undefined;
-		const parsedConsentGroup = ConsentGroup.parse(consentGroup);
 		const clinicianInvite = await createClinicianInvite({
 			clinicianFirstName,
 			clinicianInstitutionalEmailAddress,
 			clinicianLastName,
 			clinicianTitle,
-			consentGroup: parsedConsentGroup,
+			consentGroup,
 			consentToBeContacted,
 			inviteSentDate: parsedInviteSentDate,
 			inviteAcceptedDate: parsedInviteAcceptedDate,
