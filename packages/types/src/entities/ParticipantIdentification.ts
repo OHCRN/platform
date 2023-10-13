@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { ConsentGroup } from './ConsentGroup.js';
 import { Province } from './Province.js';
