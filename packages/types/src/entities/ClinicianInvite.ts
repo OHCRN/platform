@@ -19,40 +19,30 @@
 
 import { z } from 'zod';
 
-import { ConsentGroup } from './ConsentCategory.js';
+import { ConsentGroup } from './ConsentGroup.js';
+import { Name } from './Name.js';
+import { PhoneNumber } from './PhoneNumber.js';
+import { NanoId } from './NanoId.js';
 
 export const ClinicianInvite = z.object({
-	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
-	id: z.string().cuid(),
+	id: NanoId,
 	inviteSentDate: z.date(),
 	inviteAcceptedDate: z.date().optional(),
 	inviteAccepted: z.boolean().optional(),
-	clinicianFirstName: z.string().regex(/^[A-Za-z\s]+$/),
-	clinicianLastName: z.string().regex(/^[A-Za-z\s]+$/),
+	clinicianFirstName: Name,
+	clinicianLastName: Name,
 	clinicianInstitutionalEmailAddress: z.string().email(),
 	clinicianTitle: z.string(),
-	participantFirstName: z.string().regex(/^[A-Za-z\s]+$/),
-	participantLastName: z.string().regex(/^[A-Za-z\s]+$/),
+	participantFirstName: Name,
+	participantLastName: Name,
 	participantEmailAddress: z.string().email(),
-	participantPhoneNumber: z.string().regex(/^[0-9]{10}/),
-	participantPreferredName: z
-		.string()
-		.regex(/^[A-Za-z\s]+$/)
-		.optional(),
+	participantPhoneNumber: PhoneNumber,
+	participantPreferredName: Name.optional(),
 	consentGroup: ConsentGroup,
-	guardianName: z
-		.string()
-		.regex(/^[A-Za-z\s]+$/)
-		.optional(),
-	guardianPhoneNumber: z
-		.string()
-		.regex(/^[0-9]{10}/)
-		.optional(),
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
 	guardianEmailAddress: z.string().email().optional(),
-	guardianRelationship: z
-		.string()
-		.regex(/^[A-Za-z\s]+$/)
-		.optional(),
+	guardianRelationship: Name.optional(),
 });
 
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
