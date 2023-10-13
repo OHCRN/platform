@@ -2,45 +2,33 @@ import * as z from 'zod';
 
 import { ConsentGroup } from './ConsentGroup.js';
 import { Province } from './Province.js';
+import { PhoneNumber } from './PhoneNumber.js';
+import { PostalCode } from './PostalCode.js';
+import { Name } from './Name.js';
+import { OhipNumber } from './OhipNumber.js';
+import { NanoId } from './NanoId.js';
 
 export const ParticipantIdentification = z.object({
-	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
-	id: z.string().cuid(),
-	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
-	inviteId: z.string().cuid().optional(),
-	ohipNumber: z.string().regex(/[0-9]{10}/),
-	participantPreferredName: z.string().regex(/^[A-Za-z\s]+$/),
-	participantOhipFirstName: z.string().regex(/^[A-Za-z\s]+$/),
-	participantOhipLastName: z.string().regex(/^[A-Za-z\s]+$/),
-	participantOhipMiddleName: z
-		.string()
-		.regex(/^[A-Za-z\s]+$/)
-		.optional(),
+	id: NanoId,
+	inviteId: NanoId.optional(),
+	ohipNumber: OhipNumber,
+	participantPreferredName: Name,
+	participantOhipFirstName: Name,
+	participantOhipLastName: Name,
+	participantOhipMiddleName: Name.optional(),
 	dateOfBirth: z.date(),
-	phoneNumber: z.string().regex(/[0-9]{10}/),
+	phoneNumber: PhoneNumber,
 	mailingAddressStreet: z.string().optional(),
 	mailingAddressCity: z.string().optional(),
 	mailingAddressProvince: Province.optional(),
-	mailingAddressPostalCode: z
-		.string()
-		.regex(/^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]/)
-		.optional(),
-	residentialPostalCode: z.string().regex(/^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]/),
+	mailingAddressPostalCode: PostalCode.optional(),
+	residentialPostalCode: PostalCode,
 	emailAddress: z.string().email(),
 	consentGroup: ConsentGroup,
-	guardianName: z
-		.string()
-		.regex(/^[A-Za-z\s]+$/)
-		.optional(),
-	guardianPhoneNumber: z
-		.string()
-		.regex(/[0-9]{10}/)
-		.optional(),
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
 	guardianEmailAddress: z.string().email().optional(),
-	guardianRelationship: z
-		.string()
-		.regex(/^[A-Za-z\s]+$/)
-		.optional(),
+	guardianRelationship: Name.optional(),
 });
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
