@@ -26,11 +26,11 @@ import { usePathname } from 'next/navigation';
 import styles from './Header.module.scss';
 
 // TODO i18n - we should have a dictionary of english & french internal paths
-const PATHNAMES_WITHOUT_DESKTOP_NAVBAR = ['/en/invite', '/en/register'];
+const PATHNAMES_WITHOUT_DESKTOP_HEADER = ['/en/invite', '/en/register'];
 
 const checkHiddenOnDesktop = (pathname: string) => {
 	// TODO this may become more complex when URL parameters are added
-	return PATHNAMES_WITHOUT_DESKTOP_NAVBAR.includes(pathname);
+	return PATHNAMES_WITHOUT_DESKTOP_HEADER.includes(pathname);
 };
 
 const HeaderWrapper = ({ children }: { children: ReactNode }) => {
