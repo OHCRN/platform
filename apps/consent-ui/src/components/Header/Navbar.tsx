@@ -16,8 +16,10 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
+import clsx from 'clsx';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/Header/LanguageToggle';
@@ -34,12 +36,18 @@ const icons: {
 	fr: OhcrnImage, // TODO: get FR icon
 };
 
-const Navbar = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+const Navbar = async ({
+	currentLang,
+	hiddenInDesktopLayout = false,
+}: {
+	currentLang: ValidLanguage;
+	hiddenInDesktopLayout: boolean;
+}) => {
 	const translate = await getTranslation(currentLang, 'header');
 	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
-		<header className={styles.header}>
+		<header className={clsx(styles.header, hiddenInDesktopLayout && styles['hide-desktop'])}>
 			<div>
 				<Link href={`/${currentLang}`}>
 					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />

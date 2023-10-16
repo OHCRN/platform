@@ -25,12 +25,17 @@ import { ValidLanguage } from 'src/i18n';
 import Navbar from './Navbar';
 
 // TODO i18n - we should have a dictionary of english & french internal paths
-const PATHNAMES_WITHOUT_HEADER = ['/en/invite', '/en/register'];
+const PATHNAMES_WITHOUT_DESKTOP_NAVBAR = ['/en/invite', '/en/register'];
 
 const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const pathname = usePathname();
 
-	return PATHNAMES_WITHOUT_HEADER.includes(pathname) ? <></> : <Navbar currentLang={currentLang} />;
+	return (
+		<Navbar
+			currentLang={currentLang}
+			hiddenInDesktopLayout={PATHNAMES_WITHOUT_DESKTOP_NAVBAR.includes(pathname)}
+		/>
+	);
 };
 
 export default Header;
