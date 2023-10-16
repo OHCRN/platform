@@ -1,64 +1,67 @@
 .header {
-  min-height: 10vh;
-  @apply grid grid-cols-2;
-  background-color: theme('colors.grayscale.100');
-  padding: 0.5rem 1rem;
-  align-items: center;
+	@apply grid grid-cols-2;
+	background-color: theme('colors.grayscale.100');
+	padding: 0.5rem 1rem;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
 }
 
 .headerItem {
-  margin-right: 1rem;
+	margin-right: 1rem;
 }
 
 .right {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 .help {
-  @apply hidden;
-  @media (min-width: theme('screens.md')) {
-    @apply flex;
-    margin-right: 1rem;
-  }
-  .helpButton {
-    padding: 0.25rem;
-    padding-right: 1rem;
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-  }
-
+	@apply hidden;
+	@media (min-width: theme('screens.md')) {
+		@apply flex;
+		margin-right: 1rem;
+	}
+	.helpButton {
+		padding: 0.25rem;
+		padding-right: 1rem;
+		svg {
+			width: 1.25rem;
+			height: 1.25rem;
+		}
+	}
 }
 .user-menu {
-  border-left: 1px solid theme('colors.grayscale.400');
-  padding-left: 1rem;
+	border-left: 1px solid theme('colors.grayscale.400');
+	padding-left: 1rem;
 }
 
 .logo {
-  width: auto;
-  height: 30px;
-  width: 126px;
-  @media (min-width: theme('screens.md')) {
-    height: 61px;
-    width: 250px;
-  }
+	width: auto;
+	height: 30px;
+	width: 126px;
+	@media (min-width: theme('screens.md')) {
+		height: 61px;
+		width: 250px;
+	}
 }
 
 .toggle-full {
-  @apply hidden;
-  @media (min-width: theme('screens.md')) {
-    @apply flex;
-  }
+	@apply hidden;
+	@media (min-width: theme('screens.md')) {
+		@apply flex;
+	}
 }
 
 .toggle-abbr {
-  @apply uppercase;
-  @apply flex;
-  @media (min-width: theme('screens.md')) {
-    @apply hidden;
-  }
+	@apply uppercase;
+	@apply flex;
+	@media (min-width: theme('screens.md')) {
+		@apply hidden;
+	}
 }
