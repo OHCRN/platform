@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const ParticipantResponse = z.object({
 	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
