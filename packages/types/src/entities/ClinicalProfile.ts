@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { Ancestry } from './Ancestry.js';
 import { BirthSex } from './BirthSex.js';
