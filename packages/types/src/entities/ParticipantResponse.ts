@@ -25,7 +25,7 @@ export const ParticipantResponse = z.object({
 	consentQuestionId: z.string().trim(),
 	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
 	participantId: z.string().cuid(),
-	response: z.string().trim(),
+	response: z.boolean(),
 });
 
 export type ParticipantResponse = z.infer<typeof ParticipantResponse>;
