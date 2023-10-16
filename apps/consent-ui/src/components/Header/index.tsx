@@ -16,55 +16,21 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import Link from 'next/link';
-import Image, { StaticImageData } from 'next/image';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import { defaultLanguage } from 'src/i18n/settings';
-import LanguageToggle from 'src/components/Header/LanguageToggle';
-import OhcrnImage from 'src/public/ohcrn_large.svg';
-import { getUnselectedLang } from 'src/components/Link/utils';
+'use client';
 
-import styles from './Header.module.scss';
-import HelpButton from './HelpButton';
+import { usePathname } from 'next/navigation';
+import { ValidLanguage } from 'src/i18n';
 
-const icons: {
-	[k in ValidLanguage]: StaticImageData;
-} = {
-	en: OhcrnImage,
-	fr: OhcrnImage, // TODO: get FR icon
-};
+import Navbar from './Navbar';
 
-const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'header');
-	const langToSelect = getUnselectedLang(currentLang);
-	const icon = icons[currentLang || defaultLanguage];
-	return (
-		<header className={styles.header}>
-			<div>
-				<Link href={`/${currentLang}`}>
-					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />
-				</Link>
-			</div>
-			<div className={styles.right}>
-				<div className={styles.headerItem}>
-					<LanguageToggle currentLang={currentLang}>
-						<span className={styles['toggle-full']}>{translate(langToSelect)}</span>
-						<span className={styles['toggle-abbr']}>{langToSelect}</span>
-					</LanguageToggle>
-				</div>
-				{/* TODO: implement real help button, ticket TBD */}
-				<div className={styles.help}>
-					<HelpButton label={translate('help')} />
-				</div>
-				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
-				{/* TODO: implement user menu, ticket TBD */}
-				<div className={styles['user-menu']}>
-					<div>Hello</div>
-				</div>
-			</div>
-		</header>
-	);
+// TODO i18n - we should have a dictionary of english & french internal paths
+const PATHNAMES_WITHOUT_HEADER = ['/en/invite', '/en/register'];
+
+const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const pathname = usePathname();
+
+	return PATHNAMES_WITHOUT_HEADER.includes(pathname) ? <></> : <Navbar currentLang={currentLang} />;
 };
 
 export default Header;
