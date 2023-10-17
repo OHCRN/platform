@@ -41,11 +41,9 @@ export const ClinicalProfile = z
 	.refine((input) => {
 		// selfIdentifiedGender must be defined if
 		// Gender.PREFER_TO_SELF_IDENTIFY was selected
-		const validateSelfIdentifiedGender = !(
-			input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY &&
-			input.selfIdentifiedGender === undefined
-		);
-		return validateSelfIdentifiedGender;
+
+		const requiresSelfIdentifiedGender = input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY;
+		return requiresSelfIdentifiedGender ? input.selfIdentifiedGender !== undefined : true;
 	});
 
 export type ClinicalProfile = z.infer<typeof ClinicalProfile>;
