@@ -1,10 +1,10 @@
 .main {
-  background-color: theme('colors.grayscale.200');
-  display: flex;
-  justify-content: center;
-  min-height: 70vh;
+	background-color: theme('colors.grayscale.200');
+	display: flex;
+	justify-content: center;
+	flex-grow: 1; // make footer stick to bottom when page is short
 }
 
 .content {
-  background-color: theme('colors.grayscale.100');
+	background-color: theme('colors.grayscale.100');
 }
