@@ -53,15 +53,15 @@ export const ParticipantIdentification = z
 	.refine((input) => {
 		// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
 		// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
-		const validateGuardianInformation = !(
-			(input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
-				input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) &&
-			(input.guardianName === undefined ||
-				input.guardianPhoneNumber === undefined ||
-				input.guardianEmailAddress === undefined ||
-				input.guardianRelationship === undefined)
-		);
-		return validateGuardianInformation;
+		const requiresGuardianInformation =
+			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
+			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
+		return requiresGuardianInformation
+			? input.guardianName !== undefined &&
+					input.guardianPhoneNumber !== undefined &&
+					input.guardianEmailAddress !== undefined &&
+					input.guardianRelationship !== undefined
+			: true;
 	});
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
