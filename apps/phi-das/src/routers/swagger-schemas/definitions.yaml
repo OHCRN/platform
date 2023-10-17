@@ -1,0 +1,10 @@
+components:
+  schemas:
+    BirthSex:
+      type: string
+      required: true
+      enum:
+        - FEMALE
+        - INTERSEX
+        - MALE
+        - PREFER_NOT_TO_ANSWER

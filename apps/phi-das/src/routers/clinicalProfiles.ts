@@ -118,8 +118,7 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *                 type: string
  *                 required: true
  *               birthSex:
- *                 type: string
- *                 required: true
+ *                 $ref: '#/components/schemas/BirthSex'
  *               gender:
  *                 type: string
  *               selfIdentifiedGender:
