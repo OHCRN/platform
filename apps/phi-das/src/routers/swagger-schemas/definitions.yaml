@@ -46,3 +46,17 @@ components:
         - TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA
         - WINDSOR_REGIONAL_HOSPITAL_WINDSOR
         - WOMENS_COLLEGE_HOSPITAL_TORONTO
+    FamilyHistoryOfCancer:
+      type: string
+      required: true
+      enum:
+        - YES
+        - NO
+        - UNKNOWN
+    HistoryOfCancer:
+      type: string
+      required: true
+      enum:
+        - YES
+        - NO
+        - UNKNOWN

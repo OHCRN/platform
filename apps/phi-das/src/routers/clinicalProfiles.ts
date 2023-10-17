@@ -137,9 +137,11 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *               historyOfCancer:
  *                 type: boolean
  *                 required: true
+ *                 $ref: '#/components/schemas/HistoryOfCancer'
  *               familyHistoryOfCancer:
  *                 type: boolean
  *                 required: true
+ *                 $ref: '#/components/schemas/FamilyHistoryOfCancer'
  *     responses:
  *       201:
  *         description: The clinical profile was successfully created.
