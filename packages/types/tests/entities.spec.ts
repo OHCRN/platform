@@ -1,11 +1,13 @@
 import { expect } from 'chai';
 
-import { OhipNumber } from '../src/entities/OhipNumber.js';
-import { PhoneNumber } from '../src/entities/PhoneNumber.js';
-import { PostalCode } from '../src/entities/PostalCode.js';
-import { Name } from '../src/entities/Name.js';
-import { ParticipantIdentification } from '../src/entities/ParticipantIdentification.js';
-import { ConsentGroup } from '../src/entities/ConsentGroup.js';
+import {
+	OhipNumber,
+	PhoneNumber,
+	PostalCode,
+	Name,
+	ParticipantIdentification,
+	ConsentGroup,
+} from '../src/entities/index.js';
 
 describe('OhipNumber', () => {
 	it('Must be 10 digits long', () => {
