@@ -19,12 +19,12 @@
 
 import { z } from 'zod';
 
+import { NanoId } from './NanoId.js';
+
 export const ParticipantResponse = z.object({
-	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
-	id: z.string().cuid(),
+	id: NanoId,
 	consentQuestionId: z.string().trim(),
-	// TODO: change from .cuid() to nanoid regex once nanoid is implemented
-	participantId: z.string().cuid(),
+	participantId: z.string().trim(),
 	response: z.boolean(),
 });
 
