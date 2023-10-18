@@ -17,15 +17,35 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
+import axios from 'axios';
+import { Request, Response, NextFunction } from 'express';
 
-const CONSENT_CATEGORIES = [
-	'INFORMED_CONSENT',
-	'CONSENT_RELEASE_DATA',
-	'CONSENT_RESEARCH_PARTICIPATION',
-	'CONSENT_RECONTACT',
-	'CONSENT_REVIEW_SIGN',
-] as const;
+const verifyRecaptcha = async (recaptchaToken?: string | null) => {
+	if (!recaptchaToken) {
+		// token not required for dev, but will be processed if provided.
+		return process.env.NODE_ENV === 'development';
+	}
 
-export const ConsentCategory = z.enum(CONSENT_CATEGORIES);
-export type ConsentCategory = z.infer<typeof ConsentCategory>;
+	try {
+		const recaptchaVerification = await axios.post(
+			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+		);
+		console.log('success?');
+		return !!recaptchaVerification.data.success;
+	} catch (error) {
+		console.error('reCAPTCHA error', error);
+		return false;
+	}
+};
+
+export const recaptchaMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+	const { recaptchaToken } = req.body;
+
+	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
+
+	if (recaptchaVerified) {
+		next();
+	} else {
+		res.status(500).send('reCAPTCHA error');
+	}
+};

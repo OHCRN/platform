@@ -2,17 +2,38 @@
 	border: 2px solid;
 	box-shadow: theme('dropShadow.sm');
 	margin-bottom: 15px;
+	&:not(.small) {
+		@media (min-width: theme('screens.md')) {
+			.container {
+				flex-direction: row;
+				padding: 20px 36px 20px 16px;
+			}
+			.icon {
+				margin-bottom: 0;
+			}
+			.body {
+				padding-left: 16px;
+				flex-grow: 1;
+			}
+			.action {
+				display: flex;
+				justify-content: flex-end;
+			}
+			.title {
+				text-align: left;
+			}
+		}
+	}
+	&.small {
+		max-width: 350px;
+	}
 }
 
 .container {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	padding: 12px 16px 24px;
-	@media (min-width: theme('screens.md')) {
-		flex-direction: row;
-		padding: 20px 36px 20px 16px;
-	}
+	padding: 12px 16px;
 }
 
 .icon {
@@ -22,20 +43,11 @@
 	svg {
 		width: 24px;
 	}
-	@media (min-width: theme('screens.md')) {
-		margin-bottom: 0;
-	}
-}
-
-.body {
-	@media (min-width: theme('screens.md')) {
-		padding-left: 16px;
-		flex-grow: 1;
-	}
 }
 
 .title {
 	font-weight: theme('fontWeight.header');
+	text-align: center;
 }
 
 .description {
@@ -51,10 +63,6 @@
 
 .action {
 	margin-top: 24px;
-	@media (min-width: theme('screens.md')) {
-		display: flex;
-		justify-content: flex-end;
-	}
 }
 
 .error {
