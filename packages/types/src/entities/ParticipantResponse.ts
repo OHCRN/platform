@@ -24,7 +24,7 @@ import { NanoId } from './NanoId.js';
 export const ParticipantResponse = z.object({
 	id: NanoId,
 	consentQuestionId: z.string().trim(),
-	participantId: z.string().trim(),
+	participantId: NanoId,
 	response: z.boolean(),
 });
 
