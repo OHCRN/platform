@@ -27,6 +27,26 @@ import { Name } from './Name.js';
 import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
 
+export const hasRequiredGuardianInformation = (
+	consentGroup: ConsentGroup,
+	guardianName?: Name,
+	guardianPhoneNumber?: PhoneNumber,
+	guardianEmailAddress?: string,
+	guardianRelationship?: Name,
+) => {
+	// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
+	// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
+	const requiresGuardianInformation =
+		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
+		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
+	return requiresGuardianInformation
+		? guardianName !== undefined &&
+				guardianPhoneNumber !== undefined &&
+				guardianEmailAddress !== undefined &&
+				guardianRelationship !== undefined
+		: true;
+};
+
 export const ParticipantIdentification = z
 	.object({
 		id: NanoId,
@@ -51,17 +71,20 @@ export const ParticipantIdentification = z
 		guardianRelationship: Name.optional(),
 	})
 	.refine((input) => {
-		// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
-		// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
-		const requiresGuardianInformation =
-			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
-			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
-		return requiresGuardianInformation
-			? input.guardianName !== undefined &&
-					input.guardianPhoneNumber !== undefined &&
-					input.guardianEmailAddress !== undefined &&
-					input.guardianRelationship !== undefined
-			: true;
+		const {
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		} = input;
+		return hasRequiredGuardianInformation(
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		);
 	});
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;

@@ -23,6 +23,7 @@ import { ConsentGroup } from './ConsentGroup.js';
 import { Name } from './Name.js';
 import { PhoneNumber } from './PhoneNumber.js';
 import { NanoId } from './NanoId.js';
+import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 
 export const ClinicianInvite = z
 	.object({
@@ -46,17 +47,20 @@ export const ClinicianInvite = z
 		guardianRelationship: Name.optional(),
 	})
 	.refine((input) => {
-		// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
-		// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
-		const validateGuardianInformation = !(
-			(input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
-				input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) &&
-			(input.guardianName === undefined ||
-				input.guardianPhoneNumber === undefined ||
-				input.guardianEmailAddress === undefined ||
-				input.guardianRelationship === undefined)
+		const {
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		} = input;
+		return hasRequiredGuardianInformation(
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
 		);
-		return validateGuardianInformation;
 	});
 
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
