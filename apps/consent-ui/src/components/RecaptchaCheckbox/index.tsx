@@ -17,43 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export type AppConfig = {
-	CONSENT_API_URL: string;
-	CONSENT_UI_URL: string;
-	FEATURE_FLAG: boolean;
-	RECAPTCHA_SITE_KEY?: string;
+'use client';
+
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha';
+
+import { useAppConfigContext } from '../AppConfigContextProvider';
+
+import { RecaptchaCheckboxRef } from '../../hooks/useRecaptcha';
+
+const RecaptchaCheckbox = ({
+	onChange,
+	recaptchaCheckboxRef,
+}: {
+	onChange: () => void;
+	recaptchaCheckboxRef: RecaptchaCheckboxRef;
+}) => {
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
+
+	return RECAPTCHA_SITE_KEY ? (
+		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
+	) : null;
 };
 
-export const defaultAppConfig: AppConfig = {
-	CONSENT_API_URL: 'http://localhost:8080',
-	CONSENT_UI_URL: 'http://localhost:3000',
-	FEATURE_FLAG: false,
-	RECAPTCHA_SITE_KEY: undefined,
-};
-
-/**
- * returns app config env vars
- * order of priority: server runtime > process.env build time > default
- */
-
-const getAppConfig = (serverEnv: any): AppConfig => ({
-	/**
-	 * keep explicit style of: Server || Client to prevent errors with Next inlining build variables
-	 */
-	CONSENT_API_URL:
-		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
-	CONSENT_UI_URL:
-		serverEnv.CONSENT_UI_URL || process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
-	FEATURE_FLAG:
-		serverEnv.FEATURE_FLAG === 'false'
-			? false
-			: serverEnv.FEATURE_FLAG === 'true' ||
-			  process.env.FEATURE_FLAG === 'true' ||
-			  defaultAppConfig.FEATURE_FLAG,
-	RECAPTCHA_SITE_KEY:
-		serverEnv.RECAPTCHA_SITE_KEY ||
-		process.env.RECAPTCHA_SITE_KEY ||
-		defaultAppConfig.RECAPTCHA_SITE_KEY,
-});
-
-export { getAppConfig };
+export default RecaptchaCheckbox;
