@@ -20,7 +20,8 @@
 import { customAlphabet } from 'nanoid';
 import { IdAlphabet } from 'types/services';
 
-import { PrismaClient, OhipKey } from './generated/client/index.js';
+import { PrismaClient, OhipKey, ClinicalProfileKey } from './generated/client/index.js';
+
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
@@ -40,5 +41,5 @@ const prisma = new PrismaClient().$extends({
 	},
 });
 
-export { OhipKey };
+export { OhipKey, ClinicalProfileKey };
 export default prisma;

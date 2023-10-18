@@ -70,32 +70,36 @@ To run the setup locally, ensure you have provided the **required** environment 
 
 ## Environment Variables
 
-| Package       | Name              | Description                       | Type     | Required | Default                                                  |
-| ------------- | ----------------- | --------------------------------- | -------- | -------- | -------------------------------------------------------- |
-| `.`           | `POSTGRES_USER`   | Docker Postgres database user     | `string` | Required | `postgres`                                               |
-| `.`           | `POSTGRES_USER`   | Docker Postgres database password | `string` | Required | `postgres`                                               |
-| `consent-api` | `PORT`            | Port number for the Consent API   | `number` | Optional | `8080`                                                   |
-| `consent-api` | `NODE_ENV`        | Node environment name             | `string` | Required | `development`                                            |
-| `consent-das` | `DATABASE_URL`    | URL for the Consent DB            | `string` | Required | `postgres://postgres:postgres@localhost:5432/consent_db` |
-| `consent-das` | `PORT`            | Port number for the Consent DAS   | `number` | Optional | `8085`                                                   |
-| `consent-ui`  | `CONSENT_API_URL` | URL for the Consent API           | `string` | Optional | `http://localhost:8080`                                  |
-| `consent-ui`  | `CONSENT_UI_URL`  | URL for the Consent UI            | `string` | Optional | `http://localhost:3000`                                  |
-| `data-mapper` | `PORT`            | Port number for the Data Mapper   | `number` | Optional | `8081`                                                   |
-| `data-mapper` | `PI_DAS_URL`      | URL for the PI DAS                | `string` | Optional | `http://localhost:8082`                                  |
-| `data-mapper` | `PHI_DAS_URL`     | URL for the PHI DAS               | `string` | Optional | `http://localhost:8083`                                  |
-| `data-mapper` | `KEYS_DAS_URL`    | URL for the Keys DAS              | `string` | Optional | `http://localhost:8084`                                  |
-| `data-mapper` | `CONSENT_DAS_URL` | URL for the Consent DAS           | `string` | Optional | `http://localhost:8085`                                  |
-| `keys-das`    | `DATABASE_URL`    | URL for the Keys DB               | `string` | Required | `postgres://postgres:postgres@localhost:5432/keys_db`    |
-| `keys-das`    | `PORT`            | Port number for the Keys DAS      | `number` | Optional | `8084`                                                   |
-| `phi-das`     | `DATABASE_URL`    | URL for the PHI DAS               | `string` | Required | `postgres://postgres:postgres@localhost:5432/phi_db`     |
-| `phi-das`     | `PORT`            | Port number for the PHI DAS       | `number` | Optional | `8083`                                                   |
-| `pi-das`      | `DATABASE_URL`    | URL for the PI DAS                | `string` | Required | `postgres://postgres:postgres@localhost:5432/pi_db`      |
-| `pi-das`      | `PORT`            | Port number for the PI DAS        | `number` | Optional | `8082`                                                   |
+| Package       | Name                   | Description                       | Type     | Required | Default                                                                                                                                                  |
+| ------------- | ---------------------- | --------------------------------- | -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.`           | `POSTGRES_USER`        | Docker Postgres database user     | `string` | Required | `postgres`                                                                                                                                               |
+| `.`           | `POSTGRES_USER`        | Docker Postgres database password | `string` | Required | `postgres`                                                                                                                                               |
+| `consent-api` | `PORT`                 | Port number for the Consent API   | `number` | Optional | `8080`                                                                                                                                                   |
+| `consent-api` | `NODE_ENV`             | Node environment name             | `string` | Required | `development`                                                                                                                                            |
+| `consent-api` | `RECAPTCHA_SECRET_KEY` | API secret key for ReCAPTCHA      | `string` | Required | Use [Google's test keys](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do) for local dev |
+| `consent-das` | `DATABASE_URL`         | URL for the Consent DB            | `string` | Required | `postgres://postgres:postgres@localhost:5432/consent_db`                                                                                                 |
+| `consent-das` | `PORT`                 | Port number for the Consent DAS   | `number` | Optional | `8085`                                                                                                                                                   |
+| `consent-ui`  | `CONSENT_API_URL`      | URL for the Consent API           | `string` | Optional | `http://localhost:8080`                                                                                                                                  |
+| `consent-ui`  | `CONSENT_UI_URL`       | URL for the Consent UI            | `string` | Optional | `http://localhost:3000`                                                                                                                                  |
+| `consent-ui`  | `RECAPTCHA_SITE_KEY`   | API site key for ReCAPTCHA        | `string` | Required | Use [Google's test keys](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do) for local dev |
+| `data-mapper` | `PORT`                 | Port number for the Data Mapper   | `number` | Optional | `8081`                                                                                                                                                   |
+| `data-mapper` | `PI_DAS_URL`           | URL for the PI DAS                | `string` | Optional | `http://localhost:8082`                                                                                                                                  |
+| `data-mapper` | `PHI_DAS_URL`          | URL for the PHI DAS               | `string` | Optional | `http://localhost:8083`                                                                                                                                  |
+| `data-mapper` | `KEYS_DAS_URL`         | URL for the Keys DAS              | `string` | Optional | `http://localhost:8084`                                                                                                                                  |
+| `data-mapper` | `CONSENT_DAS_URL`      | URL for the Consent DAS           | `string` | Optional | `http://localhost:8085`                                                                                                                                  |
+| `keys-das`    | `DATABASE_URL`         | URL for the Keys DB               | `string` | Required | `postgres://postgres:postgres@localhost:5432/keys_db`                                                                                                    |
+| `keys-das`    | `PORT`                 | Port number for the Keys DAS      | `number` | Optional | `8084`                                                                                                                                                   |
+| `phi-das`     | `DATABASE_URL`         | URL for the PHI DAS               | `string` | Required | `postgres://postgres:postgres@localhost:5432/phi_db`                                                                                                     |
+| `phi-das`     | `PORT`                 | Port number for the PHI DAS       | `number` | Optional | `8083`                                                                                                                                                   |
+| `pi-das`      | `DATABASE_URL`         | URL for the PI DAS                | `string` | Required | `postgres://postgres:postgres@localhost:5432/pi_db`                                                                                                      |
+| `pi-das`      | `PORT`                 | Port number for the PI DAS        | `number` | Optional | `8082`                                                                                                                                                   |
 
 ## Setup
 
 - Install pnpm: `brew install pnpm`
 - Install dependencies: `pnpm install`
+
+> **Note:** This repo is using the LTS version of node (currently v18)
 
 ### VS Code Configuration
 
@@ -196,3 +200,10 @@ Verify everything is running correctly by navigating to [`http://localhost:3000`
 | `pnpm run generate`        | generates Prisma Clients for the DASes                          |
 | `pnpm run seed`            | seeds data into the DASes                                       |
 | `pnpm run start`           | runs migrations, then builds, then starts local dev servers     |
+
+## ReCAPTCHA
+
+In local dev, for consent UI & API:
+
+- Use [Google's test keys](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do) - secret key for API, site key for UI.
+- No ReCAPTCHA token is required for consent API, in development. If one isn't provided, the ReCAPTCHA verification process will be skipped. If you provide any token, the verification process will take place and verification will always be successful.

@@ -32,17 +32,56 @@ const router = Router();
  *     description: OHIP Key management
  */
 
-// TODO: add proper JSDoc comments
-// get all ohip keys
+/**
+ * @openapi
+ * /ohip-keys:
+ *   get:
+ *     tags:
+ *       - OHIP Keys
+ *     name: Get OHIP Keys
+ *     description: Fetch OHIP keys list.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: OHIP keys retrieved successfully.
+ *       500:
+ *         description: Error retrieving OHIP keys.
+ */
 router.get('/', async (req, res) => {
 	logger.info('GET /ohip-keys');
-	// TODO: add error handling
-	const ohipKeys = await getOhipKeys();
-	res.send({ ohipKeys: [ohipKeys] });
+	try {
+		const ohipKeys = await getOhipKeys();
+		res.status(200).send({ ohipKeys });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ error: 'Error retrieving OHIP keys' });
+	}
 });
 
-// TODO: add proper JSDoc comments
-// get ohip key by participant id
+/**
+ * @openapi
+ * /ohip-keys/{participantId}:
+ *   get:
+ *     tags:
+ *       - OHIP Keys
+ *     name: Get OHIP Key by Participant ID
+ *     description: Fetch OHIP key for a specific participant.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: participantId
+ *         in: path
+ *         description: Participant's ID.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OHIP key retrieved successfully.
+ *       500:
+ *         description: Error retrieving OHIP key.
+ */
 router.get('/:participantId', async (req, res) => {
 	logger.info('GET /ohip-keys/:participantId');
 	const { participantId } = req.params;
@@ -52,12 +91,35 @@ router.get('/:participantId', async (req, res) => {
 		res.status(200).send({ ohipKey });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'OHIP Key not found' });
+		res.status(500).send({ error: 'Error retrieving OHIP key' });
 	}
 });
 
-// TODO: add proper JSDoc comments
-// create ohip key
+/**
+ * @openapi
+ * /ohip-keys:
+ *   post:
+ *     tags:
+ *       - OHIP Keys
+ *     name: Create OHIP Key
+ *     description: Create an OHIP key for a participant.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               participantId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: OHIP key created successfully.
+ *       500:
+ *         description: Error creating OHIP key.
+ */
 router.post('/', async (req, res) => {
 	logger.info('POST /ohip-keys');
 	const { participantId, id } = req.body;
