@@ -27,27 +27,41 @@ import { Name } from './Name.js';
 import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
 
-export const ParticipantIdentification = z.object({
-	id: NanoId,
-	inviteId: NanoId.optional(),
-	ohipNumber: OhipNumber,
-	participantPreferredName: Name,
-	participantOhipFirstName: Name,
-	participantOhipLastName: Name,
-	participantOhipMiddleName: Name.optional(),
-	dateOfBirth: z.date(),
-	phoneNumber: PhoneNumber,
-	mailingAddressStreet: z.string().optional(),
-	mailingAddressCity: z.string().optional(),
-	mailingAddressProvince: Province.optional(),
-	mailingAddressPostalCode: PostalCode.optional(),
-	residentialPostalCode: PostalCode,
-	emailAddress: z.string().email(),
-	consentGroup: ConsentGroup,
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianEmailAddress: z.string().email().optional(),
-	guardianRelationship: Name.optional(),
-});
+export const ParticipantIdentification = z
+	.object({
+		id: NanoId,
+		inviteId: NanoId.optional(),
+		ohipNumber: OhipNumber,
+		participantPreferredName: Name,
+		participantOhipFirstName: Name,
+		participantOhipLastName: Name,
+		participantOhipMiddleName: Name.optional(),
+		dateOfBirth: z.date(),
+		phoneNumber: PhoneNumber,
+		mailingAddressStreet: z.string().optional(),
+		mailingAddressCity: z.string().optional(),
+		mailingAddressProvince: Province.optional(),
+		mailingAddressPostalCode: PostalCode.optional(),
+		residentialPostalCode: PostalCode,
+		emailAddress: z.string().email(),
+		consentGroup: ConsentGroup,
+		guardianName: Name.optional(),
+		guardianPhoneNumber: PhoneNumber.optional(),
+		guardianEmailAddress: z.string().email().optional(),
+		guardianRelationship: Name.optional(),
+	})
+	.refine((input) => {
+		// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
+		// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
+		const requiresGuardianInformation =
+			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
+			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
+		return requiresGuardianInformation
+			? input.guardianName !== undefined &&
+					input.guardianPhoneNumber !== undefined &&
+					input.guardianEmailAddress !== undefined &&
+					input.guardianRelationship !== undefined
+			: true;
+	});
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
