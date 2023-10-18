@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 import { ComponentProps } from 'react';
 import Link from 'next/link';
 
