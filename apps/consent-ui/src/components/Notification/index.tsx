@@ -29,6 +29,7 @@ import DismissButton from './DismissButton';
 import ActionButton from './ActionButton';
 
 export type NotificationLevel = 'error' | 'info' | 'success' | 'warning';
+export type NotificationVariant = 'small' | 'medium';
 
 export interface NotificationProps {
 	actionText?: string;
@@ -37,6 +38,7 @@ export interface NotificationProps {
 	title: string | JSX.Element;
 	description?: string | JSX.Element;
 	dismissable?: boolean;
+	variant?: NotificationVariant;
 }
 
 const notificationIcons: Record<NotificationLevel, JSX.Element> = {
@@ -53,9 +55,10 @@ const Notification = ({
 	title,
 	description,
 	dismissable,
+	variant = 'medium',
 }: NotificationProps) => {
 	return (
-		<div className={clsx(styles.base, styles[level], styles[className])}>
+		<div className={clsx(styles.base, styles[level], styles[className], styles[variant])}>
 			<div className={clsx(styles.container)}>
 				<div className={clsx(styles.icon)}>{notificationIcons[level]}</div>
 				<div className={clsx(styles.body)}>
