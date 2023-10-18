@@ -19,13 +19,21 @@
 
 import { z } from 'zod';
 
-const CONSENT_CATEGORIES = [
-	'INFORMED_CONSENT',
-	'CONSENT_RELEASE_DATA',
-	'CONSENT_RESEARCH_PARTICIPATION',
-	'CONSENT_RECONTACT',
-	'CONSENT_REVIEW_SIGN',
+const PROVINCES = [
+	'ALBERTA',
+	'BRITISH_COLUMBIA',
+	'MANITOBA',
+	'NEW_BRUNSWICK',
+	'NEWFOUNDLAND_AND_LABRADOR',
+	'NORTHWEST_TERRITORIES',
+	'NOVA_SCOTIA',
+	'NUNAVUT',
+	'ONTARIO',
+	'PRINCE_EDWARD_ISLAND',
+	'QUEBEC',
+	'SASKATCHEWAN',
+	'YUKON',
 ] as const;
 
-export const ConsentCategory = z.enum(CONSENT_CATEGORIES);
-export type ConsentCategory = z.infer<typeof ConsentCategory>;
+export const Province = z.enum(PROVINCES);
+export type Province = z.infer<typeof Province>;
