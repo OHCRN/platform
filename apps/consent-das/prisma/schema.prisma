@@ -17,12 +17,13 @@ enum ConsentGroup {
 }
 
 model Participant {
-  id                  String                @id @default(cuid())
-  consentGroup        ConsentGroup?
-  emailVerified       Boolean               @default(false)
-  isGuardian          Boolean
-  guardianIdVerified  Boolean?
-  ParticipantResponse ParticipantResponse[]
+  id                   String                @id @default(cuid())
+  consentGroup         ConsentGroup?
+  consentToBeContacted Boolean               @default(false)
+  emailVerified        Boolean               @default(false)
+  isGuardian           Boolean
+  guardianIdVerified   Boolean?
+  ParticipantResponse  ParticipantResponse[]
 }
 
 enum ConsentCategory {
@@ -54,14 +55,14 @@ model ParticipantResponse {
 }
 
 model ClinicianInvite {
-  id String @id @default(cuid())
-  clinicianFirstName String
+  id                                 String       @id @default(cuid())
+  clinicianFirstName                 String
   clinicianInstitutionalEmailAddress String
-  clinicianLastName String
-  clinicianTitle String
-  consentGroup ConsentGroup
-  consentToBeContacted Boolean
-  inviteSentDate DateTime? @db.Date
-  inviteAcceptedDate DateTime? @db.Date
-  inviteAccepted Boolean?
+  clinicianLastName                  String
+  clinicianTitle                     String
+  consentGroup                       ConsentGroup
+  consentToBeContacted               Boolean
+  inviteSentDate                     DateTime?    @db.Date
+  inviteAcceptedDate                 DateTime?    @db.Date
+  inviteAccepted                     Boolean?
 }

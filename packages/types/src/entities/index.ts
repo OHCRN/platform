@@ -23,6 +23,7 @@ export * from './ConsentQuestion.js';
 export * from './Name.js';
 export * from './OhipNumber.js';
 export * from './ParticipantIdentification.js';
+export * from './ParticipantRegistration.js';
 export * from './PhoneNumber.js';
 export * from './PostalCode.js';
 export * from './Province.js';

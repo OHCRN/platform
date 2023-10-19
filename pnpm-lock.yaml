@@ -412,9 +412,15 @@ importers:
 
   packages/types:
     dependencies:
+      '@anatine/zod-openapi':
+        specifier: ^2.2.0
+        version: 2.2.0(openapi3-ts@4.1.2)(zod@3.21.4)
       eslint-config-ohcrn:
         specifier: workspace:^
         version: link:../config/eslint-config-ohcrn
+      openapi3-ts:
+        specifier: ^4.1.2
+        version: 4.1.2
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -432,6 +438,17 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.9
+
+  /@anatine/zod-openapi@2.2.0(openapi3-ts@4.1.2)(zod@3.21.4):
+    resolution: {integrity: sha512-Ponwenf2NMIVbs9IuB3YoW7CQPkuRWxhYV/qxBu48DQhmRyipEw/YROVTWnvku7+lwhv1EyP4+h3J5SwrvmfHg==}
+    peerDependencies:
+      openapi3-ts: ^4.1.2
+      zod: ^3.20.0
+    dependencies:
+      openapi3-ts: 4.1.2
+      ts-deepmerge: 6.2.0
+      zod: 3.21.4
+    dev: false
 
   /@apidevtools/json-schema-ref-parser@9.1.2:
     resolution: {integrity: sha512-r1w81DpR+KyRWd3f+rk6TNqMgedmAxZP5v5KWlXQWlgMUUtyEJch0DKEci1SorPMiSeM8XPl7MZ3miJ60JIpQg==}
@@ -4103,6 +4120,12 @@ packages:
     resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
     dev: false
 
+  /openapi3-ts@4.1.2:
+    resolution: {integrity: sha512-B7gOkwsYMZO7BZXwJzXCuVagym2xhqsrilVvV0dnq2Di4+iLUXKVX9gOK23ZqaAHZOwABXN0QTdW8QnkUTX6DA==}
+    dependencies:
+      yaml: 2.2.2
+    dev: false
+
   /optionator@0.9.1:
     resolution: {integrity: sha512-74RlY5FCnhq4jRxVUPKDaRwrVNXMqsGsiW6AJw4XK8hmtm10wC0ypZBLw5IIp85NZMr91+qd1RvvENwg7jjRFw==}
     engines: {node: '>= 0.8.0'}
@@ -5221,6 +5244,11 @@ packages:
     dependencies:
       typescript: 5.2.2
     dev: true
+
+  /ts-deepmerge@6.2.0:
+    resolution: {integrity: sha512-2qxI/FZVDPbzh63GwWIZYE7daWKtwXZYuyc8YNq0iTmMUwn4mL0jRLsp6hfFlgbdRSR4x2ppe+E86FnvEpN7Nw==}
+    engines: {node: '>=14.13.1'}
+    dev: false
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}

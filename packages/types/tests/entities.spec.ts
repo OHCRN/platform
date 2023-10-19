@@ -89,6 +89,7 @@ describe('ParticipantIdentification', () => {
 				guardianPhoneNumber: '1234567890',
 				guardianEmailAddress: 'marge.simpson@example.com',
 				guardianRelationship: 'Wife',
+				consentToBeContacted: true,
 			}).success,
 		).true;
 		expect(
@@ -103,6 +104,7 @@ describe('ParticipantIdentification', () => {
 				residentialPostalCode: 'T4B0V7',
 				emailAddress: 'homer.simpson@example.com',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR, // missing all guardian contact fields
+				consentToBeContacted: true,
 			}).success,
 		).false;
 		expect(
@@ -120,6 +122,7 @@ describe('ParticipantIdentification', () => {
 				guardianName: 'Marge Simpson',
 				guardianPhoneNumber: '1234567890',
 				guardianRelationship: 'Wife', // missing guardianEmailAddress
+				consentToBeContacted: true,
 			}).success,
 		).false;
 		expect(
@@ -136,6 +139,7 @@ describe('ParticipantIdentification', () => {
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 				guardianName: 'Marge Simpson',
 				guardianRelationship: 'Wife', // missing guardianPhoneNumber and guardianEmailAddress
+				consentToBeContacted: true,
 			}).success,
 		).false;
 	});

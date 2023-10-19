@@ -18,61 +18,45 @@
  */
 
 import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import { ParticipantRegistrationRequest } from 'types/entities';
 
-import packageJson from '../../package.json' assert { type: 'json' };
+import logger from '../logger.js';
 
 /**
  * @openapi
- * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         error:
- *           type: string
- *         message:
- *           type: string
- *       required:
- *          - code
- *          - message
+ * tags:
+ *   - name: Register
+ *     description: Participant Self-Registration
  */
 
-const options = swaggerJsdoc({
-	failOnErrors: true,
-	definition: {
-		openapi: '3.1.0',
-		info: {
-			title: 'OHCRN Consent API',
-			version: packageJson.version,
-			description: '',
-			license: {
-				name: 'APGL',
-				url: 'https://www.gnu.org/licenses/agpl-3.0.en.html',
-			},
-			servers: [
-				{
-					url: '/',
-				},
-			],
-		},
-		components: {
-			schemas: {
-				ParticipantRegistrationRequest,
-			},
-		},
-	},
-	apis: ['./src/routers/*'],
-});
-
 const router = Router();
-router.use('/', serve, setup(options));
+
+/**
+ * @openapi
+ * /register:
+ *   post:
+ *     tags:
+ *       - Register
+ *     name: Register Participant
+ *     description: Create participant with Keycloak ID and email
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ParticipantRegistrationRequest'
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Server error
+ */
+router.post('/', async (req, res) => {
+	logger.info(`POST /register`);
+	// TODO: implement
+	const response = { message: `Participant (un)successfully registered` };
+	res.json(response);
+});
 
 export default router;

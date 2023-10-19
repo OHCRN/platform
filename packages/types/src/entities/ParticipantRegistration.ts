@@ -18,33 +18,24 @@
  */
 
 import { z } from 'zod';
+import { generateSchema, extendZodWithOpenApi } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentGroup } from './ConsentGroup.js';
-import { Province } from './Province.js';
-import { PhoneNumber } from './PhoneNumber.js';
-import { PostalCode } from './PostalCode.js';
-import { Name } from './Name.js';
-import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
+import { Name } from './Name.js';
+import { PhoneNumber } from './PhoneNumber.js';
 
-export const ParticipantIdentification = z
+extendZodWithOpenApi(z);
+
+export const ParticipantRegistration = z
 	.object({
-		id: NanoId,
 		inviteId: NanoId.optional(),
-		ohipNumber: OhipNumber,
+		isGuardian: z.boolean(),
 		participantPreferredName: Name,
 		participantOhipFirstName: Name,
 		participantOhipLastName: Name,
-		participantOhipMiddleName: Name.optional(),
 		dateOfBirth: z.date(),
-		phoneNumber: PhoneNumber,
-		mailingAddressStreet: z.string().optional(),
-		mailingAddressCity: z.string().optional(),
-		mailingAddressProvince: Province.optional(),
-		mailingAddressPostalCode: PostalCode.optional(),
-		residentialPostalCode: PostalCode,
 		emailAddress: z.string().email(),
-		consentGroup: ConsentGroup,
 		guardianName: Name.optional(),
 		guardianPhoneNumber: PhoneNumber.optional(),
 		guardianEmailAddress: z.string().email().optional(),
@@ -52,17 +43,30 @@ export const ParticipantIdentification = z
 		consentToBeContacted: z.boolean(),
 	})
 	.refine((input) => {
-		// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
-		// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
-		const requiresGuardianInformation =
-			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
-			input.consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
-		return requiresGuardianInformation
+		return input.isGuardian
 			? input.guardianName !== undefined &&
 					input.guardianPhoneNumber !== undefined &&
 					input.guardianEmailAddress !== undefined &&
 					input.guardianRelationship !== undefined
 			: true;
+	})
+	.openapi({
+		example: {
+			inviteId: 'TjvI79qhWw1fMKJsaYo497SaOZ30Fc26',
+			isGuardian: true,
+			participantPreferredName: 'Homer',
+			participantOhipFirstName: 'Homer',
+			participantOhipLastName: 'Simpson',
+			dateOfBirth: '2023-10-19T19:56:06.063Z',
+			emailAddress: 'homer.simpson@example.com',
+			guardianName: 'Marge Simpson',
+			guardianPhoneNumber: '6395506721',
+			guardianEmailAddress: 'marge.simpson@example.com',
+			guardianRelationship: 'Wife',
+			consentToBeContacted: true,
+		},
 	});
 
-export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
+export type ParticipantRegistration = z.infer<typeof ParticipantRegistration>;
+
+export const ParticipantRegistrationRequest: SchemaObject = generateSchema(ParticipantRegistration);
