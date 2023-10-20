@@ -11,11 +11,13 @@ export const createParticipant = async ({
 	emailVerified,
 	isGuardian,
 	consentGroup,
+	consentToBeContacted,
 	guardianIdVerified,
 }: {
 	emailVerified: boolean;
 	isGuardian: boolean;
 	consentGroup?: ConsentGroup;
+	consentToBeContacted: boolean;
 	guardianIdVerified?: boolean;
 }): Promise<Participant> => {
 	// TODO: add error handling
@@ -24,6 +26,7 @@ export const createParticipant = async ({
 			emailVerified,
 			isGuardian,
 			consentGroup,
+			consentToBeContacted,
 			guardianIdVerified,
 		},
 	});

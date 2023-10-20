@@ -117,6 +117,8 @@ router.get('/:participantId', async (req, res) => {
  *                 type: boolean
  *               isGuardian:
  *                 type: boolean
+ *               consentToBeContacted:
+ *                 type: boolean
  *               consentGroup:
  *                 type: string
  *                 enum:
@@ -130,6 +132,7 @@ router.get('/:participantId', async (req, res) => {
  *             required:
  *               - emailVerified
  *               - isGuardian
+ *               - consentToBeContacted
  *     responses:
  *       201:
  *         description: The participant was successfully created.
@@ -138,13 +141,15 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
+	const { emailVerified, isGuardian, consentGroup, consentToBeContacted, guardianIdVerified } =
+		req.body;
 	// TODO: add validation
 	try {
 		const participant = await createParticipant({
 			emailVerified,
 			isGuardian,
 			consentGroup,
+			consentToBeContacted,
 			guardianIdVerified,
 		});
 		res.status(201).send({ participant });
