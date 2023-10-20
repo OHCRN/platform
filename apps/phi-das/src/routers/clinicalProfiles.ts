@@ -118,29 +118,18 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *                 type: string
  *                 required: true
  *               birthSex:
- *                 type: string
- *                 required: true
  *                 $ref: '#/components/schemas/BirthSex'
  *               gender:
- *                 type: string
  *                 $ref: '#/components/schemas/Gender'
  *               selfIdentifiedGender:
  *                 type: string
  *               ancestry:
- *                 type: string
- *                 required: true
  *                 $ref: '#/components/schemas/Ancestry'
  *               geneticsClinicVisited:
- *                 type: string
- *                 required: true
  *                 $ref: '#/components/schemas/GeneticsClinic'
  *               historyOfCancer:
- *                 type: boolean
- *                 required: true
  *                 $ref: '#/components/schemas/HistoryOfCancer'
  *               familyHistoryOfCancer:
- *                 type: boolean
- *                 required: true
  *                 $ref: '#/components/schemas/FamilyHistoryOfCancer'
  *     responses:
  *       201:
