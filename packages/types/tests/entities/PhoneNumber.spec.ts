@@ -33,5 +33,6 @@ describe('PhoneNumber', () => {
 		expect(PhoneNumber.safeParse('123 456 78').success).false;
 		expect(PhoneNumber.safeParse('+1 (234) 5').success).false;
 		expect(PhoneNumber.safeParse('123456789.').success).false;
+		expect(PhoneNumber.safeParse(undefined).success).false;
 	});
 });

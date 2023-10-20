@@ -26,6 +26,7 @@ describe('PostalCode', () => {
 		expect(PostalCode.safeParse('T4B0V7').success).true;
 		expect(PostalCode.safeParse('T4B0V7A').success).false;
 		expect(PostalCode.safeParse('T4B0V').success).false;
+		expect(PostalCode.safeParse(undefined).success).false;
 	});
 	it('Can only contain letters and numbers', () => {
 		expect(PostalCode.safeParse('T4B 0V').success).false;
