@@ -22,20 +22,29 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import { ValidLanguage } from 'src/i18n';
+import routesByLocale from 'src/i18n/routes/routesByLocale.json';
+
+import { getLinkNameByPath } from '../Link/utils';
 
 import styles from './Header.module.scss';
 
-// TODO i18n - we should have a dictionary of english & french internal paths
-const PATHNAMES_WITHOUT_DESKTOP_HEADER = ['/en/invite', '/en/register'];
+const ROUTES_WITHOUT_DESKTOP_HEADER = [routesByLocale.en.invite, routesByLocale.en.register];
 
-const checkHiddenOnDesktop = (pathname: string) => {
-	// TODO this may become more complex when URL parameters are added
-	return PATHNAMES_WITHOUT_DESKTOP_HEADER.includes(pathname);
+const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
+	const linkName = getLinkNameByPath(pathname, currentLang);
+	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(`/${linkName}`);
 };
 
-const HeaderWrapper = ({ children }: { children: ReactNode }) => {
+const HeaderWrapper = ({
+	children,
+	currentLang,
+}: {
+	children: ReactNode;
+	currentLang: ValidLanguage;
+}) => {
 	const pathname = usePathname();
-	const hiddenOnDesktop = checkHiddenOnDesktop(pathname);
+	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
 	return (
 		<header className={clsx(styles.header, hiddenOnDesktop && styles['hide-desktop'])}>
 			{children}

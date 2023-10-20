@@ -41,7 +41,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
-		<HeaderWrapper>
+		<HeaderWrapper currentLang={currentLang}>
 			<div>
 				<Link href={`/${currentLang}`}>
 					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />
