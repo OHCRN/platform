@@ -326,7 +326,7 @@ model ClinicalProfile {
   ancestry              Ancestry
   birthSex              BirthSex
   familyHistoryOfCancer HistoryOfCancer
-  gender                Gender?
+  gender                Gender
   geneticsClinicVisited GeneticsClinic
   historyOfCancer       HistoryOfCancer
   participantId         String

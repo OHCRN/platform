@@ -46,36 +46,26 @@ const ohipData: Prisma.OhipCreateInput[] = [
 
 const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	{
-		// both gender fields skipped
-		id: 'clnexki5e00049e9c287k9bfp',
-		ancestry: Ancestry.ITALIAN,
-		birthSex: BirthSex.FEMALE,
-		familyHistoryOfCancer: HistoryOfCancer.NO,
-		geneticsClinicVisited: GeneticsClinic.HEALTH_SCIENCES_NORTH_SUDBURY,
-		historyOfCancer: HistoryOfCancer.YES,
-		participantId: 'clnexkrgk00069e9c5jko7ldk',
-	},
-	{
-		// self-identified gender skipped
-		id: 'clnexhbg700009e9c68ga23ab',
-		ancestry: Ancestry.SEYCHELLOIS,
-		birthSex: BirthSex.INTERSEX,
+		// gender selected, self-identified gender skipped
+		id: 'fFPBqZk0bQEFdKONRClhg',
+		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
+		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_NOT_TO_ANSWER,
 		geneticsClinicVisited: GeneticsClinic.PRINCESS_MARGARET_HOSPITAL_TORONTO,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
-		participantId: 'clnexin1o00029e9c94b2110u',
+		participantId: 'GbmJ8ptnfscbgqt3_Wxhd',
 	},
 	{
 		// both gender options provided
-		id: 'clney08wl00089e9cb42mf2pr',
+		id: '36cuyHMfjUDe25uOu-A08',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
-		birthSex: BirthSex.MALE,
+		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_TO_SELF_IDENTIFY,
 		geneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
-		participantId: 'clney0c6a000a9e9c5qez52wj',
+		participantId: 'HMbM2rZlrpCtSpPzK5Uox',
 		selfIdentifiedGender: 'other',
 	},
 ];

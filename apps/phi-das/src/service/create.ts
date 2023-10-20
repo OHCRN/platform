@@ -56,7 +56,7 @@ export const createClinicalProfile = async ({
 }: {
 	participantId: string;
 	birthSex: BirthSex;
-	gender?: Gender;
+	gender: Gender;
 	selfIdentifiedGender?: string;
 	ancestry: Ancestry;
 	geneticsClinicVisited: GeneticsClinic;
