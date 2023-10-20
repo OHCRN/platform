@@ -122,7 +122,7 @@ router.get('/:inviteId', async (req, res) => {
  *               clinicianLastName:
  *                 type: string
  *                 required: true
- *               clinicianTitle:
+ *               clinicianTitleOrRole:
  *                 type: string
  *                 required: true
  *               consentGroup:
@@ -158,7 +158,7 @@ router.post('/', async (req, res) => {
 		clinicianFirstName,
 		clinicianInstitutionalEmailAddress,
 		clinicianLastName,
-		clinicianTitle,
+		clinicianTitleOrRole,
 		consentGroup,
 		consentToBeContacted,
 		inviteSentDate,
@@ -173,7 +173,7 @@ router.post('/', async (req, res) => {
 			clinicianFirstName,
 			clinicianInstitutionalEmailAddress,
 			clinicianLastName,
-			clinicianTitle,
+			clinicianTitleOrRole,
 			consentGroup,
 			consentToBeContacted,
 			inviteSentDate: parsedInviteSentDate,

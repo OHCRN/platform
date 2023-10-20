@@ -6,14 +6,14 @@ describe('ClinicianInvite', () => {
 	it('Must define conditionally required fields on condition', () => {
 		expect(
 			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
-				clinicianLastName: 'Simson',
+				clinicianLastName: 'Simpson',
 				clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-				clinicianTitle: 'Doctor',
+				clinicianTitleOrRole: 'Doctor',
 				participantFirstName: 'Bart',
-				participantLastName: 'Simson',
+				participantLastName: 'Simpson',
 				participantEmailAddress: 'bart.simpson@example.com',
 				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -25,14 +25,14 @@ describe('ClinicianInvite', () => {
 		).true;
 		expect(
 			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
-				clinicianLastName: 'Simson',
+				clinicianLastName: 'Simpson',
 				clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-				clinicianTitle: 'Doctor',
+				clinicianTitleOrRole: 'Doctor',
 				participantFirstName: 'Bart',
-				participantLastName: 'Simson',
+				participantLastName: 'Simpson',
 				participantEmailAddress: 'bart.simpson@example.com',
 				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -42,14 +42,14 @@ describe('ClinicianInvite', () => {
 		).false;
 		expect(
 			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
-				clinicianLastName: 'Simson',
+				clinicianLastName: 'Simpson',
 				clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-				clinicianTitle: 'Doctor',
+				clinicianTitleOrRole: 'Doctor',
 				participantFirstName: 'Bart',
-				participantLastName: 'Simson',
+				participantLastName: 'Simpson',
 				participantEmailAddress: 'bart.simpson@example.com',
 				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
