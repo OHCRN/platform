@@ -18,6 +18,7 @@
  */
 
 import { Router } from 'express';
+import { ParticipantRegistration } from 'types/entities';
 
 import logger from '../logger.js';
 
@@ -54,9 +55,14 @@ const router = Router();
  */
 router.post('/', async (req, res) => {
 	logger.info(`POST /register`);
-	// TODO: implement
-	const response = { message: `Participant (un)successfully registered` };
-	res.json(response);
+	try {
+		const body = ParticipantRegistration.parse(req.body);
+		// TODO: implement
+		res.status(200).send({ message: `Participant (un)successfully registered`, body });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ message: 'An error occurred' });
+	}
 });
 
 export default router;

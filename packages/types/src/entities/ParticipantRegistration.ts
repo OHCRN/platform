@@ -29,12 +29,13 @@ extendZodWithOpenApi(z);
 
 export const ParticipantRegistration = z
 	.object({
+		keycloakId: z.string().uuid(),
 		inviteId: NanoId.optional(),
 		isGuardian: z.boolean(),
 		participantPreferredName: Name,
 		participantOhipFirstName: Name,
 		participantOhipLastName: Name,
-		dateOfBirth: z.date(),
+		dateOfBirth: z.string().datetime(),
 		emailAddress: z.string().email(),
 		guardianName: Name.optional(),
 		guardianPhoneNumber: PhoneNumber.optional(),
@@ -52,6 +53,7 @@ export const ParticipantRegistration = z
 	})
 	.openapi({
 		example: {
+			keycloakId: '3d7d161e-da15-41f2-b863-a201fb6bb8cc',
 			inviteId: 'TjvI79qhWw1fMKJsaYo497SaOZ30Fc26',
 			isGuardian: true,
 			participantPreferredName: 'Homer',
