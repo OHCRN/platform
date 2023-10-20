@@ -25,7 +25,7 @@ describe('ParticipantResponse', () => {
 	it('Must have a consent question', () => {
 		expect(
 			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
 				participantId: 'Mnnaygsae2ix7J33stdVQ',
 				response: true,
