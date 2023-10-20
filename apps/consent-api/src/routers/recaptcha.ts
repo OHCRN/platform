@@ -17,15 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
+import { Router } from 'express';
 
-const CONSENT_CATEGORIES = [
-	'INFORMED_CONSENT',
-	'CONSENT_RELEASE_DATA',
-	'CONSENT_RESEARCH_PARTICIPATION',
-	'CONSENT_RECONTACT',
-	'CONSENT_REVIEW_SIGN',
-] as const;
+import { recaptchaMiddleware } from '../utils/recaptcha.js';
 
-export const ConsentCategory = z.enum(CONSENT_CATEGORIES);
-export type ConsentCategory = z.infer<typeof ConsentCategory>;
+const router = Router();
+
+// TEST ENDPOINT
+// remove after adding an endpoint that uses recaptcha
+
+router.post('/', recaptchaMiddleware, async (req, res) => {
+	const { inputData } = req.body;
+
+	res.status(200).send({ message: 'reCAPTCHA success', inputData });
+});
+
+export default router;
