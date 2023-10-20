@@ -46,7 +46,7 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ParticipantRegistrationRequest'
+ *             $ref: '#/components/schemas/ParticipantRegistration'
  *     responses:
  *       200:
  *         description: OK

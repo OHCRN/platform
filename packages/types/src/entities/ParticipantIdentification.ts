@@ -32,7 +32,7 @@ export const ParticipantIdentification = z
 		id: NanoId,
 		inviteId: NanoId.optional(),
 		ohipNumber: OhipNumber,
-		participantPreferredName: Name,
+		participantPreferredName: Name.optional(),
 		participantOhipFirstName: Name,
 		participantOhipLastName: Name,
 		participantOhipMiddleName: Name.optional(),

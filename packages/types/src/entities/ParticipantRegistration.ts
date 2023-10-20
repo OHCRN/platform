@@ -32,10 +32,10 @@ export const ParticipantRegistration = z
 		keycloakId: z.string().uuid(),
 		inviteId: NanoId.optional(),
 		isGuardian: z.boolean(),
-		participantPreferredName: Name,
+		participantPreferredName: Name.optional(),
 		participantOhipFirstName: Name,
 		participantOhipLastName: Name,
-		dateOfBirth: z.string().datetime(),
+		dateOfBirth: z.coerce.date(),
 		emailAddress: z.string().email(),
 		guardianName: Name.optional(),
 		guardianPhoneNumber: PhoneNumber.optional(),
@@ -71,4 +71,5 @@ export const ParticipantRegistration = z
 
 export type ParticipantRegistration = z.infer<typeof ParticipantRegistration>;
 
-export const ParticipantRegistrationRequest: SchemaObject = generateSchema(ParticipantRegistration);
+export const ParticipantRegistrationOpenAPISchema: SchemaObject =
+	generateSchema(ParticipantRegistration);

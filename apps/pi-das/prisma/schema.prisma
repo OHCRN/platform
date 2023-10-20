@@ -34,7 +34,7 @@ model Participant {
   participantOhipLastName   String
   participantOhipMiddleName String?
   phoneNumber               String           @db.Char(10)
-  participantPreferredName  String
+  participantPreferredName  String?
   guardianName              String?
   guardianPhoneNumber       String?          @db.Char(10)
   guardianEmailAddress      String?
@@ -45,7 +45,6 @@ model Participant {
   mailingAddressPostalCode  String?          @db.Char(6)
   residentialPostalCode     String           @db.Char(6)
 }
-
 
 model ClinicianInvite {
   id                       String        @id @default(cuid())
@@ -60,4 +59,3 @@ model ClinicianInvite {
   guardianRelationship     String?
   Participant              Participant[]
 }
-
