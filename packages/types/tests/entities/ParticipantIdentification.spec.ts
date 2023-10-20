@@ -43,7 +43,7 @@ describe('ParticipantIdentification', () => {
 		).true;
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
@@ -57,7 +57,7 @@ describe('ParticipantIdentification', () => {
 		).false;
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
@@ -74,7 +74,7 @@ describe('ParticipantIdentification', () => {
 		).false;
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41-vCQm',
+				id: 'CVCFbeKH2Njl1G41vCQm',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
