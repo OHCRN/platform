@@ -17,10 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
-
-export const name = /^[A-Za-z\s]+$/;
-export const nanoId = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
-export const ohipNumber = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
-export const phoneNumber = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
-export const postalCode = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
+export const NANOID_LENGTH = 21 as const;
+export const PHONE_NUMBER_LENGTH = 10 as const;
+export const OHIP_NUMBER_LENGTH = 10 as const;

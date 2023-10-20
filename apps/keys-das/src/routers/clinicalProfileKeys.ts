@@ -122,10 +122,13 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profile-keys');
-	const { participantId } = req.body;
+	const { participantId, clinicalProfilePrivateKey } = req.body;
 	// TODO: add validation
 	try {
-		const clinicalProfileKey = await createClinicalProfileKey({ participantId });
+		const clinicalProfileKey = await createClinicalProfileKey({
+			participantId,
+			clinicalProfilePrivateKey,
+		});
 		res.status(201).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);

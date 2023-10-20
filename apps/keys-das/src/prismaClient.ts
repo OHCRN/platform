@@ -19,23 +19,48 @@
 
 import { customAlphabet } from 'nanoid';
 import { IdAlphabet } from 'types/services';
+import { NANOID_LENGTH, NanoId } from 'types/entities';
 
 import { PrismaClient, OhipKey, ClinicalProfileKey } from './generated/client/index.js';
-
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
-const nanoid = customAlphabet(IdAlphabet);
+const nanoid = customAlphabet(IdAlphabet, NANOID_LENGTH);
 
 const prisma = new PrismaClient().$extends({
 	query: {
-		$allModels: {
+		ohipKey: {
 			async create({ args, query }) {
-				args.data = {
-					...args.data,
-					id: args.data.id || nanoid(),
-				};
-				return query(args);
+				try {
+					const validPrivateKey = args.data.ohipPrivateKey
+						? NanoId.parse(args.data.ohipPrivateKey)
+						: nanoid();
+					args.data = {
+						...args.data,
+						ohipPrivateKey: validPrivateKey,
+					};
+					return query(args);
+				} catch (e) {
+					// TODO: specify error when custom Error types are implemented
+					throw new Error('Invalid key provided');
+				}
+			},
+		},
+		clinicalProfileKey: {
+			async create({ args, query }) {
+				try {
+					const validPrivateKey = args.data.clinicalProfilePrivateKey
+						? NanoId.parse(args.data.clinicalProfilePrivateKey)
+						: nanoid();
+					args.data = {
+						...args.data,
+						clinicalProfilePrivateKey: validPrivateKey,
+					};
+					return query(args);
+				} catch (e) {
+					// TODO: specify error when custom Error types are implemented
+					throw new Error('Invalid key provided');
+				}
 			},
 		},
 	},

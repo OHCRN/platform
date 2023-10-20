@@ -2,16 +2,16 @@ import prisma, { OhipKey, ClinicalProfileKey } from '../prismaClient.js';
 
 export const createOhipKey = async ({
 	participantId,
-	id,
+	ohipPrivateKey,
 }: {
 	participantId: string;
-	id?: string;
+	ohipPrivateKey?: string;
 }): Promise<OhipKey> => {
 	// TODO: add error handling
 	const result = await prisma.ohipKey.create({
 		data: {
 			participantId,
-			id,
+			ohipPrivateKey,
 		},
 	});
 	return result;
@@ -19,13 +19,16 @@ export const createOhipKey = async ({
 
 export const createClinicalProfileKey = async ({
 	participantId,
+	clinicalProfilePrivateKey,
 }: {
 	participantId: string;
+	clinicalProfilePrivateKey?: string;
 }): Promise<ClinicalProfileKey> => {
 	// TODO: add error handling
 	const result = await prisma.clinicalProfileKey.create({
 		data: {
 			participantId,
+			clinicalProfilePrivateKey,
 		},
 	});
 	return result;
