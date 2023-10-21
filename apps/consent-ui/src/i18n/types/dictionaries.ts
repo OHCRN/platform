@@ -19,7 +19,26 @@
 
 import { ValidLanguage } from './languages';
 
-export const namespaces = ['common', 'header', 'footer', 'landing-page'] as const;
+export const namespaces = [
+	'ancestry',
+	'birth-sex',
+	'common',
+	'consents-step-1',
+	'consents-step-2',
+	'consents-step-3',
+	'consents-step-4',
+	'consents-step-5',
+	'dashboard',
+	'footer',
+	'gender',
+	'genetics-clinic',
+	'header',
+	'invite',
+	'landing-page',
+	'province',
+	'register',
+] as const;
+
 export type ValidNamespace = (typeof namespaces)[number];
 
 export type Translation = (k: string, params?: { [key: string]: string | number }) => string;

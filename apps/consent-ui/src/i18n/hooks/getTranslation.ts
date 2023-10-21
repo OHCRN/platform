@@ -23,11 +23,11 @@ import { defaultLanguage, defaultNamespace } from 'src/i18n/settings';
 // these will only reload on page refresh (server only) or lang change
 const dictionaries: GetDictionary = {
 	en: (namespace) =>
-		import(`../locales/en/${namespace}.json`).then((module) => {
+		import(`../locales/en/${namespace}.ts`).then((module) => {
 			return module.default;
 		}),
 	fr: (namespace) =>
-		import(`../locales/fr/${namespace}.json`).then((module) => {
+		import(`../locales/fr/${namespace}.ts`).then((module) => {
 			return module.default;
 		}),
 };
