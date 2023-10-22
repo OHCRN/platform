@@ -17,13 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ConsentGroup } from 'types/entities';
+
 const dictionary = {
-	ADULT_CONSENT: 'Adult Consent (>18)',
-	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
+	[ConsentGroup.enum.ADULT_CONSENT]: 'Adult Consent (>18)',
+	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
 		'Adult Consent using a Substitute Additional Decision Maker (>18)',
-	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
-	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
-	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
+	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR]: 'Guardian Consent of a Minor',
+	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
+		'Guardian Consent of a Minor (including Assent)',
+	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Young Adult Consent (<18)',
 } as const;
 
 export type InviteDictionaryKey = keyof typeof dictionary;

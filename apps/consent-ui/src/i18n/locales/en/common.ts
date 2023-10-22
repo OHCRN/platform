@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ConsentCategory } from 'types/entities';
+
 const dictionary = {
 	home: 'Homepage',
 	register: 'Participant Registration',
@@ -24,11 +26,11 @@ const dictionary = {
 	consent: 'Consent Forms',
 	invite: 'Clinician Invite',
 	'consent-forms': 'Consent Forms',
-	INFORMED_CONSENT: 'Informed Consent',
-	CONSENT_RELEASE_DATA: 'Consent to Data Release ',
-	CONSENT_RESEARCH_PARTICIPATION: 'Consent to Research Participation ',
-	CONSENT_RECONTACT: 'Consent to Recontact',
-	CONSENT_REVIEW_SIGN: 'Review and Sign',
+	[ConsentCategory.enum.INFORMED_CONSENT]: 'Informed Consent',
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: 'Consent to Data Release ',
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]: 'Consent to Research Participation ',
+	[ConsentCategory.enum.CONSENT_RECONTACT]: 'Consent to Recontact',
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: 'Review and Sign',
 	YES: 'Yes',
 	NO: 'No',
 	UNKNOWN: 'Unknown',

@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ConsentCategory } from 'types/entities';
+
 import { CommonDictionary } from '../en/common.js';
 
 const dictionary: CommonDictionary = {
@@ -26,11 +28,12 @@ const dictionary: CommonDictionary = {
 	consent: 'Formulaires de consentement',
 	invite: 'Invitation du clinicien',
 	'consent-forms': 'Formulaires de consentement',
-	INFORMED_CONSENT: 'Consentement éclairé',
-	CONSENT_RELEASE_DATA: 'Consentement à la divulgation de données',
-	CONSENT_RESEARCH_PARTICIPATION: 'Consentement à la participation à la recherche',
-	CONSENT_RECONTACT: 'Consentement à la reprise de contact',
-	CONSENT_REVIEW_SIGN: 'Examen et signature',
+	[ConsentCategory.enum.INFORMED_CONSENT]: 'Consentement éclairé',
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: 'Consentement à la divulgation de données',
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]:
+		'Consentement à la participation à la recherche',
+	[ConsentCategory.enum.CONSENT_RECONTACT]: 'Consentement à la reprise de contact',
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: 'Examen et signature',
 	YES: 'Oui',
 	NO: 'Non',
 	UNKNOWN: 'Inconnu',
