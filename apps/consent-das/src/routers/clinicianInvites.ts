@@ -146,6 +146,8 @@ router.get('/:inviteId', async (req, res) => {
  *                 format: date
  *               inviteAccepted:
  *                 type: boolean
+ *               clinicianInviteId
+ *                 type: string
  *     responses:
  *       201:
  *         description: The clinician invite was successfully created.

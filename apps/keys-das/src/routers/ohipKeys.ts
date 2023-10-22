@@ -114,6 +114,8 @@ router.get('/:participantId', async (req, res) => {
  *             properties:
  *               participantId:
  *                 type: string
+ *               ohipPrivateKey:
+ *                 type: string
  *     responses:
  *       201:
  *         description: OHIP key created successfully.

@@ -127,6 +127,8 @@ router.get('/:participantId', async (req, res) => {
  *                   - YOUNG_ADULT_CONSENT
  *               guardianIdVerified:
  *                 type: boolean
+ *               participantId:
+ *                 type: string
  *             required:
  *               - emailVerified
  *               - isGuardian

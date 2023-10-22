@@ -114,6 +114,8 @@ router.get('/:participantId', async (req, res) => {
  *             properties:
  *               participantId:
  *                 type: string
+ *               clinicalProfilePrivateKey
+ *                 type: string
  *     responses:
  *       201:
  *         description: Clinical profile key created successfully.
