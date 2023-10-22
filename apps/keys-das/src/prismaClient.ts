@@ -18,14 +18,14 @@
  */
 
 import { customAlphabet } from 'nanoid';
-import { IdAlphabet } from 'types/services';
+import { ID_ALPHABET } from 'types/services';
 import { NANOID_LENGTH, NanoId } from 'types/entities';
 
 import { PrismaClient, OhipKey, ClinicalProfileKey } from './generated/client/index.js';
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
-const nanoid = customAlphabet(IdAlphabet, NANOID_LENGTH);
+const nanoid = customAlphabet(ID_ALPHABET, NANOID_LENGTH);
 
 const prisma = new PrismaClient().$extends({
 	query: {

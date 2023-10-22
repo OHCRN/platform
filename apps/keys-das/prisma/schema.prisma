@@ -10,10 +10,10 @@ generator client {
 
 model OhipKey {
   participantId     String @unique
-  ohipPrivateKey    String @id @unique @default("") @db.Char(21)
+  ohipPrivateKey    String @id @default("") @db.Char(21)
 }
 
 model ClinicalProfileKey {
   participantId             String @unique
-  clinicalProfilePrivateKey String @id @unique @default("") @db.Char(21)
+  clinicalProfilePrivateKey String @id @default("") @db.Char(21)
 }
