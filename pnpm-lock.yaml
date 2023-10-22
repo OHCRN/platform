@@ -346,6 +346,9 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      nanoid:
+        specifier: ^5.0.2
+        version: 5.0.2
       types:
         specifier: workspace:^
         version: link:../../packages/types

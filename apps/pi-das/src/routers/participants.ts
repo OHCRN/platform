@@ -157,6 +157,8 @@ router.get('/:participantId', async (req, res) => {
  *               residentialPostalCode:
  *                 type: string
  *                 required: true
+ *               participantId:
+ *                 type: string
  *     responses:
  *       201:
  *         description: The participant was successfully created.
@@ -183,6 +185,7 @@ router.post('/', async (req, res) => {
 		mailingAddressProvince,
 		mailingAddressPostalCode,
 		residentialPostalCode,
+		participantId,
 	} = req.body;
 	// TODO: add validation
 	try {
@@ -205,6 +208,7 @@ router.post('/', async (req, res) => {
 			mailingAddressProvince,
 			mailingAddressPostalCode,
 			residentialPostalCode,
+			participantId,
 		});
 		res.status(201).send({ participant });
 	} catch (error) {

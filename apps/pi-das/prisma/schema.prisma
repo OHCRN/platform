@@ -25,7 +25,7 @@ enum Province {
 }
 
 model Participant {
-  id                        String           @id @default(cuid())
+  id                        String           @id @default("") @db.Char(21)
   inviteId                  String?
   clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   dateOfBirth               DateTime         @db.Date
@@ -48,7 +48,7 @@ model Participant {
 
 
 model ClinicianInvite {
-  id                       String        @id @default(cuid())
+  id                       String        @id @default("") @db.Char(21)
   participantFirstName     String
   participantLastName      String
   participantEmailAddress  String        @unique

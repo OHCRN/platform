@@ -1,5 +1,5 @@
 import logger from '../../src/logger.js';
-import prisma from '../../src/prismaClient.js'
+import prisma from '../../src/prismaClient.js';
 
 import { clinicalProfileKeys, ohipKeys } from './seed-data.js';
 

@@ -138,6 +138,8 @@ router.get('/:inviteId', async (req, res) => {
  *                 format: email
  *               guardianRelationship:
  *                 type: string
+ *               clinicianInviteId:
+ *                 type: string
  *     responses:
  *       201:
  *         description: The clinician invite was successfully created.
@@ -156,6 +158,7 @@ router.post('/', async (req, res) => {
 		guardianPhoneNumber,
 		guardianEmailAddress,
 		guardianRelationship,
+		clinicianInviteId,
 	} = req.body;
 	// TODO: add validation
 	try {
@@ -169,6 +172,7 @@ router.post('/', async (req, res) => {
 			guardianPhoneNumber,
 			guardianEmailAddress,
 			guardianRelationship,
+			clinicianInviteId,
 		});
 		res.status(201).send({ invite });
 	} catch (error) {
