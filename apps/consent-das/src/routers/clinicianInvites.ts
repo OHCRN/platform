@@ -157,6 +157,7 @@ router.post('/', async (req, res) => {
 	const {
 		clinicianFirstName,
 		clinicianInstitutionalEmailAddress,
+		clinicianInviteId,
 		clinicianLastName,
 		clinicianTitleOrRole,
 		consentGroup,
@@ -172,6 +173,7 @@ router.post('/', async (req, res) => {
 		const clinicianInvite = await createClinicianInvite({
 			clinicianFirstName,
 			clinicianInstitutionalEmailAddress,
+			clinicianInviteId,
 			clinicianLastName,
 			clinicianTitleOrRole,
 			consentGroup,

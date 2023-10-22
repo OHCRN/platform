@@ -138,7 +138,7 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
+	const { emailVerified, isGuardian, consentGroup, guardianIdVerified, participantId } = req.body;
 	// TODO: add validation
 	try {
 		const participant = await createParticipant({
@@ -146,6 +146,7 @@ router.post('/', async (req, res) => {
 			isGuardian,
 			consentGroup,
 			guardianIdVerified,
+			participantId,
 		});
 		res.status(201).send({ participant });
 	} catch (error) {

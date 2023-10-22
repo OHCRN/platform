@@ -17,6 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { NANOID_LENGTH, NanoId } from 'types/entities';
+import { customAlphabet } from 'nanoid';
+import { ID_ALPHABET } from 'types/services';
+
 import {
 	PrismaClient,
 	Participant,
@@ -28,8 +32,53 @@ import {
 } from './generated/client/index.js';
 import logger from './logger.js';
 
+const nanoid = customAlphabet(ID_ALPHABET, NANOID_LENGTH);
+
 logger.info('Initializing prismaClient.ts');
-const prisma = new PrismaClient();
+
+const prisma = new PrismaClient().$extends({
+	query: {
+		participant: {
+			async create({ args, query }) {
+				try {
+					const validParticipantId = args.data.id ? NanoId.parse(args.data.id) : nanoid();
+					args.data = {
+						...args.data,
+						id: validParticipantId,
+					};
+					return query(args);
+				} catch (e) {
+					// 	// TODO: specify error when custom Error types are implemented
+					throw new Error('Invalid participant id provided');
+				}
+			},
+		},
+		clinicianInvite: {
+			async create({ args, query }) {
+				try {
+					const validInviteId = args.data.id ? NanoId.parse(args.data.id) : nanoid();
+					args.data = {
+						...args.data,
+						id: validInviteId,
+					};
+					return query(args);
+				} catch (e) {
+					// 	// TODO: specify error when custom Error types are implemented
+					throw new Error('Invalid invite id provided');
+				}
+			},
+		},
+		participantResponse: {
+			async create({ args, query }) {
+				args.data = {
+					...args.data,
+					id: nanoid(),
+				};
+				return query(args);
+			},
+		},
+	},
+});
 
 export {
 	Participant,

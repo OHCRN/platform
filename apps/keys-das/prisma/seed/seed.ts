@@ -1,9 +1,7 @@
-import { PrismaClient } from '../../src/generated/client/index.js';
 import logger from '../../src/logger.js';
+import prisma from '../../src/prismaClient.js'
 
 import { clinicalProfileKeys, ohipKeys } from './seed-data.js';
-
-const prisma = new PrismaClient();
 
 const seed = async () => {
 	logger.info('Seeding database...');
