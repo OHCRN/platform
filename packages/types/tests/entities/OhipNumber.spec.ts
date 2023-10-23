@@ -33,5 +33,6 @@ describe('OhipNumber', () => {
 		expect(OhipNumber.safeParse('#123456789').success).false;
 		expect(OhipNumber.safeParse('123456789.').success).false;
 		expect(OhipNumber.safeParse(undefined).success).false;
+		expect(OhipNumber.safeParse(null).success).false;
 	});
 });
