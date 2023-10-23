@@ -19,17 +19,7 @@
 	"GUARDIAN_CONSENT_OF_MINOR": "Guardian Consent of a Minor",
 	"GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT": "Guardian Consent of a Minor (including Assent)",
 	"YOUNG_ADULT_CONSENT": "Young Adult Consent (<18)",
-	"ALBERTA": "Alberta",
-	"BRITISH_COLUMBIA": "British Columbia",
-	"MANITOBA": "Manitoba",
-	"NEW_BRUNSWICK": "New Brunswick",
-	"NEWFOUNDLAND_AND_LABRADOR": "Newfoundland and Labrador",
-	"NORTHWEST_TERRITORIES": "Northwest Territories",
-	"NOVA_SCOTIA": "Nova Scotia",
-	"NUNAVUT": "Nunavut",
-	"ONTARIO": "Ontario",
-	"PRINCE_EDWARD_ISLAND": "Prince Edward Island",
-	"QUEBEC": "Quebec",
-	"SASKATCHEWAN": "Saskatchewan",
-	"YUKON": "Yukon"
+	"YES": "Yes",
+	"NO": "No",
+	"UNKNOWN": "Unknown"
 }

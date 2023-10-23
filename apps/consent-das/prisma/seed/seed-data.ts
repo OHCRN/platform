@@ -66,7 +66,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		clinicianFirstName: 'Steven',
 		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
 		clinicianLastName: 'Strange',
-		clinicianTitle: 'Neurosurgeon',
+		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: 'ADULT_CONSENT',
 		consentToBeContacted: true,
 		inviteSentDate: new Date('2023-10-03'),
