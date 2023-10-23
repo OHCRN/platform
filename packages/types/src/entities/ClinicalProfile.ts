@@ -24,18 +24,18 @@ import { BirthSex } from './BirthSex.js';
 import { Gender } from './Gender.js';
 import { GeneticsClinic } from './GeneticsClinic.js';
 import { HistoryOfCancer } from './HistoryOfCancer.js';
+import { NanoId } from './NanoId.js';
 
 export const ClinicalProfile = z
 	.object({
-		clinicalProfilePrivateKey: z.string().trim(),
 		ancestry: Ancestry,
 		birthSex: BirthSex,
+		clinicalProfilePrivateKey: z.string().trim(),
 		familyHistoryOfCancer: HistoryOfCancer,
-		gender: Gender.optional(),
+		gender: Gender,
 		geneticsClinicVisited: GeneticsClinic,
 		historyOfCancer: HistoryOfCancer,
-		// TODO: change from .cuid() to nanoid regex once nanoid is implemented
-		participantId: z.string().cuid(),
+		participantId: NanoId,
 		selfIdentifiedGender: z.string().trim().optional(),
 	})
 	.refine((input) => {
