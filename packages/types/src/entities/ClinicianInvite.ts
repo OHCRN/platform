@@ -20,50 +20,26 @@
 import { z } from 'zod';
 
 import { ConsentGroup } from './ConsentGroup.js';
-import { Province } from './Province.js';
-import { PhoneNumber } from './PhoneNumber.js';
-import { PostalCode } from './PostalCode.js';
 import { Name } from './Name.js';
-import { OhipNumber } from './OhipNumber.js';
+import { PhoneNumber } from './PhoneNumber.js';
 import { NanoId } from './NanoId.js';
+import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 
-export const hasRequiredGuardianInformation = (
-	consentGroup: ConsentGroup,
-	guardianName?: Name,
-	guardianPhoneNumber?: PhoneNumber,
-	guardianEmailAddress?: string,
-	guardianRelationship?: Name,
-) => {
-	// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
-	// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
-	const requiresGuardianInformation =
-		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
-		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
-	return requiresGuardianInformation
-		? guardianName !== undefined &&
-				guardianPhoneNumber !== undefined &&
-				guardianEmailAddress !== undefined &&
-				guardianRelationship !== undefined
-		: true;
-};
-
-export const ParticipantIdentification = z
+export const ClinicianInvite = z
 	.object({
 		id: NanoId,
-		inviteId: NanoId.optional(),
-		ohipNumber: OhipNumber,
-		participantPreferredName: Name,
-		participantOhipFirstName: Name,
-		participantOhipLastName: Name,
-		participantOhipMiddleName: Name.optional(),
-		dateOfBirth: z.date(),
-		phoneNumber: PhoneNumber,
-		mailingAddressStreet: z.string().optional(),
-		mailingAddressCity: z.string().optional(),
-		mailingAddressProvince: Province.optional(),
-		mailingAddressPostalCode: PostalCode.optional(),
-		residentialPostalCode: PostalCode,
-		emailAddress: z.string().email(),
+		inviteSentDate: z.date(),
+		inviteAcceptedDate: z.date().optional(),
+		inviteAccepted: z.boolean().default(false),
+		clinicianFirstName: Name,
+		clinicianLastName: Name,
+		clinicianInstitutionalEmailAddress: z.string().email(),
+		clinicianTitleOrRole: z.string(),
+		participantFirstName: Name,
+		participantLastName: Name,
+		participantEmailAddress: z.string().email(),
+		participantPhoneNumber: PhoneNumber,
+		participantPreferredName: Name.optional(),
 		consentGroup: ConsentGroup,
 		guardianName: Name.optional(),
 		guardianPhoneNumber: PhoneNumber.optional(),
@@ -87,4 +63,4 @@ export const ParticipantIdentification = z
 		);
 	});
 
-export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
+export type ClinicianInvite = z.infer<typeof ClinicianInvite>;

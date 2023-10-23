@@ -17,6 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+export * from './ClinicianInvite.js';
 export * from './ConsentCategory.js';
 export * from './ConsentGroup.js';
 export * from './ConsentQuestion.js';

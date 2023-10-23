@@ -18,7 +18,6 @@
  */
 
 import { Router } from 'express';
-import { ConsentGroup } from 'types/entities';
 
 import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
@@ -123,7 +122,7 @@ router.get('/:inviteId', async (req, res) => {
  *               clinicianLastName:
  *                 type: string
  *                 required: true
- *               clinicianTitle:
+ *               clinicianTitleOrRole:
  *                 type: string
  *                 required: true
  *               consentGroup:
@@ -141,6 +140,7 @@ router.get('/:inviteId', async (req, res) => {
  *               inviteSentDate:
  *                 type: string
  *                 format: date
+ *                 required: true
  *               inviteAcceptedDate:
  *                 type: string
  *                 format: date
@@ -158,7 +158,7 @@ router.post('/', async (req, res) => {
 		clinicianFirstName,
 		clinicianInstitutionalEmailAddress,
 		clinicianLastName,
-		clinicianTitle,
+		clinicianTitleOrRole,
 		consentGroup,
 		consentToBeContacted,
 		inviteSentDate,
@@ -167,15 +167,14 @@ router.post('/', async (req, res) => {
 	} = req.body;
 	// TODO: add validation
 	try {
-		const parsedInviteSentDate = inviteSentDate ? new Date(inviteSentDate) : undefined;
+		const parsedInviteSentDate = new Date(inviteSentDate);
 		const parsedInviteAcceptedDate = inviteAcceptedDate ? new Date(inviteAcceptedDate) : undefined;
-		const parsedConsentGroup = ConsentGroup.parse(consentGroup);
 		const clinicianInvite = await createClinicianInvite({
 			clinicianFirstName,
 			clinicianInstitutionalEmailAddress,
 			clinicianLastName,
-			clinicianTitle,
-			consentGroup: parsedConsentGroup,
+			clinicianTitleOrRole,
+			consentGroup,
 			consentToBeContacted,
 			inviteSentDate: parsedInviteSentDate,
 			inviteAcceptedDate: parsedInviteAcceptedDate,
