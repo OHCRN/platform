@@ -24,7 +24,6 @@ import { BirthSex } from './BirthSex.js';
 import { Gender } from './Gender.js';
 import { GeneticsClinic } from './GeneticsClinic.js';
 import { HistoryOfCancer } from './HistoryOfCancer.js';
-import { NanoId } from './NanoId.js';
 
 export const ClinicalProfile = z
 	.object({
@@ -35,7 +34,7 @@ export const ClinicalProfile = z
 		gender: Gender,
 		geneticsClinicVisited: GeneticsClinic,
 		historyOfCancer: HistoryOfCancer,
-		participantId: NanoId,
+		participantId: z.string().trim(),
 		selfIdentifiedGender: z.string().trim().optional(),
 	})
 	.refine((input) => {
