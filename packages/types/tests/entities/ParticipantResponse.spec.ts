@@ -45,7 +45,7 @@ describe('ParticipantResponse', () => {
 			ParticipantResponse.safeParse({
 				id: 'qjVNbQwUdWmddU8AyLoJn',
 				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7r_bpcUTF',
+				participantId: '5yW4tMaJMVef7rbpcUTF',
 				response: undefined,
 			}).success,
 		).false;
