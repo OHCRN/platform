@@ -63,7 +63,7 @@ const options = swaggerJsdoc({
 			],
 		},
 	},
-	apis: ['./src/routers/*'],
+	apis: ['./src/routers/*.ts', './src/routers/swagger-schemas/*.yaml'],
 });
 
 const router = Router();
