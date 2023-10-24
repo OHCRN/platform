@@ -23,17 +23,18 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { ValidLanguage } from 'src/i18n';
-import routesByLocale from 'src/i18n/routes/routesByLocale.json';
 
 import { getLinkNameByPath } from '../Link/utils';
+import { RouteName } from '../Link/types';
 
 import styles from './Header.module.scss';
 
-const ROUTES_WITHOUT_DESKTOP_HEADER = [routesByLocale.en.invite, routesByLocale.en.register];
+const ROUTES_WITHOUT_DESKTOP_HEADER: RouteName[] = ['invite', 'register'];
 
 const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
+	// checks english and french paths by using route names
 	const linkName = getLinkNameByPath(pathname, currentLang);
-	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(`/${linkName}`);
+	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(linkName);
 };
 
 const HeaderWrapper = ({
