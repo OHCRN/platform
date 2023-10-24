@@ -40,9 +40,8 @@ const dictionary = {
 	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners (Mississauga)',
 	WINDSOR_REGIONAL_HOSPITAL_WINDSOR: 'Windsor Regional Hospital (Windsor)',
 	WOMENS_COLLEGE_HOSPITAL_TORONTO: "Women's College Hospital (Toronto)",
-} as const;
+} satisfies Record<string, string>;
 
-export type GeneticsClinicDictionaryKey = keyof typeof dictionary;
-export type GeneticsClinicDictionary = { [k in GeneticsClinicDictionaryKey]: string };
+export type GeneticsClinicDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

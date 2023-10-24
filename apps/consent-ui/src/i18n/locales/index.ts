@@ -17,8 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterDictionary } from 'src/i18n/locales/en/register';
+import en from './en';
+import fr from './fr';
 
-const dictionary = {} satisfies RegisterDictionary;
+const locales = {
+	en,
+	fr,
+};
 
-export default dictionary;
+export default locales;

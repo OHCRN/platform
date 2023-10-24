@@ -27,9 +27,8 @@ const dictionary = {
 	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
 		'Guardian Consent of a Minor (including Assent)',
 	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Young Adult Consent (<18)',
-} as const;
+} satisfies Record<string, string>;
 
-export type InviteDictionaryKey = keyof typeof dictionary;
-export type InviteDictionary = { [k in InviteDictionaryKey]: string };
+export type InviteDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

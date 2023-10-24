@@ -274,9 +274,8 @@ const dictionary = {
 	YUGOSLAVIAN_NOS: 'Yugoslavian, n.o.s.',
 	ZAMBIAN: 'Zambian',
 	ZIMBABWEAN: 'Zimbabwean',
-} as const;
+} satisfies Record<string, string>;
 
-export type AncestryDictionaryKey = keyof typeof dictionary;
-export type AncestryDictionary = { [k in AncestryDictionaryKey]: string };
+export type AncestryDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

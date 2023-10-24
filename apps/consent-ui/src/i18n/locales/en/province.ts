@@ -33,9 +33,8 @@ const dictionary = {
 	[Province.enum.QUEBEC]: 'Quebec',
 	[Province.enum.SASKATCHEWAN]: 'Saskatchewan',
 	[Province.enum.YUKON]: 'Yukon',
-} as const;
+} satisfies Record<string, string>;
 
-export type ProvinceDictionaryKey = keyof typeof dictionary;
-export type ProvinceDictionary = { [k in ProvinceDictionaryKey]: string };
+export type ProvinceDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

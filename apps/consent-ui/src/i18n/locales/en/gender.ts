@@ -29,9 +29,8 @@ const dictionary = {
 	TRANSGENDER_WOMAN_TRANSWOMAN: 'Transgender woman / Transwoman',
 	TWO_SPIRIT: 'Two-Spirit',
 	WOMAN: 'Woman',
-} as const;
+} satisfies Record<string, string>;
 
-export type GenderDictionaryKey = keyof typeof dictionary;
-export type GenderDictionary = { [k in GenderDictionaryKey]: string };
+export type GenderDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

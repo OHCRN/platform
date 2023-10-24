@@ -17,13 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { BirthSexDictionary } from '../en/birth-sex.js';
+import { BirthSexDictionary } from 'src/i18n/locales/en/birth-sex';
 
-const dictionary: BirthSexDictionary = {
+const dictionary = {
 	FEMALE: 'Female',
 	INTERSEX: 'Intersex',
 	MALE: 'Male',
 	PREFER_NOT_TO_ANSWER: 'Prefer not to answer',
-};
+} satisfies BirthSexDictionary;
 
 export default dictionary;

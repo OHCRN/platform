@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GeneticsClinicDictionary } from '../en/genetics-clinic.js';
+import { GeneticsClinicDictionary } from 'src/i18n/locales/en/genetics-clinic';
 
-const dictionary: GeneticsClinicDictionary = {
+const dictionary = {
 	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: 'Children’s Hospital of Eastern Ontario (Ottawa)',
 	GRAND_RIVER_HOSPITAL_KITCHENER: 'Grand River Hospital (Kitchener)',
 	HAMILTON_HEALTH_SCIENCES_HAMILTON: 'Hamilton Health Sciences (Hamilton)',
@@ -42,6 +42,6 @@ const dictionary: GeneticsClinicDictionary = {
 	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners (Mississauga)',
 	WINDSOR_REGIONAL_HOSPITAL_WINDSOR: 'Windsor Regional Hospital (Windsor)',
 	WOMENS_COLLEGE_HOSPITAL_TORONTO: 'Women’s College Hospital (Toronto)',
-};
+} satisfies GeneticsClinicDictionary;
 
 export default dictionary;

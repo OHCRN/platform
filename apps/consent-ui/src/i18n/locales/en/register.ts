@@ -17,9 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} as const;
+const dictionary = {} satisfies Record<string, string>;
 
-export type RegisterDictionaryKey = keyof typeof dictionary;
-export type RegisterDictionary = { [k in RegisterDictionaryKey]: string };
+export type RegisterDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

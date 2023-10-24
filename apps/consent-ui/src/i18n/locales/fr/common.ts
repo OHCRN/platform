@@ -19,9 +19,9 @@
 
 import { ConsentCategory } from 'types/entities';
 
-import { CommonDictionary } from '../en/common.js';
+import { CommonDictionary } from 'src/i18n/locales/en/common';
 
-const dictionary: CommonDictionary = {
+const dictionary = {
 	home: "Page d'accueil",
 	register: 'Inscription du participant',
 	dashboard: 'Tableau de bord',
@@ -37,6 +37,6 @@ const dictionary: CommonDictionary = {
 	YES: 'Oui',
 	NO: 'Non',
 	UNKNOWN: 'Inconnu',
-};
+} satisfies CommonDictionary;
 
 export default dictionary;

@@ -22,9 +22,8 @@ const dictionary = {
 	fr: 'Français',
 	'logo-alt-text': 'OICR-OHCRN Logo',
 	help: 'Help',
-} as const;
+} satisfies Record<string, string>;
 
-export type HeaderDictionaryKey = keyof typeof dictionary;
-export type HeaderDictionary = { [k in HeaderDictionaryKey]: string };
+export type HeaderDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

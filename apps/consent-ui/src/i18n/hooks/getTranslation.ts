@@ -17,46 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GetDictionary, GetTranslation } from 'src/i18n/types';
-import { defaultLanguage, defaultNamespace } from 'src/i18n/settings';
+import { GLOBAL_REGEX_FLAG } from 'types/entities';
 
-// these will only reload on page refresh (server only) or lang change
-const dictionaries: GetDictionary = {
-	en: (namespace) =>
-		import(`../locales/en/${namespace}.ts`).then((module) => {
-			return module.default;
-		}),
-	fr: (namespace) =>
-		import(`../locales/fr/${namespace}.ts`).then((module) => {
-			return module.default;
-		}),
+import { GetTranslation } from 'src/i18n/types';
+import dictionaries from 'src/i18n/locales';
+
+const replaceParams = (
+	original: string,
+	replacements?: Record<string, string | number>,
+): string => {
+	return Object.entries(replacements || {}).reduce((acc, [key, value]) => {
+		const tagRegex = new RegExp(`{{[\\s]*${key}[\\s]*}}`, GLOBAL_REGEX_FLAG);
+		return acc.replace(tagRegex, String(value));
+	}, original);
 };
 
-export const getTranslation: GetTranslation = async (
-	language = defaultLanguage,
-	namespace = defaultNamespace,
-) => {
-	const dictionary = await dictionaries[language](namespace);
-	return (key: string, params?: { [key: string]: string | number }) => {
-		let translation = dictionary[key];
-		// TODO: use this for nested keys, not sure if we will use this approach? namespaces may be sufficient
-		// .split('.')
-		// .reduce((obj, key) => obj && obj[key], dictionary);
-
-		// Use Object.hasOwn() to check instead of !translation to prevent false negatives for empty strings
-		if (!Object.hasOwn(dictionary, key)) {
-			// TODO: add error handling/default values for missing translations
-			console.error(
-				`Could not find "${language}" translation for key "${key}" in namespace "${namespace}"`,
-			);
-			return key;
-		}
-		// for interpolation
-		if (params && Object.entries(params).length) {
-			Object.entries(params).forEach(([key, value]) => {
-				translation = translation!.replace(`{{ ${key} }}`, String(value));
-			});
-		}
-		return translation;
+export const getTranslation: GetTranslation = async (language) => {
+	const dictionary = dictionaries[language];
+	return (namespace, key, params) => {
+		// TODO: consider throwing error if translation not a string/undefined.
+		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
+		const translation = `${dictionary[namespace][key] || ''}`;
+		return replaceParams(translation, params);
 	};
 };

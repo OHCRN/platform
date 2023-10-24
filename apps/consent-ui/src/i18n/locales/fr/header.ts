@@ -17,13 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { HeaderDictionary } from '../en/header.js';
+import { HeaderDictionary } from 'src/i18n/locales/en/header';
 
-const dictionary: HeaderDictionary = {
+const dictionary = {
 	en: 'English',
 	fr: 'Français',
 	'logo-alt-text': 'Logo OICR-OHCRN',
 	help: 'Assistance',
-};
+} satisfies HeaderDictionary;
 
 export default dictionary;

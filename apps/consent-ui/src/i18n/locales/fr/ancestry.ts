@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AncestryDictionary } from '../en/ancestry.js';
+import { AncestryDictionary } from 'src/i18n/locales/en/ancestry';
 
-const dictionary: AncestryDictionary = {
+const dictionary = {
 	ABORIGINAL_FROM_CENTRAL_SOUTH_AMERICA_EXCEPT_ARAWAK_AND_MAYA:
 		'Aboriginal from Central/South America (except Arawak and Maya)',
 	ACADIAN: 'Acadian',
@@ -276,6 +276,6 @@ const dictionary: AncestryDictionary = {
 	YUGOSLAVIAN_NOS: 'Yugoslavian, n.o.s.',
 	ZAMBIAN: 'Zambian',
 	ZIMBABWEAN: 'Zimbabwean',
-};
+} satisfies AncestryDictionary;
 
 export default dictionary;

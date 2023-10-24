@@ -34,9 +34,8 @@ const dictionary = {
 	YES: 'Yes',
 	NO: 'No',
 	UNKNOWN: 'Unknown',
-} as const;
+} satisfies Record<string, string>;
 
-export type CommonDictionaryKey = keyof typeof dictionary;
-export type CommonDictionary = { [k in CommonDictionaryKey]: string };
+export type CommonDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

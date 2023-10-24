@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FooterDictionary } from '../en/footer.js';
+import { FooterDictionary } from 'src/i18n/locales/en/footer';
 
-const dictionary: FooterDictionary = {
+const dictionary = {
 	'oicr-logo-alt': 'Link to OICR Home',
 	'instagram-logo-alt': 'Link to Instagram',
 	'twitter-logo-alt': 'Link to Twitter',
@@ -35,6 +35,6 @@ const dictionary: FooterDictionary = {
 	'ohcrn-registry': 'Registre OHCRN {{ registryVersion }}',
 	'powered-by': 'Propulsé par',
 	api: 'API {{ apiVersion }}',
-};
+} satisfies FooterDictionary;
 
 export default dictionary;

@@ -22,9 +22,8 @@ const dictionary = {
 	INTERSEX: 'Intersex',
 	MALE: 'Male',
 	PREFER_NOT_TO_ANSWER: 'Prefer not to answer',
-} as const;
+} satisfies Record<string, string>;
 
-export type BirthSexDictionaryKey = keyof typeof dictionary;
-export type BirthSexDictionary = { [k in BirthSexDictionaryKey]: string };
+export type BirthSexDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

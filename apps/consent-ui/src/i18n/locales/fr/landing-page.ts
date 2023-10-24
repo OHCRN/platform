@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { LandingPageDictionary } from '../en/landing-page.js';
+import { LandingPageDictionary } from 'src/i18n/locales/en/landing-page';
 
-const dictionary: LandingPageDictionary = {
+const dictionary = {
 	title: "Bienvenue dans le registre de l'OHCRN",
 	'hero-background-img-alt': '',
 	'ohcrn-description':
@@ -36,6 +36,6 @@ const dictionary: LandingPageDictionary = {
 	'long-clinicians-register-today':
 		'Êtes-vous un clinicien qui s’occupe d’un patient porteur d’un syndrome de cancer héréditaire ?',
 	'register-patient-today': "Enregistrez votre patient aujourd'hui",
-};
+} satisfies LandingPageDictionary;
 
 export default dictionary;

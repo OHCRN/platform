@@ -19,9 +19,9 @@
 
 import { ConsentGroup } from 'types/entities';
 
-import { InviteDictionary } from '../en/invite.js';
+import { InviteDictionary } from 'src/i18n/locales/en/invite';
 
-const dictionary: InviteDictionary = {
+const dictionary = {
 	[ConsentGroup.enum.ADULT_CONSENT]: "Consentement d'un adulte (>18)",
 	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
 		"Consentement d'un adulte faisant appel à un décideur suppléant supplémentaire (>18)",
@@ -29,6 +29,6 @@ const dictionary: InviteDictionary = {
 	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
 		"Consentement du tuteur d'un mineur (y compris le consentement)",
 	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Consentement des jeunes adultes (<18 ans)',
-};
+} satisfies InviteDictionary;
 
 export default dictionary;

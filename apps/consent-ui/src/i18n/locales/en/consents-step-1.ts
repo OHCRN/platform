@@ -17,9 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} as const;
+const dictionary = {} satisfies Record<string, string>;
 
-export type ConsentsStep1DictionaryKey = keyof typeof dictionary;
-export type ConsentsStep1Dictionary = { [k in ConsentsStep1DictionaryKey]: string };
+export type ConsentsStep1Dictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

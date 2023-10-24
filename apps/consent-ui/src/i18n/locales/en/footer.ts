@@ -33,9 +33,8 @@ const dictionary = {
 	'ohcrn-registry': 'OHCRN Registry {{ registryVersion }}',
 	'powered-by': 'Powered by',
 	api: 'API {{ apiVersion }}',
-} as const;
+} satisfies Record<string, string>;
 
-export type FooterDictionaryKey = keyof typeof dictionary;
-export type FooterDictionary = { [k in FooterDictionaryKey]: string };
+export type FooterDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

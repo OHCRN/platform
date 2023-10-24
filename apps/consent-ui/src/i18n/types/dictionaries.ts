@@ -17,37 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import dictionaries from '../locales/index.js';
+
 import { ValidLanguage } from './languages';
 
-export const namespaces = [
-	'ancestry',
-	'birth-sex',
-	'common',
-	'consents-step-1',
-	'consents-step-2',
-	'consents-step-3',
-	'consents-step-4',
-	'consents-step-5',
-	'dashboard',
-	'footer',
-	'gender',
-	'genetics-clinic',
-	'header',
-	'invite',
-	'landing-page',
-	'province',
-	'register',
-] as const;
-
-export type ValidNamespace = (typeof namespaces)[number];
-
-export type Translation = (k: string, params?: { [key: string]: string | number }) => string;
-
-export type GetDictionary = {
-	[k in ValidLanguage]: (namespace: ValidNamespace) => Promise<{ [k: string]: string }>;
-};
+export type Dictionaries = typeof dictionaries;
+export type Namespace = keyof Dictionaries[ValidLanguage];
 
 export type GetTranslation = (
-	language?: ValidLanguage,
-	namespace?: ValidNamespace,
-) => Promise<Translation>;
+	language: ValidLanguage,
+) => Promise<
+	<SelectedNamespace extends Namespace>(
+		namespace: SelectedNamespace,
+		label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
+		params?: { [key: string]: string | number },
+	) => string
+>;
+
+export type TranslationFunction = Awaited<ReturnType<GetTranslation>>;

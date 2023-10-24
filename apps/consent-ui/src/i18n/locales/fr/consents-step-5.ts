@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentsStep5Dictionary } from '../en/consents-step-5.js';
+import { ConsentsStep5Dictionary } from 'src/i18n/locales/en/consents-step-5';
 
-const dictionary: ConsentsStep5Dictionary = {};
+const dictionary = {} satisfies ConsentsStep5Dictionary;
 
 export default dictionary;

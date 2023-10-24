@@ -34,9 +34,8 @@ const dictionary = {
 	'long-clinicians-register-today':
 		'Are you a clinician caring for a patient who is a carrier for a hereditary cancer syndrome?',
 	'register-patient-today': 'Register your patient today',
-} as const;
+} satisfies Record<string, string>;
 
-export type LandingPageDictionaryKey = keyof typeof dictionary;
-export type LandingPageDictionary = { [k in LandingPageDictionaryKey]: string };
+export type LandingPageDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

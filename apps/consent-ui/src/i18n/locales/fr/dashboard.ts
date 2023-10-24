@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { DashboardDictionary } from '../en/dashboard.js';
+import { DashboardDictionary } from 'src/i18n/locales/en/dashboard';
 
-const dictionary: DashboardDictionary = {};
+const dictionary = {} satisfies DashboardDictionary;
 
 export default dictionary;

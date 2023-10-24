@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GenderDictionary } from '../en/gender.js';
+import { GenderDictionary } from 'src/i18n/locales/en/gender';
 
-const dictionary: GenderDictionary = {
+const dictionary = {
 	GENDER_FLUID: 'Gender Fluid',
 	GENDER_QUEER: 'Gender queer',
 	MAN: 'Man',
@@ -31,6 +31,6 @@ const dictionary: GenderDictionary = {
 	TRANSGENDER_WOMAN_TRANSWOMAN: 'Transgender woman / Transwoman',
 	TWO_SPIRIT: 'Two-Spirit',
 	WOMAN: 'Woman',
-};
+} satisfies GenderDictionary;
 
 export default dictionary;

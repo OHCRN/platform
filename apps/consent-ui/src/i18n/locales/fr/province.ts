@@ -19,9 +19,9 @@
 
 import { Province } from 'types/entities';
 
-import { ProvinceDictionary } from '../en/province.js';
+import { ProvinceDictionary } from 'src/i18n/locales/en/province';
 
-const dictionary: ProvinceDictionary = {
+const dictionary = {
 	[Province.enum.ALBERTA]: 'Alberta',
 	[Province.enum.BRITISH_COLUMBIA]: 'British Columbia',
 	[Province.enum.MANITOBA]: 'Manitoba',
@@ -35,6 +35,6 @@ const dictionary: ProvinceDictionary = {
 	[Province.enum.QUEBEC]: 'Quebec',
 	[Province.enum.SASKATCHEWAN]: 'Saskatchewan',
 	[Province.enum.YUKON]: 'Yukon',
-};
+} satisfies ProvinceDictionary;
 
 export default dictionary;
