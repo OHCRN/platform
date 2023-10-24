@@ -24,7 +24,7 @@ import DoctorIcon from 'src/components/Icons/Doctor';
 import RightArrow from 'src/components/Icons/Arrow';
 import Chevron from 'src/components/Icons/Chevron';
 import Card from 'src/components/Card';
-import CardLink from 'src/components/CardLink';
+import CardLink from 'src/components/Card/CardLink';
 
 import styles from './LandingPageCard.module.scss';
 
