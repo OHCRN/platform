@@ -33,6 +33,22 @@ const router = Router();
  */
 
 // TODO: add proper JSDoc comments
+/**
+ * @openapi
+ * /ohip:
+ *   get:
+ *     tags:
+ *       - OHIP
+ *     name: Get All OHIP numbers
+ *     description: Fetch OHIP numbers list
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The list of ohip numbers was successfully retrieved.
+ *       500:
+ *         description: Error retrieving ohip numbers.
+ */
 router.get('/', async (req, res) => {
 	logger.info('GET /ohip');
 	// TODO: add error handling
@@ -41,6 +57,29 @@ router.get('/', async (req, res) => {
 });
 
 // TODO: add proper JSDoc comments
+/**
+ * @openapi
+ * /ohip/{ohipPrivateKey}:
+ *   get:
+ *     tags:
+ *       - OHIP
+ *     name: Get OHIP number by ohipPrivateKey
+ *     description: Fetch one ohip number
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *      - name: ohipPrivateKey
+ *        in: path
+ *        description: OHIP Private Key
+ *        required: true
+ *        schema:
+ *          type: string
+ *     responses:
+ *       200:
+ *         description: The ohip number was successfully retrieved.
+ *       500:
+ *         description: Error retrieving ohip number.
+ */
 router.get('/:ohipPrivateKey', async (req, res) => {
 	logger.info('GET /ohip/:ohipPrivateKey');
 	const { ohipPrivateKey } = req.params;
@@ -55,6 +94,35 @@ router.get('/:ohipPrivateKey', async (req, res) => {
 });
 
 // TODO: add proper JSDoc comments
+/**
+ * @openapi
+ * /ohip:
+ *   post:
+ *     tags:
+ *       - OHIP
+ *     name: Create OHIP number
+ *     description: Create one ohip number
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ohipPrivateKey:
+ *                 type: string
+ *                 required: true
+ *               ohipNumber:
+ *                 type: string
+ *                 required: true
+ *     responses:
+ *       201:
+ *         description: The OHIP number was successfully created.
+ *       500:
+ *         description: Error creating OHIP number
+ */
 router.post('/', async (req, res) => {
 	logger.info('POST /ohip');
 	const { ohipPrivateKey, ohipNumber } = req.body;

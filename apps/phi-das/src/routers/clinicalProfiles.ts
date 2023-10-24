@@ -114,7 +114,7 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               participantId:
+ *               clinicalProfilePrivateKey:
  *                 type: string
  *                 required: true
  *               birthSex:
@@ -140,7 +140,7 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profiles');
 	const {
-		participantId,
+		clinicalProfilePrivateKey,
 		birthSex,
 		gender,
 		selfIdentifiedGender,
@@ -152,7 +152,7 @@ router.post('/', async (req, res) => {
 	// TODO: add validation
 	try {
 		const profile = await createClinicalProfile({
-			participantId,
+			clinicalProfilePrivateKey,
 			birthSex,
 			gender,
 			selfIdentifiedGender,
