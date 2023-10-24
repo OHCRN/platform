@@ -17,22 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
+import { expect } from 'chai';
+
+import { PostalCode } from '../../src/entities/index.js';
+
+describe('PostalCode', () => {
+	it('Must be 6 characters long', () => {
+		expect(PostalCode.safeParse('T4B0V7').success).true;
+		expect(PostalCode.safeParse('T4B0V7A').success).false;
+		expect(PostalCode.safeParse('T4B0V').success).false;
+		expect(PostalCode.safeParse(undefined).success).false;
+		expect(PostalCode.safeParse(null).success).false;
+	});
+	it('Can only contain letters and numbers', () => {
+		expect(PostalCode.safeParse('T4B 0V').success).false;
+		expect(PostalCode.safeParse('T4B-0V').success).false;
+	});
+	it('Can contain lowercase letters', () => {
+		// these are parsed into uppercase, so should not cause an error
+		expect(PostalCode.safeParse('t4b0v7').success).true;
+		expect(PostalCode.safeParse('T4B0v7').success).true;
+	});
+	it('Must contain characters in the correct order', () => {
+		expect(PostalCode.safeParse('T4B07V').success).false;
+		expect(PostalCode.safeParse('4B7O7V').success).false;
+		expect(PostalCode.safeParse('ABC123').success).false;
+	});
+});
