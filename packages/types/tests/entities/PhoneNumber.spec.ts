@@ -17,16 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
+import { expect } from 'chai';
+
+import { PhoneNumber } from '../../src/entities/index.js';
+
+describe('PhoneNumber', () => {
+	it('Must be 10 digits long', () => {
+		expect(PhoneNumber.safeParse('1234567890').success).true;
+		expect(PhoneNumber.safeParse('1').success).false;
+		expect(PhoneNumber.safeParse('12345678901').success).false;
+	});
+	it('Can only contain numbers', () => {
+		expect(PhoneNumber.safeParse('123-456-78').success).false;
+		expect(PhoneNumber.safeParse('+123456789').success).false;
+		expect(PhoneNumber.safeParse('123 456 78').success).false;
+		expect(PhoneNumber.safeParse('+1 (234) 5').success).false;
+		expect(PhoneNumber.safeParse('123456789.').success).false;
+		expect(PhoneNumber.safeParse(undefined).success).false;
+		expect(PhoneNumber.safeParse(null).success).false;
+	});
+});

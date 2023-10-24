@@ -17,16 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
+import { expect } from 'chai';
+
+import { Name } from '../../src/entities/index.js';
+
+describe('Name', () => {
+	it('Can only contain letters and whitespace', () => {
+		expect(Name.safeParse('Homer Simpson').success).true;
+		expect(Name.safeParse('homer simpson').success).true;
+		expect(Name.safeParse('Homer Simpon!').success).false;
+		expect(Name.safeParse("D'oh").success).false;
+		expect(Name.safeParse('Homer_Simpson').success).false;
+		expect(Name.safeParse('-Homer Simpson').success).false;
+		expect(Name.safeParse(undefined).success).false;
+		expect(Name.safeParse(null).success).false;
+	});
+});
