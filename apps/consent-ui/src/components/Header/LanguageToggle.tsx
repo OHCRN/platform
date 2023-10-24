@@ -27,6 +27,8 @@ import { ValidLanguage } from 'src/i18n';
 import LocalizedLink from 'src/components/Link/LocalizedLink';
 import { getLinkNameByPath, getUnselectedLang } from 'src/components/Link/utils';
 
+import headerStyles from './Header.module.scss';
+
 function LanguageToggle({
 	currentLang,
 	children,
@@ -44,7 +46,7 @@ function LanguageToggle({
 			linkLang={langToSelect}
 			role="button"
 			color="blue"
-			className={clsx(styles.base, styles.secondary, styles.blue)}
+			className={clsx(styles.base, styles.secondary, styles.blue, headerStyles.toggle)}
 		>
 			{children}
 		</LocalizedLink>

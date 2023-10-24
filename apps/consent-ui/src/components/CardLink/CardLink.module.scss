@@ -1,0 +1,12 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 100ms;
+  outline: solid 0px theme('colors.grayscale.200');
+
+  &:hover {
+    background-color: theme('colors.grayscale.200');
+    outline-width: 10px;
+  }
+}

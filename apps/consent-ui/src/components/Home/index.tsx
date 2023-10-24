@@ -22,23 +22,19 @@ import Image from 'next/image';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/Button/LinkButton';
 import RightArrow from 'src/components/Icons/Arrow';
-import BackgroundImage from 'src/public/background.png';
+import BackgroundImage from 'src/public/landing-page.png';
 import { OHCRN_HOME_LINK } from 'src/constants';
 
+import LandingPageCard from './LandingPageCard';
 import styles from './Home.module.scss';
-import Card from './Card/Card';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang, 'landing-page');
 	return (
 		<div className={styles.heroContainer}>
-			<Image
-				src={BackgroundImage}
-				alt={translate('hero-background-img-alt')}
-				priority
-				className={styles.backgroundImg}
-			/>
-			<div className={styles.gradientOverlay}></div>
+			<div className={styles.backgroundImg}>
+				<Image src={BackgroundImage} alt={translate('hero-background-img-alt')} priority />
+			</div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
 					<h1>{translate('title')}</h1>
@@ -50,7 +46,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 						<RightArrow />
 					</LinkButton>
 				</div>
-				<Card currentLang={currentLang} />
+				<LandingPageCard currentLang={currentLang} />
 			</div>
 		</div>
 	);
