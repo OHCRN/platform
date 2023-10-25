@@ -32,6 +32,7 @@ const replaceParams = (
 	}, original);
 };
 
+// TODO: is there a way to enforce this function for server side use only?
 export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
 	return (namespace, key, params) => {
