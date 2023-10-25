@@ -67,6 +67,9 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6(jsdom@22.1.0)(sass@1.64.0)
 
   apps/consent-api:
     dependencies:

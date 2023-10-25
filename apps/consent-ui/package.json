@@ -39,6 +39,6 @@
 		"eslint-config-next": "13.4.12",
 		"eslint-config-ohcrn": "workspace:^",
 		"jsdom": "^22.1.0",
-		"vitest": "^0.34.6"
+		"vitest": "workspace:^"
 	}
 }

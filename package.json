@@ -14,7 +14,8 @@
 		"migrate-dev": "pnpm --filter '*-das' run migrate-dev",
 		"generate": "pnpm --filter '*-das' --workspace-concurrency=1 run generate",
 		"seed": "pnpm --filter '*-das' run seed",
-		"start": "pnpm run migrate-dev && pnpm run build && pnpm run dev"
+		"start": "pnpm run migrate-dev && pnpm run build && pnpm run dev",
+		"vitest": "vitest"
 	},
 	"keywords": [],
 	"author": "",
@@ -35,7 +36,8 @@
 		"prettier": "^2.8.8",
 		"sinon": "^15.2.0",
 		"ts-node": "^10.9.1",
-		"typescript": "^5.2.2"
+		"typescript": "^5.2.2",
+		"vitest": "^0.34.6"
 	},
 	"pnpm": {
 		"overrides": {
