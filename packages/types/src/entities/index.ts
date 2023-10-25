@@ -30,3 +30,4 @@ export * from './PostalCode.js';
 export * from './Province.js';
 export * from './Regex.js';
 export * from './User.js';
+export * from './UserRole.js';

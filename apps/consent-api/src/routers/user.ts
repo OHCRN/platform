@@ -18,61 +18,61 @@
  */
 
 import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import { UserSchema as User } from 'types/entities';
+import { User, UserRole } from 'types/entities';
 
-import packageJson from '../../package.json' assert { type: 'json' };
+import logger from '../logger.js';
 
 /**
  * @openapi
- * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         error:
- *           type: string
- *         message:
- *           type: string
- *       required:
- *          - code
- *          - message
+ * tags:
+ *   - name: User
+ *     description: User info
  */
 
-const options = swaggerJsdoc({
-	failOnErrors: true,
-	definition: {
-		openapi: '3.1.0',
-		info: {
-			title: 'OHCRN Consent API',
-			version: packageJson.version,
-			description: '',
-			license: {
-				name: 'APGL',
-				url: 'https://www.gnu.org/licenses/agpl-3.0.en.html',
-			},
-			servers: [
-				{
-					url: '/',
-				},
-			],
-		},
-		components: {
-			schemas: {
-				User,
-			},
-		},
-	},
-	apis: ['./src/routers/*'],
-});
-
 const router = Router();
-router.use('/', serve, setup(options));
+
+/**
+ * @openapi
+ * /user:
+ *   get:
+ *     tags:
+ *       - User
+ *     name: Get User Info
+ *     description: Retrieve user login information
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: session
+ *         in: header
+ *         required: true
+ *         description: User session token
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Server error
+ */
+router.get('/', async (req, res) => {
+	logger.info(`GET /user`);
+	// TODO: implement
+	const user: User = {
+		firstName: 'Homer',
+		lastName: 'Simpson',
+		email: 'homer.simpson@example.com',
+		role: UserRole.enum.USER,
+		emailVerified: true,
+		enabled2FA: false,
+	};
+	res.status(200).send({ user });
+});
 
 export default router;
