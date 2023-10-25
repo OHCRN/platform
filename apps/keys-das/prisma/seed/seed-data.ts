@@ -2,30 +2,30 @@ import { Prisma } from '../../src/generated/client/index.js';
 
 const ohipKeys: Prisma.OhipKeyCreateInput[] = [
 	{
-		participantId: 'cllgostgz000008l3fk0w',
+		participantId: 'buqF3qkmrXcuCZaZfXKmX',
 		ohipPrivateKey: 'Pli04iPLl7UwGHVROUesK',
 	},
 	{
-		participantId: 'cllgoufw3000208l3c6gy',
+		participantId: '5PLJAg6LPDHKCzZUVamcg',
 		ohipPrivateKey: 'Pli04iPLl7UwGHVROUrtd',
 	},
 	{
-		participantId: 'cllgouzph000308l35o99',
+		participantId: '9Cjl0sUDKnyW2TvQdAta6',
 		ohipPrivateKey: 'Pli04iPLl7UwGHVROU2se',
 	},
 ];
 
 const clinicalProfileKeys: Prisma.ClinicalProfileKeyCreateInput[] = [
 	{
-		participantId: 'cllgostgz000008l3fk0w',
+		participantId: 'NylQ1O6cMTFJDAbWHSnjm',
 		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU2se',
 	},
 	{
-		participantId: 'cllgoufw3000208l3c6gy',
+		participantId: 'OiUvq8rNh1BY1H9DOSt7Y',
 		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROUewq',
 	},
 	{
-		participantId: 'cllgouzph000308l35o99',
+		participantId: 'oUrel7bpWvMhMWzmMRboX',
 		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU4ds',
 	},
 ];
