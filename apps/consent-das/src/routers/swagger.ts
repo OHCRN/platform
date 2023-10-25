@@ -20,6 +20,10 @@
 import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import {
+	ConsentCategorySchema as ConsentCategory,
+	ConsentGroupSchema as ConsentGroup,
+} from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 
@@ -61,6 +65,12 @@ const options = swaggerJsdoc({
 					url: '/',
 				},
 			],
+		},
+		components: {
+			schemas: {
+				ConsentCategory,
+				ConsentGroup,
+			},
 		},
 	},
 	apis: ['./src/routers/*'],
