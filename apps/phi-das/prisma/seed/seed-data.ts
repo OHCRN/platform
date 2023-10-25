@@ -28,18 +28,15 @@ import {
 
 const ohipData: Prisma.OhipCreateInput[] = [
 	{
-		id: 'cllgscubn000108mo6goq2gjl',
-		ohipPrivateKey: 'cllgsdpy4000208mo0gk0djuy',
+		ohipPrivateKey: 'Pli04iPLl7UwGHVROUesK',
 		ohipNumber: '1234567890AA',
 	},
 	{
-		id: 'cllgsrff8000008mndd928h8v',
-		ohipPrivateKey: 'cllgsrjrt000108mn0nxvfzc3',
+		ohipPrivateKey: 'Pli04iPLl7UwGHVROUrtd',
 		ohipNumber: '1234567890BB',
 	},
 	{
-		id: 'cllgsrruu000208mnhq6wh7e6',
-		ohipPrivateKey: 'cllgsrw92000308mn09obgujg',
+		ohipPrivateKey: 'Pli04iPLl7UwGHVROU2se',
 		ohipNumber: '1234567890CC',
 	},
 ];
@@ -47,26 +44,34 @@ const ohipData: Prisma.OhipCreateInput[] = [
 const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	{
 		// gender selected, self-identified gender skipped
-		id: 'fFPBqZk0bQEFdKONRClhg',
+		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU2se',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_NOT_TO_ANSWER,
 		geneticsClinicVisited: GeneticsClinic.PRINCESS_MARGARET_HOSPITAL_TORONTO,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
-		participantId: 'GbmJ8ptnfscbgqt3_Wxhd',
 	},
 	{
 		// both gender options provided
-		id: '36cuyHMfjUDe25uOu-A08',
+		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROUewq',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_TO_SELF_IDENTIFY,
 		geneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
-		participantId: 'HMbM2rZlrpCtSpPzK5Uox',
 		selfIdentifiedGender: 'other',
+	},
+	// gender selected, self-identified gender skipped
+	{
+		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU4ds',
+		ancestry: Ancestry.ARMENIAN,
+		birthSex: BirthSex.MALE,
+		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
+		gender: Gender.MAN,
+		geneticsClinicVisited: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
+		historyOfCancer: HistoryOfCancer.NO,
 	},
 ];
 
