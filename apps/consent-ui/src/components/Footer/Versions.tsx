@@ -31,23 +31,25 @@ import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'footer');
+	const translate = getTranslation(currentLang);
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>
 				<span>
-					<b>{translate('powered-by')}: </b>
+					<b>{translate('footer', 'powered-by')}: </b>
 				</span>
 				<Link href="#" className={clsx(styles.icon, styles.overture)}>
-					<Image src={OvertureLogo} alt={translate('overture-alt')} />
+					<Image src={OvertureLogo} alt={translate('footer', 'overture-alt')} />
 				</Link>
 				<Link href="#" className={styles.icon}>
-					<Image src={GithubLogo} alt={translate('github-alt')} />
+					<Image src={GithubLogo} alt={translate('footer', 'github-alt')} />
 				</Link>
 			</div>
 			<div className={styles.copyright}>
-				<span>{translate('copyright', { year: new Date().getFullYear() })} </span>
-				<span>{translate('ohcrn-registry', { registryVersion: packageJson.version })} - </span>
+				<span>{translate('footer', 'copyright', { year: new Date().getFullYear() })} </span>
+				<span>
+					{translate('footer', 'ohcrn-registry', { registryVersion: packageJson.version })} -{' '}
+				</span>
 				<Suspense fallback={<span />}>
 					<APIVersion currentLang={currentLang} />
 				</Suspense>
