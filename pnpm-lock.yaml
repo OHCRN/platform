@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -179,7 +179,7 @@ importers:
         specifier: 18.2.14
         version: 18.2.14
       '@types/react-dom':
-        specifier: ^18.2.6
+        specifier: 18.2.6
         version: 18.2.6
       '@types/react-google-recaptcha':
         specifier: ^2.1.6
