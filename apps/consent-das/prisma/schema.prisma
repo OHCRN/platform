@@ -17,7 +17,7 @@ enum ConsentGroup {
 }
 
 model Participant {
-  id                  String                @id @default(cuid())
+  id                  String                @id @default("") @db.Char(21)
   consentGroup        ConsentGroup?
   emailVerified       Boolean               @default(false)
   isGuardian          Boolean
@@ -42,7 +42,7 @@ model ConsentQuestion {
 }
 
 model ParticipantResponse {
-  id                String          @default(cuid())
+  id                String          @default("") @db.Char(21)
   participant       Participant     @relation(fields: [participantId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   participantId     String
   consentQuestion   ConsentQuestion @relation(fields: [consentQuestionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
@@ -54,7 +54,7 @@ model ParticipantResponse {
 }
 
 model ClinicianInvite {
-  id String @id @default(cuid())
+  id String @id @default("") @db.Char(21)
   clinicianFirstName String
   clinicianInstitutionalEmailAddress String
   clinicianLastName String

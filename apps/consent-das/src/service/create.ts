@@ -12,11 +12,13 @@ export const createParticipant = async ({
 	isGuardian,
 	consentGroup,
 	guardianIdVerified,
+	participantId,
 }: {
 	emailVerified: boolean;
 	isGuardian: boolean;
 	consentGroup?: ConsentGroup;
 	guardianIdVerified?: boolean;
+	participantId?: string;
 }): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.create({
@@ -25,6 +27,7 @@ export const createParticipant = async ({
 			isGuardian,
 			consentGroup,
 			guardianIdVerified,
+			id: participantId,
 		},
 	});
 	return result;
@@ -73,6 +76,7 @@ export const createParticipantResponse = async ({
 export const createClinicianInvite = async ({
 	clinicianFirstName,
 	clinicianInstitutionalEmailAddress,
+	clinicianInviteId,
 	clinicianLastName,
 	clinicianTitleOrRole,
 	consentGroup,
@@ -83,6 +87,7 @@ export const createClinicianInvite = async ({
 }: {
 	clinicianFirstName: string;
 	clinicianInstitutionalEmailAddress: string;
+	clinicianInviteId?: string;
 	clinicianLastName: string;
 	clinicianTitleOrRole: string;
 	consentGroup: ConsentGroup;
@@ -100,6 +105,7 @@ export const createClinicianInvite = async ({
 			clinicianTitleOrRole,
 			consentGroup,
 			consentToBeContacted,
+			id: clinicianInviteId,
 			inviteSentDate,
 			inviteAcceptedDate,
 			inviteAccepted,

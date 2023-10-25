@@ -9,8 +9,7 @@ generator client {
 }
 
 model Ohip {
-  id             String @id @default(cuid())
-  ohipPrivateKey String @unique
+  ohipPrivateKey String @id @db.Char(21)
   ohipNumber     String @unique
 }
 
@@ -322,13 +321,12 @@ enum GeneticsClinic {
 }
 
 model ClinicalProfile {
-  id                    String          @id @default(cuid())
+  clinicalProfilePrivateKey String @id @db.Char(21)
   ancestry              Ancestry
   birthSex              BirthSex
   familyHistoryOfCancer HistoryOfCancer
   gender                Gender
   geneticsClinicVisited GeneticsClinic
   historyOfCancer       HistoryOfCancer
-  participantId         String
   selfIdentifiedGender  String?
 }
