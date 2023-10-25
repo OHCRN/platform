@@ -37,7 +37,9 @@ const prisma = new PrismaClient().$extends({
 					return query(args);
 				} catch (e) {
 					// TODO: specify error when custom Error types are implemented
-					throw new Error('Invalid ohip private key provided');
+					const message = 'Invalid ohip private key provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
 				}
 			},
 		},
@@ -52,7 +54,9 @@ const prisma = new PrismaClient().$extends({
 					return query(args);
 				} catch (e) {
 					// TODO: specify error when custom Error types are implemented
-					throw new Error('Invalid clinical profile private key provided');
+					const message = 'Invalid clinical profile private key provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
 				}
 			},
 		},

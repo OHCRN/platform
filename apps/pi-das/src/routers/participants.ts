@@ -24,7 +24,7 @@ import { createParticipant } from '../service/create.js';
 import { updateParticipant } from '../service/update.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -34,7 +34,6 @@ import logger from '../logger.js';
 
 const router = Router();
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participants:
@@ -61,7 +60,6 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participants/{participantId}:

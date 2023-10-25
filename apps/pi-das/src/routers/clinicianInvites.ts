@@ -23,7 +23,7 @@ import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -33,7 +33,6 @@ import logger from '../logger.js';
 
 const router = Router();
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /clinician-invites:
@@ -60,7 +59,6 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /clinician-invites/{inviteId}:

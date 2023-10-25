@@ -25,6 +25,7 @@ import logger from '../logger.js';
 
 const router = Router();
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:

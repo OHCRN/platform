@@ -42,7 +42,9 @@ const prisma = new PrismaClient().$extends({
 					return query(args);
 				} catch (e) {
 					// TODO: specify error when custom Error types are implemented
-					throw new Error('Invalid key provided');
+					const message = 'Invalid key provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
 				}
 			},
 		},
@@ -59,7 +61,9 @@ const prisma = new PrismaClient().$extends({
 					return query(args);
 				} catch (e) {
 					// TODO: specify error when custom Error types are implemented
-					throw new Error('Invalid key provided');
+					const message = 'Invalid key provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
 				}
 			},
 		},

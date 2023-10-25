@@ -23,6 +23,7 @@ import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
 import logger from '../logger.js';
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:

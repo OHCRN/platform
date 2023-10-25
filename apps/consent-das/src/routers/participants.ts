@@ -23,6 +23,7 @@ import { getParticipant, getParticipants } from '../service/search.js';
 import { createParticipant } from '../service/create.js';
 import logger from '../logger.js';
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:

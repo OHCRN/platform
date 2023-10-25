@@ -41,7 +41,9 @@ const prisma = new PrismaClient().$extends({
 					return query(args);
 				} catch (e) {
 					// TODO: specify error when custom Error types are implemented
-					throw new Error('Invalid participant id provided');
+					const message = 'Invalid participant id provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
 				}
 			},
 		},
@@ -56,7 +58,9 @@ const prisma = new PrismaClient().$extends({
 					return query(args);
 				} catch (e) {
 					// TODO: specify error when custom Error types are implemented
-					throw new Error('Invalid clinical invite id provided');
+					const message = 'Invalid clinical invite id provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
 				}
 			},
 		},

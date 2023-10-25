@@ -25,6 +25,7 @@ import logger from '../logger.js';
 
 const router = Router();
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -32,7 +33,6 @@ const router = Router();
  *     description: OHIP data management
  */
 
-// TODO: add proper JSDoc comments
 /**
  * @openapi
  * /ohip:
@@ -56,7 +56,6 @@ router.get('/', async (req, res) => {
 	res.send({ ohipData: [ohipData] });
 });
 
-// TODO: add proper JSDoc comments
 /**
  * @openapi
  * /ohip/{ohipPrivateKey}:
@@ -93,7 +92,6 @@ router.get('/:ohipPrivateKey', async (req, res) => {
 	}
 });
 
-// TODO: add proper JSDoc comments
 /**
  * @openapi
  * /ohip:
