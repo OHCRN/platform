@@ -18,6 +18,7 @@ export const createParticipant = async ({
 	mailingAddressProvince,
 	mailingAddressPostalCode,
 	residentialPostalCode,
+	participantId,
 }: {
 	inviteId?: string;
 	dateOfBirth: Date;
@@ -36,6 +37,7 @@ export const createParticipant = async ({
 	mailingAddressProvince?: Province;
 	mailingAddressPostalCode?: string;
 	residentialPostalCode: string;
+	participantId?: string;
 }): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.create({
@@ -57,6 +59,7 @@ export const createParticipant = async ({
 			mailingAddressProvince,
 			mailingAddressPostalCode,
 			residentialPostalCode,
+			id: participantId,
 		},
 	});
 	return result;
@@ -72,6 +75,7 @@ export const createClinicianInvite = async ({
 	guardianPhoneNumber,
 	guardianEmailAddress,
 	guardianRelationship,
+	clinicianInviteId,
 }: {
 	participantFirstName: string;
 	participantLastName: string;
@@ -82,6 +86,7 @@ export const createClinicianInvite = async ({
 	guardianPhoneNumber?: string;
 	guardianEmailAddress?: string;
 	guardianRelationship?: string;
+	clinicianInviteId?: string;
 }): Promise<ClinicianInvite> => {
 	const result = await prisma.clinicianInvite.create({
 		data: {
@@ -94,6 +99,7 @@ export const createClinicianInvite = async ({
 			guardianPhoneNumber,
 			guardianEmailAddress,
 			guardianRelationship,
+			id: clinicianInviteId,
 		},
 	});
 	return result;

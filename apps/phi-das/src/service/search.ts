@@ -41,7 +41,7 @@ export const getClinicalProfile = async (
 	// TODO: add error handling
 	const result = await prisma.clinicalProfile.findUniqueOrThrow({
 		where: {
-			id: clinicalProfilePrivateKey,
+			clinicalProfilePrivateKey,
 		},
 	});
 	return result;

@@ -2,17 +2,17 @@ import { Prisma, ConsentCategory } from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
-		id: 'clmarsvhd000008jngksv45v6',
+		id: 'cllgostgz000008l3fk0w',
 		emailVerified: false,
 		isGuardian: false,
 	},
 	{
-		id: 'clmart1bi000108jn9vkwdumh',
+		id: 'cllgoufw3000208l3c6gy',
 		emailVerified: false,
 		isGuardian: false,
 	},
 	{
-		id: 'clmart6nv000208jn9kf18da0',
+		id: 'cllgouzph000308l35o99',
 		emailVerified: false,
 		isGuardian: false,
 	},
@@ -63,6 +63,7 @@ const consentQuestions: Prisma.ConsentQuestionCreateInput[] = [
 
 const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
+		id: 'clmarsvhd000008jngksv',
 		clinicianFirstName: 'Steven',
 		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
 		clinicianLastName: 'Strange',

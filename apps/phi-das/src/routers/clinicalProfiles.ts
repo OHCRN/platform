@@ -23,7 +23,7 @@ import { getClinicalProfile, getClinicalProfiles } from '../service/search.js';
 import { createClinicalProfile } from '../service/create.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -33,7 +33,6 @@ import logger from '../logger.js';
 
 const router = Router();
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /clinical-profiles:
@@ -60,7 +59,6 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /clinical-profiles/{clinicalProfilePrivateKey}:
@@ -114,7 +112,7 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               participantId:
+ *               clinicalProfilePrivateKey:
  *                 type: string
  *                 required: true
  *               birthSex:
@@ -140,7 +138,7 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profiles');
 	const {
-		participantId,
+		clinicalProfilePrivateKey,
 		birthSex,
 		gender,
 		selfIdentifiedGender,
@@ -152,7 +150,7 @@ router.post('/', async (req, res) => {
 	// TODO: add validation
 	try {
 		const profile = await createClinicalProfile({
-			participantId,
+			clinicalProfilePrivateKey,
 			birthSex,
 			gender,
 			selfIdentifiedGender,
