@@ -60,6 +60,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 *.code-workspace
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
 !.vscode/*.schema.json
 
 # ignore test output
