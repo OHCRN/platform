@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 
 import { ParticipantResponse } from '../../src/entities/index.js';
 
@@ -25,7 +25,7 @@ describe('ParticipantResponse', () => {
 	it('Must have a consent question', () => {
 		expect(
 			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: 'zT0RErVqQEj3kac3bazBA',
 				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
 				participantId: 'Mnnaygsae2ix7J33stdVQ',
 				response: true,
@@ -33,7 +33,7 @@ describe('ParticipantResponse', () => {
 		).true;
 		expect(
 			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
+				id: 'ZgpLk1KlxsQIkTdp7RJTP',
 				consentQuestionId: undefined,
 				participantId: '0v2jwozojfDVQAXIMZJfs',
 				response: true,
@@ -43,7 +43,7 @@ describe('ParticipantResponse', () => {
 	it('Must have a response', () => {
 		expect(
 			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
+				id: 'k41qGV4Y8b5eL6UuMwHlG',
 				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
 				participantId: '5yW4tMaJMVef7rbpcUTF',
 				response: undefined,

@@ -17,30 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { PostalCode } from '../../src/entities/index.js';
+import { sum } from '../src/app/[lang]/dashboard/sum.js';
 
-describe('PostalCode', () => {
-	it('Must be 6 characters long', () => {
-		expect(PostalCode.safeParse('T4B0V7').success).true;
-		expect(PostalCode.safeParse('T4B0V7A').success).false;
-		expect(PostalCode.safeParse('T4B0V').success).false;
-		expect(PostalCode.safeParse(undefined).success).false;
-		expect(PostalCode.safeParse(null).success).false;
-	});
-	it('Can only contain letters and numbers', () => {
-		expect(PostalCode.safeParse('T4B 0V').success).false;
-		expect(PostalCode.safeParse('T4B-0V').success).false;
-	});
-	it('Can contain lowercase letters', () => {
-		// these are parsed into uppercase, so should not cause an error
-		expect(PostalCode.safeParse('t4b0v7').success).true;
-		expect(PostalCode.safeParse('T4B0v7').success).true;
-	});
-	it('Must contain characters in the correct order', () => {
-		expect(PostalCode.safeParse('T4B07V').success).false;
-		expect(PostalCode.safeParse('4B7O7V').success).false;
-		expect(PostalCode.safeParse('ABC123').success).false;
-	});
+// testing importing files in tests
+// and running tests in multiple parts of the monorepo
+
+test('adds 1 + 2 to equal 3', () => {
+	expect(sum(1, 2)).toBe(3);
 });

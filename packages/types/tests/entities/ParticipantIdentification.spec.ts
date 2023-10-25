@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 
 import { ConsentGroup, ParticipantIdentification } from '../../src/entities/index.js';
 
@@ -25,7 +25,7 @@ describe('ParticipantIdentification', () => {
 	it('Must define conditionally required fields on condition', () => {
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: '2djzvw10gEJ9PLTI79kTe',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
@@ -43,7 +43,7 @@ describe('ParticipantIdentification', () => {
 		).true;
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: '4X2M0MTqNatyionKhpbuL',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
@@ -57,7 +57,7 @@ describe('ParticipantIdentification', () => {
 		).false;
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: 'J8tb1NOXf5FpvAcpFsn6v',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
@@ -74,7 +74,7 @@ describe('ParticipantIdentification', () => {
 		).false;
 		expect(
 			ParticipantIdentification.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: 'RsU3cfzaFRgcWsIhXmIB0',
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
