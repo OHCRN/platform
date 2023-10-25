@@ -8,8 +8,7 @@
 		"build": "NEXT_IS_BUILDING=true next build",
 		"start": "next start",
 		"lint": "eslint .",
-		"test": "nyc mocha",
-		"vitest": "vitest",
+		"test": "vitest",
 		"test-runtime-vars": "NEXT_IS_BUILDING=true next build && FEATURE_FLAG=true next start"
 	},
 	"dependencies": {
@@ -37,8 +36,6 @@
 		"@vitejs/plugin-react": "^4.1.0",
 		"eslint": "8.40.0",
 		"eslint-config-next": "13.4.12",
-		"eslint-config-ohcrn": "workspace:^",
-		"jsdom": "^22.1.0",
-		"vitest": "workspace:^"
+		"eslint-config-ohcrn": "workspace:^"
 	}
 }
