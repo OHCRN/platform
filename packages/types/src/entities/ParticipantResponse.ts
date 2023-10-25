@@ -17,18 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
+import { z } from 'zod';
+
+import { NanoId } from './NanoId.js';
+
+export const ParticipantResponse = z.object({
+	id: NanoId,
+	consentQuestionId: z.string().trim(),
+	participantId: NanoId,
+	response: z.boolean(),
+});
+
+export type ParticipantResponse = z.infer<typeof ParticipantResponse>;

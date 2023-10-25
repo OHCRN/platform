@@ -17,18 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
+import { expect } from 'chai';
+
+import { OhipNumber } from '../../src/entities/index.js';
+
+describe('OhipNumber', () => {
+	it('Must be 10 digits long', () => {
+		expect(OhipNumber.safeParse('1234567890').success).true;
+		expect(OhipNumber.safeParse('1').success).false;
+		expect(OhipNumber.safeParse('12345678901').success).false;
+	});
+	it('Can only contain numbers', () => {
+		expect(OhipNumber.safeParse('123-456-78').success).false;
+		expect(OhipNumber.safeParse('123 456 78').success).false;
+		expect(OhipNumber.safeParse('#123456789').success).false;
+		expect(OhipNumber.safeParse('123456789.').success).false;
+		expect(OhipNumber.safeParse(undefined).success).false;
+		expect(OhipNumber.safeParse(null).success).false;
+	});
+});
