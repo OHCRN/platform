@@ -17,18 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NANOID_LENGTH, NanoId } from 'types/entities';
 import { customAlphabet } from 'nanoid';
+import { NANOID_LENGTH, NanoId } from 'types/entities';
 import { ID_ALPHABET } from 'types/services';
 
 import {
-	PrismaClient,
-	Participant,
-	ConsentQuestion,
+	ClinicianInvite,
 	ConsentCategory,
 	ConsentGroup,
+	ConsentQuestion,
+	Participant,
 	ParticipantResponse,
-	ClinicianInvite,
+	PrismaClient,
 } from './generated/client/index.js';
 import logger from './logger.js';
 
@@ -48,7 +48,7 @@ const prisma = new PrismaClient().$extends({
 					};
 					return query(args);
 				} catch (e) {
-					// 	// TODO: specify error when custom Error types are implemented
+					// TODO: specify error when custom Error types are implemented
 					throw new Error('Invalid participant id provided');
 				}
 			},
@@ -63,29 +63,34 @@ const prisma = new PrismaClient().$extends({
 					};
 					return query(args);
 				} catch (e) {
-					// 	// TODO: specify error when custom Error types are implemented
+					// TODO: specify error when custom Error types are implemented
 					throw new Error('Invalid invite id provided');
 				}
 			},
 		},
 		participantResponse: {
 			async create({ args, query }) {
-				args.data = {
-					...args.data,
-					id: nanoid(),
-				};
-				return query(args);
+				try {
+					args.data = {
+						...args.data,
+						id: nanoid(),
+					};
+					return query(args);
+				} catch (e) {
+					// TODO: specify error when custom Error types are implemented
+					throw new Error('Error creating participant response');
+				}
 			},
 		},
 	},
 });
 
 export {
-	Participant,
-	ConsentQuestion,
+	ClinicianInvite,
 	ConsentCategory,
 	ConsentGroup,
+	ConsentQuestion,
+	Participant,
 	ParticipantResponse,
-	ClinicianInvite,
 };
 export default prisma;

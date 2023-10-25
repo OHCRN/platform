@@ -114,7 +114,7 @@ router.get('/:participantId', async (req, res) => {
  *             properties:
  *               participantId:
  *                 type: string
- *               clinicalProfilePrivateKey
+ *               clinicalProfilePrivateKey:
  *                 type: string
  *     responses:
  *       201:

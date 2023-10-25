@@ -19,7 +19,7 @@
 
 import { NanoId } from 'types/entities';
 
-import { ClinicalProfile, PrismaClient, Ohip } from './generated/client/index.js';
+import { ClinicalProfile, Ohip, PrismaClient } from './generated/client/index.js';
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');

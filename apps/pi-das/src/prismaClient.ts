@@ -18,11 +18,11 @@
  */
 
 import { customAlphabet } from 'nanoid';
-import { ID_ALPHABET } from 'types/services';
 import { NANOID_LENGTH, NanoId } from 'types/entities';
+import { ID_ALPHABET } from 'types/services';
 
+import { ClinicianInvite, Participant, PrismaClient, Province } from './generated/client/index.js';
 import logger from './logger.js';
-import { PrismaClient, Participant, Province, ClinicianInvite } from './generated/client/index.js';
 
 logger.info('Initializing prismaClient.ts');
 
@@ -63,5 +63,5 @@ const prisma = new PrismaClient().$extends({
 	},
 });
 
-export { Participant, Province, ClinicianInvite };
+export { ClinicianInvite, Participant, Province };
 export default prisma;

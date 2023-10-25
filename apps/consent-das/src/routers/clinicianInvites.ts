@@ -146,7 +146,7 @@ router.get('/:inviteId', async (req, res) => {
  *                 format: date
  *               inviteAccepted:
  *                 type: boolean
- *               clinicianInviteId
+ *               clinicianInviteId:
  *                 type: string
  *     responses:
  *       201:

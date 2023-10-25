@@ -17,6 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const NANOID_LENGTH = 21 as const;
-export const PHONE_NUMBER_LENGTH = 10 as const;
-export const OHIP_NUMBER_LENGTH = 10 as const;
+export const NANOID_LENGTH = 21;
+export const PHONE_NUMBER_LENGTH = 10;
+export const OHIP_NUMBER_LENGTH = 10;
