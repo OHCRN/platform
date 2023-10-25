@@ -37,7 +37,7 @@ describe('ClinicalProfile', () => {
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_NOT_TO_ANSWER, // chose a gender option
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
-				participantId: 'ZtvQTe7TMI98nVwaCkD5',
+				participantId: 'tREi8pepJ4sshATZJExqS',
 				selfIdentifiedGender: undefined,
 			}).success,
 		).true;
@@ -49,7 +49,7 @@ describe('ClinicalProfile', () => {
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
-				participantId: 'qMDIqixz5lKhnCX0soSe',
+				participantId: 'r1kIA9KK8X6HMI32338a5',
 				selfIdentifiedGender: 'Nulla labore amet minim nisi',
 			}).success,
 		).true;
@@ -61,7 +61,7 @@ describe('ClinicalProfile', () => {
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
-				participantId: 'LbAIK5lt6kru6SvU8Bw',
+				participantId: 'wkIQYKCumXoARLSqNLHuV',
 				selfIdentifiedGender: undefined, // missing self-identified gender
 			}).success,
 		).false;
