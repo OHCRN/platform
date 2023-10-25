@@ -32,11 +32,15 @@ const replaceParams = (
 	}, original);
 };
 
-export const getTranslation: GetTranslation = async (language) => {
+export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
 	return (namespace, key, params) => {
-		// TODO: consider throwing error if translation not a string/undefined.
+		// TODO: consider throwing error if translation not a string/undefined
 		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
+		// warning log and `|| ''` is currently provided as a stopgap
+		if (!(dictionary && namespace && key)) {
+			console.warn(`Missing translation in ${language} dictionary!`);
+		}
 		const translation = `${dictionary[namespace][key] || ''}`;
 		return replaceParams(translation, params);
 	};

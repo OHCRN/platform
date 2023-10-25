@@ -26,12 +26,10 @@ export type Namespace = keyof Dictionaries[ValidLanguage];
 
 export type GetTranslation = (
 	language: ValidLanguage,
-) => Promise<
-	<SelectedNamespace extends Namespace>(
-		namespace: SelectedNamespace,
-		label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
-		params?: { [key: string]: string | number },
-	) => string
->;
+) => <SelectedNamespace extends Namespace>(
+	namespace: SelectedNamespace,
+	label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
+	params?: { [key: string]: string | number },
+) => string;
 
-export type TranslationFunction = Awaited<ReturnType<GetTranslation>>;
+export type TranslationFunction = ReturnType<GetTranslation>;
