@@ -2,7 +2,7 @@ import { Prisma } from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
-		id: 'cllgostgz000008l3fk0wd8w0',
+		id: 'cllgostgz000008l3fk0w',
 		dateOfBirth: new Date('1956-05-12'),
 		emailAddress: 'homer.simpson@example.com',
 		participantOhipFirstName: 'Homer',
@@ -16,7 +16,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 		residentialPostalCode: 'L5V1G3',
 	},
 	{
-		id: 'cllgoufw3000208l3c6gyg9bh',
+		id: 'cllgoufw3000208l3c6gy',
 		dateOfBirth: new Date('1986-07-14'),
 		emailAddress: 'spongebob.squarepants@example.com',
 		participantOhipFirstName: 'Spongebob',
@@ -34,7 +34,7 @@ const participants: Prisma.ParticipantCreateInput[] = [
 		residentialPostalCode: 'A1B2C3',
 	},
 	{
-		id: 'cllgouzph000308l35o99bgqi',
+		id: 'cllgouzph000308l35o99',
 		dateOfBirth: new Date('1954-04-29'),
 		emailAddress: 'jerry.seinfeld@example.com',
 		participantOhipFirstName: 'Jerry',
@@ -47,12 +47,14 @@ const participants: Prisma.ParticipantCreateInput[] = [
 
 const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
+		id: 'clmarsvhd000008jngksv',
 		participantFirstName: 'Bruce',
 		participantLastName: 'Wayne',
 		participantEmailAddress: 'bruce.wayne@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
+		id: 'NUF9dN5ZWIfc2TLMG3p2Y',
 		participantFirstName: 'Tim',
 		participantLastName: 'Drake',
 		participantEmailAddress: 'tim.drake@example.com',
