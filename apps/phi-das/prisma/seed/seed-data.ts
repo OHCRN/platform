@@ -44,7 +44,7 @@ const ohipData: Prisma.OhipCreateInput[] = [
 const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	{
 		// gender selected, self-identified gender skipped
-		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU2se',
+		clinicalProfilePrivateKey: 'MJLhYoHSBKgqQnkWJwfgy',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
@@ -54,7 +54,7 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	},
 	{
 		// both gender options provided
-		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROUewq',
+		clinicalProfilePrivateKey: 'Z78VtTLvqciD7wuwErl00',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
@@ -65,7 +65,7 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	},
 	// gender selected, self-identified gender skipped
 	{
-		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU4ds',
+		clinicalProfilePrivateKey: 'YSvwdKKx3XpdML8cCVcPi',
 		ancestry: Ancestry.ARMENIAN,
 		birthSex: BirthSex.MALE,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,

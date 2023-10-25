@@ -30,7 +30,7 @@ export const ClinicalProfile = z
 	.object({
 		ancestry: Ancestry,
 		birthSex: BirthSex,
-		clinicalProfilePrivateKey: z.string().trim(),
+		clinicalProfilePrivateKey: NanoId,
 		familyHistoryOfCancer: HistoryOfCancer,
 		gender: Gender,
 		geneticsClinicVisited: GeneticsClinic,

@@ -33,7 +33,7 @@ describe('ClinicalProfile', () => {
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
 				birthSex: BirthSex.enum.PREFER_NOT_TO_ANSWER,
-				clinicalProfilePrivateKey: 'pFj26nyWhw2NrvvhSqofB',
+				clinicalProfilePrivateKey: '6mhX6urHt4R3OG6Yxbimx',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_NOT_TO_ANSWER, // chose a gender option
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
@@ -45,7 +45,7 @@ describe('ClinicalProfile', () => {
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
 				birthSex: BirthSex.enum.PREFER_NOT_TO_ANSWER,
-				clinicalProfilePrivateKey: '8RYAeXNK5EKrqQW3l4zIp',
+				clinicalProfilePrivateKey: 'JZzEHrE93yKxsrzZKbHVH',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
@@ -57,7 +57,7 @@ describe('ClinicalProfile', () => {
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
 				birthSex: BirthSex.enum.PREFER_NOT_TO_ANSWER,
-				clinicalProfilePrivateKey: '0ykzjnMCqHPT5K3maOkad',
+				clinicalProfilePrivateKey: '7yLTLyJC2LPjpy2vBnkFm',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,

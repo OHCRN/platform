@@ -18,15 +18,15 @@ const ohipKeys: Prisma.OhipKeyCreateInput[] = [
 const clinicalProfileKeys: Prisma.ClinicalProfileKeyCreateInput[] = [
 	{
 		participantId: 'NylQ1O6cMTFJDAbWHSnjm',
-		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU2se',
+		clinicalProfilePrivateKey: 'AFLH1BdZv4gI3As5h8r4T',
 	},
 	{
 		participantId: 'OiUvq8rNh1BY1H9DOSt7Y',
-		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROUewq',
+		clinicalProfilePrivateKey: '21zkiwRtDwB2diY4cRH8M',
 	},
 	{
 		participantId: 'oUrel7bpWvMhMWzmMRboX',
-		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU4ds',
+		clinicalProfilePrivateKey: '2AwZtRhObB67crgoBkO3H',
 	},
 ];
 
