@@ -9,11 +9,10 @@
 		"start": "next start",
 		"lint": "eslint .",
 		"test": "nyc mocha",
+		"vitest": "vitest",
 		"test-runtime-vars": "NEXT_IS_BUILDING=true next build && FEATURE_FLAG=true next start"
 	},
 	"dependencies": {
-		"@types/react": "18.2.14",
-		"@types/react-dom": "18.2.6",
 		"autoprefixer": "10.4.14",
 		"axios": "^1.5.0",
 		"clsx": "^2.0.0",
@@ -30,9 +29,16 @@
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
+		"@testing-library/react": "^14.0.0",
+		"@types/node": "^20.1.3",
+		"@types/react": "18.2.0",
+		"@types/react-dom": "^18.2.0",
 		"@types/react-google-recaptcha": "^2.1.6",
+		"@vitejs/plugin-react": "^4.1.0",
 		"eslint": "8.40.0",
 		"eslint-config-next": "13.4.12",
-		"eslint-config-ohcrn": "workspace:^"
+		"eslint-config-ohcrn": "workspace:^",
+		"jsdom": "^22.1.0",
+		"vitest": "^0.34.6"
 	}
 }
