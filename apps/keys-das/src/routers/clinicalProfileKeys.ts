@@ -25,6 +25,7 @@ import logger from '../logger.js';
 
 const router = Router();
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -114,6 +115,8 @@ router.get('/:participantId', async (req, res) => {
  *             properties:
  *               participantId:
  *                 type: string
+ *               clinicalProfilePrivateKey:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Clinical profile key created successfully.
@@ -122,10 +125,13 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profile-keys');
-	const { participantId } = req.body;
+	const { participantId, clinicalProfilePrivateKey } = req.body;
 	// TODO: add validation
 	try {
-		const clinicalProfileKey = await createClinicalProfileKey({ participantId });
+		const clinicalProfileKey = await createClinicalProfileKey({
+			participantId,
+			clinicalProfilePrivateKey,
+		});
 		res.status(201).send({ clinicalProfileKey });
 	} catch (error) {
 		logger.error(error);

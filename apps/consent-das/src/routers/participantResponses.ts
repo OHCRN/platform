@@ -24,7 +24,7 @@ import { getParticipantResponses } from '../service/search.js';
 import { createParticipantResponse } from '../service/create.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -83,7 +83,6 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	}
 });
 
-// TODO: update JSDoc comments
 /**
  * @openapi
  * /participant-responses:

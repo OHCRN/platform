@@ -23,6 +23,7 @@ import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
 import logger from '../logger.js';
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -146,6 +147,8 @@ router.get('/:inviteId', async (req, res) => {
  *                 format: date
  *               inviteAccepted:
  *                 type: boolean
+ *               clinicianInviteId:
+ *                 type: string
  *     responses:
  *       201:
  *         description: The clinician invite was successfully created.
@@ -157,6 +160,7 @@ router.post('/', async (req, res) => {
 	const {
 		clinicianFirstName,
 		clinicianInstitutionalEmailAddress,
+		clinicianInviteId,
 		clinicianLastName,
 		clinicianTitleOrRole,
 		consentGroup,
@@ -172,6 +176,7 @@ router.post('/', async (req, res) => {
 		const clinicianInvite = await createClinicianInvite({
 			clinicianFirstName,
 			clinicianInstitutionalEmailAddress,
+			clinicianInviteId,
 			clinicianLastName,
 			clinicianTitleOrRole,
 			consentGroup,

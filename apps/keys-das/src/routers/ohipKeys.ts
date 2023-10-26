@@ -25,6 +25,7 @@ import logger from '../logger.js';
 
 const router = Router();
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -114,6 +115,8 @@ router.get('/:participantId', async (req, res) => {
  *             properties:
  *               participantId:
  *                 type: string
+ *               ohipPrivateKey:
+ *                 type: string
  *     responses:
  *       201:
  *         description: OHIP key created successfully.
@@ -122,10 +125,10 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /ohip-keys');
-	const { participantId } = req.body;
+	const { participantId, ohipPrivateKey } = req.body;
 	// TODO: add validation
 	try {
-		const ohipKey = await createOhipKey({ participantId });
+		const ohipKey = await createOhipKey({ participantId, ohipPrivateKey });
 		res.status(201).send({ ohipKey });
 	} catch (error) {
 		logger.error(error);

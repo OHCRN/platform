@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -125,6 +125,9 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      nanoid:
+        specifier: ^5.0.2
+        version: 5.0.2
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -263,6 +266,9 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      nanoid:
+        specifier: ^5.0.2
+        version: 5.0.2
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -340,6 +346,9 @@ importers:
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
+      nanoid:
+        specifier: ^5.0.2
+        version: 5.0.2
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -1137,7 +1146,7 @@ packages:
     resolution: {integrity: sha512-rClGrMuyS/3j0ETa1Ui7s6GkLhfZGKZL3ZrChLeAiACBE/tRc1wq8SNZESUuluxhLj9FkUefRs2l6bCIArWBiQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
-      '@typescript-eslint/parser': 6.2.0
+      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
       eslint: ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
@@ -2321,7 +2330,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: ^2.27.5
+      eslint-plugin-import: '*'
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
       enhanced-resolve: 5.14.0
@@ -3797,6 +3806,12 @@ packages:
   /nanoid@3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: false
+
+  /nanoid@5.0.2:
+    resolution: {integrity: sha512-2ustYUX1R2rL/Br5B/FMhi8d5/QzvkJ912rBYxskcpu0myTHzSZfTr1LAS2Sm7jxRUObRrSBFoyzwAhL49aVSg==}
+    engines: {node: ^18 || >=20}
     hasBin: true
     dev: false
 

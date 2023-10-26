@@ -45,7 +45,7 @@ export const createOhipNumber = async ({
 };
 
 export const createClinicalProfile = async ({
-	participantId,
+	clinicalProfilePrivateKey,
 	birthSex,
 	gender,
 	selfIdentifiedGender,
@@ -54,7 +54,7 @@ export const createClinicalProfile = async ({
 	historyOfCancer,
 	familyHistoryOfCancer,
 }: {
-	participantId: string;
+	clinicalProfilePrivateKey: string;
 	birthSex: BirthSex;
 	gender: Gender;
 	selfIdentifiedGender?: string;
@@ -65,7 +65,7 @@ export const createClinicalProfile = async ({
 }): Promise<ClinicalProfile> => {
 	const result = await prisma.clinicalProfile.create({
 		data: {
-			participantId,
+			clinicalProfilePrivateKey,
 			birthSex,
 			gender,
 			selfIdentifiedGender,
