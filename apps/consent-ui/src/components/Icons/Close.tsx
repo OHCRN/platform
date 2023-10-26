@@ -19,9 +19,9 @@
 
 import React from 'react';
 
-function Close({ classes }: { classes?: string }) {
+function Close({ className }: { className?: string }) {
 	return (
-		<svg className={classes} viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg className={className} viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M17.5093 5.34175L16.2099 4.16675L11.0585 8.82508L5.90704 4.16675L4.60767 5.34175L9.7591 10.0001L4.60767 14.6584L5.90704 15.8334L11.0585 11.1751L16.2099 15.8334L17.5093 14.6584L12.3579 10.0001L17.5093 5.34175Z"
 				fill="currentColor"

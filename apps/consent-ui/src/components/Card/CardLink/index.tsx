@@ -28,16 +28,16 @@ import styles from './CardLink.module.scss';
 const CardLink = async ({
 	name,
 	currentLang,
-	classes,
+	className,
 	children,
 }: {
 	name: RouteName;
 	currentLang: ValidLanguage;
-	classes?: string;
+	className?: string;
 	children: React.ReactNode;
 }) => {
 	return (
-		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, classes)}>
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
 			{children}
 		</LocalizedLink>
 	);

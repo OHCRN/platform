@@ -35,7 +35,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 	const translate = await getTranslation(currentLang, 'dashboard');
 	return (
 		<div className={styles.dashboard}>
-			<Card dropShadow="sm" classes={clsx(styles.card, styles[consentStatus])}>
+			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])}>
 				<div className={styles['consents-img']}>
 					<Image src={ConsentsImage} alt={translate('review-ohcrn-consents-img')} />
 				</div>

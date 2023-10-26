@@ -19,11 +19,11 @@
 
 import React from 'react';
 
-function Family({ classes }: { classes?: string }) {
+function Family({ className }: { className?: string }) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			className={classes}
+			className={className}
 			width="50"
 			height="50"
 			fill="none"

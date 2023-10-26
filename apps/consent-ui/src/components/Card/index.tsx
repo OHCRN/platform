@@ -24,16 +24,16 @@ import styles from './Card.module.scss';
 const Card = async ({
 	layout = 'column',
 	dropShadow = 'base',
-	classes,
+	className,
 	children,
 }: {
 	layout?: 'column' | 'row';
 	dropShadow?: 'none' | 'sm' | 'base' | 'lg';
-	classes?: string;
+	className?: string;
 	children: React.ReactNode;
 }) => {
 	return (
-		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], classes)}>
+		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}>
 			{children}
 		</div>
 	);
