@@ -23,6 +23,7 @@ import { getParticipant, getParticipants } from '../service/search.js';
 import { createParticipant } from '../service/create.js';
 import logger from '../logger.js';
 
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -121,6 +122,8 @@ router.get('/:participantId', async (req, res) => {
  *                 $ref: '#/components/schemas/ConsentGroup'
  *               guardianIdVerified:
  *                 type: boolean
+ *               participantId:
+ *                 type: string
  *             required:
  *               - emailVerified
  *               - isGuardian
@@ -132,7 +135,7 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { emailVerified, isGuardian, consentGroup, guardianIdVerified } = req.body;
+	const { emailVerified, isGuardian, consentGroup, guardianIdVerified, participantId } = req.body;
 	// TODO: add validation
 	try {
 		const participant = await createParticipant({
@@ -140,6 +143,7 @@ router.post('/', async (req, res) => {
 			isGuardian,
 			consentGroup,
 			guardianIdVerified,
+			participantId,
 		});
 		res.status(201).send({ participant });
 	} catch (error) {

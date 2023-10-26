@@ -16,9 +16,9 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
-
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/Header/LanguageToggle';
@@ -27,6 +27,7 @@ import { getUnselectedLang } from 'src/components/Link/utils';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
+import HeaderWrapper from './HeaderWrapper';
 
 const icons: {
 	[k in ValidLanguage]: StaticImageData;
@@ -40,7 +41,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
-		<header className={styles.header}>
+		<HeaderWrapper currentLang={currentLang}>
 			<div>
 				<Link href={`/${currentLang}`}>
 					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />
@@ -63,7 +64,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					<div>Hello</div>
 				</div>
 			</div>
-		</header>
+		</HeaderWrapper>
 	);
 };
 

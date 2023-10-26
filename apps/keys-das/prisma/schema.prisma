@@ -9,13 +9,11 @@ generator client {
 }
 
 model OhipKey {
-  id             String @id @default(cuid())
-  participantId  String @unique
-  ohipPrivateKey String @unique @default(cuid())
+  participantId     String @unique
+  ohipPrivateKey    String @id @default("") @db.Char(21)
 }
 
 model ClinicalProfileKey {
-  id                        String @id @default(cuid())
   participantId             String @unique
-  clinicalProfilePrivateKey String @unique @default(cuid())
+  clinicalProfilePrivateKey String @id @default("") @db.Char(21)
 }

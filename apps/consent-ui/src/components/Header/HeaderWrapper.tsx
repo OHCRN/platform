@@ -17,19 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
+'use client';
+
+import clsx from 'clsx';
+import { ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
+import { ValidLanguage } from 'src/i18n';
+
+import { getLinkNameByPath } from '../Link/utils';
+import { RouteName } from '../Link/types';
+
+import styles from './Header.module.scss';
+
+const ROUTES_WITHOUT_DESKTOP_HEADER: RouteName[] = ['invite', 'register'];
+
+const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
+	// checks english and french paths by using route names
+	const linkName = getLinkNameByPath(pathname, currentLang);
+	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(linkName);
+};
+
+const HeaderWrapper = ({
+	children,
+	currentLang,
+}: {
+	children: ReactNode;
+	currentLang: ValidLanguage;
+}) => {
+	const pathname = usePathname();
+	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
+	return (
+		<header className={clsx(styles.header, hiddenOnDesktop && styles['hide-desktop'])}>
+			{children}
+		</header>
+	);
+};
+
+export default HeaderWrapper;

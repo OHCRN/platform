@@ -1,9 +1,7 @@
-import { PrismaClient } from '../../src/generated/client/index.js';
 import logger from '../../src/logger.js';
+import prisma from '../../src/prismaClient.js';
 
 import { clinicalProfileKeys, ohipKeys } from './seed-data.js';
-
-const prisma = new PrismaClient();
 
 const seed = async () => {
 	logger.info('Seeding database...');
@@ -20,14 +18,14 @@ const seed = async () => {
 		await prisma.ohipKey.createMany({
 			data: ohipKeys,
 			skipDuplicates: true,
-		});	
+		});
 		logger.info('Creating new OHIP keys from seed data...COMPLETE');
 
 		logger.info('Creating new clinical profile keys from seed data...');
 		await prisma.clinicalProfileKey.createMany({
 			data: clinicalProfileKeys,
 			skipDuplicates: true,
-		});	
+		});
 		logger.info('Creating new clinical profile keys from seed data...COMPLETE');
 	} catch (error) {
 		logger.error('Error seeding database: ', error);
@@ -36,6 +34,6 @@ const seed = async () => {
 	} finally {
 		await prisma.$disconnect();
 	}
-}
+};
 
 seed();

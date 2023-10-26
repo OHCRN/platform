@@ -25,7 +25,7 @@ import { getConsentQuestion, getConsentQuestions } from '../service/search.js';
 import { createConsentQuestion } from '../service/create.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments
+// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
