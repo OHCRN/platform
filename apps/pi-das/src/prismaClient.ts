@@ -17,11 +17,55 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { PrismaClient, Participant, Province, ClinicianInvite } from './generated/client/index.js';
+import { customAlphabet } from 'nanoid';
+import { NANOID_LENGTH, NanoId } from 'types/entities';
+import { ID_ALPHABET } from 'types/services';
+
+import { ClinicianInvite, Participant, PrismaClient, Province } from './generated/client/index.js';
 import logger from './logger.js';
 
 logger.info('Initializing prismaClient.ts');
-const prisma = new PrismaClient();
 
-export { Participant, Province, ClinicianInvite };
+const nanoid = customAlphabet(ID_ALPHABET, NANOID_LENGTH);
+
+const prisma = new PrismaClient().$extends({
+	query: {
+		participant: {
+			async create({ args, query }) {
+				try {
+					const validParticipantId = args.data.id ? NanoId.parse(args.data.id) : nanoid();
+					args.data = {
+						...args.data,
+						id: validParticipantId,
+					};
+					return query(args);
+				} catch (e) {
+					// TODO: specify error when custom Error types are implemented
+					const message = 'Invalid participant id provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
+				}
+			},
+		},
+		clinicianInvite: {
+			async create({ args, query }) {
+				try {
+					const validInviteId = args.data.id ? NanoId.parse(args.data.id) : nanoid();
+					args.data = {
+						...args.data,
+						id: validInviteId,
+					};
+					return query(args);
+				} catch (e) {
+					// TODO: specify error when custom Error types are implemented
+					const message = 'Invalid clinical invite id provided';
+					logger.error(`${message}: ${e}`);
+					throw new Error(message);
+				}
+			},
+		},
+	},
+});
+
+export { ClinicianInvite, Participant, Province };
 export default prisma;

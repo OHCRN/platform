@@ -16,13 +16,10 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-import { PrismaClient } from '../../src/generated/client/index.js';
 import logger from '../../src/logger.js';
+import prisma from '../../src/prismaClient.js';
 
 import { clinicalProfiles, ohipData } from './seed-data.js';
-
-const prisma = new PrismaClient();
 
 const seed = async () => {
 	logger.info('Seeding database...');
