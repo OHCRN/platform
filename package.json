@@ -10,7 +10,7 @@
 		"das-dev": "pnpm --filter '*-das' run dev",
 		"data-mapper-dev": "pnpm --filter data-mapper run dev",
 		"dev": "pnpm --parallel run dev",
-		"test": "nyc mocha",
+		"test": "pnpm -r test",
 		"migrate-dev": "pnpm --filter '*-das' run migrate-dev",
 		"generate": "pnpm --filter '*-das' --workspace-concurrency=1 run generate",
 		"seed": "pnpm --filter '*-das' run seed",
