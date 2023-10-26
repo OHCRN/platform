@@ -19,10 +19,11 @@
 
 import {
 	Ancestry,
+	BirthSex,
+	Gender,
 	GeneticsClinic,
 	HistoryOfCancer,
-	Gender,
-	BirthSex,
+	MolecularLab,
 } from 'src/generated/client/index.js';
 
 import prisma, { ClinicalProfile, Ohip } from '../prismaClient.js';
@@ -45,34 +46,37 @@ export const createOhipNumber = async ({
 };
 
 export const createClinicalProfile = async ({
-	clinicalProfilePrivateKey,
-	birthSex,
-	gender,
-	selfIdentifiedGender,
 	ancestry,
-	geneticsClinicVisited,
-	historyOfCancer,
+	birthSex,
+	clinicalProfilePrivateKey,
 	familyHistoryOfCancer,
+	gender,
+	historyOfCancer,
+	selfIdentifiedGender,
+	selfReportedGeneticsClinicVisited,
+	selfReportedMolecularLabVisited,
 }: {
-	clinicalProfilePrivateKey: string;
-	birthSex: BirthSex;
-	gender: Gender;
-	selfIdentifiedGender?: string;
 	ancestry: Ancestry;
-	geneticsClinicVisited: GeneticsClinic;
-	historyOfCancer: HistoryOfCancer;
+	birthSex: BirthSex;
+	clinicalProfilePrivateKey: string;
 	familyHistoryOfCancer: HistoryOfCancer;
+	gender: Gender;
+	historyOfCancer: HistoryOfCancer;
+	selfIdentifiedGender?: string;
+	selfReportedGeneticsClinicVisited?: GeneticsClinic;
+	selfReportedMolecularLabVisited?: MolecularLab;
 }): Promise<ClinicalProfile> => {
 	const result = await prisma.clinicalProfile.create({
 		data: {
-			clinicalProfilePrivateKey,
-			birthSex,
-			gender,
-			selfIdentifiedGender,
 			ancestry,
-			geneticsClinicVisited,
-			historyOfCancer,
+			birthSex,
+			clinicalProfilePrivateKey,
 			familyHistoryOfCancer,
+			gender,
+			historyOfCancer,
+			selfIdentifiedGender,
+			selfReportedGeneticsClinicVisited,
+			selfReportedMolecularLabVisited,
 		},
 	});
 	return result;

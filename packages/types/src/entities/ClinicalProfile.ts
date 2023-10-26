@@ -23,6 +23,7 @@ import { Ancestry } from './Ancestry.js';
 import { BirthSex } from './BirthSex.js';
 import { Gender } from './Gender.js';
 import { GeneticsClinic } from './GeneticsClinic.js';
+import { MolecularLab } from './MolecularLab.js';
 import { HistoryOfCancer } from './HistoryOfCancer.js';
 import { NanoId } from './NanoId.js';
 
@@ -33,10 +34,11 @@ export const ClinicalProfile = z
 		clinicalProfilePrivateKey: NanoId,
 		familyHistoryOfCancer: HistoryOfCancer,
 		gender: Gender,
-		geneticsClinicVisited: GeneticsClinic,
 		historyOfCancer: HistoryOfCancer,
 		participantId: NanoId,
 		selfIdentifiedGender: z.string().trim().optional(),
+		selfReportedGeneticsClinicVisited: GeneticsClinic.optional(),
+		selfReportedMolecularLabVisited: MolecularLab.optional(),
 	})
 	.refine((input) => {
 		// selfIdentifiedGender must be defined if

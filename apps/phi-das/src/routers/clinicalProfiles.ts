@@ -123,8 +123,10 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *                 type: string
  *               ancestry:
  *                 $ref: '#/components/schemas/Ancestry'
- *               geneticsClinicVisited:
+ *               selfReportedGeneticsClinicVisited:
  *                 $ref: '#/components/schemas/GeneticsClinic'
+ *               selfReportedMolecularLabVisited:
+ *                 $ref: '#/components/schemas/MolecularLab'
  *               historyOfCancer:
  *                 $ref: '#/components/schemas/HistoryOfCancer'
  *               familyHistoryOfCancer:
@@ -138,26 +140,28 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profiles');
 	const {
-		clinicalProfilePrivateKey,
-		birthSex,
-		gender,
-		selfIdentifiedGender,
 		ancestry,
-		geneticsClinicVisited,
-		historyOfCancer,
+		birthSex,
+		clinicalProfilePrivateKey,
 		familyHistoryOfCancer,
+		gender,
+		historyOfCancer,
+		selfIdentifiedGender,
+		selfReportedGeneticsClinicVisited,
+		selfReportedMolecularLabVisited,
 	} = req.body;
 	// TODO: add validation
 	try {
 		const profile = await createClinicalProfile({
-			clinicalProfilePrivateKey,
-			birthSex,
-			gender,
-			selfIdentifiedGender,
 			ancestry,
-			geneticsClinicVisited,
-			historyOfCancer,
+			birthSex,
+			clinicalProfilePrivateKey,
 			familyHistoryOfCancer,
+			gender,
+			historyOfCancer,
+			selfIdentifiedGender,
+			selfReportedGeneticsClinicVisited,
+			selfReportedMolecularLabVisited,
 		});
 		res.status(201).send({ profile });
 	} catch (error) {

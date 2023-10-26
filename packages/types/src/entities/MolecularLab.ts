@@ -17,25 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './lengthConstraints.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
+import { z } from 'zod';
+
+const MOLECULAR_LAB = [
+	'CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA',
+	'HAMILTON_HEALTH_SCIENCES_HAMILTON',
+	'HOSPITAL_FOR_SICK_CHILDREN_TORONTO',
+	'KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON',
+	'LONDON_HEALTH_SCIENCES_CENTRE_LONDON',
+	'NORTH_YORK_GENERAL_HOSPITAL_TORONTO',
+	'SINAI_HEALTH_SYSTEM_TORONTO',
+	'TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA',
+	'UNIVERSITY_HEALTH_NETWORK_TORONTO',
+] as const;
+
+export const MolecularLab = z.enum(MOLECULAR_LAB);
+export type MolecularLab = z.infer<typeof MolecularLab>;

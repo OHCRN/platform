@@ -17,25 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './lengthConstraints.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
+import { expect } from 'chai';
+
+import { MolecularLab } from '../../src/entities/index.js';
+
+describe('MolecularLab', () => {
+	it('Must use the MolecularLab enum', () => {
+		expect(MolecularLab.safeParse(MolecularLab.enum.NORTH_YORK_GENERAL_HOSPITAL_TORONTO).success)
+			.true;
+		expect(MolecularLab.safeParse('In quis duis adipisicing magnat.').success).false;
+		expect(MolecularLab.safeParse(undefined).success).false;
+		expect(MolecularLab.safeParse(null).success).false;
+	});
+});

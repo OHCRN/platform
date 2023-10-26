@@ -24,7 +24,9 @@ import {
 	BirthSex,
 	ClinicalProfile,
 	Gender,
+	GeneticsClinic,
 	HistoryOfCancer,
+	MolecularLab,
 } from '../../src/entities/index.js';
 
 describe('ClinicalProfile', () => {
@@ -39,6 +41,8 @@ describe('ClinicalProfile', () => {
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'tREi8pepJ4sshATZJExqS',
 				selfIdentifiedGender: undefined,
+				selfReportedGeneticsClinic: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
+				selfReportedMolecularLab: MolecularLab.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 			}).success,
 		).true;
 		expect(

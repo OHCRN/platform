@@ -23,6 +23,7 @@ import {
 	Gender,
 	GeneticsClinic,
 	HistoryOfCancer,
+	MolecularLab,
 	Prisma,
 } from '../../src/generated/client/index.js';
 
@@ -44,34 +45,35 @@ const ohipData: Prisma.OhipCreateInput[] = [
 const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	{
 		// gender selected, self-identified gender skipped
-		clinicalProfilePrivateKey: 'MJLhYoHSBKgqQnkWJwfgy',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
+		clinicalProfilePrivateKey: 'MJLhYoHSBKgqQnkWJwfgy',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_NOT_TO_ANSWER,
-		geneticsClinicVisited: GeneticsClinic.PRINCESS_MARGARET_HOSPITAL_TORONTO,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
+		selfReportedGeneticsClinic: GeneticsClinic.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
+		selfReportedMolecularLab: MolecularLab.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 	},
 	{
 		// both gender options provided
-		clinicalProfilePrivateKey: 'Z78VtTLvqciD7wuwErl00',
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
+		clinicalProfilePrivateKey: 'Z78VtTLvqciD7wuwErl00',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_TO_SELF_IDENTIFY,
-		geneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
 		selfIdentifiedGender: 'other',
+		selfReportedGeneticsClinic: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 	},
 	// gender selected, self-identified gender skipped
 	{
-		clinicalProfilePrivateKey: 'YSvwdKKx3XpdML8cCVcPi',
 		ancestry: Ancestry.ARMENIAN,
 		birthSex: BirthSex.MALE,
+		clinicalProfilePrivateKey: 'YSvwdKKx3XpdML8cCVcPi',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.MAN,
-		geneticsClinicVisited: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
 		historyOfCancer: HistoryOfCancer.NO,
+		selfReportedGeneticsClinic: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
 	},
 ];
 
