@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consent-research-participation';
 
-export type ConsentsStep5Dictionary = Record<keyof typeof dictionary, string>;
+const dictionary = {} satisfies ConsentResearchParticipationDictionary;
 
 export default dictionary;

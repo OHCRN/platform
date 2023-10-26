@@ -19,6 +19,6 @@
 
 const dictionary = {} satisfies Record<string, string>;
 
-export type ConsentsStep3Dictionary = Record<keyof typeof dictionary, string>;
+export type ConsentReleaseDataDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

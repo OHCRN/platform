@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentsStep2Dictionary } from 'src/i18n/locales/en/consents-step-2';
+const dictionary = {} satisfies Record<string, string>;
 
-const dictionary = {} satisfies ConsentsStep2Dictionary;
+export type InformedConsentDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

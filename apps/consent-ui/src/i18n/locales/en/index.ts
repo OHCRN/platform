@@ -20,11 +20,11 @@
 import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birth-sex';
 import commonDictionary from './common';
-import consentsStep1Dictionary from './consents-step-1';
-import consentsStep2Dictionary from './consents-step-2';
-import consentsStep3Dictionary from './consents-step-3';
-import consentsStep4Dictionary from './consents-step-4';
-import consentsStep5Dictionary from './consents-step-5';
+import informedConsentDictionary from './informed-consent';
+import consentReleaseDataDictionary from './consent-release-data';
+import consentResearchParticipationDictionary from './consent-research-participation';
+import consentRecontactDictionary from './consent-recontact';
+import consentReviewSignDictionary from './consent-review-sign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
 import genderDictionary from './gender';
@@ -39,11 +39,11 @@ const dictionaries = {
 	ancestry: ancestryDictionary,
 	'birth-sex': birthSexDictionary,
 	common: commonDictionary,
-	'consents-step-1': consentsStep1Dictionary,
-	'consents-step-2': consentsStep2Dictionary,
-	'consents-step-3': consentsStep3Dictionary,
-	'consents-step-4': consentsStep4Dictionary,
-	'consents-step-5': consentsStep5Dictionary,
+	'informed-consent': informedConsentDictionary,
+	'consent-release-data': consentReleaseDataDictionary,
+	'consent-research-participation': consentResearchParticipationDictionary,
+	'consent-recontact': consentRecontactDictionary,
+	'consent-review-sign': consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
 	gender: genderDictionary,

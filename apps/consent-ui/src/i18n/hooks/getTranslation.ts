@@ -22,6 +22,27 @@ import { GLOBAL_REGEX_FLAG } from 'types/entities';
 import { GetTranslation } from 'src/i18n/types';
 import dictionaries from 'src/i18n/locales';
 
+/**
+ * ```
+ * Util function that takes the parameters object passed in to the function returned from getTranslation()
+ * and replaces the key in the translated string with the value of that key
+ * Uses the global regex flag to ensure each instance of an argument key in a string is replaced
+ *
+ * ```
+ * @param original
+ * @param replacements
+ * @returns string
+ * @example
+ * const dict = {
+ * 	common: {
+ * 		'sample-sentence': 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.'
+ * 	}
+ * }
+ * const translate = getTranslation('en')
+ * translate('common', 'sample-sentence', { dayOfWeek: 'Thursday', dayOfMonth: 'October' }) would call replaceParams as:
+ * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
+ * // returns 'Translated this string on a Thursday in October.'
+ */
 const replaceParams = (
 	original: string,
 	replacements?: Record<string, string | number>,
