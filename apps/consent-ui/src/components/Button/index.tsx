@@ -27,7 +27,7 @@ import styles from './Button.module.scss';
 export type ButtonVariant = 'primary' | 'secondary';
 export type ButtonColor = 'default' | 'blue' | 'green';
 export type ButtonSize = 'base' | 'large';
-export type ButtonLayout = 'default' | 'icon';
+export type ButtonLayout = 'default' | 'right-icon' | 'left-icon';
 export type ButtonAction = 'next' | 'prev';
 export interface ButtonProps {
 	children: ReactNode;
@@ -59,7 +59,8 @@ const Button = ({
 				styles[color],
 				styles[size],
 				styles[layout],
-				action && styles.icon,
+				action === 'prev' && styles['left-icon'],
+				action === 'next' && styles['right-icon'],
 				className,
 			)}
 			disabled={disabled}

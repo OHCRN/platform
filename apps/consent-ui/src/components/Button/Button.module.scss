@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   height: 30px;
-  padding: 0.1rem 1rem;
+  padding: 0.1rem 1.25rem;
   height: fit-content;
   font-size: theme('fontSize.base');
   font-weight: 700;
@@ -104,7 +104,7 @@
 }
 
 // Icon buttons
-.icon {
+.left-icon, .right-icon {
   width: fit-content;
   display: flex;
   justify-content: space-between;
@@ -113,13 +113,27 @@
   svg {
     height: 0.9rem;
   }
+}
+
+.right-icon {
 
   &.base {
-    padding-right: 0.6rem;
+    padding-right: 0.5rem;
   }
   &.large {
     padding-left: 2rem;
     padding-right: 1.2rem;
+  }
+}
+
+.left-icon {
+
+  &.base {
+    padding-left: 0.5rem;
+  }
+  &.large {
+    padding-right: 2rem;
+    padding-left: 1.2rem;
   }
 }
 

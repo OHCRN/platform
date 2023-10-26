@@ -36,7 +36,8 @@ const LinkButton = ({
 				styles[color],
 				styles[size],
 				styles[layout],
-				action && styles.icon,
+				action === 'prev' && styles['left-icon'],
+				action === 'next' && styles['right-icon'],
 				className,
 			)}
 			role="button"
