@@ -333,16 +333,16 @@ enum MolecularLab {
 }
 
 model ClinicalProfile {
-  ancestry                         Ancestry
-  birthSex                         BirthSex
-  clinicalProfilePrivateKey        String          @id @db.Char(21)
-  familyHistoryOfCancer            HistoryOfCancer
-  gender                           Gender
-  historyOfCancer                  HistoryOfCancer
-  selfIdentifiedGender             String?
-  selfReportedClinicianFirstName   String?
-  selfReportedClinicianLastName    String?
-  selfReportedClinicianTitleOrRole String?
-  selfReportedGeneticsClinic       GeneticsClinic?
-  selfReportedMolecularLab         MolecularLab?
+  ancestry                          Ancestry
+  birthSex                          BirthSex
+  clinicalProfilePrivateKey         String          @id @db.Char(21)
+  familyHistoryOfCancer             HistoryOfCancer
+  gender                            Gender
+  historyOfCancer                   HistoryOfCancer
+  selfIdentifiedGender              String?
+  selfReportedClinicianFirstName    String?
+  selfReportedClinicianLastName     String?
+  selfReportedClinicianTitleOrRole  String?
+  selfReportedGeneticsClinicVisited GeneticsClinic?
+  selfReportedMolecularLabVisited   MolecularLab?
 }

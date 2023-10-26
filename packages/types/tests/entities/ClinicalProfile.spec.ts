@@ -41,8 +41,8 @@ describe('ClinicalProfile', () => {
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'tREi8pepJ4sshATZJExqS',
 				selfIdentifiedGender: undefined,
-				selfReportedGeneticsClinic: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
-				selfReportedMolecularLab: MolecularLab.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
+				selfReportedGeneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
+				selfReportedMolecularLabVisited: MolecularLab.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 			}).success,
 		).true;
 		expect(
