@@ -6,7 +6,7 @@ describe('ClinicianInvite', () => {
 	it('Must define conditionally required fields on condition', () => {
 		expect(
 			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: 'FGzgsOVSG4qANULuLMuaD',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
 				clinicianLastName: 'Simpson',
@@ -25,7 +25,7 @@ describe('ClinicianInvite', () => {
 		).true;
 		expect(
 			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: 'WkAjaLswDlWVBJE9im2Pc',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
 				clinicianLastName: 'Simpson',
@@ -42,7 +42,7 @@ describe('ClinicianInvite', () => {
 		).false;
 		expect(
 			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQm',
+				id: 'u0xAXpD5dhC0CKt8BdLXH',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
 				clinicianLastName: 'Simpson',
