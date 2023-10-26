@@ -8,6 +8,11 @@
 	left: 0;
 	right: 0;
 	z-index: 1;
+	&.hide-desktop {
+		@media (min-width: theme('screens.md')) {
+			display: none;
+		}
+	}
 }
 
 .headerItem {
