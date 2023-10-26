@@ -41,10 +41,10 @@
 }
 
 .button-container {
-	width: 100%;
-	text-align: left;
+	display: flex;
+	justify-content: left;
 	@media (min-width: theme('screens.sm')) {
-		text-align: right;
+		justify-content: end;
 	}
 }
 

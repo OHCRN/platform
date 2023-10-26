@@ -22,7 +22,6 @@ import Image from 'next/image';
 
 import Card from 'src/components/Card';
 import LinkButton from 'src/components/Button/LinkButton';
-import RightArrow from 'src/components/Icons/Arrow';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/public/consents.jpeg';
 
@@ -44,13 +43,12 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 					<p>{translate('review-consents-description')}</p>
 					<div className={styles['button-container']}>
 						{consentStatus == 'complete' ? (
-							<LinkButton href={''} variant="secondary" color="blue" layout="icon">
+							<LinkButton href={''} variant="secondary" color="blue">
 								<b>{translate('download-consent-forms')}</b>
 							</LinkButton>
 						) : (
-							<LinkButton href={''} variant="primary" color="green" layout="icon">
+							<LinkButton href={''} variant="primary" color="green" size="large" action="next">
 								<b>{translate('complete-consent-forms')}</b>
-								<RightArrow />
 							</LinkButton>
 						)}
 					</div>

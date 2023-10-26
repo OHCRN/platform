@@ -2,9 +2,11 @@ import { ReactNode } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 
+import RightArrow from 'src/components/Icons/Arrow';
+
 import styles from './Button.module.scss';
 
-import { ButtonColor, ButtonSize, ButtonVariant, ButtonLayout } from '.';
+import { ButtonColor, ButtonSize, ButtonVariant, ButtonLayout, ButtonAction } from '.';
 
 const LinkButton = ({
 	href,
@@ -12,6 +14,7 @@ const LinkButton = ({
 	color = 'default',
 	size = 'base',
 	layout = 'default',
+	action,
 	children,
 	className = '',
 }: {
@@ -21,6 +24,7 @@ const LinkButton = ({
 	color?: ButtonColor;
 	size?: ButtonSize;
 	layout?: ButtonLayout;
+	action?: ButtonAction;
 	className?: string;
 }) => {
 	return (
@@ -32,11 +36,14 @@ const LinkButton = ({
 				styles[color],
 				styles[size],
 				styles[layout],
+				action && styles.icon,
 				className,
 			)}
 			role="button"
 		>
+			{action === 'prev' && <RightArrow className={styles['left-arrow']} />}
 			{children}
+			{action === 'next' && <RightArrow />}
 		</Link>
 	);
 };

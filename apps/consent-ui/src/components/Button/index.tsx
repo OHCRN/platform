@@ -20,12 +20,15 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
+import RightArrow from 'src/components/Icons/Arrow';
+
 import styles from './Button.module.scss';
 
 export type ButtonVariant = 'primary' | 'secondary';
 export type ButtonColor = 'default' | 'blue' | 'green';
 export type ButtonSize = 'base' | 'large';
 export type ButtonLayout = 'default' | 'icon';
+export type ButtonAction = 'next' | 'prev';
 export interface ButtonProps {
 	children: ReactNode;
 	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
@@ -33,6 +36,7 @@ export interface ButtonProps {
 	color?: ButtonColor;
 	size?: ButtonSize;
 	layout?: ButtonLayout;
+	action?: ButtonAction;
 	disabled?: boolean;
 	className?: string;
 }
@@ -43,6 +47,7 @@ const Button = ({
 	color = 'default',
 	size = 'base',
 	layout = 'default',
+	action,
 	disabled = false,
 	className = '',
 }: ButtonProps) => {
@@ -54,12 +59,15 @@ const Button = ({
 				styles[color],
 				styles[size],
 				styles[layout],
+				action && styles.icon,
 				className,
 			)}
 			disabled={disabled}
 			onClick={onClick}
 		>
+			{action === 'prev' && <RightArrow className={styles['left-arrow']} />}
 			{children}
+			{action === 'next' && <RightArrow />}
 		</button>
 	);
 };
