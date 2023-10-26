@@ -26,6 +26,7 @@ import dictionaries from 'src/i18n/locales';
  * ```
  * Util function that takes the parameters object passed in to the function returned from getTranslation()
  * and replaces the key in the translated string with the value of that key
+ * Regex will ignore whitespace between the {{/}} and the tag, so {{key}} and {{ key }} and all other permutations of spaces are matched
  * Uses the global regex flag to ensure each instance of an argument key in a string is replaced
  *
  * ```
