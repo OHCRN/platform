@@ -20,6 +20,7 @@
 import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import { ConsentWizardProgressSchema as ConsentWizardProgress } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 
@@ -61,6 +62,11 @@ const options = swaggerJsdoc({
 					url: '/',
 				},
 			],
+		},
+		components: {
+			schemas: {
+				ConsentWizardProgress,
+			},
 		},
 	},
 	apis: ['./src/routers/*'],
