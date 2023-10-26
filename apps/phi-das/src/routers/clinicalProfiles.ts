@@ -112,25 +112,31 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
+ *               ancestry:
+ *                 $ref: '#/components/schemas/Ancestry'
+ *               birthSex:
+ *                 $ref: '#/components/schemas/BirthSex'
  *               clinicalProfilePrivateKey:
  *                 type: string
  *                 required: true
- *               birthSex:
- *                 $ref: '#/components/schemas/BirthSex'
+ *               familyHistoryOfCancer:
+ *                 $ref: '#/components/schemas/FamilyHistoryOfCancer'
  *               gender:
  *                 $ref: '#/components/schemas/Gender'
+ *               historyOfCancer:
+ *                 $ref: '#/components/schemas/HistoryOfCancer'
  *               selfIdentifiedGender:
  *                 type: string
- *               ancestry:
- *                 $ref: '#/components/schemas/Ancestry'
+ *               selfReportedClinicianFirstName:
+ *                 type: string
+ *               selfReportedClinicianLastName:
+ *                 type: string
+ *               selfReportedClinicianTitleOrRole:
+ *                 type: string
  *               selfReportedGeneticsClinicVisited:
  *                 $ref: '#/components/schemas/GeneticsClinic'
  *               selfReportedMolecularLabVisited:
  *                 $ref: '#/components/schemas/MolecularLab'
- *               historyOfCancer:
- *                 $ref: '#/components/schemas/HistoryOfCancer'
- *               familyHistoryOfCancer:
- *                 $ref: '#/components/schemas/FamilyHistoryOfCancer'
  *     responses:
  *       201:
  *         description: The clinical profile was successfully created.
@@ -140,6 +146,8 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profiles');
 	const {
+		selfReportedClinicianLastName,
+		selfReportedClinicianTitleOrRole,
 		ancestry,
 		birthSex,
 		clinicalProfilePrivateKey,
@@ -147,6 +155,7 @@ router.post('/', async (req, res) => {
 		gender,
 		historyOfCancer,
 		selfIdentifiedGender,
+		selfReportedClinicianFirstName,
 		selfReportedGeneticsClinicVisited,
 		selfReportedMolecularLabVisited,
 	} = req.body;
@@ -160,6 +169,9 @@ router.post('/', async (req, res) => {
 			gender,
 			historyOfCancer,
 			selfIdentifiedGender,
+			selfReportedClinicianFirstName,
+			selfReportedClinicianLastName,
+			selfReportedClinicianTitleOrRole,
 			selfReportedGeneticsClinicVisited,
 			selfReportedMolecularLabVisited,
 		});

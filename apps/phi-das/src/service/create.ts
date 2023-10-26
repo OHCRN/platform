@@ -53,6 +53,9 @@ export const createClinicalProfile = async ({
 	gender,
 	historyOfCancer,
 	selfIdentifiedGender,
+	selfReportedClinicianFirstName,
+	selfReportedClinicianLastName,
+	selfReportedClinicianTitleOrRole,
 	selfReportedGeneticsClinicVisited,
 	selfReportedMolecularLabVisited,
 }: {
@@ -63,6 +66,9 @@ export const createClinicalProfile = async ({
 	gender: Gender;
 	historyOfCancer: HistoryOfCancer;
 	selfIdentifiedGender?: string;
+	selfReportedClinicianFirstName?: string;
+	selfReportedClinicianLastName?: string;
+	selfReportedClinicianTitleOrRole?: string;
 	selfReportedGeneticsClinicVisited?: GeneticsClinic;
 	selfReportedMolecularLabVisited?: MolecularLab;
 }): Promise<ClinicalProfile> => {
@@ -75,6 +81,9 @@ export const createClinicalProfile = async ({
 			gender,
 			historyOfCancer,
 			selfIdentifiedGender,
+			selfReportedClinicianFirstName,
+			selfReportedClinicianLastName,
+			selfReportedClinicianTitleOrRole,
 			selfReportedGeneticsClinicVisited,
 			selfReportedMolecularLabVisited,
 		},

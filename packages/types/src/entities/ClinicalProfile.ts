@@ -23,8 +23,8 @@ import { Ancestry } from './Ancestry.js';
 import { BirthSex } from './BirthSex.js';
 import { Gender } from './Gender.js';
 import { GeneticsClinic } from './GeneticsClinic.js';
-import { MolecularLab } from './MolecularLab.js';
 import { HistoryOfCancer } from './HistoryOfCancer.js';
+import { MolecularLab } from './MolecularLab.js';
 import { NanoId } from './NanoId.js';
 
 export const ClinicalProfile = z
@@ -37,6 +37,9 @@ export const ClinicalProfile = z
 		historyOfCancer: HistoryOfCancer,
 		participantId: NanoId,
 		selfIdentifiedGender: z.string().trim().optional(),
+		selfReportedClinicianFirstName: z.string().trim().optional(),
+		selfReportedClinicianLastName: z.string().trim().optional(),
+		selfReportedClinicianTitleOrRole: z.string().trim().optional(),
 		selfReportedGeneticsClinicVisited: GeneticsClinic.optional(),
 		selfReportedMolecularLabVisited: MolecularLab.optional(),
 	})
