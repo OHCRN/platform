@@ -119,13 +119,7 @@ router.get('/:participantId', async (req, res) => {
  *               isGuardian:
  *                 type: boolean
  *               consentGroup:
- *                 type: string
- *                 enum:
- *                   - ADULT_CONSENT
- *                   - ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER
- *                   - GUARDIAN_CONSENT_OF_MINOR
- *                   - GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT
- *                   - YOUNG_ADULT_CONSENT
+ *                 $ref: '#/components/schemas/ConsentGroup'
  *               guardianIdVerified:
  *                 type: boolean
  *               participantId:
