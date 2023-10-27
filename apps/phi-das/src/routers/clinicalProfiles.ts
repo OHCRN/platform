@@ -123,20 +123,12 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *                 $ref: '#/components/schemas/FamilyHistoryOfCancer'
  *               gender:
  *                 $ref: '#/components/schemas/Gender'
+ *               geneticsClinicVisited:
+ *                 $ref: '#/components/schemas/GeneticsClinic'
  *               historyOfCancer:
  *                 $ref: '#/components/schemas/HistoryOfCancer'
  *               selfIdentifiedGender:
  *                 type: string
- *               selfReportedClinicianFirstName:
- *                 type: string
- *               selfReportedClinicianLastName:
- *                 type: string
- *               selfReportedClinicianTitleOrRole:
- *                 type: string
- *               selfReportedGeneticsClinicVisited:
- *                 $ref: '#/components/schemas/GeneticsClinic'
- *               selfReportedMolecularLabVisited:
- *                 $ref: '#/components/schemas/MolecularLab'
  *     responses:
  *       201:
  *         description: The clinical profile was successfully created.
@@ -146,18 +138,14 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
 router.post('/', async (req, res) => {
 	logger.info('POST /clinical-profiles');
 	const {
-		selfReportedClinicianLastName,
-		selfReportedClinicianTitleOrRole,
 		ancestry,
 		birthSex,
 		clinicalProfilePrivateKey,
 		familyHistoryOfCancer,
 		gender,
+		geneticsClinicVisited,
 		historyOfCancer,
 		selfIdentifiedGender,
-		selfReportedClinicianFirstName,
-		selfReportedGeneticsClinicVisited,
-		selfReportedMolecularLabVisited,
 	} = req.body;
 	// TODO: add validation
 	try {
@@ -167,13 +155,9 @@ router.post('/', async (req, res) => {
 			clinicalProfilePrivateKey,
 			familyHistoryOfCancer,
 			gender,
+			geneticsClinicVisited,
 			historyOfCancer,
 			selfIdentifiedGender,
-			selfReportedClinicianFirstName,
-			selfReportedClinicianLastName,
-			selfReportedClinicianTitleOrRole,
-			selfReportedGeneticsClinicVisited,
-			selfReportedMolecularLabVisited,
 		});
 		res.status(201).send({ profile });
 	} catch (error) {

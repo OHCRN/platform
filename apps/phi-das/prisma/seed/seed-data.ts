@@ -23,7 +23,6 @@ import {
 	Gender,
 	GeneticsClinic,
 	HistoryOfCancer,
-	MolecularLab,
 	Prisma,
 } from '../../src/generated/client/index.js';
 
@@ -50,9 +49,8 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		clinicalProfilePrivateKey: 'MJLhYoHSBKgqQnkWJwfgy',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_NOT_TO_ANSWER,
+		geneticsClinicVisited: GeneticsClinic.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
-		selfReportedGeneticsClinicVisited: GeneticsClinic.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
-		selfReportedMolecularLabVisited: MolecularLab.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 	},
 	{
 		// both gender options provided
@@ -61,9 +59,9 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		clinicalProfilePrivateKey: 'Z78VtTLvqciD7wuwErl00',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_TO_SELF_IDENTIFY,
+		geneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
 		selfIdentifiedGender: 'other',
-		selfReportedGeneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 	},
 	// gender selected, self-identified gender skipped
 	{
@@ -72,8 +70,8 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		clinicalProfilePrivateKey: 'YSvwdKKx3XpdML8cCVcPi',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.MAN,
+		geneticsClinicVisited: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
 		historyOfCancer: HistoryOfCancer.NO,
-		selfReportedGeneticsClinicVisited: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
 	},
 ];
 

@@ -28,7 +28,6 @@ export * from './Gender.js';
 export * from './GeneticsClinic.js';
 export * from './HistoryOfCancer.js';
 export * from './lengthConstraints.js';
-export * from './MolecularLab.js';
 export * from './Name.js';
 export * from './NanoId.js';
 export * from './OhipNumber.js';
