@@ -25,42 +25,42 @@ import { PhoneNumber } from './PhoneNumber.js';
 import { NanoId } from './NanoId.js';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 
-export const ClinicianInvite = z
-	.object({
-		id: NanoId,
-		inviteSentDate: z.date(),
-		inviteAcceptedDate: z.date().optional(),
-		inviteAccepted: z.boolean().default(false),
-		clinicianFirstName: Name,
-		clinicianLastName: Name,
-		clinicianInstitutionalEmailAddress: z.string().email(),
-		clinicianTitleOrRole: z.string(),
-		participantFirstName: Name,
-		participantLastName: Name,
-		participantEmailAddress: z.string().email(),
-		participantPhoneNumber: PhoneNumber,
-		participantPreferredName: Name.optional(),
-		consentGroup: ConsentGroup,
-		guardianName: Name.optional(),
-		guardianPhoneNumber: PhoneNumber.optional(),
-		guardianEmailAddress: z.string().email().optional(),
-		guardianRelationship: Name.optional(),
-	})
-	.refine((input) => {
-		const {
-			consentGroup,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		} = input;
-		return hasRequiredGuardianInformation(
-			consentGroup,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		);
-	});
+export const ClinicianInviteBase = z.object({
+	id: NanoId,
+	inviteSentDate: z.coerce.date(),
+	inviteAcceptedDate: z.coerce.date().optional(),
+	inviteAccepted: z.boolean().default(false),
+	clinicianFirstName: Name,
+	clinicianLastName: Name,
+	clinicianInstitutionalEmailAddress: z.string().email(),
+	clinicianTitleOrRole: z.string(),
+	participantFirstName: Name,
+	participantLastName: Name,
+	participantEmailAddress: z.string().email(),
+	participantPhoneNumber: PhoneNumber,
+	participantPreferredName: Name.optional(),
+	consentGroup: ConsentGroup,
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianEmailAddress: z.string().email().optional(),
+	guardianRelationship: Name.optional(),
+});
+
+export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
+	const {
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	} = input;
+	return hasRequiredGuardianInformation(
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	);
+});
 
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;

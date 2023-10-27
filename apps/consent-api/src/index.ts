@@ -28,6 +28,7 @@ import ParticipantRouter from './routers/participants.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ParticipantResponseRouter from './routers/participantResponses.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
+import ClinicianInviteRouter from './routers/invites.js';
 import RecaptchaRouter from './routers/recaptcha.js';
 
 const App = (config: AppConfig) => {
@@ -52,6 +53,7 @@ const App = (config: AppConfig) => {
 	app.use('/consent-questions', ConsentQuestionRouter);
 	app.use('/participant-responses', ParticipantResponseRouter);
 	app.use('/consent-completion', ConsentCompletionRouter);
+	app.use('/invites', ClinicianInviteRouter);
 	app.use('/recaptcha', RecaptchaRouter);
 
 	return app;
