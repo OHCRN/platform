@@ -17,47 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import clsx from 'clsx';
+import { ConsentCategory } from 'types/entities';
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+const dictionary = {
+	home: 'Homepage',
+	register: 'Participant Registration',
+	dashboard: 'Dashboard',
+	consent: 'Consent Forms',
+	invite: 'Clinician Invite',
+	'consent-forms': 'Consent Forms',
+	[ConsentCategory.enum.INFORMED_CONSENT]: 'Informed Consent',
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: 'Consent to Data Release ',
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]: 'Consent to Research Participation ',
+	[ConsentCategory.enum.CONSENT_RECONTACT]: 'Consent to Recontact',
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: 'Review and Sign',
+	YES: 'Yes',
+	NO: 'No',
+	UNKNOWN: 'Unknown',
+} satisfies Record<string, string>;
 
-import styles from './Footer.module.scss';
+export type CommonDictionary = Record<keyof typeof dictionary, string>;
 
-const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
-	{
-		translationKey: 'about',
-		url: '#',
-	},
-	{
-		translationKey: 'help',
-		url: '#',
-	},
-	{
-		translationKey: 'contact',
-		url: '#',
-	},
-	{
-		translationKey: 'terms',
-		url: '#',
-	},
-	{
-		translationKey: 'privacy',
-		url: '#',
-	},
-];
-
-const Links = ({ translate }: { translate: TranslationFunction }) => {
-	return (
-		<div className={clsx(styles.linkGrid, styles.links)}>
-			{footerLinks.map((link) => (
-				<Link className={styles.link} key={link.translationKey} href={link.url}>
-					{translate('footer', link.translationKey)}
-				</Link>
-			))}
-		</div>
-	);
-};
-
-export default Links;
+export default dictionary;

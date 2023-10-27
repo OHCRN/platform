@@ -17,47 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import clsx from 'clsx';
+import { Province } from 'types/entities';
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+const dictionary = {
+	[Province.enum.ALBERTA]: 'Alberta',
+	[Province.enum.BRITISH_COLUMBIA]: 'British Columbia',
+	[Province.enum.MANITOBA]: 'Manitoba',
+	[Province.enum.NEW_BRUNSWICK]: 'New Brunswick',
+	[Province.enum.NEWFOUNDLAND_AND_LABRADOR]: 'Newfoundland and Labrador',
+	[Province.enum.NORTHWEST_TERRITORIES]: 'Northwest Territories',
+	[Province.enum.NOVA_SCOTIA]: 'Nova Scotia',
+	[Province.enum.NUNAVUT]: 'Nunavut',
+	[Province.enum.ONTARIO]: 'Ontario',
+	[Province.enum.PRINCE_EDWARD_ISLAND]: 'Prince Edward Island',
+	[Province.enum.QUEBEC]: 'Quebec',
+	[Province.enum.SASKATCHEWAN]: 'Saskatchewan',
+	[Province.enum.YUKON]: 'Yukon',
+} satisfies Record<string, string>;
 
-import styles from './Footer.module.scss';
+export type ProvinceDictionary = Record<keyof typeof dictionary, string>;
 
-const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
-	{
-		translationKey: 'about',
-		url: '#',
-	},
-	{
-		translationKey: 'help',
-		url: '#',
-	},
-	{
-		translationKey: 'contact',
-		url: '#',
-	},
-	{
-		translationKey: 'terms',
-		url: '#',
-	},
-	{
-		translationKey: 'privacy',
-		url: '#',
-	},
-];
-
-const Links = ({ translate }: { translate: TranslationFunction }) => {
-	return (
-		<div className={clsx(styles.linkGrid, styles.links)}>
-			{footerLinks.map((link) => (
-				<Link className={styles.link} key={link.translationKey} href={link.url}>
-					{translate('footer', link.translationKey)}
-				</Link>
-			))}
-		</div>
-	);
-};
-
-export default Links;
+export default dictionary;

@@ -20,7 +20,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@anatine/zod-openapi": "^2.2.0",
     "eslint-config-ohcrn": "workspace:^",
+    "openapi3-ts": "^4.1.2",
     "zod": "^3.21.4"
   }
 }

@@ -17,47 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import clsx from 'clsx';
+import { FooterDictionary } from 'src/i18n/locales/en/footer';
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+const dictionary = {
+	'oicr-logo-alt': 'Link to OICR Home',
+	'instagram-logo-alt': 'Link to Instagram',
+	'twitter-logo-alt': 'Link to Twitter',
+	'on-govt-logo-alt': 'Link to Ontario Government Home',
+	'overture-alt': 'Link to Overture Home',
+	'github-alt': 'Link to GitHub',
+	about: 'à Propos de OHCRN',
+	help: "Centre d'Aide",
+	contact: 'Contacter',
+	privacy: 'Politique de Confidentialité',
+	terms: 'Termes & Conditions',
+	copyright: '© {{ year }} Ontario Hereditary Cancer Research Network. Tous droits réservés.',
+	'ohcrn-registry': 'Registre OHCRN {{ registryVersion }}',
+	'powered-by': 'Propulsé par',
+	api: 'API {{ apiVersion }}',
+} satisfies FooterDictionary;
 
-import styles from './Footer.module.scss';
-
-const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
-	{
-		translationKey: 'about',
-		url: '#',
-	},
-	{
-		translationKey: 'help',
-		url: '#',
-	},
-	{
-		translationKey: 'contact',
-		url: '#',
-	},
-	{
-		translationKey: 'terms',
-		url: '#',
-	},
-	{
-		translationKey: 'privacy',
-		url: '#',
-	},
-];
-
-const Links = ({ translate }: { translate: TranslationFunction }) => {
-	return (
-		<div className={clsx(styles.linkGrid, styles.links)}>
-			{footerLinks.map((link) => (
-				<Link className={styles.link} key={link.translationKey} href={link.url}>
-					{translate('footer', link.translationKey)}
-				</Link>
-			))}
-		</div>
-	);
-};
-
-export default Links;
+export default dictionary;

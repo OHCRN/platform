@@ -18,16 +18,16 @@
  */
 
 import Link from 'next/link';
-import { getTranslation, ValidLanguage } from 'src/i18n';
 
+import { getTranslation, ValidLanguage } from 'src/i18n';
 import RegistrationForm from 'src/components/RegistrationForm';
 
 const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 	return (
 		<div>
-			<h2>{translate('register')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
+			<h2>{translate('common', 'register')}</h2>
+			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 
 			<RegistrationForm />
 		</div>

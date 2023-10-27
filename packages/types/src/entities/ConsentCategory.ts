@@ -18,6 +18,8 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 const CONSENT_CATEGORIES = [
 	'INFORMED_CONSENT',
@@ -29,3 +31,5 @@ const CONSENT_CATEGORIES = [
 
 export const ConsentCategory = z.enum(CONSENT_CATEGORIES);
 export type ConsentCategory = z.infer<typeof ConsentCategory>;
+
+export const ConsentCategorySchema: SchemaObject = generateSchema(ConsentCategory);

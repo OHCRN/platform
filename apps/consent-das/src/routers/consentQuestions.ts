@@ -50,13 +50,7 @@ const router = Router();
  *         in: query
  *         description: Consent question category
  *         schema:
- *           type: string
- *           enum:
- *             - INFORMED_CONSENT
- *             - CONSENT_RELEASE_DATA
- *             - CONSENT_RESEARCH_PARTICIPATION
- *             - CONSENT_RECONTACT
- *             - CONSENT_REVIEW_SIGN
+ *           $ref: '#/components/schemas/ConsentCategory'
  *     responses:
  *       200:
  *         description: The list of questions was successfully retrieved.
@@ -146,13 +140,7 @@ router.get('/:consentQuestionId', async (req, res) => {
  *               isActive:
  *                 type: boolean
  *               category:
- *                 type: string
- *                 enum:
- *                   - INFORMED_CONSENT
- *                   - CONSENT_RELEASE_DATA
- *                   - CONSENT_RESEARCH_PARTICIPATION
- *                   - CONSENT_RECONTACT
- *                   - CONSENT_REVIEW_SIGN
+ *                 $ref: '#/components/schemas/ConsentCategory'
  *     responses:
  *       201:
  *         description: The question was successfully created.

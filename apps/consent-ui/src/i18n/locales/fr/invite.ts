@@ -17,47 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import clsx from 'clsx';
+import { ConsentGroup } from 'types/entities';
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+import { InviteDictionary } from 'src/i18n/locales/en/invite';
 
-import styles from './Footer.module.scss';
+const dictionary = {
+	[ConsentGroup.enum.ADULT_CONSENT]: "Consentement d'un adulte (>18)",
+	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
+		"Consentement d'un adulte faisant appel à un décideur suppléant supplémentaire (>18)",
+	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR]: "Consentement du tuteur d'un mineur",
+	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
+		"Consentement du tuteur d'un mineur (y compris le consentement)",
+	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Consentement des jeunes adultes (<18 ans)',
+} satisfies InviteDictionary;
 
-const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
-	{
-		translationKey: 'about',
-		url: '#',
-	},
-	{
-		translationKey: 'help',
-		url: '#',
-	},
-	{
-		translationKey: 'contact',
-		url: '#',
-	},
-	{
-		translationKey: 'terms',
-		url: '#',
-	},
-	{
-		translationKey: 'privacy',
-		url: '#',
-	},
-];
-
-const Links = ({ translate }: { translate: TranslationFunction }) => {
-	return (
-		<div className={clsx(styles.linkGrid, styles.links)}>
-			{footerLinks.map((link) => (
-				<Link className={styles.link} key={link.translationKey} href={link.url}>
-					{translate('footer', link.translationKey)}
-				</Link>
-			))}
-		</div>
-	);
-};
-
-export default Links;
+export default dictionary;
