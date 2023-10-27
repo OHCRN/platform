@@ -18,6 +18,8 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 const CONSENT_GROUPS = [
 	'ADULT_CONSENT',
@@ -29,3 +31,5 @@ const CONSENT_GROUPS = [
 
 export const ConsentGroup = z.enum(CONSENT_GROUPS);
 export type ConsentGroup = z.infer<typeof ConsentGroup>;
+
+export const ConsentGroupSchema: SchemaObject = generateSchema(ConsentGroup);
