@@ -17,21 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
-export * from './SubmitInformedConsent.js';
-export * from './RetrieveInformedConsent.js';
-export * from './InformedConsentResponse.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
+
+import { NanoId } from './NanoId.js';
+
+// TODO get participantId from auth
+export const SubmitInformedConsent = z.object({
+	completedInformedConsent: z.boolean(),
+	participantId: NanoId,
+});
+
+export type SubmitInformedConsent = z.infer<typeof SubmitInformedConsent>;
+export const SubmitInformedConsentSchema: SchemaObject = generateSchema(SubmitInformedConsent);
