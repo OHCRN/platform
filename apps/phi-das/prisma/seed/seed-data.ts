@@ -46,7 +46,7 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		// gender selected, self-identified gender skipped
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
-		clinicalProfilePrivateKey: 'MJLhYoHSBKgqQnkWJwfgy',
+		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU2se',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_NOT_TO_ANSWER,
 		geneticsClinicVisited: GeneticsClinic.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
@@ -56,7 +56,7 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		// both gender options provided
 		ancestry: Ancestry.PREFER_NOT_TO_ANSWER,
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
-		clinicalProfilePrivateKey: 'Z78VtTLvqciD7wuwErl00',
+		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROUewq',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_TO_SELF_IDENTIFY,
 		geneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
@@ -67,7 +67,7 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 	{
 		ancestry: Ancestry.ARMENIAN,
 		birthSex: BirthSex.MALE,
-		clinicalProfilePrivateKey: 'YSvwdKKx3XpdML8cCVcPi',
+		clinicalProfilePrivateKey: 'Cli04iPLl7UwGHVROU4ds',
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.MAN,
 		geneticsClinicVisited: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
