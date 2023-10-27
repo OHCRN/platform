@@ -17,24 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
+import { z } from 'zod';
+
+import { Ancestry } from './Ancestry.js';
+import { BirthSex } from './BirthSex.js';
+import { Gender } from './Gender.js';
+import { GeneticsClinic } from './GeneticsClinic.js';
+import { HistoryOfCancer } from './HistoryOfCancer.js';
+import { NanoId } from './NanoId.js';
+
+export const ClinicalProfile = z
+	.object({
+		ancestry: Ancestry,
+		birthSex: BirthSex,
+		clinicalProfilePrivateKey: NanoId,
+		familyHistoryOfCancer: HistoryOfCancer,
+		gender: Gender,
+		geneticsClinicVisited: GeneticsClinic.optional(),
+		historyOfCancer: HistoryOfCancer,
+		participantId: NanoId,
+		selfIdentifiedGender: z.string().trim().optional(),
+	})
+	.refine((input) => {
+		// selfIdentifiedGender must be defined if
+		// Gender.PREFER_TO_SELF_IDENTIFY was selected
+
+		const requiresSelfIdentifiedGender = input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY;
+		return requiresSelfIdentifiedGender ? input.selfIdentifiedGender !== undefined : true;
+	});
+
+export type ClinicalProfile = z.infer<typeof ClinicalProfile>;

@@ -17,24 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
+import { z } from 'zod';
+
+const GENETICS_CLINIC = [
+	'CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA',
+	'GRAND_RIVER_HOSPITAL_KITCHENER',
+	'HAMILTON_HEALTH_SCIENCES_HAMILTON',
+	'HEALTH_SCIENCES_NORTH_SUDBURY',
+	'HOSPITAL_FOR_SICK_CHILDREN_TORONTO',
+	'KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON',
+	'LAKERIDGE_HEALTH_OSHAWA',
+	'LONDON_HEALTH_SCIENCES_CENTRE_LONDON',
+	'MACKENZIE_HEALTH_RICHMOND_HILL',
+	'NORTH_YORK_GENERAL_HOSPITAL_TORONTO',
+	'ORILLIA_SOLDIERS_MEMORIAL_HOSPITAL_ORILLIA_SIMCOE_MUSKOKA',
+	'PETERBOROUGH_REGIONAL_HEALTH_CENTRE_PETERBOROUGH',
+	'PRINCESS_MARGARET_HOSPITAL_TORONTO',
+	'SINAI_HEALTH_SYSTEM_TORONTO',
+	'SUNNYBROOK_HEALTH_SCIENCES_TORONTO',
+	'THUNDER_BAY_REGIONAL_HEALTH_SCIENCES_CENTRE_THUNDER_BAY',
+	'TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA',
+	'WINDSOR_REGIONAL_HOSPITAL_WINDSOR',
+	'WOMENS_COLLEGE_HOSPITAL_TORONTO',
+] as const;
+
+export const GeneticsClinic = z.enum(GENETICS_CLINIC);
+export type GeneticsClinic = z.infer<typeof GeneticsClinic>;
