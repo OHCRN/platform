@@ -17,47 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import clsx from 'clsx';
+import { ConsentCategory } from 'types/entities';
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+import { CommonDictionary } from 'src/i18n/locales/en/common';
 
-import styles from './Footer.module.scss';
+const dictionary = {
+	home: "Page d'accueil",
+	register: 'Inscription du participant',
+	dashboard: 'Tableau de bord',
+	consent: 'Formulaires de consentement',
+	invite: 'Invitation du clinicien',
+	'consent-forms': 'Formulaires de consentement',
+	[ConsentCategory.enum.INFORMED_CONSENT]: 'Consentement éclairé',
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: 'Consentement à la divulgation de données',
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]:
+		'Consentement à la participation à la recherche',
+	[ConsentCategory.enum.CONSENT_RECONTACT]: 'Consentement à la reprise de contact',
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: 'Examen et signature',
+	YES: 'Oui',
+	NO: 'Non',
+	UNKNOWN: 'Inconnu',
+} satisfies CommonDictionary;
 
-const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
-	{
-		translationKey: 'about',
-		url: '#',
-	},
-	{
-		translationKey: 'help',
-		url: '#',
-	},
-	{
-		translationKey: 'contact',
-		url: '#',
-	},
-	{
-		translationKey: 'terms',
-		url: '#',
-	},
-	{
-		translationKey: 'privacy',
-		url: '#',
-	},
-];
-
-const Links = ({ translate }: { translate: TranslationFunction }) => {
-	return (
-		<div className={clsx(styles.linkGrid, styles.links)}>
-			{footerLinks.map((link) => (
-				<Link className={styles.link} key={link.translationKey} href={link.url}>
-					{translate('footer', link.translationKey)}
-				</Link>
-			))}
-		</div>
-	);
-};
-
-export default Links;
+export default dictionary;

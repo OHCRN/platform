@@ -23,7 +23,6 @@
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useAppConfigContext } from '../AppConfigContextProvider';
-
 import { RecaptchaCheckboxRef } from '../../hooks/useRecaptcha';
 
 const RecaptchaCheckbox = ({

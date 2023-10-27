@@ -17,46 +17,54 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GetDictionary, GetTranslation } from 'src/i18n/types';
-import { defaultLanguage, defaultNamespace } from 'src/i18n/settings';
+import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
-// these will only reload on page refresh (server only) or lang change
-const dictionaries: GetDictionary = {
-	en: (namespace) =>
-		import(`../locales/en/${namespace}.json`).then((module) => {
-			return module.default;
-		}),
-	fr: (namespace) =>
-		import(`../locales/fr/${namespace}.json`).then((module) => {
-			return module.default;
-		}),
+import { GetTranslation } from 'src/i18n/types';
+import dictionaries from 'src/i18n/locales';
+
+/**
+ * ```
+ * Util function that takes the parameters object passed in to the function returned from getTranslation()
+ * and replaces the key in the translated string with the value of that key
+ * Regex will ignore whitespace between the {{/}} and the tag, so {{key}} and {{ key }} and all other permutations of spaces are matched
+ * Uses the global regex flag to ensure each instance of an argument key in a string is replaced
+ *
+ * ```
+ * @param original
+ * @param replacements
+ * @returns string
+ * @example
+ * const dict = {
+ * 	common: {
+ * 		'sample-sentence': 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.'
+ * 	}
+ * }
+ * const translate = getTranslation('en')
+ * translate('common', 'sample-sentence', { dayOfWeek: 'Thursday', dayOfMonth: 'October' }) would call replaceParams as:
+ * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
+ * // returns 'Translated this string on a Thursday in October.'
+ */
+const replaceParams = (
+	original: string,
+	replacements?: Record<string, string | number>,
+): string => {
+	return Object.entries(replacements || {}).reduce((acc, [key, value]) => {
+		const tagRegex = new RegExp(`{{[\\s]*${key}[\\s]*}}`, REGEX_FLAG_GLOBAL);
+		return acc.replace(tagRegex, String(value));
+	}, original);
 };
 
-export const getTranslation: GetTranslation = async (
-	language = defaultLanguage,
-	namespace = defaultNamespace,
-) => {
-	const dictionary = await dictionaries[language](namespace);
-	return (key: string, params?: { [key: string]: string | number }) => {
-		let translation = dictionary[key];
-		// TODO: use this for nested keys, not sure if we will use this approach? namespaces may be sufficient
-		// .split('.')
-		// .reduce((obj, key) => obj && obj[key], dictionary);
-
-		// Use Object.hasOwn() to check instead of !translation to prevent false negatives for empty strings
-		if (!Object.hasOwn(dictionary, key)) {
-			// TODO: add error handling/default values for missing translations
-			console.error(
-				`Could not find "${language}" translation for key "${key}" in namespace "${namespace}"`,
-			);
-			return key;
+// TODO: is there a way to enforce this function for server side use only?
+export const getTranslation: GetTranslation = (language) => {
+	const dictionary = dictionaries[language];
+	return (namespace, key, params) => {
+		// TODO: consider throwing error if translation not a string/undefined
+		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
+		// warning log and `|| ''` is currently provided as a stopgap
+		if (!(dictionary && namespace && key)) {
+			console.warn(`Missing translation in ${language} dictionary!`);
 		}
-		// for interpolation
-		if (params && Object.entries(params).length) {
-			Object.entries(params).forEach(([key, value]) => {
-				translation = translation!.replace(`{{ ${key} }}`, String(value));
-			});
-		}
-		return translation;
+		const translation = `${dictionary[namespace][key] || ''}`;
+		return replaceParams(translation, params);
 	};
 };

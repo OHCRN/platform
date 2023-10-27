@@ -37,26 +37,31 @@ const icons: {
 };
 
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'header');
+	const translate = getTranslation(currentLang);
 	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
 		<HeaderWrapper currentLang={currentLang}>
 			<div>
 				<Link href={`/${currentLang}`}>
-					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />
+					<Image
+						src={icon}
+						priority
+						alt={translate('header', 'logo-alt-text')}
+						className={styles.logo}
+					/>
 				</Link>
 			</div>
 			<div className={styles.right}>
 				<div className={styles.headerItem}>
 					<LanguageToggle currentLang={currentLang}>
-						<span className={styles['toggle-full']}>{translate(langToSelect)}</span>
+						<span className={styles['toggle-full']}>{translate('header', langToSelect)}</span>
 						<span className={styles['toggle-abbr']}>{langToSelect}</span>
 					</LanguageToggle>
 				</div>
 				{/* TODO: implement real help button, ticket TBD */}
 				<div className={styles.help}>
-					<HelpButton label={translate('help')} />
+					<HelpButton label={translate('header', 'help')} />
 				</div>
 				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 				{/* TODO: implement user menu, ticket TBD */}

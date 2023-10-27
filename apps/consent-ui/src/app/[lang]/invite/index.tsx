@@ -22,11 +22,11 @@ import Link from 'next/link';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 	return (
 		<div>
-			<h2>{translate('invite')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
+			<h2>{translate('common', 'invite')}</h2>
+			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 		</div>
 	);
 };
