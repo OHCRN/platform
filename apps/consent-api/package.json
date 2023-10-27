@@ -11,7 +11,6 @@
 		"build": "tsc",
 		"dev": "nodemon",
 		"start": "ts-node src/server.ts",
-		"test": "nyc mocha",
 		"lint": "eslint ."
 	},
 	"keywords": [],
