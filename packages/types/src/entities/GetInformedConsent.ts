@@ -22,8 +22,8 @@ import { z } from 'zod';
 import { NanoId } from './NanoId.js';
 
 // TODO get participantId from auth
-export const RetrieveInformedConsent = z.object({
+export const GetInformedConsent = z.object({
 	participantId: NanoId,
 });
 
-export type RetrieveInformedConsent = z.infer<typeof RetrieveInformedConsent>;
+export type GetInformedConsent = z.infer<typeof GetInformedConsent>;

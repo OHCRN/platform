@@ -33,5 +33,5 @@ export * from './User.js';
 export * from './NanoId.js';
 export * from './lengthConstraints.js';
 export * from './SubmitInformedConsent.js';
-export * from './RetrieveInformedConsent.js';
+export * from './GetInformedConsent.js';
 export * from './InformedConsentResponse.js';

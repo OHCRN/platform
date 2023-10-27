@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
  *       - Consent Wizard
  *       - Informed Consent
  *     name: Retrieve Informed Consent
- *     description: Form response for Informed Consent
+ *     description: Participant's response for Informed Consent
  *     requestBody:
  *       required: true
  *       content:
@@ -89,7 +89,7 @@ router.post('/', async (req, res) => {
  *             type: object
  *             properties:
  *               data:
- *                 $ref: '#/components/schemas/RetrieveInformedConsent'
+ *                 $ref: '#/components/schemas/GetInformedConsent'
  *     responses:
  *       200:
  *         description: OK
@@ -98,8 +98,8 @@ router.post('/', async (req, res) => {
  *             schema:
  *               type: object
  *               properties:
- *                 data:
- *                   $ref: '#/components/schemas/InformedConsentResponse'
+ *                 properties:
+ *                   message: string
  *       500:
  *         description: Server error
  */
@@ -108,7 +108,7 @@ router.get('/', async (req, res) => {
 	// TODO: implement
 	try {
 		logger.info(`Retrieved informed consent`);
-		res.status(201).send({ completedInformedConsent: true });
+		res.status(201).send({ message: 'Success' });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });

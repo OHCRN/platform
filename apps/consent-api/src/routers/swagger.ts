@@ -20,7 +20,6 @@
 import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { SubmitInformedConsentSchema as SubmitInformedConsent } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 
@@ -62,11 +61,6 @@ const options = swaggerJsdoc({
 					url: '/',
 				},
 			],
-		},
-		components: {
-			schemas: {
-				SubmitInformedConsent,
-			},
 		},
 	},
 	apis: ['./src/routers/*'],
