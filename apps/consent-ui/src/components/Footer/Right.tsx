@@ -20,16 +20,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Translation } from 'src/i18n';
+import { TranslationFunction } from 'src/i18n';
 import ONGovtLogo from 'src/public/on_govt.svg';
 
 import styles from './Footer.module.scss';
 
-const Right = ({ translate }: { translate: Translation }) => {
+const Right = ({ translate }: { translate: TranslationFunction }) => {
 	return (
 		<div className={styles.right}>
 			<Link href="#">
-				<Image src={ONGovtLogo} alt={translate('on-govt-logo-alt')} className={styles['on-gov']} />
+				<Image
+					src={ONGovtLogo}
+					alt={translate('footer', 'on-govt-logo-alt')}
+					className={styles['on-gov']}
+				/>
 			</Link>
 		</div>
 	);

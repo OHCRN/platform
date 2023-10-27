@@ -17,47 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import clsx from 'clsx';
+const dictionary = {
+	'oicr-logo-alt': 'Link to OICR Home',
+	'instagram-logo-alt': 'Link to Instagram',
+	'twitter-logo-alt': 'Link to Twitter',
+	'on-govt-logo-alt': 'Link to Ontario Government Home',
+	'overture-alt': 'Link to Overture Home',
+	'github-alt': 'Link to GitHub',
+	about: 'About OHCRN',
+	help: 'Help Centre',
+	contact: 'Contact',
+	privacy: 'Privacy Policy',
+	terms: 'Terms & Conditions',
+	copyright: '© {{ year }} Ontario Hereditary Cancer Research Network. All rights reserved.',
+	'ohcrn-registry': 'OHCRN Registry {{ registryVersion }}',
+	'powered-by': 'Powered by',
+	api: 'API {{ apiVersion }}',
+} satisfies Record<string, string>;
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+export type FooterDictionary = Record<keyof typeof dictionary, string>;
 
-import styles from './Footer.module.scss';
-
-const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
-	{
-		translationKey: 'about',
-		url: '#',
-	},
-	{
-		translationKey: 'help',
-		url: '#',
-	},
-	{
-		translationKey: 'contact',
-		url: '#',
-	},
-	{
-		translationKey: 'terms',
-		url: '#',
-	},
-	{
-		translationKey: 'privacy',
-		url: '#',
-	},
-];
-
-const Links = ({ translate }: { translate: TranslationFunction }) => {
-	return (
-		<div className={clsx(styles.linkGrid, styles.links)}>
-			{footerLinks.map((link) => (
-				<Link className={styles.link} key={link.translationKey} href={link.url}>
-					{translate('footer', link.translationKey)}
-				</Link>
-			))}
-		</div>
-	);
-};
-
-export default Links;
+export default dictionary;

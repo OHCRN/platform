@@ -29,24 +29,24 @@ import styles from './Home.module.scss';
 import Card from './Card/Card';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'landing-page');
+	const translate = getTranslation(currentLang);
 	return (
 		<div className={styles.heroContainer}>
 			<Image
 				src={BackgroundImage}
-				alt={translate('hero-background-img-alt')}
+				alt={translate('landing-page', 'hero-background-img-alt')}
 				priority
 				className={styles.backgroundImg}
 			/>
 			<div className={styles.gradientOverlay}></div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
-					<h1>{translate('title')}</h1>
+					<h1>{translate('landing-page', 'title')}</h1>
 					<p>
-						<b>{translate('ohcrn-description')}</b>
+						<b>{translate('landing-page', 'ohcrn-description')}</b>
 					</p>
 					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" layout="icon">
-						<b>{translate('more-about-ohcrn')}</b>
+						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
 						<RightArrow />
 					</LinkButton>
 				</div>
