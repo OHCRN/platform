@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GLOBAL_REGEX_FLAG } from 'types/entities';
+import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
 import { GetTranslation } from 'src/i18n/types';
 import dictionaries from 'src/i18n/locales';
@@ -49,7 +49,7 @@ const replaceParams = (
 	replacements?: Record<string, string | number>,
 ): string => {
 	return Object.entries(replacements || {}).reduce((acc, [key, value]) => {
-		const tagRegex = new RegExp(`{{[\\s]*${key}[\\s]*}}`, GLOBAL_REGEX_FLAG);
+		const tagRegex = new RegExp(`{{[\\s]*${key}[\\s]*}}`, REGEX_FLAG_GLOBAL);
 		return acc.replace(tagRegex, String(value));
 	}, original);
 };
