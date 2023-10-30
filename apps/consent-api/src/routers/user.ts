@@ -63,7 +63,7 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
 	logger.info(`GET /user`);
-	// TODO: implement
+	// TODO: implement when authentication layer is ready
 	const user: User = {
 		firstName: 'Homer',
 		lastName: 'Simpson',
