@@ -19,35 +19,13 @@
 
 import { expect } from 'chai';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+import { Gender } from '../../src/entities/index.js';
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
+describe('Gender', () => {
+	it('Must use the Gender enum', () => {
+		expect(Gender.safeParse(Gender.enum.PREFER_NOT_TO_ANSWER).success).true;
+		expect(Gender.safeParse('E-7zhxgpxf_wiPY0kXD9i').success).false;
+		expect(Gender.safeParse(undefined).success).false;
+		expect(Gender.safeParse(null).success).false;
 	});
 });

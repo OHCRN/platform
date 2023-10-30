@@ -19,35 +19,13 @@
 
 import { expect } from 'chai';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+import { HistoryOfCancer } from '../../src/entities/index.js';
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
+describe('HistoryOfCancer', () => {
+	it('Must use the HistoryOfCancer enum', () => {
+		expect(HistoryOfCancer.safeParse(HistoryOfCancer.enum.UNKNOWN).success).true;
+		expect(HistoryOfCancer.safeParse('jqvYWdsxjGLssBIHCf6v4').success).false;
+		expect(HistoryOfCancer.safeParse(undefined).success).false;
+		expect(HistoryOfCancer.safeParse(null).success).false;
 	});
 });
