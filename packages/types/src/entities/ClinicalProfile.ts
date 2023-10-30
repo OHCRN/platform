@@ -33,7 +33,7 @@ export const ClinicalProfile = z
 		clinicalProfilePrivateKey: NanoId,
 		familyHistoryOfCancer: HistoryOfCancer,
 		gender: Gender,
-		geneticsClinicVisited: GeneticsClinic.optional(),
+		geneticsClinicVisited: GeneticsClinic,
 		historyOfCancer: HistoryOfCancer,
 		participantId: NanoId,
 		selfIdentifiedGender: z.string().trim().optional(),
