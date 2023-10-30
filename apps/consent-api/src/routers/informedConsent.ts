@@ -87,7 +87,7 @@ router.post('/', async (req, res) => {
  *       - Consent Wizard
  *       - Informed Consent
  *     name: Retrieve Informed Consent
- *     description: Participant's response for Consent Wizard - Informed Consent
+ *     description: Participant's latest response for Consent Wizard - Informed Consent
  *     security:
  *       - bearerAuth: []
  *     responses:
