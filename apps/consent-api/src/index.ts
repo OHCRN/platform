@@ -29,7 +29,7 @@ import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ParticipantResponseRouter from './routers/participantResponses.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
 import RecaptchaRouter from './routers/recaptcha.js';
-import InformedConsentRouter from './routers/consentWizard/informedConsent.js';
+import InformedConsentRouter from './routers/informedConsent.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -54,7 +54,7 @@ const App = (config: AppConfig) => {
 	app.use('/participant-responses', ParticipantResponseRouter);
 	app.use('/consent-completion', ConsentCompletionRouter);
 	app.use('/recaptcha', RecaptchaRouter);
-	app.use('/consent-wizard/informed-consent', InformedConsentRouter);
+	app.use('/wizard/steps/informed-consent', InformedConsentRouter);
 
 	return app;
 };

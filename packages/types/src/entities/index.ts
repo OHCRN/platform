@@ -32,6 +32,4 @@ export * from './Regex.js';
 export * from './User.js';
 export * from './NanoId.js';
 export * from './lengthConstraints.js';
-export * from './SubmitInformedConsent.js';
-export * from './GetInformedConsent.js';
-export * from './InformedConsentResponse.js';
+export * from './InformedConsent.js';

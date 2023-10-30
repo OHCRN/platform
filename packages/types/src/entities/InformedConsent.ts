@@ -18,12 +18,12 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { NanoId } from './NanoId.js';
-
-// TODO get participantId from auth
-export const GetInformedConsent = z.object({
-	participantId: NanoId,
+export const InformedConsent = z.object({
+	COMPLETED_INFORMED_CONSENT: z.boolean(),
 });
 
-export type GetInformedConsent = z.infer<typeof GetInformedConsent>;
+export type InformedConsent = z.infer<typeof InformedConsent>;
+export const InformedConsentSchema: SchemaObject = generateSchema(InformedConsent);
