@@ -18,7 +18,7 @@ enum ConsentGroup {
 
 model Participant {
   id                  String                @id @default("") @db.Char(21)
-  consentGroup        ConsentGroup?
+  consentGroup        ConsentGroup
   emailVerified       Boolean               @default(false)
   isGuardian          Boolean
   guardianIdVerified  Boolean?
