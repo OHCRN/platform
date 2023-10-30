@@ -18,14 +18,15 @@
  */
 
 import Link from 'next/link';
+
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 	return (
 		<div style={{ width: 500 }}>
-			<h2>{translate('dashboard')}</h2>
-			<Link href={`/${currentLang}`}>{translate('home')}</Link>
+			<h2>{translate('common', 'dashboard')}</h2>
+			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 			<p>Test out sticky header/footer</p>
 			<p>
 				Ad adipisicing laborum in sunt occaecat aliqua est excepteur. Excepteur qui eu consectetur

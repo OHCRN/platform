@@ -27,12 +27,12 @@ import styles from './Card.module.scss';
 import CardLink from './CardLink';
 
 const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'landing-page');
+	const translate = getTranslation(currentLang);
 	return (
 		<div className={styles.card}>
-			<h2>{translate('join-ohcrn')}</h2>
+			<h2>{translate('landing-page', 'join-ohcrn')}</h2>
 			<p>
-				<b>{translate('join-ohcrn-description')}</b>
+				<b>{translate('landing-page', 'join-ohcrn-description')}</b>
 			</p>
 			{/* mobile view */}
 			<CardLink
@@ -42,7 +42,7 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				classes={styles.mobileCardBtn}
 				iconClasses={styles.patientIcon}
 			>
-				<strong>{translate('participants-register-today')}</strong>
+				<strong>{translate('landing-page', 'participants-register-today')}</strong>
 				<RightArrow classes={styles.arrow} />
 			</CardLink>
 			<CardLink
@@ -52,7 +52,7 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				classes={styles.mobileCardBtn}
 				iconClasses={styles.doctorIcon}
 			>
-				<strong>{translate('clinicians-register-today')}</strong>
+				<strong>{translate('landing-page', 'clinicians-register-today')}</strong>
 				<RightArrow classes={styles.arrow} />
 			</CardLink>
 			{/* tablet/desktop view */}
@@ -64,8 +64,8 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				iconClasses={styles.patientIcon}
 			>
 				<span>
-					{translate('long-participants-register-today')}{' '}
-					<strong>{translate('register-yourself-today')}</strong>
+					{translate('landing-page', 'long-participants-register-today')}{' '}
+					<strong>{translate('landing-page', 'register-yourself-today')}</strong>
 				</span>
 				<Chevron classes={styles.chevron} />
 			</CardLink>
@@ -77,8 +77,8 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				iconClasses={styles.doctorIcon}
 			>
 				<span>
-					{translate('long-clinicians-register-today')}{' '}
-					<strong>{translate('register-patient-today')}</strong>
+					{translate('landing-page', 'long-clinicians-register-today')}{' '}
+					<strong>{translate('landing-page', 'register-patient-today')}</strong>
 				</span>
 				<Chevron classes={styles.chevron} />
 			</CardLink>

@@ -17,18 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import dictionaries from '../locales/index.js';
+
 import { ValidLanguage } from './languages';
 
-export const namespaces = ['common', 'header', 'footer', 'landing-page'] as const;
-export type ValidNamespace = (typeof namespaces)[number];
-
-export type Translation = (k: string, params?: { [key: string]: string | number }) => string;
-
-export type GetDictionary = {
-	[k in ValidLanguage]: (namespace: ValidNamespace) => Promise<{ [k: string]: string }>;
-};
+export type Dictionaries = typeof dictionaries;
+export type Namespace = keyof Dictionaries[ValidLanguage];
 
 export type GetTranslation = (
-	language?: ValidLanguage,
-	namespace?: ValidNamespace,
-) => Promise<Translation>;
+	language: ValidLanguage,
+) => <SelectedNamespace extends Namespace>(
+	namespace: SelectedNamespace,
+	label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
+	params?: { [key: string]: string | number },
+) => string;
+
+export type TranslationFunction = ReturnType<GetTranslation>;
