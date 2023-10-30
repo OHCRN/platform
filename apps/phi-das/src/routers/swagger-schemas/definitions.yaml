@@ -45,7 +45,7 @@ components:
         - TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA
         - WINDSOR_REGIONAL_HOSPITAL_WINDSOR
         - WOMENS_COLLEGE_HOSPITAL_TORONTO
-    MolecularClinic:
+    MolecularLab:
       type: string
       enum:
         - CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA

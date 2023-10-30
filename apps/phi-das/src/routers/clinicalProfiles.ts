@@ -131,8 +131,8 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  *                 type: string
  *               selfReportedGeneticsClinicVisited:
  *                 $ref: '#/components/schemas/GeneticsClinic'
- *               selfReportedMolecularClinicVisited:
- *                 $ref: '#/components/schemas/MolecularClinic'
+ *               selfReportedMolecularLabVisited:
+ *                 $ref: '#/components/schemas/MolecularLab'
  *               historyOfCancer:
  *                 $ref: '#/components/schemas/HistoryOfCancer'
  *               familyHistoryOfCancer:
@@ -155,7 +155,7 @@ router.post('/', async (req, res) => {
 		selfReportedClinicianLastName,
 		selfReportedClinicianTitleOrRole,
 		selfReportedGeneticsClinicVisited,
-		selfReportedMolecularClinicVisited,
+		selfReportedMolecularLabVisited,
 		historyOfCancer,
 		familyHistoryOfCancer,
 	} = req.body;
@@ -171,7 +171,7 @@ router.post('/', async (req, res) => {
 			selfReportedClinicianLastName,
 			selfReportedClinicianTitleOrRole,
 			selfReportedGeneticsClinicVisited,
-			selfReportedMolecularClinicVisited,
+			selfReportedMolecularLabVisited,
 			historyOfCancer,
 			familyHistoryOfCancer,
 		});
