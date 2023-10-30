@@ -65,10 +65,10 @@ const router = Router();
  */
 router.post('/', recaptchaMiddleware, async (req, res) => {
 	logger.info(`POST /invites`);
-	// TODO: implement
 	try {
 		const data = ClinicianInviteForm.parse(req.body.data);
-		logger.info(`Created clinician invite with ID: ${data.id}`);
+		// TODO: implement
+		logger.info(data && 'Created clinician invite');
 		res.status(201).send({ message: 'Success' });
 	} catch (error) {
 		logger.error(error);
