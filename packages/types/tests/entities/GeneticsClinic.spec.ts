@@ -19,35 +19,16 @@
 
 import { expect } from 'chai';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+import { GeneticsClinic } from '../../src/entities/index.js';
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
+describe('GeneticsClinic', () => {
+	it('Must use the GeneticsClinic enum', () => {
 		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
+			GeneticsClinic.safeParse(GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA)
+				.success,
 		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
+		expect(GeneticsClinic.safeParse('XqhTcsD3eXW9kg3xLv0ly').success).false;
+		expect(GeneticsClinic.safeParse(undefined).success).false;
+		expect(GeneticsClinic.safeParse(null).success).false;
 	});
 });

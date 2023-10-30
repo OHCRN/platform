@@ -34,7 +34,7 @@ model Participant {
   participantOhipLastName   String
   participantOhipMiddleName String?
   phoneNumber               String           @db.Char(10)
-  participantPreferredName  String
+  participantPreferredName  String?
   guardianName              String?
   guardianPhoneNumber       String?          @db.Char(10)
   guardianEmailAddress      String?
