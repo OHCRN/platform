@@ -17,37 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { z } from 'zod';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+import { Ancestry } from './Ancestry.js';
+import { BirthSex } from './BirthSex.js';
+import { Gender } from './Gender.js';
+import { GeneticsClinic } from './GeneticsClinic.js';
+import { HistoryOfCancer } from './HistoryOfCancer.js';
+import { NanoId } from './NanoId.js';
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
+export const ClinicalProfile = z
+	.object({
+		ancestry: Ancestry,
+		birthSex: BirthSex,
+		clinicalProfilePrivateKey: NanoId,
+		familyHistoryOfCancer: HistoryOfCancer,
+		gender: Gender,
+		geneticsClinicVisited: GeneticsClinic,
+		historyOfCancer: HistoryOfCancer,
+		participantId: NanoId,
+		selfIdentifiedGender: z.string().trim().optional(),
+	})
+	.refine((input) => {
+		// selfIdentifiedGender must be defined if
+		// Gender.PREFER_TO_SELF_IDENTIFY was selected
+
+		const requiresSelfIdentifiedGender = input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY;
+		return requiresSelfIdentifiedGender ? input.selfIdentifiedGender !== undefined : true;
 	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
-	});
-});
+
+export type ClinicalProfile = z.infer<typeof ClinicalProfile>;
