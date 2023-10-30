@@ -17,37 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { z } from 'zod';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+const GENETICS_CLINIC = [
+	'CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA',
+	'GRAND_RIVER_HOSPITAL_KITCHENER',
+	'HAMILTON_HEALTH_SCIENCES_HAMILTON',
+	'HEALTH_SCIENCES_NORTH_SUDBURY',
+	'HOSPITAL_FOR_SICK_CHILDREN_TORONTO',
+	'KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON',
+	'LAKERIDGE_HEALTH_OSHAWA',
+	'LONDON_HEALTH_SCIENCES_CENTRE_LONDON',
+	'MACKENZIE_HEALTH_RICHMOND_HILL',
+	'NORTH_YORK_GENERAL_HOSPITAL_TORONTO',
+	'ORILLIA_SOLDIERS_MEMORIAL_HOSPITAL_ORILLIA_SIMCOE_MUSKOKA',
+	'PETERBOROUGH_REGIONAL_HEALTH_CENTRE_PETERBOROUGH',
+	'PRINCESS_MARGARET_HOSPITAL_TORONTO',
+	'SINAI_HEALTH_SYSTEM_TORONTO',
+	'SUNNYBROOK_HEALTH_SCIENCES_TORONTO',
+	'THUNDER_BAY_REGIONAL_HEALTH_SCIENCES_CENTRE_THUNDER_BAY',
+	'TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA',
+	'WINDSOR_REGIONAL_HOSPITAL_WINDSOR',
+	'WOMENS_COLLEGE_HOSPITAL_TORONTO',
+] as const;
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
-	});
-});
+export const GeneticsClinic = z.enum(GENETICS_CLINIC);
+export type GeneticsClinic = z.infer<typeof GeneticsClinic>;
