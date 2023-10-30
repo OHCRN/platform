@@ -6,7 +6,7 @@ This document describes how text content is translated in the Consent UI.
 
 ### Location
 
-All translation-related code is located in the [`/apps/consent-ui/` folder](../apps/consent-ui/src/i18n/), including:
+All translation-related code is located in the [`/apps/consent-ui/src/i18n/` folder](../apps/consent-ui/src/i18n/), including:
 
 - [`/locales/`](../apps/consent-ui/src/i18n/locales/) => contains the dictionaries for each supported language. We are currently supporting English (`en` folder) and French (`fr` folder)
 - [`/utils/`](../apps/consent-ui/src/i18n/utils/) => utility functions for retrieving translated values from the dictionaries
