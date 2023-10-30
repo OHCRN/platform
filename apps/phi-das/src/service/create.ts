@@ -21,7 +21,7 @@ import {
 	Ancestry,
 	GeneticsClinic,
 	HistoryOfCancer,
-	MolecularClinic,
+	MolecularLab,
 	Gender,
 	BirthSex,
 } from 'src/generated/client/index.js';
@@ -55,7 +55,7 @@ export const createClinicalProfile = async ({
 	selfReportedClinicianLastName,
 	selfReportedClinicianTitleOrRole,
 	selfReportedGeneticsClinicVisited,
-	selfReportedMolecularClinicVisited,
+	selfReportedMolecularLabVisited,
 	historyOfCancer,
 	familyHistoryOfCancer,
 }: {
@@ -68,7 +68,7 @@ export const createClinicalProfile = async ({
 	selfReportedClinicianLastName?: string;
 	selfReportedClinicianTitleOrRole?: string;
 	selfReportedGeneticsClinicVisited?: GeneticsClinic;
-	selfReportedMolecularClinicVisited?: MolecularClinic;
+	selfReportedMolecularLabVisited?: MolecularLab;
 	historyOfCancer: HistoryOfCancer;
 	familyHistoryOfCancer: HistoryOfCancer;
 }): Promise<ClinicalProfile> => {
@@ -83,7 +83,7 @@ export const createClinicalProfile = async ({
 			selfReportedClinicianLastName,
 			selfReportedClinicianTitleOrRole,
 			selfReportedGeneticsClinicVisited,
-			selfReportedMolecularClinicVisited,
+			selfReportedMolecularLabVisited,
 			historyOfCancer,
 			familyHistoryOfCancer,
 		},
