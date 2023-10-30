@@ -6,12 +6,12 @@ This document describes how text content is translated in the Consent UI.
 
 ### Location
 
-All translation-related code is located in the [`/apps/consent-ui/` folder](./apps/consent-ui/src/i18n/), including:
+All translation-related code is located in the [`/apps/consent-ui/` folder](../apps/consent-ui/src/i18n/), including:
 
-- [`/locales/`](./apps/consent-ui/src/i18n/locales/) => contains the dictionaries for each supported language. We are currently supporting English (`en` folder) and French (`fr` folder)
-- [`/utils/`](./apps/consent-ui/src/i18n/utils/) => utility functions for retrieving translated values from the dictionaries
-- [`/types/`](./apps/consent-ui/src/i18n/types/) => types for utils and supported languages
-- [`/routes/`](./apps/consent-ui/src/i18n/routes/) => a `.json` dictionary that defines the route key names and translated values for translated paths. The setup for translated routes is separate and is not covered in this README.
+- [`/locales/`](../apps/consent-ui/src/i18n/locales/) => contains the dictionaries for each supported language. We are currently supporting English (`en` folder) and French (`fr` folder)
+- [`/utils/`](../apps/consent-ui/src/i18n/utils/) => utility functions for retrieving translated values from the dictionaries
+- [`/types/`](../apps/consent-ui/src/i18n/types/) => types for utils and supported languages
+- [`/routes/`](../apps/consent-ui/src/i18n/routes/) => a `.json` dictionary that defines the route key names and translated values for translated paths. The setup for translated routes is separate and is not covered in this README.
 
 ### Terms
 
@@ -21,7 +21,7 @@ All translation-related code is located in the [`/apps/consent-ui/` folder](./ap
 
 ### Type Structure
 
-The English dictionaries will be the source of truth for the expected type structure of all  dictionaries. This means that any new namespace or namespace key added in [`/locales/en/`](./apps/consent-ui/src/i18n/locales/en/) should trigger TS errors in [`/locales/fr/`](./apps/consent-ui/src/i18n/locales/fr/). The opposite is also true: attempting to add a namespace or key in the French dictionaries that is not already in the English dictionaries will cause TS to error. This is achieved with TS `satisfies` operator to preserve type structure:
+The English dictionaries will be the source of truth for the expected type structure of all  dictionaries. This means that any new namespace or namespace key added in [`/locales/en/`](../apps/consent-ui/src/i18n/locales/en/) should trigger TS errors in [`/locales/fr/`](../apps/consent-ui/src/i18n/locales/fr/). The opposite is also true: attempting to add a namespace or key in the French dictionaries that is not already in the English dictionaries will cause TS to error. This is achieved with TS `satisfies` operator to preserve type structure:
 
 
 ```typescript
@@ -96,7 +96,7 @@ export type MyNamespaceDictionary = Record<keyof typeof dictionary, string>;
 export default dictionary;
 ```
 
-Then add this dictionary to the top-level `dictionaries` definition in [`/locales/en/index.ts`](./apps/consent-ui/src/i18n/locales/en/index.ts):
+Then add this dictionary to the top-level `dictionaries` definition in [`/locales/en/index.ts`](../apps/consent-ui/src/i18n/locales/en/index.ts):
 
 ```typescript
 // "/locales/en/index.ts"
@@ -110,7 +110,7 @@ const dictionaries = {
 export default dictionaries;
 ```
 
-At this point TS should now be showing errors in the [`/locales/fr/index.ts file`](./apps/consent-ui/src/i18n/locales/fr/index.ts), because this dictionary is no longer valid against the English dictionary structure. Fix this by adding a corresponding namespace file in the `fr` locale folder, and adding `{ namespace: namespaceDictionary }` to the French dictionaries definition. Be sure to add the `satisfies MyNamespaceDictionary` to the French namespace file definition.
+At this point TS should now be showing errors in the [`/locales/fr/index.ts file`](../apps/consent-ui/src/i18n/locales/fr/index.ts), because this dictionary is no longer valid against the English dictionary structure. Fix this by adding a corresponding namespace file in the `fr` locale folder, and adding `{ namespace: namespaceDictionary }` to the French dictionaries definition. Be sure to add the `satisfies MyNamespaceDictionary` to the French namespace file definition.
 
 ### How to Add a Translation to a Namespace
 
