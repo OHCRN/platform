@@ -26,7 +26,7 @@ import { GeneticsClinic } from './GeneticsClinic.js';
 import { HistoryOfCancer } from './HistoryOfCancer.js';
 import { NanoId } from './NanoId.js';
 import { Name } from './Name.js';
-import { MolecularLab } from './MolecularClinic.js';
+import { MolecularLab } from './MolecularLab.js';
 
 export const ClinicalProfile = z
 	.object({
