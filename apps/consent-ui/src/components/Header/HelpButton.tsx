@@ -10,7 +10,7 @@ const HelpButton = ({ label }: { label: string }) => {
 		<Button
 			variant="secondary"
 			color="green"
-			layout="icon"
+			layout="left-icon"
 			className={styles.helpButton}
 			onClick={() => console.log('HALP')}
 		>

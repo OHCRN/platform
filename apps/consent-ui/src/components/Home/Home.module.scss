@@ -50,13 +50,13 @@
 }
 
 .heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  
   font-size: theme('fontSize.lg');
   @media (min-width: theme('screens.md')) {
     max-width: 45rem;
-  }
-
-  * {
-    margin: 2rem 0;
   }
 
   h1 {
