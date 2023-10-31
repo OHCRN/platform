@@ -37,7 +37,7 @@ export const ClinicalProfile = z
 		gender: Gender,
 		selfReportedClinicianFirstName: Name.optional(),
 		selfReportedClinicianLastName: Name.optional(),
-		selfReportedClinicianTitleOrRole: Name.optional(),
+		selfReportedClinicianTitleOrRole: z.string().optional(),
 		selfReportedGeneticsClinicVisited: GeneticsClinic.optional(),
 		selfReportedMolecularLabVisited: MolecularLab.optional(),
 		historyOfCancer: HistoryOfCancer,
