@@ -17,7 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+const dictionary = {
+	'review-ohcrn-consents': 'Review OHCRN Consents',
+	'review-ohcrn-consents-img': 'Review OHCRN Consents',
+	'review-consents-description':
+		'A step-by-step guide to help you review and agree to the consents that are required for participating in the OHCRN registry.',
+	'complete-consent-forms': 'Complete Consent Forms',
+	'download-consent-forms': 'Download Consent PDF',
+} satisfies Record<string, string>;
 
 export type DashboardDictionary = Record<keyof typeof dictionary, string>;
 
