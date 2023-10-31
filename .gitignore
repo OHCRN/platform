@@ -68,3 +68,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # prisma client
 generated/
+
+# test coverage reports
+coverage
+*.ts.html
