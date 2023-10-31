@@ -21,8 +21,9 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-const CONSENT_QUESTION_IDS = ['INFORMED_CONSENT__READ_AND_UNDERSTAND'] as const;
+const CONSENT_QUESTION_IDS = ['READ_AND_UNDERSTAND'] as const;
 
 export const ConsentQuestionId = z.enum(CONSENT_QUESTION_IDS);
 export type ConsentQuestionId = z.infer<typeof ConsentQuestionId>;
+
 export const ConsentQuestionIdSchema: SchemaObject = generateSchema(ConsentQuestionId);

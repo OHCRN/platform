@@ -21,8 +21,10 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
+import { ConsentQuestionId } from './ConsentQuestionId.js';
+
 export const InformedConsent = z.object({
-	COMPLETED_INFORMED_CONSENT: z.boolean(),
+	[ConsentQuestionId.enum.READ_AND_UNDERSTAND]: z.boolean(),
 });
 
 export type InformedConsent = z.infer<typeof InformedConsent>;
