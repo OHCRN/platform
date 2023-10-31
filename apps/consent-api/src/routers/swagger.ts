@@ -22,6 +22,7 @@ import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ConsentWizardProgressSchema as ConsentWizardProgress,
+	ClinicianInviteFormSchema as ClinicianInviteForm,
 	UserSchema as User,
 } from 'types/entities';
 
@@ -69,6 +70,7 @@ const options = swaggerJsdoc({
 		components: {
 			schemas: {
 				ConsentWizardProgress,
+				ClinicianInviteForm,
 				User,
 			},
 		},
