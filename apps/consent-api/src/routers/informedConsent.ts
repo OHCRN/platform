@@ -18,6 +18,7 @@
  */
 
 import { Router } from 'express';
+import { ConsentQuestionId } from 'types/entities';
 
 import logger from '../logger.js';
 
@@ -49,7 +50,7 @@ const router = Router();
  *             type: object
  *             properties:
  *               data:
- *                 $ref: '#/components/schemas/InformedConsent'
+ *                 $ref: '#/components/schemas/InformedConsentRequest'
  *     responses:
  *       201:
  *         description: OK
@@ -59,7 +60,7 @@ const router = Router();
  *               type: object
  *               properties:
  *                 data:
- *                   $ref: '#/components/schemas/InformedConsent'
+ *                   $ref: '#/components/schemas/InformedConsentResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -72,7 +73,7 @@ router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Submitted informed consent`);
-		res.status(201).send({ message: 'Success' });
+		res.status(201).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
@@ -99,7 +100,7 @@ router.post('/', async (req, res) => {
  *               type: object
  *               properties:
  *                 data:
- *                   $ref: '#/components/schemas/InformedConsent'
+ *                   $ref: '#/components/schemas/InformedConsentResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -112,7 +113,7 @@ router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Retrieved informed consent`);
-		res.status(200).send({ message: 'Success' });
+		res.status(200).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });

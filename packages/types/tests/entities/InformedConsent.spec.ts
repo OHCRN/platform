@@ -19,27 +19,56 @@
 
 import { expect } from 'chai';
 
-import { InformedConsent, ConsentQuestionId } from '../../src/entities/index.js';
+import {
+	ConsentQuestionId,
+	InformedConsentRequest,
+	InformedConsentResponse,
+} from '../../src/entities/index.js';
 
-describe('InformedConsent', () => {
+describe('InformedConsentRequest', () => {
 	it('Must provide a boolean value for informed consent', () => {
 		expect(
-			InformedConsent.safeParse({
+			InformedConsentRequest.safeParse({
 				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true,
 			}).success,
 		).true;
 		expect(
-			InformedConsent.safeParse({
+			InformedConsentRequest.safeParse({
 				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: false,
 			}).success,
 		).true;
 		expect(
-			InformedConsent.safeParse({
+			InformedConsentRequest.safeParse({
 				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: null,
 			}).success,
 		).false;
 		expect(
-			InformedConsent.safeParse({
+			InformedConsentRequest.safeParse({
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: undefined,
+			}).success,
+		).false;
+	});
+});
+
+describe('InformedConsentResponse', () => {
+	it('Must provide a boolean value for informed consent', () => {
+		expect(
+			InformedConsentResponse.safeParse({
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true,
+			}).success,
+		).true;
+		expect(
+			InformedConsentResponse.safeParse({
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: false,
+			}).success,
+		).true;
+		expect(
+			InformedConsentResponse.safeParse({
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: null,
+			}).success,
+		).false;
+		expect(
+			InformedConsentResponse.safeParse({
 				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: undefined,
 			}).success,
 		).false;

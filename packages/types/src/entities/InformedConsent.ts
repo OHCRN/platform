@@ -21,11 +21,16 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentQuestionId } from './ConsentQuestionId.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-export const InformedConsent = z.object({
-	[ConsentQuestionId.enum.READ_AND_UNDERSTAND]: z.boolean(),
+export const InformedConsentBase = z.object({
+	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.boolean(),
 });
 
-export type InformedConsent = z.infer<typeof InformedConsent>;
-export const InformedConsentSchema: SchemaObject = generateSchema(InformedConsent);
+export const InformedConsentRequest = InformedConsentBase;
+export type InformedConsentRequest = z.infer<typeof InformedConsentRequest>;
+export const InformedConsentRequestSchema: SchemaObject = generateSchema(InformedConsentRequest);
+
+export const InformedConsentResponse = InformedConsentBase;
+export type InformedConsentResponse = z.infer<typeof InformedConsentResponse>;
+export const InformedConsentResponseSchema: SchemaObject = generateSchema(InformedConsentResponse);
