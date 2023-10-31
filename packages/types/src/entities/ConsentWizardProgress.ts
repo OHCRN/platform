@@ -17,26 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentWizardProgress.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
+
+import { ConsentCategory } from './ConsentCategory.js';
+
+const CONSENT_STATUSES = ['INCOMPLETE', 'COMPLETE'] as const;
+const ConsentStatus = z.enum(CONSENT_STATUSES);
+
+export const ConsentWizardProgress = z.object({
+	[ConsentCategory.enum.INFORMED_CONSENT]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RECONTACT]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: ConsentStatus,
+});
+
+export type ConsentWizardProgress = z.infer<typeof ConsentWizardProgress>;
+export const ConsentWizardProgressSchema: SchemaObject = generateSchema(ConsentWizardProgress);
