@@ -17,62 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import { UserSchema as User } from 'types/entities';
+import { z } from 'zod';
 
-import packageJson from '../../package.json' assert { type: 'json' };
+const USER_ROLES = ['USER', 'ADMIN'] as const;
 
-/**
- * @openapi
- * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         error:
- *           type: string
- *         message:
- *           type: string
- *       required:
- *          - code
- *          - message
- */
-
-const options = swaggerJsdoc({
-	failOnErrors: true,
-	definition: {
-		openapi: '3.1.0',
-		info: {
-			title: 'OHCRN Consent API',
-			version: packageJson.version,
-			description: '',
-			license: {
-				name: 'APGL',
-				url: 'https://www.gnu.org/licenses/agpl-3.0.en.html',
-			},
-			servers: [
-				{
-					url: '/',
-				},
-			],
-		},
-		components: {
-			schemas: {
-				User,
-			},
-		},
-	},
-	apis: ['./src/routers/*'],
-});
-
-const router = Router();
-router.use('/', serve, setup(options));
-
-export default router;
+export const UserRole = z.enum(USER_ROLES);
+export type UserRole = z.infer<typeof UserRole>;

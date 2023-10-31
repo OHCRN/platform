@@ -23,6 +23,7 @@ import bodyParser from 'body-parser';
 
 import { AppConfig } from './config.js';
 import SwaggerRouter from './routers/swagger.js';
+import UserRouter from './routers/user.js';
 import StatusRouter from './routers/status.js';
 import ParticipantRouter from './routers/participants.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
@@ -47,6 +48,7 @@ const App = (config: AppConfig) => {
 
 	// set up routers
 	app.use('/api-docs', SwaggerRouter);
+	app.use('/user', UserRouter);
 	app.use('/status', StatusRouter);
 	app.use('/participants', ParticipantRouter);
 	app.use('/consent-questions', ConsentQuestionRouter);
