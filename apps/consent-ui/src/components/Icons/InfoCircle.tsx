@@ -19,9 +19,9 @@
 
 import React from 'react';
 
-function InfoCircle({ classes }: { classes?: string }) {
+function InfoCircle({ className }: { className?: string }) {
 	return (
-		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+		<svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
 			<g clipPath="url(#clip0_34_3961)">
 				<rect
 					width="22"

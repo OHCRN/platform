@@ -19,9 +19,9 @@
 
 import React from 'react';
 
-function Arrow({ classes }: { classes?: string }) {
+function Arrow({ className }: { className?: string }) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className={classes} fill="none" viewBox="0 0 7 10">
+		<svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 7 10">
 			<path
 				fill="currentColor"
 				fillRule="evenodd"
