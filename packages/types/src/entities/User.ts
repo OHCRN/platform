@@ -18,11 +18,21 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
+
+import { Name } from './Name.js';
+import { UserRole } from './UserRole.js';
 
 export const User = z.object({
-	id: z.string(),
-	name: z.string(),
+	firstName: Name,
+	lastName: Name,
 	email: z.string().email(),
+	role: UserRole,
+	emailVerified: z.boolean(),
+	enabled2FA: z.boolean(),
 });
 
 export type User = z.infer<typeof User>;
+
+export const UserSchema: SchemaObject = generateSchema(User);
