@@ -26,7 +26,6 @@ export * from './ConsentCategory.js';
 export * from './ConsentGroup.js';
 export * from './ConsentWizardProgress.js';
 export * from './ConsentQuestion.js';
-export * from './ConsentQuestionId.js';
 export * from './Gender.js';
 export * from './GeneticsClinic.js';
 export * from './HistoryOfCancer.js';
