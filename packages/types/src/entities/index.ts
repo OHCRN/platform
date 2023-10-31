@@ -17,10 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+export * from './Ancestry.js';
+export * from './BirthSex.js';
 export * from './ClinicianInvite.js';
+export * from './ClinicianInviteForm.js';
+export * from './ClinicalProfile.js';
 export * from './ConsentCategory.js';
 export * from './ConsentGroup.js';
+export * from './ConsentWizardProgress.js';
 export * from './ConsentQuestion.js';
+export * from './Gender.js';
+export * from './GeneticsClinic.js';
+export * from './HistoryOfCancer.js';
 export * from './Name.js';
 export * from './OhipNumber.js';
 export * from './ParticipantIdentification.js';
@@ -30,6 +38,7 @@ export * from './PostalCode.js';
 export * from './Province.js';
 export * from './Regex.js';
 export * from './User.js';
+export * from './UserRole.js';
 export * from './NanoId.js';
 export * from './lengthConstraints.js';
 export * from './InformedConsent.js';

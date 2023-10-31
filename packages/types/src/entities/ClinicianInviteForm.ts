@@ -17,37 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
+import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
-	});
+export const ClinicianInviteForm = ClinicianInviteBase.omit({
+	id: true,
+	inviteSentDate: true,
+}).refine((input) => {
+	const {
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	} = input;
+	return hasRequiredGuardianInformation(
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	);
 });
+
+export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
+export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);
