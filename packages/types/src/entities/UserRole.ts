@@ -17,5 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './types';
-export * from './utils';
+import { z } from 'zod';
+
+const USER_ROLES = ['USER', 'ADMIN'] as const;
+
+export const UserRole = z.enum(USER_ROLES);
+export type UserRole = z.infer<typeof UserRole>;

@@ -23,12 +23,14 @@ import bodyParser from 'body-parser';
 
 import { AppConfig } from './config.js';
 import SwaggerRouter from './routers/swagger.js';
+import UserRouter from './routers/user.js';
 import StatusRouter from './routers/status.js';
 import ParticipantRouter from './routers/participants.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ParticipantResponseRouter from './routers/participantResponses.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
 import RecaptchaRouter from './routers/recaptcha.js';
+import WizardRouter from './routers/wizard.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -47,12 +49,14 @@ const App = (config: AppConfig) => {
 
 	// set up routers
 	app.use('/api-docs', SwaggerRouter);
+	app.use('/user', UserRouter);
 	app.use('/status', StatusRouter);
 	app.use('/participants', ParticipantRouter);
 	app.use('/consent-questions', ConsentQuestionRouter);
 	app.use('/participant-responses', ParticipantResponseRouter);
 	app.use('/consent-completion', ConsentCompletionRouter);
 	app.use('/recaptcha', RecaptchaRouter);
+	app.use('/wizard', WizardRouter);
 
 	return app;
 };

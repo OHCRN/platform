@@ -17,5 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './types';
-export * from './utils';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
+
+import { ConsentCategory } from './ConsentCategory.js';
+
+const CONSENT_STATUSES = ['INCOMPLETE', 'COMPLETE'] as const;
+const ConsentStatus = z.enum(CONSENT_STATUSES);
+
+export const ConsentWizardProgress = z.object({
+	[ConsentCategory.enum.INFORMED_CONSENT]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RECONTACT]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: ConsentStatus,
+});
+
+export type ConsentWizardProgress = z.infer<typeof ConsentWizardProgress>;
+export const ConsentWizardProgressSchema: SchemaObject = generateSchema(ConsentWizardProgress);
