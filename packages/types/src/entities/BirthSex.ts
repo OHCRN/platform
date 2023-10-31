@@ -17,37 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { z } from 'zod';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+const BIRTH_SEX = ['FEMALE', 'INTERSEX', 'MALE', 'PREFER_NOT_TO_ANSWER'] as const;
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
-	});
-});
+export const BirthSex = z.enum(BIRTH_SEX);
+export type BirthSex = z.infer<typeof BirthSex>;

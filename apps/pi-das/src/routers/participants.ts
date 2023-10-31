@@ -135,7 +135,6 @@ router.get('/:participantId', async (req, res) => {
  *                 type: string
  *               participantPreferredName:
  *                 type: string
- *                 required: true
  *               guardianName:
  *                 type: string
  *               guardianPhoneNumber:

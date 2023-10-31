@@ -17,37 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ParticipantResponse } from '../../src/entities/index.js';
+import { ConsentCategory } from './ConsentCategory.js';
 
-describe('ParticipantResponse', () => {
-	it('Must have a consent question', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				consentQuestionId: 'Minim culpa ullamco laborum enim consequat?',
-				participantId: 'Mnnaygsae2ix7J33stdVQ',
-				response: true,
-			}).success,
-		).true;
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'Ki3JMgZNnaQdYcJEbLDyh',
-				consentQuestionId: undefined,
-				participantId: '0v2jwozojfDVQAXIMZJfs',
-				response: true,
-			}).success,
-		).false;
-	});
-	it('Must have a response', () => {
-		expect(
-			ParticipantResponse.safeParse({
-				id: 'qjVNbQwUdWmddU8AyLoJn',
-				consentQuestionId: 'Sunt amet irure officia Lorem ullamco ex?',
-				participantId: '5yW4tMaJMVef7rbpcUTF',
-				response: undefined,
-			}).success,
-		).false;
-	});
+const CONSENT_STATUSES = ['INCOMPLETE', 'COMPLETE'] as const;
+const ConsentStatus = z.enum(CONSENT_STATUSES);
+
+export const ConsentWizardProgress = z.object({
+	[ConsentCategory.enum.INFORMED_CONSENT]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RELEASE_DATA]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_RECONTACT]: ConsentStatus,
+	[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: ConsentStatus,
 });
+
+export type ConsentWizardProgress = z.infer<typeof ConsentWizardProgress>;
+export const ConsentWizardProgressSchema: SchemaObject = generateSchema(ConsentWizardProgress);
