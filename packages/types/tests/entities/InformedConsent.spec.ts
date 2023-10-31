@@ -19,28 +19,28 @@
 
 import { expect } from 'chai';
 
-import { InformedConsent } from '../../src/entities/index.js';
+import { InformedConsent, ConsentQuestionId } from '../../src/entities/index.js';
 
 describe('InformedConsent', () => {
 	it('Must provide a boolean value for informed consent', () => {
 		expect(
 			InformedConsent.safeParse({
-				COMPLETED_INFORMED_CONSENT: true,
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true,
 			}).success,
 		).true;
 		expect(
 			InformedConsent.safeParse({
-				COMPLETED_INFORMED_CONSENT: false,
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: false,
 			}).success,
 		).true;
 		expect(
 			InformedConsent.safeParse({
-				COMPLETED_INFORMED_CONSENT: null,
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: null,
 			}).success,
 		).false;
 		expect(
 			InformedConsent.safeParse({
-				COMPLETED_INFORMED_CONSENT: undefined,
+				[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: undefined,
 			}).success,
 		).false;
 	});
