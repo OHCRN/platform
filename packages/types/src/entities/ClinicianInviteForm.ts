@@ -24,27 +24,25 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-export const ClinicianInviteForm = ClinicianInviteBase.omit({ id: true })
-	.extend({
-		inviteSentDate: z.coerce.date().default(new Date()), // overwrites base schema's inviteSentDate to set a default only at form submission
-		consentToBeContacted: z.boolean(),
-	})
-	.refine((input) => {
-		const {
-			consentGroup,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		} = input;
-		return hasRequiredGuardianInformation(
-			consentGroup,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		);
-	});
+export const ClinicianInviteForm = ClinicianInviteBase.omit({
+	id: true,
+	inviteSentDate: true,
+}).refine((input) => {
+	const {
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	} = input;
+	return hasRequiredGuardianInformation(
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	);
+});
 
 export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
 export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);

@@ -44,6 +44,7 @@ export const ClinicianInviteBase = z.object({
 	guardianPhoneNumber: PhoneNumber.optional(),
 	guardianEmailAddress: z.string().email().optional(),
 	guardianRelationship: Name.optional(),
+	consentToBeContacted: z.boolean(),
 });
 
 export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
