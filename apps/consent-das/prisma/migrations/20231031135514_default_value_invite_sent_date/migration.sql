@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "ClinicianInvite" ALTER COLUMN "inviteSentDate" SET DEFAULT CURRENT_TIMESTAMP;
