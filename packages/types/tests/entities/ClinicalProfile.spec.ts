@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { expect } from 'chai';
+import { describe, expect, it } from 'vitest';
 
 import {
 	Ancestry,
@@ -47,11 +47,12 @@ describe('ClinicalProfile', () => {
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
 				birthSex: BirthSex.enum.PREFER_NOT_TO_ANSWER,
-				clinicalProfilePrivateKey: 'JZzEHrE93yKxsrzZKbHVH',
+				clinicalProfilePrivateKey: '6mhX6urHt4R3OG6Yxbimx',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
+				geneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
-				participantId: 'r1kIA9KK8X6HMI32338a5',
+				participantId: 'tREi8pepJ4sshATZJExqS',
 				selfIdentifiedGender: 'Nulla labore amet minim nisi',
 			}).success,
 		).true;
@@ -62,6 +63,7 @@ describe('ClinicalProfile', () => {
 				clinicalProfilePrivateKey: '7yLTLyJC2LPjpy2vBnkFm',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
+				geneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'wkIQYKCumXoARLSqNLHuV',
 				selfIdentifiedGender: undefined, // missing self-identified gender
