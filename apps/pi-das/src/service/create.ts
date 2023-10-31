@@ -27,7 +27,7 @@ export const createParticipant = async ({
 	participantOhipLastName: string;
 	participantOhipMiddleName?: string;
 	phoneNumber: string;
-	participantPreferredName: string;
+	participantPreferredName?: string;
 	guardianName?: string;
 	guardianPhoneNumber?: string;
 	guardianEmailAddress?: string;

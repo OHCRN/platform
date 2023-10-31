@@ -20,6 +20,11 @@
 import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import {
+	ConsentWizardProgressSchema as ConsentWizardProgress,
+	ClinicianInviteFormSchema as ClinicianInviteForm,
+	UserSchema as User,
+} from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 
@@ -61,6 +66,13 @@ const options = swaggerJsdoc({
 					url: '/',
 				},
 			],
+		},
+		components: {
+			schemas: {
+				ConsentWizardProgress,
+				ClinicianInviteForm,
+				User,
+			},
 		},
 	},
 	apis: ['./src/routers/*'],

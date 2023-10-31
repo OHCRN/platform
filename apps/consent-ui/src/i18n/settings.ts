@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidNamespace, ValidLanguage } from './types';
+import { ValidLanguage } from './types';
 
 export const supportedLanguages = ValidLanguage.options;
 export const defaultLanguage = ValidLanguage.enum.en;
 
-export const defaultNamespace: ValidNamespace = 'common';
+export const defaultNamespace = 'common';

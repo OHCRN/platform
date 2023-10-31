@@ -16,9 +16,9 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
-
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/Header/LanguageToggle';
@@ -27,6 +27,7 @@ import { getUnselectedLang } from 'src/components/Link/utils';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
+import HeaderWrapper from './HeaderWrapper';
 
 const icons: {
 	[k in ValidLanguage]: StaticImageData;
@@ -36,26 +37,31 @@ const icons: {
 };
 
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = await getTranslation(currentLang, 'header');
+	const translate = getTranslation(currentLang);
 	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
-		<header className={styles.header}>
+		<HeaderWrapper currentLang={currentLang}>
 			<div>
 				<Link href={`/${currentLang}`}>
-					<Image src={icon} priority alt={translate('logo-alt-text')} className={styles.logo} />
+					<Image
+						src={icon}
+						priority
+						alt={translate('header', 'logo-alt-text')}
+						className={styles.logo}
+					/>
 				</Link>
 			</div>
 			<div className={styles.right}>
 				<div className={styles.headerItem}>
 					<LanguageToggle currentLang={currentLang}>
-						<span className={styles['toggle-full']}>{translate(langToSelect)}</span>
+						<span className={styles['toggle-full']}>{translate('header', langToSelect)}</span>
 						<span className={styles['toggle-abbr']}>{langToSelect}</span>
 					</LanguageToggle>
 				</div>
 				{/* TODO: implement real help button, ticket TBD */}
 				<div className={styles.help}>
-					<HelpButton label={translate('help')} />
+					<HelpButton label={translate('header', 'help')} />
 				</div>
 				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 				{/* TODO: implement user menu, ticket TBD */}
@@ -63,7 +69,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					<div>Hello</div>
 				</div>
 			</div>
-		</header>
+		</HeaderWrapper>
 	);
 };
 
