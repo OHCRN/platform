@@ -16,7 +16,7 @@ export const createParticipant = async ({
 }: {
 	emailVerified: boolean;
 	isGuardian: boolean;
-	consentGroup?: ConsentGroup;
+	consentGroup: ConsentGroup;
 	guardianIdVerified?: boolean;
 	participantId?: string;
 }): Promise<Participant> => {

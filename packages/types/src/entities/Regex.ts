@@ -24,3 +24,5 @@ export const nanoId = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
 export const ohipNumber = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
 export const phoneNumber = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
 export const postalCode = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
+
+export const REGEX_FLAG_GLOBAL = 'g';
