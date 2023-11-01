@@ -28,6 +28,7 @@ import {
 	ConsentQuestion,
 	Participant,
 	ParticipantResponse,
+	LifecycleState,
 	PrismaClient,
 } from './generated/client/index.js';
 import logger from './logger.js';
@@ -98,5 +99,6 @@ export {
 	ConsentQuestion,
 	Participant,
 	ParticipantResponse,
+	LifecycleState,
 };
 export default prisma;

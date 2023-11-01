@@ -16,13 +16,29 @@ enum ConsentGroup {
   YOUNG_ADULT_CONSENT
 }
 
+enum LifecycleState {
+  REGISTERED
+  CONSENTED
+  IN_PROCESSING
+  PROFILE_COMPLETE
+  PUBLISHED
+  DELETION_REQUESTED
+  PAUSE_REQUESTED
+  CHANGE_REQUESTED
+  APPROVED_FOR_DELETION
+  PAUSED
+  DELETED
+}
+
 model Participant {
-  id                  String                @id @default("") @db.Char(21)
-  consentGroup        ConsentGroup
-  emailVerified       Boolean               @default(false)
-  isGuardian          Boolean
-  guardianIdVerified  Boolean?
-  ParticipantResponse ParticipantResponse[]
+  id                     String                @id @default("") @db.Char(21)
+  consentGroup           ConsentGroup
+  emailVerified          Boolean               @default(false)
+  isGuardian             Boolean
+  guardianIdVerified     Boolean?
+  currentLifecycleState  LifecycleState        @default(REGISTERED)
+  previousLifecycleState LifecycleState?
+  ParticipantResponse    ParticipantResponse[]
 }
 
 enum ConsentCategory {
@@ -54,14 +70,14 @@ model ParticipantResponse {
 }
 
 model ClinicianInvite {
-  id String @id @default("") @db.Char(21)
-  clinicianFirstName String
+  id                                 String       @id @default("") @db.Char(21)
+  clinicianFirstName                 String
   clinicianInstitutionalEmailAddress String
-  clinicianLastName String
-  clinicianTitleOrRole String
-  consentGroup ConsentGroup
-  consentToBeContacted Boolean
-  inviteSentDate DateTime @db.Date @default(now())
-  inviteAcceptedDate DateTime? @db.Date
-  inviteAccepted Boolean @default(false)
+  clinicianLastName                  String
+  clinicianTitleOrRole               String
+  consentGroup                       ConsentGroup
+  consentToBeContacted               Boolean
+  inviteSentDate                     DateTime     @default(now()) @db.Date
+  inviteAcceptedDate                 DateTime?    @db.Date
+  inviteAccepted                     Boolean      @default(false)
 }
