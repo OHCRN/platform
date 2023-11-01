@@ -18,9 +18,10 @@
  */
 
 import { Router } from 'express';
+import { ConsentWizardProgress } from 'types/entities';
 
-import PdfRouter from './pdf.js';
-import ProgressRouter from './progress.js';
+import logger from '../logger.js';
+
 import StepsRouter from './steps.js';
 
 /**
@@ -32,8 +33,84 @@ import StepsRouter from './steps.js';
 
 const router = Router();
 
-router.use('/pdf', PdfRouter);
-router.use('/progress', ProgressRouter);
 router.use('/steps', StepsRouter);
+
+/**
+ * @openapi
+ * /wizard/pdf:
+ *   get:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Consent Summary
+ *     description: Retrieve a generated PDF summary of user's consent if consented
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: session
+ *         in: header
+ *         required: true
+ *         description: User session token
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: string
+ *       500:
+ *         description: Server error
+ */
+router.get('/pdf', async (req, res) => {
+	logger.info(`GET /wizard/pdf`);
+	// TODO: implement and update JSDocs responses schema
+	res.status(200).send({ message: 'Success' });
+});
+
+/**
+ * @openapi
+ * /wizard/progress:
+ *   get:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Consent Wizard Progress
+ *     description: Get status of user's progress in consent wizard
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: session
+ *         in: header
+ *         required: true
+ *         description: User session token
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   $ref: '#/components/schemas/ConsentWizardProgress'
+ *       500:
+ *         description: Server error
+ */
+router.get('/progress', async (req, res) => {
+	logger.info(`GET /wizard/progress`);
+	// TODO: implement
+	const status: ConsentWizardProgress = {
+		INFORMED_CONSENT: 'COMPLETE',
+		CONSENT_RELEASE_DATA: 'COMPLETE',
+		CONSENT_RESEARCH_PARTICIPATION: 'COMPLETE',
+		CONSENT_RECONTACT: 'COMPLETE',
+		CONSENT_REVIEW_SIGN: 'COMPLETE',
+	};
+	res.status(200).send({ status });
+});
 
 export default router;
