@@ -19,21 +19,10 @@
 
 import { Router } from 'express';
 
-import PdfRouter from './pdf.js';
-import ProgressRouter from './progress.js';
-import StepsRouter from './steps.js';
-
-/**
- * @openapi
- * tags:
- *   - name: Consent Wizard
- *     description: Consent wizard steps and status
- */
+import InformedConsentRouter from './informedConsent.js';
 
 const router = Router();
 
-router.use('/pdf', PdfRouter);
-router.use('/progress', ProgressRouter);
-router.use('/steps', StepsRouter);
+router.use('/informed-consent', InformedConsentRouter);
 
 export default router;

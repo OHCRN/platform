@@ -31,7 +31,6 @@ import ParticipantResponseRouter from './routers/participantResponses.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
 import ClinicianInviteRouter from './routers/invites.js';
 import RecaptchaRouter from './routers/recaptcha.js';
-import InformedConsentRouter from './routers/informedConsent.js';
 import WizardRouter from './routers/wizard.js';
 
 const App = (config: AppConfig) => {
@@ -59,8 +58,7 @@ const App = (config: AppConfig) => {
 	app.use('/consent-completion', ConsentCompletionRouter);
 	app.use('/invites', ClinicianInviteRouter);
 	app.use('/recaptcha', RecaptchaRouter);
-  app.use('/wizard', WizardRouter);
-	app.use('/wizard/steps/informed-consent', InformedConsentRouter);
+	app.use('/wizard', WizardRouter);
 
 	return app;
 };

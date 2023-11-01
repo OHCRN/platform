@@ -19,21 +19,43 @@
 
 import { Router } from 'express';
 
-import PdfRouter from './pdf.js';
-import ProgressRouter from './progress.js';
-import StepsRouter from './steps.js';
-
-/**
- * @openapi
- * tags:
- *   - name: Consent Wizard
- *     description: Consent wizard steps and status
- */
+import logger from '../logger.js';
 
 const router = Router();
 
-router.use('/pdf', PdfRouter);
-router.use('/progress', ProgressRouter);
-router.use('/steps', StepsRouter);
+/**
+ * @openapi
+ * /wizard/pdf:
+ *   get:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Consent Summary
+ *     description: Retrieve a generated PDF summary of user's consent if consented
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: session
+ *         in: header
+ *         required: true
+ *         description: User session token
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: string
+ *       500:
+ *         description: Server error
+ */
+router.get('/', async (req, res) => {
+	logger.info(`GET /wizard/pdf`);
+	// TODO: implement and update JSDocs responses schema
+	res.status(200).send({ message: 'Success' });
+});
 
 export default router;

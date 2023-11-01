@@ -18,22 +18,53 @@
  */
 
 import { Router } from 'express';
+import { ConsentWizardProgress } from 'types/entities';
 
-import PdfRouter from './pdf.js';
-import ProgressRouter from './progress.js';
-import StepsRouter from './steps.js';
-
-/**
- * @openapi
- * tags:
- *   - name: Consent Wizard
- *     description: Consent wizard steps and status
- */
+import logger from '../logger.js';
 
 const router = Router();
 
-router.use('/pdf', PdfRouter);
-router.use('/progress', ProgressRouter);
-router.use('/steps', StepsRouter);
+/**
+ * @openapi
+ * /wizard/progress:
+ *   get:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Consent Wizard Progress
+ *     description: Get status of user's progress in consent wizard
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: session
+ *         in: header
+ *         required: true
+ *         description: User session token
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   $ref: '#/components/schemas/ConsentWizardProgress'
+ *       500:
+ *         description: Server error
+ */
+router.get('/', async (req, res) => {
+	logger.info(`GET /wizard/progress`);
+	// TODO: implement
+	const status: ConsentWizardProgress = {
+		INFORMED_CONSENT: 'COMPLETE',
+		CONSENT_RELEASE_DATA: 'COMPLETE',
+		CONSENT_RESEARCH_PARTICIPATION: 'COMPLETE',
+		CONSENT_RECONTACT: 'COMPLETE',
+		CONSENT_REVIEW_SIGN: 'COMPLETE',
+	};
+	res.status(200).send({ status });
+});
 
 export default router;

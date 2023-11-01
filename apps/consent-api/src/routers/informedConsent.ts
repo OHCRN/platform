@@ -22,13 +22,6 @@ import { ConsentQuestionId } from 'types/entities';
 
 import logger from '../logger.js';
 
-/**
- * @openapi
- * tags:
- *   - name: Consent Wizard
- *     description: Consent wizard management
- */
-
 const router = Router();
 
 /**
@@ -37,7 +30,6 @@ const router = Router();
  *   post:
  *     tags:
  *       - Consent Wizard
- *       - Informed Consent
  *     name: Submit Informed Consent
  *     description: Form submission for Consent Wizard - Informed Consent
  *     security:
@@ -86,7 +78,6 @@ router.post('/', async (req, res) => {
  *   get:
  *     tags:
  *       - Consent Wizard
- *       - Informed Consent
  *     name: Retrieve Informed Consent
  *     description: Participant's latest response for Consent Wizard - Informed Consent
  *     security:
