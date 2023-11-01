@@ -29,6 +29,7 @@ export * from './ConsentQuestion.js';
 export * from './Gender.js';
 export * from './GeneticsClinic.js';
 export * from './HistoryOfCancer.js';
+export * from './LifecycleState.js';
 export * from './Name.js';
 export * from './OhipNumber.js';
 export * from './ParticipantIdentification.js';

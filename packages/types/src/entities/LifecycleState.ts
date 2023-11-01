@@ -18,6 +18,8 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 const LIFECYCLE_STATES = [
 	'REGISTERED',
@@ -35,3 +37,4 @@ const LIFECYCLE_STATES = [
 
 export const LifecycleState = z.enum(LIFECYCLE_STATES);
 export type LifecycleState = z.infer<typeof LifecycleState>;
+export const LifecycleStateSchema: SchemaObject = generateSchema(LifecycleState);
