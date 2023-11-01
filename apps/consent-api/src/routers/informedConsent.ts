@@ -39,20 +39,14 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               data:
- *                 $ref: '#/components/schemas/InformedConsentRequest'
+ *             $ref: '#/components/schemas/InformedConsentRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   $ref: '#/components/schemas/InformedConsentResponse'
+ *               $ref: '#/components/schemas/InformedConsentResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -88,10 +82,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   $ref: '#/components/schemas/InformedConsentResponse'
+ *               $ref: '#/components/schemas/InformedConsentResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
