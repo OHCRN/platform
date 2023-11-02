@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ConsentCategory } from 'types/entities';
+import { ConsentCategory, ConsentQuestionId } from 'types/entities';
 
 import { updateConsentQuestionIsActive } from '../service/update.js';
 import { getConsentQuestion, getConsentQuestions } from '../service/search.js';
@@ -98,7 +98,7 @@ router.get('/', async (req, res) => {
  *         description: Consent Question ID
  *         required: true
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/ConsentQuestionId'
  *     responses:
  *       200:
  *         description: The question was successfully retrieved.
@@ -110,7 +110,8 @@ router.get('/:consentQuestionId', async (req, res) => {
 	const { consentQuestionId } = req.params;
 	// TODO: add validation
 	try {
-		const question = await getConsentQuestion(consentQuestionId);
+		const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
+		const question = await getConsentQuestion(parsedConsentQuestionId);
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
@@ -136,7 +137,7 @@ router.get('/:consentQuestionId', async (req, res) => {
  *             type: object
  *             properties:
  *               consentQuestionId:
- *                 type: string
+ *                 $ref: '#/components/schemas/ConsentQuestionId'
  *               isActive:
  *                 type: boolean
  *               category:
@@ -176,7 +177,7 @@ router.post('/', async (req, res) => {
  *         description: Consent Question ID
  *         required: true
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/ConsentQuestionId'
  *     requestBody:
  *       required: true
  *       content:
@@ -197,8 +198,12 @@ router.patch('/:consentQuestionId', async (req, res) => {
 	const { consentQuestionId } = req.params;
 	const { isActive } = req.body;
 	// TODO: add validation
+	const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
 	try {
-		const question = await updateConsentQuestionIsActive({ consentQuestionId, isActive });
+		const question = await updateConsentQuestionIsActive({
+			consentQuestionId: parsedConsentQuestionId,
+			isActive,
+		});
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);

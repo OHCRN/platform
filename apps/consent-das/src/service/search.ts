@@ -2,6 +2,7 @@ import { Prisma } from '../generated/client/index.js';
 import prisma, {
 	Participant,
 	ConsentQuestion,
+	ConsentQuestionId,
 	ParticipantResponse,
 	ConsentCategory,
 	ClinicianInvite,
@@ -23,7 +24,9 @@ export const getParticipants = async (): Promise<Participant[]> => {
 	return result;
 };
 
-export const getConsentQuestion = async (consentQuestionId: string): Promise<ConsentQuestion> => {
+export const getConsentQuestion = async (
+	consentQuestionId: ConsentQuestionId,
+): Promise<ConsentQuestion> => {
 	// TODO: add error handling
 	const result = await prisma.consentQuestion.findUniqueOrThrow({
 		where: {
@@ -47,7 +50,7 @@ export const getConsentQuestions = async (
 
 export const getParticipantResponses = async (
 	participantId: string,
-	consentQuestionId: string,
+	consentQuestionId: ConsentQuestionId,
 	sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
 ): Promise<ParticipantResponse[]> => {
 	// TODO: add error handling

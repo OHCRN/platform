@@ -5,6 +5,7 @@ import prisma, {
 	ConsentGroup,
 	ParticipantResponse,
 	ClinicianInvite,
+	ConsentQuestionId,
 } from '../prismaClient.js';
 
 export const createParticipant = async ({
@@ -38,7 +39,7 @@ export const createConsentQuestion = async ({
 	isActive,
 	category,
 }: {
-	consentQuestionId: string;
+	consentQuestionId: ConsentQuestionId;
 	isActive: boolean;
 	category: ConsentCategory;
 }): Promise<ConsentQuestion> => {
@@ -59,7 +60,7 @@ export const createParticipantResponse = async ({
 	response,
 }: {
 	participantId: string;
-	consentQuestionId: string;
+	consentQuestionId: ConsentQuestionId;
 	response: boolean;
 }): Promise<ParticipantResponse> => {
 	// TODO: add error handling
