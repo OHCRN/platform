@@ -110,7 +110,8 @@ router.get('/:consentQuestionId', async (req, res) => {
 	const { consentQuestionId } = req.params;
 	// TODO: add validation
 	try {
-		const question = await getConsentQuestion(ConsentQuestionId.parse(consentQuestionId));
+		const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
+		const question = await getConsentQuestion(parsedConsentQuestionId);
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
@@ -197,9 +198,10 @@ router.patch('/:consentQuestionId', async (req, res) => {
 	const { consentQuestionId } = req.params;
 	const { isActive } = req.body;
 	// TODO: add validation
+	const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
 	try {
 		const question = await updateConsentQuestionIsActive({
-			consentQuestionId: ConsentQuestionId.parse(consentQuestionId),
+			consentQuestionId: parsedConsentQuestionId,
 			isActive,
 		});
 		res.status(200).send({ question });

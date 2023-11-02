@@ -70,9 +70,10 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
 	try {
+		const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
 		const participant_responses = await getParticipantResponses(
 			participantId,
-			ConsentQuestionId.parse(consentQuestionId),
+			parsedConsentQuestionId,
 			// TODO: add validation in getParticipantResponses and fix `as Prisma.SortOrder`
 			sort_order as Prisma.SortOrder | undefined,
 		);
