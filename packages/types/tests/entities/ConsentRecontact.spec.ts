@@ -26,7 +26,7 @@ import {
 } from '../../src/entities/index.js';
 
 describe('ConsentRecontactRequest', () => {
-	it('Must provide boolean values', () => {
+	it('Must only accept boolean values', () => {
 		expect(
 			ConsentRecontactRequest.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
@@ -55,7 +55,7 @@ describe('ConsentRecontactRequest', () => {
 });
 
 describe('ConsentRecontactResponse', () => {
-	it('Must provide boolean values', () => {
+	it('Must only accept boolean values', () => {
 		expect(
 			ConsentRecontactResponse.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
