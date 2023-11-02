@@ -42,3 +42,4 @@ export * from './UserRole.js';
 export * from './NanoId.js';
 export * from './lengthConstraints.js';
 export * from './InformedConsent.js';
+export * from './ConsentReleaseData.js';

@@ -19,6 +19,23 @@
 
 import { ConsentReleaseDataDictionary } from 'src/i18n/locales/en/consent-release-data';
 
-const dictionary = {} satisfies ConsentReleaseDataDictionary;
+const dictionary = {
+	RELEASE_DATA__FIRST_NAME: 'Prénom',
+	RELEASE_DATA__LAST_NAME: 'Nom de famille',
+	RELEASE_DATA__GENDER_IDENTITY: 'Identité de genre',
+	RELEASE_DATA__OHIP_NUMBER: '# OHIP',
+	RELEASE_DATA__DATE_OF_BIRTH: 'Date de naissance',
+	RELEASE_DATA__BIRTH_SEX: 'Sexe attribué à la naissance',
+	RELEASE_DATA__ANCESTRY: 'Ascendance',
+	RELEASE_DATA__HISTORY_OF_CANCER: 'Antécédents personnels de cancer ?',
+	RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS: 'Diagnostic primaire du cancer',
+	RELEASE_DATA__FAMILY_HISTORY_OF_CANCER: 'Antécédents familiaux de cancer ?',
+	RELEASE_DATA__RESIDENTIAL_POSTAL_CODE: 'Code Postal',
+	RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE: 'Titre de clinicien',
+	RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME: 'Prénom du clinicien',
+	RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME: 'Nom de famille du clinicien',
+	RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC: 'Clinique de génétique',
+	RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB: 'Laboratoire moléculaire',
+} satisfies ConsentReleaseDataDictionary;
 
 export default dictionary;
