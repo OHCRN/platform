@@ -17,14 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import InformedConsentRouter from './informedConsent.js';
-import ConsentRecontactRouter from './consentRecontact.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-const router = Router();
+export const ConsentRecontactBase = z.object({
+	[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: z.boolean(),
+	[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: z.boolean(),
+});
 
-router.use('/informed-consent', InformedConsentRouter);
-router.use('/consent-for-recontact', ConsentRecontactRouter);
+export const ConsentRecontactRequest = ConsentRecontactBase;
+export type ConsentRecontactRequest = z.infer<typeof ConsentRecontactRequest>;
+export const ConsentRecontactRequestSchema: SchemaObject = generateSchema(ConsentRecontactRequest);
 
-export default router;
+export const ConsentRecontactResponse = ConsentRecontactBase;
+export type ConsentRecontactResponse = z.infer<typeof ConsentRecontactResponse>;
+export const ConsentRecontactResponseSchema: SchemaObject =
+	generateSchema(ConsentRecontactResponse);
