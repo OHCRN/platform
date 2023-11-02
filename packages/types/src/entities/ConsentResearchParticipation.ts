@@ -32,7 +32,7 @@ export const ConsentResearchParticipationRequest = ConsentResearchParticipationB
 export type ConsentResearchParticipationRequest = z.infer<
 	typeof ConsentResearchParticipationRequest
 >;
-export const ResearchParticipationRequestSchema: SchemaObject = generateSchema(
+export const ConsentResearchParticipationRequestSchema: SchemaObject = generateSchema(
 	ConsentResearchParticipationRequest,
 );
 
@@ -40,6 +40,6 @@ export const ConsentResearchParticipationResponse = ConsentResearchParticipation
 export type ConsentResearchParticipationResponse = z.infer<
 	typeof ConsentResearchParticipationResponse
 >;
-export const ResearchParticipationResponseSchema: SchemaObject = generateSchema(
+export const ConsentResearchParticipationResponseSchema: SchemaObject = generateSchema(
 	ConsentResearchParticipationResponse,
 );
