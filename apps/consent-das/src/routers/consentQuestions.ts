@@ -18,9 +18,8 @@
  */
 
 import { Router } from 'express';
-import { ConsentCategory } from 'types/entities';
+import { ConsentCategory, ConsentQuestionId } from 'types/entities';
 
-import { ConsentQuestionId } from '../prismaClient.js';
 import { updateConsentQuestionIsActive } from '../service/update.js';
 import { getConsentQuestion, getConsentQuestions } from '../service/search.js';
 import { createConsentQuestion } from '../service/create.js';
@@ -99,8 +98,7 @@ router.get('/', async (req, res) => {
  *         description: Consent Question ID
  *         required: true
  *         schema:
- *           type: string
- *           TODO: replace with Zod component schema
+ *           $ref: '#/components/schemas/ConsentQuestionId'
  *     responses:
  *       200:
  *         description: The question was successfully retrieved.
@@ -112,7 +110,7 @@ router.get('/:consentQuestionId', async (req, res) => {
 	const { consentQuestionId } = req.params;
 	// TODO: add validation
 	try {
-		const question = await getConsentQuestion(consentQuestionId as ConsentQuestionId); // TODO: remove 'as ConsentQuestionId' and parse with Zod type
+		const question = await getConsentQuestion(ConsentQuestionId.parse(consentQuestionId));
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
@@ -138,8 +136,7 @@ router.get('/:consentQuestionId', async (req, res) => {
  *             type: object
  *             properties:
  *               consentQuestionId:
- *                 type: string
- *                 TODO: replace with Zod component schema
+ *                 $ref: '#/components/schemas/ConsentQuestionId'
  *               isActive:
  *                 type: boolean
  *               category:
@@ -179,8 +176,7 @@ router.post('/', async (req, res) => {
  *         description: Consent Question ID
  *         required: true
  *         schema:
- *           type: string
- *           TODO: replace with Zod component schema
+ *           $ref: '#/components/schemas/ConsentQuestionId'
  *     requestBody:
  *       required: true
  *       content:
@@ -200,12 +196,10 @@ router.patch('/:consentQuestionId', async (req, res) => {
 	logger.info('PATCH /consent-questions/:consentQuestionId');
 	const { consentQuestionId } = req.params;
 	const { isActive } = req.body;
-	// TODO: parse with Zod type
-	const parsedConsentQuestionId = consentQuestionId as ConsentQuestionId;
 	// TODO: add validation
 	try {
 		const question = await updateConsentQuestionIsActive({
-			consentQuestionId: parsedConsentQuestionId,
+			consentQuestionId: ConsentQuestionId.parse(consentQuestionId),
 			isActive,
 		});
 		res.status(200).send({ question });

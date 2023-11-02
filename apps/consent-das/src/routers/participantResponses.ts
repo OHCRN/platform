@@ -18,8 +18,8 @@
  */
 
 import { Router } from 'express';
+import { ConsentQuestionId } from 'types/entities';
 
-import { ConsentQuestionId } from '../prismaClient.js';
 import { Prisma } from '../generated/client/index.js';
 import { getParticipantResponses } from '../service/search.js';
 import { createParticipantResponse } from '../service/create.js';
@@ -58,8 +58,7 @@ const router = Router();
  *         description: Consent Question ID
  *         required: true
  *         schema:
- *           type: string
- *           TODO: replace with Zod component schema
+ *           $ref: '#/components/schemas/ConsentQuestionId'
  *     responses:
  *       200:
  *         description: The participant responses were successfully retrieved.
@@ -70,12 +69,10 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
-	// TODO: parse with Zod type
-	const parsedConsentQuestionId = consentQuestionId as ConsentQuestionId;
 	try {
 		const participant_responses = await getParticipantResponses(
 			participantId,
-			parsedConsentQuestionId,
+			ConsentQuestionId.parse(consentQuestionId),
 			// TODO: add validation in getParticipantResponses and fix `as Prisma.SortOrder`
 			sort_order as Prisma.SortOrder | undefined,
 		);
@@ -107,8 +104,8 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *               participantId:
  *                 type: string
  *               consentQuestionId:
- *                 type: string
- *                 TODO: replace with Zod component schema
+ *                 schema:
+ *                 $ref: '#/components/schemas/ConsentQuestionId'
  *               response:
  *                 type: boolean
  *     responses:
