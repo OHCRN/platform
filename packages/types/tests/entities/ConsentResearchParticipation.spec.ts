@@ -30,8 +30,8 @@ describe('ConsentResearchParticipationRequest', () => {
 	it('Must use boolean values', () => {
 		expect(
 			ConsentResearchParticipationRequest.safeParse({
-				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
-				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
+				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
+				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
 			}).success,
 		).true;
 		expect(
@@ -60,8 +60,8 @@ describe('ConsentResearchParticipationResponse', () => {
 	it('Must use boolean values', () => {
 		expect(
 			ConsentResearchParticipationResponse.safeParse({
-				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
-				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
+				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
+				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
 			}).success,
 		).true;
 		expect(
