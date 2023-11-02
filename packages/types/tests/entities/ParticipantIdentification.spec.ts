@@ -20,12 +20,14 @@
 import { expect } from 'chai';
 
 import { ConsentGroup, ParticipantIdentification } from '../../src/entities/index.js';
+import { LifecycleState } from '../../src/entities/LifecycleState.js';
 
 describe('ParticipantIdentification', () => {
 	it('Must define conditionally required fields on condition', () => {
 		expect(
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				ohipNumber: '1234567890',
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
@@ -45,6 +47,7 @@ describe('ParticipantIdentification', () => {
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				ohipNumber: '1234567890',
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
 				participantOhipLastName: 'Simson',
@@ -59,6 +62,7 @@ describe('ParticipantIdentification', () => {
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				ohipNumber: '1234567890',
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
 				participantOhipLastName: 'Simson',
@@ -76,6 +80,7 @@ describe('ParticipantIdentification', () => {
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				ohipNumber: '1234567890',
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
 				participantOhipLastName: 'Simson',
