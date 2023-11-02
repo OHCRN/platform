@@ -96,7 +96,7 @@ router.get('/', async (req, res) => {
 	logger.info(`GET /wizard/steps/consent-to-release-data`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Retrieved informed consent`);
+		logger.info(`Retrieved consent to release data`);
 		// TODO: actually retrieve user data
 		const data = {};
 		res.status(200).send(data);
