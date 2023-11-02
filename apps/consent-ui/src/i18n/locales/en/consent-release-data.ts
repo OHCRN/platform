@@ -17,23 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ConsentReleaseDataQuestion } from 'types/entities';
+
 const dictionary = {
-	RELEASE_DATA__FIRST_NAME: 'First Name',
-	RELEASE_DATA__LAST_NAME: 'Last Name',
-	RELEASE_DATA__GENDER_IDENTITY: 'Gender Identity',
-	RELEASE_DATA__OHIP_NUMBER: 'OHIP #',
-	RELEASE_DATA__DATE_OF_BIRTH: 'Date of Birth',
-	RELEASE_DATA__BIRTH_SEX: 'Sex Assigned at Birth',
-	RELEASE_DATA__ANCESTRY: 'Ancestry',
-	RELEASE_DATA__HISTORY_OF_CANCER: 'Personal History of Cancer?',
-	RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS: 'Primary Cancer Diagnosis',
-	RELEASE_DATA__FAMILY_HISTORY_OF_CANCER: 'Family History of Cancer?',
-	RELEASE_DATA__RESIDENTIAL_POSTAL_CODE: 'Postal Code',
-	RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE: 'Clinician Title',
-	RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME: 'Clinician First Name',
-	RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME: 'Clinician Last Name',
-	RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC: 'Genetics Clinic',
-	RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB: 'Molecular Lab',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FIRST_NAME]: 'First Name',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__LAST_NAME]: 'Last Name',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__GENDER_IDENTITY]: 'Gender Identity',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__OHIP_NUMBER]: 'OHIP #',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__DATE_OF_BIRTH]: 'Date of Birth',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__BIRTH_SEX]: 'Sex Assigned at Birth',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__ANCESTRY]: 'Ancestry',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__HISTORY_OF_CANCER]: 'Personal History of Cancer?',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'Primary Cancer Diagnosis',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]: 'Family History of Cancer?',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'Postal Code',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: 'Clinician Title',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]:
+		'Clinician First Name',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]: 'Clinician Last Name',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]: 'Genetics Clinic',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]: 'Molecular Lab',
 } satisfies Record<string, string>;
 
 export type ConsentReleaseDataDictionary = Record<keyof typeof dictionary, string>;
