@@ -1,4 +1,4 @@
-import { Prisma, ConsentCategory, ConsentGroup } from '../../src/generated/client/index.js';
+import { Prisma, ConsentCategory, ConsentGroup, ConsentQuestionId } from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
@@ -23,42 +23,42 @@ const participants: Prisma.ParticipantCreateInput[] = [
 
 const consentQuestions: Prisma.ConsentQuestionCreateInput[] = [
 	{
-		id: 'informed-consent__read-and-understand',
+		id: ConsentQuestionId.INFORMED_CONSENT__READ_AND_UNDERSTAND,
 		isActive: true,
 		category: ConsentCategory.INFORMED_CONSENT,
 	},
 	{
-		id: 'release-data__clinical-and-genetic',
+		id: ConsentQuestionId.RELEASE_DATA__CLINICAL_AND_GENETIC,
 		isActive: true,
 		category: ConsentCategory.CONSENT_RELEASE_DATA,
 	},
 	{
-		id: 'release-data__de-identified',
+		id: ConsentQuestionId.RELEASE_DATA__DE_IDENTIFIED,
 		isActive: true,
 		category: ConsentCategory.CONSENT_RELEASE_DATA,
 	},
 	{
-		id: 'research-participation__future-research',
+		id: ConsentQuestionId.RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
 		isActive: true,
 		category: ConsentCategory.CONSENT_RESEARCH_PARTICIPATION,
 	},
 	{
-		id: 'research-participation__contact-information',
+		id: ConsentQuestionId.RESEARCH_PARTICIPATION__CONTACT_INFORMATION,
 		isActive: true,
 		category: ConsentCategory.CONSENT_RESEARCH_PARTICIPATION,
 	},
 	{
-		id: 'recontact__future-research',
+		id: ConsentQuestionId.RECONTACT__FUTURE_RESEARCH,
 		isActive: true,
 		category: ConsentCategory.CONSENT_RECONTACT,
 	},
 	{
-		id: 'recontact__secondary-contact',
+		id: ConsentQuestionId.RECONTACT__SECONDARY_CONTACT,
 		isActive: true,
 		category: ConsentCategory.CONSENT_RECONTACT,
 	},
 	{
-		id: 'review-sign__signed',
+		id: ConsentQuestionId.REVIEW_SIGN__SIGNED,
 		isActive: true,
 		category: ConsentCategory.CONSENT_REVIEW_SIGN,
 	},

@@ -26,6 +26,7 @@ import { PostalCode } from './PostalCode.js';
 import { Name } from './Name.js';
 import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
+import { LifecycleState } from './LifecycleState.js';
 
 export const hasRequiredGuardianInformation = (
 	consentGroup: ConsentGroup,
@@ -51,6 +52,8 @@ export const ParticipantIdentification = z
 	.object({
 		id: NanoId,
 		inviteId: NanoId.optional(),
+		currentLifecycleState: LifecycleState,
+		previousLifecycleState: LifecycleState.optional(),
 		ohipNumber: OhipNumber,
 		participantPreferredName: Name.optional(),
 		participantOhipFirstName: Name,

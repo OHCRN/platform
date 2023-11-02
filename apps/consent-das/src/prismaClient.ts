@@ -26,6 +26,7 @@ import {
 	ConsentCategory,
 	ConsentGroup,
 	ConsentQuestion,
+	ConsentQuestionId,
 	Participant,
 	ParticipantResponse,
 	PrismaClient,
@@ -96,6 +97,7 @@ export {
 	ConsentCategory,
 	ConsentGroup,
 	ConsentQuestion,
+	ConsentQuestionId,
 	Participant,
 	ParticipantResponse,
 };
