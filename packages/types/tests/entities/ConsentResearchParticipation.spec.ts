@@ -18,7 +18,6 @@
  */
 
 import { expect } from 'chai';
-import { z } from 'zod';
 
 import {
 	ConsentQuestionId,
