@@ -25,6 +25,8 @@ import {
 	ClinicianInviteFormSchema as ClinicianInviteForm,
 	InformedConsentResponseSchema as InformedConsentResponse,
 	InformedConsentRequestSchema as InformedConsentRequest,
+	ResearchParticipationResponseSchema as ResearchParticipationResponse,
+	ResearchParticipationRequestSchema as ResearchParticipationRequest,
 	UserSchema as User,
 } from 'types/entities';
 
@@ -75,6 +77,8 @@ const options = swaggerJsdoc({
 				ClinicianInviteForm,
 				InformedConsentRequest,
 				InformedConsentResponse,
+				ResearchParticipationResponse,
+				ResearchParticipationRequest,
 				User,
 			},
 		},

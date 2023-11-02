@@ -17,14 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import InformedConsentRouter from './informedConsent.js';
-import ResearchParticipationRouter from './researchParticipation.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-const router = Router();
+export const ResearchParticipationBase = z.object({
+	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
+	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
+});
 
-router.use('/informed-consent', InformedConsentRouter);
-router.use('/research-participation', ResearchParticipationRouter);
+export const ResearchParticipationRequest = ResearchParticipationBase;
+export type ResearchParticipationRequest = z.infer<typeof ResearchParticipationRequest>;
+export const ResearchParticipationRequestSchema: SchemaObject = generateSchema(
+	ResearchParticipationRequest,
+);
 
-export default router;
+export const ResearchParticipationResponse = ResearchParticipationBase;
+export type ResearchParticipationResponse = z.infer<typeof ResearchParticipationResponse>;
+export const ResearchParticipationResponseSchema: SchemaObject = generateSchema(
+	ResearchParticipationResponse,
+);
