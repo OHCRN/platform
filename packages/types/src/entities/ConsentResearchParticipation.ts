@@ -23,19 +23,23 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
 
-export const ResearchParticipationBase = z.object({
+export const ConsentResearchParticipationBase = z.object({
 	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
 	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
 });
 
-export const ResearchParticipationRequest = ResearchParticipationBase;
-export type ResearchParticipationRequest = z.infer<typeof ResearchParticipationRequest>;
+export const ConsentResearchParticipationRequest = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationRequest = z.infer<
+	typeof ConsentResearchParticipationRequest
+>;
 export const ResearchParticipationRequestSchema: SchemaObject = generateSchema(
-	ResearchParticipationRequest,
+	ConsentResearchParticipationRequest,
 );
 
-export const ResearchParticipationResponse = ResearchParticipationBase;
-export type ResearchParticipationResponse = z.infer<typeof ResearchParticipationResponse>;
+export const ConsentResearchParticipationResponse = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationResponse = z.infer<
+	typeof ConsentResearchParticipationResponse
+>;
 export const ResearchParticipationResponseSchema: SchemaObject = generateSchema(
-	ResearchParticipationResponse,
+	ConsentResearchParticipationResponse,
 );

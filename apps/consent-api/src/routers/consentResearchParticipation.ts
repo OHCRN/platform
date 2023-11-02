@@ -26,7 +26,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/research-participation:
+ * /wizard/steps/consent-for-research-participation:
  *   post:
  *     tags:
  *       - Consent Wizard
@@ -39,14 +39,14 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ResearchParticipationRequest'
+ *             $ref: '#/components/schemas/ConsentResearchParticipationRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ResearchParticipationResponse'
+ *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -55,7 +55,7 @@ const router = Router();
  *         description: Server error
  */
 router.post('/', async (req, res) => {
-	logger.info(`POST /wizard/steps/research-participation`);
+	logger.info(`POST /wizard/steps/consent-for-research-participation`);
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Submitted Consent for Research Participation`);
@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
 
 /**
  * @openapi
- * /wizard/steps/research-participation:
+ * /wizard/steps/consent-for-research-participation:
  *   get:
  *     tags:
  *       - Consent Wizard
@@ -85,7 +85,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ResearchParticipationResponse'
+ *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -94,7 +94,7 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/research-participation`);
+	logger.info(`GET /wizard/steps/consent-for-research-participation`);
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Retrieved Consent for Research Participation`);

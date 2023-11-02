@@ -22,33 +22,33 @@ import { z } from 'zod';
 
 import {
 	ConsentQuestionId,
-	ResearchParticipationRequest,
-	ResearchParticipationResponse,
+	ConsentResearchParticipationRequest,
+	ConsentResearchParticipationResponse,
 } from '../../src/entities/index.js';
 
-describe('ResearchParticipationRequest', () => {
+describe('ConsentResearchParticipationRequest', () => {
 	it('Must use boolean values', () => {
 		expect(
-			ResearchParticipationRequest.safeParse({
+			ConsentResearchParticipationRequest.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
 			}).success,
 		).true;
 		expect(
-			ResearchParticipationRequest.safeParse({
+			ConsentResearchParticipationRequest.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]:
 					'Laborum pariatur commodo',
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: 67,
 			}).success,
 		).false;
 		expect(
-			ResearchParticipationRequest.safeParse({
+			ConsentResearchParticipationRequest.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: null,
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: null,
 			}).success,
 		).false;
 		expect(
-			ResearchParticipationRequest.safeParse({
+			ConsentResearchParticipationRequest.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: undefined,
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: undefined,
 			}).success,
@@ -56,29 +56,29 @@ describe('ResearchParticipationRequest', () => {
 	});
 });
 
-describe('ResearchParticipationResponse', () => {
+describe('ConsentResearchParticipationResponse', () => {
 	it('Must use boolean values', () => {
 		expect(
-			ResearchParticipationResponse.safeParse({
+			ConsentResearchParticipationResponse.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
 			}).success,
 		).true;
 		expect(
-			ResearchParticipationResponse.safeParse({
+			ConsentResearchParticipationResponse.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]:
 					'Laborum pariatur commodo',
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: 67,
 			}).success,
 		).false;
 		expect(
-			ResearchParticipationResponse.safeParse({
+			ConsentResearchParticipationResponse.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: null,
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: null,
 			}).success,
 		).false;
 		expect(
-			ResearchParticipationResponse.safeParse({
+			ConsentResearchParticipationResponse.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: undefined,
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: undefined,
 			}).success,
