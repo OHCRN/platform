@@ -105,8 +105,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *               participantId:
  *                 type: string
  *               consentQuestionId:
- *                 schema:
- *                   $ref: '#/components/schemas/ConsentQuestionId'
+ *                 $ref: '#/components/schemas/ConsentQuestionId'
  *               response:
  *                 type: boolean
  *     responses:
