@@ -18,13 +18,31 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentCategory } from './ConsentCategory.js';
 
+const CONSENT_QUESTION_IDS = [
+	'INFORMED_CONSENT__READ_AND_UNDERSTAND',
+	'RECONTACT__FUTURE_RESEARCH',
+	'RECONTACT__SECONDARY_CONTACT',
+	'RELEASE_DATA__CLINICAL_AND_GENETIC',
+	'RELEASE_DATA__DE_IDENTIFIED',
+	'RESEARCH_PARTICIPATION__CONTACT_INFORMATION',
+	'RESEARCH_PARTICIPATION__FUTURE_RESEARCH',
+	'REVIEW_SIGN__SIGNED',
+] as const;
+
+export const ConsentQuestionId = z.enum(CONSENT_QUESTION_IDS);
+
 export const ConsentQuestion = z.object({
-	id: z.string().trim(),
+	id: ConsentQuestionId,
 	isActive: z.boolean(),
 	category: ConsentCategory,
 });
 
 export type ConsentQuestion = z.infer<typeof ConsentQuestion>;
+export type ConsentQuestionId = z.infer<typeof ConsentQuestionId>;
+export const ConsentQuestionSchema: SchemaObject = generateSchema(ConsentQuestion);
+export const ConsentQuestionIdSchema: SchemaObject = generateSchema(ConsentQuestionId);
