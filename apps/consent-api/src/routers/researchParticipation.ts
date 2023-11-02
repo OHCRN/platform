@@ -60,8 +60,8 @@ router.post('/', async (req, res) => {
 	try {
 		logger.info(`Submitted Consent for Research Participation`);
 		res.status(201).send({
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: 'YES',
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: 'NO',
+			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
+			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
 		});
 	} catch (error) {
 		logger.error(error);
@@ -99,8 +99,8 @@ router.get('/', async (req, res) => {
 	try {
 		logger.info(`Retrieved Consent for Research Participation`);
 		res.status(200).send({
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: 'YES',
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: 'NO',
+			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
+			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
 		});
 	} catch (error) {
 		logger.error(error);

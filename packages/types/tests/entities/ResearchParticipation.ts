@@ -27,7 +27,7 @@ import {
 } from '../../src/entities/index.js';
 
 describe('ResearchParticipationRequest', () => {
-	it('Must use a boolean', () => {
+	it('Must use boolean values', () => {
 		expect(
 			ResearchParticipationRequest.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
@@ -57,7 +57,7 @@ describe('ResearchParticipationRequest', () => {
 });
 
 describe('ResearchParticipationResponse', () => {
-	it('Must use a boolean', () => {
+	it('Must use boolean values', () => {
 		expect(
 			ResearchParticipationResponse.safeParse({
 				[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
