@@ -47,7 +47,7 @@ describe('ParticipantIdentification', () => {
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				ohipNumber: '1234567890',
-				currentLifecycleState: LifecycleState.enum.APPROVED_FOR_DELETION,
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
 				participantOhipLastName: 'Simson',
@@ -62,7 +62,7 @@ describe('ParticipantIdentification', () => {
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				ohipNumber: '1234567890',
-				currentLifecycleState: LifecycleState.enum.CONSENTED,
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
 				participantOhipLastName: 'Simson',
@@ -80,7 +80,7 @@ describe('ParticipantIdentification', () => {
 			ParticipantIdentification.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				ohipNumber: '1234567890',
-				currentLifecycleState: LifecycleState.enum.IN_PROCESSING,
+				currentLifecycleState: LifecycleState.enum.REGISTERED,
 				participantPreferredName: 'Homer',
 				participantOhipFirstName: 'Homer',
 				participantOhipLastName: 'Simson',

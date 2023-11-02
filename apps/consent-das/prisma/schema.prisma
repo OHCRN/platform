@@ -49,8 +49,19 @@ enum ConsentCategory {
   CONSENT_REVIEW_SIGN
 }
 
+enum ConsentQuestionId {
+  INFORMED_CONSENT__READ_AND_UNDERSTAND
+  RELEASE_DATA__CLINICAL_AND_GENETIC
+  RELEASE_DATA__DE_IDENTIFIED
+  RESEARCH_PARTICIPATION__FUTURE_RESEARCH
+  RESEARCH_PARTICIPATION__CONTACT_INFORMATION
+  RECONTACT__FUTURE_RESEARCH
+  RECONTACT__SECONDARY_CONTACT
+  REVIEW_SIGN__SIGNED
+}
+
 model ConsentQuestion {
-  id                  String                @id
+  id                  ConsentQuestionId     @id
   isActive            Boolean               @default(true)
   createdAt           DateTime              @default(now())
   category            ConsentCategory
@@ -58,13 +69,13 @@ model ConsentQuestion {
 }
 
 model ParticipantResponse {
-  id                String          @default("") @db.Char(21)
-  participant       Participant     @relation(fields: [participantId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  id                String            @default("") @db.Char(21)
+  participant       Participant       @relation(fields: [participantId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   participantId     String
-  consentQuestion   ConsentQuestion @relation(fields: [consentQuestionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  consentQuestionId String
+  consentQuestion   ConsentQuestion   @relation(fields: [consentQuestionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  consentQuestionId ConsentQuestionId
   response          Boolean
-  submittedAt       DateTime        @default(now())
+  submittedAt       DateTime          @default(now())
 
   @@id([id, participantId, consentQuestionId])
 }

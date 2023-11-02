@@ -23,6 +23,8 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ConsentCategorySchema as ConsentCategory,
 	ConsentGroupSchema as ConsentGroup,
+	ConsentQuestionSchema as ConsentQuestion,
+	ConsentQuestionIdSchema as ConsentQuestionId,
 	LifecycleStateSchema as LifecycleState,
 } from 'types/entities';
 
@@ -71,6 +73,8 @@ const options = swaggerJsdoc({
 			schemas: {
 				ConsentCategory,
 				ConsentGroup,
+				ConsentQuestion,
+				ConsentQuestionId,
 				LifecycleState,
 			},
 		},

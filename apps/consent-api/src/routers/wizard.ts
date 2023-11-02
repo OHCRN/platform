@@ -22,6 +22,8 @@ import { ConsentWizardProgress } from 'types/entities';
 
 import logger from '../logger.js';
 
+import StepsRouter from './steps.js';
+
 /**
  * @openapi
  * tags:
@@ -30,6 +32,8 @@ import logger from '../logger.js';
  */
 
 const router = Router();
+
+router.use('/steps', StepsRouter);
 
 /**
  * @openapi
