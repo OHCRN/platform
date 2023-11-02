@@ -30,6 +30,7 @@ import { HistoryOfCancer } from './HistoryOfCancer.js';
 import { PostalCode } from './PostalCode.js';
 import { GeneticsClinic } from './GeneticsClinic.js';
 import { MolecularLab } from './MolecularLab.js';
+import { OhipNumber } from './OhipNumber.js';
 
 const CONSENT_RELEASE_DATA_QUESTIONS = [
 	'RELEASE_DATA__FIRST_NAME',
@@ -58,6 +59,7 @@ export const ConsentReleaseDataBase = z.object({
 	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FIRST_NAME]: Name,
 	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__LAST_NAME]: Name,
 	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender,
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__OHIP_NUMBER]: OhipNumber.optional(),
 	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__DATE_OF_BIRTH]: z.coerce.date(),
 	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex,
 	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__ANCESTRY]: Ancestry,
