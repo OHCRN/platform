@@ -32,7 +32,7 @@ import { GeneticsClinic } from './GeneticsClinic.js';
 import { MolecularLab } from './MolecularLab.js';
 import { OhipNumber } from './OhipNumber.js';
 
-const CONSENT_RELEASE_DATA_QUESTIONS = [
+const CONSENT_RELEASE_DATA_FIELD_NAMES = [
 	'RELEASE_DATA__FIRST_NAME',
 	'RELEASE_DATA__LAST_NAME',
 	'RELEASE_DATA__GENDER_IDENTITY',
@@ -51,27 +51,27 @@ const CONSENT_RELEASE_DATA_QUESTIONS = [
 	'RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB',
 ] as const;
 
-export const ConsentReleaseDataQuestion = z.enum(CONSENT_RELEASE_DATA_QUESTIONS);
+export const ConsentReleaseDataFieldName = z.enum(CONSENT_RELEASE_DATA_FIELD_NAMES);
 
 export const ConsentReleaseDataBase = z.object({
 	[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
 	[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FIRST_NAME]: Name,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__LAST_NAME]: Name,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__OHIP_NUMBER]: OhipNumber.optional(),
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__DATE_OF_BIRTH]: z.coerce.date(),
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__ANCESTRY]: Ancestry,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: z.string(),
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]: HistoryOfCancer,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: PostalCode,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: z.string(),
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]: Name,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]: Name,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]: GeneticsClinic,
-	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]: MolecularLab,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: Name,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: Name,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: OhipNumber.optional(),
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: z.coerce.date(),
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: z.string(),
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]: HistoryOfCancer,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: PostalCode,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: z.string(),
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]: Name,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]: Name,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]: GeneticsClinic,
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]: MolecularLab,
 });
 
 export const ConsentReleaseDataRequest = ConsentReleaseDataBase;
