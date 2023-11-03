@@ -17,25 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ConsentReleaseDataQuestion } from 'types/entities';
+
 import { ConsentReleaseDataDictionary } from 'src/i18n/locales/en/consent-release-data';
 
 const dictionary = {
-	RELEASE_DATA__FIRST_NAME: 'Prénom',
-	RELEASE_DATA__LAST_NAME: 'Nom de famille',
-	RELEASE_DATA__GENDER_IDENTITY: 'Identité de genre',
-	RELEASE_DATA__OHIP_NUMBER: '# OHIP',
-	RELEASE_DATA__DATE_OF_BIRTH: 'Date de naissance',
-	RELEASE_DATA__BIRTH_SEX: 'Sexe attribué à la naissance',
-	RELEASE_DATA__ANCESTRY: 'Ascendance',
-	RELEASE_DATA__HISTORY_OF_CANCER: 'Antécédents personnels de cancer ?',
-	RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS: 'Diagnostic primaire du cancer',
-	RELEASE_DATA__FAMILY_HISTORY_OF_CANCER: 'Antécédents familiaux de cancer ?',
-	RELEASE_DATA__RESIDENTIAL_POSTAL_CODE: 'Code Postal',
-	RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE: 'Titre de clinicien',
-	RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME: 'Prénom du clinicien',
-	RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME: 'Nom de famille du clinicien',
-	RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC: 'Clinique de génétique',
-	RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB: 'Laboratoire moléculaire',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FIRST_NAME]: 'Prénom',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__LAST_NAME]: 'Nom de famille',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__GENDER_IDENTITY]: 'Identité de genre',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__OHIP_NUMBER]: '# OHIP',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__DATE_OF_BIRTH]: 'Date de naissance',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__BIRTH_SEX]: 'Sexe attribué à la naissance',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__ANCESTRY]: 'Ascendance',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__HISTORY_OF_CANCER]: 'Antécédents personnels de cancer ?',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'Diagnostic primaire du cancer',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]: 'Antécédents familiaux de cancer ?',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'Code Postal',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: 'Titre de clinicien',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]: 'Prénom du clinicien',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]: 'Nom de famille du clinicien',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]: 'Clinique de génétique',
+	[ConsentReleaseDataQuestion.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]: 'Laboratoire moléculaire',
 } satisfies ConsentReleaseDataDictionary;
 
 export default dictionary;
