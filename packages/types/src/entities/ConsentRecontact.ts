@@ -21,12 +21,25 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentQuestionId } from './ConsentQuestion.js';
+import { ConsentQuestionId, Name, PhoneNumber } from './index.js';
 
-export const ConsentRecontactBase = z.object({
-	[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: z.boolean(),
-	[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: z.boolean(),
-});
+export const ConsentRecontactBase = z
+	.object({
+		[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: z.boolean(),
+		[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: z.boolean(),
+		secondaryContactFirstName: Name.optional(),
+		secondaryContactLastName: Name.optional(),
+		secondaryContactPhoneNumber: PhoneNumber.optional(),
+	})
+	.refine((input) => {
+		const requireSecondaryContactInfo =
+			input[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT] === true;
+		const allSecondaryContactInfoDefined =
+			input.secondaryContactFirstName !== undefined &&
+			input.secondaryContactLastName !== undefined &&
+			input.secondaryContactPhoneNumber !== undefined;
+		return requireSecondaryContactInfo ? allSecondaryContactInfoDefined : true;
+	});
 
 export const ConsentRecontactRequest = ConsentRecontactBase;
 export type ConsentRecontactRequest = z.infer<typeof ConsentRecontactRequest>;
