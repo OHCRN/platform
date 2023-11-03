@@ -17,19 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import Form from 'src/components/Form';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+'use client';
 
-const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+type Inputs = {
+	example: string;
+	exampleRequired: string;
+};
+
+const Form = () => {
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+	} = useForm<Inputs>();
+	const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+	console.log(watch('example'));
+
 	return (
-		<div>
-			<h2>{translate('common', 'invite')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<Form />
-		</div>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<input defaultValue="test" {...register('example')} />
+			<input {...register('exampleRequired', { required: true })} />
+
+			{errors.exampleRequired && <span>This field is required</span>}
+
+			<input type="submit" />
+		</form>
 	);
 };
 
-export default ClinicianRegistration;
+export default Form;
