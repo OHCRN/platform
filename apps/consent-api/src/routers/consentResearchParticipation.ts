@@ -22,6 +22,11 @@ import { ConsentQuestionId } from 'types/entities';
 
 import logger from '../logger.js';
 
+const mockConsentResponse = {
+	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
+	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
+};
+
 const router = Router();
 
 /**
@@ -59,10 +64,8 @@ router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Submitted Consent for Research Participation`);
-		res.status(201).send({
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
-		});
+		// TODO send real response
+		res.status(201).send(mockConsentResponse);
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
@@ -98,10 +101,8 @@ router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Retrieved Consent for Research Participation`);
-		res.status(200).send({
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
-			[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
-		});
+		// TODO send real response
+		res.status(200).send(mockConsentResponse);
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
