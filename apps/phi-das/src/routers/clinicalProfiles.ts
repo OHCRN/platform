@@ -100,7 +100,7 @@ router.get('/:clinicalProfilePrivateKey', async (req, res) => {
  * /clinical-profiles/:
  *   post:
  *     tags:
- *       - Clinical Profile
+ *       - Clinical Profiles
  *     name: Create Clinical Profile
  *     description: Create one clinical profile
  *     security:
