@@ -28,8 +28,7 @@ const dictionary = {
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: 'Sex Assigned at Birth',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: 'Ancestry',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: 'Personal History of Cancer?',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]:
-		'Primary Cancer Diagnosis',
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PREFERRED_NAME]: 'Preferred Name',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 		'Family History of Cancer?',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'Postal Code',

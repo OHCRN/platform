@@ -31,8 +31,7 @@ const dictionary = {
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: 'Ascendance',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]:
 		'Antécédents personnels de cancer ?',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]:
-		'Diagnostic primaire du cancer',
+	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PREFERRED_NAME]: 'Nom préféré',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 		'Antécédents familiaux de cancer ?',
 	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'Code Postal',

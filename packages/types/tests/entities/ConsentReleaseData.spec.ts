@@ -46,7 +46,6 @@ describe('ConsentReleaseDataRequest', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -73,7 +72,6 @@ describe('ConsentReleaseDataRequest', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -91,7 +89,6 @@ describe('ConsentReleaseDataRequest', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -109,7 +106,6 @@ describe('ConsentReleaseDataRequest', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -134,7 +130,6 @@ describe('ConsentReleaseDataResponse', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -161,7 +156,6 @@ describe('ConsentReleaseDataResponse', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -179,7 +173,6 @@ describe('ConsentReleaseDataResponse', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
@@ -197,7 +190,6 @@ describe('ConsentReleaseDataResponse', () => {
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PRIMARY_CANCER_DIAGNOSIS]: 'N/A',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
