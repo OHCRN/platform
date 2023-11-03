@@ -22,6 +22,11 @@ import { ConsentQuestionId } from 'types/entities';
 
 import logger from '../logger.js';
 
+const mockConsentResponse = {
+	[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
+	[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
+};
+
 const router = Router();
 
 /**
@@ -59,10 +64,7 @@ router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Submitted Consent for Re-Contact`);
-		res.status(201).send({
-			[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
-			[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
-		});
+		res.status(201).send(mockConsentResponse);
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
@@ -98,10 +100,7 @@ router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Retrieved Consent for Re-Contact`);
-		res.status(200).send({
-			[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
-			[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
-		});
+		res.status(200).send(mockConsentResponse);
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
