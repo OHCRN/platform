@@ -17,17 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getTranslation, ValidLanguage } from 'src/i18n';
+import { replaceParams } from 'src/i18n/utils/replaceParams';
 
-const APIVersionLabel = async ({
-	apiVersion,
-	currentLang,
+export const TranslationWithInterpolation = ({
+	translatedText,
+	parameters,
 }: {
-	apiVersion: string;
-	currentLang: ValidLanguage;
+	translatedText: string;
+	parameters: Record<string, string | number>;
 }) => {
-	const translate = getTranslation(currentLang);
-	return <span>{translate('footer', 'api', { apiVersion })}</span>;
+	return <span>{replaceParams(translatedText, parameters)}</span>;
 };
 
-export default APIVersionLabel;
+export default TranslationWithInterpolation;

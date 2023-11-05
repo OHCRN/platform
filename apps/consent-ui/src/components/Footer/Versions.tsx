@@ -51,7 +51,7 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					{translate('footer', 'ohcrn-registry', { registryVersion: packageJson.version })} -{' '}
 				</span>
 				<Suspense fallback={<span />}>
-					<APIVersion currentLang={currentLang} />
+					<APIVersion versionText={translate('footer', 'api')} />
 				</Suspense>
 			</div>
 		</div>

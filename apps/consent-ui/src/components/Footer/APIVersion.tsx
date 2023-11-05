@@ -21,12 +21,11 @@
 
 import { useEffect, useState } from 'react';
 
-import { ValidLanguage } from 'src/i18n';
 import { getAPIStatus } from 'src/services/api';
 
-import APIVersionLabel from './APIVersionLabel';
+import { TranslationWithInterpolation } from '../TranslationWithInterpolation';
 
-const APIVersion = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const APIVersion = ({ versionText }: { versionText: string }) => {
 	const [apiVersion, setApiVersion] = useState<string>('N/A');
 
 	useEffect(() => {
@@ -37,7 +36,7 @@ const APIVersion = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		fetchData();
 	}, []);
 
-	return <APIVersionLabel apiVersion={apiVersion} currentLang={currentLang} />;
+	return <TranslationWithInterpolation translatedText={versionText} parameters={{ apiVersion }} />;
 };
 
 export default APIVersion;
