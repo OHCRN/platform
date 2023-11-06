@@ -18,6 +18,7 @@
  */
 
 import { Router } from 'express';
+import { ConsentQuestionId } from 'types/entities';
 
 import { Prisma } from '../generated/client/index.js';
 import { getParticipantResponses } from '../service/search.js';
@@ -57,7 +58,7 @@ const router = Router();
  *         description: Consent Question ID
  *         required: true
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/ConsentQuestionId'
  *     responses:
  *       200:
  *         description: The participant responses were successfully retrieved.
@@ -68,11 +69,11 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
 	const { participantId, consentQuestionId } = req.params;
 	const { sort_order } = req.query;
-
 	try {
+		const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
 		const participant_responses = await getParticipantResponses(
 			participantId,
-			consentQuestionId,
+			parsedConsentQuestionId,
 			// TODO: add validation in getParticipantResponses and fix `as Prisma.SortOrder`
 			sort_order as Prisma.SortOrder | undefined,
 		);
@@ -104,7 +105,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
  *               participantId:
  *                 type: string
  *               consentQuestionId:
- *                 type: string
+ *                 $ref: '#/components/schemas/ConsentQuestionId'
  *               response:
  *                 type: boolean
  *     responses:
