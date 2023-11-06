@@ -132,10 +132,6 @@ router.get('/:inviteId', async (req, res) => {
  *               consentToBeContacted:
  *                 type: boolean
  *                 required: true
- *               inviteSentDate:
- *                 type: string
- *                 format: date
- *                 required: true
  *               inviteAcceptedDate:
  *                 type: string
  *                 format: date
@@ -159,13 +155,11 @@ router.post('/', async (req, res) => {
 		clinicianTitleOrRole,
 		consentGroup,
 		consentToBeContacted,
-		inviteSentDate,
 		inviteAcceptedDate,
 		inviteAccepted,
 	} = req.body;
 	// TODO: add validation
 	try {
-		const parsedInviteSentDate = new Date(inviteSentDate);
 		const parsedInviteAcceptedDate = inviteAcceptedDate ? new Date(inviteAcceptedDate) : undefined;
 		const clinicianInvite = await createClinicianInvite({
 			clinicianFirstName,
@@ -175,7 +169,6 @@ router.post('/', async (req, res) => {
 			clinicianTitleOrRole,
 			consentGroup,
 			consentToBeContacted,
-			inviteSentDate: parsedInviteSentDate,
 			inviteAcceptedDate: parsedInviteAcceptedDate,
 			inviteAccepted,
 		});
