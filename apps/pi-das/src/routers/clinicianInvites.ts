@@ -100,8 +100,8 @@ router.get('/:inviteId', async (req, res) => {
  * /clinician-invites/:
  *   post:
  *     tags:
- *       - Participant
- *     name: Create Participant
+ *       - Clinician Invites
+ *     name: Create Clinician Invite
  *     description: Create one clinician invite
  *     security:
  *       - bearerAuth: []
