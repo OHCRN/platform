@@ -26,8 +26,10 @@ import {
 	ConsentCategory,
 	ConsentGroup,
 	ConsentQuestion,
+	ConsentQuestionId,
 	Participant,
 	ParticipantResponse,
+	LifecycleState,
 	PrismaClient,
 } from './generated/client/index.js';
 import logger from './logger.js';
@@ -96,7 +98,9 @@ export {
 	ConsentCategory,
 	ConsentGroup,
 	ConsentQuestion,
+	ConsentQuestionId,
 	Participant,
 	ParticipantResponse,
+	LifecycleState,
 };
 export default prisma;
