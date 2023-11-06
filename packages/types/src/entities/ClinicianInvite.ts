@@ -26,25 +26,25 @@ import { NanoId } from './NanoId.js';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 
 export const ClinicianInviteBase = z.object({
-	clinicianFirstName: Name,
-	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianLastName: Name,
-	clinicianTitleOrRole: z.string(),
-	consentGroup: ConsentGroup,
-	consentToBeContacted: z.boolean(),
-	guardianEmailAddress: z.string().email().optional(),
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianRelationship: Name.optional(),
 	id: NanoId,
-	inviteAccepted: z.boolean().default(false),
-	inviteAcceptedDate: z.coerce.date().optional(),
 	inviteSentDate: z.coerce.date(),
-	participantEmailAddress: z.string().email(),
+	inviteAcceptedDate: z.coerce.date().optional(),
+	inviteAccepted: z.boolean().default(false),
+	clinicianFirstName: Name,
+	clinicianLastName: Name,
+	clinicianInstitutionalEmailAddress: z.string().email(),
+	clinicianTitleOrRole: z.string(),
 	participantFirstName: Name,
 	participantLastName: Name,
+	participantEmailAddress: z.string().email(),
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name.optional(),
+	consentGroup: ConsentGroup,
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianEmailAddress: z.string().email().optional(),
+	guardianRelationship: Name.optional(),
+	consentToBeContacted: z.boolean(),
 });
 
 export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
