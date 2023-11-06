@@ -10,7 +10,7 @@
 		"das-dev": "pnpm --filter '*-das' run dev",
 		"data-mapper-dev": "pnpm --filter data-mapper run dev",
 		"dev": "pnpm --parallel run dev",
-		"test": "vitest",
+		"test": "vitest run",
 		"coverage": "vitest run --coverage",
 		"migrate-dev": "pnpm --filter '*-das' run migrate-dev",
 		"generate": "pnpm --filter '*-das' --workspace-concurrency=1 run generate",
