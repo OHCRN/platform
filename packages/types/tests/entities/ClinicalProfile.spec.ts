@@ -47,12 +47,12 @@ describe('ClinicalProfile', () => {
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
 				birthSex: BirthSex.enum.PREFER_NOT_TO_ANSWER,
-				clinicalProfilePrivateKey: '6mhX6urHt4R3OG6Yxbimx',
+				clinicalProfilePrivateKey: 'JZzEHrE93yKxsrzZKbHVH',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_TO_SELF_IDENTIFY, // chose to self-identify
 				geneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
-				participantId: 'tREi8pepJ4sshATZJExqS',
+				participantId: 'r1kIA9KK8X6HMI32338a5',
 				selfIdentifiedGender: 'Nulla labore amet minim nisi',
 			}).success,
 		).true;
