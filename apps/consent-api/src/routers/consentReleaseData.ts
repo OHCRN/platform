@@ -62,10 +62,8 @@ const router = Router();
  *         description: Server error
  */
 router.post('/', async (req, res) => {
-	logger.info(`POST /wizard/steps/consent-to-release-data`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Submitted consent to release data`);
 		const data = ConsentReleaseDataRequest.parse(req.body);
 		// TODO: make updates and return modified data
 		res.status(201).send(data);
@@ -107,10 +105,8 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/consent-to-release-data`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Retrieved consent to release data`);
 		// TODO: actually retrieve user data
 		const data = {};
 		res.status(200).send(data);

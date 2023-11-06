@@ -24,18 +24,17 @@ import {
 	BirthSex,
 	ConsentQuestionId,
 	ConsentReleaseDataFieldName,
-	ConsentReleaseDataRequest,
-	ConsentReleaseDataResponse,
+	ConsentReleaseDataBase,
 	Gender,
-	GeneticsClinic,
 	HistoryOfCancer,
+	GeneticsClinic,
+	MolecularLab,
 } from '../../src/entities/index.js';
-import { MolecularLab } from '../../src/entities/MolecularLab.js';
 
-describe('ConsentReleaseDataRequest', () => {
-	it('Must provide valid fields', () => {
+describe('ConsentReleaseDataBase', () => {
+	it('Must provide valid instances of each field', () => {
 		expect(
-			ConsentReleaseDataRequest.safeParse({
+			ConsentReleaseDataBase.safeParse({
 				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
 				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
@@ -60,141 +59,23 @@ describe('ConsentReleaseDataRequest', () => {
 					MolecularLab.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA,
 			}).success,
 		).true;
-		expect(
-			ConsentReleaseDataRequest.safeParse({
-				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: undefined, // should be defined
-				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-			}).success,
-		).false;
-		expect(
-			ConsentReleaseDataRequest.safeParse({
-				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
-				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: null, // should be bool
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-			}).success,
-		).false;
-		expect(
-			ConsentReleaseDataRequest.safeParse({
-				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
-				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]:
-					"Children's Hospital Of Eastern Ontario Ottawa", // invalid value
-			}).success,
-		).false;
 	});
-});
-
-describe('ConsentReleaseDataResponse', () => {
-	it('Must provide valid fields', () => {
+	it('Must contain a valid date of birth', () => {
 		expect(
-			ConsentReleaseDataRequest.safeParse({
+			ConsentReleaseDataBase.safeParse({
 				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
 				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
+				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: 'Invalid date', // not a date
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
 					HistoryOfCancer.enum.YES,
 				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: 'Doctor',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]:
-					'Jerry',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]:
-					'Seinfeld',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]:
-					GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]:
-					MolecularLab.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA,
-			}).success,
-		).true;
-		expect(
-			ConsentReleaseDataRequest.safeParse({
-				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: undefined, // should be defined
-				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-			}).success,
-		).false;
-		expect(
-			ConsentReleaseDataRequest.safeParse({
-				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
-				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: null, // should be bool
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-			}).success,
-		).false;
-		expect(
-			ConsentReleaseDataRequest.safeParse({
-				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
-				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]:
-					"Children's Hospital Of Eastern Ontario Ottawa", // invalid value
 			}).success,
 		).false;
 	});
