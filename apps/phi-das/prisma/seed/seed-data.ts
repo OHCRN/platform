@@ -49,7 +49,6 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_NOT_TO_ANSWER,
-		geneticsClinicVisited: GeneticsClinic.PRINCESS_MARGARET_HOSPITAL_TORONTO,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
 	},
 	{
@@ -59,7 +58,6 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		birthSex: BirthSex.PREFER_NOT_TO_ANSWER,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.PREFER_TO_SELF_IDENTIFY,
-		geneticsClinicVisited: GeneticsClinic.LONDON_HEALTH_SCIENCES_CENTRE_LONDON,
 		historyOfCancer: HistoryOfCancer.UNKNOWN,
 		selfIdentifiedGender: 'other',
 	},
@@ -70,7 +68,6 @@ const clinicalProfiles: Prisma.ClinicalProfileCreateInput[] = [
 		birthSex: BirthSex.MALE,
 		familyHistoryOfCancer: HistoryOfCancer.UNKNOWN,
 		gender: Gender.MAN,
-		geneticsClinicVisited: GeneticsClinic.GRAND_RIVER_HOSPITAL_KITCHENER,
 		historyOfCancer: HistoryOfCancer.NO,
 	},
 ];

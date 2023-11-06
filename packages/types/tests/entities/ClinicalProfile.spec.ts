@@ -37,7 +37,7 @@ describe('ClinicalProfile', () => {
 				clinicalProfilePrivateKey: '6mhX6urHt4R3OG6Yxbimx',
 				familyHistoryOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				gender: Gender.enum.PREFER_NOT_TO_ANSWER, // chose a gender option
-				geneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
+				selfReportedGeneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'tREi8pepJ4sshATZJExqS',
 				selfIdentifiedGender: undefined,

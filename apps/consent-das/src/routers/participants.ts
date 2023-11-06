@@ -124,6 +124,10 @@ router.get('/:participantId', async (req, res) => {
  *                 type: boolean
  *               participantId:
  *                 type: string
+ *               currentLifecycleState:
+ *                 $ref: '#/components/schemas/LifecycleState'
+ *               previousLifecycleState:
+ *                 $ref: '#/components/schemas/LifecycleState'
  *             required:
  *               - emailVerified
  *               - isGuardian
@@ -135,7 +139,15 @@ router.get('/:participantId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
 	logger.info('POST /participants');
-	const { emailVerified, isGuardian, consentGroup, guardianIdVerified, participantId } = req.body;
+	const {
+		emailVerified,
+		isGuardian,
+		consentGroup,
+		guardianIdVerified,
+		participantId,
+		currentLifecycleState,
+		previousLifecycleState,
+	} = req.body;
 	// TODO: add validation
 	try {
 		const participant = await createParticipant({
@@ -144,6 +156,8 @@ router.post('/', async (req, res) => {
 			consentGroup,
 			guardianIdVerified,
 			participantId,
+			currentLifecycleState,
+			previousLifecycleState,
 		});
 		res.status(201).send({ participant });
 	} catch (error) {
