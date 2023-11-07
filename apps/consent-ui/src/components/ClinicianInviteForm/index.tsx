@@ -34,7 +34,7 @@ export const clinicianInviteFormSchema = z.object({
 
 export type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;
 
-const InviteForm = () => {
+const ClinicianInviteForm = () => {
 	const {
 		register,
 		handleSubmit,
@@ -61,4 +61,4 @@ const InviteForm = () => {
 	);
 };
 
-export default InviteForm;
+export default ClinicianInviteForm;

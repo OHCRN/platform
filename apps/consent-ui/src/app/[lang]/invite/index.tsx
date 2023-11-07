@@ -18,7 +18,7 @@
  */
 
 import Link from 'next/link';
-import InviteForm from 'src/components/InviteForm';
+import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
@@ -27,7 +27,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<InviteForm />
+			<ClinicianInviteForm />
 		</div>
 	);
 };
