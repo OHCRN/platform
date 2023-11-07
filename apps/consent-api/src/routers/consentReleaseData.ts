@@ -34,13 +34,6 @@ const router = Router();
  *     description: Form submission for Consent Wizard - Consent to Release Data
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -90,13 +83,6 @@ router.post('/', async (req, res) => {
  *     description: Participant's latest response for Consent Wizard - Consent to Release Data
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         description: OK
