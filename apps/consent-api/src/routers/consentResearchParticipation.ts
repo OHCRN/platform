@@ -18,14 +18,9 @@
  */
 
 import { Router } from 'express';
-import { ConsentQuestionId } from 'types/entities';
+import { ConsentResearchParticipationRequest } from 'types/entities';
 
 import logger from '../logger.js';
-
-const mockConsentResponse = {
-	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: true,
-	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: false,
-};
 
 const router = Router();
 
@@ -52,6 +47,8 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
+ *       400:
+ *         description: Bad Request
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -63,9 +60,14 @@ router.post('/', async (req, res) => {
 	logger.info(`POST /wizard/steps/consent-for-research-participation`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Submitted Consent for Research Participation`);
-		// TODO send real response
-		res.status(201).send(mockConsentResponse);
+		try {
+			const data = ConsentResearchParticipationRequest.parse(req.body);
+			// TODO: make updates and return modified data
+			res.status(201).send(data);
+		} catch (error) {
+			logger.error(error);
+			res.status(400).send({ message: 'Bad Request' });
+		}
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
@@ -97,12 +99,11 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/consent-for-research-participation`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Retrieved Consent for Research Participation`);
-		// TODO send real response
-		res.status(200).send(mockConsentResponse);
+		// TODO: actually retrieve user data
+		const data = {};
+		res.status(200).send(data);
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
