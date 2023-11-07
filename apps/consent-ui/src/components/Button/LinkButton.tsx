@@ -6,25 +6,27 @@ import RightArrow from 'src/components/Icons/Arrow';
 
 import styles from './Button.module.scss';
 
-import { ButtonColor, ButtonSize, ButtonVariant, ButtonLayout, ButtonAction } from '.';
+import { ButtonColor, ButtonSize, ButtonVariant, ButtonAction } from '.';
 
 const LinkButton = ({
 	href,
 	variant = 'primary',
 	color = 'default',
 	size = 'base',
-	layout = 'default',
 	action,
 	children,
 	className = '',
+	LeftIcon,
+	RightIcon,
 }: {
 	href: string;
 	children: ReactNode;
 	variant?: ButtonVariant;
 	color?: ButtonColor;
 	size?: ButtonSize;
-	layout?: ButtonLayout;
 	action?: ButtonAction;
+	LeftIcon?: ReactNode;
+	RightIcon?: ReactNode;
 	className?: string;
 }) => {
 	return (
@@ -35,16 +37,15 @@ const LinkButton = ({
 				styles[variant],
 				styles[color],
 				styles[size],
-				styles[layout],
-				action === 'prev' && styles['left-icon'],
-				action === 'next' && styles['right-icon'],
+				(action === 'prev' || LeftIcon) && styles['left-icon'],
+				(action === 'next' || RightIcon) && styles['right-icon'],
 				className,
 			)}
 			role="button"
 		>
-			{action === 'prev' && <RightArrow className={styles['left-arrow']} />}
+			{action === 'prev' ? <RightArrow className={styles['left-arrow']} /> : LeftIcon}
 			{children}
-			{action === 'next' && <RightArrow />}
+			{action === 'next' ? <RightArrow /> : RightIcon}
 		</Link>
 	);
 };

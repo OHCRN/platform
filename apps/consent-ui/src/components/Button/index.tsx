@@ -27,7 +27,6 @@ import styles from './Button.module.scss';
 export type ButtonVariant = 'primary' | 'secondary';
 export type ButtonColor = 'default' | 'blue' | 'green';
 export type ButtonSize = 'base' | 'large';
-export type ButtonLayout = 'default' | 'right-icon' | 'left-icon';
 export type ButtonAction = 'next' | 'prev';
 export interface ButtonProps {
 	children: ReactNode;
@@ -35,9 +34,10 @@ export interface ButtonProps {
 	variant?: ButtonVariant;
 	color?: ButtonColor;
 	size?: ButtonSize;
-	layout?: ButtonLayout;
 	action?: ButtonAction;
 	disabled?: boolean;
+	LeftIcon?: ReactNode;
+	RightIcon?: ReactNode;
 	className?: string;
 }
 const Button = ({
@@ -46,10 +46,11 @@ const Button = ({
 	variant = 'primary',
 	color = 'default',
 	size = 'base',
-	layout = 'default',
 	action,
 	disabled = false,
 	className = '',
+	LeftIcon,
+	RightIcon,
 }: ButtonProps) => {
 	return (
 		<button
@@ -58,17 +59,16 @@ const Button = ({
 				styles[variant],
 				styles[color],
 				styles[size],
-				styles[layout],
-				action === 'prev' && styles['left-icon'],
-				action === 'next' && styles['right-icon'],
+				(action === 'prev' || LeftIcon) && styles['left-icon'],
+				(action === 'next' || RightIcon) && styles['right-icon'],
 				className,
 			)}
 			disabled={disabled}
 			onClick={onClick}
 		>
-			{action === 'prev' && <RightArrow className={styles['left-arrow']} />}
+			{action === 'prev' ? <RightArrow className={styles['left-arrow']} /> : LeftIcon}
 			{children}
-			{action === 'next' && <RightArrow />}
+			{action === 'next' ? <RightArrow /> : RightIcon}
 		</button>
 	);
 };
