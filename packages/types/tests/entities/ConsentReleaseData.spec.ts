@@ -23,7 +23,6 @@ import {
 	Ancestry,
 	BirthSex,
 	ConsentQuestionId,
-	ConsentReleaseDataFieldName,
 	ConsentReleaseDataBase,
 	Gender,
 	HistoryOfCancer,
@@ -37,26 +36,22 @@ describe('ConsentReleaseDataBase', () => {
 			ConsentReleaseDataBase.safeParse({
 				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
 				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: '1956-07-12',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: 'Doctor',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]:
-					'Jerry',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]:
-					'Seinfeld',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]:
+				firstName: 'Homer',
+				lastName: 'Simpson',
+				genderIdentity: Gender.enum.MAN,
+				ohipNumber: '1234567890',
+				dateOfBirth: '1956-07-12',
+				birthSex: BirthSex.enum.MALE,
+				ancestry: Ancestry.enum.AMERICAN,
+				historyOfCancer: HistoryOfCancer.enum.NO,
+				familyHistoryOfCancer: HistoryOfCancer.enum.YES,
+				residentialPostalCode: 'L5V5G3',
+				selfReportedClinicianTitle: 'Doctor',
+				selfReportedClinicianFirstName: 'Jerry',
+				selfReportedClinicianLastName: 'Seinfeld',
+				selfReportedGeneticsClinic:
 					GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]:
-					MolecularLab.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA,
+				selfReportedMolecularLab: MolecularLab.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA,
 			}).success,
 		).true;
 	});
@@ -65,17 +60,16 @@ describe('ConsentReleaseDataBase', () => {
 			ConsentReleaseDataBase.safeParse({
 				[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: true,
 				[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: false,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Homer',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Simpson',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender.enum.MAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '1234567890',
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: 'Invalid date', // not a date
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex.enum.MALE,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry.enum.AMERICAN,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer.enum.NO,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-					HistoryOfCancer.enum.YES,
-				[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'L5V5G3',
+				firstName: 'Homer',
+				lastName: 'Simpson',
+				genderIdentity: Gender.enum.MAN,
+				ohipNumber: '1234567890',
+				dateOfBirth: 'Invalid date', // not a date
+				birthSex: BirthSex.enum.MALE,
+				ancestry: Ancestry.enum.AMERICAN,
+				historyOfCancer: HistoryOfCancer.enum.NO,
+				familyHistoryOfCancer: HistoryOfCancer.enum.YES,
+				residentialPostalCode: 'L5V5G3',
 			}).success,
 		).false;
 	});

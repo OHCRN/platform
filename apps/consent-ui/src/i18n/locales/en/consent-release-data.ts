@@ -17,29 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentReleaseDataFieldName } from 'types/entities';
-
-const dictionary = {
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'First Name',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Last Name',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: 'Gender Identity',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: 'OHIP #',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: 'Date of Birth',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: 'Sex Assigned at Birth',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: 'Ancestry',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: 'Personal History of Cancer?',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PREFERRED_NAME]: 'Preferred Name',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-		'Family History of Cancer?',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'Postal Code',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: 'Clinician Title',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]:
-		'Clinician First Name',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]:
-		'Clinician Last Name',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]: 'Genetics Clinic',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]: 'Molecular Lab',
-} satisfies Record<string, string>;
+const dictionary = {} satisfies Record<string, string>;
 
 export type ConsentReleaseDataDictionary = Record<keyof typeof dictionary, string>;
 

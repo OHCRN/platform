@@ -17,34 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentReleaseDataFieldName } from 'types/entities';
-
 import { ConsentReleaseDataDictionary } from 'src/i18n/locales/en/consent-release-data';
 
-const dictionary = {
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: 'Prénom',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: 'Nom de famille',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: 'Identité de genre',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: '# OHIP',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: 'Date de naissance',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: 'Sexe attribué à la naissance',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: 'Ascendance',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]:
-		'Antécédents personnels de cancer ?',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PREFERRED_NAME]: 'Nom préféré',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]:
-		'Antécédents familiaux de cancer ?',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: 'Code Postal',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]:
-		'Titre de clinicien',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]:
-		'Prénom du clinicien',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]:
-		'Nom de famille du clinicien',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]:
-		'Clinique de génétique',
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]:
-		'Laboratoire moléculaire',
-} satisfies ConsentReleaseDataDictionary;
+const dictionary = {} satisfies ConsentReleaseDataDictionary;
 
 export default dictionary;

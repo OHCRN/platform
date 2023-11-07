@@ -32,52 +32,25 @@ import { GeneticsClinic } from './GeneticsClinic.js';
 import { MolecularLab } from './MolecularLab.js';
 import { OhipNumber } from './OhipNumber.js';
 
-const CONSENT_RELEASE_DATA_FIELD_NAMES = [
-	'RELEASE_DATA__FIRST_NAME',
-	'RELEASE_DATA__LAST_NAME',
-	'RELEASE_DATA__PREFERRED_NAME',
-	'RELEASE_DATA__GENDER_IDENTITY',
-	'RELEASE_DATA__OHIP_NUMBER',
-	'RELEASE_DATA__DATE_OF_BIRTH',
-	'RELEASE_DATA__BIRTH_SEX',
-	'RELEASE_DATA__ANCESTRY',
-	'RELEASE_DATA__HISTORY_OF_CANCER',
-	'RELEASE_DATA__FAMILY_HISTORY_OF_CANCER',
-	'RELEASE_DATA__RESIDENTIAL_POSTAL_CODE',
-	'RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE',
-	'RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME',
-	'RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME',
-	'RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC',
-	'RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB',
-] as const;
-
-export const ConsentReleaseDataFieldName = z.enum(CONSENT_RELEASE_DATA_FIELD_NAMES);
-
 export const ConsentReleaseDataBase = z.object({
 	[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
 	[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FIRST_NAME]: Name,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__LAST_NAME]: Name,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__PREFERRED_NAME]: Name.optional(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__GENDER_IDENTITY]: Gender,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__OHIP_NUMBER]: OhipNumber.optional(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__DATE_OF_BIRTH]: z.coerce.date(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__BIRTH_SEX]: BirthSex,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__ANCESTRY]: Ancestry,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__HISTORY_OF_CANCER]: HistoryOfCancer,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__FAMILY_HISTORY_OF_CANCER]: HistoryOfCancer,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__RESIDENTIAL_POSTAL_CODE]: PostalCode,
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_TITLE]: z
-		.string()
-		.optional(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_FIRST_NAME]:
-		Name.optional(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_CLINICIAN_LAST_NAME]:
-		Name.optional(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_GENETICS_CLINIC]:
-		GeneticsClinic.optional(),
-	[ConsentReleaseDataFieldName.enum.RELEASE_DATA__SELF_REPORTED_MOLECULAR_LAB]:
-		MolecularLab.optional(),
+	firstName: Name,
+	lastName: Name,
+	preferredName: Name.optional(),
+	genderIdentity: Gender,
+	ohipNumber: OhipNumber.optional(),
+	dateOfBirth: z.coerce.date(),
+	birthSex: BirthSex,
+	ancestry: Ancestry,
+	historyOfCancer: HistoryOfCancer,
+	familyHistoryOfCancer: HistoryOfCancer,
+	residentialPostalCode: PostalCode,
+	selfReportedClinicianTitle: z.string().optional(),
+	selfReportedClinicianFirstName: Name.optional(),
+	selfReportedClinicianLastName: Name.optional(),
+	selfReportedGeneticsClinic: GeneticsClinic.optional(),
+	selfReportedMolecularLab: MolecularLab.optional(),
 });
 
 export const ConsentReleaseDataRequest = ConsentReleaseDataBase;
