@@ -21,6 +21,8 @@
 
 import { Ref } from 'react';
 
+// TODO: html input element should specify if it's text/email/tel type
+
 const TextInput = ({
 	fieldRef,
 	name,
@@ -42,6 +44,7 @@ const TextInput = ({
 			onChange={onChange}
 			ref={fieldRef}
 			required={required}
+			type="text" // TODO html input element should specify text/email/tel type depending on fieldName
 		/>
 	);
 };

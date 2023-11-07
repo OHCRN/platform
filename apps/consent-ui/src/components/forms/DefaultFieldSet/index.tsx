@@ -17,70 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 import { ReactNode } from 'react';
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-import TextInput from '../TextInput';
-import FieldWrapper from '../DefaultFieldSet';
-
-type FormFieldTypes =
-	| 'checkbox'
-	| 'date'
-	| 'date'
-	| 'radioGroup'
-	| 'select'
-	| 'text'
-	| 'textWithCheckbox';
-
-interface FormFieldProps<T extends FieldValues> {
-	description?: ReactNode;
-	error?: string;
-	fieldName: Path<T>;
-	label: string;
-	register: UseFormRegister<T>;
-	required?: boolean;
-	type: FormFieldTypes;
-}
-
-const FormFieldProps = <T extends FieldValues>({
-	description,
-	error,
-	fieldName,
+const DefaultFieldSet = ({
+	children,
 	label,
-	register,
+	name,
 	required = false,
-}: FormFieldProps<T>) => {
-	// we can't pass refs to functional components.
-	// this component creates the ref (needed for react-hook-form) for each field,
-	// renames it to fieldRef, and passes it to the input component.
-
-	const { name, onChange, onBlur, ref: fieldRef } = register(fieldName, { required });
-
-	const inputProps = {
-		error,
-		fieldRef,
-		name,
-		onBlur,
-		onChange,
-		required,
-	};
-
-	const wrapperProps = {
-		description,
-		error,
-		name,
-		label,
-		required,
-	};
-
+}: {
+	children: ReactNode;
+	name: string;
+	label: string;
+	required: boolean;
+}) => {
 	return (
-		<FieldWrapper {...wrapperProps}>
-			<TextInput {...inputProps} />
-			{error && error}
-		</FieldWrapper>
+		<fieldset>
+			<label htmlFor={name}>
+				{label}
+				{required && '*'}
+			</label>
+			{children}
+		</fieldset>
 	);
 };
 
-export default FormFieldProps;
+export default DefaultFieldSet;
