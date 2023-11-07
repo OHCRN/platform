@@ -10,11 +10,10 @@ const HelpButton = ({ label }: { label: string }) => {
 		<Button
 			variant="secondary"
 			color="green"
-			layout="left-icon"
 			className={styles.helpButton}
+			LeftIcon={<Help />}
 			onClick={() => console.log('HALP')}
 		>
-			<Help />
 			{label}
 		</Button>
 	);
