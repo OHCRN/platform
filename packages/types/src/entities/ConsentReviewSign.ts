@@ -25,17 +25,15 @@ import { ConsentQuestionId } from './ConsentQuestion.js';
 
 export const ConsentReviewSignResponse = z.object({
 	[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: z.object({
-		// TODO: use enums from step 2 questions
+		// TODO: use schema from step 2
 	}),
-	[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: z.boolean().refine((input) => input),
-	// ^ this isn't an optional consent, so if user is on the Review & Sign page
-	// they must have completed that question and consented, so this must have a value of true
+	[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
 	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
 	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
 	[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: z.boolean(),
 	[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: z
 		.object({
-			// TODO: use enums from step 4 questions
+			// TODO: use schema from step 4
 		})
 		.optional(), // if this data is not defined, they did not consent
 });
