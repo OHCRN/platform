@@ -101,7 +101,7 @@ router.get('/:participantId', async (req, res) => {
  * /participants/:
  *   post:
  *     tags:
- *       - Participant
+ *       - Participants
  *     name: Create Participant
  *     description: Create one participant
  *     security:
@@ -219,7 +219,7 @@ router.post('/', async (req, res) => {
  * /participants/{participantId}:
  *   patch:
  *     tags:
- *       - Participant
+ *       - Participants
  *     name: Update Participant
  *     description: Update participant by ID
  *     security:
