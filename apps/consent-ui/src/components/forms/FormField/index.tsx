@@ -19,18 +19,29 @@
 
 'use client';
 
+import { ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
 import TextInput from '../TextInput';
+import FieldWrapper from '../FieldWrapper';
+
+type FormFieldTypes = 'text' | 'select' | 'checkbox' | 'radioGroup' | 'date' | 'textWithCheckbox';
 
 interface FormFieldProps<T extends FieldValues> {
+	description?: ReactNode;
+	error?: string;
 	fieldName: Path<T>;
+	label: string;
 	register: UseFormRegister<T>;
 	required?: boolean;
+	type: FormFieldTypes;
 }
 
 const FormFieldProps = <T extends FieldValues>({
+	description,
+	error,
 	fieldName,
+	label,
 	register,
 	required = false,
 }: FormFieldProps<T>) => {
@@ -40,7 +51,8 @@ const FormFieldProps = <T extends FieldValues>({
 
 	const { name, onChange, onBlur, ref } = register(fieldName, { required });
 
-	const fieldProps = {
+	const inputProps = {
+		error,
 		fieldRef: ref,
 		name,
 		onBlur,
@@ -48,7 +60,20 @@ const FormFieldProps = <T extends FieldValues>({
 		required,
 	};
 
-	return <TextInput {...fieldProps} />;
+	const wrapperProps = {
+		description,
+		error,
+		name,
+		label,
+		required,
+	};
+
+	return (
+		<FieldWrapper {...wrapperProps}>
+			<TextInput {...inputProps} />
+			{error && error}
+		</FieldWrapper>
+	);
 };
 
 export default FormFieldProps;

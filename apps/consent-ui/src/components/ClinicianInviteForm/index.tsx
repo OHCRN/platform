@@ -26,7 +26,7 @@ import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
 import FormField from '../forms/FormField';
 
 export const clinicianInviteFormSchema = z.object({
-	email: z.string().min(1).email(),
+	// email: z.string().min(1).email(),
 	firstName: z.string().min(1),
 	lastName: z.string().min(25), // DEMO fake validation
 	preferredName: z.string().optional(),
@@ -51,9 +51,31 @@ const ClinicianInviteForm = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<FormField register={register} fieldName="firstName" required />
-			<FormField register={register} fieldName="lastName" required />
-			<FormField register={register} fieldName="preferredName" />
+			<h2>Patient Information</h2>
+			<p>* indicates required field</p>
+			<FormField
+				register={register}
+				error={errors.firstName?.type}
+				fieldName="firstName"
+				label="First Name"
+				type="text"
+				required
+			/>
+			<FormField
+				register={register}
+				error={errors.lastName?.type}
+				fieldName="lastName"
+				label="Last Name"
+				type="text"
+				required
+			/>
+			<FormField
+				register={register}
+				error={errors.preferredName?.type}
+				fieldName="preferredName"
+				label="Preferred Name"
+				type="text"
+			/>
 			{errors.lastName && <span>{errors.lastName?.message}</span>}
 
 			<input type="submit" />
