@@ -54,6 +54,8 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
+ *       400:
+ *         description: Bad Request
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -64,9 +66,14 @@ const router = Router();
 router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
-		const data = ConsentReleaseDataRequest.parse(req.body);
-		// TODO: make updates and return modified data
-		res.status(201).send(data);
+		try {
+			const data = ConsentReleaseDataRequest.parse(req.body);
+			// TODO: make updates and return modified data
+			res.status(201).send(data);
+		} catch (error) {
+			logger.error(error);
+			res.status(400).send({ message: 'Bad Request' });
+		}
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
