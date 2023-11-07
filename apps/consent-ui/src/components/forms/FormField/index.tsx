@@ -17,19 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import InviteForm from 'src/components/InviteForm';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+'use client';
 
-const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
-	return (
-		<div>
-			<h2>{translate('common', 'invite')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<InviteForm />
-		</div>
-	);
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+
+import TextInput from '../TextInput';
+
+interface FormFieldProps<T extends FieldValues> {
+	fieldName: Path<T>;
+	register: UseFormRegister<T>;
+	required?: boolean;
+}
+
+const FormFieldProps = <T extends FieldValues>({
+	fieldName,
+	register,
+	required = false,
+}: FormFieldProps<T>) => {
+	// we can't pass refs to functional components.
+	// this component creates the ref (needed for react-hook-form) for each field,
+	// renames it to fieldRef, and passes it to the input component.
+
+	const { name, onChange, onBlur, ref } = register(fieldName, { required });
+
+	const fieldProps = {
+		fieldRef: ref,
+		name,
+		onBlur,
+		onChange,
+		required,
+	};
+
+	return <TextInput {...fieldProps} />;
 };
 
-export default ClinicianRegistration;
+export default FormFieldProps;

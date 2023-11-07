@@ -19,65 +19,22 @@
 
 'use client';
 
-import { Ref } from 'react';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm as useReactHookForm, SubmitHandler, UseFormRegister } from 'react-hook-form';
+import { z } from 'zod';
+import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
 
-const clinicianInviteFormSchema = z.object({
-	firstName: z.string().min(1),
-	lastName: z.string().min(10),
-	preferredName: z.string().optional(),
+import FormField from '../forms/FormField';
+
+export const clinicianInviteFormSchema = z.object({
 	email: z.string().min(1).email(),
+	firstName: z.string().min(1),
+	lastName: z.string().min(25), // DEMO fake validation
+	preferredName: z.string().optional(),
 });
 
-type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;
+export type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;
 
-const TextField = ({
-	fieldRef,
-	name,
-	onBlur,
-	onChange,
-	required = false,
-}: {
-	fieldRef: Ref<any>;
-	name: string;
-	onBlur: any;
-	onChange: any;
-	required?: boolean;
-}) => {
-	return (
-		<input
-			id={name}
-			name={name}
-			onBlur={onBlur}
-			onChange={onChange}
-			ref={fieldRef}
-			required={required}
-		/>
-	);
-};
-
-// TODO add generics
-const FieldWrapper = ({
-	fieldName,
-	register,
-	required = false,
-}: {
-	fieldName: keyof ClinicianInviteFormSchema;
-	register: UseFormRegister<ClinicianInviteFormSchema>;
-	required?: boolean;
-}) => {
-	// call react-hook-form register function
-	// then pass down its properties to a UI component
-	const { name, onChange, onBlur, ref } = register(fieldName, { required });
-
-	return (
-		<TextField fieldRef={ref} name={name} onBlur={onBlur} onChange={onChange} required={required} />
-	);
-};
-
-const Form = () => {
+const InviteForm = () => {
 	const {
 		register,
 		handleSubmit,
@@ -94,9 +51,9 @@ const Form = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<FieldWrapper register={register} fieldName="firstName" required />
-			<FieldWrapper register={register} fieldName="lastName" required />
-			<FieldWrapper register={register} fieldName="preferredName" />
+			<FormField register={register} fieldName="firstName" required />
+			<FormField register={register} fieldName="lastName" required />
+			<FormField register={register} fieldName="preferredName" />
 			{errors.lastName && <span>{errors.lastName?.message}</span>}
 
 			<input type="submit" />
@@ -104,4 +61,4 @@ const Form = () => {
 	);
 };
 
-export default Form;
+export default InviteForm;

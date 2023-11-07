@@ -17,19 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import InviteForm from 'src/components/InviteForm';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+'use client';
 
-const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+import { Ref } from 'react';
+
+const TextInput = ({
+	fieldRef,
+	name,
+	onBlur,
+	onChange,
+	required = false,
+}: {
+	fieldRef: Ref<any>;
+	name: string;
+	onBlur: any;
+	onChange: any;
+	required?: boolean;
+}) => {
 	return (
-		<div>
-			<h2>{translate('common', 'invite')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<InviteForm />
-		</div>
+		<input
+			id={name}
+			name={name}
+			onBlur={onBlur}
+			onChange={onChange}
+			ref={fieldRef}
+			required={required}
+		/>
 	);
 };
 
-export default ClinicianRegistration;
+export default TextInput;
