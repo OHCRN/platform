@@ -20,14 +20,18 @@
 'use client';
 
 import { Ref } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm as useReactHookForm, SubmitHandler, UseFormRegister } from 'react-hook-form';
 
-// TODO 1 zod schema validation
-type ClinicianInviteFormInputs = {
-	firstName: string;
-	lastName: string;
-	preferredName?: string;
-};
+const clinicianInviteFormSchema = z.object({
+	firstName: z.string().min(1),
+	lastName: z.string().min(10),
+	preferredName: z.string().optional(),
+	email: z.string().min(1).email(),
+});
+
+type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;
 
 const TextField = ({
 	fieldRef,
@@ -60,8 +64,8 @@ const FieldWrapper = ({
 	register,
 	required = false,
 }: {
-	fieldName: keyof ClinicianInviteFormInputs;
-	register: UseFormRegister<ClinicianInviteFormInputs>;
+	fieldName: keyof ClinicianInviteFormSchema;
+	register: UseFormRegister<ClinicianInviteFormSchema>;
 	required?: boolean;
 }) => {
 	// call react-hook-form register function
@@ -79,17 +83,21 @@ const Form = () => {
 		handleSubmit,
 		watch,
 		formState: { errors },
-	} = useReactHookForm<ClinicianInviteFormInputs>();
-	const onSubmit: SubmitHandler<ClinicianInviteFormInputs> = (data) => console.log({ data });
+	} = useReactHookForm<ClinicianInviteFormSchema>({
+		resolver: zodResolver(clinicianInviteFormSchema),
+	});
+	const onSubmit: SubmitHandler<ClinicianInviteFormSchema> = (data) => console.log('data', data);
 
 	console.log('lastName', watch('lastName'));
+
+	console.log('errors', errors);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<FieldWrapper register={register} fieldName="firstName" required />
 			<FieldWrapper register={register} fieldName="lastName" required />
 			<FieldWrapper register={register} fieldName="preferredName" />
-			{errors.lastName && <span>This field is required</span>}
+			{errors.lastName && <span>{errors.lastName?.message}</span>}
 
 			<input type="submit" />
 		</form>
