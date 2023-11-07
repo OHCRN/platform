@@ -19,11 +19,58 @@
 
 'use client';
 
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { Ref } from 'react';
+import { useForm as useReactHookForm, SubmitHandler, UseFormRegister } from 'react-hook-form';
 
-type Inputs = {
-	example: string;
-	exampleRequired: string;
+// TODO 1 zod schema validation
+type ClinicianInviteFormInputs = {
+	firstName: string;
+	lastName: string;
+	preferredName?: string;
+};
+
+const TextField = ({
+	fieldRef,
+	name,
+	onBlur,
+	onChange,
+	required = false,
+}: {
+	fieldRef: Ref<any>;
+	name: string;
+	onBlur: any;
+	onChange: any;
+	required?: boolean;
+}) => {
+	return (
+		<input
+			id={name}
+			name={name}
+			onBlur={onBlur}
+			onChange={onChange}
+			ref={fieldRef}
+			required={required}
+		/>
+	);
+};
+
+// TODO add generics
+const FieldWrapper = ({
+	fieldName,
+	register,
+	required = false,
+}: {
+	fieldName: keyof ClinicianInviteFormInputs;
+	register: UseFormRegister<ClinicianInviteFormInputs>;
+	required?: boolean;
+}) => {
+	// call react-hook-form register function
+	// then pass down its properties to a UI component
+	const { name, onChange, onBlur, ref } = register(fieldName, { required });
+
+	return (
+		<TextField fieldRef={ref} name={name} onBlur={onBlur} onChange={onChange} required={required} />
+	);
 };
 
 const Form = () => {
@@ -32,17 +79,17 @@ const Form = () => {
 		handleSubmit,
 		watch,
 		formState: { errors },
-	} = useForm<Inputs>();
-	const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+	} = useReactHookForm<ClinicianInviteFormInputs>();
+	const onSubmit: SubmitHandler<ClinicianInviteFormInputs> = (data) => console.log({ data });
 
-	console.log(watch('example'));
+	console.log('lastName', watch('lastName'));
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<input defaultValue="test" {...register('example')} />
-			<input {...register('exampleRequired', { required: true })} />
-
-			{errors.exampleRequired && <span>This field is required</span>}
+			<FieldWrapper register={register} fieldName="firstName" required />
+			<FieldWrapper register={register} fieldName="lastName" required />
+			<FieldWrapper register={register} fieldName="preferredName" />
+			{errors.lastName && <span>This field is required</span>}
 
 			<input type="submit" />
 		</form>
