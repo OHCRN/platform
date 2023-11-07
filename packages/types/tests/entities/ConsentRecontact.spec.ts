@@ -21,14 +21,13 @@ import { expect } from 'chai';
 
 import {
 	ConsentQuestionId,
-	ConsentRecontactRequest,
-	ConsentRecontactResponse,
+	ConsentRecontactBase,
 } from '../../src/entities/index.js';
 
-describe('ConsentRecontactRequest', () => {
+describe('ConsentRecontactBase', () => {
 	it('Must define secondary contact info if user consented to secondary contact', () => {
 		expect(
-			ConsentRecontactRequest.safeParse({
+			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
 				secondaryContactFirstName: 'Marge', // secondary contact info all provided
@@ -37,7 +36,7 @@ describe('ConsentRecontactRequest', () => {
 			}).success,
 		).true;
 		expect(
-			ConsentRecontactRequest.safeParse({
+			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
 				secondaryContactFirstName: undefined, // secondary contact info not needed
@@ -46,7 +45,7 @@ describe('ConsentRecontactRequest', () => {
 			}).success,
 		).true;
 		expect(
-			ConsentRecontactRequest.safeParse({
+			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
 				secondaryContactFirstName: undefined,
@@ -55,7 +54,7 @@ describe('ConsentRecontactRequest', () => {
 			}).success,
 		).false;
 		expect(
-			ConsentRecontactRequest.safeParse({
+			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
 				secondaryContactFirstName: 'Marge',
@@ -64,7 +63,7 @@ describe('ConsentRecontactRequest', () => {
 			}).success,
 		).false;
 		expect(
-			ConsentRecontactRequest.safeParse({
+			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: null,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: null,
 				secondaryContactFirstName: null,
@@ -73,66 +72,7 @@ describe('ConsentRecontactRequest', () => {
 			}).success,
 		).false;
 		expect(
-			ConsentRecontactRequest.safeParse({
-				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: undefined,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: undefined,
-				secondaryContactFirstName: undefined,
-				secondaryContactLastName: undefined,
-				secondaryContactPhoneNumber: undefined,
-			}).success,
-		).false;
-	});
-});
-
-describe('ConsentRecontactResponse', () => {
-	it('Must define secondary contact info if user consented to secondary contact', () => {
-		expect(
-			ConsentRecontactResponse.safeParse({
-				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
-				secondaryContactFirstName: 'Marge', // secondary contact info all provided
-				secondaryContactLastName: 'Simpson',
-				secondaryContactPhoneNumber: '6471234567',
-			}).success,
-		).true;
-		expect(
-			ConsentRecontactResponse.safeParse({
-				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
-				secondaryContactFirstName: undefined, // secondary contact info not needed
-				secondaryContactLastName: undefined,
-				secondaryContactPhoneNumber: undefined,
-			}).success,
-		).true;
-		expect(
-			ConsentRecontactResponse.safeParse({
-				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
-				secondaryContactFirstName: undefined,
-				secondaryContactLastName: undefined,
-				secondaryContactPhoneNumber: undefined, // missing all secondary contact fields
-			}).success,
-		).false;
-		expect(
-			ConsentRecontactResponse.safeParse({
-				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
-				secondaryContactFirstName: 'Marge',
-				secondaryContactLastName: 'Simpson',
-				secondaryContactPhoneNumber: undefined, // missing one secondary contact field
-			}).success,
-		).false;
-		expect(
-			ConsentRecontactResponse.safeParse({
-				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: null,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: null,
-				secondaryContactFirstName: null,
-				secondaryContactLastName: null,
-				secondaryContactPhoneNumber: null,
-			}).success,
-		).false;
-		expect(
-			ConsentRecontactResponse.safeParse({
+			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: undefined,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: undefined,
 				secondaryContactFirstName: undefined,

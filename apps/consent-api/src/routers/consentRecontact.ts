@@ -18,14 +18,9 @@
  */
 
 import { Router } from 'express';
-import { ConsentQuestionId } from 'types/entities';
+import { ConsentRecontactRequest } from 'types/entities';
 
 import logger from '../logger.js';
-
-const mockConsentResponse = {
-	[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
-	[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
-};
 
 const router = Router();
 
@@ -52,6 +47,8 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ConsentRecontactResponse'
+ *       400:
+ *         description: Bad Request
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -60,11 +57,16 @@ const router = Router();
  *         description: Server error
  */
 router.post('/', async (req, res) => {
-	logger.info(`POST /wizard/steps/consent-for-recontact`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Submitted Consent for Re-Contact`);
-		res.status(201).send(mockConsentResponse);
+		try {
+			const data = ConsentRecontactRequest.parse(req.body);
+			// TODO: make updates and return modified data
+			res.status(201).send(data);
+		} catch (error) {
+			logger.error(error);
+			res.status(400).send({ message: 'Bad Request' });
+		}
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
@@ -96,11 +98,11 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/consent-for-recontact`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Retrieved Consent for Re-Contact`);
-		res.status(200).send(mockConsentResponse);
+		// TODO: actually retrieve user data
+		const data = {};
+		res.status(200).send(data);
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
