@@ -23,10 +23,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
 
-import FormField from '../forms/FormField';
+import FormField from '../Form/FormField';
 
 export const clinicianInviteFormSchema = z.object({
-	// email: z.string().min(1).email(),
 	firstName: z.string().min(1),
 	lastName: z.string().min(25), // DEMO fake validation
 	preferredName: z.string().optional(),
@@ -34,52 +33,53 @@ export const clinicianInviteFormSchema = z.object({
 
 export type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;
 
-const ClinicianInviteForm = () => {
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useReactHookForm<ClinicianInviteFormSchema>({
-		resolver: zodResolver(clinicianInviteFormSchema),
-	});
-	const onSubmit: SubmitHandler<ClinicianInviteFormSchema> = (data) => console.log('data', data);
+const ClinicianInviteForm = () =>
+	// { formErrorMap }: { formErrorMap: z.ZodErrorMap }
+	{
+		const {
+			register,
+			handleSubmit,
+			// watch,
+			formState: { errors },
+		} = useReactHookForm<ClinicianInviteFormSchema>({
+			resolver: zodResolver(clinicianInviteFormSchema),
+		});
 
-	console.log('lastName', watch('lastName'));
+		// z.setErrorMap(formErrorMap);
 
-	console.log('errors', errors);
+		const onSubmit: SubmitHandler<ClinicianInviteFormSchema> = (data) => console.log('data', data);
 
-	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<h2>Patient Information</h2>
-			<p>* indicates required field</p>
-			<FormField
-				register={register}
-				error={errors.firstName?.type}
-				fieldName="firstName"
-				label="First Name"
-				type="text"
-				required
-			/>
-			<FormField
-				register={register}
-				error={errors.lastName?.type}
-				fieldName="lastName"
-				label="Last Name"
-				type="text"
-				required
-			/>
-			<FormField
-				register={register}
-				error={errors.preferredName?.type}
-				fieldName="preferredName"
-				label="Preferred Name"
-				type="text"
-			/>
+		return (
+			<form>
+				<h2>Patient Information</h2>
+				<p>* indicates required field</p>
+				<FormField
+					register={register}
+					error={errors.firstName?.type}
+					fieldName="firstName"
+					label="First Name"
+					type="text"
+					required
+				/>
+				<FormField
+					register={register}
+					error={errors.lastName?.type}
+					fieldName="lastName"
+					label="Last Name"
+					type="text"
+					required
+				/>
+				<FormField
+					register={register}
+					error={errors.preferredName?.type}
+					fieldName="preferredName"
+					label="Preferred Name"
+					type="text"
+				/>
 
-			<input type="submit" />
-		</form>
-	);
-};
+				<input type="submit" onClick={handleSubmit(onSubmit)} />
+			</form>
+		);
+	};
 
 export default ClinicianInviteForm;
