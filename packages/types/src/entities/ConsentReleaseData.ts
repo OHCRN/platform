@@ -32,9 +32,11 @@ import { GeneticsClinic } from './GeneticsClinic.js';
 import { MolecularLab } from './MolecularLab.js';
 import { OhipNumber } from './OhipNumber.js';
 
+const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
+
 export const ConsentReleaseDataBase = z.object({
-	[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
-	[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
+	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
+	[RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
 	firstName: Name,
 	lastName: Name,
 	preferredName: Name.optional(),
