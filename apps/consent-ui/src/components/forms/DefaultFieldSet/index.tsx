@@ -38,8 +38,8 @@ const DefaultFieldSet = ({
 				{label}
 				{required && '*'}
 			</label>
-			{error && <p style={{ color: 'red' }}>{error}</p>}
 			{children}
+			{error && <p style={{ color: 'red' }}>{error}</p>}
 		</fieldset>
 	);
 };
