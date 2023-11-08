@@ -23,7 +23,7 @@ import { ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
 import TextInput from '../TextInput';
-import FieldWrapper from '../DefaultFieldSet';
+import DefaultFieldSet from '../DefaultFieldSet';
 
 type FormFieldTypes =
 	| 'checkbox'
@@ -76,10 +76,9 @@ const FormFieldProps = <T extends FieldValues>({
 	};
 
 	return (
-		<FieldWrapper {...wrapperProps}>
+		<DefaultFieldSet {...wrapperProps}>
 			<TextInput {...inputProps} />
-			{error && error}
-		</FieldWrapper>
+		</DefaultFieldSet>
 	);
 };
 

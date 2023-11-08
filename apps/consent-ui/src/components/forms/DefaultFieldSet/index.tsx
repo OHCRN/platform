@@ -21,11 +21,13 @@ import { ReactNode } from 'react';
 
 const DefaultFieldSet = ({
 	children,
+	error,
 	label,
 	name,
 	required = false,
 }: {
 	children: ReactNode;
+	error?: string;
 	name: string;
 	label: string;
 	required: boolean;
@@ -36,6 +38,7 @@ const DefaultFieldSet = ({
 				{label}
 				{required && '*'}
 			</label>
+			{error && <p style={{ color: 'red' }}>{error}</p>}
 			{children}
 		</fieldset>
 	);

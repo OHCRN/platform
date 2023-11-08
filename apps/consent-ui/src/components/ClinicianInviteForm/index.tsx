@@ -76,7 +76,6 @@ const ClinicianInviteForm = () => {
 				label="Preferred Name"
 				type="text"
 			/>
-			{errors.lastName && <span>{errors.lastName?.message}</span>}
 
 			<input type="submit" />
 		</form>
