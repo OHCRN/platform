@@ -21,7 +21,7 @@ import Image from 'next/image';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/Button/LinkButton';
-import BackgroundImage from 'src/public/landing-page.png';
+import BackgroundImage from 'src/public/landing-page.jpg';
 import { OHCRN_HOME_LINK } from 'src/constants';
 
 import LandingPageCard from './LandingPageCard';

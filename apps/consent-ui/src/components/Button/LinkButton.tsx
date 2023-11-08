@@ -54,9 +54,21 @@ const LinkButton = ({
 			)}
 			role="button"
 		>
-			{action === 'prev' ? <RightArrow className={styles['left-arrow']} /> : LeftIcon}
+			{action === 'prev' ? (
+				<div>
+					<RightArrow className={styles['left-arrow']} />
+				</div>
+			) : (
+				LeftIcon && <div>{LeftIcon}</div>
+			)}
 			{children}
-			{action === 'next' ? <RightArrow /> : RightIcon}
+			{action === 'next' ? (
+				<div>
+					<RightArrow />
+				</div>
+			) : (
+				RightIcon && <div>{RightIcon}</div>
+			)}
 		</Link>
 	);
 };
