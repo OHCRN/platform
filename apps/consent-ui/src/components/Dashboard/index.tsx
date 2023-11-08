@@ -21,9 +21,10 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import Card from 'src/components/Card';
-import LinkButton from 'src/components/Button/LinkButton';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/public/consents.jpeg';
+
+import LocalizedLink from '../Link/LocalizedLink';
 
 import styles from './Dashboard.module.scss';
 
@@ -43,13 +44,27 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 					<p>{translate('dashboard', 'review-consents-description')}</p>
 					<div className={styles['button-container']}>
 						{consentStatus == 'complete' ? (
-							<LinkButton href={''} variant="secondary" color="blue">
-								<b>{translate('dashboard', 'download-consent-forms')}</b>
-							</LinkButton>
+							<LocalizedLink
+								name={'home'}
+								linkLang={currentLang}
+								role="button"
+								variant="secondary"
+								color="blue"
+							>
+								{translate('dashboard', 'download-consent-forms')}
+							</LocalizedLink>
 						) : (
-							<LinkButton href={''} variant="primary" color="green" size="large" action="next">
-								<b>{translate('dashboard', 'complete-consent-forms')}</b>
-							</LinkButton>
+							<LocalizedLink
+								name={'consent-1'}
+								linkLang={currentLang}
+								role="button"
+								variant="primary"
+								color="green"
+								size="large"
+								action="next"
+							>
+								{translate('dashboard', 'complete-consent-forms')}
+							</LocalizedLink>
 						)}
 					</div>
 				</div>

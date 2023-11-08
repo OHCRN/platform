@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { ComponentProps } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 import Link from 'next/link';
 
 import { ValidLanguage } from 'src/i18n';
+
+import { ButtonAction, ButtonColor, ButtonSize, ButtonVariant } from '../Button';
 
 const VALID_ROUTE_NAMES = [
 	'home',
@@ -33,4 +35,10 @@ export type Route =
 export type LocalizedLinkProps = Omit<ComponentProps<typeof Link>, 'href'> &
 	Route & {
 		linkLang: ValidLanguage;
+		variant?: ButtonVariant;
+		color?: ButtonColor;
+		size?: ButtonSize;
+		action?: ButtonAction;
+		LeftIcon?: ReactNode;
+		RightIcon?: ReactNode;
 	};
