@@ -21,12 +21,15 @@ import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birth-sex';
 import commonDictionary from './common';
 import informedConsentDictionary from './informed-consent';
+import clinicianInviteFormDictionary from './clinician-invite-form';
 import consentReleaseDataDictionary from './consent-release-data';
 import consentResearchParticipationDictionary from './consent-research-participation';
 import consentRecontactDictionary from './consent-recontact';
 import consentReviewSignDictionary from './consent-review-sign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
+import formsDictionary from './forms';
+import formErrorsDictionary from './form-errors';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './genetics-clinic';
 import headerDictionary from './header';
@@ -38,6 +41,7 @@ import registerDictionary from './register';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	'birth-sex': birthSexDictionary,
+	'clinician-invite-form': clinicianInviteFormDictionary,
 	common: commonDictionary,
 	'informed-consent': informedConsentDictionary,
 	'consent-release-data': consentReleaseDataDictionary,
@@ -46,6 +50,8 @@ const dictionaries = {
 	'consent-review-sign': consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
+	'form-errors': formErrorsDictionary,
+	forms: formsDictionary,
 	gender: genderDictionary,
 	'genetics-clinic': geneticsClinicDictionary,
 	header: headerDictionary,
