@@ -17,29 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
 import clsx from 'clsx';
 
 import RightArrow from 'src/components/Icons/Arrow';
 
+import { ButtonProps as BaseProps } from './types';
 import styles from './Button.module.scss';
 
-export type ButtonVariant = 'primary' | 'secondary';
-export type ButtonColor = 'default' | 'blue' | 'green';
-export type ButtonSize = 'base' | 'large';
-export type ButtonAction = 'next' | 'prev';
-export interface ButtonProps {
-	children: ReactNode;
+interface ButtonProps extends BaseProps {
 	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
-	variant?: ButtonVariant;
-	color?: ButtonColor;
-	size?: ButtonSize;
-	action?: ButtonAction;
 	disabled?: boolean;
-	LeftIcon?: ReactNode;
-	RightIcon?: ReactNode;
-	className?: string;
 }
+
 const Button = ({
 	children,
 	onClick,

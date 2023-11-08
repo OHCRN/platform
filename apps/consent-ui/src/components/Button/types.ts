@@ -17,48 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
-import Link from 'next/link';
+import { ReactNode } from 'react';
 
-import RightArrow from 'src/components/Icons/Arrow';
+export type ButtonVariant = 'primary' | 'secondary';
+export type ButtonColor = 'default' | 'blue' | 'green';
+export type ButtonSize = 'base' | 'large';
+export type ButtonAction = 'next' | 'prev';
 
-import { ButtonProps } from './types';
-import styles from './Button.module.scss';
-
-interface LinkButtonProps extends ButtonProps {
-	href: string;
-}
-
-const LinkButton = ({
-	href,
-	variant = 'primary',
-	color = 'default',
-	size = 'base',
-	action,
-	children,
-	className = '',
-	LeftIcon,
-	RightIcon,
-}: LinkButtonProps) => {
-	return (
-		<Link
-			href={href}
-			className={clsx(
-				styles.base,
-				styles[variant],
-				styles[color],
-				styles[size],
-				(action === 'prev' || LeftIcon) && styles['left-icon'],
-				(action === 'next' || RightIcon) && styles['right-icon'],
-				className,
-			)}
-			role="button"
-		>
-			{action === 'prev' ? <RightArrow className={styles['left-arrow']} /> : LeftIcon}
-			{children}
-			{action === 'next' ? <RightArrow /> : RightIcon}
-		</Link>
-	);
+export type ButtonProps = {
+	children: ReactNode;
+	variant?: ButtonVariant;
+	color?: ButtonColor;
+	size?: ButtonSize;
+	action?: ButtonAction;
+	LeftIcon?: ReactNode;
+	RightIcon?: ReactNode;
+	className?: string;
 };
-
-export default LinkButton;
