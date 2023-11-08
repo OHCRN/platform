@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ConsentRecontactRequest } from 'types/entities';
+import { ConsentRecontactRequest, ZodError } from 'types/entities';
 
 import logger from '../logger.js';
 
@@ -59,17 +59,16 @@ const router = Router();
 router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
-		try {
-			const data = ConsentRecontactRequest.parse(req.body);
-			// TODO: make updates and return modified data
-			res.status(201).send(data);
-		} catch (error) {
-			logger.error(error);
-			res.status(400).send({ message: 'Bad Request' });
-		}
+		const data = ConsentRecontactRequest.parse(req.body);
+		// TODO: make updates and return modified data
+		res.status(201).send(data);
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
+		if (error instanceof ZodError) {
+			res.status(400).send({ message: 'Bad Request' });
+		} else {
+			res.status(500).send({ message: 'Server error' });
+		}
 	}
 });
 

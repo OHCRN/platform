@@ -23,17 +23,18 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentQuestionId, Name, PhoneNumber } from './index.js';
 
+const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
+
 export const ConsentRecontactBase = z
 	.object({
-		[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: z.boolean(),
-		[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: z.boolean(),
+		[RECONTACT__FUTURE_RESEARCH]: z.boolean(),
+		[RECONTACT__SECONDARY_CONTACT]: z.boolean(),
 		secondaryContactFirstName: Name.optional(),
 		secondaryContactLastName: Name.optional(),
 		secondaryContactPhoneNumber: PhoneNumber.optional(),
 	})
 	.refine((input) => {
-		const requireSecondaryContactInfo =
-			input[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT] === true;
+		const requireSecondaryContactInfo = input[RECONTACT__SECONDARY_CONTACT] === true;
 		const allSecondaryContactInfoDefined =
 			input.secondaryContactFirstName !== undefined &&
 			input.secondaryContactLastName !== undefined &&
