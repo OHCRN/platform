@@ -22,7 +22,7 @@ import { describe, expect, it } from 'vitest';
 import { ConsentQuestionId, ConsentRecontactBase } from '../../src/entities/index.js';
 
 describe('ConsentRecontactBase', () => {
-	it('Should provide all secondary contact info if user has consented', () => {
+	it('Parses correctly when secondary contact consent is indicated and required fields are provided', () => {
 		expect(
 			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
@@ -33,7 +33,7 @@ describe('ConsentRecontactBase', () => {
 			}).success,
 		).true;
 	});
-	it('Cannot exclude any secondary contact info if user has consented', () => {
+	it('Parsing fails when secondary contact consent is indicated and required fields are NOT provided', () => {
 		expect(
 			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
@@ -49,7 +49,7 @@ describe('ConsentRecontactBase', () => {
 			}).success,
 		).false;
 	});
-	it('May exclude secondary contact info if user has not consented', () => {
+	it('Parses correctly when secondary contact consent is NOT indicated and required fields are NOT provided', () => {
 		expect(
 			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
@@ -57,11 +57,11 @@ describe('ConsentRecontactBase', () => {
 			}).success,
 		).true;
 	});
-	it('May define secondary contact info if user has not consented', () => {
+	it('Parses correctly when secondary contact consent is NOT indicated and required fields are provided', () => {
 		expect(
 			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
-				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
+				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
 				secondaryContactFirstName: 'Marge', // secondary contact info all provided
 				secondaryContactLastName: 'Simpson',
 				secondaryContactPhoneNumber: '6471234567',
