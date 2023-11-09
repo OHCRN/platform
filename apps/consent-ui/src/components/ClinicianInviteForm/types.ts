@@ -34,6 +34,8 @@ export type ClinicianInviteFormTextDictionary = Partial<
 	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
 >;
 
+export type ClinicianInviteFormErrorDictionary = Partial<FormErrorsDictionary>;
+
 export const clinicianInviteFormSchema = z.object({
 	firstName: z.string().min(1),
 });

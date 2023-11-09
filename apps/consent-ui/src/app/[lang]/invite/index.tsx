@@ -20,10 +20,12 @@
 import Link from 'next/link';
 import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
 import {
+	ClinicianInviteFormErrorDictionary,
 	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -41,11 +43,15 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
 	};
 
+	const errorDict: ClinicianInviteFormErrorDictionary = {
+		required: translate('form-errors', 'required'),
+	};
+
 	return (
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteForm textDict={textDict} fieldDict={fieldDict} />
+			<ClinicianInviteForm errorDict={errorDict} fieldDict={fieldDict} textDict={textDict} />
 		</div>
 	);
 };

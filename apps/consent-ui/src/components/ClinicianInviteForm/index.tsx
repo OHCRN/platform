@@ -19,6 +19,7 @@
 
 'use client';
 
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
 
@@ -27,26 +28,33 @@ import FormField from '../Form/FormField';
 import {
 	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
-	ClinicianInviteFormSchema,
-	clinicianInviteFormSchema,
+	ClinicianInviteFormErrorDictionary,
 } from './types';
 
 const ClinicianInviteForm = ({
+	errorDict,
 	fieldDict,
 	textDict,
 }: {
+	errorDict: ClinicianInviteFormErrorDictionary;
 	fieldDict: ClinicianInviteFormFieldsDictionary;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
+	const schema = z.object({
+		firstName: z.string().min(2, {
+			message: errorDict.required,
+		}),
+	});
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useReactHookForm<ClinicianInviteFormSchema>({
-		resolver: zodResolver(clinicianInviteFormSchema),
+	} = useReactHookForm<z.infer<typeof schema>>({
+		resolver: zodResolver(schema),
 	});
 
-	const onSubmit: SubmitHandler<ClinicianInviteFormSchema> = (data) => console.log('data', data);
+	const onSubmit: SubmitHandler<z.infer<typeof schema>> = (data) => console.log('data', data);
 
 	return (
 		<form>
@@ -56,7 +64,7 @@ const ClinicianInviteForm = ({
 			</p>
 			<FormField
 				register={register}
-				error={errors.firstName?.type}
+				error={errors.firstName?.message}
 				fieldName="firstName"
 				label={fieldDict.firstName.label}
 				type={fieldDict.firstName.type}
