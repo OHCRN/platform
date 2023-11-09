@@ -18,10 +18,11 @@
  */
 
 import Link from 'next/link';
-import ClinicianInviteForm, {
+import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
+import {
 	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
-} from 'src/components/ClinicianInviteForm';
+} from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
