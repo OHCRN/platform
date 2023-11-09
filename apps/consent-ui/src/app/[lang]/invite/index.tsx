@@ -25,7 +25,6 @@ import {
 	ClinicianInviteFormTextDictionary,
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
