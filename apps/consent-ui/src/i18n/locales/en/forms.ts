@@ -18,6 +18,7 @@
  */
 
 const dictionary = {
+	'indicates-required-field': 'indicates required field',
 	'first-name-label': 'First Name',
 	'last-name-label': 'Last Name',
 	'preferred-name-label': 'Preferred Name',

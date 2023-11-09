@@ -18,14 +18,16 @@
  */
 
 import Link from 'next/link';
-// import { z } from 'zod';
-import ClinicianInviteForm, { FieldsDictionary } from 'src/components/ClinicianInviteForm';
+import ClinicianInviteForm, {
+	ClinicianInviteFormFieldsDictionary,
+	ClinicianInviteFormTextDictionary,
+} from 'src/components/ClinicianInviteForm';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
-	const fieldDict: FieldsDictionary = {
+	const fieldDict: ClinicianInviteFormFieldsDictionary = {
 		firstName: {
 			label: translate('forms', 'first-name-label'),
 			type: 'text',
@@ -33,11 +35,16 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		},
 	};
 
+	const textDict: ClinicianInviteFormTextDictionary = {
+		'patient-information': translate('clinician-invite-form', 'patient-information'),
+		'indicates-required-field': translate('forms', 'indicates-required-field'),
+	};
+
 	return (
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteForm fieldDict={fieldDict} />
+			<ClinicianInviteForm textDict={textDict} fieldDict={fieldDict} />
 		</div>
 	);
 };

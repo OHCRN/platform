@@ -18,6 +18,7 @@
  */
 
 const dictionary = {
+	'indicates-required-field': 'indique un champ obligatoire',
 	'first-name-label': 'Prénom',
 	'last-name-label': 'Nom de famille',
 	'preferred-name-label': 'Nom préféré',
