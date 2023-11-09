@@ -20,29 +20,16 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
-import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
 
-import FormField, { FormFieldTypes } from '../Form/FormField';
+import FormField from '../Form/FormField';
 
-export type ClinicianInviteFormFieldsDictionary = Record<
-	keyof ClinicianInviteFormSchema,
-	{ label: string; required: boolean; type: FormFieldTypes }
->;
-
-// TODO ClinicianInviteFormDictionary shouldn't be partial in final version
-export type ClinicianInviteFormTextDictionary = Partial<
-	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
->;
-
-export const clinicianInviteFormSchema = z.object({
-	firstName: z.string().min(1),
-});
-
-export type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;
+import {
+	ClinicianInviteFormFieldsDictionary,
+	ClinicianInviteFormTextDictionary,
+	ClinicianInviteFormSchema,
+	clinicianInviteFormSchema,
+} from './types';
 
 const ClinicianInviteForm = ({
 	fieldDict,
