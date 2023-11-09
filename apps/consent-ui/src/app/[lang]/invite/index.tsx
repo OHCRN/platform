@@ -19,27 +19,25 @@
 
 import Link from 'next/link';
 // import { z } from 'zod';
-import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
+import ClinicianInviteForm, { FieldsDictionary } from 'src/components/ClinicianInviteForm';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
-	// can't pass down function as a prop
-	// const formErrorMap: z.ZodErrorMap = (issue, ctx) => {
-	// 	switch (issue.code) {
-	// 		case z.ZodIssueCode.too_small:
-	// 			return { message: translate('form-errors', 'required') };
-	// 		default:
-	// 			return { message: ctx.defaultError };
-	// 	}
-	// };
+	const fieldDict: FieldsDictionary = {
+		firstName: {
+			label: translate('forms', 'first-name-label'),
+			type: 'text',
+			required: true,
+		},
+	};
 
 	return (
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteForm />
+			<ClinicianInviteForm fieldDict={fieldDict} />
 		</div>
 	);
 };

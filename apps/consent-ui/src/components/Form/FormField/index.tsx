@@ -25,7 +25,7 @@ import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import TextInput from '../TextInput';
 import DefaultFieldSet from '../DefaultFieldSet';
 
-type FormFieldTypes =
+export type FormFieldTypes =
 	| 'checkbox'
 	| 'date'
 	| 'date'
