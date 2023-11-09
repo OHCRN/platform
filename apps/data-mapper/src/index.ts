@@ -23,6 +23,7 @@ import bodyParser from 'body-parser';
 import { AppConfig } from './config.js';
 import SwaggerRouter from './routers/swagger.js';
 import ParticipantsRouter from './routers/participants.js';
+import ClinicianInviteRouter from './routers/invites.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -31,6 +32,7 @@ const App = (config: AppConfig) => {
 
 	app.use('/api-docs', SwaggerRouter);
 	app.use('/participants', ParticipantsRouter);
+	app.use('/invites', ClinicianInviteRouter);
 
 	return app;
 };

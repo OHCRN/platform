@@ -18,36 +18,21 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
 
-import { ConsentGroup } from './ConsentGroup.js';
-import { Name } from './Name.js';
-import { PhoneNumber } from './PhoneNumber.js';
-import { NanoId } from './NanoId.js';
-import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
+import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
 
-export const ClinicianInviteBase = z.object({
-	id: NanoId,
-	inviteSentDate: z.coerce.date(),
-	inviteAcceptedDate: z.coerce.date().optional(),
-	inviteAccepted: z.boolean().default(false),
-	clinicianFirstName: Name,
-	clinicianLastName: Name,
-	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianTitleOrRole: z.string(),
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantEmailAddress: z.string().email(),
-	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name.optional(),
-	consentGroup: ConsentGroup,
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianEmailAddress: z.string().email().optional(),
-	guardianRelationship: Name.optional(),
-	consentToBeContacted: z.boolean(),
-});
+import { ClinicianInviteBase } from './base.js';
 
-export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
+export const dataMapperClinicianInvite = ClinicianInviteBase.transform((input) => ({
+	...input,
+	inviteAcceptedDate: input.inviteAcceptedDate ?? undefined,
+	participantPreferredName: input.participantPreferredName ?? undefined,
+	guardianName: input.guardianName ?? undefined,
+	guardianPhoneNumber: input.guardianPhoneNumber ?? undefined,
+	guardianEmailAddress: input.guardianEmailAddress ?? undefined,
+	guardianRelationship: input.guardianRelationship ?? undefined,
+})).refine((input) => {
 	const {
 		consentGroup,
 		guardianName,
@@ -64,4 +49,5 @@ export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
 	);
 });
 
-export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
+export type dataMapperClinicianInvite = z.infer<typeof dataMapperClinicianInvite>;
+export const dataMapperClinicianInviteSchema = generateSchema(dataMapperClinicianInvite);

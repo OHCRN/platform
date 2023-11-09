@@ -22,7 +22,7 @@ import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ConsentWizardProgressSchema as ConsentWizardProgress,
-	ClinicianInviteFormSchema as ClinicianInviteForm,
+	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	InformedConsentResponseSchema as InformedConsentResponse,
 	InformedConsentRequestSchema as InformedConsentRequest,
 	UserSchema as User,
@@ -72,7 +72,7 @@ const options = swaggerJsdoc({
 		components: {
 			schemas: {
 				ConsentWizardProgress,
-				ClinicianInviteForm,
+				ClinicianInviteRequest,
 				InformedConsentRequest,
 				InformedConsentResponse,
 				User,

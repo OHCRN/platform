@@ -17,28 +17,31 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicianInvite/index.js';
-export * from './ClinicalProfile.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentWizardProgress.js';
-export * from './ConsentQuestion.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './LifecycleState.js';
-export * from './Name.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './NanoId.js';
-export * from './lengthConstraints.js';
-export * from './InformedConsent.js';
+import { z } from 'zod';
+
+import { ConsentGroup } from '../ConsentGroup.js';
+import { Name } from '../Name.js';
+import { PhoneNumber } from '../PhoneNumber.js';
+import { NanoId } from '../NanoId.js';
+
+export const ClinicianInviteBase = z.object({
+	id: NanoId,
+	inviteSentDate: z.coerce.date(),
+	inviteAcceptedDate: z.coerce.date().optional(),
+	inviteAccepted: z.boolean().default(false),
+	clinicianFirstName: Name,
+	clinicianLastName: Name,
+	clinicianInstitutionalEmailAddress: z.string().email(),
+	clinicianTitleOrRole: z.string(),
+	participantFirstName: Name,
+	participantLastName: Name,
+	participantEmailAddress: z.string().email(),
+	participantPhoneNumber: PhoneNumber,
+	participantPreferredName: Name.optional(),
+	consentGroup: ConsentGroup,
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianEmailAddress: z.string().email().optional(),
+	guardianRelationship: Name.optional(),
+	consentToBeContacted: z.boolean(),
+});

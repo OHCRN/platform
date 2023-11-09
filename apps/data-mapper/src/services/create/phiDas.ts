@@ -17,32 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { getAppConfig } from '../../config.js';
 
-import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
-import { ClinicianInviteBase } from './ClinicianInvite.js';
-
-export const ClinicianInviteForm = ClinicianInviteBase.omit({
-	id: true,
-	inviteSentDate: true,
-}).refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
-
-export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
-export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);
+export const saveParticipantOhipNumber = async ({
+	ohipPrivateKey,
+	ohipNumber,
+}: {
+	ohipPrivateKey: string;
+	ohipNumber: string;
+}): Promise<any> => {
+	// TODO: add Type instead of any
+	const { phiDasUrl } = getAppConfig();
+	// TODO: use urlJoin
+	// TODO: add error handling
+	// TODO: use axios instead of fetch
+	const result = await fetch(`${phiDasUrl}/ohip`, {
+		method: 'POST',
+		body: JSON.stringify({ ohipPrivateKey, ohipNumber }),
+		headers: { 'Content-Type': 'application/json' },
+	}).then((res) => res.json());
+	return result.ohipData.ohipNumber;
+};

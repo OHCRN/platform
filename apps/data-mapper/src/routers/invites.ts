@@ -6,7 +6,7 @@
  * GNU Affero General Public License along with this program.
  *  If not, see <http://www.gnu.org/licenses/>.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
  * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -20,8 +20,10 @@
 import { Router } from 'express';
 import { ClinicianInviteRequest } from 'types/entities';
 
-import { recaptchaMiddleware } from '../utils/recaptcha.js';
 import logger from '../logger.js';
+import { createInvite } from '../services/create/index.js';
+
+const router = Router();
 
 /**
  * @openapi
@@ -30,27 +32,20 @@ import logger from '../logger.js';
  *     description: Clinician invites management
  */
 
-const router = Router();
-
 /**
  * @openapi
  * /invites:
  *   post:
  *     tags:
  *       - Clinician Invites
- *     name: Submit Clinician Invite
- *     description: Form submission for Clinician Patient Registration
+ *     name: Create Clinician Invite
+ *     description: Submit clinician invite data across PI and Consent DAS
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               recaptchaToken:
- *                 type: string
- *               data:
- *                 $ref: '#/components/schemas/ClinicianInviteRequest'
+ *             $ref: '#/components/schemas/ClinicianInviteRequest'
  *     responses:
  *       201:
  *         description: OK
@@ -59,20 +54,22 @@ const router = Router();
  *             schema:
  *               type: object
  *               properties:
- *                 message: string
+ *                 inviteId: string
+ *       400:
+ *         description: Bad request
  *       500:
  *         description: Server error
  */
-router.post('/', recaptchaMiddleware, async (req, res) => {
-	logger.info(`POST /invites`);
+router.post('/', async (req, res) => {
+	logger.info(`POST /invites`); // TODO: remove
 	try {
-		const data = ClinicianInviteRequest.parse(req.body.data);
-		// TODO: implement
-		logger.info(data && 'Created clinician invite');
-		res.status(201).send({ message: 'Success' });
+		const data = ClinicianInviteRequest.parse(req.body);
+		const invite = await createInvite(data);
+		res.status(201).send({ inviteId: invite.id });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
+		// TODO: catch ZodError and send 400 status
+		res.status(500).send({ error: 'Error creating clinician invite' });
 	}
 });
 
