@@ -17,7 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
@@ -25,7 +24,7 @@ import { FormsDictionary } from 'src/i18n/locales/en/forms';
 import { FormFieldTypes } from '../Form/FormField';
 
 export type ClinicianInviteFormFieldsDictionary = Record<
-	keyof ClinicianInviteFormSchema,
+	string,
 	{ label: string; required: boolean; type: FormFieldTypes }
 >;
 
@@ -35,9 +34,3 @@ export type ClinicianInviteFormTextDictionary = Partial<
 >;
 
 export type ClinicianInviteFormErrorDictionary = Partial<FormErrorsDictionary>;
-
-export const clinicianInviteFormSchema = z.object({
-	firstName: z.string().min(1),
-});
-
-export type ClinicianInviteFormSchema = z.infer<typeof clinicianInviteFormSchema>;

@@ -31,6 +31,9 @@ import {
 	ClinicianInviteFormErrorDictionary,
 } from './types';
 
+// require more characters, in order to show errors better
+const DEMO_STRING_LENGTH = 5;
+
 const ClinicianInviteForm = ({
 	errorDict,
 	fieldDict,
@@ -41,9 +44,13 @@ const ClinicianInviteForm = ({
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
 	const schema = z.object({
-		firstName: z.string().min(2, {
+		firstName: z.string().min(DEMO_STRING_LENGTH, {
 			message: errorDict.required,
 		}),
+		lastName: z.string().min(DEMO_STRING_LENGTH, {
+			message: errorDict.required,
+		}),
+		preferredName: z.string().optional(),
 	});
 
 	const {
@@ -57,7 +64,7 @@ const ClinicianInviteForm = ({
 	const onSubmit: SubmitHandler<z.infer<typeof schema>> = (data) => console.log('data', data);
 
 	return (
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<h2>{textDict['patient-information']}</h2>
 			<p>
 				<span style={{ color: 'red' }}>*</span> {textDict['indicates-required-field']}
@@ -70,8 +77,24 @@ const ClinicianInviteForm = ({
 				type={fieldDict.firstName.type}
 				required={fieldDict.firstName.required}
 			/>
+			<FormField
+				register={register}
+				error={errors.lastName?.message}
+				fieldName="lastName"
+				label={fieldDict.lastName.label}
+				type={fieldDict.lastName.type}
+				required={fieldDict.lastName.required}
+			/>
+			<FormField
+				register={register}
+				error={errors.preferredName?.message}
+				fieldName="preferredName"
+				label={fieldDict.preferredName.label}
+				type={fieldDict.preferredName.type}
+				required={fieldDict.preferredName.required}
+			/>
 
-			<input type="submit" onClick={handleSubmit(onSubmit)} />
+			<input type="submit" />
 		</form>
 	);
 };
