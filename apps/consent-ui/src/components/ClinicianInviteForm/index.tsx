@@ -35,10 +35,7 @@ export type ClinicianInviteFormFieldsDictionary = Record<
 
 // TODO ClinicianInviteFormDictionary shouldn't be partial in final version
 export type ClinicianInviteFormTextDictionary = Partial<
-	Record<
-		keyof ClinicianInviteFormDictionary | keyof FormsDictionary | keyof FormErrorsDictionary,
-		string
-	>
+	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
 >;
 
 export const clinicianInviteFormSchema = z.object({
