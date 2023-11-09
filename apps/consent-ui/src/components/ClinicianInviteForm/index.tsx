@@ -22,6 +22,7 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
+import { PhoneNumber } from 'types/entities';
 
 import FormField from '../Form/FormField';
 
@@ -51,6 +52,12 @@ const ClinicianInviteForm = ({
 			message: errorDict.required,
 		}),
 		preferredName: z.string().optional(),
+		phoneNumber: PhoneNumber.length(10, {
+			message: errorDict.required,
+		}),
+		email: z.string().email({
+			message: errorDict.required,
+		}),
 	});
 
 	const {
@@ -92,6 +99,22 @@ const ClinicianInviteForm = ({
 				label={fieldDict.preferredName.label}
 				type={fieldDict.preferredName.type}
 				required={fieldDict.preferredName.required}
+			/>
+			<FormField
+				register={register}
+				error={errors.phoneNumber?.message}
+				fieldName="phoneNumber"
+				label={fieldDict.phoneNumber.label}
+				type={fieldDict.phoneNumber.type}
+				required={fieldDict.phoneNumber.required}
+			/>
+			<FormField
+				register={register}
+				error={errors.email?.message}
+				fieldName="email"
+				label={fieldDict.email.label}
+				type={fieldDict.email.type}
+				required={fieldDict.email.required}
 			/>
 
 			<input type="submit" />

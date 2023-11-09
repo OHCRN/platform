@@ -28,11 +28,12 @@ import DefaultFieldSet from '../DefaultFieldSet';
 export type FormFieldTypes =
 	| 'checkbox'
 	| 'date'
-	| 'date'
 	| 'radioGroup'
 	| 'select'
 	| 'text'
-	| 'textWithCheckbox';
+	| 'textWithCheckbox'
+	| 'tel'
+	| 'email';
 
 interface FormFieldProps<T extends FieldValues> {
 	description?: ReactNode;

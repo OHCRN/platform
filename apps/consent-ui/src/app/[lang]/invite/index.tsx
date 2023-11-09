@@ -45,6 +45,16 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 			type: 'text',
 			required: false,
 		},
+		phoneNumber: {
+			label: translate('forms', 'phone-label'),
+			type: 'tel',
+			required: true,
+		},
+		email: {
+			label: translate('forms', 'email-label'),
+			type: 'email',
+			required: true,
+		},
 	};
 
 	const textDict: ClinicianInviteFormTextDictionary = {
