@@ -122,13 +122,6 @@ router.get('/progress', async (req, res) => {
  *     name: Submit signature
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
  *     responses:
  *       201:
  *         description: OK
