@@ -39,48 +39,48 @@ const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				name={'register'}
 				currentLang={currentLang}
 				Icon={PatientIcon}
-				classes={styles.mobileCardBtn}
+				className={styles.mobileCardBtn}
 				iconClasses={styles.patientIcon}
 			>
 				<strong>{translate('landing-page', 'participants-register-today')}</strong>
-				<RightArrow classes={styles.arrow} />
+				<RightArrow className={styles.arrow} />
 			</CardLink>
 			<CardLink
 				name={'invite'}
 				currentLang={currentLang}
 				Icon={DoctorIcon}
-				classes={styles.mobileCardBtn}
+				className={styles.mobileCardBtn}
 				iconClasses={styles.doctorIcon}
 			>
 				<strong>{translate('landing-page', 'clinicians-register-today')}</strong>
-				<RightArrow classes={styles.arrow} />
+				<RightArrow className={styles.arrow} />
 			</CardLink>
 			{/* tablet/desktop view */}
 			<CardLink
 				name={'register'}
 				currentLang={currentLang}
 				Icon={PatientIcon}
-				classes={styles.tabletCardBtn}
+				className={styles.tabletCardBtn}
 				iconClasses={styles.patientIcon}
 			>
 				<span>
 					{translate('landing-page', 'long-participants-register-today')}{' '}
 					<strong>{translate('landing-page', 'register-yourself-today')}</strong>
 				</span>
-				<Chevron classes={styles.chevron} />
+				<Chevron className={styles.chevron} />
 			</CardLink>
 			<CardLink
 				name={'invite'}
 				currentLang={currentLang}
 				Icon={DoctorIcon}
-				classes={styles.tabletCardBtn}
+				className={styles.tabletCardBtn}
 				iconClasses={styles.doctorIcon}
 			>
 				<span>
 					{translate('landing-page', 'long-clinicians-register-today')}{' '}
 					<strong>{translate('landing-page', 'register-patient-today')}</strong>
 				</span>
-				<Chevron classes={styles.chevron} />
+				<Chevron className={styles.chevron} />
 			</CardLink>
 		</div>
 	);

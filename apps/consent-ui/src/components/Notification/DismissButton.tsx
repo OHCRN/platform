@@ -24,7 +24,7 @@ import Close from '../Icons/Close';
 const DismissButton = ({ className }: { className?: string }) => {
 	return (
 		<button>
-			<Close classes={className} />
+			<Close className={className} />
 		</button>
 	);
 };
