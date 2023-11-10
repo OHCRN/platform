@@ -22,6 +22,7 @@ import birthSexDictionary from 'src/i18n/locales/fr/birth-sex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import informedConsentDictionary from 'src/i18n/locales/fr/informed-consent';
 import clinicianInviteFormDictionary from 'src/i18n/locales/fr/clinician-invite-form';
+import consentGroupDictionary from 'src/i18n/locales/fr/consent-group';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consent-release-data';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consent-research-participation';
 import consentRecontactDictionary from 'src/i18n/locales/fr/consent-recontact';
@@ -45,6 +46,7 @@ const dictionaries = {
 	'clinician-invite-form': clinicianInviteFormDictionary,
 	common: commonDictionary,
 	'informed-consent': informedConsentDictionary,
+	'consent-group': consentGroupDictionary,
 	'consent-release-data': consentReleaseDataDictionary,
 	'consent-research-participation': consentResearchParticipationDictionary,
 	'consent-recontact': consentRecontactDictionary,

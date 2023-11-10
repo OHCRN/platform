@@ -22,6 +22,7 @@ import birthSexDictionary from './birth-sex';
 import commonDictionary from './common';
 import informedConsentDictionary from './informed-consent';
 import clinicianInviteFormDictionary from './clinician-invite-form';
+import consentGroupDictionary from './consent-group';
 import consentReleaseDataDictionary from './consent-release-data';
 import consentResearchParticipationDictionary from './consent-research-participation';
 import consentRecontactDictionary from './consent-recontact';
@@ -44,6 +45,7 @@ const dictionaries = {
 	'clinician-invite-form': clinicianInviteFormDictionary,
 	common: commonDictionary,
 	'informed-consent': informedConsentDictionary,
+	'consent-group': consentGroupDictionary,
 	'consent-release-data': consentReleaseDataDictionary,
 	'consent-research-participation': consentResearchParticipationDictionary,
 	'consent-recontact': consentRecontactDictionary,
