@@ -60,7 +60,7 @@ export const createInviteConsentData = async ({
 	const result = await fetch(urlJoin(consentDasUrl, 'clinician-invites'), {
 		method: 'POST',
 		body: JSON.stringify({
-			id,
+			clinicianInviteId: id,
 			inviteAcceptedDate,
 			inviteAccepted,
 			clinicianFirstName,
