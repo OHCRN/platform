@@ -17,30 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicianInviteForm.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentWizardProgress.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './InformedConsent.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './lengthConstraints.js';
+import { MolecularLabDictionary } from '../en/molecular-lab';
+
+const dictionary = {
+	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: "Children's Hospital of Eastern Ontario, Ottawa",
+	HAMILTON_HEALTH_SCIENCES_HAMILTON: 'Hamilton Health Sciences, Hamilton',
+	HOSPITAL_FOR_SICK_CHILDREN_TORONTO: 'Hospital For Sick Children, Toronto',
+	KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON: 'Kingston Health Sciences Centre, Kingston',
+	LONDON_HEALTH_SCIENCES_CENTRE_LONDON: 'London Health Sciences Centre, London',
+	NORTH_YORK_GENERAL_HOSPITAL_TORONTO: 'North York General Hospital, Toronto',
+	SINAI_HEALTH_SYSTEM_TORONTO: 'Sinai Health System, Toronto',
+	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners, Mississauga',
+	UNIVERSITY_HEALTH_NETWORK_TORONTO: 'University Health Network, Toronto',
+} satisfies MolecularLabDictionary;
+
+export default dictionary;

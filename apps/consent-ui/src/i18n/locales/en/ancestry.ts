@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { Ancestry } from 'types/entities';
+
 const dictionary = {
 	ABORIGINAL_FROM_CENTRAL_SOUTH_AMERICA_EXCEPT_ARAWAK_AND_MAYA:
 		'Aboriginal from Central/South America (except Arawak and Maya)',
@@ -274,7 +276,8 @@ const dictionary = {
 	YUGOSLAVIAN_NOS: 'Yugoslavian, n.o.s.',
 	ZAMBIAN: 'Zambian',
 	ZIMBABWEAN: 'Zimbabwean',
-} satisfies Record<string, string>;
+	ZULU: 'Zulu',
+} satisfies Record<Ancestry, string>;
 
 export type AncestryDictionary = Record<keyof typeof dictionary, string>;
 
