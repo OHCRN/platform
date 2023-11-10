@@ -37,6 +37,7 @@ import landingPageDictionary from './landing-page';
 import molecularLabDictionary from './molecular-lab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
+import historyOfCancerDictionary from './history-of-cancer';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
@@ -53,6 +54,7 @@ const dictionaries = {
 	gender: genderDictionary,
 	'genetics-clinic': geneticsClinicDictionary,
 	header: headerDictionary,
+	'history-of-cancer': historyOfCancerDictionary,
 	'informed-consent': informedConsentDictionary,
 	invite: inviteDictionary,
 	'landing-page': landingPageDictionary,
