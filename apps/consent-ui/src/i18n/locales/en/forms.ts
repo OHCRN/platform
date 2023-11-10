@@ -23,6 +23,7 @@ const dictionary = {
 	'last-name-label': 'Last Name',
 	'preferred-name-label': 'Preferred Name',
 	'consent-group-label': 'Consent Group',
+	'select-placeholder': 'Select an option...',
 	'phone-label': 'Phone Number',
 	'email-label': 'Email Address',
 	'clinician-role-label': 'Clinician Role',
