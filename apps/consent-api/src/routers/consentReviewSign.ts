@@ -33,13 +33,6 @@ const router = Router();
  *     description: Participant's latest response for Consent Wizard - Review & Sign
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         description: OK
@@ -76,13 +69,6 @@ router.get('/', async (req, res) => {
  *     description: Form submission for Consent Wizard - Review & Sign
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
  *     responses:
  *       201:
  *         description: OK
