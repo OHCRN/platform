@@ -17,34 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicianInviteForm.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentRecontact.js';
-export * from './ConsentReleaseData.js';
-export * from './ConsentResearchParticipation.js';
-export * from './ConsentWizardProgress.js';
-export * from './Error.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './InformedConsent.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './lengthConstraints.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
+
+import { ConsentQuestionId } from './ConsentQuestion.js';
+
+const { RESEARCH_PARTICIPATION__CONTACT_INFORMATION, RESEARCH_PARTICIPATION__FUTURE_RESEARCH } =
+	ConsentQuestionId.enum;
+
+export const ConsentResearchParticipationBase = z.object({
+	[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
+	[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
+});
+
+export const ConsentResearchParticipationRequest = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationRequest = z.infer<
+	typeof ConsentResearchParticipationRequest
+>;
+export const ConsentResearchParticipationRequestSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationRequest,
+);
+
+export const ConsentResearchParticipationResponse = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationResponse = z.infer<
+	typeof ConsentResearchParticipationResponse
+>;
+export const ConsentResearchParticipationResponseSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationResponse,
+);

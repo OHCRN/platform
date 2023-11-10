@@ -17,17 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentRecontactDictionary } from 'src/i18n/locales/en/consent-recontact';
-import { ConsentGroup } from 'types/entities';
+import { ConsentGroupDictionary } from '../en/consent-group';
 
 const dictionary = {
-	[ConsentGroup.enum.ADULT_CONSENT]: 'Adult Consent (>18) FR',
-	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
-		'Adult Consent using a Substitute Additional Decision Maker (>18) FR',
-	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR]: 'Guardian Consent of a Minor FR',
-	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
-		'Guardian Consent of a Minor (including Assent) FR',
-	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Young Adult Consent (<18) FR',
-} satisfies ConsentRecontactDictionary;
+	ADULT_CONSENT: 'Adult Consent (>18)',
+	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
+		'Adult Consent using a Substitute Additional Decision Maker (>18)',
+	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
+	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
+} satisfies ConsentGroupDictionary;
 
 export default dictionary;

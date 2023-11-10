@@ -20,12 +20,12 @@
 import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birth-sex';
 import commonDictionary from './common';
-import informedConsentDictionary from './informed-consent';
 import clinicianInviteFormDictionary from './clinician-invite-form';
+import consentCategoryDictionary from './consent-category';
 import consentGroupDictionary from './consent-group';
+import consentRecontactDictionary from './consent-recontact';
 import consentReleaseDataDictionary from './consent-release-data';
 import consentResearchParticipationDictionary from './consent-research-participation';
-import consentRecontactDictionary from './consent-recontact';
 import consentReviewSignDictionary from './consent-review-sign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
@@ -34,17 +34,20 @@ import formErrorsDictionary from './form-errors';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './genetics-clinic';
 import headerDictionary from './header';
+import informedConsentDictionary from './informed-consent';
 import inviteDictionary from './invite';
 import landingPageDictionary from './landing-page';
+import molecularLabDictionary from './molecular-lab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
+import historyOfCancerDictionary from './history-of-cancer';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	'birth-sex': birthSexDictionary,
 	'clinician-invite-form': clinicianInviteFormDictionary,
 	common: commonDictionary,
-	'informed-consent': informedConsentDictionary,
+	'consent-category': consentCategoryDictionary,
 	'consent-group': consentGroupDictionary,
 	'consent-release-data': consentReleaseDataDictionary,
 	'consent-research-participation': consentResearchParticipationDictionary,
@@ -57,8 +60,11 @@ const dictionaries = {
 	gender: genderDictionary,
 	'genetics-clinic': geneticsClinicDictionary,
 	header: headerDictionary,
+	'history-of-cancer': historyOfCancerDictionary,
+	'informed-consent': informedConsentDictionary,
 	invite: inviteDictionary,
 	'landing-page': landingPageDictionary,
+	'molecular-lab': molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
 };

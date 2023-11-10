@@ -29,20 +29,20 @@ const CardLink = async ({
 	name,
 	currentLang,
 	Icon,
-	classes,
+	className,
 	iconClasses,
 	children,
 }: {
 	name: RouteName;
 	currentLang: ValidLanguage;
 	Icon: React.ComponentType<any>;
-	classes?: string;
+	className?: string;
 	iconClasses?: string;
 	children: React.ReactNode;
 }) => {
 	return (
-		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.card, classes)}>
-			<Icon classes={clsx(styles.icon, iconClasses)} />
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.card, className)}>
+			<Icon className={clsx(styles.icon, iconClasses)} />
 			{children}
 		</LocalizedLink>
 	);

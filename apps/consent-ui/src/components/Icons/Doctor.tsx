@@ -19,11 +19,11 @@
 
 import React from 'react';
 
-function Doctor({ classes }: { classes?: string }) {
+function Doctor({ className }: { className?: string }) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			className={classes}
+			className={className}
 			width="45"
 			height="52"
 			fill="none"
