@@ -21,7 +21,9 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentQuestionId, Name, PhoneNumber } from './index.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
+import { Name } from './Name.js';
+import { PhoneNumber } from './PhoneNumber.js';
 
 const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
 

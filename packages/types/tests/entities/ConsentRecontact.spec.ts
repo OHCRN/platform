@@ -58,6 +58,8 @@ describe('ConsentRecontactBase', () => {
 		).true;
 	});
 	it('Parses correctly when secondary contact consent is NOT indicated and required fields are provided', () => {
+		// TODO: update this test once the expected behaviour is mapped out
+		// i.e. if a user consents to secondary contact then goes back and deselects, do we delete the contact info?
 		expect(
 			ConsentRecontactBase.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
