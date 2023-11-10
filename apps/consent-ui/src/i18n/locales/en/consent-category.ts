@@ -17,33 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicianInviteForm.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentReleaseData.js';
-export * from './ConsentResearchParticipation.js';
-export * from './ConsentWizardProgress.js';
-export * from './Error.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './InformedConsent.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './lengthConstraints.js';
+import { ConsentCategory } from 'types/entities';
+
+const dictionary = {
+	INFORMED_CONSENT: 'Informed Consent',
+	CONSENT_RELEASE_DATA: 'Consent to Data Release ',
+	CONSENT_RESEARCH_PARTICIPATION: 'Consent to Research Participation ',
+	CONSENT_RECONTACT: 'Consent to Recontact',
+	CONSENT_REVIEW_SIGN: 'Review and Sign',
+} satisfies Record<ConsentCategory, string>;
+
+export type ConsentCategoryDictionary = Record<keyof typeof dictionary, string>;
+
+export default dictionary;
