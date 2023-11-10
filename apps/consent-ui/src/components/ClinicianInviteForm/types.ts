@@ -20,6 +20,7 @@
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
+import { ConsentGroup } from 'types/entities';
 
 import { FormFieldTypes } from '../Form/FormField';
 
@@ -27,6 +28,11 @@ export type ClinicianInviteFormFieldsDictionary = Record<
 	string,
 	{ label: string; required: boolean; type: FormFieldTypes }
 >;
+
+export type ConsentGroupOptions = {
+	label: string;
+	value: ConsentGroup;
+}[];
 
 // TODO ClinicianInviteFormDictionary shouldn't be partial in final version
 export type ClinicianInviteFormTextDictionary = Partial<

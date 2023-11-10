@@ -18,11 +18,13 @@
  */
 
 import Link from 'next/link';
+import { ConsentGroup } from 'types/entities';
 import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
 import {
 	ClinicianInviteFormErrorDictionary,
 	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
+	ConsentGroupOptions,
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
@@ -57,6 +59,13 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		},
 	};
 
+	const consentGroupOptions: ConsentGroupOptions = [
+		{
+			label: translate('consent-group', 'ADULT_CONSENT'),
+			value: ConsentGroup.enum.ADULT_CONSENT,
+		},
+	];
+
 	const textDict: ClinicianInviteFormTextDictionary = {
 		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
@@ -70,7 +79,12 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteForm errorDict={errorDict} fieldDict={fieldDict} textDict={textDict} />
+			<ClinicianInviteForm
+				consentGroupOptions={consentGroupOptions}
+				errorDict={errorDict}
+				fieldDict={fieldDict}
+				textDict={textDict}
+			/>
 		</div>
 	);
 };

@@ -31,21 +31,19 @@ import {
 	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
 	ClinicianInviteFormErrorDictionary,
+	ConsentGroupOptions,
 } from './types';
-
-const consentGroupOptions = [
-	{ label: 'beep', value: 'beepVal' },
-	{ label: 'boop', value: 'boopVal' },
-];
 
 // require more characters, in order to show errors better
 const DEMO_STRING_LENGTH = 5;
 
 const ClinicianInviteForm = ({
+	consentGroupOptions,
 	errorDict,
 	fieldDict,
 	textDict,
 }: {
+	consentGroupOptions: ConsentGroupOptions;
 	errorDict: ClinicianInviteFormErrorDictionary;
 	fieldDict: ClinicianInviteFormFieldsDictionary;
 	textDict: ClinicianInviteFormTextDictionary;

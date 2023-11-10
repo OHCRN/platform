@@ -18,9 +18,16 @@
  */
 
 import { ConsentRecontactDictionary } from 'src/i18n/locales/en/consent-recontact';
+import { ConsentGroup } from 'types/entities';
 
 const dictionary = {
-	'adult-consent': 'Adult Consent (>18)',
+	[ConsentGroup.enum.ADULT_CONSENT]: 'Adult Consent (>18) FR',
+	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
+		'Adult Consent using a Substitute Additional Decision Maker (>18) FR',
+	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR]: 'Guardian Consent of a Minor FR',
+	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
+		'Guardian Consent of a Minor (including Assent) FR',
+	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Young Adult Consent (<18) FR',
 } satisfies ConsentRecontactDictionary;
 
 export default dictionary;
