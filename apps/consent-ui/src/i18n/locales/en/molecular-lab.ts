@@ -17,15 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
+import { MolecularLab } from 'types/entities';
 
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'consent-forms': 'Formulaires de consentement',
-} satisfies CommonDictionary;
+	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: "Children's Hospital of Eastern Ontario, Ottawa",
+	HAMILTON_HEALTH_SCIENCES_HAMILTON: 'Hamilton Health Sciences, Hamilton',
+	HOSPITAL_FOR_SICK_CHILDREN_TORONTO: 'Hospital For Sick Children, Toronto',
+	KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON: 'Kingston Health Sciences Centre, Kingston',
+	LONDON_HEALTH_SCIENCES_CENTRE_LONDON: 'London Health Sciences Centre, London',
+	NORTH_YORK_GENERAL_HOSPITAL_TORONTO: 'North York General Hospital, Toronto',
+	SINAI_HEALTH_SYSTEM_TORONTO: 'Sinai Health System, Toronto',
+	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners, Mississauga',
+	UNIVERSITY_HEALTH_NETWORK_TORONTO: 'University Health Network, Toronto',
+} satisfies Record<MolecularLab, string>;
+
+export type MolecularLabDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

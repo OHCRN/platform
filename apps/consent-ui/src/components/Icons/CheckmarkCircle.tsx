@@ -19,9 +19,9 @@
 
 import React from 'react';
 
-function CheckmarkCircle({ classes }: { classes?: string }) {
+function CheckmarkCircle({ className }: { className?: string }) {
 	return (
-		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
+		<svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25">
 			<g stroke="currentColor" strokeWidth="2" clipPath="url(#clip0_34_3952)">
 				<rect width="22" height="22" x="1" y="1.508" rx="11"></rect>
 				<path d="M17 8.508l-7 7-3-3"></path>

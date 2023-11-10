@@ -17,15 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
+import { HistoryOfCancerDictionary } from '../en/history-of-cancer';
 
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'consent-forms': 'Formulaires de consentement',
-} satisfies CommonDictionary;
+	YES: 'Oui',
+	NO: 'Non',
+	UNKNOWN: 'Inconnu',
+} satisfies HistoryOfCancerDictionary;
 
 export default dictionary;

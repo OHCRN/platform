@@ -17,15 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
+import { HistoryOfCancer } from 'types/entities';
 
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'consent-forms': 'Formulaires de consentement',
-} satisfies CommonDictionary;
+	YES: 'Yes',
+	NO: 'No',
+	UNKNOWN: 'Unknown',
+} satisfies Record<HistoryOfCancer, string>;
+
+export type HistoryOfCancerDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

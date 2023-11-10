@@ -17,15 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
+import { ConsentCategory } from 'types/entities';
 
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'consent-forms': 'Formulaires de consentement',
-} satisfies CommonDictionary;
+	INFORMED_CONSENT: 'Informed Consent',
+	CONSENT_RELEASE_DATA: 'Consent to Data Release ',
+	CONSENT_RESEARCH_PARTICIPATION: 'Consent to Research Participation ',
+	CONSENT_RECONTACT: 'Consent to Recontact',
+	CONSENT_REVIEW_SIGN: 'Review and Sign',
+} satisfies Record<ConsentCategory, string>;
+
+export type ConsentCategoryDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

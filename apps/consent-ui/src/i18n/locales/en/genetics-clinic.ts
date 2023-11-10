@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { GeneticsClinic } from 'types/entities';
+
 const dictionary = {
 	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: 'Children’s Hospital of Eastern Ontario (Ottawa)',
 	GRAND_RIVER_HOSPITAL_KITCHENER: 'Grand River Hospital (Kitchener)',
@@ -40,7 +42,7 @@ const dictionary = {
 	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners (Mississauga)',
 	WINDSOR_REGIONAL_HOSPITAL_WINDSOR: 'Windsor Regional Hospital (Windsor)',
 	WOMENS_COLLEGE_HOSPITAL_TORONTO: "Women's College Hospital (Toronto)",
-} satisfies Record<string, string>;
+} satisfies Record<GeneticsClinic, string>;
 
 export type GeneticsClinicDictionary = Record<keyof typeof dictionary, string>;
 

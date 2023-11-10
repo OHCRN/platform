@@ -17,24 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Province } from 'types/entities';
-
 import { ProvinceDictionary } from 'src/i18n/locales/en/province';
 
 const dictionary = {
-	[Province.enum.ALBERTA]: 'Alberta',
-	[Province.enum.BRITISH_COLUMBIA]: 'British Columbia',
-	[Province.enum.MANITOBA]: 'Manitoba',
-	[Province.enum.NEW_BRUNSWICK]: 'New Brunswick',
-	[Province.enum.NEWFOUNDLAND_AND_LABRADOR]: 'Newfoundland and Labrador',
-	[Province.enum.NORTHWEST_TERRITORIES]: 'Northwest Territories',
-	[Province.enum.NOVA_SCOTIA]: 'Nova Scotia',
-	[Province.enum.NUNAVUT]: 'Nunavut',
-	[Province.enum.ONTARIO]: 'Ontario',
-	[Province.enum.PRINCE_EDWARD_ISLAND]: 'Prince Edward Island',
-	[Province.enum.QUEBEC]: 'Quebec',
-	[Province.enum.SASKATCHEWAN]: 'Saskatchewan',
-	[Province.enum.YUKON]: 'Yukon',
+	ALBERTA: 'Alberta',
+	BRITISH_COLUMBIA: 'British Columbia',
+	MANITOBA: 'Manitoba',
+	NEW_BRUNSWICK: 'New Brunswick',
+	NEWFOUNDLAND_AND_LABRADOR: 'Newfoundland and Labrador',
+	NORTHWEST_TERRITORIES: 'Northwest Territories',
+	NOVA_SCOTIA: 'Nova Scotia',
+	NUNAVUT: 'Nunavut',
+	ONTARIO: 'Ontario',
+	PRINCE_EDWARD_ISLAND: 'Prince Edward Island',
+	QUEBEC: 'Quebec',
+	SASKATCHEWAN: 'Saskatchewan',
+	YUKON: 'Yukon',
 } satisfies ProvinceDictionary;
 
 export default dictionary;

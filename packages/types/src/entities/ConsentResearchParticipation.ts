@@ -17,15 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'consent-forms': 'Formulaires de consentement',
-} satisfies CommonDictionary;
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-export default dictionary;
+const { RESEARCH_PARTICIPATION__CONTACT_INFORMATION, RESEARCH_PARTICIPATION__FUTURE_RESEARCH } =
+	ConsentQuestionId.enum;
+
+export const ConsentResearchParticipationBase = z.object({
+	[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
+	[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
+});
+
+export const ConsentResearchParticipationRequest = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationRequest = z.infer<
+	typeof ConsentResearchParticipationRequest
+>;
+export const ConsentResearchParticipationRequestSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationRequest,
+);
+
+export const ConsentResearchParticipationResponse = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationResponse = z.infer<
+	typeof ConsentResearchParticipationResponse
+>;
+export const ConsentResearchParticipationResponseSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationResponse,
+);
