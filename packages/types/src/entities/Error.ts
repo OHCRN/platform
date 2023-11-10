@@ -17,14 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
+import { ZodError } from 'zod';
 
-import InformedConsentRouter from './informedConsent.js';
-import ConsentReleaseDataRouter from './consentReleaseData.js';
-
-const router = Router();
-
-router.use('/informed-consent', InformedConsentRouter);
-router.use('/consent-to-release-data', ConsentReleaseDataRouter);
-
-export default router;
+// TODO: remove and use custom Error schemas
+// this is just here for temporary error handling in consent-api to return a 400 status for invalid requests
+// when we implement custom error schemas this will not need to be exported
+export { ZodError };
