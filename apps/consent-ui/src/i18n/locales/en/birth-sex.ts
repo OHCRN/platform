@@ -17,12 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { BirthSex } from 'types/entities';
+
 const dictionary = {
 	FEMALE: 'Female',
 	INTERSEX: 'Intersex',
 	MALE: 'Male',
 	PREFER_NOT_TO_ANSWER: 'Prefer not to answer',
-} satisfies Record<string, string>;
+} satisfies Record<BirthSex, string>;
 
 export type BirthSexDictionary = Record<keyof typeof dictionary, string>;
 
