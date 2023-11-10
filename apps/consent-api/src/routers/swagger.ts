@@ -25,8 +25,10 @@ import {
 	ClinicianInviteFormSchema as ClinicianInviteForm,
 	InformedConsentResponseSchema as InformedConsentResponse,
 	InformedConsentRequestSchema as InformedConsentRequest,
-	ConsentRecontactResponseSchema as ConsentRecontactResponse,
+	ConsentReleaseDataRequestSchema as ConsentReleaseDataRequest,
+	ConsentReleaseDataResponseSchema as ConsentReleaseDataResponse,
 	ConsentRecontactRequestSchema as ConsentRecontactRequest,
+	ConsentRecontactResponseSchema as ConsentRecontactResponse,
 	UserSchema as User,
 } from 'types/entities';
 
@@ -73,12 +75,14 @@ const options = swaggerJsdoc({
 		},
 		components: {
 			schemas: {
-				ConsentRecontactRequest,
-				ConsentRecontactResponse,
 				ConsentWizardProgress,
 				ClinicianInviteForm,
 				InformedConsentRequest,
 				InformedConsentResponse,
+				ConsentReleaseDataRequest,
+				ConsentReleaseDataResponse,
+				ConsentRecontactRequest,
+				ConsentRecontactResponse,
 				User,
 			},
 		},
