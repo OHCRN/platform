@@ -21,7 +21,8 @@
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
+import Select from 'react-select';
+import { useForm as useReactHookForm, SubmitHandler, Controller } from 'react-hook-form';
 import { PhoneNumber } from 'types/entities';
 
 import FormField from '../Form/FormField';
@@ -31,6 +32,11 @@ import {
 	ClinicianInviteFormTextDictionary,
 	ClinicianInviteFormErrorDictionary,
 } from './types';
+
+const consentGroupOptions = [
+	{ label: 'beep', value: 'beepVal' },
+	{ label: 'boop', value: 'boopVal' },
+];
 
 // require more characters, in order to show errors better
 const DEMO_STRING_LENGTH = 5;
@@ -58,12 +64,16 @@ const ClinicianInviteForm = ({
 		email: z.string().email({
 			message: errorDict.required,
 		}),
+		consentGroup: z.string().min(DEMO_STRING_LENGTH, {
+			message: errorDict.required,
+		}),
 	});
 
 	const {
-		register,
-		handleSubmit,
+		control,
 		formState: { errors },
+		handleSubmit,
+		register,
 	} = useReactHookForm<z.infer<typeof schema>>({
 		resolver: zodResolver(schema),
 	});
@@ -115,6 +125,21 @@ const ClinicianInviteForm = ({
 				label={fieldDict.email.label}
 				type={fieldDict.email.type}
 				required={fieldDict.email.required}
+			/>
+
+			<Controller
+				control={control}
+				name="consentGroup"
+				render={({ field: { onChange, value } }) => (
+					<Select
+						instanceId="consentGroupSelect"
+						onChange={(val: any) => onChange(val.value || null)}
+						options={consentGroupOptions}
+						value={consentGroupOptions.find((option) => option.value === value) || ''}
+						placeholder="-- Choose consent group --"
+					/>
+				)}
+				rules={{ required: true }}
 			/>
 
 			<input type="submit" />
