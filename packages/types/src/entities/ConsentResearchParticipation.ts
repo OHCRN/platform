@@ -17,18 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import InformedConsentRouter from './informedConsent.js';
-import ConsentReleaseDataRouter from './consentReleaseData.js';
-import ConsentResearchParticipationRouter from './consentResearchParticipation.js';
-import ConsentRecontactRouter from './consentRecontact.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-const router = Router();
+const { RESEARCH_PARTICIPATION__CONTACT_INFORMATION, RESEARCH_PARTICIPATION__FUTURE_RESEARCH } =
+	ConsentQuestionId.enum;
 
-router.use('/informed-consent', InformedConsentRouter);
-router.use('/consent-to-release-data', ConsentReleaseDataRouter);
-router.use('/consent-for-research-participation', ConsentResearchParticipationRouter);
-router.use('/consent-for-recontact', ConsentRecontactRouter);
+export const ConsentResearchParticipationBase = z.object({
+	[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
+	[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
+});
 
-export default router;
+export const ConsentResearchParticipationRequest = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationRequest = z.infer<
+	typeof ConsentResearchParticipationRequest
+>;
+export const ConsentResearchParticipationRequestSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationRequest,
+);
+
+export const ConsentResearchParticipationResponse = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationResponse = z.infer<
+	typeof ConsentResearchParticipationResponse
+>;
+export const ConsentResearchParticipationResponseSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationResponse,
+);
