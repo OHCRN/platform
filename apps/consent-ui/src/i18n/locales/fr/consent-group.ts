@@ -17,34 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicianInviteForm.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentRecontact.js';
-export * from './ConsentReleaseData.js';
-export * from './ConsentResearchParticipation.js';
-export * from './ConsentWizardProgress.js';
-export * from './Error.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './InformedConsent.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './lengthConstraints.js';
+import { ConsentGroupDictionary } from '../en/consent-group';
+
+const dictionary = {
+	ADULT_CONSENT: 'Adult Consent (>18)',
+	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
+		'Adult Consent using a Substitute Additional Decision Maker (>18)',
+	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
+	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
+} satisfies ConsentGroupDictionary;
+
+export default dictionary;
