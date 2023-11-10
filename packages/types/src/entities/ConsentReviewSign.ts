@@ -26,9 +26,11 @@ import { ConsentReleaseDataResponse } from './ConsentReleaseData.js';
 import { ConsentResearchParticipationResponse } from './ConsentResearchParticipation.js';
 import { ConsentRecontactBase, hasRequiredSecondaryContactInfo } from './ConsentRecontact.js';
 
-const { RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
-const { RESEARCH_PARTICIPATION__FUTURE_RESEARCH } = ConsentQuestionId.enum;
-const { RECONTACT__FUTURE_RESEARCH } = ConsentQuestionId.enum;
+const {
+	RELEASE_DATA__DE_IDENTIFIED,
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
+	RECONTACT__FUTURE_RESEARCH,
+} = ConsentQuestionId.enum;
 
 export const ConsentReviewSignResponse = z.object({
 	releaseOfHealthData: ConsentReleaseDataResponse.omit({
