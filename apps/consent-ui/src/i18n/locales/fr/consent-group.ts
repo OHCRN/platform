@@ -17,18 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { ConsentGroupDictionary } from '../en/consent-group';
 
-import { GeneticsClinic } from '../../src/entities/index.js';
+const dictionary = {
+	ADULT_CONSENT: 'Adult Consent (>18)',
+	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
+		'Adult Consent using a Substitute Additional Decision Maker (>18)',
+	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
+	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
+} satisfies ConsentGroupDictionary;
 
-describe('GeneticsClinic', () => {
-	it('Must use the GeneticsClinic enum', () => {
-		expect(
-			GeneticsClinic.safeParse(GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA)
-				.success,
-		).true;
-		expect(GeneticsClinic.safeParse('XqhTcsD3eXW9kg3xLv0ly').success).false;
-		expect(GeneticsClinic.safeParse(undefined).success).false;
-		expect(GeneticsClinic.safeParse(null).success).false;
-	});
-});
+export default dictionary;
