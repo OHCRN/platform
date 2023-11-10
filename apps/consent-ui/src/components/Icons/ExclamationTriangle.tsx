@@ -19,9 +19,9 @@
 
 import React from 'react';
 
-function ExclamationTriangle({ classes }: { classes?: string }) {
+function ExclamationTriangle({ className }: { className?: string }) {
 	return (
-		<svg className={classes} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 24">
+		<svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 24">
 			<path
 				fill="currentColor"
 				fillRule="evenodd"
