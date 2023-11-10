@@ -17,18 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { MolecularLabDictionary } from '../en/molecular-lab';
 
-import { GeneticsClinic } from '../../src/entities/index.js';
+const dictionary = {
+	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: "Children's Hospital of Eastern Ontario, Ottawa",
+	HAMILTON_HEALTH_SCIENCES_HAMILTON: 'Hamilton Health Sciences, Hamilton',
+	HOSPITAL_FOR_SICK_CHILDREN_TORONTO: 'Hospital For Sick Children, Toronto',
+	KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON: 'Kingston Health Sciences Centre, Kingston',
+	LONDON_HEALTH_SCIENCES_CENTRE_LONDON: 'London Health Sciences Centre, London',
+	NORTH_YORK_GENERAL_HOSPITAL_TORONTO: 'North York General Hospital, Toronto',
+	SINAI_HEALTH_SYSTEM_TORONTO: 'Sinai Health System, Toronto',
+	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners, Mississauga',
+	UNIVERSITY_HEALTH_NETWORK_TORONTO: 'University Health Network, Toronto',
+} satisfies MolecularLabDictionary;
 
-describe('GeneticsClinic', () => {
-	it('Must use the GeneticsClinic enum', () => {
-		expect(
-			GeneticsClinic.safeParse(GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA)
-				.success,
-		).true;
-		expect(GeneticsClinic.safeParse('XqhTcsD3eXW9kg3xLv0ly').success).false;
-		expect(GeneticsClinic.safeParse(undefined).success).false;
-		expect(GeneticsClinic.safeParse(null).success).false;
-	});
-});
+export default dictionary;

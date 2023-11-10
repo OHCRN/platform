@@ -73,7 +73,6 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: 'ADULT_CONSENT',
 		consentToBeContacted: true,
-		inviteSentDate: new Date('2023-10-03'),
 	},
 ];
 

@@ -6,6 +6,7 @@ import prisma, {
 	ParticipantResponse,
 	ClinicianInvite,
 	ConsentQuestionId,
+	LifecycleState,
 } from '../prismaClient.js';
 
 export const createParticipant = async ({
@@ -14,12 +15,16 @@ export const createParticipant = async ({
 	consentGroup,
 	guardianIdVerified,
 	participantId,
+	currentLifecycleState,
+	previousLifecycleState,
 }: {
 	emailVerified: boolean;
 	isGuardian: boolean;
 	consentGroup: ConsentGroup;
 	guardianIdVerified?: boolean;
 	participantId?: string;
+	currentLifecycleState?: LifecycleState;
+	previousLifecycleState?: LifecycleState;
 }): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.create({
@@ -29,6 +34,8 @@ export const createParticipant = async ({
 			consentGroup,
 			guardianIdVerified,
 			id: participantId,
+			currentLifecycleState,
+			previousLifecycleState,
 		},
 	});
 	return result;
@@ -82,7 +89,6 @@ export const createClinicianInvite = async ({
 	clinicianTitleOrRole,
 	consentGroup,
 	consentToBeContacted,
-	inviteSentDate,
 	inviteAcceptedDate,
 	inviteAccepted,
 }: {
@@ -93,7 +99,6 @@ export const createClinicianInvite = async ({
 	clinicianTitleOrRole: string;
 	consentGroup: ConsentGroup;
 	consentToBeContacted: boolean;
-	inviteSentDate: Date;
 	inviteAcceptedDate?: Date;
 	inviteAccepted?: boolean;
 }): Promise<ClinicianInvite> => {
@@ -107,7 +112,6 @@ export const createClinicianInvite = async ({
 			consentGroup,
 			consentToBeContacted,
 			id: clinicianInviteId,
-			inviteSentDate,
 			inviteAcceptedDate,
 			inviteAccepted,
 		},

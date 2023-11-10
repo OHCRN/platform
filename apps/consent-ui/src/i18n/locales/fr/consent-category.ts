@@ -17,18 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { ConsentCategoryDictionary } from '../en/consent-category';
 
-import { GeneticsClinic } from '../../src/entities/index.js';
+const dictionary = {
+	INFORMED_CONSENT: 'Consentement éclairé',
+	CONSENT_RELEASE_DATA: 'Consentement à la divulgation de données',
+	CONSENT_RESEARCH_PARTICIPATION: 'Consentement à la participation à la recherche',
+	CONSENT_RECONTACT: 'Consentement à la reprise de contact',
+	CONSENT_REVIEW_SIGN: 'Examen et signature',
+} satisfies ConsentCategoryDictionary;
 
-describe('GeneticsClinic', () => {
-	it('Must use the GeneticsClinic enum', () => {
-		expect(
-			GeneticsClinic.safeParse(GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA)
-				.success,
-		).true;
-		expect(GeneticsClinic.safeParse('XqhTcsD3eXW9kg3xLv0ly').success).false;
-		expect(GeneticsClinic.safeParse(undefined).success).false;
-		expect(GeneticsClinic.safeParse(null).success).false;
-	});
-});
+export default dictionary;

@@ -87,6 +87,15 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                container('node') {
+                    sh 'npx --yes pnpm run test'
+                }
+            }
+        }
+
+
         stage('Build') {
             steps {
                 container('docker') {
