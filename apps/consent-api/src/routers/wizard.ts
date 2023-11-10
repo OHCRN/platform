@@ -113,4 +113,48 @@ router.get('/progress', async (req, res) => {
 	res.status(200).send({ status });
 });
 
+/**
+ * @openapi
+ * /wizard/signatures:
+ *   post:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Submit signature
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: session
+ *         in: header
+ *         required: true
+ *         description: User session token
+ *         schema:
+ *           type: string
+ *     responses:
+ *       201:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized. Authorization information is missing or invalid.
+ *       403:
+ *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Server error
+ */
+router.post('/signatures', async (req, res) => {
+	// TODO: implement when auth layer is ready
+	try {
+		// TODO: map out request body and processing
+		res.status(201).send({ message: 'Success!' });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ message: 'Server error' });
+	}
+});
+
 export default router;

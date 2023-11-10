@@ -22,20 +22,47 @@ import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
+import { ConsentReleaseDataResponse } from './ConsentReleaseData.js';
+import { ConsentResearchParticipationResponse } from './ConsentResearchParticipation.js';
+import { ConsentRecontactBase, hasRequiredSecondaryContactInfo } from './ConsentRecontact.js';
+
+const { RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
+const { RESEARCH_PARTICIPATION__FUTURE_RESEARCH } = ConsentQuestionId.enum;
+const { RECONTACT__FUTURE_RESEARCH } = ConsentQuestionId.enum;
 
 export const ConsentReviewSignResponse = z.object({
-	[ConsentQuestionId.enum.RELEASE_DATA__CLINICAL_AND_GENETIC]: z.object({
-		// TODO: use schema from step 2
+	releaseOfHealthData: ConsentReleaseDataResponse.omit({
+		[RELEASE_DATA__DE_IDENTIFIED]: true,
 	}),
-	[ConsentQuestionId.enum.RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
-	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
-	[ConsentQuestionId.enum.RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
-	[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: z.boolean(),
-	[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: z
-		.object({
-			// TODO: use schema from step 4
-		})
-		.optional(), // if this data is not defined, they did not consent
+	deIdentifiedResearchParticipation: ConsentReleaseDataResponse.pick({
+		[RELEASE_DATA__DE_IDENTIFIED]: true,
+	}),
+	optionalDecentralizedBiobank: ConsentResearchParticipationResponse.pick({
+		[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: true,
+	}),
+	optionalReleaseOfContactInformation: ConsentResearchParticipationResponse.omit({
+		[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: true,
+	}),
+	optionalReContact: ConsentRecontactBase.pick({
+		[RECONTACT__FUTURE_RESEARCH]: true,
+	}),
+	optionalSecondaryContact: ConsentRecontactBase.omit({
+		[RECONTACT__FUTURE_RESEARCH]: true,
+	}).refine((input) => {
+		const {
+			RECONTACT__SECONDARY_CONTACT,
+			secondaryContactFirstName,
+			secondaryContactLastName,
+			secondaryContactPhoneNumber,
+		} = input;
+
+		return hasRequiredSecondaryContactInfo({
+			requireSecondaryContactInfo: RECONTACT__SECONDARY_CONTACT,
+			secondaryContactFirstName,
+			secondaryContactLastName,
+			secondaryContactPhoneNumber,
+		});
+	}),
 });
 
 export type ConsentReviewSignResponse = z.infer<typeof ConsentReviewSignResponse>;

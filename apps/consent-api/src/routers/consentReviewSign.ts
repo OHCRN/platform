@@ -55,10 +55,8 @@ const router = Router();
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/review-sign`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Retrieved informed consent`);
 		// TODO: retrieve user data
 		const data = {};
 		res.status(200).send(data);
@@ -67,8 +65,6 @@ router.get('/', async (req, res) => {
 		res.status(500).send({ message: 'Server error' });
 	}
 });
-
-export default router;
 
 /**
  * @openapi
@@ -105,14 +101,14 @@ export default router;
  *         description: Server error
  */
 router.post('/', async (req, res) => {
-	logger.info(`POST /wizard/steps/review-sign`);
 	// TODO: implement when auth layer is ready
 	try {
-		logger.info(`Submitted informed consent`);
-		// TODO: update participant status to consented
+		// TODO: verify participant data and update lifecycleState to CONSENTED
 		res.status(201).send({ message: 'Success!' });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });
 	}
 });
+
+export default router;
