@@ -21,10 +21,12 @@ import { Router } from 'express';
 
 import InformedConsentRouter from './informedConsent.js';
 import ConsentReleaseDataRouter from './consentReleaseData.js';
+import ConsentResearchParticipationRouter from './consentResearchParticipation.js';
 
 const router = Router();
 
 router.use('/informed-consent', InformedConsentRouter);
 router.use('/consent-to-release-data', ConsentReleaseDataRouter);
+router.use('/consent-for-research-participation', ConsentResearchParticipationRouter);
 
 export default router;
