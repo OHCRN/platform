@@ -19,4 +19,7 @@
 
 import { ZodError } from 'zod';
 
+// TODO: remove and use custom Error schemas
+// this is just here for temporary error handling in consent-api to return a 400 status for invalid requests
+// when we implement custom error schemas this will not need to be exported
 export { ZodError };
