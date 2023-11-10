@@ -17,34 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicianInviteForm.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentWizardProgress.js';
-export * from './Error.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './InformedConsent.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './lengthConstraints.js';
-export * from './InformedConsent.js';
-export * from './ConsentResearchParticipation.js';
-export * from './ConsentReleaseData.js';
+import { ZodError } from 'zod';
+
+// TODO: remove and use custom Error schemas
+// this is just here for temporary error handling in consent-api to return a 400 status for invalid requests
+// when we implement custom error schemas this will not need to be exported
+export { ZodError };
