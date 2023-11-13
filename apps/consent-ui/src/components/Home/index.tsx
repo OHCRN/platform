@@ -21,7 +21,6 @@ import Image from 'next/image';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/Button/LinkButton';
-import RightArrow from 'src/components/Icons/Arrow';
 import BackgroundImage from 'src/public/background.png';
 import { OHCRN_HOME_LINK } from 'src/constants';
 
@@ -45,9 +44,8 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					<p>
 						<b>{translate('landing-page', 'ohcrn-description')}</b>
 					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" layout="icon">
+					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
 						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
-						<RightArrow />
 					</LinkButton>
 				</div>
 				<Card currentLang={currentLang} />
