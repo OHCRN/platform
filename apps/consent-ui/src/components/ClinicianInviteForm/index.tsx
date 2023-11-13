@@ -79,17 +79,17 @@ const ClinicianInviteFormEl = ({
 			<TextFieldSet
 				error={errors.participantFirstName?.type}
 				register={register}
-				{...textFieldsDict.firstName}
+				{...textFieldsDict.participantFirstName}
 			/>
 			<TextFieldSet
 				error={errors.participantLastName?.type}
 				register={register}
-				{...textFieldsDict.lastName}
+				{...textFieldsDict.participantLastName}
 			/>
 			<TextFieldSet
 				error={errors.participantPreferredName?.type}
 				register={register}
-				{...textFieldsDict.preferredName}
+				{...textFieldsDict.participantPreferredName}
 			/>
 
 			{/* mimicking structure of FormField
@@ -118,6 +118,16 @@ const ClinicianInviteFormEl = ({
 				</div>
 			</div> */}
 
+			<TextFieldSet
+				error={errors.participantPhoneNumber?.type}
+				register={register}
+				{...textFieldsDict.participantPhoneNumber}
+			/>
+			<TextFieldSet
+				error={errors.participantEmailAddress?.type}
+				register={register}
+				{...textFieldsDict.participantEmailAddress}
+			/>
 			<input type="submit" />
 		</form>
 	);

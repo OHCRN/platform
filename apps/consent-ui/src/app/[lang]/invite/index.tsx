@@ -35,36 +35,36 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 	// translations for form fields.
 	// keys / form field names need to match up with the clinician invite API
 	const textFieldsDict: TextFormFieldsDictionary = {
-		firstName: {
-			name: 'firstName',
+		participantFirstName: {
+			name: 'participantFirstName',
 			fieldType: 'text',
 			textInputType: 'text',
 			label: translate('forms', 'first-name-label'),
 			required: true,
 		},
-		lastName: {
-			name: 'lastName',
+		participantLastName: {
+			name: 'participantLastName',
 			fieldType: 'text',
 			textInputType: 'text',
 			label: translate('forms', 'last-name-label'),
 			required: true,
 		},
-		preferredName: {
-			name: 'preferredName',
+		participantPreferredName: {
+			name: 'participantPreferredName',
 			fieldType: 'text',
 			textInputType: 'text',
 			label: translate('forms', 'preferred-name-label'),
 			required: false,
 		},
-		phoneNumber: {
-			name: 'phone-number',
+		participantPhoneNumber: {
+			name: 'participantPhoneNumber',
 			fieldType: 'text',
 			textInputType: 'tel',
 			label: translate('forms', 'phone-label'),
 			required: true,
 		},
-		email: {
-			name: 'email',
+		participantEmailAddress: {
+			name: 'participantEmailAddress',
 			fieldType: 'text',
 			textInputType: 'email',
 			label: translate('forms', 'email-label'),
