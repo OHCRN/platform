@@ -2,6 +2,8 @@
 
 import { getAppConfig } from '../config.js';
 
+import axiosClient from './axiosClient.js';
+
 // PI-DAS
 const createParticipantPiData = async ({
 	name,
@@ -14,13 +16,11 @@ const createParticipantPiData = async ({
 	const { piDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${piDasUrl}/participants`, {
-		method: 'POST',
-		body: JSON.stringify({ name, email }),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.participant;
+	const result = await axiosClient.post(`${piDasUrl}/participants`, {
+		name,
+		email,
+	});
+	return result.data.participant;
 };
 
 // KEYS-DAS
@@ -29,13 +29,10 @@ const createParticipantOhipKey = async (participantId: string): Promise<any> => 
 	const { keysDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${keysDasUrl}/ohip-keys`, {
-		method: 'POST',
-		body: JSON.stringify({ participantId }),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.ohipKey;
+	const result = await axiosClient.post(`${keysDasUrl}/ohip-keys`, {
+		participantId,
+	});
+	return result.data.ohipKey;
 };
 
 // PHI-DAS
@@ -50,13 +47,11 @@ const saveParticipantOhipNumber = async ({
 	const { phiDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${phiDasUrl}/ohip`, {
-		method: 'POST',
-		body: JSON.stringify({ ohipPrivateKey, ohipNumber }),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.ohipData.ohipNumber;
+	const result = await axiosClient.post(`${phiDasUrl}/ohip`, {
+		ohipPrivateKey,
+		ohipNumber,
+	});
+	return result.data.ohipData.ohipNumber;
 };
 
 // CONSENT-DAS
@@ -71,13 +66,11 @@ const createParticipantConsentData = async ({
 	const { consentDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${consentDasUrl}/participants`, {
-		method: 'POST',
-		body: JSON.stringify({ participantId, emailVerified }),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.participant;
+	const result = await axiosClient.post(`${consentDasUrl}/participants`, {
+		participantId,
+		emailVerified,
+	});
+	return result.data.participant;
 };
 
 // separates data along concerns to store in respective DASes

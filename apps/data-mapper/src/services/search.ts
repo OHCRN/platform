@@ -2,15 +2,16 @@
 
 import { getAppConfig } from '../config.js';
 
+import axiosClient from './axiosClient.js';
+
 // PI-DAS
 // TODO: add Type instead of any
 const getParticipantPiData = async (participantId: string): Promise<any> => {
 	const { piDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${piDasUrl}/participants/${participantId}`).then((res) => res.json());
-	return result.participant;
+	const result = await axiosClient.get(`${piDasUrl}/participants/${participantId}`);
+	return result.data.participant;
 };
 
 // KEYS-DAS
@@ -19,9 +20,8 @@ const getParticipantOhipKey = async (participantId: string): Promise<any> => {
 	const { keysDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${keysDasUrl}/ohip-keys/${participantId}`).then((res) => res.json());
-	return result.ohipKey.ohipPrivateKey;
+	const result = await axiosClient.get(`${keysDasUrl}/ohip-keys/${participantId}`);
+	return result.data.ohipKey.ohipPrivateKey;
 };
 
 // PHI-DAS
@@ -30,9 +30,8 @@ const getParticipantOhipNumber = async (ohipPrivateKey: string): Promise<any> =>
 	const { phiDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${phiDasUrl}/ohip/${ohipPrivateKey}`).then((res) => res.json());
-	return result.ohipData.ohipNumber;
+	const result = await axiosClient.get(`${phiDasUrl}/ohip/${ohipPrivateKey}`);
+	return result.data.ohipData.ohipNumber;
 };
 
 // CONSENT-DAS
@@ -41,11 +40,8 @@ const getParticipantConsentData = async (participantId: string): Promise<any> =>
 	const { consentDasUrl } = getAppConfig();
 	// TODO: use urlJoin
 	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${consentDasUrl}/participants/${participantId}`).then((res) =>
-		res.json(),
-	);
-	return result.participant;
+	const result = await axiosClient.get(`${consentDasUrl}/participants/${participantId}`);
+	return result.data.participant;
 };
 
 // combines data from respective DASes to return a single Participant object
