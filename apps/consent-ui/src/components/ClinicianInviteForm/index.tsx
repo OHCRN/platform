@@ -19,7 +19,6 @@
 
 'use client';
 
-import { z } from 'zod';
 // import { ReactNode } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 // import Select, { SingleValue } from 'react-select';
@@ -29,6 +28,7 @@ import {
 	// Controller
 } from 'react-hook-form';
 // import { PhoneNumber } from 'types/entities';
+import { ClinicianInviteBase, ClinicianInviteForm } from 'types/entities';
 
 import TextFieldSet from '../Form/TextFieldSet';
 import {
@@ -36,13 +36,11 @@ import {
 	// CheckboxRadioFormFieldsDictionary,
 	// SelectFormFieldsDictionary,
 } from '../Form/types';
+import RequiredAsterisk from '../Form/RequiredAsterisk';
 
 import { ClinicianInviteFormTextDictionary, ClinicianInviteFormErrorDictionary } from './types';
 
-// require more characters, in order to show errors better
-const DEMO_STRING_LENGTH = 5;
-
-const ClinicianInviteForm = ({
+const ClinicianInviteFormEl = ({
 	// checkboxRadioFieldsDict,
 	errorDict,
 	// selectFieldsDict,
@@ -55,54 +53,41 @@ const ClinicianInviteForm = ({
 	textDict: ClinicianInviteFormTextDictionary;
 	textFieldsDict: TextFormFieldsDictionary;
 }) => {
-	const schema = z.object({
-		firstName: z.string().min(DEMO_STRING_LENGTH, {
-			message: errorDict.required,
-		}),
-		lastName: z.string().min(DEMO_STRING_LENGTH, {
-			message: errorDict.required,
-		}),
-		preferredName: z.string().optional(),
-		// phoneNumber: PhoneNumber.length(10, {
-		// 	message: errorDict.required,
-		// }),
-		// email: z.string().email({
-		// 	message: errorDict.required,
-		// }),
-		// consentGroup: z.string().min(DEMO_STRING_LENGTH, {
-		// 	message: errorDict.required,
-		// }),
-	});
-
 	const {
 		// control,
 		formState: { errors },
 		handleSubmit,
 		register,
-	} = useReactHookForm<z.infer<typeof schema>>({
-		resolver: zodResolver(schema),
+	} = useReactHookForm<ClinicianInviteForm>({
+		resolver: zodResolver(ClinicianInviteBase),
 	});
 
-	const onSubmit: SubmitHandler<z.infer<typeof schema>> = (data: any) => console.log('data', data);
+	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data: any) => console.log('data', data);
+
+	// doesn't work. uncomment to see TS error
+	// const translateError: string = (error?: any) => {
+	// 	const errorKey = Object.keys(error)[0];
+	// 	(error && errorDict[errorKey]) || '';
+	// };
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<h2>{textDict['patient-information']}</h2>
 			<p>
-				<span style={{ color: 'red' }}>*</span> {textDict['indicates-required-field']}
+				<RequiredAsterisk required /> {textDict['indicates-required-field']}
 			</p>
 			<TextFieldSet
-				error={errors.firstName?.message}
+				error={errors.participantFirstName?.type}
 				register={register}
 				{...textFieldsDict.firstName}
 			/>
 			<TextFieldSet
-				error={errors.lastName?.message}
+				error={errors.participantLastName?.type}
 				register={register}
 				{...textFieldsDict.lastName}
 			/>
 			<TextFieldSet
-				error={errors.preferredName?.message}
+				error={errors.participantPreferredName?.type}
 				register={register}
 				{...textFieldsDict.preferredName}
 			/>
@@ -138,4 +123,4 @@ const ClinicianInviteForm = ({
 	);
 };
 
-export default ClinicianInviteForm;
+export default ClinicianInviteFormEl;
