@@ -1,5 +1,7 @@
 import { dataMapperClinicianInvite, ClinicianInviteRequest, ClinicianInvite } from 'types/entities';
 
+import logger from '../../logger.js';
+
 import { createInvitePiData, createParticipantPiData } from './piDas.js';
 import { createInviteConsentData, createParticipantConsentData } from './consentDas.js';
 import { saveParticipantOhipNumber } from './phiDas.js';
@@ -56,31 +58,37 @@ export const createInvite = async ({
 	consentGroup,
 	consentToBeContacted,
 }: ClinicianInviteRequest): Promise<ClinicianInvite> => {
-	const invitePiData = await createInvitePiData({
-		participantFirstName,
-		participantLastName,
-		participantEmailAddress,
-		participantPhoneNumber,
-		participantPreferredName,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	});
-	const inviteConsentData = await createInviteConsentData({
-		id: invitePiData.id,
-		inviteAcceptedDate,
-		inviteAccepted,
-		clinicianFirstName,
-		clinicianLastName,
-		clinicianInstitutionalEmailAddress,
-		clinicianTitleOrRole,
-		consentGroup,
-		consentToBeContacted,
-	});
+	try {
+		const invitePiData = await createInvitePiData({
+			participantFirstName,
+			participantLastName,
+			participantEmailAddress,
+			participantPhoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		});
+		const inviteConsentData = await createInviteConsentData({
+			id: invitePiData.id,
+			inviteAcceptedDate,
+			inviteAccepted,
+			clinicianFirstName,
+			clinicianLastName,
+			clinicianInstitutionalEmailAddress,
+			clinicianTitleOrRole,
+			consentGroup,
+			consentToBeContacted,
+		});
 
-	return dataMapperClinicianInvite.parse({
-		...invitePiData,
-		...inviteConsentData,
-	});
+		return dataMapperClinicianInvite.parse({
+			...invitePiData,
+			...inviteConsentData,
+		});
+	} catch (error) {
+		logger.error(error);
+		// TODO: rollback/delete invites already created
+		throw error; // TODO: remove and send custom error schema
+	}
 };

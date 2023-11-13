@@ -22,6 +22,7 @@ import urlJoin from 'url-join';
 
 import { ClinicianInvite } from '../../../../pi-das/src/generated/client/index.js';
 import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
 
 export const createParticipantPiData = async ({
 	name,
@@ -55,11 +56,9 @@ export const createInvitePiData = async ({
 	guardianRelationship,
 }: piClinicianInvite): Promise<ClinicianInvite> => {
 	const { piDasUrl } = getAppConfig();
-	// TODO: add error handling
 	// TODO: use axios instead of fetch
-	const result = await fetch(urlJoin(piDasUrl, 'clinician-invites'), {
-		method: 'POST',
-		body: JSON.stringify({
+	try {
+		const body = piClinicianInvite.parse({
 			participantFirstName,
 			participantLastName,
 			participantEmailAddress,
@@ -69,8 +68,15 @@ export const createInvitePiData = async ({
 			guardianPhoneNumber,
 			guardianEmailAddress,
 			guardianRelationship,
-		}),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.invite;
+		});
+		const result = await fetch(urlJoin(piDasUrl, 'clinician-invites'), {
+			method: 'POST',
+			body: JSON.stringify({ body }),
+			headers: { 'Content-Type': 'application/json' },
+		}).then((res) => res.json());
+		return result.invite;
+	} catch (error) {
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
+	}
 };

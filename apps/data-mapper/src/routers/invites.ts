@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ClinicianInviteRequest } from 'types/entities';
+import { ClinicianInviteRequest, ZodError } from 'types/entities';
 
 import logger from '../logger.js';
 import { createInvite } from '../services/create/index.js';
@@ -56,7 +56,7 @@ const router = Router();
  *               properties:
  *                 inviteId: string
  *       400:
- *         description: Bad request
+ *         description: Bad Request
  *       500:
  *         description: Server error
  */
@@ -68,8 +68,11 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ inviteId: invite.id });
 	} catch (error) {
 		logger.error(error);
-		// TODO: catch ZodError and send 400 status
-		res.status(500).send({ error: 'Error creating clinician invite' });
+		if (error instanceof ZodError) {
+			res.status(400).send({ error: 'Bad Request' });
+		} else {
+			res.status(500).send({ error: 'Error creating clinician invite' });
+		}
 	}
 });
 

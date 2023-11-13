@@ -22,6 +22,7 @@ import { consentClinicianInvite } from 'types/entities';
 
 import { ClinicianInvite } from '../../../../consent-das/src/generated/client/index.js';
 import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
 
 export const createParticipantConsentData = async ({
 	participantId,
@@ -55,12 +56,10 @@ export const createInviteConsentData = async ({
 	consentToBeContacted,
 }: consentClinicianInvite): Promise<ClinicianInvite> => {
 	const { consentDasUrl } = getAppConfig();
-	// TODO: add error handling
 	// TODO: use axios instead of fetch
-	const result = await fetch(urlJoin(consentDasUrl, 'clinician-invites'), {
-		method: 'POST',
-		body: JSON.stringify({
-			clinicianInviteId: id,
+	try {
+		const body = consentClinicianInvite.parse({
+			id,
 			inviteAcceptedDate,
 			inviteAccepted,
 			clinicianFirstName,
@@ -69,8 +68,15 @@ export const createInviteConsentData = async ({
 			clinicianTitleOrRole,
 			consentGroup,
 			consentToBeContacted,
-		}),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.clinicianInvite;
+		});
+		const result = await fetch(urlJoin(consentDasUrl, 'clinician-invites'), {
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: { 'Content-Type': 'application/json' },
+		}).then((res) => res.json());
+		return result.clinicianInvite;
+	} catch (error) {
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
+	}
 };
