@@ -18,11 +18,12 @@
  */
 
 import urlJoin from 'url-join';
-import { ClinicianInvite, consentClinicianInvite } from 'types/entities';
+import { consentClinicianInvite } from 'types/entities';
 
 import { getAppConfig } from '../../config.js';
 import logger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
+import { ClinicianInvite } from '../../../../consent-das/src/prismaClient.js';
 
 // CREATE
 

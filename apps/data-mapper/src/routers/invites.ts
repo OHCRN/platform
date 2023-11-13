@@ -52,9 +52,7 @@ const router = Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 inviteId: string
+ *               $ref: '#/components/schemas/ClinicianInvite'
  *       400:
  *         description: Bad Request
  *       500:
@@ -65,7 +63,7 @@ router.post('/', async (req, res) => {
 	try {
 		const data = ClinicianInviteRequest.parse(req.body);
 		const invite = await createInvite(data);
-		res.status(201).send({ inviteId: invite.id });
+		res.status(201).send(invite);
 	} catch (error) {
 		logger.error(error);
 		if (error instanceof ZodError) {

@@ -18,11 +18,12 @@
  */
 
 import urlJoin from 'url-join';
-import { ClinicianInvite, piClinicianInvite } from 'types/entities';
+import { piClinicianInvite } from 'types/entities';
 
 import { getAppConfig } from '../../config.js';
 import logger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
+import { ClinicianInvite } from '../../../../pi-das/src/prismaClient.js';
 
 // CREATE
 

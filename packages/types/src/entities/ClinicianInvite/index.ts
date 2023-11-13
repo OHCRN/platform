@@ -18,6 +18,7 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
 
 import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
 
@@ -41,6 +42,7 @@ export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
 });
 
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
+export const ClinicianInviteSchema = generateSchema(ClinicianInvite);
 
 export * from './consentApi.js';
 export * from './consentDas.js';
