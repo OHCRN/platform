@@ -19,6 +19,8 @@
 
 import { ReactNode } from 'react';
 
+import RequiredAsterisk from '../RequiredAsterisk';
+
 const DefaultFieldSet = ({
 	children,
 	error,
@@ -36,7 +38,7 @@ const DefaultFieldSet = ({
 		<fieldset>
 			<label htmlFor={name}>
 				{label}
-				{required && '*'}
+				<RequiredAsterisk required={required} />
 			</label>
 			{children}
 			{error && <p style={{ color: 'red' }}>{error}</p>}
