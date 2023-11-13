@@ -17,19 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { ConsentGroup } from 'types/entities';
+import TextInput from './TextInput';
+import DefaultFieldSet from './DefaultFieldSet';
+import { FormTextInputTypes } from './types';
 
-export type ConsentGroupOption = {
+const TextFieldSet = ({
+	error,
+	fieldType,
+	label,
+	name,
+	register,
+	required = false,
+	textInputType,
+}: {
+	error?: string;
+	fieldType: 'text';
 	label: string;
-	value: ConsentGroup;
-};
+	name: string;
+	register: any;
+	required: boolean;
+	textInputType: FormTextInputTypes;
+}) => (
+	<DefaultFieldSet error={error} label={label} name={name} required={required}>
+		<TextInput
+			fieldName={name}
+			fieldType={fieldType}
+			register={register}
+			required={required}
+			textInputType={textInputType}
+		/>
+	</DefaultFieldSet>
+);
 
-// TODO ClinicianInviteFormDictionary shouldn't be partial in final version
-export type ClinicianInviteFormTextDictionary = Partial<
-	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
->;
-
-export type ClinicianInviteFormErrorDictionary = Partial<FormErrorsDictionary>;
+export default TextFieldSet;

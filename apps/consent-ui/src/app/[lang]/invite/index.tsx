@@ -18,61 +18,72 @@
  */
 
 import Link from 'next/link';
-import { ConsentGroup } from 'types/entities';
 import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
 import {
 	ClinicianInviteFormErrorDictionary,
-	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
-	ConsentGroupOption,
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
+import {
+	// SelectFormFieldsDictionary,
+	TextFormFieldsDictionary,
+} from 'src/components/Form/types';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
 	// translations for form fields.
 	// keys / form field names need to match up with the clinician invite API
-	const fieldDict: ClinicianInviteFormFieldsDictionary = {
+	const textFieldsDict: TextFormFieldsDictionary = {
 		firstName: {
+			name: 'firstName',
+			fieldType: 'text',
+			textInputType: 'text',
 			label: translate('forms', 'first-name-label'),
-			type: 'text',
 			required: true,
 		},
 		lastName: {
+			name: 'lastName',
+			fieldType: 'text',
+			textInputType: 'text',
 			label: translate('forms', 'last-name-label'),
-			type: 'text',
 			required: true,
 		},
 		preferredName: {
+			name: 'preferredName',
+			fieldType: 'text',
+			textInputType: 'text',
 			label: translate('forms', 'preferred-name-label'),
-			type: 'text',
 			required: false,
 		},
 		phoneNumber: {
+			name: 'phone-number',
+			fieldType: 'text',
+			textInputType: 'tel',
 			label: translate('forms', 'phone-label'),
-			type: 'tel',
 			required: true,
 		},
 		email: {
+			name: 'email',
+			fieldType: 'text',
+			textInputType: 'email',
 			label: translate('forms', 'email-label'),
-			type: 'email',
-			required: true,
-		},
-		consentGroup: {
-			label: translate('forms', 'consent-group-label'),
-			type: 'select',
 			required: true,
 		},
 	};
 
-	// translations for consent group dropdown options
-	const consentGroupOptions: ConsentGroupOption[] = Object.values(ConsentGroup).map(
-		(group: ConsentGroup) => ({
-			label: translate('consent-group', group),
-			value: `${group}`,
-		}),
-	);
+	// const selectFieldsDict: SelectFormFieldsDictionary = {
+	// 	consentGroup: {
+	// 		name: 'consentGroup',
+	// 		fieldType: 'select',
+	// 		label: translate('forms', 'consent-group-label'),
+	// 		required: true,
+	// 		options: Object.values(ConsentGroup).map((group: ConsentGroup) => ({
+	// 			label: translate('consent-group', group),
+	// 			value: `${group}`,
+	// 		})),
+	// 	},
+	// };
 
 	// translations for standalone text in the form
 	const textDict: ClinicianInviteFormTextDictionary = {
@@ -90,10 +101,10 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 			<ClinicianInviteForm
-				consentGroupOptions={consentGroupOptions}
 				errorDict={errorDict}
-				fieldDict={fieldDict}
+				// selectFieldsDict={selectFieldsDict}
 				textDict={textDict}
+				textFieldsDict={textFieldsDict}
 			/>
 		</div>
 	);

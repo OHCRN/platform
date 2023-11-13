@@ -19,34 +19,19 @@
 
 'use client';
 
-import { Ref } from 'react';
+import { FieldValues } from 'react-hook-form';
 
-// TODO: html input element should specify if it's text/email/tel type
+import { FormTextInputProps } from '../types';
 
-const TextInput = ({
-	fieldRef,
-	name,
-	onBlur,
-	onChange,
-	required = false,
-}: {
-	fieldRef: Ref<any>;
-	name: string;
-	onBlur: any;
-	onChange: any;
-	required?: boolean;
-}) => {
-	return (
-		<input
-			id={name}
-			name={name}
-			onBlur={onBlur}
-			onChange={onChange}
-			ref={fieldRef}
-			required={required}
-			type="text" // TODO html input element should specify text/email/tel type depending on fieldName
-		/>
-	);
-};
+const TextInput = <T extends FieldValues>({
+	fieldName,
+	register,
+	required,
+	textInputType,
+}: FormTextInputProps<T>) => (
+	<div>
+		<input {...register(fieldName, { required })} aria-required={required} type={textInputType} />
+	</div>
+);
 
 export default TextInput;

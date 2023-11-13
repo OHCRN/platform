@@ -17,70 +17,67 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 import { ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-import TextInput from '../TextInput';
-import DefaultFieldSet from '../DefaultFieldSet';
+// indicates which react component to use
+export type FormFieldTypes = 'checkbox' | 'date' | 'radio' | 'select' | 'text' | 'textWithCheckbox';
 
-export type FormFieldTypes =
-	| 'checkbox'
-	| 'date'
-	| 'radioGroup'
-	| 'select'
-	| 'text'
-	| 'textWithCheckbox'
-	| 'tel'
-	| 'email';
+// indicates the HTML type attribute for inputs that are or look like text fields
+export type FormTextInputTypes = 'email' | 'tel' | 'text';
 
-interface FormFieldProps<T extends FieldValues> {
-	description?: ReactNode;
+export interface FormFieldProps<T extends FieldValues> {
 	error?: string;
 	fieldName: Path<T>;
+	fieldType: FormFieldTypes;
 	label: string;
 	register: UseFormRegister<T>;
 	required?: boolean;
-	type: FormFieldTypes;
 }
 
-const FormFieldProps = <T extends FieldValues>({
-	description,
-	error,
-	fieldName,
-	label,
-	register,
-	required = false,
-}: FormFieldProps<T>) => {
-	// we can't pass refs to functional components.
-	// this component creates the ref (needed for react-hook-form) for each field,
-	// renames it to fieldRef, and passes it to the input component.
+interface FormInputProps<T extends FieldValues> {
+	fieldName: Path<T>;
+	fieldType: FormFieldTypes;
+	register: UseFormRegister<T>;
+	required?: boolean;
+}
 
-	const { name, onChange, onBlur, ref: fieldRef } = register(fieldName, { required });
-
-	const inputProps = {
-		error,
-		fieldRef,
-		name,
-		onBlur,
-		onChange,
-		required,
-	};
-
-	const wrapperProps = {
-		description,
-		error,
-		name,
-		label,
-		required,
-	};
-
-	return (
-		<DefaultFieldSet {...wrapperProps}>
-			<TextInput {...inputProps} />
-		</DefaultFieldSet>
-	);
+export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
+	textInputType: FormTextInputTypes;
 };
 
-export default FormFieldProps;
+export type FormCheckboxRadioProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
+	value: V;
+	description?: ReactNode;
+};
+
+interface FormFieldsDictionary {
+	name: string;
+	label: string;
+	required: boolean;
+}
+
+export type TextFormFieldsDictionary = Record<
+	string,
+	FormFieldsDictionary & {
+		fieldType: 'text';
+		textInputType: FormTextInputTypes;
+	}
+>;
+
+export type CheckboxRadioFormFieldsDictionary = Record<
+	string,
+	FormFieldsDictionary & {
+		fieldType: 'checkbox' | 'radio';
+		value: string;
+		description?: ReactNode;
+	}
+>;
+
+export type SelectFormFieldsDictionary = Record<
+	string,
+	FormFieldsDictionary & {
+		fieldType: 'select';
+		options: { label: string; value: string }[];
+	}
+>;

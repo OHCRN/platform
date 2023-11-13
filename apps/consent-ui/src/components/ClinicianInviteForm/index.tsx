@@ -20,33 +20,40 @@
 'use client';
 
 import { z } from 'zod';
+// import { ReactNode } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Select, { SingleValue } from 'react-select';
-import { useForm as useReactHookForm, SubmitHandler, Controller } from 'react-hook-form';
-import { PhoneNumber } from 'types/entities';
-
-import FormField from '../Form/FormField';
-
+// import Select, { SingleValue } from 'react-select';
 import {
-	ClinicianInviteFormFieldsDictionary,
-	ClinicianInviteFormTextDictionary,
-	ClinicianInviteFormErrorDictionary,
-	ConsentGroupOption,
-} from './types';
+	useForm as useReactHookForm,
+	SubmitHandler,
+	// Controller
+} from 'react-hook-form';
+// import { PhoneNumber } from 'types/entities';
+
+import TextFieldSet from '../Form/TextFieldSet';
+import {
+	TextFormFieldsDictionary,
+	// CheckboxRadioFormFieldsDictionary,
+	// SelectFormFieldsDictionary,
+} from '../Form/types';
+
+import { ClinicianInviteFormTextDictionary, ClinicianInviteFormErrorDictionary } from './types';
 
 // require more characters, in order to show errors better
 const DEMO_STRING_LENGTH = 5;
 
 const ClinicianInviteForm = ({
-	consentGroupOptions,
+	// checkboxRadioFieldsDict,
 	errorDict,
-	fieldDict,
+	// selectFieldsDict,
 	textDict,
+	textFieldsDict,
 }: {
-	consentGroupOptions: ConsentGroupOption[];
+	// checkboxRadioFieldsDict: CheckboxRadioFormFieldsDictionary;
 	errorDict: ClinicianInviteFormErrorDictionary;
-	fieldDict: ClinicianInviteFormFieldsDictionary;
+	// selectFieldsDict: SelectFormFieldsDictionary;
 	textDict: ClinicianInviteFormTextDictionary;
+	textFieldsDict: TextFormFieldsDictionary;
 }) => {
 	const schema = z.object({
 		firstName: z.string().min(DEMO_STRING_LENGTH, {
@@ -56,19 +63,19 @@ const ClinicianInviteForm = ({
 			message: errorDict.required,
 		}),
 		preferredName: z.string().optional(),
-		phoneNumber: PhoneNumber.length(10, {
-			message: errorDict.required,
-		}),
-		email: z.string().email({
-			message: errorDict.required,
-		}),
-		consentGroup: z.string().min(DEMO_STRING_LENGTH, {
-			message: errorDict.required,
-		}),
+		// phoneNumber: PhoneNumber.length(10, {
+		// 	message: errorDict.required,
+		// }),
+		// email: z.string().email({
+		// 	message: errorDict.required,
+		// }),
+		// consentGroup: z.string().min(DEMO_STRING_LENGTH, {
+		// 	message: errorDict.required,
+		// }),
 	});
 
 	const {
-		control,
+		// control,
 		formState: { errors },
 		handleSubmit,
 		register,
@@ -76,7 +83,7 @@ const ClinicianInviteForm = ({
 		resolver: zodResolver(schema),
 	});
 
-	const onSubmit: SubmitHandler<z.infer<typeof schema>> = (data) => console.log('data', data);
+	const onSubmit: SubmitHandler<z.infer<typeof schema>> = (data: any) => console.log('data', data);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -84,34 +91,25 @@ const ClinicianInviteForm = ({
 			<p>
 				<span style={{ color: 'red' }}>*</span> {textDict['indicates-required-field']}
 			</p>
-			<FormField
-				register={register}
+			<TextFieldSet
 				error={errors.firstName?.message}
-				fieldName="firstName"
-				label={fieldDict.firstName.label}
-				type={fieldDict.firstName.type}
-				required={fieldDict.firstName.required}
-			/>
-			<FormField
 				register={register}
+				{...textFieldsDict.firstName}
+			/>
+			<TextFieldSet
 				error={errors.lastName?.message}
-				fieldName="lastName"
-				label={fieldDict.lastName.label}
-				type={fieldDict.lastName.type}
-				required={fieldDict.lastName.required}
-			/>
-			<FormField
 				register={register}
+				{...textFieldsDict.lastName}
+			/>
+			<TextFieldSet
 				error={errors.preferredName?.message}
-				fieldName="preferredName"
-				label={fieldDict.preferredName.label}
-				type={fieldDict.preferredName.type}
-				required={fieldDict.preferredName.required}
+				register={register}
+				{...textFieldsDict.preferredName}
 			/>
 
 			{/* mimicking structure of FormField
 			TODO move select to FormField */}
-			<div>
+			{/* <div>
 				<div>
 					<label htmlFor="consentGroupSelect">{fieldDict.consentGroup.label}</label>
 				</div>
@@ -133,24 +131,7 @@ const ClinicianInviteForm = ({
 						rules={{ required: true }}
 					/>
 				</div>
-			</div>
-
-			<FormField
-				register={register}
-				error={errors.phoneNumber?.message}
-				fieldName="phoneNumber"
-				label={fieldDict.phoneNumber.label}
-				type={fieldDict.phoneNumber.type}
-				required={fieldDict.phoneNumber.required}
-			/>
-			<FormField
-				register={register}
-				error={errors.email?.message}
-				fieldName="email"
-				label={fieldDict.email.label}
-				type={fieldDict.email.type}
-				required={fieldDict.email.required}
-			/>
+			</div> */}
 
 			<input type="submit" />
 		</form>
