@@ -18,6 +18,8 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentGroup } from './ConsentGroup.js';
 import { Name } from './Name.js';
@@ -26,10 +28,6 @@ import { NanoId } from './NanoId.js';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 
 export const ClinicianInviteBase = z.object({
-	id: NanoId,
-	inviteSentDate: z.coerce.date(),
-	inviteAcceptedDate: z.coerce.date().optional(),
-	inviteAccepted: z.boolean().default(false),
 	clinicianFirstName: Name,
 	clinicianLastName: Name,
 	clinicianInstitutionalEmailAddress: z.string().email(),
@@ -47,7 +45,14 @@ export const ClinicianInviteBase = z.object({
 	consentToBeContacted: z.boolean(),
 });
 
-export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
+export const ClinicianInvite = ClinicianInviteBase.and(
+	z.object({
+		id: NanoId,
+		inviteSentDate: z.coerce.date(),
+		inviteAcceptedDate: z.coerce.date().optional(),
+		inviteAccepted: z.boolean().default(false),
+	}),
+).refine((input) => {
 	const {
 		consentGroup,
 		guardianName,
@@ -65,3 +70,4 @@ export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
 });
 
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
+export const ClinicianInviteSchema: SchemaObject = generateSchema(ClinicianInvite);

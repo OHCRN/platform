@@ -24,10 +24,7 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-export const ClinicianInviteForm = ClinicianInviteBase.omit({
-	id: true,
-	inviteSentDate: true,
-}).refine((input) => {
+export const ClinicianInviteForm = ClinicianInviteBase.refine((input) => {
 	const {
 		consentGroup,
 		guardianName,
