@@ -25,8 +25,6 @@ import logger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
 import { ClinicianInvite } from '../../../../consent-das/src/prismaClient.js';
 
-// CREATE
-
 export const createInviteConsentData = async ({
 	id,
 	inviteAcceptedDate,
@@ -40,7 +38,7 @@ export const createInviteConsentData = async ({
 }: consentClinicianInvite): Promise<ClinicianInvite> => {
 	const { consentDasUrl } = getAppConfig();
 	try {
-		const body = consentClinicianInvite.parse({
+		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), {
 			id,
 			inviteAcceptedDate,
 			inviteAccepted,
@@ -51,7 +49,6 @@ export const createInviteConsentData = async ({
 			consentGroup,
 			consentToBeContacted,
 		});
-		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), body);
 		return result.data.clinicianInvite;
 	} catch (error) {
 		logger.error(error);

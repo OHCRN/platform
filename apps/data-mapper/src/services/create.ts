@@ -1,5 +1,11 @@
 import urlJoin from 'url-join';
-import { ClinicianInvite, ClinicianInviteRequest, dataMapperClinicianInvite } from 'types/entities';
+import {
+	ClinicianInvite,
+	ClinicianInviteRequest,
+	consentClinicianInvite,
+	dataMapperClinicianInvite,
+	piClinicianInvite,
+} from 'types/entities';
 
 import logger from '../logger.js';
 import { getAppConfig } from '../config.js';
@@ -130,7 +136,7 @@ export const createInvite = async ({
 	consentToBeContacted,
 }: ClinicianInviteRequest): Promise<ClinicianInvite> => {
 	try {
-		const invitePiData = await createInvitePiData({
+		const piData = piClinicianInvite.parse({
 			participantFirstName,
 			participantLastName,
 			participantEmailAddress,
@@ -141,7 +147,10 @@ export const createInvite = async ({
 			guardianEmailAddress,
 			guardianRelationship,
 		});
-		const inviteConsentData = await createInviteConsentData({
+		const invitePiData = await createInvitePiData(piData);
+		// TODO: validating consentData should be done before creating invitePiData,
+		// however there is no way to validate id then
+		const consentData = consentClinicianInvite.parse({
 			id: invitePiData.id,
 			inviteAcceptedDate,
 			inviteAccepted,
@@ -152,6 +161,7 @@ export const createInvite = async ({
 			consentGroup,
 			consentToBeContacted,
 		});
+		const inviteConsentData = await createInviteConsentData(consentData);
 
 		return dataMapperClinicianInvite.parse({
 			...invitePiData,

@@ -25,8 +25,6 @@ import logger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
 import { ClinicianInvite } from '../../../../pi-das/src/prismaClient.js';
 
-// CREATE
-
 export const createInvitePiData = async ({
 	participantFirstName,
 	participantLastName,
@@ -40,7 +38,7 @@ export const createInvitePiData = async ({
 }: piClinicianInvite): Promise<ClinicianInvite> => {
 	const { piDasUrl } = getAppConfig();
 	try {
-		const body = piClinicianInvite.parse({
+		const result = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), {
 			participantFirstName,
 			participantLastName,
 			participantEmailAddress,
@@ -51,7 +49,6 @@ export const createInvitePiData = async ({
 			guardianEmailAddress,
 			guardianRelationship,
 		});
-		const result = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), body);
 		return result.data.invite;
 	} catch (error) {
 		logger.error(error);
