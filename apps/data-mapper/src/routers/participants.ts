@@ -20,8 +20,8 @@
 import { Router } from 'express';
 
 import logger from '../logger.js';
-import { getParticipant } from '../services/search/index.js';
-import { createParticipant } from '../services/create/index.js';
+import { getParticipant } from '../services/search.js';
+import { createParticipant } from '../services/create.js';
 
 const router = Router();
 
