@@ -21,7 +21,7 @@ import { Router } from 'express';
 import { ClinicianInviteRequest, ZodError } from 'types/entities';
 
 import logger from '../logger.js';
-import { createInvite } from '../services/create/index.js';
+import { createInvite } from '../services/create.js';
 
 const router = Router();
 
@@ -39,7 +39,7 @@ const router = Router();
  *     tags:
  *       - Clinician Invites
  *     name: Create Clinician Invite
- *     description: Submit clinician invite data across PI and Consent DAS
+ *     description: Submit relevant Clinician Invite data to PI DAS and Consent DAS
  *     requestBody:
  *       required: true
  *       content:

@@ -17,24 +17,43 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getAppConfig } from '../../config.js';
+import urlJoin from 'url-join';
+import { ClinicianInvite, piClinicianInvite } from 'types/entities';
 
-export const saveParticipantOhipNumber = async ({
-	ohipPrivateKey,
-	ohipNumber,
-}: {
-	ohipPrivateKey: string;
-	ohipNumber: string;
-}): Promise<any> => {
-	// TODO: add Type instead of any
-	const { phiDasUrl } = getAppConfig();
-	// TODO: use urlJoin
-	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${phiDasUrl}/ohip`, {
-		method: 'POST',
-		body: JSON.stringify({ ohipPrivateKey, ohipNumber }),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.ohipData.ohipNumber;
+import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
+import axiosClient from '../axiosClient.js';
+
+// CREATE
+
+export const createInvitePiData = async ({
+	participantFirstName,
+	participantLastName,
+	participantEmailAddress,
+	participantPhoneNumber,
+	participantPreferredName,
+	guardianName,
+	guardianPhoneNumber,
+	guardianEmailAddress,
+	guardianRelationship,
+}: piClinicianInvite): Promise<ClinicianInvite> => {
+	const { piDasUrl } = getAppConfig();
+	try {
+		const body = piClinicianInvite.parse({
+			participantFirstName,
+			participantLastName,
+			participantEmailAddress,
+			participantPhoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		});
+		const result = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), body);
+		return result.data.invite;
+	} catch (error) {
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
+	}
 };

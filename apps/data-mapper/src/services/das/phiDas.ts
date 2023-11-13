@@ -16,17 +16,3 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-import { getAppConfig } from '../../config.js';
-
-// TODO: add Type instead of any
-export const getParticipantConsentData = async (participantId: string): Promise<any> => {
-	const { consentDasUrl } = getAppConfig();
-	// TODO: use urlJoin
-	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${consentDasUrl}/participants/${participantId}`).then((res) =>
-		res.json(),
-	);
-	return result.participant;
-};

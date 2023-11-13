@@ -16,15 +16,3 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-import { getAppConfig } from '../../config.js';
-
-// TODO: add Type instead of any
-export const getParticipantOhipKey = async (participantId: string): Promise<any> => {
-	const { keysDasUrl } = getAppConfig();
-	// TODO: use urlJoin
-	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${keysDasUrl}/ohip-keys/${participantId}`).then((res) => res.json());
-	return result.ohipKey.ohipPrivateKey;
-};

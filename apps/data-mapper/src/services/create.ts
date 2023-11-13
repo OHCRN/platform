@@ -1,8 +1,12 @@
 import urlJoin from 'url-join';
+import { ClinicianInvite, ClinicianInviteRequest, dataMapperClinicianInvite } from 'types/entities';
 
+import logger from '../logger.js';
 import { getAppConfig } from '../config.js';
 
 import axiosClient from './axiosClient.js';
+import { createInvitePiData } from './das/piDas.js';
+import { createInviteConsentData } from './das/consentDas.js';
 
 // PI-DAS
 const createParticipantPiData = async ({
@@ -100,4 +104,62 @@ export const createParticipant = async ({
 		ohipNumber: participantOhipNumber,
 		emailVerified: participantConsentData.emailVerified,
 	};
+};
+
+/**
+ * Creates clinician invite in the PI DAS first to get an inviteId,
+ * then uses the same inviteId to create a corresponding entry in the Consent DAS
+ */
+export const createInvite = async ({
+	participantFirstName,
+	participantLastName,
+	participantEmailAddress,
+	participantPhoneNumber,
+	participantPreferredName,
+	guardianName,
+	guardianPhoneNumber,
+	guardianEmailAddress,
+	guardianRelationship,
+	inviteAcceptedDate,
+	inviteAccepted,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianInstitutionalEmailAddress,
+	clinicianTitleOrRole,
+	consentGroup,
+	consentToBeContacted,
+}: ClinicianInviteRequest): Promise<ClinicianInvite> => {
+	try {
+		const invitePiData = await createInvitePiData({
+			participantFirstName,
+			participantLastName,
+			participantEmailAddress,
+			participantPhoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		});
+		const inviteConsentData = await createInviteConsentData({
+			id: invitePiData.id,
+			inviteAcceptedDate,
+			inviteAccepted,
+			clinicianFirstName,
+			clinicianLastName,
+			clinicianInstitutionalEmailAddress,
+			clinicianTitleOrRole,
+			consentGroup,
+			consentToBeContacted,
+		});
+
+		return dataMapperClinicianInvite.parse({
+			...invitePiData,
+			...inviteConsentData,
+		});
+	} catch (error) {
+		logger.error(error);
+		// TODO: rollback/delete invites already created
+		throw error; // TODO: remove and send custom error schema
+	}
 };

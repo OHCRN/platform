@@ -18,31 +18,13 @@
  */
 
 import urlJoin from 'url-join';
-import { consentClinicianInvite } from 'types/entities';
+import { ClinicianInvite, consentClinicianInvite } from 'types/entities';
 
-import { ClinicianInvite } from '../../../../consent-das/src/generated/client/index.js';
 import { getAppConfig } from '../../config.js';
 import logger from '../../logger.js';
+import axiosClient from '../axiosClient.js';
 
-export const createParticipantConsentData = async ({
-	participantId,
-	emailVerified,
-}: {
-	participantId: string;
-	emailVerified: boolean;
-}): Promise<any> => {
-	// TODO: add Type instead of any
-	const { consentDasUrl } = getAppConfig();
-	// TODO: use urlJoin
-	// TODO: add error handling
-	// TODO: use axios instead of fetch
-	const result = await fetch(`${consentDasUrl}/participants`, {
-		method: 'POST',
-		body: JSON.stringify({ participantId, emailVerified }),
-		headers: { 'Content-Type': 'application/json' },
-	}).then((res) => res.json());
-	return result.participant;
-};
+// CREATE
 
 export const createInviteConsentData = async ({
 	id,
@@ -56,7 +38,6 @@ export const createInviteConsentData = async ({
 	consentToBeContacted,
 }: consentClinicianInvite): Promise<ClinicianInvite> => {
 	const { consentDasUrl } = getAppConfig();
-	// TODO: use axios instead of fetch
 	try {
 		const body = consentClinicianInvite.parse({
 			id,
@@ -69,12 +50,8 @@ export const createInviteConsentData = async ({
 			consentGroup,
 			consentToBeContacted,
 		});
-		const result = await fetch(urlJoin(consentDasUrl, 'clinician-invites'), {
-			method: 'POST',
-			body: JSON.stringify(body),
-			headers: { 'Content-Type': 'application/json' },
-		}).then((res) => res.json());
-		return result.clinicianInvite;
+		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), body);
+		return result.data.clinicianInvite;
 	} catch (error) {
 		logger.error(error);
 		throw error; // TODO: remove and send custom error schema
