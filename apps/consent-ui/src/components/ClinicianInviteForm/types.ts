@@ -29,10 +29,10 @@ export type ClinicianInviteFormFieldsDictionary = Record<
 	{ label: string; required: boolean; type: FormFieldTypes }
 >;
 
-export type ConsentGroupOptions = {
+export type ConsentGroupOption = {
 	label: string;
 	value: ConsentGroup;
-}[];
+};
 
 // TODO ClinicianInviteFormDictionary shouldn't be partial in final version
 export type ClinicianInviteFormTextDictionary = Partial<

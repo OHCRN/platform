@@ -21,7 +21,7 @@
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import { useForm as useReactHookForm, SubmitHandler, Controller } from 'react-hook-form';
 import { PhoneNumber } from 'types/entities';
 
@@ -31,7 +31,7 @@ import {
 	ClinicianInviteFormFieldsDictionary,
 	ClinicianInviteFormTextDictionary,
 	ClinicianInviteFormErrorDictionary,
-	ConsentGroupOptions,
+	ConsentGroupOption,
 } from './types';
 
 // require more characters, in order to show errors better
@@ -43,7 +43,7 @@ const ClinicianInviteForm = ({
 	fieldDict,
 	textDict,
 }: {
-	consentGroupOptions: ConsentGroupOptions;
+	consentGroupOptions: ConsentGroupOption[];
 	errorDict: ClinicianInviteFormErrorDictionary;
 	fieldDict: ClinicianInviteFormFieldsDictionary;
 	textDict: ClinicianInviteFormTextDictionary;
@@ -108,6 +108,33 @@ const ClinicianInviteForm = ({
 				type={fieldDict.preferredName.type}
 				required={fieldDict.preferredName.required}
 			/>
+
+			{/* mimicking structure of FormField
+			TODO move select to FormField */}
+			<div>
+				<div>
+					<label htmlFor="consentGroupSelect">{fieldDict.consentGroup.label}</label>
+				</div>
+				<div>
+					<Controller
+						control={control}
+						name="consentGroup"
+						render={({ field: { onChange, value } }) => (
+							<Select
+								instanceId="consentGroupSelect"
+								onChange={(val: SingleValue<string | { label: string; value: string }>) =>
+									onChange(typeof val === 'string' ? val : val?.value || null)
+								}
+								options={consentGroupOptions}
+								placeholder={textDict['select-placeholder']}
+								value={consentGroupOptions.find((option) => option.value === value) || ''}
+							/>
+						)}
+						rules={{ required: true }}
+					/>
+				</div>
+			</div>
+
 			<FormField
 				register={register}
 				error={errors.phoneNumber?.message}
@@ -123,21 +150,6 @@ const ClinicianInviteForm = ({
 				label={fieldDict.email.label}
 				type={fieldDict.email.type}
 				required={fieldDict.email.required}
-			/>
-
-			<Controller
-				control={control}
-				name="consentGroup"
-				render={({ field: { onChange, value } }) => (
-					<Select
-						instanceId="consentGroupSelect"
-						onChange={(val: any) => onChange(val.value || null)}
-						options={consentGroupOptions}
-						value={consentGroupOptions.find((option) => option.value === value) || ''}
-						placeholder="-- Choose consent group --"
-					/>
-				)}
-				rules={{ required: true }}
 			/>
 
 			<input type="submit" />
