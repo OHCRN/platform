@@ -1,4 +1,4 @@
-// import urlJoin from 'url-join';
+import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
 
@@ -8,9 +8,8 @@ import axiosClient from './axiosClient.js';
 // TODO: add Type instead of any
 const getParticipantPiData = async (participantId: string): Promise<any> => {
 	const { piDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.get(`${piDasUrl}/participants/${participantId}`);
+	const result = await axiosClient.get(urlJoin(piDasUrl, 'participants', participantId));
 	return result.data.participant;
 };
 
@@ -18,9 +17,8 @@ const getParticipantPiData = async (participantId: string): Promise<any> => {
 // TODO: add Type instead of any
 const getParticipantOhipKey = async (participantId: string): Promise<any> => {
 	const { keysDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.get(`${keysDasUrl}/ohip-keys/${participantId}`);
+	const result = await axiosClient.get(urlJoin(keysDasUrl, 'ohip-keys', participantId));
 	return result.data.ohipKey.ohipPrivateKey;
 };
 
@@ -28,9 +26,8 @@ const getParticipantOhipKey = async (participantId: string): Promise<any> => {
 // TODO: add Type instead of any
 const getParticipantOhipNumber = async (ohipPrivateKey: string): Promise<any> => {
 	const { phiDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.get(`${phiDasUrl}/ohip/${ohipPrivateKey}`);
+	const result = await axiosClient.get(urlJoin(phiDasUrl, 'ohip', ohipPrivateKey));
 	return result.data.ohipData.ohipNumber;
 };
 
@@ -38,9 +35,8 @@ const getParticipantOhipNumber = async (ohipPrivateKey: string): Promise<any> =>
 // TODO: add Type instead of any
 const getParticipantConsentData = async (participantId: string): Promise<any> => {
 	const { consentDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.get(`${consentDasUrl}/participants/${participantId}`);
+	const result = await axiosClient.get(urlJoin(consentDasUrl, 'participants', participantId));
 	return result.data.participant;
 };
 

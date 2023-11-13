@@ -1,4 +1,4 @@
-// import urlJoin from 'url-join';
+import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
 
@@ -14,9 +14,8 @@ const createParticipantPiData = async ({
 }): Promise<any> => {
 	// TODO: add Type instead of any
 	const { piDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.post(`${piDasUrl}/participants`, {
+	const result = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
 		name,
 		email,
 	});
@@ -27,9 +26,8 @@ const createParticipantPiData = async ({
 // TODO: add Type instead of any
 const createParticipantOhipKey = async (participantId: string): Promise<any> => {
 	const { keysDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.post(`${keysDasUrl}/ohip-keys`, {
+	const result = await axiosClient.post(urlJoin(keysDasUrl, 'ohip-keys'), {
 		participantId,
 	});
 	return result.data.ohipKey;
@@ -45,9 +43,8 @@ const saveParticipantOhipNumber = async ({
 }): Promise<any> => {
 	// TODO: add Type instead of any
 	const { phiDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.post(`${phiDasUrl}/ohip`, {
+	const result = await axiosClient.post(urlJoin(phiDasUrl, 'ohip'), {
 		ohipPrivateKey,
 		ohipNumber,
 	});
@@ -64,9 +61,8 @@ const createParticipantConsentData = async ({
 }): Promise<any> => {
 	// TODO: add Type instead of any
 	const { consentDasUrl } = getAppConfig();
-	// TODO: use urlJoin
 	// TODO: add error handling
-	const result = await axiosClient.post(`${consentDasUrl}/participants`, {
+	const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), {
 		participantId,
 		emailVerified,
 	});
