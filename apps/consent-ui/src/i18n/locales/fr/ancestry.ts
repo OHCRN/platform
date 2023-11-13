@@ -276,6 +276,7 @@ const dictionary = {
 	YUGOSLAVIAN_NOS: 'Yugoslavian, n.o.s.',
 	ZAMBIAN: 'Zambian',
 	ZIMBABWEAN: 'Zimbabwean',
+	ZULU: 'Zulu',
 } satisfies AncestryDictionary;
 
 export default dictionary;
