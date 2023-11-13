@@ -142,7 +142,7 @@ router.get('/progress', async (req, res) => {
 router.post('/signatures', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
-		// TODO: map out request body and processing
+		// TODO: map out request body and processing - TBD here https://github.com/OHCRN/platform/issues/155
 		res.status(201).send({ message: 'Success!' });
 	} catch (error) {
 		logger.error(error);

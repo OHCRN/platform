@@ -45,7 +45,7 @@ export const ConsentReviewSignResponse = z.object({
 	optionalReleaseOfContactInformation: ConsentResearchParticipationResponse.omit({
 		[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: true,
 	}),
-	optionalReContact: ConsentRecontactBase.pick({
+	optionalRecontact: ConsentRecontactBase.pick({
 		[RECONTACT__FUTURE_RESEARCH]: true,
 	}),
 	optionalSecondaryContact: ConsentRecontactBase.omit({

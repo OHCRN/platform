@@ -76,7 +76,7 @@ describe('ConsentRecontactRequest', () => {
 	});
 });
 
-// same tests for ConsentRecontactRequest
+// same tests as ConsentRecontactRequest
 describe('ConsentRecontactResponse', () => {
 	it('Parses correctly when secondary contact consent is indicated and required fields are provided', () => {
 		expect(
