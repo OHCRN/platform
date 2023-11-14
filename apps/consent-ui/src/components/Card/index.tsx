@@ -17,11 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+'use client';
+
 import clsx from 'clsx';
 
 import styles from './Card.module.scss';
 
-const Card = async ({
+const Card = ({
 	layout = 'column',
 	dropShadow = 'base',
 	className,

@@ -22,6 +22,7 @@ import LinkButton from '../Button/LinkButton';
 
 export type ModalConfig = {
 	title?: React.ReactNode;
+	message?: React.ReactNode;
 	actionButtonText?: React.ReactNode;
 	actionDisabled?: boolean;
 	cancelButtonText?: React.ReactNode;
@@ -33,17 +34,13 @@ export type ModalConfig = {
 };
 
 export type ModalContext = {
-	isOpen: boolean;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	config: ModalConfig;
 	setConfig: React.Dispatch<React.SetStateAction<ModalConfig>>;
 };
 
 // this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
 // its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
 export const defaultModalContext = {
-	isOpen: false,
 	setIsOpen: () => {},
-	config: {},
 	setConfig: () => {},
 };
