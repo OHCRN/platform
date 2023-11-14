@@ -22,6 +22,7 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+
 import { ValidLanguage } from 'src/i18n';
 
 import { getLinkNameByPath } from '../Link/utils';

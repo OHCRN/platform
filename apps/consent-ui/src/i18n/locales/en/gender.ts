@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { Gender } from 'types/entities';
+
 const dictionary = {
 	GENDER_FLUID: 'Gender Fluid',
 	GENDER_QUEER: 'Gender queer',
@@ -29,7 +31,7 @@ const dictionary = {
 	TRANSGENDER_WOMAN_TRANSWOMAN: 'Transgender woman / Transwoman',
 	TWO_SPIRIT: 'Two-Spirit',
 	WOMAN: 'Woman',
-} satisfies Record<string, string>;
+} satisfies Record<Gender, string>;
 
 export type GenderDictionary = Record<keyof typeof dictionary, string>;
 

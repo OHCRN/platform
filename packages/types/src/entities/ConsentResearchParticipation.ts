@@ -17,18 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { GeneticsClinic } from '../../src/entities/index.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-describe('GeneticsClinic', () => {
-	it('Must use the GeneticsClinic enum', () => {
-		expect(
-			GeneticsClinic.safeParse(GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA)
-				.success,
-		).true;
-		expect(GeneticsClinic.safeParse('XqhTcsD3eXW9kg3xLv0ly').success).false;
-		expect(GeneticsClinic.safeParse(undefined).success).false;
-		expect(GeneticsClinic.safeParse(null).success).false;
-	});
+const { RESEARCH_PARTICIPATION__CONTACT_INFORMATION, RESEARCH_PARTICIPATION__FUTURE_RESEARCH } =
+	ConsentQuestionId.enum;
+
+export const ConsentResearchParticipationBase = z.object({
+	[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: z.boolean(),
+	[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: z.boolean(),
 });
+
+export const ConsentResearchParticipationRequest = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationRequest = z.infer<
+	typeof ConsentResearchParticipationRequest
+>;
+export const ConsentResearchParticipationRequestSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationRequest,
+);
+
+export const ConsentResearchParticipationResponse = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationResponse = z.infer<
+	typeof ConsentResearchParticipationResponse
+>;
+export const ConsentResearchParticipationResponseSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationResponse,
+);
