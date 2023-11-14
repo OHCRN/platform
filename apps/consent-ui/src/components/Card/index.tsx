@@ -19,33 +19,24 @@
 
 import clsx from 'clsx';
 
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import { RouteName } from 'src/components/Link/types';
-import { ValidLanguage } from 'src/i18n';
+import styles from './Card.module.scss';
 
-import styles from './CardLink.module.scss';
-
-const CardLink = async ({
-	name,
-	currentLang,
-	Icon,
+const Card = async ({
+	layout = 'column',
+	dropShadow = 'base',
 	className,
-	iconClasses,
 	children,
 }: {
-	name: RouteName;
-	currentLang: ValidLanguage;
-	Icon: React.ComponentType<any>;
+	layout?: 'column' | 'row';
+	dropShadow?: 'none' | 'sm' | 'base' | 'lg';
 	className?: string;
-	iconClasses?: string;
 	children: React.ReactNode;
 }) => {
 	return (
-		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.card, className)}>
-			<Icon className={clsx(styles.icon, iconClasses)} />
+		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}>
 			{children}
-		</LocalizedLink>
+		</div>
 	);
 };
 
-export default CardLink;
+export default Card;

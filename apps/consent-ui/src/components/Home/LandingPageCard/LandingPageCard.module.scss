@@ -1,0 +1,60 @@
+.landing-page-card {
+	@media (min-width: theme('screens.md')) {
+		max-width: 45rem;
+	}
+
+	strong {
+		color: theme('colors.secondary.500');
+		text-decoration-line: underline;
+		transition: color 200ms;
+
+		&:hover {
+			color: theme('colors.secondary.400');
+		}
+	}
+
+	.icon {
+		color: theme('colors.secondary.500');
+	}
+
+	.mobile {
+		@media (min-width: theme('screens.sm')) {
+			display: none;
+		}
+
+		border: 0.5px solid theme('colors.secondary.500');
+		padding: theme('padding.sm');
+
+		.arrow {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.doctorIcon,
+		.patientIcon {
+			width: 3rem;
+		}
+	}
+
+	.tablet {
+		display: none;
+
+		@media (min-width: theme('screens.sm')) {
+			display: flex;
+		}
+
+		.doctorIcon {
+			width: 8.5rem;
+			height: 4rem;
+		}
+
+		.patientIcon {
+			width: 10rem;
+			height: 4rem;
+		}
+
+		.chevron {
+			width: 3rem;
+		}
+	}
+}

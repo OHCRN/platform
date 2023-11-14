@@ -16,74 +16,60 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import clsx from 'clsx';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import PatientIcon from 'src/components/Icons/Family';
 import DoctorIcon from 'src/components/Icons/Doctor';
 import RightArrow from 'src/components/Icons/Arrow';
 import Chevron from 'src/components/Icons/Chevron';
+import Card from 'src/components/Card';
+import CardLink from 'src/components/Card/CardLink';
 
-import styles from './Card.module.scss';
-import CardLink from './CardLink';
+import styles from './LandingPageCard.module.scss';
 
-const Card = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 	return (
-		<div className={styles.card}>
+		<Card dropShadow="none" className={styles['landing-page-card']}>
 			<h2>{translate('landing-page', 'join-ohcrn')}</h2>
 			<p>
 				<b>{translate('landing-page', 'join-ohcrn-description')}</b>
 			</p>
+
 			{/* mobile view */}
-			<CardLink
-				name={'register'}
-				currentLang={currentLang}
-				Icon={PatientIcon}
-				className={styles.mobileCardBtn}
-				iconClasses={styles.patientIcon}
-			>
+			<CardLink name={'register'} currentLang={currentLang} className={styles.mobile}>
+				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
 				<strong>{translate('landing-page', 'participants-register-today')}</strong>
-				<RightArrow className={styles.arrow} />
+				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
-			<CardLink
-				name={'invite'}
-				currentLang={currentLang}
-				Icon={DoctorIcon}
-				className={styles.mobileCardBtn}
-				iconClasses={styles.doctorIcon}
-			>
+
+			<CardLink name={'invite'} currentLang={currentLang} className={styles.mobile}>
+				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
 				<strong>{translate('landing-page', 'clinicians-register-today')}</strong>
-				<RightArrow className={styles.arrow} />
+				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
+
 			{/* tablet/desktop view */}
-			<CardLink
-				name={'register'}
-				currentLang={currentLang}
-				Icon={PatientIcon}
-				className={styles.tabletCardBtn}
-				iconClasses={styles.patientIcon}
-			>
+			<CardLink name={'register'} currentLang={currentLang} className={styles.tablet}>
+				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
 				<span>
 					{translate('landing-page', 'long-participants-register-today')}{' '}
 					<strong>{translate('landing-page', 'register-yourself-today')}</strong>
 				</span>
-				<Chevron className={styles.chevron} />
+				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>
-			<CardLink
-				name={'invite'}
-				currentLang={currentLang}
-				Icon={DoctorIcon}
-				className={styles.tabletCardBtn}
-				iconClasses={styles.doctorIcon}
-			>
+
+			<CardLink name={'invite'} currentLang={currentLang} className={styles.tablet}>
+				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
 				<span>
 					{translate('landing-page', 'long-clinicians-register-today')}{' '}
 					<strong>{translate('landing-page', 'register-patient-today')}</strong>
 				</span>
-				<Chevron className={styles.chevron} />
+				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>
-		</div>
+		</Card>
 	);
 };
 
-export default Card;
+export default LandingPageCard;

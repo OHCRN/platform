@@ -17,41 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Image from 'next/image';
+import clsx from 'clsx';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import LinkButton from 'src/components/Button/LinkButton';
-import BackgroundImage from 'src/public/landing-page.jpg';
-import { OHCRN_HOME_LINK } from 'src/constants';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
+import { RouteName } from 'src/components/Link/types';
+import { ValidLanguage } from 'src/i18n';
 
-import LandingPageCard from './LandingPageCard';
-import styles from './Home.module.scss';
+import styles from './CardLink.module.scss';
 
-const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+const CardLink = async ({
+	name,
+	currentLang,
+	className,
+	children,
+}: {
+	name: RouteName;
+	currentLang: ValidLanguage;
+	className?: string;
+	children: React.ReactNode;
+}) => {
 	return (
-		<div className={styles.heroContainer}>
-			<div className={styles.backgroundImg}>
-				<Image
-					src={BackgroundImage}
-					alt={translate('landing-page', 'hero-background-img-alt')}
-					priority
-				/>
-			</div>
-			<div className={styles.hero}>
-				<div className={styles.heroText}>
-					<h1>{translate('landing-page', 'title')}</h1>
-					<p>
-						<b>{translate('landing-page', 'ohcrn-description')}</b>
-					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
-						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
-					</LinkButton>
-				</div>
-				<LandingPageCard currentLang={currentLang} />
-			</div>
-		</div>
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
+			{children}
+		</LocalizedLink>
 	);
 };
 
-export default HomeComponent;
+export default CardLink;
