@@ -23,6 +23,7 @@ import InformedConsentRouter from './informedConsent.js';
 import ConsentReleaseDataRouter from './consentReleaseData.js';
 import ConsentResearchParticipationRouter from './consentResearchParticipation.js';
 import ConsentRecontactRouter from './consentRecontact.js';
+import ConsentReviewSignRouter from './consentReviewSign.js';
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use('/informed-consent', InformedConsentRouter);
 router.use('/consent-to-release-data', ConsentReleaseDataRouter);
 router.use('/consent-for-research-participation', ConsentResearchParticipationRouter);
 router.use('/consent-for-recontact', ConsentRecontactRouter);
+router.use('/review-sign', ConsentReviewSignRouter);
 
 export default router;
