@@ -27,28 +27,65 @@ import { PhoneNumber } from './PhoneNumber.js';
 
 const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
 
-export const ConsentRecontactBase = z
-	.object({
-		[RECONTACT__FUTURE_RESEARCH]: z.boolean(),
-		[RECONTACT__SECONDARY_CONTACT]: z.boolean(),
-		secondaryContactFirstName: Name.optional(),
-		secondaryContactLastName: Name.optional(),
-		secondaryContactPhoneNumber: PhoneNumber.optional(),
-	})
-	.refine((input) => {
-		const requireSecondaryContactInfo = input[RECONTACT__SECONDARY_CONTACT] === true;
-		const allSecondaryContactInfoDefined =
-			input.secondaryContactFirstName !== undefined &&
-			input.secondaryContactLastName !== undefined &&
-			input.secondaryContactPhoneNumber !== undefined;
-		return requireSecondaryContactInfo ? allSecondaryContactInfoDefined : true;
-	});
+export const ConsentRecontactBase = z.object({
+	[RECONTACT__FUTURE_RESEARCH]: z.boolean(),
+	[RECONTACT__SECONDARY_CONTACT]: z.boolean(),
+	secondaryContactFirstName: Name.optional(),
+	secondaryContactLastName: Name.optional(),
+	secondaryContactPhoneNumber: PhoneNumber.optional(),
+});
 
-export const ConsentRecontactRequest = ConsentRecontactBase;
+export const hasRequiredSecondaryContactInfo = ({
+	requireSecondaryContactInfo,
+	secondaryContactFirstName,
+	secondaryContactLastName,
+	secondaryContactPhoneNumber,
+}: {
+	requireSecondaryContactInfo: boolean;
+	secondaryContactFirstName?: string;
+	secondaryContactLastName?: string;
+	secondaryContactPhoneNumber?: string;
+}) => {
+	const allSecondaryContactInfoDefined =
+		secondaryContactFirstName !== undefined &&
+		secondaryContactLastName !== undefined &&
+		secondaryContactPhoneNumber !== undefined;
+	return requireSecondaryContactInfo ? allSecondaryContactInfoDefined : true;
+};
+
+export const ConsentRecontactRequest = ConsentRecontactBase.refine((input) => {
+	const {
+		RECONTACT__SECONDARY_CONTACT,
+		secondaryContactFirstName,
+		secondaryContactLastName,
+		secondaryContactPhoneNumber,
+	} = input;
+
+	return hasRequiredSecondaryContactInfo({
+		requireSecondaryContactInfo: RECONTACT__SECONDARY_CONTACT,
+		secondaryContactFirstName,
+		secondaryContactLastName,
+		secondaryContactPhoneNumber,
+	});
+});
 export type ConsentRecontactRequest = z.infer<typeof ConsentRecontactRequest>;
 export const ConsentRecontactRequestSchema: SchemaObject = generateSchema(ConsentRecontactRequest);
 
-export const ConsentRecontactResponse = ConsentRecontactBase;
+export const ConsentRecontactResponse = ConsentRecontactBase.refine((input) => {
+	const {
+		RECONTACT__SECONDARY_CONTACT,
+		secondaryContactFirstName,
+		secondaryContactLastName,
+		secondaryContactPhoneNumber,
+	} = input;
+
+	return hasRequiredSecondaryContactInfo({
+		requireSecondaryContactInfo: RECONTACT__SECONDARY_CONTACT,
+		secondaryContactFirstName,
+		secondaryContactLastName,
+		secondaryContactPhoneNumber,
+	});
+});
 export type ConsentRecontactResponse = z.infer<typeof ConsentRecontactResponse>;
 export const ConsentRecontactResponseSchema: SchemaObject =
 	generateSchema(ConsentRecontactResponse);

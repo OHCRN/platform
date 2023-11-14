@@ -6,7 +6,7 @@
  * GNU Affero General Public License along with this program.
  *  If not, see <http://www.gnu.org/licenses/>.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
  * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -18,108 +18,55 @@
  */
 
 import { Router } from 'express';
-import { ConsentWizardProgress } from 'types/entities';
 
 import logger from '../logger.js';
 
-import StepsRouter from './steps.js';
-
-/**
- * @openapi
- * tags:
- *   - name: Consent Wizard
- *     description: Consent wizard steps and status
- */
-
 const router = Router();
 
-router.use('/steps', StepsRouter);
-
 /**
  * @openapi
- * /wizard/pdf:
+ * /wizard/steps/review-sign:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Consent Summary
- *     description: Retrieve a generated PDF summary of user's consent if consented
+ *     name: Retrieve Review & Sign
+ *     description: Participant's latest response for Consent Wizard - Review & Sign
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message: string
+ *               $ref: '#/components/schemas/ConsentReviewSignResponse'
+ *       401:
+ *         description: Unauthorized. Authorization information is missing or invalid.
+ *       403:
+ *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
  *       500:
  *         description: Server error
  */
-router.get('/pdf', async (req, res) => {
-	logger.info(`GET /wizard/pdf`);
-	// TODO: implement and update JSDocs responses schema
-	res.status(200).send({ message: 'Success' });
+router.get('/', async (req, res) => {
+	// TODO: implement when auth layer is ready
+	try {
+		// TODO: retrieve user data
+		const data = {};
+		res.status(200).send(data);
+	} catch (error) {
+		logger.error(error);
+		res.status(500).send({ message: 'Server error' });
+	}
 });
 
 /**
  * @openapi
- * /wizard/progress:
- *   get:
- *     tags:
- *       - Consent Wizard
- *     name: Consent Wizard Progress
- *     description: Get status of user's progress in consent wizard
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   $ref: '#/components/schemas/ConsentWizardProgress'
- *       500:
- *         description: Server error
- */
-router.get('/progress', async (req, res) => {
-	logger.info(`GET /wizard/progress`);
-	// TODO: implement
-	const status: ConsentWizardProgress = {
-		INFORMED_CONSENT: 'COMPLETE',
-		CONSENT_RELEASE_DATA: 'COMPLETE',
-		CONSENT_RESEARCH_PARTICIPATION: 'COMPLETE',
-		CONSENT_RECONTACT: 'COMPLETE',
-		CONSENT_REVIEW_SIGN: 'COMPLETE',
-	};
-	res.status(200).send({ status });
-});
-
-/**
- * @openapi
- * /wizard/signatures:
+ * /wizard/steps/review-sign:
  *   post:
  *     tags:
  *       - Consent Wizard
- *     name: Submit signature
+ *     name: Submit Review & Sign
+ *     description: Form submission for Consent Wizard - Review & Sign
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -139,10 +86,10 @@ router.get('/progress', async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.post('/signatures', async (req, res) => {
+router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
-		// TODO: map out request body and processing - TBD here https://github.com/OHCRN/platform/issues/155
+		// TODO: verify participant data and update lifecycleState to CONSENTED
 		res.status(201).send({ message: 'Success!' });
 	} catch (error) {
 		logger.error(error);

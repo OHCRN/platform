@@ -31,6 +31,7 @@ import {
 	ConsentResearchParticipationResponseSchema as ConsentResearchParticipationResponse,
 	ConsentRecontactRequestSchema as ConsentRecontactRequest,
 	ConsentRecontactResponseSchema as ConsentRecontactResponse,
+	ConsentReviewSignResponseSchema as ConsentReviewSignResponse,
 	UserSchema as User,
 } from 'types/entities';
 
@@ -87,6 +88,7 @@ const options = swaggerJsdoc({
 				ConsentResearchParticipationResponse,
 				ConsentRecontactRequest,
 				ConsentRecontactResponse,
+				ConsentReviewSignResponse,
 				User,
 			},
 		},
