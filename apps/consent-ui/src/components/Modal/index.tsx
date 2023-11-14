@@ -17,31 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
-import Container from 'src/components/Container';
-import Header from 'src/components/Header';
-import Footer from 'src/components/Footer';
+'use client';
 
-import ModalProvider from '../Modal';
+import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
 
-import styles from './PageLayout.module.scss';
+import { ModalConfig, ModalContext, defaultModalContext } from './types';
 
-const PageLayout = async ({
-	children,
-	currentLang,
-}: {
-	children: React.ReactNode;
-	currentLang: ValidLanguage;
-}) => {
+const ModalContext = createContext<ModalContext>(defaultModalContext);
+
+const ModalProvider = ({ children }: { children: ReactNode }) => {
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [config, setConfig] = useState<ModalConfig>({});
+
+	const value = useMemo(
+		() => ({
+			isOpen,
+			setIsOpen,
+			config,
+			setConfig,
+		}),
+		[isOpen, setIsOpen, config, setConfig],
+	);
+
 	return (
-		<ModalProvider>
-			<Container>
-				<Header currentLang={currentLang} />
-				<main className={styles.main}>{children}</main>
-				<Footer currentLang={currentLang} />
-			</Container>
-		</ModalProvider>
+		<ModalContext.Provider value={value}>
+			{isOpen && <div>Modal</div>}
+			{children}
+		</ModalContext.Provider>
 	);
 };
 
-export default PageLayout;
+export const useModal = () => {
+	return useContext(ModalContext);
+};
+
+export default ModalProvider;

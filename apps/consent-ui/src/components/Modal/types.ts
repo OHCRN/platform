@@ -17,31 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
-import Container from 'src/components/Container';
-import Header from 'src/components/Header';
-import Footer from 'src/components/Footer';
+import Button from '../Button';
+import LinkButton from '../Button/LinkButton';
 
-import ModalProvider from '../Modal';
-
-import styles from './PageLayout.module.scss';
-
-const PageLayout = async ({
-	children,
-	currentLang,
-}: {
-	children: React.ReactNode;
-	currentLang: ValidLanguage;
-}) => {
-	return (
-		<ModalProvider>
-			<Container>
-				<Header currentLang={currentLang} />
-				<main className={styles.main}>{children}</main>
-				<Footer currentLang={currentLang} />
-			</Container>
-		</ModalProvider>
-	);
+export type ModalConfig = {
+	title?: React.ReactNode;
+	actionButtonText?: React.ReactNode;
+	actionDisabled?: boolean;
+	cancelButtonText?: React.ReactNode;
+	cancelDisabled?: boolean;
+	onActionClick?: React.ComponentProps<typeof Button>['onClick'];
+	actionLink?: React.ComponentProps<typeof LinkButton>['href'];
+	onCancelClick?: React.ComponentProps<typeof Button>['onClick'];
+	cancelLink?: React.ComponentProps<typeof LinkButton>['href'];
 };
 
-export default PageLayout;
+export type ModalContext = {
+	isOpen: boolean;
+	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	config: ModalConfig;
+	setConfig: React.Dispatch<React.SetStateAction<ModalConfig>>;
+};
+
+// this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
+// its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
+export const defaultModalContext = {
+	isOpen: false,
+	setIsOpen: () => {},
+	config: {},
+	setConfig: () => {},
+};
