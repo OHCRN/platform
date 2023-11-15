@@ -34,7 +34,9 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 	const fieldsDict: Partial<FormsDictionary> = {
 		'first-name-label': translate('forms', 'first-name-label'),
 		'last-name-label': translate('forms', 'last-name-label'),
-		'phone-label': translate('forms', 'phone-label'),
+		'preferred-name-label': translate('forms', 'preferred-name-label'),
+		// 'phone-label': translate('forms', 'phone-label'),
+		// 'email-label': translate('forms', 'email-label'),
 	};
 
 	const textDict: ClinicianInviteFormTextDictionary = {

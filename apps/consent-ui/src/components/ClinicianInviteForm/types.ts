@@ -21,6 +21,7 @@ import { z } from 'zod';
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
+// import { PhoneNumber } from 'types/entities';
 
 // TODO ClinicianInviteFormDictionary shouldn't be partial in final version
 export type ClinicianInviteFormTextDictionary = Partial<
@@ -32,8 +33,8 @@ const TEMP_FIELD_NAMES = [
 	'participantFirstName',
 	'participantLastName',
 	'participantPreferredName',
-	'participantPhoneNumber',
-	'participantEmailAddress',
+	// 'participantPhoneNumber',
+	// 'participantEmailAddress',
 ] as const;
 
 export const TempFieldNames = z.enum(TEMP_FIELD_NAMES);
@@ -42,8 +43,8 @@ export const tempValidationSchema = z.object({
 	[TempFieldNames.enum.participantFirstName]: z.string(),
 	[TempFieldNames.enum.participantLastName]: z.string(),
 	[TempFieldNames.enum.participantPreferredName]: z.string(),
-	[TempFieldNames.enum.participantPhoneNumber]: z.string(),
-	[TempFieldNames.enum.participantEmailAddress]: z.string(),
+	// [TempFieldNames.enum.participantPhoneNumber]: PhoneNumber,
+	// [TempFieldNames.enum.participantEmailAddress]: z.string().email(),
 });
 
 export type TempValidationSchema = z.infer<typeof tempValidationSchema>;

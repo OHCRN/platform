@@ -102,8 +102,8 @@ const ClinicianInviteFormEl = ({
 				register={register}
 				required
 				textInputType="TEL" // TODO use enum
-			/> */}
-			{/* <TextFieldSet
+			/>
+			<TextFieldSet
 				error={errors.participantEmailAddress?.type}
 				label={fieldsDict['email-label'] || ''}
 				name={TempFieldNames.enum.participantEmailAddress}
