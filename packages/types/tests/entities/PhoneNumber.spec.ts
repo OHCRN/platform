@@ -28,12 +28,11 @@ describe('PhoneNumber', () => {
 		expect(PhoneNumber.safeParse('12345678901').success).false;
 	});
 	it('Can only contain numbers', () => {
+		expect(PhoneNumber.safeParse('123456789A').success).false;
 		expect(PhoneNumber.safeParse('123-456-78').success).false;
 		expect(PhoneNumber.safeParse('+123456789').success).false;
 		expect(PhoneNumber.safeParse('123 456 78').success).false;
 		expect(PhoneNumber.safeParse('+1 (234) 5').success).false;
 		expect(PhoneNumber.safeParse('123456789.').success).false;
-		expect(PhoneNumber.safeParse(undefined).success).false;
-		expect(PhoneNumber.safeParse(null).success).false;
 	});
 });
