@@ -28,9 +28,9 @@ export type FormTextFieldSetProps<T extends FieldValues> = {
 	error?: string; // TODO harmonize error dictionary & RHF errors
 	label: string;
 	name: Path<T>;
-	register: UseFormRegister<T>; // TODO use register type
+	register: UseFormRegister<T>;
 	required?: boolean;
-	type: FormTextInputType;
+	type?: FormTextInputType;
 };
 
 // field inputs
@@ -59,4 +59,9 @@ export type FormCheckboxRadioInputProps<
 
 export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	options: { label: string; value: V }[];
+};
+
+export type FormSelectOption<T extends string> = {
+	label: string;
+	value: T;
 };

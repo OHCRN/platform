@@ -29,7 +29,7 @@ const TextFieldSet = <T extends FieldValues>({
 	name,
 	register,
 	required = false,
-	type,
+	type = 'text',
 }: FormTextFieldSetProps<T>) => (
 	<FieldSet error={error} label={label} name={name} required={required}>
 		<TextInput name={name} register={register} required={required} type={type} />

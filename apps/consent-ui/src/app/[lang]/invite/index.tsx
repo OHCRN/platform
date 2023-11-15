@@ -19,10 +19,14 @@
 
 import Link from 'next/link';
 import ClinicianInviteFormEl from 'src/components/ClinicianInviteForm';
-import { ClinicianInviteFormTextDictionary } from 'src/components/ClinicianInviteForm/types';
+import {
+	ClinicianInviteFormTextDictionary,
+	ConsentGroupOption,
+} from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 // import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
+import { ConsentGroup } from 'types/entities';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -45,11 +49,26 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		'select-placeholder': translate('forms', 'select-placeholder'),
 	};
 
+	const consentGroupOptions: ConsentGroupOption[] = [
+		ConsentGroup.enum.ADULT_CONSENT,
+		ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+		ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+		ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+		ConsentGroup.enum.YOUNG_ADULT_CONSENT,
+	].map((group) => ({
+		label: translate('consent-group', group),
+		value: group,
+	}));
+
 	return (
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteFormEl fieldsDict={fieldsDict} textDict={textDict} />
+			<ClinicianInviteFormEl
+				consentGroupOptions={consentGroupOptions}
+				fieldsDict={fieldsDict}
+				textDict={textDict}
+			/>
 		</div>
 	);
 };

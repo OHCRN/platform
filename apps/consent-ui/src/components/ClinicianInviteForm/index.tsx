@@ -21,31 +21,38 @@
 
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
+import ReactSelect, { SingleValue } from 'react-select';
 
 import TextFieldSet from '../Form/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
+import FieldSet from '../Form/FieldSet';
 
 import {
 	ClinicianInviteFormTextDictionary,
+	ConsentGroupOption,
 	TempFieldNames,
 	TempValidationSchema,
 	tempValidationSchema,
 } from './types';
 
 const ClinicianInviteFormEl = ({
+	consentGroupOptions,
 	fieldsDict,
 	textDict,
 }: {
+	consentGroupOptions: ConsentGroupOption[];
 	fieldsDict: Partial<FormsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
 	const {
+		control,
+		formState,
 		formState: { errors },
 		handleSubmit,
 		register,
-	} = useReactHookForm<TempValidationSchema>({
+	} = useForm<TempValidationSchema>({
 		resolver: zodResolver(tempValidationSchema),
 	});
 
@@ -84,22 +91,44 @@ const ClinicianInviteFormEl = ({
 				name={TempFieldNames.enum.participantLastName}
 				register={register}
 				required
-				type="text"
 			/>
 			<TextFieldSet
 				error={errors.participantPreferredName?.type}
 				label={fieldsDict['preferred-name-label'] || ''}
 				name={TempFieldNames.enum.participantPreferredName}
 				register={register}
-				type="text"
 			/>
+
+			<Controller
+				name={TempFieldNames.enum.consentGroup}
+				control={control}
+				render={({ field: { onChange, value } }) => (
+					<FieldSet
+						label={fieldsDict['consent-group-label'] || ''}
+						name={TempFieldNames.enum.consentGroup}
+						required
+					>
+						<ReactSelect
+							instanceId={TempFieldNames.enum.consentGroup}
+							onChange={(val: SingleValue<string | ConsentGroupOption>) =>
+								onChange(typeof val === 'string' ? val : val?.value || null)
+							}
+							options={consentGroupOptions}
+							placeholder={textDict['select-placeholder']}
+							value={consentGroupOptions.find((option) => option.value === value) || ''}
+						/>
+					</FieldSet>
+				)}
+				rules={{ required: true }}
+			/>
+
 			<TextFieldSet
 				error={errors.participantPhoneNumber?.type}
 				label={fieldsDict['phone-label'] || ''}
 				name={TempFieldNames.enum.participantPhoneNumber}
 				register={register}
 				required
-				type="text"
+				type="tel"
 			/>
 			<TextFieldSet
 				error={errors.participantEmailAddress?.type}
@@ -107,7 +136,7 @@ const ClinicianInviteFormEl = ({
 				name={TempFieldNames.enum.participantEmailAddress}
 				register={register}
 				required
-				type="text"
+				type="email"
 			/>
 
 			<button type="submit" onClick={handleSubmit(onSubmit)}>

@@ -21,12 +21,17 @@ import { z } from 'zod';
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { PhoneNumber } from 'types/entities';
+import { ConsentGroup, PhoneNumber } from 'types/entities';
+import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
+
+import { FormSelectOption } from '../Form/types';
 
 // TODO ClinicianInviteFormDictionary shouldn't be partial in final version
 export type ClinicianInviteFormTextDictionary = Partial<
 	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
 >;
+
+export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
 
 // TEMP submit doesn't work if there's fields missing
 // so work with a reduced schema
@@ -36,6 +41,7 @@ const TEMP_FIELD_NAMES = [
 	'participantPreferredName',
 	'participantPhoneNumber',
 	'participantEmailAddress',
+	'consentGroup',
 ] as const;
 
 export const TempFieldNames = z.enum(TEMP_FIELD_NAMES);
@@ -46,6 +52,7 @@ export const tempValidationSchema = z.object({
 	[TempFieldNames.enum.participantPreferredName]: z.string().optional(),
 	[TempFieldNames.enum.participantPhoneNumber]: PhoneNumber,
 	[TempFieldNames.enum.participantEmailAddress]: z.string().email(),
+	[TempFieldNames.enum.consentGroup]: ConsentGroup,
 });
 
 export type TempValidationSchema = z.infer<typeof tempValidationSchema>;

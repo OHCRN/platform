@@ -32,7 +32,7 @@ const FieldSet = ({
 	error?: string;
 	label: string;
 	name: string;
-	required: boolean;
+	required?: boolean;
 }) => {
 	return (
 		<fieldset>
