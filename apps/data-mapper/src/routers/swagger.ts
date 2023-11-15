@@ -22,7 +22,7 @@ import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ClinicianInviteRequestSchema as ClinicianInviteRequest,
-	ClinicianInviteSchema as ClinicianInvite,
+	ClinicianInviteResponseSchema as ClinicianInviteResponse,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -67,7 +67,7 @@ const options = swaggerJsdoc({
 		},
 		components: {
 			schemas: {
-				ClinicianInvite,
+				ClinicianInviteResponse,
 				ClinicianInviteRequest,
 			},
 		},

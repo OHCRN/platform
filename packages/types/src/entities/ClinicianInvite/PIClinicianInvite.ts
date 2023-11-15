@@ -19,10 +19,11 @@
 
 import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
+import { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ClinicianInviteBase } from './base.js';
+import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-export const piClinicianInvite = ClinicianInviteBase.pick({
+export const PIClinicianInviteRequest = ClinicianInviteBase.pick({
 	participantFirstName: true,
 	participantLastName: true,
 	participantEmailAddress: true,
@@ -34,5 +35,23 @@ export const piClinicianInvite = ClinicianInviteBase.pick({
 	guardianRelationship: true,
 });
 
-export type piClinicianInvite = z.infer<typeof piClinicianInvite>;
-export const piClinicianInviteSchema = generateSchema(piClinicianInvite);
+export type PIClinicianInviteRequest = z.infer<typeof PIClinicianInviteRequest>;
+export const PIClinicianInviteRequestSchema: SchemaObject =
+	generateSchema(PIClinicianInviteRequest);
+
+export const PIClinicianInviteResponse = ClinicianInviteBase.pick({
+	id: true,
+	participantFirstName: true,
+	participantLastName: true,
+	participantEmailAddress: true,
+	participantPhoneNumber: true,
+	participantPreferredName: true,
+	guardianName: true,
+	guardianPhoneNumber: true,
+	guardianEmailAddress: true,
+	guardianRelationship: true,
+});
+
+export type PIClinicianInviteResponse = z.infer<typeof PIClinicianInviteResponse>;
+export const PIClinicianInviteResponseSchema: SchemaObject =
+	generateSchema(PIClinicianInviteResponse);

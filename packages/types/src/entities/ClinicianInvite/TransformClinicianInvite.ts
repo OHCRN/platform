@@ -19,15 +19,21 @@
 
 import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
+import { SchemaObject } from 'openapi3-ts/oas31';
 
 import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
 
-import { ClinicianInviteBase } from './base.js';
+import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-export const ClinicianInviteRequest = ClinicianInviteBase.omit({
-	id: true,
-	inviteSentDate: true,
-}).refine((input) => {
+export const TransformClinicianInvite = ClinicianInviteBase.transform((input) => ({
+	...input,
+	inviteAcceptedDate: input.inviteAcceptedDate ?? undefined,
+	participantPreferredName: input.participantPreferredName ?? undefined,
+	guardianName: input.guardianName ?? undefined,
+	guardianPhoneNumber: input.guardianPhoneNumber ?? undefined,
+	guardianEmailAddress: input.guardianEmailAddress ?? undefined,
+	guardianRelationship: input.guardianRelationship ?? undefined,
+})).refine((input) => {
 	const {
 		consentGroup,
 		guardianName,
@@ -44,5 +50,6 @@ export const ClinicianInviteRequest = ClinicianInviteBase.omit({
 	);
 });
 
-export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;
-export const ClinicianInviteRequestSchema = generateSchema(ClinicianInviteRequest);
+export type TransformClinicianInvite = z.infer<typeof TransformClinicianInvite>;
+export const TransformClinicianInviteSchema: SchemaObject =
+	generateSchema(TransformClinicianInvite);

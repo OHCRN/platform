@@ -52,7 +52,7 @@ const router = Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ClinicianInvite'
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
  *       400:
  *         description: Bad Request
  *       500:

@@ -18,12 +18,11 @@
  */
 
 import urlJoin from 'url-join';
-import { consentClinicianInvite } from 'types/entities';
+import { ConsentClinicianInviteRequest, ConsentClinicianInviteResponse } from 'types/entities';
 
 import { getAppConfig } from '../../config.js';
 import logger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { ClinicianInvite } from '../../../../consent-das/src/prismaClient.js';
 
 export const createInviteConsentData = async ({
 	id,
@@ -35,7 +34,7 @@ export const createInviteConsentData = async ({
 	clinicianTitleOrRole,
 	consentGroup,
 	consentToBeContacted,
-}: consentClinicianInvite): Promise<ClinicianInvite> => {
+}: ConsentClinicianInviteRequest): Promise<ConsentClinicianInviteResponse> => {
 	const { consentDasUrl } = getAppConfig();
 	try {
 		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), {

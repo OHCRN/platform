@@ -17,34 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-
-import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
-
-import { ClinicianInviteBase } from './base.js';
-
-export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
-
-export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
-export const ClinicianInviteSchema = generateSchema(ClinicianInvite);
-
-export * from './consentApi.js';
-export * from './consentDas.js';
-export * from './dataMapper.js';
-export * from './piDas.js';
+export * from './ClinicianInvite.js';
+export * from './ConsentClinicianInvite.js';
+export * from './TransformClinicianInvite.js';
+export * from './PIClinicianInvite.js';
