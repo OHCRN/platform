@@ -30,6 +30,7 @@ import consentReviewSignDictionary from './consent-review-sign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
 import formsDictionary from './forms';
+import formLabelsDictionary from './form-labels';
 import formErrorsDictionary from './form-errors';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './genetics-clinic';
@@ -55,8 +56,9 @@ const dictionaries = {
 	'consent-review-sign': consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
-	'form-errors': formErrorsDictionary,
 	forms: formsDictionary,
+	'form-errors': formErrorsDictionary,
+	'form-labels': formLabelsDictionary,
 	gender: genderDictionary,
 	'genetics-clinic': geneticsClinicDictionary,
 	header: headerDictionary,

@@ -23,15 +23,20 @@ const dictionary = {
 	'main-description': 'Invite your patients to participate in the OHCRN registry.',
 	'patient-information': 'Patient Information',
 	'consent-group-tooltip': 'This will determine if a guardian must be involved with consents.',
-	'phone-tooltip': 'If we contact them, it will be for health updates and consent',
+	'phone-tooltip': 'If we contact them, it will be for health updates and consent.',
 	'email-tooltip': 'The patient will receive an invitation to this account.',
 	'after-registering':
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
-	'consent-contact-title': 'Consent to be Contacted',
-	'consent-contact-label':
+	'consent-contact-description':
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	'clinician-information': 'Clinician Information',
 	'clinician-email-tooltip': 'We require this to confirm your authority to register patients.',
+	'enter-guardian-info': "Please enter the guardian's information below:",
+	'upload-file-description-1':
+		'The participant is part of the "Guardian Consent of a Minor (including Assent)" group. Please ',
+	'upload-file-link': 'download a copy of the assent form',
+	'upload-file-description-2':
+		' and have your participant (who is a minor) read and sign the assent form. Use the upload button below to submit a completed assent form signed by the minor.',
 } satisfies Record<string, string>;
 
 export type ClinicianInviteFormDictionary = Record<keyof typeof dictionary, string>;

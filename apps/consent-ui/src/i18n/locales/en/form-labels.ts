@@ -18,10 +18,24 @@
  */
 
 const dictionary = {
-	'indicates-required-field': 'indicates required field',
-	'select-placeholder': 'Select an option...',
+	'clinician-first-name': 'Clinician First Name',
+	'clinician-institutional-email-address': 'Clinician Institutional Email Address',
+	'clinician-last-name': 'Clinician Last Name',
+	'clinician-role': 'Clinician Role',
+	'clinician-title': 'Clinician Title',
+	'consent-contact': 'Consent to be Contacted',
+	'consent-group': 'Consent Group',
+	'first-name': 'First Name',
+	'guardian-email': "Guardian's Email Address",
+	'guardian-name': "Guardian's Name",
+	'guardian-phone': "Guardian's Phone Number",
+	'guardian-relationship': "Guardian's Relationship to Participant",
+	'last-name': 'Last Name',
+	'preferred-name': 'Preferred Name',
+	email: 'Email Address',
+	phone: 'Phone Number',
 } satisfies Record<string, string>;
 
-export type FormsDictionary = Record<keyof typeof dictionary, string>;
+export type FormLabelsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

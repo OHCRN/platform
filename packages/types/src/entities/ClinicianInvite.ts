@@ -31,7 +31,7 @@ export const ClinicianInviteBase = z.object({
 	clinicianFirstName: Name,
 	clinicianLastName: Name,
 	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianTitleOrRole: z.string(),
+	clinicianTitleOrRole: z.string().min(1),
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantEmailAddress: z.string().email(),

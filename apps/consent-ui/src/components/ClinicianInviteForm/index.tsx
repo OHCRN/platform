@@ -19,11 +19,13 @@
 
 'use client';
 
+import { useEffect } from 'react';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import ReactSelect, { SingleValue } from 'react-select';
+import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
+import Select, { SingleValue } from 'react-select';
+import { ConsentGroup } from 'types/entities';
 
 import TextFieldSet from '../Form/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
@@ -37,13 +39,25 @@ import {
 	tempValidationSchema,
 } from './types';
 
+const consentGroupsRequiringGuardian: ConsentGroup[] = [
+	'GUARDIAN_CONSENT_OF_MINOR',
+	'GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT',
+];
+
+const guardianInfoFields: TempFieldNames[] = [
+	'guardianName',
+	'guardianPhoneNumber',
+	'guardianEmailAddress',
+	'guardianRelationship',
+];
+
 const ClinicianInviteFormEl = ({
 	consentGroupOptions,
-	fieldsDict,
+	labelsDict,
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
-	fieldsDict: Partial<FormsDictionary>;
+	labelsDict: Partial<FormLabelsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
 	const {
@@ -51,6 +65,8 @@ const ClinicianInviteFormEl = ({
 		formState: { errors },
 		handleSubmit,
 		register,
+		unregister,
+		watch,
 	} = useForm<TempValidationSchema>({
 		resolver: zodResolver(tempValidationSchema),
 	});
@@ -63,6 +79,20 @@ const ClinicianInviteFormEl = ({
 			console.log(e);
 		}
 	};
+
+	// watch consentGroup value & show/hide guardian info fields if participant is a minor
+	const watchConsentGroup = watch(TempFieldNames.enum.consentGroup);
+	useEffect(() => {
+		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
+			guardianInfoFields.forEach((field) => {
+				register(field);
+			});
+		} else {
+			guardianInfoFields.forEach((field) => {
+				unregister(field);
+			});
+		}
+	}, [register, unregister, watchConsentGroup]);
 
 	// NOTE doesn't work. uncomment to see TS error
 	// const translateError: string = (error?: any) => {
@@ -78,21 +108,21 @@ const ClinicianInviteFormEl = ({
 			</p>
 			<TextFieldSet
 				error={errors.participantFirstName?.type}
-				label={fieldsDict['first-name-label'] || ''}
+				label={labelsDict['first-name'] || ''}
 				name={TempFieldNames.enum.participantFirstName}
 				register={register}
 				required
 			/>
 			<TextFieldSet
 				error={errors.participantLastName?.type}
-				label={fieldsDict['last-name-label'] || ''}
+				label={labelsDict['last-name'] || ''}
 				name={TempFieldNames.enum.participantLastName}
 				register={register}
 				required
 			/>
 			<TextFieldSet
 				error={errors.participantPreferredName?.type}
-				label={fieldsDict['preferred-name-label'] || ''}
+				label={labelsDict['preferred-name'] || ''}
 				name={TempFieldNames.enum.participantPreferredName}
 				register={register}
 			/>
@@ -103,11 +133,11 @@ const ClinicianInviteFormEl = ({
 				render={({ field: { onChange, value } }) => (
 					<FieldSet
 						error={errors.participantPhoneNumber?.type}
-						label={fieldsDict['consent-group-label'] || ''}
+						label={labelsDict['consent-group'] || ''}
 						name={TempFieldNames.enum.consentGroup}
 						required
 					>
-						<ReactSelect
+						<Select
 							instanceId={TempFieldNames.enum.consentGroup}
 							onChange={(val: SingleValue<string | ConsentGroupOption>) =>
 								onChange(typeof val === 'string' ? val : val?.value || null)
@@ -124,7 +154,7 @@ const ClinicianInviteFormEl = ({
 
 			<TextFieldSet
 				error={errors.participantPhoneNumber?.type}
-				label={fieldsDict['phone-label'] || ''}
+				label={labelsDict['phone'] || ''}
 				name={TempFieldNames.enum.participantPhoneNumber}
 				register={register}
 				required
@@ -132,7 +162,7 @@ const ClinicianInviteFormEl = ({
 			/>
 			<TextFieldSet
 				error={errors.participantEmailAddress?.type}
-				label={fieldsDict['email-label'] || ''}
+				label={labelsDict['email'] || ''}
 				name={TempFieldNames.enum.participantEmailAddress}
 				register={register}
 				required

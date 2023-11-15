@@ -31,6 +31,7 @@ import consentReviewSignDictionary from 'src/i18n/locales/fr/consent-review-sign
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
 import footerDictionary from 'src/i18n/locales/fr/footer';
 import formsDictionary from 'src/i18n/locales/fr/forms';
+import formLabelsDictionary from 'src/i18n/locales/fr/form-labels';
 import formErrorsDictionary from 'src/i18n/locales/fr/form-errors';
 import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/genetics-clinic';
@@ -56,8 +57,9 @@ const dictionaries = {
 	'consent-review-sign': consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
-	'form-errors': formErrorsDictionary,
 	forms: formsDictionary,
+	'form-errors': formErrorsDictionary,
+	'form-labels': formLabelsDictionary,
 	gender: genderDictionary,
 	'genetics-clinic': geneticsClinicDictionary,
 	header: headerDictionary,

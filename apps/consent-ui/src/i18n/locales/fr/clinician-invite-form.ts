@@ -25,16 +25,24 @@ const dictionary = {
 	'consent-group-tooltip':
 		'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
 	'phone-tooltip':
-		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement',
+		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
 	'email-tooltip': 'Le patient recevra une invitation sur ce compte.',
 	'after-registering':
 		"Après votre inscription, nous devrons collecter certains consentements et données importants. Votre patient aura accès à la mise à jour de son dossier, mais s'il a besoin d'aide, nous pouvons le contacter.",
+	'consent-contact-description':
+		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
 	'consent-contact-title': 'Consentement à être contacté',
 	'consent-contact-label':
 		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
 	'clinician-information': 'Informations sur le clinicien',
 	'clinician-email-tooltip':
 		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
+	'enter-guardian-info': 'Veuillez saisir les informations du tuteur ci-dessous :',
+	'upload-file-description-1':
+		"Le participant fait partie du groupe « Consentement du tuteur d'un mineur (y compris assentiment) ». Veuillez",
+	'upload-file-link': "télécharger une copie du formulaire d'accord",
+	'upload-file-description-2':
+		"et demandez à votre participant (qui est mineur) de lire et de signer le formulaire d'assentiment. Utilisez le bouton de téléchargement ci-dessous pour soumettre un formulaire de consentement complété et signé par le mineur.",
 } satisfies Record<string, string>;
 
 export type ClinicianInviteFormDictionary = Record<keyof typeof dictionary, string>;

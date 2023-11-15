@@ -25,7 +25,7 @@ import {
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 // import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
+import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import { ConsentGroup } from 'types/entities';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
@@ -35,18 +35,31 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 	// 	required: translate('form-errors', 'required'),
 	// };
 
-	const fieldsDict: Partial<FormsDictionary> = {
-		'first-name-label': translate('forms', 'first-name-label'),
-		'last-name-label': translate('forms', 'last-name-label'),
-		'preferred-name-label': translate('forms', 'preferred-name-label'),
-		'phone-label': translate('forms', 'phone-label'),
-		'email-label': translate('forms', 'email-label'),
-		'consent-group-label': translate('forms', 'consent-group-label'),
+	const labelsDict: Partial<FormLabelsDictionary> = {
+		'consent-group': translate('form-labels', 'consent-group'),
+		'first-name': translate('form-labels', 'first-name'),
+		'last-name': translate('form-labels', 'last-name'),
+		'preferred-name': translate('form-labels', 'preferred-name'),
+		email: translate('form-labels', 'email'),
+		phone: translate('form-labels', 'phone'),
+		'clinician-first-name': translate('form-labels', 'clinician-first-name'),
+		'clinician-institutional-email-address': translate(
+			'form-labels',
+			'clinician-institutional-email-address',
+		),
+		'clinician-last-name': translate('form-labels', 'clinician-last-name'),
+		'clinician-role': translate('form-labels', 'clinician-role'),
+		'clinician-title': translate('form-labels', 'clinician-title'),
+		'consent-contact': translate('form-labels', 'consent-contact'),
+		'guardian-email': translate('form-labels', 'guardian-email'),
+		'guardian-name': translate('form-labels', 'guardian-name'),
+		'guardian-phone': translate('form-labels', 'guardian-phone'),
+		'guardian-relationship': translate('form-labels', 'guardian-relationship'),
 	};
 
 	const textDict: ClinicianInviteFormTextDictionary = {
-		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
+		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'select-placeholder': translate('forms', 'select-placeholder'),
 	};
 
@@ -67,7 +80,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 			<ClinicianInviteFormEl
 				consentGroupOptions={consentGroupOptions}
-				fieldsDict={fieldsDict}
+				labelsDict={labelsDict}
 				textDict={textDict}
 			/>
 		</div>
