@@ -18,54 +18,50 @@
  */
 
 import Link from 'next/link';
-import ClinicianInviteForm from 'src/components/ClinicianInviteForm';
-import {
-	ClinicianInviteFormErrorDictionary,
-	ClinicianInviteFormTextDictionary,
-} from 'src/components/ClinicianInviteForm/types';
+import ClinicianInviteFormEl from 'src/components/ClinicianInviteForm';
+import { ClinicianInviteFormTextDictionary } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import {
-	// SelectFormFieldsDictionary,
-	TextFormFieldsDictionary,
-} from 'src/components/Form/types';
+import { TextFormFieldsDictionary } from 'src/components/Form/types';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
 	// translations for form fields.
 	// keys / form field names need to match up with the clinician invite API
-	const textFieldsDict: TextFormFieldsDictionary = {
+	const textFieldsDict: TextFormFieldsDictionary<any> = {
+		// TODO: fix any. not sure how to get a partial type of keys in ClinicianInviteForm
 		participantFirstName: {
 			name: 'participantFirstName',
-			fieldType: 'text',
+			fieldType: 'TEXT', // TODO use fieldType enum
 			textInputType: 'text',
 			label: translate('forms', 'first-name-label'),
 			required: true,
 		},
 		participantLastName: {
 			name: 'participantLastName',
-			fieldType: 'text',
+			fieldType: 'TEXT', // TODO use fieldType enum
 			textInputType: 'text',
 			label: translate('forms', 'last-name-label'),
 			required: true,
 		},
 		participantPreferredName: {
 			name: 'participantPreferredName',
-			fieldType: 'text',
+			fieldType: 'TEXT', // TODO use fieldType enum
 			textInputType: 'text',
 			label: translate('forms', 'preferred-name-label'),
 			required: false,
 		},
 		participantPhoneNumber: {
 			name: 'participantPhoneNumber',
-			fieldType: 'text',
+			fieldType: 'TEXT', // TODO use fieldType enum
 			textInputType: 'tel',
 			label: translate('forms', 'phone-label'),
 			required: true,
 		},
 		participantEmailAddress: {
 			name: 'participantEmailAddress',
-			fieldType: 'text',
+			fieldType: 'TEXT', // TODO use fieldType enum
 			textInputType: 'email',
 			label: translate('forms', 'email-label'),
 			required: true,
@@ -92,7 +88,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		'select-placeholder': translate('forms', 'select-placeholder'),
 	};
 
-	const errorDict: ClinicianInviteFormErrorDictionary = {
+	const errorDict: Partial<FormErrorsDictionary> = {
 		required: translate('form-errors', 'required'),
 	};
 
@@ -100,7 +96,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteForm
+			<ClinicianInviteFormEl
 				errorDict={errorDict}
 				// selectFieldsDict={selectFieldsDict}
 				textDict={textDict}

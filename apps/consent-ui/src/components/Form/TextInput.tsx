@@ -17,17 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { ConsentGroup } from 'types/entities';
+'use client';
 
-export type ConsentGroupOption = {
-	label: string;
-	value: ConsentGroup;
-};
+import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-// TODO ClinicianInviteFormDictionary shouldn't be partial in final version
-export type ClinicianInviteFormTextDictionary = Partial<
-	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
->;
+import { FormTextInputProps } from './types';
+
+const TextInput = <T extends FieldValues>({
+	className,
+	fieldName,
+	register,
+	required,
+	textInputType,
+}: FormTextInputProps<T>) => (
+	<input
+		{...register(fieldName, { required })}
+		aria-required={required}
+		className={clsx('text-input', className)}
+		type={textInputType.toLowerCase()}
+	/>
+);
+
+export default TextInput;

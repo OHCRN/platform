@@ -17,9 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { FormTextInputType } from 'types/entities';
+
 import TextInput from './TextInput';
 import DefaultFieldSet from './DefaultFieldSet';
-import { FormTextInputTypes } from './types';
 
 const TextFieldSet = ({
 	error,
@@ -30,13 +31,13 @@ const TextFieldSet = ({
 	required = false,
 	textInputType,
 }: {
-	error?: string;
-	fieldType: 'text';
+	error?: string; // TODO use form-errors translation keys
+	fieldType: 'TEXT'; // TODO use FormFieldType type/enum
 	label: string;
-	name: string;
-	register: any;
+	name: string; // TODO use <T extends FieldValues>
+	register: any; // TODO use register type
 	required: boolean;
-	textInputType: FormTextInputTypes;
+	textInputType: FormTextInputType;
 }) => (
 	<DefaultFieldSet error={error} label={label} name={name} required={required}>
 		<TextInput

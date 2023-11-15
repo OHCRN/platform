@@ -17,17 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { ConsentGroup } from 'types/entities';
+'use client';
 
-export type ConsentGroupOption = {
-	label: string;
-	value: ConsentGroup;
-};
+import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-// TODO ClinicianInviteFormDictionary shouldn't be partial in final version
-export type ClinicianInviteFormTextDictionary = Partial<
-	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
->;
+import { FormCheckboxRadioProps } from './types';
+
+const CheckboxRadioInput = <T extends FieldValues, V extends string>({
+	className,
+	fieldName,
+	register,
+	required,
+	value,
+	fieldType,
+}: FormCheckboxRadioProps<T, V>) => (
+	<input
+		{...register(fieldName, { required })}
+		className={clsx(`${fieldType.toLowerCase()}-input`, className)}
+		aria-required={required}
+		type={fieldType.toLowerCase()}
+		value={value}
+	/>
+);
+
+export default CheckboxRadioInput;

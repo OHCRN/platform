@@ -17,21 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { z } from 'zod';
 
-import { FieldValues } from 'react-hook-form';
+export const FormFieldType = z.enum([
+	'CHECKBOX',
+	'DATE',
+	'RADIO',
+	'SELECT',
+	'TEXT',
+	'TEXT_WITH_CHECKBOX', // ohip number
+]);
+export type FormFieldType = z.infer<typeof FormFieldType>;
 
-import { FormTextInputProps } from '../types';
-
-const TextInput = <T extends FieldValues>({
-	fieldName,
-	register,
-	required,
-	textInputType,
-}: FormTextInputProps<T>) => (
-	<div>
-		<input {...register(fieldName, { required })} aria-required={required} type={textInputType} />
-	</div>
-);
-
-export default TextInput;
+export const FormTextInputType = z.enum(['EMAIL', 'TEL', 'TEXT']);
+export type FormTextInputType = z.infer<typeof FormTextInputType>;

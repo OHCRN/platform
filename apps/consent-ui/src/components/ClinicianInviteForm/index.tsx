@@ -19,16 +19,11 @@
 
 'use client';
 
-// import { ReactNode } from 'react';
+import axios from 'axios';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-// import Select, { SingleValue } from 'react-select';
-import {
-	useForm as useReactHookForm,
-	SubmitHandler,
-	// Controller
-} from 'react-hook-form';
-// import { PhoneNumber } from 'types/entities';
-import { ClinicianInviteBase, ClinicianInviteForm } from 'types/entities';
+import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 import TextFieldSet from '../Form/TextFieldSet';
 import {
@@ -38,33 +33,46 @@ import {
 } from '../Form/types';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
 
-import { ClinicianInviteFormTextDictionary, ClinicianInviteFormErrorDictionary } from './types';
+import { ClinicianInviteFormTextDictionary } from './types';
+
+// TEMP submit doesn't work if there's fields missing
+const tempValidationSchema = z.object({
+	participantFirstName: z.string(),
+	participantLastName: z.string(),
+	participantPreferredName: z.string(),
+	participantPhoneNumber: z.string(),
+	participantEmailAddress: z.string(),
+});
+
+type TempValidationSchema = z.infer<typeof tempValidationSchema>;
 
 const ClinicianInviteFormEl = ({
-	// checkboxRadioFieldsDict,
-	errorDict,
-	// selectFieldsDict,
 	textDict,
 	textFieldsDict,
 }: {
-	// checkboxRadioFieldsDict: CheckboxRadioFormFieldsDictionary;
-	errorDict: ClinicianInviteFormErrorDictionary;
-	// selectFieldsDict: SelectFormFieldsDictionary;
+	errorDict: Partial<FormErrorsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
-	textFieldsDict: TextFormFieldsDictionary;
+	textFieldsDict: TextFormFieldsDictionary<any>;
+	// TODO: fix any. not sure how to get a partial type of keys in ClinicianInviteForm
 }) => {
 	const {
-		// control,
 		formState: { errors },
 		handleSubmit,
 		register,
-	} = useReactHookForm<ClinicianInviteForm>({
-		resolver: zodResolver(ClinicianInviteBase),
+	} = useReactHookForm<TempValidationSchema>({
+		resolver: zodResolver(tempValidationSchema),
 	});
 
-	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data: any) => console.log('data', data);
+	const onSubmit: SubmitHandler<TempValidationSchema> = (data: any) => {
+		console.log('SUBMIT DATA', data);
+		try {
+			axios.post('http://localhost:8080/invites', { body: data });
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
-	// doesn't work. uncomment to see TS error
+	// NOTE doesn't work. uncomment to see TS error
 	// const translateError: string = (error?: any) => {
 	// 	const errorKey = Object.keys(error)[0];
 	// 	(error && errorDict[errorKey]) || '';
@@ -128,7 +136,9 @@ const ClinicianInviteFormEl = ({
 				register={register}
 				{...textFieldsDict.participantEmailAddress}
 			/>
-			<input type="submit" />
+			<button type="submit" onClick={handleSubmit(onSubmit)}>
+				Submit
+			</button>
 		</form>
 	);
 };
