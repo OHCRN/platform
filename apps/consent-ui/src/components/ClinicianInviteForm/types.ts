@@ -21,7 +21,7 @@ import { z } from 'zod';
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { ConsentGroup, PhoneNumber } from 'types/entities';
+import { ConsentGroup, Name, PhoneNumber } from 'types/entities';
 import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
 
 import { FormSelectOption } from '../Form/types';
@@ -47,9 +47,9 @@ const TEMP_FIELD_NAMES = [
 export const TempFieldNames = z.enum(TEMP_FIELD_NAMES);
 
 export const tempValidationSchema = z.object({
-	[TempFieldNames.enum.participantFirstName]: z.string(),
-	[TempFieldNames.enum.participantLastName]: z.string(),
-	[TempFieldNames.enum.participantPreferredName]: z.string().optional(),
+	[TempFieldNames.enum.participantFirstName]: Name,
+	[TempFieldNames.enum.participantLastName]: Name,
+	[TempFieldNames.enum.participantPreferredName]: Name.optional(),
 	[TempFieldNames.enum.participantPhoneNumber]: PhoneNumber,
 	[TempFieldNames.enum.participantEmailAddress]: z.string().email(),
 	[TempFieldNames.enum.consentGroup]: ConsentGroup,

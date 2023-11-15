@@ -35,6 +35,7 @@ const TextInput = <T extends FieldValues>({
 		{...register(name, { required })}
 		aria-required={required}
 		className={clsx('text-input', className)}
+		id={name}
 		type={type}
 	/>
 );

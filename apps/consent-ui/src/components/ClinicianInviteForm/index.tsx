@@ -48,7 +48,6 @@ const ClinicianInviteFormEl = ({
 }) => {
 	const {
 		control,
-		formState,
 		formState: { errors },
 		handleSubmit,
 		register,
@@ -83,7 +82,6 @@ const ClinicianInviteFormEl = ({
 				name={TempFieldNames.enum.participantFirstName}
 				register={register}
 				required
-				type="text"
 			/>
 			<TextFieldSet
 				error={errors.participantLastName?.type}
