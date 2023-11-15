@@ -27,6 +27,7 @@ export * from './ConsentQuestion.js';
 export * from './ConsentRecontact.js';
 export * from './ConsentReleaseData.js';
 export * from './ConsentResearchParticipation.js';
+export * from './ConsentReviewSign.js';
 export * from './ConsentWizardProgress.js';
 export * from './Error.js';
 export * from './Gender.js';

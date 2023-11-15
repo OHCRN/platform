@@ -17,15 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import clsx from 'clsx';
 
-import { HistoryOfCancer } from '../../src/entities/index.js';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
+import { RouteName } from 'src/components/Link/types';
+import { ValidLanguage } from 'src/i18n';
 
-describe('HistoryOfCancer', () => {
-	it('Must use the HistoryOfCancer enum', () => {
-		expect(HistoryOfCancer.safeParse(HistoryOfCancer.enum.UNKNOWN).success).true;
-		expect(HistoryOfCancer.safeParse('jqvYWdsxjGLssBIHCf6v4').success).false;
-		expect(HistoryOfCancer.safeParse(undefined).success).false;
-		expect(HistoryOfCancer.safeParse(null).success).false;
-	});
-});
+import styles from './CardLink.module.scss';
+
+const CardLink = async ({
+	name,
+	currentLang,
+	className,
+	children,
+}: {
+	name: RouteName;
+	currentLang: ValidLanguage;
+	className?: string;
+	children: React.ReactNode;
+}) => {
+	return (
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
+			{children}
+		</LocalizedLink>
+	);
+};
+
+export default CardLink;

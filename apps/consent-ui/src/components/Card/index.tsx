@@ -17,18 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import clsx from 'clsx';
 
-import { GeneticsClinic } from '../../src/entities/index.js';
+import styles from './Card.module.scss';
 
-describe('GeneticsClinic', () => {
-	it('Must use the GeneticsClinic enum', () => {
-		expect(
-			GeneticsClinic.safeParse(GeneticsClinic.enum.CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA)
-				.success,
-		).true;
-		expect(GeneticsClinic.safeParse('XqhTcsD3eXW9kg3xLv0ly').success).false;
-		expect(GeneticsClinic.safeParse(undefined).success).false;
-		expect(GeneticsClinic.safeParse(null).success).false;
-	});
-});
+const Card = async ({
+	layout = 'column',
+	dropShadow = 'base',
+	className,
+	children,
+}: {
+	layout?: 'column' | 'row';
+	dropShadow?: 'none' | 'sm' | 'base' | 'lg';
+	className?: string;
+	children: React.ReactNode;
+}) => {
+	return (
+		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}>
+			{children}
+		</div>
+	);
+};
+
+export default Card;
