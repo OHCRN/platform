@@ -38,7 +38,7 @@ export const createInviteConsentData = async ({
 	const { consentDasUrl } = getAppConfig();
 	try {
 		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), {
-			id,
+			clinicianInviteId: id,
 			inviteAcceptedDate,
 			inviteAccepted,
 			clinicianFirstName,
