@@ -102,6 +102,7 @@ const ClinicianInviteFormEl = ({
 				control={control}
 				render={({ field: { onChange, value } }) => (
 					<FieldSet
+						error={errors.participantPhoneNumber?.type}
 						label={fieldsDict['consent-group-label'] || ''}
 						name={TempFieldNames.enum.consentGroup}
 						required
@@ -113,6 +114,7 @@ const ClinicianInviteFormEl = ({
 							}
 							options={consentGroupOptions}
 							placeholder={textDict['select-placeholder']}
+							required
 							value={consentGroupOptions.find((option) => option.value === value) || ''}
 						/>
 					</FieldSet>
