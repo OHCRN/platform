@@ -1,5 +1,5 @@
 import urlJoin from 'url-join';
-import { ClinicianInviteRequest, TransformClinicianInvite } from 'types/entities';
+import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
 
 import logger from '../logger.js';
 import { getAppConfig } from '../config.js';
@@ -131,7 +131,7 @@ export const createInvite = async ({
 	clinicianTitleOrRole,
 	consentGroup,
 	consentToBeContacted,
-}: ClinicianInviteRequest): Promise<TransformClinicianInvite> => {
+}: ClinicianInviteRequest): Promise<ClinicianInviteResponse> => {
 	try {
 		const invitePiData = await createInvitePiData({
 			participantFirstName,
@@ -155,8 +155,8 @@ export const createInvite = async ({
 			consentGroup,
 			consentToBeContacted,
 		});
-		// validate Consent and PI data, and transform nulls to undefined
-		return TransformClinicianInvite.parse({
+		// validate Consent and PI data together
+		return ClinicianInviteResponse.parse({
 			...invitePiData,
 			...inviteConsentData,
 		});

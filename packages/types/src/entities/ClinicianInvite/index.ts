@@ -19,5 +19,4 @@
 
 export * from './ClinicianInvite.js';
 export * from './ConsentClinicianInvite.js';
-export * from './TransformClinicianInvite.js';
 export * from './PIClinicianInvite.js';

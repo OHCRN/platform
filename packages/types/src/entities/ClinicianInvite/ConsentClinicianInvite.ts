@@ -51,6 +51,11 @@ export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
 	clinicianTitleOrRole: true,
 	consentGroup: true,
 	consentToBeContacted: true,
+}).extend({
+	inviteAcceptedDate: z.coerce
+		.date()
+		.nullable()
+		.transform((input) => input ?? undefined),
 });
 
 export type ConsentClinicianInviteResponse = z.infer<typeof ConsentClinicianInviteResponse>;

@@ -48,7 +48,8 @@ export const createInviteConsentData = async ({
 			consentGroup,
 			consentToBeContacted,
 		});
-		return result.data.clinicianInvite;
+		// converts all nulls to undefined
+		return ConsentClinicianInviteResponse.parse(result.data.clinicianInvite);
 	} catch (error) {
 		logger.error(error);
 		throw error; // TODO: remove and send custom error schema
