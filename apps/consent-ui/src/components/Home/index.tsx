@@ -36,6 +36,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					src={BackgroundImage}
 					alt={translate('landing-page', 'hero-background-img-alt')}
 					priority
+					placeholder="blur"
 				/>
 			</div>
 			<div className={styles.hero}>
