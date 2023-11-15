@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ClinicianInviteRequest, ZodError } from 'types/entities';
+import { ClinicianInviteRequest, ClinicianInviteResponse, ZodError } from 'types/entities';
 
 import logger from '../logger.js';
 import { createInvite } from '../services/create.js';
@@ -63,7 +63,8 @@ router.post('/', async (req, res) => {
 	try {
 		const data = ClinicianInviteRequest.parse(req.body);
 		const invite = await createInvite(data);
-		res.status(201).send(invite);
+		const validatedInvite = ClinicianInviteResponse.parse(invite);
+		res.status(201).send(validatedInvite);
 	} catch (error) {
 		logger.error(error);
 		if (error instanceof ZodError) {

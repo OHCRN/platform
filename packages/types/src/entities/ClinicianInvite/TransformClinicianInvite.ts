@@ -22,18 +22,26 @@ import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 
 import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
+import { Name } from '../Name.js';
+import { PhoneNumber } from '../PhoneNumber.js';
 
 import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-export const TransformClinicianInvite = ClinicianInviteBase.transform((input) => ({
-	...input,
-	inviteAcceptedDate: input.inviteAcceptedDate ?? undefined,
-	participantPreferredName: input.participantPreferredName ?? undefined,
-	guardianName: input.guardianName ?? undefined,
-	guardianPhoneNumber: input.guardianPhoneNumber ?? undefined,
-	guardianEmailAddress: input.guardianEmailAddress ?? undefined,
-	guardianRelationship: input.guardianRelationship ?? undefined,
-})).refine((input) => {
+export const TransformClinicianInvite = ClinicianInviteBase.extend({
+	inviteAcceptedDate: z.coerce
+		.date()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
+	guardianName: Name.nullable().transform((input) => input ?? undefined),
+	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
+	guardianEmailAddress: z
+		.string()
+		.email()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
+}).refine((input) => {
 	const {
 		consentGroup,
 		guardianName,
