@@ -21,8 +21,8 @@ import Button from '../Button';
 import LinkButton from '../Button/LinkButton';
 
 export type ModalConfig = {
-	title?: React.ReactNode;
-	message?: React.ReactNode;
+	title?: string;
+	body?: React.ReactNode;
 	actionButtonText?: React.ReactNode;
 	actionDisabled?: boolean;
 	cancelButtonText?: React.ReactNode;

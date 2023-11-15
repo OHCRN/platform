@@ -35,7 +35,7 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 	const [config, setConfig] = useState<ModalConfig>({});
 	const {
 		title,
-		message,
+		body,
 		actionButtonText,
 		cancelButtonText,
 		onActionClick,
@@ -60,25 +60,27 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 				<div className={styles.modal}>
 					<Card className={styles.card} dropShadow="none">
 						{title && <h3>{title}</h3>}
-						{message && <p>{message}</p>}
+						{body}
 						{(actionButtonText || cancelButtonText) && (
 							<div className={styles.buttons}>
-								{onCancelClick && (
+								{cancelButtonText && onCancelClick && (
 									<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
 										{cancelButtonText}
 									</Button>
 								)}
-								{cancelLink && (
+								{cancelButtonText && cancelLink && (
 									<LinkButton href={cancelLink} variant="secondary">
 										{cancelButtonText}
 									</LinkButton>
 								)}
-								{onActionClick && (
+								{actionButtonText && onActionClick && (
 									<Button onClick={onActionClick} disabled={actionDisabled}>
 										{actionButtonText}
 									</Button>
 								)}
-								{actionLink && <LinkButton href={actionLink}>{actionButtonText}</LinkButton>}
+								{actionButtonText && actionLink && (
+									<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
+								)}
 							</div>
 						)}
 					</Card>

@@ -98,8 +98,7 @@ const RegistrationForm = () => {
 			onActionClick: () => setIsOpen(false),
 			onCancelClick: () => setIsOpen(false),
 			cancelButtonText: 'Back to Homepage',
-			message:
-				'You have entered the information of a participant that is under the age of 18. All minors must have their guardian first contact their clinician to get started.',
+			body: 'You have entered the information of a participant that is under the age of 18. All minors must have their guardian first contact their clinician to get started.',
 		});
 		setIsOpen(true);
 	}, [setIsOpen, setConfig]);
