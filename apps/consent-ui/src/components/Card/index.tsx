@@ -26,14 +26,19 @@ const Card = ({
 	dropShadow = 'base',
 	className,
 	children,
+	onClick,
 }: {
 	layout?: 'column' | 'row';
 	dropShadow?: 'none' | 'sm' | 'base' | 'lg';
 	className?: string;
 	children: React.ReactNode;
+	onClick?: (e: React.SyntheticEvent<HTMLElement>) => any;
 }) => {
 	return (
-		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}>
+		<div
+			className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}
+			onClick={onClick}
+		>
 			{children}
 		</div>
 	);

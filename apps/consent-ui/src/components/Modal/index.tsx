@@ -57,8 +57,8 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 	return (
 		<ModalContext.Provider value={value}>
 			{isOpen && (
-				<div className={styles.modal}>
-					<Card className={styles.card} dropShadow="none">
+				<div className={styles.modal} onClick={() => setIsOpen(false)}>
+					<Card className={styles.card} dropShadow="none" onClick={(e) => e.stopPropagation()}>
 						{title && <h3>{title}</h3>}
 						{body}
 						{(actionButtonText || cancelButtonText) && (
