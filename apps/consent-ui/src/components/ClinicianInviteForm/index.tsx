@@ -23,14 +23,10 @@ import axios from 'axios';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+// import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { FormsDictionary } from 'src/i18n/locales/en/forms';
 
 import TextFieldSet from '../Form/TextFieldSet';
-import {
-	TextFormFieldsDictionary,
-	// CheckboxRadioFormFieldsDictionary,
-	// SelectFormFieldsDictionary,
-} from '../Form/types';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
 
 import { ClinicianInviteFormTextDictionary } from './types';
@@ -47,13 +43,13 @@ const tempValidationSchema = z.object({
 type TempValidationSchema = z.infer<typeof tempValidationSchema>;
 
 const ClinicianInviteFormEl = ({
+	// errorDict,
+	fieldsDict,
 	textDict,
-	textFieldsDict,
 }: {
-	errorDict: Partial<FormErrorsDictionary>;
+	// errorDict: Partial<FormErrorsDictionary>;
+	fieldsDict: Partial<FormsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
-	textFieldsDict: TextFormFieldsDictionary<any>;
-	// TODO: fix any. not sure how to get a partial type of keys in ClinicianInviteForm
 }) => {
 	const {
 		formState: { errors },
@@ -82,22 +78,30 @@ const ClinicianInviteFormEl = ({
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<h2>{textDict['patient-information']}</h2>
 			<p>
-				<RequiredAsterisk required /> {textDict['indicates-required-field']}
+				<RequiredAsterisk /> {textDict['indicates-required-field']}
 			</p>
 			<TextFieldSet
 				error={errors.participantFirstName?.type}
+				label={fieldsDict['first-name-label'] || ''}
+				name="participantFirstName" // TODO use enum
 				register={register}
-				{...textFieldsDict.participantFirstName}
+				required
+				textInputType="TEXT" // TODO use enum
 			/>
 			<TextFieldSet
 				error={errors.participantLastName?.type}
+				label={fieldsDict['last-name-label'] || ''}
+				name="participantLastName" // TODO use enum
 				register={register}
-				{...textFieldsDict.participantLastName}
+				required
+				textInputType="TEXT" // TODO use enum
 			/>
 			<TextFieldSet
 				error={errors.participantPreferredName?.type}
+				label={fieldsDict['preferred-name-label'] || ''}
+				name="participantPreferredName" // TODO use enum
 				register={register}
-				{...textFieldsDict.participantPreferredName}
+				textInputType="TEXT" // TODO use enum
 			/>
 
 			{/* mimicking structure of FormField
@@ -128,14 +132,21 @@ const ClinicianInviteFormEl = ({
 
 			<TextFieldSet
 				error={errors.participantPhoneNumber?.type}
+				label={fieldsDict['phone-label'] || ''}
+				name="participantPhoneNumber" // TODO use enum
 				register={register}
-				{...textFieldsDict.participantPhoneNumber}
+				required
+				textInputType="TEL" // TODO use enum
 			/>
 			<TextFieldSet
 				error={errors.participantEmailAddress?.type}
+				label={fieldsDict['email-label'] || ''}
+				name="participantEmailAddress" // TODO use enum
 				register={register}
-				{...textFieldsDict.participantEmailAddress}
+				required
+				textInputType="EMAIL" // TODO use enum
 			/>
+
 			<button type="submit" onClick={handleSubmit(onSubmit)}>
 				Submit
 			</button>

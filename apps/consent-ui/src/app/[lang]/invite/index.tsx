@@ -21,87 +21,33 @@ import Link from 'next/link';
 import ClinicianInviteFormEl from 'src/components/ClinicianInviteForm';
 import { ClinicianInviteFormTextDictionary } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import { TextFormFieldsDictionary } from 'src/components/Form/types';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+// import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { FormsDictionary } from 'src/i18n/locales/en/forms';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
-	// translations for form fields.
-	// keys / form field names need to match up with the clinician invite API
-	const textFieldsDict: TextFormFieldsDictionary<any> = {
-		// TODO: fix any. not sure how to get a partial type of keys in ClinicianInviteForm
-		participantFirstName: {
-			name: 'participantFirstName',
-			fieldType: 'TEXT', // TODO use fieldType enum
-			textInputType: 'text',
-			label: translate('forms', 'first-name-label'),
-			required: true,
-		},
-		participantLastName: {
-			name: 'participantLastName',
-			fieldType: 'TEXT', // TODO use fieldType enum
-			textInputType: 'text',
-			label: translate('forms', 'last-name-label'),
-			required: true,
-		},
-		participantPreferredName: {
-			name: 'participantPreferredName',
-			fieldType: 'TEXT', // TODO use fieldType enum
-			textInputType: 'text',
-			label: translate('forms', 'preferred-name-label'),
-			required: false,
-		},
-		participantPhoneNumber: {
-			name: 'participantPhoneNumber',
-			fieldType: 'TEXT', // TODO use fieldType enum
-			textInputType: 'tel',
-			label: translate('forms', 'phone-label'),
-			required: true,
-		},
-		participantEmailAddress: {
-			name: 'participantEmailAddress',
-			fieldType: 'TEXT', // TODO use fieldType enum
-			textInputType: 'email',
-			label: translate('forms', 'email-label'),
-			required: true,
-		},
-	};
-
-	// const selectFieldsDict: SelectFormFieldsDictionary = {
-	// 	consentGroup: {
-	// 		name: 'consentGroup',
-	// 		fieldType: 'select',
-	// 		label: translate('forms', 'consent-group-label'),
-	// 		required: true,
-	// 		options: Object.values(ConsentGroup).map((group: ConsentGroup) => ({
-	// 			label: translate('consent-group', group),
-	// 			value: `${group}`,
-	// 		})),
-	// 	},
+	// const errorDict: Partial<FormErrorsDictionary> = {
+	// 	required: translate('form-errors', 'required'),
 	// };
 
-	// translations for standalone text in the form
+	const fieldsDict: Partial<FormsDictionary> = {
+		'first-name-label': translate('forms', 'first-name-label'),
+		'last-name-label': translate('forms', 'last-name-label'),
+		'phone-label': translate('forms', 'phone-label'),
+	};
+
 	const textDict: ClinicianInviteFormTextDictionary = {
 		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
 		'select-placeholder': translate('forms', 'select-placeholder'),
 	};
 
-	const errorDict: Partial<FormErrorsDictionary> = {
-		required: translate('form-errors', 'required'),
-	};
-
 	return (
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteFormEl
-				errorDict={errorDict}
-				// selectFieldsDict={selectFieldsDict}
-				textDict={textDict}
-				textFieldsDict={textFieldsDict}
-			/>
+			<ClinicianInviteFormEl fieldsDict={fieldsDict} textDict={textDict} />
 		</div>
 	);
 };

@@ -21,7 +21,13 @@ import clsx from 'clsx';
 
 import styles from './RequiredAsterisk.module.scss';
 
-const RequiredAsterisk = ({ className, required }: { className?: string; required?: boolean }) => {
+const RequiredAsterisk = ({
+	className,
+	required = true,
+}: {
+	className?: string;
+	required?: boolean;
+}) => {
 	return required && <span className={clsx(styles.base, className)}>*</span>;
 };
 

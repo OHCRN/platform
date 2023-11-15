@@ -22,16 +22,16 @@
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormCheckboxRadioProps } from './types';
+import { FormCheckboxRadioInputProps } from './types';
 
 const CheckboxRadioInput = <T extends FieldValues, V extends string>({
 	className,
 	fieldName,
+	fieldType,
 	register,
 	required,
 	value,
-	fieldType,
-}: FormCheckboxRadioProps<T, V>) => (
+}: FormCheckboxRadioInputProps<T, V>) => (
 	<input
 		{...register(fieldName, { required })}
 		className={clsx(`${fieldType.toLowerCase()}-input`, className)}

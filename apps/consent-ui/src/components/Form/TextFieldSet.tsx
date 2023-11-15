@@ -20,11 +20,10 @@
 import { FormTextInputType } from 'types/entities';
 
 import TextInput from './TextInput';
-import DefaultFieldSet from './DefaultFieldSet';
+import FieldSet from './FieldSet';
 
 const TextFieldSet = ({
 	error,
-	fieldType,
 	label,
 	name,
 	register,
@@ -32,22 +31,20 @@ const TextFieldSet = ({
 	textInputType,
 }: {
 	error?: string; // TODO use form-errors translation keys
-	fieldType: 'TEXT'; // TODO use FormFieldType type/enum
 	label: string;
 	name: string; // TODO use <T extends FieldValues>
 	register: any; // TODO use register type
-	required: boolean;
+	required?: boolean;
 	textInputType: FormTextInputType;
 }) => (
-	<DefaultFieldSet error={error} label={label} name={name} required={required}>
+	<FieldSet error={error} label={label} name={name} required={!!required}>
 		<TextInput
 			fieldName={name}
-			fieldType={fieldType}
 			register={register}
-			required={required}
+			required={!!required}
 			textInputType={textInputType}
 		/>
-	</DefaultFieldSet>
+	</FieldSet>
 );
 
 export default TextFieldSet;

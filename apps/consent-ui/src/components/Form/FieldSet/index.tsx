@@ -21,7 +21,7 @@ import { ReactNode } from 'react';
 
 import RequiredAsterisk from '../RequiredAsterisk';
 
-const DefaultFieldSet = ({
+const FieldSet = ({
 	children,
 	error,
 	label,
@@ -30,8 +30,8 @@ const DefaultFieldSet = ({
 }: {
 	children: ReactNode;
 	error?: string;
-	name: string;
 	label: string;
+	name: string;
 	required: boolean;
 }) => {
 	return (
@@ -46,4 +46,4 @@ const DefaultFieldSet = ({
 	);
 };
 
-export default DefaultFieldSet;
+export default FieldSet;
