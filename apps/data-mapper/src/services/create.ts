@@ -11,8 +11,8 @@ import logger from '../logger.js';
 import { getAppConfig } from '../config.js';
 
 import axiosClient from './axiosClient.js';
-import { createInvitePiData } from './das/piDas.js';
-import { createInviteConsentData } from './das/consentDas.js';
+import { createInvitePiData } from './das/pi.js';
+import { createInviteConsentData } from './das/consent.js';
 
 // PI-DAS
 const createParticipantPiData = async ({
