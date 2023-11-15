@@ -111,7 +111,7 @@ export const createParticipant = async ({
  * then uses the same inviteId to create a corresponding entry in the Consent DAS
  * @async
  * @param {ClinicianInviteRequest} data
- * @returns {Promise<ClinicianInvite>} Created Clinician Invite data
+ * @returns {Promise<TransformClinicianInvite>} Created Clinician Invite data
  */
 export const createInvite = async ({
 	participantFirstName,

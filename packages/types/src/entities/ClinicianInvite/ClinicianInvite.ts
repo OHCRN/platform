@@ -49,9 +49,24 @@ export const ClinicianInviteBase = z.object({
 	consentToBeContacted: z.boolean(),
 });
 
-export const ClinicianInviteRequest = ClinicianInviteBase.omit({
-	id: true,
-	inviteSentDate: true,
+export const ClinicianInviteRequest = ClinicianInviteBase.pick({
+	inviteAcceptedDate: true,
+	inviteAccepted: true,
+	clinicianFirstName: true,
+	clinicianLastName: true,
+	clinicianInstitutionalEmailAddress: true,
+	clinicianTitleOrRole: true,
+	participantFirstName: true,
+	participantLastName: true,
+	participantEmailAddress: true,
+	participantPhoneNumber: true,
+	participantPreferredName: true,
+	consentGroup: true,
+	guardianName: true,
+	guardianPhoneNumber: true,
+	guardianEmailAddress: true,
+	guardianRelationship: true,
+	consentToBeContacted: true,
 }).refine((input) => {
 	const {
 		consentGroup,
