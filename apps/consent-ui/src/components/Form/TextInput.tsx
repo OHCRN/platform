@@ -26,16 +26,16 @@ import { FormTextInputProps } from './types';
 
 const TextInput = <T extends FieldValues>({
 	className,
-	fieldName,
+	name,
 	register,
-	required,
-	textInputType,
+	required = false,
+	type,
 }: FormTextInputProps<T>) => (
 	<input
-		{...register(fieldName, { required })}
+		{...register(name, { required })}
 		aria-required={required}
 		className={clsx('text-input', className)}
-		type={textInputType.toLowerCase()}
+		type={type.toLowerCase()}
 	/>
 );
 

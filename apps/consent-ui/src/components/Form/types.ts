@@ -20,24 +20,38 @@
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { FormFieldType, FormTextInputType } from 'types/entities';
 
+// field sets
+
+export type FormTextFieldSetProps<T extends FieldValues> = {
+	error?: string; // TODO harmonize error dictionary & RHF errors
+	label: string;
+	name: Path<T>;
+	register: UseFormRegister<T>; // TODO use register type
+	required?: boolean;
+	type: FormTextInputType;
+};
+
 // field inputs
 
 interface FormInputProps<T extends FieldValues> {
 	className?: string;
-	fieldName: Path<T>;
-	register: UseFormRegister<T>;
-	required: boolean;
+	name: Path<T>;
+	required?: boolean;
 }
 
-export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	textInputType: FormTextInputType;
+type FormRegisteredInputProps<T extends FieldValues> = FormInputProps<T> & {
+	register: UseFormRegister<T>;
+};
+
+export type FormTextInputProps<T extends FieldValues> = FormRegisteredInputProps<T> & {
+	type: FormTextInputType;
 };
 
 export type FormCheckboxRadioInputProps<
 	T extends FieldValues,
 	V extends string,
-> = FormInputProps<T> & {
-	fieldType: FormFieldType;
+> = FormRegisteredInputProps<T> & {
+	type: FormFieldType;
 	value: V;
 };
 

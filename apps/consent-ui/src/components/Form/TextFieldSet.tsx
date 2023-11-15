@@ -17,33 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormTextInputType } from 'types/entities';
+import { FieldValues } from 'react-hook-form';
 
 import TextInput from './TextInput';
 import FieldSet from './FieldSet';
+import { FormTextFieldSetProps } from './types';
 
-const TextFieldSet = ({
+const TextFieldSet = <T extends FieldValues>({
 	error,
 	label,
 	name,
 	register,
 	required = false,
-	textInputType,
-}: {
-	error?: string; // TODO use form-errors translation keys
-	label: string;
-	name: string; // TODO use <T extends FieldValues>
-	register: any; // TODO use register type
-	required?: boolean;
-	textInputType: FormTextInputType;
-}) => (
-	<FieldSet error={error} label={label} name={name} required={!!required}>
-		<TextInput
-			fieldName={name}
-			register={register}
-			required={!!required}
-			textInputType={textInputType}
-		/>
+	type,
+}: FormTextFieldSetProps<T>) => (
+	<FieldSet error={error} label={label} name={name} required={required}>
+		<TextInput name={name} register={register} required={required} type={type} />
 	</FieldSet>
 );
 

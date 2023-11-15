@@ -20,34 +20,24 @@
 'use client';
 
 import axios from 'axios';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm as useReactHookForm, SubmitHandler } from 'react-hook-form';
-// import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
 
 import TextFieldSet from '../Form/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
 
-import { ClinicianInviteFormTextDictionary } from './types';
-
-// TEMP submit doesn't work if there's fields missing
-const tempValidationSchema = z.object({
-	participantFirstName: z.string(),
-	participantLastName: z.string(),
-	participantPreferredName: z.string(),
-	participantPhoneNumber: z.string(),
-	participantEmailAddress: z.string(),
-});
-
-type TempValidationSchema = z.infer<typeof tempValidationSchema>;
+import {
+	ClinicianInviteFormTextDictionary,
+	TempFieldNames,
+	TempValidationSchema,
+	tempValidationSchema,
+} from './types';
 
 const ClinicianInviteFormEl = ({
-	// errorDict,
 	fieldsDict,
 	textDict,
 }: {
-	// errorDict: Partial<FormErrorsDictionary>;
 	fieldsDict: Partial<FormsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
@@ -83,69 +73,44 @@ const ClinicianInviteFormEl = ({
 			<TextFieldSet
 				error={errors.participantFirstName?.type}
 				label={fieldsDict['first-name-label'] || ''}
-				name="participantFirstName" // TODO use enum
+				name={TempFieldNames.enum.participantFirstName}
 				register={register}
 				required
-				textInputType="TEXT" // TODO use enum
+				type="TEXT" // TODO use enum
 			/>
 			<TextFieldSet
 				error={errors.participantLastName?.type}
 				label={fieldsDict['last-name-label'] || ''}
-				name="participantLastName" // TODO use enum
+				name={TempFieldNames.enum.participantLastName}
 				register={register}
 				required
-				textInputType="TEXT" // TODO use enum
+				type="TEXT" // TODO use enum
 			/>
 			<TextFieldSet
 				error={errors.participantPreferredName?.type}
 				label={fieldsDict['preferred-name-label'] || ''}
-				name="participantPreferredName" // TODO use enum
+				name={TempFieldNames.enum.participantPreferredName}
 				register={register}
-				textInputType="TEXT" // TODO use enum
+				type="TEXT" // TODO use enum
 			/>
 
-			{/* mimicking structure of FormField
-			TODO move select to FormField */}
-			{/* <div>
-				<div>
-					<label htmlFor="consentGroupSelect">{fieldDict.consentGroup.label}</label>
-				</div>
-				<div>
-					<Controller
-						control={control}
-						name="consentGroup"
-						render={({ field: { onChange, value } }) => (
-							<Select
-								instanceId="consentGroupSelect"
-								onChange={(val: SingleValue<string | { label: string; value: string }>) =>
-									onChange(typeof val === 'string' ? val : val?.value || null)
-								}
-								options={consentGroupOptions}
-								placeholder={textDict['select-placeholder']}
-								value={consentGroupOptions.find((option) => option.value === value) || ''}
-							/>
-						)}
-						rules={{ required: true }}
-					/>
-				</div>
-			</div> */}
-
-			<TextFieldSet
+			{/* phone/email not working, TS errors with register method */}
+			{/* <TextFieldSet
 				error={errors.participantPhoneNumber?.type}
 				label={fieldsDict['phone-label'] || ''}
-				name="participantPhoneNumber" // TODO use enum
+				name={TempFieldNames.enum.participantPhoneNumber}
 				register={register}
 				required
 				textInputType="TEL" // TODO use enum
-			/>
-			<TextFieldSet
+			/> */}
+			{/* <TextFieldSet
 				error={errors.participantEmailAddress?.type}
 				label={fieldsDict['email-label'] || ''}
-				name="participantEmailAddress" // TODO use enum
+				name={TempFieldNames.enum.participantEmailAddress}
 				register={register}
 				required
 				textInputType="EMAIL" // TODO use enum
-			/>
+			/> */}
 
 			<button type="submit" onClick={handleSubmit(onSubmit)}>
 				Submit

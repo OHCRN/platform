@@ -26,17 +26,17 @@ import { FormCheckboxRadioInputProps } from './types';
 
 const CheckboxRadioInput = <T extends FieldValues, V extends string>({
 	className,
-	fieldName,
-	fieldType,
+	name,
+	type,
 	register,
 	required,
 	value,
 }: FormCheckboxRadioInputProps<T, V>) => (
 	<input
-		{...register(fieldName, { required })}
-		className={clsx(`${fieldType.toLowerCase()}-input`, className)}
+		{...register(name, { required })}
+		className={clsx(`${type.toLowerCase()}-input`, className)}
 		aria-required={required}
-		type={fieldType.toLowerCase()}
+		type={type.toLowerCase()}
 		value={value}
 	/>
 );
