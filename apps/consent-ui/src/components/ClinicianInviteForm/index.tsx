@@ -93,15 +93,13 @@ const ClinicianInviteFormEl = ({
 				register={register}
 				type="text"
 			/>
-
-			{/* phone/email not working, TS errors with register method */}
-			{/* <TextFieldSet
+			<TextFieldSet
 				error={errors.participantPhoneNumber?.type}
 				label={fieldsDict['phone-label'] || ''}
 				name={TempFieldNames.enum.participantPhoneNumber}
 				register={register}
 				required
-				textInputType="TEL" // TODO use enum
+				type="text"
 			/>
 			<TextFieldSet
 				error={errors.participantEmailAddress?.type}
@@ -109,8 +107,8 @@ const ClinicianInviteFormEl = ({
 				name={TempFieldNames.enum.participantEmailAddress}
 				register={register}
 				required
-				textInputType="EMAIL" // TODO use enum
-			/> */}
+				type="text"
+			/>
 
 			<button type="submit" onClick={handleSubmit(onSubmit)}>
 				Submit
