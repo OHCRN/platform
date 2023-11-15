@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { FormLabelsDictionary } from '../en/form-labels';
+
 const dictionary = {
 	'clinician-first-name': 'Prénom du clinicien',
 	'clinician-institutional-email-address': 'Adresse e-mail institutionnelle du clinicien',
@@ -34,8 +36,6 @@ const dictionary = {
 	'preferred-name': 'Nom préféré',
 	email: 'Adresse e-mail',
 	phone: 'Numéro de téléphone',
-} satisfies Record<string, string>;
-
-export type FormsDictionary = Record<keyof typeof dictionary, string>;
+} satisfies FormLabelsDictionary;
 
 export default dictionary;

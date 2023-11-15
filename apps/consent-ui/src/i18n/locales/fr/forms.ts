@@ -17,11 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { FormsDictionary } from '../en/forms';
+
 const dictionary = {
 	'indicates-required-field': 'indique un champ obligatoire',
 	'select-placeholder': 'Choisissez-en un',
-} satisfies Record<string, string>;
-
-export type FormsDictionary = Record<keyof typeof dictionary, string>;
+} satisfies FormsDictionary;
 
 export default dictionary;

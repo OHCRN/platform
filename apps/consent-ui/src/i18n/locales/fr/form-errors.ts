@@ -17,10 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { FormErrorsDictionary } from '../en/form-errors';
+
 const dictionary = {
 	required: 'Veuillez remplir le champ requis.',
-} satisfies Record<string, string>;
-
-export type FormErrorsDictionary = Record<keyof typeof dictionary, string>;
+} satisfies FormErrorsDictionary;
 
 export default dictionary;

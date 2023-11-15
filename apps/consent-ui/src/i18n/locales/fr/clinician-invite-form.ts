@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ClinicianInviteFormDictionary } from '../en/clinician-invite-form';
+
 const dictionary = {
 	title: 'Inscription des patients cliniciens',
 	'main-title': 'Enregistrez votre patient',
@@ -31,9 +33,6 @@ const dictionary = {
 		"Après votre inscription, nous devrons collecter certains consentements et données importants. Votre patient aura accès à la mise à jour de son dossier, mais s'il a besoin d'aide, nous pouvons le contacter.",
 	'consent-contact-description':
 		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
-	'consent-contact-title': 'Consentement à être contacté',
-	'consent-contact-label':
-		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
 	'clinician-information': 'Informations sur le clinicien',
 	'clinician-email-tooltip':
 		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
@@ -43,8 +42,6 @@ const dictionary = {
 	'upload-file-link': "télécharger une copie du formulaire d'accord",
 	'upload-file-description-2':
 		"et demandez à votre participant (qui est mineur) de lire et de signer le formulaire d'assentiment. Utilisez le bouton de téléchargement ci-dessous pour soumettre un formulaire de consentement complété et signé par le mineur.",
-} satisfies Record<string, string>;
-
-export type ClinicianInviteFormDictionary = Record<keyof typeof dictionary, string>;
+} satisfies ClinicianInviteFormDictionary;
 
 export default dictionary;
