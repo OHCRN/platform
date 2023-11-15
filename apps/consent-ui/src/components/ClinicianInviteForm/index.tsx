@@ -76,7 +76,7 @@ const ClinicianInviteFormEl = ({
 				name={TempFieldNames.enum.participantFirstName}
 				register={register}
 				required
-				type="TEXT" // TODO use enum
+				type="text"
 			/>
 			<TextFieldSet
 				error={errors.participantLastName?.type}
@@ -84,14 +84,14 @@ const ClinicianInviteFormEl = ({
 				name={TempFieldNames.enum.participantLastName}
 				register={register}
 				required
-				type="TEXT" // TODO use enum
+				type="text"
 			/>
 			<TextFieldSet
 				error={errors.participantPreferredName?.type}
 				label={fieldsDict['preferred-name-label'] || ''}
 				name={TempFieldNames.enum.participantPreferredName}
 				register={register}
-				type="TEXT" // TODO use enum
+				type="text"
 			/>
 
 			{/* phone/email not working, TS errors with register method */}

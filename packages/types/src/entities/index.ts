@@ -29,7 +29,6 @@ export * from './ConsentRecontact.js';
 export * from './ConsentReleaseData.js';
 export * from './ConsentResearchParticipation.js';
 export * from './ConsentWizardProgress.js';
-export * from './ConsentUIForms.js';
 export * from './Error.js';
 export * from './Gender.js';
 export * from './GeneticsClinic.js';
