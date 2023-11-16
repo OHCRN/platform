@@ -112,7 +112,7 @@ describe('ClinicianInviteResponse', () => {
 });
 
 describe('ConsentClinicianInviteResponse', () => {
-	it('Parses inviteAcceptedDate from null to undefined', () => {
+	it('Correctly converts inviteAcceptedDate from null to undefined', () => {
 		const parsed = ConsentClinicianInviteResponse.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteSentDate: new Date(),
@@ -149,7 +149,7 @@ describe('ConsentClinicianInviteResponse', () => {
 });
 
 describe('PIClinicianInviteResponse', () => {
-	it('Parses optional values from null to undefined', () => {
+	it('Correctly converts optional values from null to undefined', () => {
 		const parsed = PIClinicianInviteResponse.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			participantFirstName: 'John',
