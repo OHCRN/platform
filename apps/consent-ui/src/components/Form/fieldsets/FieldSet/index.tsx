@@ -19,23 +19,25 @@
 
 import { ReactNode } from 'react';
 
-import RequiredAsterisk from '../RequiredAsterisk';
+import RequiredAsterisk from '../../RequiredAsterisk';
 
 const FieldSet = ({
 	children,
+	className,
 	error,
 	label,
 	name,
 	required = false,
 }: {
 	children: ReactNode;
+	className?: string;
 	error?: string;
 	label: string;
 	name: string;
 	required?: boolean;
 }) => {
 	return (
-		<fieldset>
+		<fieldset className={className}>
 			<label htmlFor={name}>
 				{label}
 				<RequiredAsterisk required={required} />

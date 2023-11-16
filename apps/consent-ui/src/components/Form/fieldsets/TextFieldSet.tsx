@@ -17,28 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 import { FieldValues } from 'react-hook-form';
-import clsx from 'clsx';
 
-import { FormCheckboxRadioInputProps } from './types';
+import { FormTextFieldSetProps } from '../types';
 
-const CheckboxRadioInput = <T extends FieldValues, V extends string>({
-	className,
+import TextInput from './inputs/TextInput';
+import FieldSet from './FieldSet';
+
+const TextFieldSet = <T extends FieldValues>({
+	error,
+	label,
 	name,
-	type,
 	register,
-	required,
-	value,
-}: FormCheckboxRadioInputProps<T, V>) => (
-	<input
-		{...register(name, { required })}
-		className={clsx(`${type}-input`, className)}
-		aria-required={required}
-		type={type}
-		value={value}
-	/>
+	required = false,
+	type = 'text',
+}: FormTextFieldSetProps<T>) => (
+	<FieldSet error={error} label={label} name={name} required={required}>
+		<TextInput name={name} register={register} required={required} type={type} />
+	</FieldSet>
 );
 
-export default CheckboxRadioInput;
+export default TextFieldSet;

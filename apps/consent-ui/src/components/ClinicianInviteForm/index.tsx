@@ -27,9 +27,9 @@ import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import Select, { SingleValue } from 'react-select';
 import { ConsentGroup } from 'types/entities';
 
-import TextFieldSet from '../Form/TextFieldSet';
+import TextFieldSet from '../Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
-import FieldSet from '../Form/FieldSet';
+import FieldSet from '../Form/fieldsets/FieldSet';
 
 import {
 	ClinicianInviteFormTextDictionary,
@@ -155,6 +155,8 @@ const ClinicianInviteFormEl = ({
 			</div>
 
 			<div style={{ background: 'lightgrey' }}>
+				{/* guardian fields are marked required in the UI because they're required if they're visible,
+				i.e. if the user has indicated the participant is a minor */}
 				<p>{textDict['enter-guardian-info']}</p>
 				<TextFieldSet
 					error={errors.guardianName?.type}
@@ -202,9 +204,9 @@ const ClinicianInviteFormEl = ({
 			<div>
 				<h3>{textDict['clinician-information']}</h3>
 				<TextFieldSet
-					error={errors.clinicianTitle?.type}
-					label={labelsDict['clinician-title'] || ''}
-					name={TempFieldNames.enum.clinicianTitle}
+					error={errors.clinicianTitleOrRole?.type}
+					label={labelsDict['clinician-title-or-role'] || ''}
+					name={TempFieldNames.enum.clinicianTitleOrRole}
 					register={register}
 					required
 				/>

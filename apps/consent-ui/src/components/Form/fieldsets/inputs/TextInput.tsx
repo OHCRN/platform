@@ -17,23 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+'use client';
+
 import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-import TextInput from './TextInput';
-import FieldSet from './FieldSet';
-import { FormTextFieldSetProps } from './types';
+import { FormTextInputProps } from '../../types';
 
-const TextFieldSet = <T extends FieldValues>({
-	error,
-	label,
+const TextInput = <T extends FieldValues>({
+	className,
 	name,
 	register,
 	required = false,
 	type = 'text',
-}: FormTextFieldSetProps<T>) => (
-	<FieldSet error={error} label={label} name={name} required={required}>
-		<TextInput name={name} register={register} required={required} type={type} />
-	</FieldSet>
+}: FormTextInputProps<T>) => (
+	<input
+		{...register(name, { required })}
+		aria-required={required}
+		className={clsx('text-input', className)}
+		id={name}
+		type={type}
+	/>
 );
 
-export default TextFieldSet;
+export default TextInput;
