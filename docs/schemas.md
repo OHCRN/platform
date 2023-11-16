@@ -1,0 +1,98 @@
+# Zod Schemas
+
+This document describes how we use [Zod](https://zod.dev/) schemas to validate and parse our data types. This includes API request/response bodies as well as enums and function parameters.
+
+## Implementation
+
+### Location
+All schemas are located in the `types` package under the `types/src/entities` directory. Common schemas (i.e. multiple complex schemas using the same base schema) are kept in directories by the base schema name (e.g. `ClinicianInvite`).
+
+### Creating Schemas
+See the [docs](https://zod.dev/?id=basic-usage) for creating schemas and the different data types supported by Zod.
+
+### Extending Schemas
+Many of our schemas have common fields. For instance, because of the way we split up most of the logical data models by DAS, we end up with a schema for the Consent DAS Clinician Invite that is comprised of half of the fields from the whole Clinician Invite schema. To avoid duplicate code, we handle this by extending the base schema to create the Consent DAS Clinician Invite schema. Zod provides multiple methods for this:
+- [`extend()`](https://zod.dev/?id=extend) takes all the fields from an existing schema and allows you to add new fields (and overwrite existing fields too!)
+- [`pick()` and `omit()`](https://zod.dev/?id=pickomit) takes the specified fields, or takes all the fields omitting the specified fields from an existing schema
+
+Note that these are composable so you can chain as many of these as you want. **However, this does not apply when using [`refine()`](https://zod.dev/?id=refine) or [`transform()`](https://zod.dev/?id=transform)**.
+
+### Preprocessing
+[`transform()`](https://zod.dev/?id=transform) allows you to perform a transform function on the input, which can be used on individual fields or entire schemas (e.g. converting lowercase letters to uppercase in postal code inputs).
+
+[`refine()`](https://zod.dev/?id=refine) allows you to perform a validation on the input which may be some complex logic that can't be captured with just the Zod data types, like checking for conditionally required fields on an API request body. This can also be used on individual fields or entire schemas.
+
+Both of these convert the schema to a `ZodEffects` type which "is a wrapper class that contains all logic pertaining to preprocessing, refinements, and transforms" so once a schema has `refine` or `transform` attached to it, it cannot be extended. If there is a schema that requires one of these, but it also must be extended, separate the `refine` or `transform` logic from it and make that the base schema. Then you can extend that base schema and add a `refine` or `transform` as needed on new schemas.
+
+[`coerce()`](https://zod.dev/?id=coercion-for-primitives) can coerce primitive data types (e.g. converting a date string to a `Date` object).
+
+
+## Usage
+
+Zod's [`parse()`](https://zod.dev/?id=parse) method simultaneously validates the data and can also coerce any data types or transform fields, as outlined in the Zod schema.
+
+### Example: `ConsentClinicianInviteResponse`
+The way we treat optional fields in the app is by storing them as `undefined` if they are not provided a value. However, because these fields are stored as `null` in the database, Prisma return types need to have these optional fields converted from `null` to `undefined`.
+
+We can do this by overwriting the base fields from `optional` to `nullable`, and adding a `transform` on the field to convert it to `undefined` if the value if `null`. We do this in the `ClinicianInvite` schemas for the return types from the `Consent` and `PI` DAS API calls:
+
+```ts
+export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
+	id: true,
+	inviteSentDate: true,
+	inviteAcceptedDate: true,
+	inviteAccepted: true,
+	clinicianFirstName: true,
+	clinicianLastName: true,
+	clinicianInstitutionalEmailAddress: true,
+	clinicianTitleOrRole: true,
+	consentGroup: true,
+	consentToBeContacted: true,
+}).extend({
+	inviteAcceptedDate: z.coerce
+		.date()
+		.nullable()
+		.transform((input) => input ?? undefined),
+});
+```
+
+The expected behaviour is described in the test cases below:
+
+```ts
+describe('ConsentClinicianInviteResponse', () => {
+	it('Correctly converts inviteAcceptedDate from null to undefined', () => {
+		const parsed = ConsentClinicianInviteResponse.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			inviteSentDate: new Date(),
+			inviteAcceptedDate: null, // originally null from the db
+			inviteAccepted: false,
+			clinicianFirstName: 'Jonah',
+			clinicianLastName: 'Jameson',
+			clinicianInstitutionalEmailAddress: 'jonah.jameson@example.com',
+			clinicianTitleOrRole: 'Physician',
+			consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+			consentToBeContacted: true,
+		});
+		expect(parsed.success).true;
+		expect(parsed.success && parsed.data.inviteAcceptedDate).to.equal(undefined); // is parsed to undefined
+	});
+	it('Accepts inviteAcceptedDate if not null', () => {
+		const parsed = ConsentClinicianInviteResponse.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			inviteSentDate: new Date(),
+			inviteAcceptedDate: new Date('10-31-2023'),
+			inviteAccepted: false,
+			clinicianFirstName: 'Jonah',
+			clinicianLastName: 'Jameson',
+			clinicianInstitutionalEmailAddress: 'jonah.jameson@example.com',
+			clinicianTitleOrRole: 'Physician',
+			consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+			consentToBeContacted: true,
+		});
+		expect(parsed.success).true;
+		expect(parsed.success && parsed.data.inviteAcceptedDate?.getTime()).to.equal(
+			new Date('10-31-2023').getTime(),
+		); // untouched since it was not null
+	});
+});
+```
