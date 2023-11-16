@@ -17,12 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
 export type FormFieldType = 'checkbox' | 'date' | 'radio' | 'select' | 'text' | 'textWithCheckbox';
 export type FormTextInputType = 'email' | 'tel' | 'text';
 
 // field sets
+
+export type FormFieldSetProps<T extends FieldValues> = {
+	children: ReactNode;
+	className?: string;
+	error?: string; // TODO harmonize error dictionary & RHF errors
+	label: string;
+	name: Path<T>;
+	required?: boolean;
+};
 
 export type FormTextFieldSetProps<T extends FieldValues> = {
 	error?: string; // TODO harmonize error dictionary & RHF errors

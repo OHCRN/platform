@@ -155,7 +155,7 @@ const ClinicianInviteFormEl = ({
 			</div>
 
 			<div style={{ background: 'lightgrey' }}>
-				{/* guardian fields are marked required in the UI because they're required if they're visible,
+				{/* guardian fields are marked required in the UI - they're required if they're visible,
 				i.e. if the user has indicated the participant is a minor */}
 				<p>{textDict['enter-guardian-info']}</p>
 				<TextFieldSet

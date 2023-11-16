@@ -17,25 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
+import { FieldValues } from 'react-hook-form';
 
 import RequiredAsterisk from '../../RequiredAsterisk';
+import { FormFieldSetProps } from '../../types';
 
-const FieldSet = ({
+const FieldSet = <T extends FieldValues>({
 	children,
 	className,
 	error,
 	label,
 	name,
 	required = false,
-}: {
-	children: ReactNode;
-	className?: string;
-	error?: string;
-	label: string;
-	name: string;
-	required?: boolean;
-}) => {
+}: FormFieldSetProps<T>) => {
 	return (
 		<fieldset className={className}>
 			<label htmlFor={name}>
