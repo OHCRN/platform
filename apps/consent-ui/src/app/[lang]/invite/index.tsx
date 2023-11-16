@@ -61,6 +61,9 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
 		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'select-placeholder': translate('forms', 'select-placeholder'),
+		'upload-file-description-1': translate('clinician-invite-form', 'upload-file-description-1'),
+		'upload-file-description-2': translate('clinician-invite-form', 'upload-file-description-2'),
+		'upload-file-link': translate('clinician-invite-form', 'upload-file-link'),
 	};
 
 	const consentGroupOptions: ConsentGroupOption[] = [

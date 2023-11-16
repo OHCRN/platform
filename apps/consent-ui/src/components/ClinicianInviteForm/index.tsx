@@ -102,72 +102,135 @@ const ClinicianInviteFormEl = ({
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<h2>{textDict['patient-information']}</h2>
-			<p>
-				<RequiredAsterisk /> {textDict['indicates-required-field']}
-			</p>
-			<TextFieldSet
-				error={errors.participantFirstName?.type}
-				label={labelsDict['first-name'] || ''}
-				name={TempFieldNames.enum.participantFirstName}
-				register={register}
-				required
-			/>
-			<TextFieldSet
-				error={errors.participantLastName?.type}
-				label={labelsDict['last-name'] || ''}
-				name={TempFieldNames.enum.participantLastName}
-				register={register}
-				required
-			/>
-			<TextFieldSet
-				error={errors.participantPreferredName?.type}
-				label={labelsDict['preferred-name'] || ''}
-				name={TempFieldNames.enum.participantPreferredName}
-				register={register}
-			/>
+			<div>
+				<h3>{textDict['patient-information']}</h3>
+				<p>
+					<RequiredAsterisk /> {textDict['indicates-required-field']}
+				</p>
+				<TextFieldSet
+					error={errors.participantFirstName?.type}
+					label={labelsDict['first-name'] || ''}
+					name={TempFieldNames.enum.participantFirstName}
+					register={register}
+					required
+				/>
+				<TextFieldSet
+					error={errors.participantLastName?.type}
+					label={labelsDict['last-name'] || ''}
+					name={TempFieldNames.enum.participantLastName}
+					register={register}
+					required
+				/>
+				<TextFieldSet
+					error={errors.participantPreferredName?.type}
+					label={labelsDict['preferred-name'] || ''}
+					name={TempFieldNames.enum.participantPreferredName}
+					register={register}
+				/>
 
-			<Controller
-				name={TempFieldNames.enum.consentGroup}
-				control={control}
-				render={({ field: { onChange, value } }) => (
-					<FieldSet
-						error={errors.participantPhoneNumber?.type}
-						label={labelsDict['consent-group'] || ''}
-						name={TempFieldNames.enum.consentGroup}
-						required
-					>
-						<Select
-							instanceId={TempFieldNames.enum.consentGroup}
-							onChange={(val: SingleValue<string | ConsentGroupOption>) =>
-								onChange(typeof val === 'string' ? val : val?.value || null)
-							}
-							options={consentGroupOptions}
-							placeholder={textDict['select-placeholder']}
+				<Controller
+					name={TempFieldNames.enum.consentGroup}
+					control={control}
+					render={({ field: { onChange, value } }) => (
+						<FieldSet
+							error={errors.consentGroup?.type}
+							label={labelsDict['consent-group'] || ''}
+							name={TempFieldNames.enum.consentGroup}
 							required
-							value={consentGroupOptions.find((option) => option.value === value) || ''}
-						/>
-					</FieldSet>
-				)}
-				rules={{ required: true }}
-			/>
+						>
+							<Select
+								instanceId={TempFieldNames.enum.consentGroup}
+								onChange={(val: SingleValue<string | ConsentGroupOption>) =>
+									onChange(typeof val === 'string' ? val : val?.value || null)
+								}
+								options={consentGroupOptions}
+								placeholder={textDict['select-placeholder']}
+								required
+								value={consentGroupOptions.find((option) => option.value === value) || ''}
+							/>
+						</FieldSet>
+					)}
+					rules={{ required: true }}
+				/>
+			</div>
 
-			<TextFieldSet
-				error={errors.participantPhoneNumber?.type}
-				label={labelsDict['phone'] || ''}
-				name={TempFieldNames.enum.participantPhoneNumber}
-				register={register}
-				required
-				type="tel"
-			/>
-			<TextFieldSet
-				error={errors.participantEmailAddress?.type}
-				label={labelsDict['email'] || ''}
-				name={TempFieldNames.enum.participantEmailAddress}
-				register={register}
-				required
-				type="email"
-			/>
+			<div style={{ background: 'lightgrey' }}>
+				<p>{textDict['enter-guardian-info']}</p>
+				<TextFieldSet
+					error={errors.guardianName?.type}
+					label={labelsDict['guardian-name'] || ''}
+					name={TempFieldNames.enum.guardianName}
+					register={register}
+					required
+				/>
+				<TextFieldSet
+					error={errors.guardianPhoneNumber?.type}
+					label={labelsDict['guardian-phone'] || ''}
+					name={TempFieldNames.enum.guardianPhoneNumber}
+					register={register}
+					required
+					type="tel"
+				/>
+				<TextFieldSet
+					error={errors.guardianEmailAddress?.type}
+					label={labelsDict['email'] || ''}
+					name={TempFieldNames.enum.guardianEmailAddress}
+					register={register}
+					required
+					type="email"
+				/>
+				<TextFieldSet
+					error={errors.guardianRelationship?.type}
+					label={labelsDict['guardian-relationship'] || ''}
+					name={TempFieldNames.enum.guardianRelationship}
+					register={register}
+					required
+				/>
+				<p>
+					{textDict['upload-file-description-1']}
+					<a href="">{textDict['upload-file-link']}</a>
+					{textDict['upload-file-description-2']}
+					{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
+				</p>
+			</div>
+
+			<div>
+				<p>{textDict['after-registering']}</p>
+				{/* checkbox input with title & description */}
+			</div>
+
+			<div>
+				<h3>{textDict['clinician-information']}</h3>
+				<TextFieldSet
+					error={errors.clinicianTitle?.type}
+					label={labelsDict['clinician-title'] || ''}
+					name={TempFieldNames.enum.clinicianTitle}
+					register={register}
+					required
+				/>
+				<TextFieldSet
+					error={errors.clinicianFirstName?.type}
+					label={labelsDict['clinician-first-name'] || ''}
+					name={TempFieldNames.enum.clinicianFirstName}
+					register={register}
+					required
+				/>
+				<TextFieldSet
+					error={errors.clinicianLastName?.type}
+					label={labelsDict['clinician-last-name'] || ''}
+					name={TempFieldNames.enum.clinicianLastName}
+					register={register}
+					required
+				/>
+				<TextFieldSet
+					error={errors.clinicianInstitutionalEmailAddress?.type}
+					label={labelsDict['clinician-institutional-email-address'] || ''}
+					name={TempFieldNames.enum.clinicianInstitutionalEmailAddress}
+					register={register}
+					required
+					type="email"
+				/>
+			</div>
 
 			<button type="submit" onClick={handleSubmit(onSubmit)}>
 				Submit

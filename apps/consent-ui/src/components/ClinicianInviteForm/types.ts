@@ -36,15 +36,18 @@ export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
 // TEMP submit doesn't work if there's fields missing
 // so work with a reduced schema
 const TEMP_FIELD_NAMES = [
+	'clinicianInstitutionalEmailAddress',
+	'clinicianFirstName',
+	'clinicianLastName',
+	'clinicianTitle',
 	'consentGroup',
+	'consentToBeContacted',
 	'guardianEmailAddress',
 	'guardianName',
 	'guardianPhoneNumber',
 	'guardianRelationship',
-	'participantEmailAddress',
 	'participantFirstName',
 	'participantLastName',
-	'participantPhoneNumber',
 	'participantPreferredName',
 ] as const;
 
@@ -52,15 +55,18 @@ export const TempFieldNames = z.enum(TEMP_FIELD_NAMES);
 export type TempFieldNames = z.infer<typeof TempFieldNames>;
 
 export const tempValidationSchema = z.object({
+	[TempFieldNames.enum.clinicianFirstName]: Name,
+	[TempFieldNames.enum.clinicianInstitutionalEmailAddress]: z.string().email(),
+	[TempFieldNames.enum.clinicianLastName]: Name,
+	[TempFieldNames.enum.clinicianTitle]: Name,
 	[TempFieldNames.enum.consentGroup]: ConsentGroup,
+	[TempFieldNames.enum.consentToBeContacted]: z.boolean(),
 	[TempFieldNames.enum.guardianEmailAddress]: z.string().email().optional(),
 	[TempFieldNames.enum.guardianName]: Name.optional(),
 	[TempFieldNames.enum.guardianPhoneNumber]: PhoneNumber.optional(),
 	[TempFieldNames.enum.guardianRelationship]: Name.optional(),
-	[TempFieldNames.enum.participantEmailAddress]: z.string().email(),
 	[TempFieldNames.enum.participantFirstName]: Name,
 	[TempFieldNames.enum.participantLastName]: Name,
-	[TempFieldNames.enum.participantPhoneNumber]: PhoneNumber,
 	[TempFieldNames.enum.participantPreferredName]: Name.optional(),
 });
 
