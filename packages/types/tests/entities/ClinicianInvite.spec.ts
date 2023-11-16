@@ -22,7 +22,7 @@ import { describe, expect, it } from 'vitest';
 import { ConsentGroup, ClinicianInvite } from '../../src/entities/index.js';
 
 describe('ClinicianInvite', () => {
-	it('Must define conditionally required fields on condition', () => {
+	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
 		expect(
 			ClinicianInvite.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
@@ -43,6 +43,30 @@ describe('ClinicianInvite', () => {
 				consentToBeContacted: true,
 			}).success,
 		).true;
+	});
+	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are provided', () => {
+		expect(
+			ClinicianInvite.safeParse({
+				id: 'CVCFbeKH2Njl1G41vCQme',
+				inviteSentDate: new Date(),
+				clinicianFirstName: 'Homer',
+				clinicianLastName: 'Simpson',
+				clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
+				clinicianTitleOrRole: 'Doctor',
+				participantFirstName: 'Bart',
+				participantLastName: 'Simpson',
+				participantEmailAddress: 'bart.simpson@example.com',
+				participantPhoneNumber: '6471234567',
+				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+				guardianName: 'Marge Simpson',
+				guardianPhoneNumber: '1234567890',
+				guardianEmailAddress: 'marge.simpson@example.com',
+				guardianRelationship: 'Wife',
+				consentToBeContacted: true,
+			}).success,
+		).true;
+	});
+	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and some guardian contact fields are NOT provided', () => {
 		expect(
 			ClinicianInvite.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
@@ -61,6 +85,8 @@ describe('ClinicianInvite', () => {
 				consentToBeContacted: true,
 			}).success,
 		).false;
+	});
+	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are NOT provided', () => {
 		expect(
 			ClinicianInvite.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
