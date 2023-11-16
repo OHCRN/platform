@@ -1,0 +1,51 @@
+.header {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 3rem;
+	
+	h3 {
+		font-size: theme('fontSize.lg');
+	}
+}
+
+.section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
+	text-align: center;
+}
+
+.divider {
+	width: 85%;
+	height: 0.05rem;
+	background: theme('colors.grayscale.500');
+	position: absolute;
+	top: 1.5rem;
+	right: -50%;
+}
+
+.divider.completed-section {
+	background: theme('colors.primary.500');
+}
+
+.success,
+.in-progress,
+.incomplete {
+	width: 3rem;
+	height: 3rem;
+}
+
+.success {
+	color: theme('colors.primary.500');
+}
+
+.in-progress {
+	color: theme('colors.warning.500');
+}
+
+.incomplete {
+	color: theme('colors.grayscale.500');
+}

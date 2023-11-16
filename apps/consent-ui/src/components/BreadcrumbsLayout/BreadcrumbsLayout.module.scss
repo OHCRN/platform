@@ -1,0 +1,29 @@
+.layout {
+	margin: 2rem 3rem;
+	width: 100%;
+}
+
+.links {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.link {
+	display: inline-flex;
+	align-items: center;
+	gap: 2rem;
+	color: theme('colors.secondary.500');
+	font-weight: 700;
+	text-decoration: underline;
+	transition: all 300ms ease-in-out;
+	&:hover {
+		color: theme('colors.secondary.400');
+	}
+}
+
+.arrow {
+	height: 0.9rem;
+	transform: rotate(180deg);
+}

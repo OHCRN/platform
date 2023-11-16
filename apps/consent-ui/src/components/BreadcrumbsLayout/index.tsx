@@ -17,11 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
-
 import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/ConsentForm/ConsentForm';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
+import RightArrow from 'src/components/Icons/Arrow';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RECONTACT} />;
-}
+import styles from './BreadcrumbsLayout.module.scss';
+
+const BreadcrumbsLayout = async ({
+	children,
+	currentLang,
+}: {
+	children: React.ReactNode;
+	currentLang: ValidLanguage;
+}) => {
+	return (
+		<div className={styles.layout}>
+			<div className={styles.links}>
+				<LocalizedLink name="dashboard" linkLang={currentLang} className={styles.link}>
+					<RightArrow className={styles.arrow} />
+					Back to Dashboard
+				</LocalizedLink>
+			</div>
+			{children}
+		</div>
+	);
+};
+
+export default BreadcrumbsLayout;

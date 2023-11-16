@@ -17,11 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import React from 'react';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/ConsentForm/ConsentForm';
-
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RECONTACT} />;
+function Success({ className }: { className?: string }) {
+	return (
+		<svg viewBox="0 0 53 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+			<g id="icons/inprogress">
+				<path
+					id="Stroke 1"
+					d="M36.9793 16.6667L21.7524 31.25L15.2266 25"
+					stroke="currentColor"
+					stroke-width="2"
+				/>
+				<path
+					id="Oval"
+					d="M51.2066 25C51.2066 38.2146 40.0086 49 26.1033 49C12.198 49 1 38.2146 1 25C1 11.7854 12.198 1 26.1033 1C40.0086 1 51.2066 11.7854 51.2066 25Z"
+					stroke="currentColor"
+					stroke-width="2"
+				/>
+			</g>
+		</svg>
+	);
 }
+
+export default Success;

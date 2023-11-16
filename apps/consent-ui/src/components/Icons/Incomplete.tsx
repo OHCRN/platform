@@ -17,11 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import React from 'react';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/ConsentForm/ConsentForm';
-
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RECONTACT} />;
+function Incomplete({ className }: { className?: string }) {
+	return (
+		<svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+			<g id="icons/inprogress">
+				<circle id="Oval" cx="25" cy="25" r="24" stroke="currentColor" stroke-width="2" />
+			</g>
+		</svg>
+	);
 }
+
+export default Incomplete;

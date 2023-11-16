@@ -20,7 +20,7 @@
 import { ConsentCategory } from 'types/entities';
 
 import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/ConsentForm';
+import ConsentForm from 'src/components/ConsentForm/ConsentForm';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
 	return <ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_REVIEW_SIGN} />;

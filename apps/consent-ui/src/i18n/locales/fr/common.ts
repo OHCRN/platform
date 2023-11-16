@@ -25,7 +25,7 @@ const dictionary = {
 	dashboard: 'Tableau de bord',
 	consent: 'Formulaires de consentement',
 	invite: 'Invitation du clinicien',
-	'consent-forms': 'Formulaires de consentement',
+	'consent-forms': 'OHCRN Formulaires de consentement',
 } satisfies CommonDictionary;
 
 export default dictionary;
