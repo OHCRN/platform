@@ -21,7 +21,7 @@ const dictionary = {
 	'clinician-first-name': 'Clinician First Name',
 	'clinician-institutional-email-address': 'Clinician Institutional Email Address',
 	'clinician-last-name': 'Clinician Last Name',
-	'clinician-title-or-role': 'Clinician Title or Role',
+	'clinician-title-role': 'Clinician Title/Role',
 	'consent-contact': 'Consent to be Contacted',
 	'consent-group': 'Consent Group',
 	'first-name': 'First Name',
