@@ -20,6 +20,7 @@
 'use client';
 
 import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { useDetectClickOutside } from 'react-detect-click-outside';
 
 import Card from 'src/components/Card';
 import Button from 'src/components/Button';
@@ -54,36 +55,40 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 		[setIsOpen, setConfig],
 	);
 
+	const ref = useDetectClickOutside({ onTriggered: () => setIsOpen(false) });
+
 	return (
 		<ModalContext.Provider value={value}>
 			{isOpen && (
-				<div className={styles.modal} onClick={() => setIsOpen(false)}>
-					<Card className={styles.card} dropShadow="none" onClick={(e) => e.stopPropagation()}>
-						{title && <h3>{title}</h3>}
-						{body}
-						{(actionButtonText || cancelButtonText) && (
-							<div className={styles.buttons}>
-								{cancelButtonText && onCancelClick && (
-									<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
-										{cancelButtonText}
-									</Button>
-								)}
-								{cancelButtonText && cancelLink && (
-									<LinkButton href={cancelLink} variant="secondary">
-										{cancelButtonText}
-									</LinkButton>
-								)}
-								{actionButtonText && onActionClick && (
-									<Button onClick={onActionClick} disabled={actionDisabled}>
-										{actionButtonText}
-									</Button>
-								)}
-								{actionButtonText && actionLink && (
-									<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
-								)}
-							</div>
-						)}
-					</Card>
+				<div className={styles.modal}>
+					<div ref={ref}>
+						<Card className={styles.card} dropShadow="none">
+							{title && <h3>{title}</h3>}
+							{body}
+							{(actionButtonText || cancelButtonText) && (
+								<div className={styles.buttons}>
+									{cancelButtonText && onCancelClick && (
+										<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
+											{cancelButtonText}
+										</Button>
+									)}
+									{cancelButtonText && cancelLink && (
+										<LinkButton href={cancelLink} variant="secondary">
+											{cancelButtonText}
+										</LinkButton>
+									)}
+									{actionButtonText && onActionClick && (
+										<Button onClick={onActionClick} disabled={actionDisabled}>
+											{actionButtonText}
+										</Button>
+									)}
+									{actionButtonText && actionLink && (
+										<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
+									)}
+								</div>
+							)}
+						</Card>
+					</div>
 				</div>
 			)}
 			{children}
