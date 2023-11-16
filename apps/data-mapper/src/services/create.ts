@@ -123,8 +123,6 @@ export const createInvite = async ({
 	guardianPhoneNumber,
 	guardianEmailAddress,
 	guardianRelationship,
-	inviteAcceptedDate,
-	inviteAccepted,
 	clinicianFirstName,
 	clinicianLastName,
 	clinicianInstitutionalEmailAddress,
@@ -146,8 +144,6 @@ export const createInvite = async ({
 		});
 		const inviteConsentData = await createInviteConsentData({
 			id: invitePiData.id,
-			inviteAcceptedDate,
-			inviteAccepted,
 			clinicianFirstName,
 			clinicianLastName,
 			clinicianInstitutionalEmailAddress,

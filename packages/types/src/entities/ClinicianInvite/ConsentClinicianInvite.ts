@@ -25,8 +25,6 @@ import { ClinicianInviteBase } from './ClinicianInvite.js';
 
 export const ConsentClinicianInviteRequest = ClinicianInviteBase.pick({
 	id: true,
-	inviteAcceptedDate: true,
-	inviteAccepted: true,
 	clinicianFirstName: true,
 	clinicianLastName: true,
 	clinicianInstitutionalEmailAddress: true,

@@ -50,8 +50,6 @@ export const ClinicianInviteBase = z.object({
 });
 
 export const ClinicianInviteRequest = ClinicianInviteBase.pick({
-	inviteAcceptedDate: true,
-	inviteAccepted: true,
 	clinicianFirstName: true,
 	clinicianLastName: true,
 	clinicianInstitutionalEmailAddress: true,
