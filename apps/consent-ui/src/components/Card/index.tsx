@@ -31,7 +31,6 @@ const Card = ({
 	dropShadow?: 'none' | 'sm' | 'base' | 'lg';
 	className?: string;
 	children: React.ReactNode;
-	onClick?: (e: React.SyntheticEvent<HTMLElement>) => any;
 }) => {
 	return (
 		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}>
