@@ -32,24 +32,37 @@ type Step = {
 };
 
 const ProgressHeader = async ({ steps }: { steps: Step[] }) => {
+	const currentStep = steps.findIndex((step) => step.inProgress) + 1;
 	return (
-		<div className={styles.header}>
-			{steps.map((step, index) => (
-				<div className={styles.step} key={step.name}>
-					{step.inProgress ? (
-						<InProgress className={styles['in-progress']} />
-					) : step.isComplete ? (
-						<Success className={styles.success} />
-					) : (
-						<Incomplete className={styles.incomplete} />
-					)}
-					<h3>{step.name}</h3>
-					{index != steps.length - 1 && (
-						<span className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />
-					)}
-				</div>
-			))}
-		</div>
+		<>
+			{/* Tablet and Desktop screens */}
+			<div className={styles.header}>
+				{steps.map((step, index) => (
+					<>
+						<div className={styles.step} key={step.name}>
+							{step.inProgress ? (
+								<InProgress className={styles['in-progress']} />
+							) : step.isComplete ? (
+								<Success className={styles.success} />
+							) : (
+								<Incomplete className={styles.incomplete} />
+							)}
+							<h3>{step.name}</h3>
+						</div>
+						{index != steps.length - 1 && (
+							<hr className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />
+						)}
+					</>
+				))}
+			</div>
+			{/* Mobile screens */}
+			<div className={styles['mobile-header']}>
+				<InProgress className={styles['in-progress']} />
+				<h3>
+					Step {currentStep} of {steps.length}
+				</h3>
+			</div>
+		</>
 	);
 };
 

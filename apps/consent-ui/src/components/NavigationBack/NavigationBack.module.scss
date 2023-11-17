@@ -1,5 +1,9 @@
 .layout {
-	margin: 2rem 3rem;
+	@media (min-width: theme('screens.sm')) {
+		margin: 2rem 3rem;
+	}
+	
+	margin: 1rem;
 	width: 100%;
 }
 
@@ -11,9 +15,14 @@
 }
 
 .link {
+	@media (min-width: theme('screens.sm')) {
+		gap: 2rem;
+	}
+
 	display: inline-flex;
 	align-items: center;
-	gap: 2rem;
+	gap: 1rem;
+
 	color: theme('colors.secondary.500');
 	font-weight: 700;
 	text-decoration: underline;

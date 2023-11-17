@@ -63,7 +63,7 @@ const ConsentWizard = async ({
 				<h3>{translate('consent-wizard', 'heading')}</h3>
 				<p>{translate('consent-wizard', 'subheading')}</p>
 			</div>
-			<Card dropShadow="sm">
+			<Card dropShadow="sm" className={styles['consent-form']}>
 				<ProgressHeader steps={progressHeaderSteps} />
 				<hr className={styles.divider} />
 				<div>

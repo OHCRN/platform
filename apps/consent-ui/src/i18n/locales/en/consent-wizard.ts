@@ -20,8 +20,8 @@
 const dictionary = {
 	INFORMED_CONSENT: '1. Informed Consent',
 	CONSENT_RELEASE_DATA: '2. Consent to Data Release ',
-	CONSENT_RESEARCH_PARTICIPATION: '3. Consent to Research Participation ',
-	CONSENT_RECONTACT: '4. Consent to Recontact',
+	CONSENT_RESEARCH_PARTICIPATION: '3. Consent for Research Participation ',
+	CONSENT_RECONTACT: '4. Consent for Recontact',
 	CONSENT_REVIEW_SIGN: '5. Review and Sign',
 	heading: 'OHCRN Consent Forms',
 	subheading:
