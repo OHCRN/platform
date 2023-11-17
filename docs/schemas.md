@@ -31,10 +31,10 @@ Both of these convert the schema to a `ZodEffects` type which "is a wrapper clas
 
 Zod's [`parse()`](https://zod.dev/?id=parse) method simultaneously validates the data and can also coerce any data types or transform fields, as outlined in the Zod schema.
 
-### Example: `ConsentClinicianInviteResponse`
+### Converting `null` values to `undefined`
 The way we treat optional fields in the app is by storing them as `undefined` if they were not provided a value. However, because these fields are stored as `null` in the database, we need to do preprocessing on the API response types coming out of the DAS, to convert any `null` values to `undefined`.
 
-This is done by overwriting the base fields from [`optional()`](https://zod.dev/?id=optional) (which accepts either the specified data type or `undefined`) to [`nullable()`](https://zod.dev/?id=nullable) (which accepts the specified data type or `null`). This ensures the schema will accept any `null` values as opposed to throwing a validation error. Then by adding a transform on any `nullable()` field, we can have Zod’s `parse()` convert it to `undefined` if the value is `null`. We do this in the `ConsentClinicianInvite` and `PIClinicianInvite` schemas, which are the response types for the Consent and PI DAS API calls to create a clinician invite. As an example, the `ConsentClinicianInviteResponse` schema looks like the following:
+This is done by overwriting the base fields from [`optional()`](https://zod.dev/?id=optional) (which accepts either the specified data type or `undefined`) to [`nullable()`](https://zod.dev/?id=nullable) (which accepts the specified data type or `null`). This ensures the schema will accept any `null` values as opposed to throwing a validation error. Then by adding a transform on any `nullable()` field, we can have Zod’s `parse()` convert it to `undefined` if the value is `null`. We do this in the `ConsentClinicianInviteResponse` and `PIClinicianInviteResponse` schemas, which are the response types for the Consent and PI DAS API calls to create a clinician invite. As an example, the `ConsentClinicianInviteResponse` schema looks like the following:
 
 ```ts
 export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
