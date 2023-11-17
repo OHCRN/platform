@@ -32,16 +32,16 @@ Both of these convert the schema to a `ZodEffects` type which "is a wrapper clas
 Zod's [`parse()`](https://zod.dev/?id=parse) method simultaneously validates the data and can also coerce any data types or transform fields, as outlined in the Zod schema.
 
 ### Example: `ConsentClinicianInviteResponse`
-The way we treat optional fields in the app is by storing them as `undefined` if they are not provided a value. However, because these fields are stored as `null` in the database, Prisma return types need to have these optional fields converted from `null` to `undefined`.
+The way we treat optional fields in the app is by storing them as `undefined` if they were not provided a value. However, because these fields are stored as `null` in the database, we need to do preprocessing on the API response types coming out of the DAS, to convert any `null` values to `undefined`.
 
-We can do this by overwriting the base fields from `optional` to `nullable`, and adding a `transform` on the field to convert it to `undefined` if the value if `null`. We do this in the `ClinicianInvite` schemas for the return types from the `Consent` and `PI` DAS API calls:
+This is done by overwriting the base fields from [`optional()`](https://zod.dev/?id=optional) (which accepts either the specified data type or `undefined`) to [`nullable()`](https://zod.dev/?id=nullable) (which accepts the specified data type or `null`). This ensures the schema will accept any `null` values as opposed to throwing a validation error. Then by adding a transform on any `nullable()` field, we can have Zod’s `parse()` convert it to `undefined` if the value is `null`. We do this in the `ConsentClinicianInvite` and `PIClinicianInvite` schemas, which are the response types for the Consent and PI DAS API calls to create a clinician invite. As an example, the `ConsentClinicianInviteResponse` schema looks like the following:
 
 ```ts
 export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
 	id: true,
 	inviteSentDate: true,
 	inviteAcceptedDate: true,
-	inviteAccepted: true,
+	inviteAccepted: true, // inviteAccepted is z.coerce.date().optional() in the ClinicianInviteBase schema
 	clinicianFirstName: true,
 	clinicianLastName: true,
 	clinicianInstitutionalEmailAddress: true,
@@ -51,8 +51,8 @@ export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
 }).extend({
 	inviteAcceptedDate: z.coerce
 		.date()
-		.nullable()
-		.transform((input) => input ?? undefined),
+		.nullable() // we overwrite it to be nullable() instead of optional()
+		.transform((input) => input ?? undefined), // then transform it to undefined if previously null
 });
 ```
 
@@ -74,13 +74,13 @@ describe('ConsentClinicianInviteResponse', () => {
 			consentToBeContacted: true,
 		});
 		expect(parsed.success).true;
-		expect(parsed.success && parsed.data.inviteAcceptedDate).to.equal(undefined); // is parsed to undefined
+		expect(parsed.success && parsed.data.inviteAcceptedDate).to.equal(undefined); // is converted to undefined
 	});
 	it('Accepts inviteAcceptedDate if not null', () => {
 		const parsed = ConsentClinicianInviteResponse.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteSentDate: new Date(),
-			inviteAcceptedDate: new Date('10-31-2023'),
+			inviteAcceptedDate: new Date('10-31-2023'), // already defined
 			inviteAccepted: false,
 			clinicianFirstName: 'Jonah',
 			clinicianLastName: 'Jameson',
