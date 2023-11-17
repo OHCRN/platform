@@ -17,15 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
+import { ConsentWizardDictionary } from '../en/consent-wizard';
 
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'back-to-dashboard': 'Retour au tableau de bord',
-} satisfies CommonDictionary;
+	INFORMED_CONSENT: '1. Consentement éclairé',
+	CONSENT_RELEASE_DATA: '2. Consentement à la divulgation de données',
+	CONSENT_RESEARCH_PARTICIPATION: '3. Consentement à la participation à la recherche',
+	CONSENT_RECONTACT: '4. Consentement à la reprise de contact',
+	CONSENT_REVIEW_SIGN: '5. Examen et signature',
+	heading: 'OHCRN Formulaires de consentement',
+	subheading:
+		"Pour être pleinement inscrit à l'OHCRN, veuillez remplir tous les champs obligatoires et soumettre le formulaire.",
+} satisfies ConsentWizardDictionary;
 
 export default dictionary;

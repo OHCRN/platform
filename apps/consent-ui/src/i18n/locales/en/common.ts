@@ -23,7 +23,6 @@ const dictionary = {
 	dashboard: 'Dashboard',
 	consent: 'Consent Forms',
 	invite: 'Clinician Invite',
-	'consent-forms': 'OHCRN Consent Forms',
 	'back-to-dashboard': 'Back to Dashboard',
 } satisfies Record<string, string>;
 

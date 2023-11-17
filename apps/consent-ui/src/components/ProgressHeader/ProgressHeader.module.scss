@@ -8,7 +8,7 @@
 	}
 }
 
-.section {
+.step {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -27,7 +27,7 @@
 	left: 68%;
 }
 
-.divider.completed-section {
+.divider.completed-step {
 	background: theme('colors.primary.500');
 }
 

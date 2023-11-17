@@ -27,6 +27,7 @@ import consentRecontactDictionary from 'src/i18n/locales/fr/consent-recontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consent-release-data';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consent-research-participation';
 import consentReviewSignDictionary from 'src/i18n/locales/fr/consent-review-sign';
+import consentWizardDictionary from 'src/i18n/locales/fr/consent-wizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
 import footerDictionary from 'src/i18n/locales/fr/footer';
 import genderDictionary from 'src/i18n/locales/fr/gender';
@@ -50,6 +51,7 @@ const dictionaries = {
 	'consent-research-participation': consentResearchParticipationDictionary,
 	'consent-recontact': consentRecontactDictionary,
 	'consent-review-sign': consentReviewSignDictionary,
+	'consent-wizard': consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
 	gender: genderDictionary,

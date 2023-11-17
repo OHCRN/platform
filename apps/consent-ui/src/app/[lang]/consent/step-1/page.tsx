@@ -19,19 +19,9 @@
 
 import { ConsentCategory } from 'types/entities';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import ConsentForm from 'src/components/ConsentForm/ConsentForm';
-import NavigationBack from 'src/components/NavigationBack';
+import ConsentWizard from 'src/components/ConsentWizard';
+import { ValidLanguage } from 'src/i18n';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	const translate = getTranslation(lang);
-	return (
-		<NavigationBack
-			currentLang={lang}
-			backLabel={translate('common', 'back-to-dashboard')}
-			backLinkName={'dashboard'}
-		>
-			<ConsentForm currentLang={lang} section={ConsentCategory.enum.INFORMED_CONSENT} />
-		</NavigationBack>
-	);
+	return <ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.INFORMED_CONSENT} />;
 }

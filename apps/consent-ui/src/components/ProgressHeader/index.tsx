@@ -17,7 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentStatus } from 'types/entities';
 import clsx from 'clsx';
 
 import Success from 'src/components/Icons/Success';
@@ -26,34 +25,27 @@ import Incomplete from 'src/components/Icons/Incomplete';
 
 import styles from './ProgressHeader.module.scss';
 
-type Section = {
-	title: string;
-	status: ConsentStatus;
-	currentSection?: boolean;
+type Step = {
+	name: string;
+	isComplete: boolean;
+	inProgress?: boolean;
 };
 
-const { INCOMPLETE, COMPLETE } = ConsentStatus.enum;
-
-const ProgressHeader = async ({ sections }: { sections: Section[] }) => {
+const ProgressHeader = async ({ steps }: { steps: Step[] }) => {
 	return (
 		<div className={styles.header}>
-			{sections.map((section, index) => (
-				<div className={styles.section} key={section.title}>
-					{section.currentSection ? (
+			{steps.map((step, index) => (
+				<div className={styles.step} key={step.name}>
+					{step.inProgress ? (
 						<InProgress className={styles['in-progress']} />
-					) : section.status == INCOMPLETE ? (
-						<Incomplete className={styles.incomplete} />
-					) : (
+					) : step.isComplete ? (
 						<Success className={styles.success} />
+					) : (
+						<Incomplete className={styles.incomplete} />
 					)}
-					<h3>{section.title}</h3>
-					{index != sections.length - 1 && (
-						<span
-							className={clsx(
-								styles.divider,
-								section.status === COMPLETE && styles['completed-section'],
-							)}
-						/>
+					<h3>{step.name}</h3>
+					{index != steps.length - 1 && (
+						<span className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />
 					)}
 				</div>
 			))}

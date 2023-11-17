@@ -17,15 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CommonDictionary } from 'src/i18n/locales/en/common';
-
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
-	consent: 'Formulaires de consentement',
-	invite: 'Invitation du clinicien',
-	'back-to-dashboard': 'Retour au tableau de bord',
-} satisfies CommonDictionary;
+	INFORMED_CONSENT: '1. Informed Consent',
+	CONSENT_RELEASE_DATA: '2. Consent to Data Release ',
+	CONSENT_RESEARCH_PARTICIPATION: '3. Consent to Research Participation ',
+	CONSENT_RECONTACT: '4. Consent to Recontact',
+	CONSENT_REVIEW_SIGN: '5. Review and Sign',
+	heading: 'OHCRN Consent Forms',
+	subheading:
+		'To be fully enrolled in OHCRN, please complete all required fields and submit the form.',
+} satisfies Record<string, string>;
+
+export type ConsentWizardDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;
