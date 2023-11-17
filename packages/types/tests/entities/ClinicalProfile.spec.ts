@@ -29,7 +29,7 @@ import {
 } from '../../src/entities/index.js';
 
 describe('ClinicalProfile', () => {
-	it('Must define self-identified gender if user chooses to self-identify', () => {
+	it('Parses correctly when gender is NOT PREFER_TO_SELF_IDENTIFY and selfIdentifiedGender is NOT provided', () => {
 		expect(
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
@@ -40,9 +40,10 @@ describe('ClinicalProfile', () => {
 				selfReportedGeneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'tREi8pepJ4sshATZJExqS',
-				selfIdentifiedGender: undefined,
 			}).success,
 		).true;
+	});
+	it('Parses correctly when gender is PREFER_TO_SELF_IDENTIFY and selfIdentifiedGender is provided', () => {
 		expect(
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
@@ -56,6 +57,8 @@ describe('ClinicalProfile', () => {
 				selfIdentifiedGender: 'Nulla labore amet minim nisi',
 			}).success,
 		).true;
+	});
+	it('Fails when gender is PREFER_TO_SELF_IDENTIFY and selfIdentifiedGender is NOT provided', () => {
 		expect(
 			ClinicalProfile.safeParse({
 				ancestry: Ancestry.enum.PREFER_NOT_TO_ANSWER,
