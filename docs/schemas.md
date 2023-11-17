@@ -5,7 +5,7 @@ This document describes how we use [Zod](https://zod.dev/) schemas to validate a
 ## Implementation
 
 ### Location
-All schemas are located in the `types` package under the `types/src/entities` directory. Common schemas (i.e. multiple complex schemas using the same base schema) are kept in directories by the base schema name (e.g. `ClinicianInvite`).
+All schemas are located in the `types` package under the [`types/src/entities`](../packages/types/src/entities/) directory. Common schemas (i.e. multiple complex schemas using the same base schema) are kept in directories by the base schema name (e.g. [`ClinicianInvite`](../packages/types/src/entities/ClinicianInvite/)).
 
 ### Creating Schemas
 See the [docs](https://zod.dev/?id=basic-usage) for creating schemas and the different data types supported by Zod.
@@ -14,6 +14,21 @@ See the [docs](https://zod.dev/?id=basic-usage) for creating schemas and the dif
 Many of our schemas have common fields. For instance, because of the way we split up most of the logical data models by DAS, we end up with a schema for the Consent DAS Clinician Invite that is comprised of half of the fields from the whole Clinician Invite schema. To avoid duplicate code, we handle this by extending the base schema to create the Consent DAS Clinician Invite schema. Zod provides multiple methods for this:
 - [`extend()`](https://zod.dev/?id=extend) takes all the fields from an existing schema and allows you to add new fields (and overwrite existing fields too!)
 - [`pick()` and `omit()`](https://zod.dev/?id=pickomit) takes the specified fields, or takes all the fields omitting the specified fields from an existing schema
+>**Note**: We prefer `pick` over `omit` because it is more readable to see exactly which fields are included, and it is generally safer. Say we add another field to the base schema but the subset does not change - using `pick` over `omit` in this case would prevent us from having to add another field to `omit` in the subset schema.
+
+For example, the `ConsentClinicianInviteRequest` looks like the following:
+
+```ts
+export const ConsentClinicianInviteRequest = ClinicianInviteBase.pick({
+	id: true,
+	clinicianFirstName: true,
+	clinicianLastName: true,
+	clinicianInstitutionalEmailAddress: true,
+	clinicianTitleOrRole: true,
+	consentGroup: true,
+	consentToBeContacted: true,
+});
+```
 
 Note that these are composable so you can chain as many of these as you want. **However, this does not apply when using [`refine()`](https://zod.dev/?id=refine) or [`transform()`](https://zod.dev/?id=transform)**.
 
