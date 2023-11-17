@@ -19,7 +19,7 @@
 
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
@@ -82,17 +82,18 @@ const ClinicianInviteFormEl = ({
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor
 	const watchConsentGroup = watch(TempFieldNames.enum.consentGroup);
+	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
 		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
-			guardianInfoFields.forEach((field) => {
-				register(field);
-			});
+			// guardian fields are registered on render
+			setShowGuardianFields(true);
 		} else {
+			setShowGuardianFields(false);
 			guardianInfoFields.forEach((field) => {
 				unregister(field);
 			});
 		}
-	}, [register, unregister, watchConsentGroup]);
+	}, [unregister, watchConsentGroup]);
 
 	// NOTE doesn't work. uncomment to see TS error
 	// const translateError: string = (error?: any) => {
@@ -101,7 +102,7 @@ const ClinicianInviteFormEl = ({
 	// };
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 600, width: '90%' }}>
 			<div>
 				<h3>{textDict['patient-information']}</h3>
 				<p>
@@ -154,47 +155,49 @@ const ClinicianInviteFormEl = ({
 				/>
 			</div>
 
-			<div style={{ background: 'lightgrey' }}>
-				{/* guardian fields are marked required in the UI - they're required if they're visible,
-				i.e. if the user has indicated the participant is a minor */}
-				<p>{textDict['enter-guardian-info']}</p>
-				<TextFieldSet
-					error={errors.guardianName?.type}
-					label={labelsDict['guardian-name'] || ''}
-					name={TempFieldNames.enum.guardianName}
-					register={register}
-					required
-				/>
-				<TextFieldSet
-					error={errors.guardianPhoneNumber?.type}
-					label={labelsDict['guardian-phone'] || ''}
-					name={TempFieldNames.enum.guardianPhoneNumber}
-					register={register}
-					required
-					type="tel"
-				/>
-				<TextFieldSet
-					error={errors.guardianEmailAddress?.type}
-					label={labelsDict['email'] || ''}
-					name={TempFieldNames.enum.guardianEmailAddress}
-					register={register}
-					required
-					type="email"
-				/>
-				<TextFieldSet
-					error={errors.guardianRelationship?.type}
-					label={labelsDict['guardian-relationship'] || ''}
-					name={TempFieldNames.enum.guardianRelationship}
-					register={register}
-					required
-				/>
-				<p>
-					{textDict['upload-file-description-1']}
-					<a href="">{textDict['upload-file-link']}</a>
-					{textDict['upload-file-description-2']}
-					{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
-				</p>
-			</div>
+			{showGuardianFields && (
+				<div style={{ background: 'lightgrey' }}>
+					{/* guardian fields are marked required in the UI - they're required if they're visible,
+						i.e. if the user has indicated the participant is a minor */}
+					<p>{textDict['enter-guardian-info']}</p>
+					<TextFieldSet
+						error={errors.guardianName?.type}
+						label={labelsDict['guardian-name'] || ''}
+						name={TempFieldNames.enum.guardianName}
+						register={register}
+						required
+					/>
+					<TextFieldSet
+						error={errors.guardianPhoneNumber?.type}
+						label={labelsDict['guardian-phone'] || ''}
+						name={TempFieldNames.enum.guardianPhoneNumber}
+						register={register}
+						required
+						type="tel"
+					/>
+					<TextFieldSet
+						error={errors.guardianEmailAddress?.type}
+						label={labelsDict['email'] || ''}
+						name={TempFieldNames.enum.guardianEmailAddress}
+						register={register}
+						required
+						type="email"
+					/>
+					<TextFieldSet
+						error={errors.guardianRelationship?.type}
+						label={labelsDict['guardian-relationship'] || ''}
+						name={TempFieldNames.enum.guardianRelationship}
+						register={register}
+						required
+					/>
+					<p>
+						{textDict['upload-file-description-1']}
+						<a href="">{textDict['upload-file-link']}</a>
+						{textDict['upload-file-description-2']}
+						{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
+					</p>
+				</div>
+			)}
 
 			<div>
 				<p>{textDict['after-registering']}</p>
