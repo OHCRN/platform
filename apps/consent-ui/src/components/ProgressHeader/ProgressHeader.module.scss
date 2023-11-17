@@ -1,7 +1,7 @@
 .header {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 3rem;
+	gap: 3%;
 	
 	h3 {
 		font-size: theme('fontSize.lg');
@@ -19,12 +19,12 @@
 }
 
 .divider {
-	width: 85%;
+	width: 80%;
 	height: 0.05rem;
 	background: theme('colors.grayscale.500');
 	position: absolute;
 	top: 1.5rem;
-	right: -50%;
+	left: 68%;
 }
 
 .divider.completed-section {
