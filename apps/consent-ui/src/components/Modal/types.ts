@@ -33,14 +33,14 @@ export type ModalConfig = {
 	cancelLink?: React.ComponentProps<typeof LinkButton>['href'];
 };
 
-export type ModalContext = {
-	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	setConfig: React.Dispatch<React.SetStateAction<ModalConfig>>;
+export type ModalContextType = {
+	openModal: (config: ModalConfig) => void;
+	closeModal: () => void;
 };
 
 // this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
 // its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
 export const defaultModalContext = {
-	setIsOpen: () => {},
-	setConfig: () => {},
+	openModal: () => {},
+	closeModal: () => {},
 };

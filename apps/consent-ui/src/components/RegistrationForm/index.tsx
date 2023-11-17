@@ -90,18 +90,18 @@ const RegistrationForm = () => {
 	};
 
 	// TODO: remove - just here to demo modal wrapper
-	const { setIsOpen, setConfig } = useModal();
+	const { openModal, closeModal } = useModal();
 	useEffect(() => {
-		setConfig({
+		const modalConfig = {
 			title: 'The participant is a minor. Please contact your clinician to register.',
 			actionButtonText: 'OK',
 			onActionClick: () => console.log('OK'),
-			onCancelClick: () => setIsOpen(false),
+			onCancelClick: closeModal,
 			cancelButtonText: 'Back to Homepage',
 			body: 'You have entered the information of a participant that is under the age of 18. All minors must have their guardian first contact their clinician to get started.',
-		});
-		setIsOpen(true);
-	}, [setIsOpen, setConfig]);
+		};
+		openModal(modalConfig);
+	}, [openModal, closeModal]);
 
 	return (
 		<form>

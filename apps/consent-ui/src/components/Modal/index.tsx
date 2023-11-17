@@ -19,17 +19,25 @@
 
 'use client';
 
-import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import {
+	ReactNode,
+	isValidElement,
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+	useState,
+} from 'react';
 import { useDetectClickOutside } from 'react-detect-click-outside';
 
 import Card from 'src/components/Card';
 import Button from 'src/components/Button';
 import LinkButton from 'src/components/Button/LinkButton';
 
-import { ModalConfig, ModalContext, defaultModalContext } from './types';
+import { ModalConfig, ModalContextType, defaultModalContext } from './types';
 import styles from './Modal.module.scss';
 
-const ModalContext = createContext<ModalContext>(defaultModalContext);
+const ModalContext = createContext<ModalContextType>(defaultModalContext);
 
 const ModalProvider = ({ children }: { children: ReactNode }) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -47,15 +55,28 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 		cancelDisabled,
 	} = config;
 
-	const value = useMemo(
-		() => ({
-			setIsOpen,
-			setConfig,
-		}),
+	const openModal = useCallback(
+		(config: ModalConfig) => {
+			setConfig(config);
+			setIsOpen(true);
+		},
 		[setIsOpen, setConfig],
 	);
 
-	const ref = useDetectClickOutside({ onTriggered: () => setIsOpen(false) });
+	const closeModal = useCallback(() => {
+		setConfig({});
+		setIsOpen(false);
+	}, [setIsOpen, setConfig]);
+
+	const value = useMemo(
+		() => ({
+			openModal,
+			closeModal,
+		}),
+		[openModal, closeModal],
+	);
+
+	const ref = useDetectClickOutside({ onTriggered: closeModal });
 
 	return (
 		<ModalContext.Provider value={value}>
@@ -64,7 +85,7 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 					<div ref={ref}>
 						<Card className={styles.card} dropShadow="none">
 							{title && <h3>{title}</h3>}
-							{body}
+							{isValidElement(body) ? body : <p>{body}</p>}
 							{(actionButtonText || cancelButtonText) && (
 								<div className={styles.buttons}>
 									{cancelButtonText && onCancelClick && (
