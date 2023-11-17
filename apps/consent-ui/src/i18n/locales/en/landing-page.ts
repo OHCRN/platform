@@ -19,7 +19,6 @@
 
 const dictionary = {
 	title: 'Welcome to the OHCRN Registry',
-	'hero-background-img-alt': '',
 	'ohcrn-description':
 		'Ontario Hereditary Cancer Research Network (OHCRN) collects information on individuals with a high chance of getting cancer. We help researchers collect data so they can find cancer earlier and treat it more effectively.',
 	'more-about-ohcrn': 'More About OHCRN',

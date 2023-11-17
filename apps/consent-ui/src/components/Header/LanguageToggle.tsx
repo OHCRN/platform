@@ -20,9 +20,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
-import clsx from 'clsx';
 
-import styles from 'src/components/Button/Button.module.scss';
 import { ValidLanguage } from 'src/i18n';
 import LocalizedLink from 'src/components/Link/LocalizedLink';
 import { getLinkNameByPath, getUnselectedLang } from 'src/components/Link/utils';
@@ -44,7 +42,7 @@ function LanguageToggle({
 			linkLang={langToSelect}
 			role="button"
 			color="blue"
-			className={clsx(styles.base, styles.secondary, styles.blue)}
+			variant="secondary"
 		>
 			{children}
 		</LocalizedLink>
