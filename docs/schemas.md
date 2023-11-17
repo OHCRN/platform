@@ -55,8 +55,8 @@ This is done by overwriting the base fields from [`optional()`](https://zod.dev
 export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
 	id: true,
 	inviteSentDate: true,
-	inviteAcceptedDate: true,
-	inviteAccepted: true, // inviteAccepted is z.coerce.date().optional() in the ClinicianInviteBase schema
+	inviteAcceptedDate: true, // inviteAcceptedDate is z.coerce.date().optional() in the ClinicianInviteBase schema
+	inviteAccepted: true,
 	clinicianFirstName: true,
 	clinicianLastName: true,
 	clinicianInstitutionalEmailAddress: true,
@@ -71,7 +71,7 @@ export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
 });
 ```
 
-The expected behaviour is described in the test cases below:
+The expected behaviour is described in the test cases below (we use `safeParse()` in the test cases so no errors are actually thrown, see the [docs](https://zod.dev/?id=safeparse) for more details):
 
 ```ts
 describe('ConsentClinicianInviteResponse', () => {
