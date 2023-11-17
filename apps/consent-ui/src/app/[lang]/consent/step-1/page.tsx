@@ -19,14 +19,19 @@
 
 import { ConsentCategory } from 'types/entities';
 
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 import ConsentForm from 'src/components/ConsentForm/ConsentForm';
-import BreadcrumbsLayout from 'src/components/BreadcrumbsLayout';
+import NavigationBack from 'src/components/NavigationBack';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	const translate = getTranslation(lang);
 	return (
-		<BreadcrumbsLayout currentLang={lang}>
+		<NavigationBack
+			currentLang={lang}
+			backLabel={translate('common', 'back-to-dashboard')}
+			backLinkName={'dashboard'}
+		>
 			<ConsentForm currentLang={lang} section={ConsentCategory.enum.INFORMED_CONSENT} />
-		</BreadcrumbsLayout>
+		</NavigationBack>
 	);
 }

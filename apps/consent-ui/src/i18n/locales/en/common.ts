@@ -24,6 +24,7 @@ const dictionary = {
 	consent: 'Consent Forms',
 	invite: 'Clinician Invite',
 	'consent-forms': 'OHCRN Consent Forms',
+	'back-to-dashboard': 'Back to Dashboard',
 } satisfies Record<string, string>;
 
 export type CommonDictionary = Record<keyof typeof dictionary, string>;

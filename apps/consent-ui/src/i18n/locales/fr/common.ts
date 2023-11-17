@@ -26,6 +26,7 @@ const dictionary = {
 	consent: 'Formulaires de consentement',
 	invite: 'Invitation du clinicien',
 	'consent-forms': 'OHCRN Formulaires de consentement',
+	'back-to-dashboard': 'Retour au tableau de bord',
 } satisfies CommonDictionary;
 
 export default dictionary;

@@ -21,21 +21,25 @@ import { ValidLanguage } from 'src/i18n';
 import LocalizedLink from 'src/components/Link/LocalizedLink';
 import RightArrow from 'src/components/Icons/Arrow';
 
-import styles from './BreadcrumbsLayout.module.scss';
+import styles from './NavigationBack.module.scss';
 
-const BreadcrumbsLayout = async ({
+const NavigationBack = async ({
 	children,
 	currentLang,
+	backLabel,
+	backLinkName,
 }: {
 	children: React.ReactNode;
 	currentLang: ValidLanguage;
+	backLabel: string;
+	backLinkName: React.ComponentProps<typeof LocalizedLink>['name'];
 }) => {
 	return (
 		<div className={styles.layout}>
 			<div className={styles.links}>
-				<LocalizedLink name="dashboard" linkLang={currentLang} className={styles.link}>
+				<LocalizedLink name={backLinkName} linkLang={currentLang} className={styles.link}>
 					<RightArrow className={styles.arrow} />
-					Back to Dashboard
+					{backLabel}
 				</LocalizedLink>
 			</div>
 			{children}
@@ -43,4 +47,4 @@ const BreadcrumbsLayout = async ({
 	);
 };
 
-export default BreadcrumbsLayout;
+export default NavigationBack;
