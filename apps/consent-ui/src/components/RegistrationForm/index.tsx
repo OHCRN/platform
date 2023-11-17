@@ -19,7 +19,7 @@
 
 'use client';
 
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
@@ -28,6 +28,7 @@ import useRecaptcha from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/RecaptchaCheckbox';
 import { useAppConfigContext } from 'src/components/AppConfigContextProvider';
 import Notification from 'src/components/Notification';
+import { useModal } from 'src/components/Modal';
 
 const RegistrationForm = () => {
 	const appConfig = useAppConfigContext();
@@ -87,6 +88,20 @@ const RegistrationForm = () => {
 
 		onRecaptchaChange();
 	};
+
+	// TODO: remove - just here to demo modal wrapper
+	const { openModal, closeModal } = useModal();
+	useEffect(() => {
+		const modalConfig = {
+			title: 'The participant is a minor. Please contact your clinician to register.',
+			actionButtonText: 'OK',
+			onActionClick: () => console.log('OK'),
+			onCancelClick: closeModal,
+			cancelButtonText: 'Back to Homepage',
+			body: 'You have entered the information of a participant that is under the age of 18. All minors must have their guardian first contact their clinician to get started.',
+		};
+		openModal(modalConfig);
+	}, [openModal, closeModal]);
 
 	return (
 		<form>

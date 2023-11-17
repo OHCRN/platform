@@ -22,6 +22,8 @@ import Container from 'src/components/Container';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
 
+import ModalProvider from '../Modal';
+
 import styles from './PageLayout.module.scss';
 
 const PageLayout = async ({
@@ -32,11 +34,13 @@ const PageLayout = async ({
 	currentLang: ValidLanguage;
 }) => {
 	return (
-		<Container>
-			<Header currentLang={currentLang} />
-			<main className={styles.main}>{children}</main>
-			<Footer currentLang={currentLang} />
-		</Container>
+		<ModalProvider>
+			<Container>
+				<Header currentLang={currentLang} />
+				<main className={styles.main}>{children}</main>
+				<Footer currentLang={currentLang} />
+			</Container>
+		</ModalProvider>
 	);
 };
 

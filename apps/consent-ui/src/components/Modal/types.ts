@@ -17,26 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
+import Button from '../Button';
+import LinkButton from '../Button/LinkButton';
 
-import styles from './Card.module.scss';
-
-const Card = ({
-	layout = 'column',
-	dropShadow = 'base',
-	className,
-	children,
-}: {
-	layout?: 'column' | 'row';
-	dropShadow?: 'none' | 'sm' | 'base' | 'lg';
-	className?: string;
-	children: React.ReactNode;
-}) => {
-	return (
-		<div className={clsx(styles.card, styles[layout], styles[`shadow-${dropShadow}`], className)}>
-			{children}
-		</div>
-	);
+export type ModalConfig = {
+	title?: string;
+	body?: React.ReactNode;
+	actionButtonText?: React.ReactNode;
+	actionDisabled?: boolean;
+	cancelButtonText?: React.ReactNode;
+	cancelDisabled?: boolean;
+	onActionClick?: React.ComponentProps<typeof Button>['onClick'];
+	actionLink?: React.ComponentProps<typeof LinkButton>['href'];
+	onCancelClick?: React.ComponentProps<typeof Button>['onClick'];
+	cancelLink?: React.ComponentProps<typeof LinkButton>['href'];
 };
 
-export default Card;
+export type ModalContextType = {
+	openModal: (config: ModalConfig) => void;
+	closeModal: () => void;
+};
+
+// this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
+// its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
+export const defaultModalContext = {
+	openModal: () => {},
+	closeModal: () => {},
+};
