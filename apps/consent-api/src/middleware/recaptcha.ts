@@ -18,9 +18,10 @@
  */
 
 import axios from 'axios';
-import { Request, Response, NextFunction } from 'express';
+import { getAppConfig } from '../config.js';
 
 const verifyRecaptcha = async (recaptchaToken?: string | null) => {
+	const config = getAppConfig();
 	if (!recaptchaToken) {
 		// token not required for dev, but will be processed if provided.
 		return process.env.NODE_ENV === 'development';
@@ -28,7 +29,7 @@ const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 
 	try {
 		const recaptchaVerification = await axios.post(
-			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+			`https://www.google.com/recaptcha/api/siteverify?secret=${config.recaptcha.secretKey}&response=${recaptchaToken}`,
 		);
 		console.log('success?');
 		return !!recaptchaVerification.data.success;
