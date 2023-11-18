@@ -18,10 +18,13 @@
  */
 
 import axios from 'axios';
+import { RequestHandler } from 'express';
+
 import { getAppConfig } from '../config.js';
 
 const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	const config = getAppConfig();
+
 	if (!recaptchaToken) {
 		// token not required for dev, but will be processed if provided.
 		return process.env.NODE_ENV === 'development';
@@ -39,7 +42,26 @@ const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	}
 };
 
-export const recaptchaMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+/**
+ * Router middleware to ensure the incoming request includes a valid reCAPTCHA token.
+ * When added to a router, it is expected that the incoming request has a property in the request body
+ *  containing a valid reCAPTCHA token. Any request missing this token or with an invalid token will be
+ *  rejected with an HTTP 400 status.
+ *
+ * **Note:** the openAPI docs for this method will need to be manually updated to declare that a recaptcha
+ *  token is needed!
+ * @example
+ * ```
+ * router.post('/', recaptchaMiddleware, async (req, res) => {
+ * 	// handle request knowing it has passed recaptcha validation
+ * }
+ * ```
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+export const recaptchaMiddleware: RequestHandler = async (req, res, next) => {
 	const { recaptchaToken } = req.body;
 
 	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
@@ -47,6 +69,7 @@ export const recaptchaMiddleware = async (req: Request, res: Response, next: Nex
 	if (recaptchaVerified) {
 		next();
 	} else {
-		res.status(500).send('reCAPTCHA error');
+		// TODO: Need a formatted error for reCAPTCHA validation failures
+		res.status(400).send('reCAPTCHA error');
 	}
 };
