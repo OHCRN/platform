@@ -20,7 +20,7 @@
 import { Router } from 'express';
 import { ClinicianInviteForm } from 'types/entities';
 
-import { recaptchaMiddleware } from '../utils/recaptcha.js';
+import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 import logger from '../logger.js';
 
 /**

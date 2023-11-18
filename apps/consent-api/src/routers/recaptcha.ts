@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 
-import { recaptchaMiddleware } from '../utils/recaptcha.js';
+import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 
 const router = Router();
 
