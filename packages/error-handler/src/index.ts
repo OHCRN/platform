@@ -17,7 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler } from 'express';
+import { ErrorResponse } from 'types/httpErrors';
 
 /**
  * Set default response for unhandled errors to be json instead of html.
@@ -27,22 +28,22 @@ import { NextFunction, Request, Response } from 'express';
  * @param next
  * @returns
  */
-function errorHandler(err: unknown, _req: Request, res: Response, next: NextFunction): any {
+const errorHandler: ErrorRequestHandler = (err, _req, res, next) => {
 	if (res.headersSent) {
 		return next(err);
 	}
 
 	const defaultName = 'ServerError';
-	const error = err instanceof Error ? err.name || defaultName : defaultName;
+	const error = (err instanceof Error && err.name) || defaultName;
 
 	const status = 500;
 
-	const message = 'An error occurred.';
+	const message = (err.message && `${err.message}`) || 'An error occurred.';
 
-	res.status(status).json({ error, message });
+	res.status(status).json(ErrorResponse(defaultName, message));
 
 	// Pass the error to any other error handlers, including express default.
 	next(err);
-}
+};
 
 export default errorHandler;
