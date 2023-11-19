@@ -19,7 +19,7 @@
 
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
-import { RequestValidationError } from 'types/httpErrors';
+import { RequestValidationErrorResponse } from 'types/httpErrors';
 import { ZodSchema } from 'zod';
 
 /**
@@ -58,7 +58,7 @@ function withRequestBodyValidation<ReqBody>(
 		}
 
 		// Request body failed validation
-		response.status(400).json(RequestValidationError(validationResult.error));
+		response.status(400).json(RequestValidationErrorResponse(validationResult.error));
 	};
 }
 
