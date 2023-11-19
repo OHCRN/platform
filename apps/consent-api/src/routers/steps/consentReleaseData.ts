@@ -18,20 +18,21 @@
  */
 
 import { Router } from 'express';
-import { ConsentRecontactRequest, ZodError } from 'types/entities';
+import { ConsentReleaseDataRequest } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
-import logger from '../logger.js';
+import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/consent-for-recontact:
+ * /wizard/steps/consent-to-release-data:
  *   post:
  *     tags:
  *       - Consent Wizard
- *     name: Submit Consent for Re-Contact
- *     description: Form submission for Consent Wizard - Consent for Re-Contact
+ *     name: Submit Consent to Release Data
+ *     description: Form submission for Consent Wizard - Consent to Release Data
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -39,14 +40,14 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ConsentRecontactRequest'
+ *             $ref: '#/components/schemas/ConsentReleaseDataRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentRecontactResponse'
+ *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
  *       400:
  *         description: Bad Request
  *       401:
@@ -56,30 +57,23 @@ const router = Router();
  *       500:
  *         description: Server error
  */
-router.post('/', async (req, res) => {
-	// TODO: implement when auth layer is ready
-	try {
-		const data = ConsentRecontactRequest.parse(req.body);
-		// TODO: make updates and return modified data
-		res.status(201).send(data);
-	} catch (error) {
-		logger.error(error);
-		if (error instanceof ZodError) {
-			res.status(400).send({ message: 'Bad Request' });
-		} else {
-			res.status(500).send({ message: 'Server error' });
-		}
-	}
-});
+router.post(
+	'/',
+	withRequestBodyValidation(ConsentReleaseDataRequest, async (req, res) => {
+		// TODO: implement when auth layer is ready
+
+		res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	}),
+);
 
 /**
  * @openapi
- * /wizard/steps/consent-for-recontact:
+ * /wizard/steps/consent-to-release-data:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Retrieve Consent for Re-Contact
- *     description: Participant's latest response for Consent Wizard - Consent for Re-Contact
+ *     name: Retrieve Consent to Release Data
+ *     description: Participant's latest response for Consent Wizard - Consent to Release Data
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -88,7 +82,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentRecontactResponse'
+ *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -98,14 +92,8 @@ router.post('/', async (req, res) => {
  */
 router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
-	try {
-		// TODO: actually retrieve user data
-		const data = {};
-		res.status(200).send(data);
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
+
+	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;

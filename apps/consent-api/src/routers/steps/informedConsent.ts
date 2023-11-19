@@ -18,20 +18,21 @@
  */
 
 import { Router } from 'express';
-import { ConsentResearchParticipationRequest, ZodError } from 'types/entities';
+import { ConsentQuestionId } from 'types/entities';
 
-import logger from '../logger.js';
+import logger from '../../logger.js';
+import { ErrorResponse } from 'types/httpErrors';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/consent-for-research-participation:
+ * /wizard/steps/informed-consent:
  *   post:
  *     tags:
  *       - Consent Wizard
- *     name: Submit Consent for Research Participation
- *     description: Form submission for Consent Wizard - Consent for Research Participation
+ *     name: Submit Informed Consent
+ *     description: Form submission for Consent Wizard - Informed Consent
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -39,16 +40,14 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ConsentResearchParticipationRequest'
+ *             $ref: '#/components/schemas/InformedConsentRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
- *       400:
- *         description: Bad Request
+ *               $ref: '#/components/schemas/InformedConsentResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -58,28 +57,18 @@ const router = Router();
  */
 router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
-	try {
-		const data = ConsentResearchParticipationRequest.parse(req.body);
-		// TODO: make updates and return modified data
-		res.status(201).send(data);
-	} catch (error) {
-		logger.error(error);
-		if (error instanceof ZodError) {
-			res.status(400).send({ message: 'Bad Request' });
-		} else {
-			res.status(500).send({ message: 'Server error' });
-		}
-	}
+
+	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 /**
  * @openapi
- * /wizard/steps/consent-for-research-participation:
+ * /wizard/steps/informed-consent:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Retrieve Consent for Research Participation
- *     description: Participant's latest response for Consent Wizard - Consent for Research Participation
+ *     name: Retrieve Informed Consent
+ *     description: Participant's latest response for Consent Wizard - Informed Consent
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -88,7 +77,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
+ *               $ref: '#/components/schemas/InformedConsentResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -97,11 +86,11 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
+	logger.info(`GET /wizard/steps/informed-consent`);
 	// TODO: implement when auth layer is ready
 	try {
-		// TODO: actually retrieve user data
-		const data = {};
-		res.status(200).send(data);
+		logger.info(`Retrieved informed consent`);
+		res.status(200).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).send({ message: 'Server error' });

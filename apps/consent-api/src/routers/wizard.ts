@@ -19,10 +19,11 @@
 
 import { Router } from 'express';
 import { ConsentWizardProgress } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
 import logger from '../logger.js';
 
-import StepsRouter from './steps.js';
+import StepsRouter from './steps/index.js';
 
 /**
  * @openapi
@@ -65,9 +66,9 @@ router.use('/steps', StepsRouter);
  *         description: Server error
  */
 router.get('/pdf', async (req, res) => {
-	logger.info(`GET /wizard/pdf`);
 	// TODO: implement and update JSDocs responses schema
-	res.status(200).send({ message: 'Success' });
+
+	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 /**

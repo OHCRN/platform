@@ -19,9 +19,11 @@
 
 import { Router } from 'express';
 import { ClinicianInviteForm } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
+import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
-import logger from '../logger.js';
+import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
 
 /**
  * @openapi
@@ -32,6 +34,7 @@ import logger from '../logger.js';
 
 const router = Router();
 
+const ClinicialInviteSchema = z.object({ data: ClinicianInviteForm });
 /**
  * @openapi
  * /invites:
@@ -63,17 +66,12 @@ const router = Router();
  *       500:
  *         description: Server error
  */
-router.post('/', recaptchaMiddleware, async (req, res) => {
-	logger.info(`POST /invites`);
-	try {
-		const data = ClinicianInviteForm.parse(req.body.data);
-		// TODO: implement
-		logger.info(data && 'Created clinician invite');
-		res.status(201).send({ message: 'Success' });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
-});
+router.post(
+	'/',
+	recaptchaMiddleware,
+	withRequestBodyValidation(ClinicialInviteSchema, async (req, res) => {
+		res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	}),
+);
 
 export default router;

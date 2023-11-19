@@ -21,7 +21,6 @@ import { Router } from 'express';
 import { APIStatus } from 'types/services';
 
 import packageJson from '../../package.json' assert { type: 'json' };
-import logger from '../logger.js';
 
 /**
  * @openapi
@@ -48,8 +47,8 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
 	// TODO: add real health check
-	logger.info(`GET /status`);
 	const response: APIStatus = { status: `API is healthy.`, version: packageJson.version };
+
 	res.json(response);
 });
 

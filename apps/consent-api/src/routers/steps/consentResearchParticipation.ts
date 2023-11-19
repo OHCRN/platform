@@ -18,20 +18,21 @@
  */
 
 import { Router } from 'express';
-import { ConsentReleaseDataRequest, ZodError } from 'types/entities';
+import { ConsentResearchParticipationRequest } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
-import logger from '../logger.js';
+import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/consent-to-release-data:
+ * /wizard/steps/consent-for-research-participation:
  *   post:
  *     tags:
  *       - Consent Wizard
- *     name: Submit Consent to Release Data
- *     description: Form submission for Consent Wizard - Consent to Release Data
+ *     name: Submit Consent for Research Participation
+ *     description: Form submission for Consent Wizard - Consent for Research Participation
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -39,14 +40,14 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ConsentReleaseDataRequest'
+ *             $ref: '#/components/schemas/ConsentResearchParticipationRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
+ *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
  *       400:
  *         description: Bad Request
  *       401:
@@ -56,30 +57,23 @@ const router = Router();
  *       500:
  *         description: Server error
  */
-router.post('/', async (req, res) => {
-	// TODO: implement when auth layer is ready
-	try {
-		const data = ConsentReleaseDataRequest.parse(req.body);
-		// TODO: make updates and return modified data
-		res.status(201).send(data);
-	} catch (error) {
-		logger.error(error);
-		if (error instanceof ZodError) {
-			res.status(400).send({ message: 'Bad Request' });
-		} else {
-			res.status(500).send({ message: 'Server error' });
-		}
-	}
-});
+router.post(
+	'/',
+	withRequestBodyValidation(ConsentResearchParticipationRequest, async (req, res) => {
+		// TODO: implement when auth layer is ready
+
+		res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	}),
+);
 
 /**
  * @openapi
- * /wizard/steps/consent-to-release-data:
+ * /wizard/steps/consent-for-research-participation:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Retrieve Consent to Release Data
- *     description: Participant's latest response for Consent Wizard - Consent to Release Data
+ *     name: Retrieve Consent for Research Participation
+ *     description: Participant's latest response for Consent Wizard - Consent for Research Participation
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -88,7 +82,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
+ *               $ref: '#/components/schemas/ConsentResearchParticipationResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -98,14 +92,7 @@ router.post('/', async (req, res) => {
  */
 router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
-	try {
-		// TODO: actually retrieve user data
-		const data = {};
-		res.status(200).send(data);
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
+	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;

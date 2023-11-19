@@ -18,20 +18,21 @@
  */
 
 import { Router } from 'express';
-import { ConsentQuestionId } from 'types/entities';
+import { ConsentRecontactRequest } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
-import logger from '../logger.js';
+import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/informed-consent:
+ * /wizard/steps/consent-for-recontact:
  *   post:
  *     tags:
  *       - Consent Wizard
- *     name: Submit Informed Consent
- *     description: Form submission for Consent Wizard - Informed Consent
+ *     name: Submit Consent for Re-Contact
+ *     description: Form submission for Consent Wizard - Consent for Re-Contact
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -39,14 +40,16 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/InformedConsentRequest'
+ *             $ref: '#/components/schemas/ConsentRecontactRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InformedConsentResponse'
+ *               $ref: '#/components/schemas/ConsentRecontactResponse'
+ *       400:
+ *         description: Bad Request
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -54,26 +57,23 @@ const router = Router();
  *       500:
  *         description: Server error
  */
-router.post('/', async (req, res) => {
-	logger.info(`POST /wizard/steps/informed-consent`);
-	// TODO: implement when auth layer is ready
-	try {
-		logger.info(`Submitted informed consent`);
-		res.status(201).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
-});
+router.post(
+	'/',
+	withRequestBodyValidation(ConsentRecontactRequest, async (req, res) => {
+		// TODO: implement when auth layer is ready
+
+		res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	}),
+);
 
 /**
  * @openapi
- * /wizard/steps/informed-consent:
+ * /wizard/steps/consent-for-recontact:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Retrieve Informed Consent
- *     description: Participant's latest response for Consent Wizard - Informed Consent
+ *     name: Retrieve Consent for Re-Contact
+ *     description: Participant's latest response for Consent Wizard - Consent for Re-Contact
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -82,7 +82,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InformedConsentResponse'
+ *               $ref: '#/components/schemas/ConsentRecontactResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -91,15 +91,9 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/informed-consent`);
 	// TODO: implement when auth layer is ready
-	try {
-		logger.info(`Retrieved informed consent`);
-		res.status(200).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
+
+	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;
