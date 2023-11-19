@@ -17,9 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
+import errorHandler from 'error-handler';
 
 import { AppConfig } from './config.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
@@ -31,7 +32,6 @@ import StatusRouter from './routers/status.js';
 import SwaggerRouter from './routers/swagger.js';
 import UserRouter from './routers/user.js';
 import WizardRouter from './routers/wizard.js';
-import errorHandler from 'error-handler';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -45,7 +45,7 @@ const App = (config: AppConfig) => {
 		);
 	}
 
-	app.set('port', config.port);
+	app.set('port', config.express.port);
 	app.use(bodyParser.json());
 
 	// set up routers

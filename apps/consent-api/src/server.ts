@@ -34,6 +34,10 @@ let server: Server;
 	const port = app.get('port');
 	server = app.listen(port, () => {
 		logger.info(`Server listening on port ${port}`);
+
+		if (!appConfig.isProduction) {
+			logger.debug(`Access Swagger API Docs at http://localhost:${port}/api-docs`);
+		}
 	});
 
 	process.on('SIGINT', () => {
