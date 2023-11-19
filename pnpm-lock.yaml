@@ -396,7 +396,7 @@ importers:
         specifier: ^4.18.2
         version: 4.18.2
       types:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../types
     devDependencies:
       '@types/express':
