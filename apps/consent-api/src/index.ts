@@ -60,6 +60,8 @@ const App = (config: AppConfig) => {
 	app.use('/user', UserRouter);
 	app.use('/wizard', WizardRouter);
 
+	// Error Handler should be last function added so that
+	// it can capture thrown errors from all previous handlers
 	app.use(errorHandler);
 
 	return app;
