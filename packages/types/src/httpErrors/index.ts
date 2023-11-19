@@ -1,2 +1,2 @@
 export * from './ErrorResponse.js';
-export * from './RequestValidationError.js';
+export * from './RequestValidationErrorResponse.js';
