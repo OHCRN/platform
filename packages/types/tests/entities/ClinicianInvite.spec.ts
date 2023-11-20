@@ -19,12 +19,17 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ConsentGroup, ClinicianInvite } from '../../src/entities/index.js';
+import {
+	ConsentGroup,
+	ClinicianInviteResponse,
+	ConsentClinicianInviteResponse,
+	PIClinicianInviteResponse,
+} from '../../src/entities/index.js';
 
-describe('ClinicianInvite', () => {
+describe('ClinicianInviteResponse', () => {
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
 		expect(
-			ClinicianInvite.safeParse({
+			ClinicianInviteResponse.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -46,7 +51,7 @@ describe('ClinicianInvite', () => {
 	});
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are provided', () => {
 		expect(
-			ClinicianInvite.safeParse({
+			ClinicianInviteResponse.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -68,7 +73,7 @@ describe('ClinicianInvite', () => {
 	});
 	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and some guardian contact fields are NOT provided', () => {
 		expect(
-			ClinicianInvite.safeParse({
+			ClinicianInviteResponse.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -88,7 +93,7 @@ describe('ClinicianInvite', () => {
 	});
 	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are NOT provided', () => {
 		expect(
-			ClinicianInvite.safeParse({
+			ClinicianInviteResponse.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -103,5 +108,85 @@ describe('ClinicianInvite', () => {
 				consentToBeContacted: true,
 			}).success,
 		).false;
+	});
+});
+
+describe('ConsentClinicianInviteResponse', () => {
+	it('Correctly converts inviteAcceptedDate from null to undefined', () => {
+		const parsed = ConsentClinicianInviteResponse.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			inviteSentDate: new Date(),
+			inviteAcceptedDate: null,
+			inviteAccepted: false,
+			clinicianFirstName: 'Jonah',
+			clinicianLastName: 'Jameson',
+			clinicianInstitutionalEmailAddress: 'jonah.jameson@example.com',
+			clinicianTitleOrRole: 'Physician',
+			consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+			consentToBeContacted: true,
+		});
+		expect(parsed.success).true;
+		expect(parsed.success && parsed.data.inviteAcceptedDate).to.equal(undefined);
+	});
+	it('Accepts inviteAcceptedDate if not null', () => {
+		const parsed = ConsentClinicianInviteResponse.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			inviteSentDate: new Date(),
+			inviteAcceptedDate: new Date('10-31-2023'),
+			inviteAccepted: false,
+			clinicianFirstName: 'Jonah',
+			clinicianLastName: 'Jameson',
+			clinicianInstitutionalEmailAddress: 'jonah.jameson@example.com',
+			clinicianTitleOrRole: 'Physician',
+			consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+			consentToBeContacted: true,
+		});
+		expect(parsed.success).true;
+		expect(parsed.success && parsed.data.inviteAcceptedDate?.getTime()).to.equal(
+			new Date('10-31-2023').getTime(),
+		);
+	});
+});
+
+describe('PIClinicianInviteResponse', () => {
+	it('Correctly converts optional values from null to undefined', () => {
+		const parsed = PIClinicianInviteResponse.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			participantFirstName: 'John',
+			participantLastName: 'Green',
+			participantEmailAddress: 'john.green@example.com',
+			participantPhoneNumber: '4155551234',
+			participantPreferredName: null,
+			guardianName: null,
+			guardianPhoneNumber: null,
+			guardianEmailAddress: null,
+			guardianRelationship: null,
+		});
+		expect(parsed.success).true;
+		expect(parsed.success && parsed.data.participantPreferredName).to.equal(undefined);
+		expect(parsed.success && parsed.data.guardianName).to.equal(undefined);
+		expect(parsed.success && parsed.data.guardianPhoneNumber).to.equal(undefined);
+		expect(parsed.success && parsed.data.guardianEmailAddress).to.equal(undefined);
+		expect(parsed.success && parsed.data.guardianRelationship).to.equal(undefined);
+	});
+	it('Accepts optional values if not null', () => {
+		const parsed = PIClinicianInviteResponse.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			participantFirstName: 'John',
+			participantLastName: 'Green',
+			participantEmailAddress: 'john.green@example.com',
+			participantPhoneNumber: '4155551234',
+			participantPreferredName: 'John',
+			guardianName: 'Jane Green',
+			guardianPhoneNumber: '4155551212',
+			guardianEmailAddress: 'jane.green@example.com',
+			guardianRelationship: 'Mother',
+		});
+		expect(parsed.success).true;
+		expect(parsed.success && parsed.data.participantFirstName).to.equal('John');
+		expect(parsed.success && parsed.data.guardianName).to.equal('Jane Green');
+		expect(parsed.success && parsed.data.guardianPhoneNumber).to.equal('4155551212');
+		expect(parsed.success && parsed.data.guardianEmailAddress).to.equal('jane.green@example.com');
+		expect(parsed.success && parsed.data.guardianRelationship).to.equal('Mother');
 	});
 });

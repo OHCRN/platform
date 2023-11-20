@@ -17,24 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import bodyParser from 'body-parser';
+import urlJoin from 'url-join';
+import { ConsentClinicianInviteRequest, ConsentClinicianInviteResponse } from 'types/entities';
 
-import { AppConfig } from './config.js';
-import SwaggerRouter from './routers/swagger.js';
-import ParticipantsRouter from './routers/participants.js';
-import ClinicianInviteRouter from './routers/invites.js';
+import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
+import axiosClient from '../axiosClient.js';
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantsRouter);
-	app.use('/invites', ClinicianInviteRouter);
-
-	return app;
+export const createInviteConsentData = async ({
+	id,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianInstitutionalEmailAddress,
+	clinicianTitleOrRole,
+	consentGroup,
+	consentToBeContacted,
+}: ConsentClinicianInviteRequest): Promise<ConsentClinicianInviteResponse> => {
+	const { consentDasUrl } = getAppConfig();
+	try {
+		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), {
+			clinicianInviteId: id,
+			clinicianFirstName,
+			clinicianLastName,
+			clinicianInstitutionalEmailAddress,
+			clinicianTitleOrRole,
+			consentGroup,
+			consentToBeContacted,
+		});
+		// converts all nulls to undefined
+		return ConsentClinicianInviteResponse.parse(result.data.clinicianInvite);
+	} catch (error) {
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
+	}
 };
-
-export default App;

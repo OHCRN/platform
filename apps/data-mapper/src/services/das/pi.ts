@@ -17,32 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import urlJoin from 'url-join';
+import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/entities';
 
-import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
-import { ClinicianInviteBase } from './ClinicianInvite.js';
+import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
+import axiosClient from '../axiosClient.js';
 
-export const ClinicianInviteForm = ClinicianInviteBase.omit({
-	id: true,
-	inviteSentDate: true,
-}).refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
-
-export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
-export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);
+export const createInvitePiData = async ({
+	participantFirstName,
+	participantLastName,
+	participantEmailAddress,
+	participantPhoneNumber,
+	participantPreferredName,
+	guardianName,
+	guardianPhoneNumber,
+	guardianEmailAddress,
+	guardianRelationship,
+}: PIClinicianInviteRequest): Promise<PIClinicianInviteResponse> => {
+	const { piDasUrl } = getAppConfig();
+	try {
+		const result = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), {
+			participantFirstName,
+			participantLastName,
+			participantEmailAddress,
+			participantPhoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		});
+		// converts all nulls to undefined
+		return PIClinicianInviteResponse.parse(result.data.invite);
+	} catch (error) {
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
+	}
+};

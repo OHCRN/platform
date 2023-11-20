@@ -16,25 +16,3 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-import express from 'express';
-import bodyParser from 'body-parser';
-
-import { AppConfig } from './config.js';
-import SwaggerRouter from './routers/swagger.js';
-import ParticipantsRouter from './routers/participants.js';
-import ClinicianInviteRouter from './routers/invites.js';
-
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantsRouter);
-	app.use('/invites', ClinicianInviteRouter);
-
-	return app;
-};
-
-export default App;
