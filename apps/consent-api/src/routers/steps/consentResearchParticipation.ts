@@ -62,7 +62,9 @@ router.post(
 	withRequestBodyValidation(ConsentResearchParticipationRequest, async (req, res) => {
 		// TODO: implement when auth layer is ready
 
-		res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+		return res
+			.status(500)
+			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 	}),
 );
 

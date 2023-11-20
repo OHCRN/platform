@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
 	// TODO: add real health check
 	const response: APIStatus = { status: `API is healthy.`, version: packageJson.version };
 
-	res.json(response);
+	return res.json(response);
 });
 
 export default router;

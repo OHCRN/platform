@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
 		emailVerified: true,
 		enabled2FA: false,
 	};
-	res.status(200).send({ user });
+	return res.status(200).send({ user });
 });
 
 export default router;

@@ -18,8 +18,6 @@
  */
 
 import { Router } from 'express';
-
-import logger from '../../logger.js';
 import { ErrorResponse } from 'types/httpErrors';
 
 const router = Router();
@@ -51,7 +49,7 @@ const router = Router();
 router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 
-	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 /**
@@ -84,7 +82,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 
-	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;

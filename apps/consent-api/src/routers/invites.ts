@@ -34,7 +34,7 @@ import withRequestBodyValidation from '../middleware/withRequestBodyValidation.j
 
 const router = Router();
 
-const ClinicialInviteSchema = z.object({ data: ClinicianInviteForm });
+const ClinicianInviteSchema = z.object({ data: ClinicianInviteForm });
 /**
  * @openapi
  * /invites:
@@ -69,8 +69,10 @@ const ClinicialInviteSchema = z.object({ data: ClinicianInviteForm });
 router.post(
 	'/',
 	recaptchaMiddleware,
-	withRequestBodyValidation(ClinicialInviteSchema, async (req, res) => {
-		res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	withRequestBodyValidation(ClinicianInviteSchema, async (req, res) => {
+		return res
+			.status(500)
+			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 	}),
 );
 

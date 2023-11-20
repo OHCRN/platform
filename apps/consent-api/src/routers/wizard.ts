@@ -68,7 +68,7 @@ router.use('/steps', StepsRouter);
 router.get('/pdf', async (req, res) => {
 	// TODO: implement and update JSDocs responses schema
 
-	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 /**
@@ -111,7 +111,7 @@ router.get('/progress', async (req, res) => {
 		CONSENT_RECONTACT: 'COMPLETE',
 		CONSENT_REVIEW_SIGN: 'COMPLETE',
 	};
-	res.status(200).send({ status });
+	return res.status(200).send({ status });
 });
 
 /**
@@ -144,10 +144,10 @@ router.post('/signatures', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		// TODO: map out request body and processing - TBD here https://github.com/OHCRN/platform/issues/155
-		res.status(201).send({ message: 'Success!' });
+		return res.status(201).send({ message: 'Success!' });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
+		return res.status(500).send({ message: 'Server error' });
 	}
 });
 

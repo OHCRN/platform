@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
 		participantId,
 		response,
 	});
-	res.status(201).send(result);
+	return res.status(201).send(result);
 });
 
 export default router;

@@ -19,9 +19,9 @@
 
 import { Router } from 'express';
 import { ConsentQuestionId } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
 import logger from '../../logger.js';
-import { ErrorResponse } from 'types/httpErrors';
 
 const router = Router();
 
@@ -58,7 +58,7 @@ const router = Router();
 router.post('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 
-	res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 /**
@@ -90,10 +90,12 @@ router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
 	try {
 		logger.info(`Retrieved informed consent`);
-		res.status(200).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
+		return res
+			.status(200)
+			.send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
+		return res.status(500).send({ message: 'Server error' });
 	}
 });
 
