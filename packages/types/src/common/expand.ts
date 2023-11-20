@@ -17,7 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './expand.js';
-export * from './keys.js';
-export * from './recursivePartial.js';
-export * from './values.js';
+/**
+ * Strip aliases out from the top level of the TS reported type.
+ * This will display type as an object with {key: value} pairs instead as an alias name.
+ *
+ * Helpful when wrestling with IntelliSense type resolution. Has no functional impact.
+ */
+export type Expand<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
