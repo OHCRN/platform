@@ -19,13 +19,13 @@
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import express from 'express';
 import errorHandler from 'error-handler';
+import express from 'express';
 
 import { AppConfig } from './config.js';
 import logger from './logger.js';
-import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
+import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ClinicianInviteRouter from './routers/invites.js';
 import ParticipantResponseRouter from './routers/participantResponses.js';
 import ParticipantRouter from './routers/participants.js';
