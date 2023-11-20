@@ -21,6 +21,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import errorHandler from 'error-handler';
 import express from 'express';
+import ExpressLogger from 'express-logger';
 
 import { AppConfig } from './config.js';
 import logger from './logger.js';
@@ -48,6 +49,8 @@ const App = (config: AppConfig) => {
 
 	app.set('port', config.express.port);
 	app.use(bodyParser.json());
+
+	app.use(ExpressLogger({ logger }));
 
 	// set up routers
 	app.use('/api-docs', SwaggerRouter);
