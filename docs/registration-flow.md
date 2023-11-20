@@ -22,7 +22,6 @@ sequenceDiagram
     Note over server: what is bare minimum user info for session
     %% Note over consent-ui: if kc register req isolated from next auth, prompt user to login after registration redirect
     client->>server: login
-    server->>client: 
     client->>+keycloak: redirect to keycloak /auth
     Note over keycloak: recognize existing kc session, skip login form
     keycloak->>-client: return auth token/code from keycloak
