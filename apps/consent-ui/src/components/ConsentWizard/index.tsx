@@ -26,6 +26,14 @@ import NavigationBack from 'src/components/NavigationBack';
 
 import styles from './ConsentWizard.module.scss';
 
+const {
+	INFORMED_CONSENT,
+	CONSENT_RELEASE_DATA,
+	CONSENT_RESEARCH_PARTICIPATION,
+	CONSENT_RECONTACT,
+	CONSENT_REVIEW_SIGN,
+} = ConsentCategory.enum;
+
 const ConsentWizard = async ({
 	currentLang,
 	currentStep,
@@ -37,11 +45,11 @@ const ConsentWizard = async ({
 
 	// TODO: return consent wizard progress from consent-api
 	const progress: ConsentWizardProgress = {
-		[ConsentCategory.enum.INFORMED_CONSENT]: ConsentStatus.enum.COMPLETE,
-		[ConsentCategory.enum.CONSENT_RELEASE_DATA]: ConsentStatus.enum.INCOMPLETE,
-		[ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION]: ConsentStatus.enum.INCOMPLETE,
-		[ConsentCategory.enum.CONSENT_RECONTACT]: ConsentStatus.enum.INCOMPLETE,
-		[ConsentCategory.enum.CONSENT_REVIEW_SIGN]: ConsentStatus.enum.INCOMPLETE,
+		[INFORMED_CONSENT]: ConsentStatus.enum.COMPLETE,
+		[CONSENT_RELEASE_DATA]: ConsentStatus.enum.INCOMPLETE,
+		[CONSENT_RESEARCH_PARTICIPATION]: ConsentStatus.enum.INCOMPLETE,
+		[CONSENT_RECONTACT]: ConsentStatus.enum.INCOMPLETE,
+		[CONSENT_REVIEW_SIGN]: ConsentStatus.enum.INCOMPLETE,
 	};
 
 	const progressHeaderSteps = Object.keys(progress).map((key) => {
@@ -59,30 +67,24 @@ const ConsentWizard = async ({
 			backLabel={translate('common', 'back-to-dashboard')}
 			backLinkName={'dashboard'}
 		>
-			<div className={styles.header}>
-				<h3>{translate('consent-wizard', 'heading')}</h3>
-				<p>{translate('consent-wizard', 'subheading')}</p>
-			</div>
-			<Card dropShadow="sm" className={styles['consent-form']}>
-				<ProgressHeader steps={progressHeaderSteps} />
-				<hr className={styles.divider} />
-				<div>
-					<h3 className="mb-4">OHCRN Study Information and Informed Consent</h3>
-					<p className="leading-[1.75rem]">
-						Please carefully review the OHCRN Study Information and Informed Consent. You can also{' '}
-						<a className="text-other-500">
-							download the study information and informed consent pdf
-						</a>{' '}
-						for review. If you have any questions or concerns please contact the OHCRN study team at{' '}
-						<a className="text-other-500" href="mailto:OHCRN@oicr.on.ca">
-							OHCRN@oicr.on.ca
-						</a>{' '}
-						If you are completing this form on behalf of someone else, ‘you’ or ‘me’ refers to your
-						child or the person you are completing the form on behalf of; ‘we’ means the doctors and
-						other study staff.
-					</p>
+			<div className={styles.wizard}>
+				<div className={styles.header}>
+					<h3>{translate('consent-wizard', 'heading')}</h3>
+					<p>{translate('consent-wizard', 'subheading')}</p>
 				</div>
-			</Card>
+				<Card dropShadow="sm" className={styles['consent-form']}>
+					<ProgressHeader steps={progressHeaderSteps} />
+					<hr className={styles.divider} />
+					<div className={styles.content}>
+						{/* TODO: add consent form for each section */}
+						{currentStep === INFORMED_CONSENT && <></>}
+						{currentStep === CONSENT_RELEASE_DATA && <></>}
+						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
+						{currentStep === CONSENT_RECONTACT && <></>}
+						{currentStep === CONSENT_REVIEW_SIGN && <></>}
+					</div>
+				</Card>
+			</div>
 		</NavigationBack>
 	);
 };

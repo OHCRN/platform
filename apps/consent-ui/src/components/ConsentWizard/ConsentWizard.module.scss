@@ -7,10 +7,26 @@
 	margin-bottom: 2rem;
 }
 
-.consent-form {
-	gap: 0.5rem;
+.wizard {
+	.consent-form {
+		gap: 0.5rem;
+
+		@media (min-width: theme('screens.sm')) {
+			padding: 1.25rem;
+		}
+		@media (min-width: theme('screens.md')) {
+			padding: 2rem;
+		}
+		
+		.content {
+			@media (min-width: theme('screens.md')) {
+				padding: 0 1rem;
+			}
+		}
+	}
 }
 
 .divider {
 	border-color: #979797;
+	margin-bottom: 1rem;
 }

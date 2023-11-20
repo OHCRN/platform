@@ -47,7 +47,8 @@ const ProgressHeader = async ({ steps }: { steps: Step[] }) => {
 							) : (
 								<Incomplete className={styles.incomplete} />
 							)}
-							<h3>{step.name}</h3>
+							<h3 className={styles['desktop-step-name']}>{step.name}</h3>
+							<h3 className={styles['tablet-step-name']}>Step {index + 1}</h3>
 						</div>
 						{index != steps.length - 1 && (
 							<hr className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />

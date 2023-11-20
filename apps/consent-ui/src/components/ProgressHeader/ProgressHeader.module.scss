@@ -1,15 +1,12 @@
 .header {
 	@media (min-width: theme('screens.sm')) {
 		display: grid;
+		margin: 1rem auto;
 	}
 
 	display: none;
 	grid-template-columns: repeat(14, minmax(0, 1fr));
-	gap: 3%;
-	
-	h3 {
-		font-size: theme('fontSize.lg');
-	}
+	gap: 0.5rem;
 }
 
 .mobile-header {
@@ -20,13 +17,28 @@
 	display: flex;
 	align-items: center;
 	gap: 1rem;
+	margin: 1rem 0;
 
 	h3 {
 		font-size: theme('fontSize.base');
 	}
+}
 
-	.in-progress {
-		width: 1.65rem;
+.desktop-step-name {
+	display: none;
+
+	@media (min-width: theme('screens.md')) {
+		display: block;
+		font-size: theme('fontSize.lg');
+	}
+}
+
+.tablet-step-name {
+	display: block;
+	font-size: theme('fontSize.base');
+
+	@media (min-width: theme('screens.md')) {
+		display: none;
 	}
 }
 
@@ -40,21 +52,30 @@
 }
 
 .divider {
-	margin-top: 1.5rem;
-	width: 350%;
-	transform: translate(-35%);
+	margin-top: 0.75rem;
+	width: 200%;
+	justify-self: center;
 	border-color: theme('colors.grayscale.500');
+	
+	@media (min-width: theme('screens.md')) {
+		margin-top: 1.5rem;
+	}
 }
 
 .divider.completed-step {
-	background: theme('colors.primary.500');
+	border-color: theme('colors.primary.500');
 }
 
 .success,
 .in-progress,
 .incomplete {
-	width: 3rem;
-	height: 3rem;
+	width: 1.6rem;
+	height: 1.6rem;
+
+	@media (min-width: theme('screens.md')) {
+		width: 3rem;
+		height: 3rem;
+	}
 }
 
 .success {

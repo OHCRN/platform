@@ -1,5 +1,8 @@
 .layout {
 	@media (min-width: theme('screens.sm')) {
+		margin: 2rem 1rem;
+	}
+	@media (min-width: theme('screens.md')) {
 		margin: 2rem 3rem;
 	}
 	
