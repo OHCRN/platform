@@ -24,12 +24,13 @@ import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
-import Select, { SingleValue } from 'react-select';
 import { ConsentGroup, ConsentToBeContacted } from 'types/entities';
 
 import TextFieldSet from '../Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
 import FieldSet from '../Form/fieldsets/FieldSet';
+import CheckboxFieldSet from '../Form/fieldsets/CheckboxFieldSet';
+import SelectInput from '../Form/fieldsets/inputs/SelectInput';
 
 import {
 	ClinicianInviteFormTextDictionary,
@@ -38,7 +39,6 @@ import {
 	TempValidationSchema,
 	tempValidationSchema,
 } from './types';
-import CheckboxFieldSet from '../Form/fieldsets/CheckboxFieldSet';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	'GUARDIAN_CONSENT_OF_MINOR',
@@ -141,15 +141,13 @@ const ClinicianInviteFormEl = ({
 							name={TempFieldNames.enum.consentGroup}
 							required
 						>
-							<Select
-								instanceId={TempFieldNames.enum.consentGroup}
-								onChange={(val: SingleValue<string | ConsentGroupOption>) =>
-									onChange(typeof val === 'string' ? val : val?.value || null)
-								}
+							<SelectInput
+								name={TempFieldNames.enum.consentGroup}
+								onChange={onChange}
 								options={consentGroupOptions}
-								placeholder={textDict['select-placeholder']}
+								placeholder={textDict['select-placeholder'] || ''}
 								required
-								value={consentGroupOptions.find((option) => option.value === value) || ''}
+								value={value}
 							/>
 						</FieldSet>
 					)}

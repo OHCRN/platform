@@ -19,6 +19,7 @@
 
 import { ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import { SingleValue } from 'react-select';
 
 export type FormFieldType = 'checkbox' | 'date' | 'radio' | 'select' | 'text' | 'textWithCheckbox';
 export type FormTextInputType = 'email' | 'tel' | 'text';
@@ -77,14 +78,21 @@ export type FormCheckboxRadioInputProps<
 	value: V;
 };
 
+// select input props
+
+export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
+
 export type FormSelectInputProps<
 	T extends FieldValues,
 	V extends string,
 > = FormInputSharedProps<T> & {
-	options: { label: string; value: V }[];
+	onChange: (val: FormSelectOnChangeArg<V>) => void;
+	options: FormSelectOption<V>[];
+	placeholder: string;
+	value?: V;
 };
 
-export type FormSelectOption<T extends string> = {
+export type FormSelectOption<V extends string> = {
 	label: string;
-	value: T;
+	value: V;
 };
