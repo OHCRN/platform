@@ -17,61 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
+import Button from '../Button';
+import LinkButton from '../Button/LinkButton';
 
-import RightArrow from 'src/components/Icons/Arrow';
-
-import { ButtonProps as BaseProps } from './types';
-import styles from './Button.module.scss';
-
-interface ButtonProps extends BaseProps {
-	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
-	disabled?: boolean;
-}
-
-const Button = ({
-	children,
-	onClick,
-	variant = 'primary',
-	color = 'default',
-	size = 'base',
-	action,
-	disabled = false,
-	className = '',
-	LeftIcon,
-	RightIcon,
-}: ButtonProps) => {
-	return (
-		<button
-			className={clsx(
-				styles.base,
-				styles[variant],
-				styles[color],
-				styles[size],
-				(action === 'prev' || LeftIcon) && styles['left-icon'],
-				(action === 'next' || RightIcon) && styles['right-icon'],
-				className,
-			)}
-			disabled={disabled}
-			onClick={onClick}
-		>
-			{action === 'prev' ? (
-				<div>
-					<RightArrow className={styles['left-arrow']} />
-				</div>
-			) : (
-				LeftIcon && <div>{LeftIcon}</div>
-			)}
-			{children}
-			{action === 'next' ? (
-				<div>
-					<RightArrow />
-				</div>
-			) : (
-				RightIcon && <div>{RightIcon}</div>
-			)}
-		</button>
-	);
+export type ModalConfig = {
+	title?: string;
+	body?: React.ReactNode;
+	actionButtonText?: React.ReactNode;
+	actionDisabled?: boolean;
+	cancelButtonText?: React.ReactNode;
+	cancelDisabled?: boolean;
+	onActionClick?: React.ComponentProps<typeof Button>['onClick'];
+	actionLink?: React.ComponentProps<typeof LinkButton>['href'];
+	onCancelClick?: React.ComponentProps<typeof Button>['onClick'];
+	cancelLink?: React.ComponentProps<typeof LinkButton>['href'];
 };
 
-export default Button;
+export type ModalContextType = {
+	openModal: (config: ModalConfig) => void;
+	closeModal: () => void;
+};
+
+// this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
+// its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
+export const defaultModalContext = {
+	openModal: () => {},
+	closeModal: () => {},
+};

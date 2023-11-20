@@ -32,12 +32,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 	return (
 		<div className={styles.heroContainer}>
 			<div className={styles.backgroundImg}>
-				<Image
-					src={BackgroundImage}
-					alt={translate('landing-page', 'hero-background-img-alt')}
-					priority
-					placeholder="blur"
-				/>
+				<Image src={BackgroundImage} alt="" priority placeholder="blur" />
 			</div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>

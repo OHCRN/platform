@@ -10,6 +10,7 @@
 	width: fit-content;
 	font-size: theme('fontSize.base');
 	font-weight: 700;
+	transition: all 300ms ease-in-out;
 }
 
 .large {
@@ -22,7 +23,6 @@
 	color: theme('colors.grayscale.100');
 	background-color: theme('colors.grayscale.800');
 	border-color: theme('colors.grayscale.800');
-	transition: all 300ms ease-in-out;
 }
 
 .primary:hover {
@@ -56,7 +56,12 @@
 	border-color: theme('colors.grayscale.800');
 	color: theme('colors.grayscale.800');
 	background-color: theme('colors.grayscale.100');
-	transition: all 300ms ease-in-out;
+}
+
+.secondary:hover {
+	color: theme('colors.grayscale.100');
+	background-color: theme('colors.grayscale.800');
+	border-color: theme('colors.grayscale.800');
 }
 
 .secondary.blue {

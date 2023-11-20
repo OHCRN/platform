@@ -21,7 +21,7 @@ import clsx from 'clsx';
 
 import styles from './Card.module.scss';
 
-const Card = async ({
+const Card = ({
 	layout = 'column',
 	dropShadow = 'base',
 	className,
