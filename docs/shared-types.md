@@ -1,6 +1,6 @@
-# Zod Schemas
+# Shared Types
 
-This document describes how we use [Zod](https://zod.dev/) schemas to validate and parse our data types. This includes API request/response bodies as well as enums and function parameters.
+This document describes how we use [Zod](https://zod.dev/) schemas to validate and parse our shared data types. This includes API request/response bodies as well as enums and function parameters.
 
 ## Implementation
 
@@ -47,7 +47,7 @@ Both of these convert the schema to a `ZodEffects` type which "is a wrapper clas
 Zod's [`parse()`](https://zod.dev/?id=parse) method simultaneously validates the data and can also coerce any data types or transform fields, as outlined in the Zod schema.
 
 ### Converting `null` values to `undefined`
-The way we treat optional fields in the app is by storing them as `undefined` if they were not provided a value. However, because these fields are stored as `null` in the database, we need to do preprocessing on the API response types coming out of the DAS, to convert any `null` values to `undefined`.
+Optional fields will be `undefined` if a value is not provided. However, in the DB, `undefined` values will be stored as `null`, so any data from a DAS response will need to go through a conversion step before being returned to the Data Mapper.
 
 This is done by overwriting the base fields from [`optional()`](https://zod.dev/?id=optional) (which accepts either the specified data type or `undefined`) to [`nullable()`](https://zod.dev/?id=nullable) (which accepts the specified data type or `null`). This ensures the schema will accept any `null` values as opposed to throwing a validation error. Then by adding a transform on any `nullable()` field, we can have Zod’s `parse()` convert it to `undefined` if the value is `null`. We do this in the `ConsentClinicianInviteResponse` and `PIClinicianInviteResponse` schemas, which are the response types for the Consent and PI DAS API calls to create a clinician invite. As an example, the `ConsentClinicianInviteResponse` schema looks like the following:
 
@@ -71,7 +71,7 @@ export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
 });
 ```
 
-The expected behaviour is described in the test cases below (we use `safeParse()` in the test cases so no errors are actually thrown, see the [docs](https://zod.dev/?id=safeparse) for more details):
+The expected behaviour is described in the test cases below (we use `safeParse()` instead of `parse()` in the test cases so no errors are actually thrown, see the [docs](https://zod.dev/?id=safeparse) for more details):
 
 ```ts
 describe('ConsentClinicianInviteResponse', () => {
