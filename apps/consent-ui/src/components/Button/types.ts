@@ -17,61 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
+import { ReactNode } from 'react';
 
-import RightArrow from 'src/components/Icons/Arrow';
+export type ButtonVariant = 'primary' | 'secondary';
+export type ButtonColor = 'default' | 'blue' | 'green';
+export type ButtonSize = 'base' | 'large';
+export type ButtonAction = 'next' | 'prev';
 
-import { ButtonProps as BaseProps } from './types';
-import styles from './Button.module.scss';
-
-interface ButtonProps extends BaseProps {
-	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
-	disabled?: boolean;
-}
-
-const Button = ({
-	children,
-	onClick,
-	variant = 'primary',
-	color = 'default',
-	size = 'base',
-	action,
-	disabled = false,
-	className = '',
-	LeftIcon,
-	RightIcon,
-}: ButtonProps) => {
-	return (
-		<button
-			className={clsx(
-				styles.base,
-				styles[variant],
-				styles[color],
-				styles[size],
-				(action === 'prev' || LeftIcon) && styles['left-icon'],
-				(action === 'next' || RightIcon) && styles['right-icon'],
-				className,
-			)}
-			disabled={disabled}
-			onClick={onClick}
-		>
-			{action === 'prev' ? (
-				<div>
-					<RightArrow className={styles['left-arrow']} />
-				</div>
-			) : (
-				LeftIcon && <div>{LeftIcon}</div>
-			)}
-			{children}
-			{action === 'next' ? (
-				<div>
-					<RightArrow />
-				</div>
-			) : (
-				RightIcon && <div>{RightIcon}</div>
-			)}
-		</button>
-	);
+export type ButtonProps = {
+	children: ReactNode;
+	variant?: ButtonVariant;
+	color?: ButtonColor;
+	size?: ButtonSize;
+	action?: ButtonAction;
+	LeftIcon?: ReactNode;
+	RightIcon?: ReactNode;
+	className?: string;
 };
-
-export default Button;
