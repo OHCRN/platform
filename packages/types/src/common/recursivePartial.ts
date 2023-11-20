@@ -17,6 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './keys.js';
-export * from './recursivePartial.js';
-export * from './values.js';
+/**
+ * Makes all properties optional recursively including nested objects and the objects inside arrays.
+ */
+export type RecursivePartial<T = object> = {
+	[P in keyof T]?: T[P] extends Array<infer I>
+		? Array<RecursivePartial<I>>
+		: T[P] extends Record<string, any>
+		? RecursivePartial<T[P]>
+		: T[P];
+};
