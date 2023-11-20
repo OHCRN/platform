@@ -27,13 +27,13 @@ function Success({ className }: { className?: string }) {
 					id="Stroke 1"
 					d="M36.9793 16.6667L21.7524 31.25L15.2266 25"
 					stroke="currentColor"
-					stroke-width="2"
+					strokeWidth="2"
 				/>
 				<path
 					id="Oval"
 					d="M51.2066 25C51.2066 38.2146 40.0086 49 26.1033 49C12.198 49 1 38.2146 1 25C1 11.7854 12.198 1 26.1033 1C40.0086 1 51.2066 11.7854 51.2066 25Z"
 					stroke="currentColor"
-					stroke-width="2"
+					strokeWidth="2"
 				/>
 			</g>
 		</svg>

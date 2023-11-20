@@ -34,6 +34,8 @@ const {
 	CONSENT_REVIEW_SIGN,
 } = ConsentCategory.enum;
 
+const { COMPLETE, INCOMPLETE } = ConsentStatus.enum;
+
 const ConsentWizard = async ({
 	currentLang,
 	currentStep,
@@ -45,18 +47,18 @@ const ConsentWizard = async ({
 
 	// TODO: return consent wizard progress from consent-api
 	const progress: ConsentWizardProgress = {
-		[INFORMED_CONSENT]: ConsentStatus.enum.COMPLETE,
-		[CONSENT_RELEASE_DATA]: ConsentStatus.enum.INCOMPLETE,
-		[CONSENT_RESEARCH_PARTICIPATION]: ConsentStatus.enum.INCOMPLETE,
-		[CONSENT_RECONTACT]: ConsentStatus.enum.INCOMPLETE,
-		[CONSENT_REVIEW_SIGN]: ConsentStatus.enum.INCOMPLETE,
+		[INFORMED_CONSENT]: COMPLETE,
+		[CONSENT_RELEASE_DATA]: INCOMPLETE,
+		[CONSENT_RESEARCH_PARTICIPATION]: INCOMPLETE,
+		[CONSENT_RECONTACT]: INCOMPLETE,
+		[CONSENT_REVIEW_SIGN]: INCOMPLETE,
 	};
 
 	const progressHeaderSteps = Object.keys(progress).map((key) => {
 		const step = ConsentCategory.parse(key);
 		return {
 			name: translate('consent-wizard', step),
-			isComplete: progress[step] === ConsentStatus.enum.COMPLETE,
+			isComplete: progress[step] === COMPLETE,
 			inProgress: step === currentStep,
 		};
 	});
@@ -73,7 +75,7 @@ const ConsentWizard = async ({
 					<p>{translate('consent-wizard', 'subheading')}</p>
 				</div>
 				<Card dropShadow="sm" className={styles['consent-form']}>
-					<ProgressHeader steps={progressHeaderSteps} />
+					<ProgressHeader currentLang={currentLang} steps={progressHeaderSteps} />
 					<hr className={styles.divider} />
 					<div className={styles.content}>
 						{/* TODO: add consent form for each section */}

@@ -18,14 +18,16 @@
  */
 
 const dictionary = {
+	heading: 'OHCRN Consent Forms',
+	subheading:
+		'To be fully enrolled in OHCRN, please complete all required fields and submit the form.',
 	INFORMED_CONSENT: '1. Informed Consent',
 	CONSENT_RELEASE_DATA: '2. Consent to Data Release ',
 	CONSENT_RESEARCH_PARTICIPATION: '3. Consent for Research Participation ',
 	CONSENT_RECONTACT: '4. Consent for Recontact',
 	CONSENT_REVIEW_SIGN: '5. Review and Sign',
-	heading: 'OHCRN Consent Forms',
-	subheading:
-		'To be fully enrolled in OHCRN, please complete all required fields and submit the form.',
+	'mobile-progress-header': 'Step {{currentStep}} of {{stepCount}}',
+	'tablet-progress-header': 'Step {{step}}',
 } satisfies Record<string, string>;
 
 export type ConsentWizardDictionary = Record<keyof typeof dictionary, string>;

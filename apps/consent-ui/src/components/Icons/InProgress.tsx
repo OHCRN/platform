@@ -27,7 +27,7 @@ function InProgress({ className }: { className?: string }) {
 					id="Oval"
 					d="M51.2066 25C51.2066 38.2146 40.0086 49 26.1033 49C12.198 49 1 38.2146 1 25C1 11.7854 12.198 1 26.1033 1C40.0086 1 51.2066 11.7854 51.2066 25Z"
 					stroke="currentColor"
-					stroke-width="2"
+					strokeWidth="2"
 				/>
 				<ellipse id="Oval_2" cx="15.6617" cy="25" rx="3.13239" ry="3" fill="currentColor" />
 				<ellipse id="Oval_3" cx="26.1031" cy="25" rx="3.13239" ry="3" fill="currentColor" />

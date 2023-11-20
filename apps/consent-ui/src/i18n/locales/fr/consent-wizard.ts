@@ -20,14 +20,16 @@
 import { ConsentWizardDictionary } from '../en/consent-wizard';
 
 const dictionary = {
+	heading: 'OHCRN Formulaires de consentement',
+	subheading:
+		"Pour être pleinement inscrit à l'OHCRN, veuillez remplir tous les champs obligatoires et soumettre le formulaire.",
 	INFORMED_CONSENT: '1. Consentement éclairé',
 	CONSENT_RELEASE_DATA: '2. Consentement à la divulgation de données',
 	CONSENT_RESEARCH_PARTICIPATION: '3. Consentement à la participation à la recherche',
 	CONSENT_RECONTACT: '4. Consentement à la reprise de contact',
 	CONSENT_REVIEW_SIGN: '5. Examen et signature',
-	heading: 'OHCRN Formulaires de consentement',
-	subheading:
-		"Pour être pleinement inscrit à l'OHCRN, veuillez remplir tous les champs obligatoires et soumettre le formulaire.",
+	'mobile-progress-header': 'Étape {{currentStep}} sur {{stepCount}}',
+	'tablet-progress-header': 'Étape {{step}}',
 } satisfies ConsentWizardDictionary;
 
 export default dictionary;

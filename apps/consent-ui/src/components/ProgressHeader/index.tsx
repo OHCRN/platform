@@ -19,6 +19,7 @@
 
 import clsx from 'clsx';
 
+import { ValidLanguage, getTranslation } from 'src/i18n';
 import Success from 'src/components/Icons/Success';
 import InProgress from 'src/components/Icons/InProgress';
 import Incomplete from 'src/components/Icons/Incomplete';
@@ -31,8 +32,15 @@ type Step = {
 	inProgress?: boolean;
 };
 
-const ProgressHeader = async ({ steps }: { steps: Step[] }) => {
+const ProgressHeader = async ({
+	currentLang,
+	steps,
+}: {
+	currentLang: ValidLanguage;
+	steps: Step[];
+}) => {
 	const currentStep = steps.findIndex((step) => step.inProgress) + 1;
+	const translate = getTranslation(currentLang);
 	return (
 		<>
 			{/* Tablet and Desktop screens */}
@@ -48,7 +56,9 @@ const ProgressHeader = async ({ steps }: { steps: Step[] }) => {
 								<Incomplete className={styles.incomplete} />
 							)}
 							<h3 className={styles['desktop-step-name']}>{step.name}</h3>
-							<h3 className={styles['tablet-step-name']}>Step {index + 1}</h3>
+							<h3 className={styles['tablet-step-name']}>
+								{translate('consent-wizard', 'tablet-progress-header', { step: index + 1 })}
+							</h3>
 						</div>
 						{index != steps.length - 1 && (
 							<hr className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />
@@ -60,7 +70,10 @@ const ProgressHeader = async ({ steps }: { steps: Step[] }) => {
 			<div className={styles['mobile-header']}>
 				<InProgress className={styles['in-progress']} />
 				<h3>
-					Step {currentStep} of {steps.length}
+					{translate('consent-wizard', 'mobile-progress-header', {
+						currentStep,
+						stepCount: steps.length,
+					})}
 				</h3>
 			</div>
 		</>
