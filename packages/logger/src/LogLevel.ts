@@ -17,15 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import createLogger, { LogLevels } from 'logger';
+import { Values } from 'types/common';
 
-import { getAppConfig } from './config.js';
-
-const config = getAppConfig();
-
-const logger = createLogger({
-	logFile: !config.isProduction,
-	level: config.isProduction ? LogLevels.INFO : LogLevels.DEBUG,
-}).forModule('Keys-DAS');
-
-export default logger;
+export const LogLevels = {
+	DEBUG: 'debug',
+	INFO: 'info',
+	WARN: 'warn',
+	ERROR: 'error',
+} as const;
+export type LogLevel = Values<typeof LogLevels>;
