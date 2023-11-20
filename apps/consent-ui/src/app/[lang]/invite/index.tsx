@@ -57,6 +57,10 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 	};
 
 	const textDict: ClinicianInviteFormTextDictionary = {
+		'consent-contact-description': translate(
+			'clinician-invite-form',
+			'consent-contact-description',
+		),
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
 		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'select-placeholder': translate('forms', 'select-placeholder'),

@@ -25,7 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import Select, { SingleValue } from 'react-select';
-import { ConsentGroup } from 'types/entities';
+import { ConsentGroup, ConsentToBeContacted } from 'types/entities';
 
 import TextFieldSet from '../Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
@@ -38,6 +38,7 @@ import {
 	TempValidationSchema,
 	tempValidationSchema,
 } from './types';
+import CheckboxFieldSet from '../Form/fieldsets/CheckboxFieldSet';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	'GUARDIAN_CONSENT_OF_MINOR',
@@ -202,7 +203,15 @@ const ClinicianInviteFormEl = ({
 
 			<div>
 				<p>{textDict['after-registering']}</p>
-				{/* checkbox input with title & description */}
+				<CheckboxFieldSet
+					description={textDict['consent-contact-description']}
+					error={errors.consentToBeContacted?.type}
+					name={TempFieldNames.enum.consentToBeContacted}
+					register={register}
+					required
+					title={labelsDict['consent-contact']}
+					value={ConsentToBeContacted.enum.CONSENTED}
+				/>
 			</div>
 
 			<div>
