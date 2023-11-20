@@ -19,31 +19,28 @@
 
 import { ErrorRequestHandler } from 'express';
 import { ErrorResponse } from 'types/httpErrors';
+import { Logger } from 'logger';
 
 /**
- * Set default response for unhandled errors to be json instead of html.
- * @param err
- * @param _req
- * @param res
- * @param next
+ * Create default response for unhandled errors to be json instead of html.
+ *
+ *
  * @returns
  */
-const errorHandler: ErrorRequestHandler = (err, _req, res, next) => {
-	if (res.headersSent) {
-		return next(err);
-	}
+const errorHandler =
+	(params: { logger?: Logger }): ErrorRequestHandler =>
+	(err, req, res, next) => {
+		const { logger } = params;
 
-	const defaultName = 'ServerError';
-	const error = (err instanceof Error && err.name) || defaultName;
+		if (res.headersSent) {
+			return next(err);
+		}
 
-	const status = 500;
+		logger?.error(`Unhandled error thrown from request`, req.url, err);
 
-	const message = (err.message && `${err.message}`) || 'An error occurred.';
+		const message = (err.message && `${err.message}`) || 'An error occurred.';
 
-	res.status(status).json(ErrorResponse(defaultName, message));
-
-	// Pass the error to any other error handlers, including express default.
-	next(err);
-};
+		return res.status(500).json(ErrorResponse('ServerError', message));
+	};
 
 export default errorHandler;

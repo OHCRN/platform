@@ -23,6 +23,7 @@ import express from 'express';
 import errorHandler from 'error-handler';
 
 import { AppConfig } from './config.js';
+import logger from './logger.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
 import ClinicianInviteRouter from './routers/invites.js';
@@ -62,7 +63,7 @@ const App = (config: AppConfig) => {
 
 	// Error Handler should be last function added so that
 	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler);
+	app.use(errorHandler({ logger }));
 
 	return app;
 };

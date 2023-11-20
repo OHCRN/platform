@@ -17,14 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from 'error-handler';
+import express from 'express';
 
 import { AppConfig } from './config.js';
-import SwaggerRouter from './routers/swagger.js';
-import ParticipantRouter from './routers/participants.js';
+import logger from './logger.js';
 import ClinicianInviteRouter from './routers/clinicianInvites.js';
+import ParticipantRouter from './routers/participants.js';
+import SwaggerRouter from './routers/swagger.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
@@ -37,7 +38,7 @@ const App = (config: AppConfig) => {
 
 	// Error Handler should be last function added so that
 	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler);
+	app.use(errorHandler({ logger }));
 
 	return app;
 };
