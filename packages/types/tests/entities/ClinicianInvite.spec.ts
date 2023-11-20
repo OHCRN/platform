@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ConsentGroup, ClinicianInvite } from '../../src/entities/index.js';
+import { ConsentGroup, ConsentToBeContacted, ClinicianInvite } from '../../src/entities/index.js';
 
 describe('ClinicianInvite', () => {
 	it('Must define conditionally required fields on condition', () => {
@@ -40,7 +40,7 @@ describe('ClinicianInvite', () => {
 				guardianPhoneNumber: '1234567890',
 				guardianEmailAddress: 'marge.simpson@example.com',
 				guardianRelationship: 'Wife',
-				consentToBeContacted: true,
+				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
 			}).success,
 		).true;
 		expect(
@@ -58,7 +58,7 @@ describe('ClinicianInvite', () => {
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 				guardianName: 'Marge Simpson',
 				guardianRelationship: 'Wife', // missing guardianEmailAddress and guardianPhoneNumber
-				consentToBeContacted: true,
+				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
 			}).success,
 		).false;
 		expect(
@@ -74,7 +74,7 @@ describe('ClinicianInvite', () => {
 				participantEmailAddress: 'bart.simpson@example.com',
 				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
-				consentToBeContacted: true,
+				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
 			}).success,
 		).false;
 	});

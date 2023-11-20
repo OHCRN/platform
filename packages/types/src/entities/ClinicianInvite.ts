@@ -26,6 +26,7 @@ import { Name } from './Name.js';
 import { PhoneNumber } from './PhoneNumber.js';
 import { NanoId } from './NanoId.js';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
+import { ConsentToBeContacted } from './ConsentToBeContacted.js';
 
 export const ClinicianInviteBase = z.object({
 	clinicianFirstName: Name,
@@ -42,7 +43,7 @@ export const ClinicianInviteBase = z.object({
 	guardianPhoneNumber: PhoneNumber.optional(),
 	guardianEmailAddress: z.string().email().optional(),
 	guardianRelationship: Name.optional(),
-	consentToBeContacted: z.boolean(),
+	consentToBeContacted: ConsentToBeContacted,
 });
 
 export const ClinicianInvite = ClinicianInviteBase.and(

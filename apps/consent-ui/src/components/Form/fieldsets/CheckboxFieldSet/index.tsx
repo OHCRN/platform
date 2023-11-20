@@ -17,35 +17,47 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ClinicianInviteForm.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentRecontact.js';
-export * from './ConsentReleaseData.js';
-export * from './ConsentResearchParticipation.js';
-export * from './ConsentToBeContacted.js';
-export * from './ConsentWizardProgress.js';
-export * from './Error.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './InformedConsent.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './ParticipantIdentification.js';
-export * from './ParticipantResponse.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './Regex.js';
-export * from './User.js';
-export * from './UserRole.js';
-export * from './lengthConstraints.js';
+'use client';
+
+import { FieldValues } from 'react-hook-form';
+
+import RequiredAsterisk from '../../RequiredAsterisk';
+import { FormCheckboxFieldSetProps } from '../../types';
+import CheckboxRadioInput from '../inputs/CheckboxRadioInput';
+
+const CheckboxFieldSet = <T extends FieldValues, V extends string>({
+	description,
+	error,
+	name,
+	register,
+	required = false,
+	title,
+	value,
+}: FormCheckboxFieldSetProps<T, V>) => {
+	return (
+		<fieldset>
+			{title && (
+				<h4>
+					{title}
+					{required && <RequiredAsterisk />}
+				</h4>
+			)}
+			<label htmlFor={name}>
+				<CheckboxRadioInput
+					required={required}
+					name={name}
+					register={register}
+					value={value}
+					type="checkbox"
+				/>
+				<span>
+					{description}
+					{required && !title && <RequiredAsterisk />}
+				</span>
+			</label>
+			{error && <span style={{ color: 'red' }}>{error}</span>}
+		</fieldset>
+	);
+};
+
+export default CheckboxFieldSet;

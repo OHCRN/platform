@@ -21,7 +21,7 @@ import { z } from 'zod';
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { ConsentGroup, Name, PhoneNumber } from 'types/entities';
+import { ConsentGroup, ConsentToBeContacted, Name, PhoneNumber } from 'types/entities';
 import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
 
 import { FormSelectOption } from '../Form/types';
@@ -60,7 +60,7 @@ export const tempValidationSchema = z.object({
 	[TempFieldNames.enum.clinicianLastName]: Name,
 	[TempFieldNames.enum.clinicianTitleOrRole]: Name,
 	[TempFieldNames.enum.consentGroup]: ConsentGroup,
-	[TempFieldNames.enum.consentToBeContacted]: z.boolean(),
+	[TempFieldNames.enum.consentToBeContacted]: ConsentToBeContacted,
 	[TempFieldNames.enum.guardianEmailAddress]: z.string().email().optional(),
 	[TempFieldNames.enum.guardianName]: Name.optional(),
 	[TempFieldNames.enum.guardianPhoneNumber]: PhoneNumber.optional(),

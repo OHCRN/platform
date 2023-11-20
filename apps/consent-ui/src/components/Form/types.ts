@@ -25,33 +25,43 @@ export type FormTextInputType = 'email' | 'tel' | 'text';
 
 // field sets
 
-export type FormFieldSetProps<T extends FieldValues> = {
-	children: ReactNode;
+interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
 	error?: string; // TODO harmonize error dictionary & RHF errors
-	label: string;
 	name: Path<T>;
 	required?: boolean;
+}
+
+export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	children: ReactNode;
+	label: string;
 };
 
-export type FormTextFieldSetProps<T extends FieldValues> = {
-	error?: string; // TODO harmonize error dictionary & RHF errors
-	label: string;
-	name: Path<T>;
+export type FormCheckboxFieldSetProps<
+	T extends FieldValues,
+	V extends string,
+> = FormFieldSetSharedProps<T> & {
+	description: ReactNode;
 	register: UseFormRegister<T>;
-	required?: boolean;
+	title?: string;
+	value: V;
+};
+
+export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	label: string;
+	register: UseFormRegister<T>;
 	type?: FormTextInputType;
 };
 
 // field inputs
 
-interface FormInputProps<T extends FieldValues> {
+interface FormInputSharedProps<T extends FieldValues> {
 	className?: string;
 	name: Path<T>;
-	required?: boolean;
+	required: boolean;
 }
 
-type FormRegisteredInputProps<T extends FieldValues> = FormInputProps<T> & {
+type FormRegisteredInputProps<T extends FieldValues> = FormInputSharedProps<T> & {
 	register: UseFormRegister<T>;
 };
 
@@ -67,7 +77,10 @@ export type FormCheckboxRadioInputProps<
 	value: V;
 };
 
-export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
+export type FormSelectInputProps<
+	T extends FieldValues,
+	V extends string,
+> = FormInputSharedProps<T> & {
 	options: { label: string; value: V }[];
 };
 

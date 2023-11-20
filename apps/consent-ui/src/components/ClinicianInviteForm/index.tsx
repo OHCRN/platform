@@ -80,11 +80,12 @@ const ClinicianInviteFormEl = ({
 		}
 	};
 
-	// watch consentGroup value & show/hide guardian info fields if participant is a minor
-	const watchConsentGroup = watch(TempFieldNames.enum.consentGroup);
+	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
+	const watchConsentGroup =
+		watch(TempFieldNames.enum.consentGroup) || ConsentGroup.enum.ADULT_CONSENT;
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
-		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
+		if (watchConsentGroup && consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
 			// guardian fields are registered on render
 			setShowGuardianFields(true);
 		} else {
