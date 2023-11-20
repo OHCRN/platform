@@ -50,15 +50,18 @@ function withRequestBodyValidation<ReqBody>(
 	bodySchema: ZodSchema<ReqBody>,
 	handler: RequestHandler<ParamsDictionary, any, ReqBody>,
 ): RequestHandler {
-	return (request, response, next) => {
-		const validationResult = bodySchema.safeParse(request.body);
-		if (validationResult.success) {
-			handler(request, response, next);
-			return;
-		}
+	return async (request, response, next) => {
+		try {
+			const validationResult = bodySchema.safeParse(request.body);
+			if (validationResult.success) {
+				return await handler(request, response, next);
+			}
 
-		// Request body failed validation
-		response.status(400).json(RequestValidationErrorResponse(validationResult.error));
+			// Request body failed validation
+			return response.status(400).json(RequestValidationErrorResponse(validationResult.error));
+		} catch (err: unknown) {
+			next(err);
+		}
 	};
 }
 
