@@ -18,8 +18,8 @@
  */
 import { Request, Response } from 'express';
 import { RequestHandler } from 'express-serve-static-core';
-import { afterEach, describe, expect, it, vi } from 'vitest';
 import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 
 import withRequestBodyValidation from '../../src/middleware/withRequestBodyValidation.js';
@@ -36,15 +36,15 @@ const validTestBody: z.infer<typeof TestSchema> = {
  * @returns
  */
 const getMockResponse = (): Response => {
-	const mockResponse: Partial<Response> = {};
+	const mockResponse = {} as Response;
 
-	mockResponse.cookie = vi.fn().mockReturnValue(mockResponse as Response);
-	mockResponse.header = vi.fn().mockReturnValue(mockResponse as Response);
-	mockResponse.json = vi.fn().mockReturnValue(mockResponse as Response);
-	mockResponse.send = vi.fn().mockReturnValue(mockResponse as Response);
-	mockResponse.status = vi.fn().mockReturnValue(mockResponse as Response);
+	mockResponse.cookie = vi.fn().mockReturnValue(mockResponse);
+	mockResponse.header = vi.fn().mockReturnValue(mockResponse);
+	mockResponse.json = vi.fn().mockReturnValue(mockResponse);
+	mockResponse.send = vi.fn().mockReturnValue(mockResponse);
+	mockResponse.status = vi.fn().mockReturnValue(mockResponse);
 
-	return mockResponse as Response;
+	return mockResponse;
 };
 
 describe('withRequestBodyValidation', () => {
