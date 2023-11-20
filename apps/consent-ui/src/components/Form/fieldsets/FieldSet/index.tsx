@@ -18,6 +18,7 @@
  */
 
 import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
 import RequiredAsterisk from '../../RequiredAsterisk';
 import { FormFieldSetProps } from '../../types';
@@ -31,7 +32,7 @@ const FieldSet = <T extends FieldValues>({
 	required = false,
 }: FormFieldSetProps<T>) => {
 	return (
-		<fieldset className={className}>
+		<fieldset className={clsx('fieldset', className)}>
 			<label htmlFor={name}>
 				{label}
 				<RequiredAsterisk required={required} />

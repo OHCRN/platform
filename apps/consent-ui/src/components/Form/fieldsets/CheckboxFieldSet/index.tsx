@@ -20,12 +20,14 @@
 'use client';
 
 import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
 import RequiredAsterisk from '../../RequiredAsterisk';
 import { FormCheckboxFieldSetProps } from '../../types';
 import CheckboxRadioInput from '../inputs/CheckboxRadioInput';
 
 const CheckboxFieldSet = <T extends FieldValues, V extends string>({
+	className,
 	description,
 	error,
 	name,
@@ -35,14 +37,14 @@ const CheckboxFieldSet = <T extends FieldValues, V extends string>({
 	value,
 }: FormCheckboxFieldSetProps<T, V>) => {
 	return (
-		<fieldset>
+		<fieldset className={clsx('checkbox-fieldset', className)}>
 			{title && (
 				<h4>
 					{title}
 					{required && <RequiredAsterisk />}
 				</h4>
 			)}
-			<label htmlFor={name}>
+			<label htmlFor={name} className="checkbox-fieldset__label">
 				<CheckboxRadioInput
 					required={required}
 					name={name}
@@ -50,7 +52,7 @@ const CheckboxFieldSet = <T extends FieldValues, V extends string>({
 					value={value}
 					type="checkbox"
 				/>
-				<span>
+				<span className="checkbox-fieldset__description">
 					{description}
 					{required && !title && <RequiredAsterisk />}
 				</span>
