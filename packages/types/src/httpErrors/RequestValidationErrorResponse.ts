@@ -26,7 +26,6 @@ export const REQUEST_VALIDATION_ERROR = 'RequestValidationError';
 export type RequestValidationError<T> = ErrorResponse & {
 	details: typeToFlattenedError<T>;
 };
-// export type RequestValidationError = ErrorResponse & any;
 
 /**
  * Convert a ZodError from ZodSchema validation into an HTTP Error response message
