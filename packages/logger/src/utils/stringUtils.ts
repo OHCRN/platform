@@ -22,11 +22,14 @@
  * @param input
  * @returns
  */
-export function unknownToString(input: unknown): string {
+export function unknownToString(
+	input: unknown,
+	jsonOptions?: { replacer?: (this: any, key: string, value: any) => any; space?: string | number },
+): string {
 	if (input instanceof Error) {
 		return input.message;
 	} else if (typeof input === 'object') {
-		return JSON.stringify(input);
+		return JSON.stringify(input, jsonOptions?.replacer, jsonOptions?.space);
 	} else {
 		return `${input}`;
 	}
