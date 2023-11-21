@@ -31,24 +31,3 @@ export type ClinicianInviteFormTextDictionary = Partial<
 >;
 
 export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
-
-// TEMP submit doesn't work if there's fields missing
-// so work with a reduced schema
-
-export const tempValidationSchema = z.object({
-	clinicianFirstName: Name,
-	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianLastName: Name,
-	clinicianTitleOrRole: Name,
-	consentGroup: ConsentGroup,
-	consentToBeContacted: ConsentToBeContacted,
-	guardianEmailAddress: z.string().email().optional(),
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianRelationship: Name.optional(),
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantPreferredName: Name.optional(),
-});
-
-export type TempValidationSchema = z.infer<typeof tempValidationSchema>;

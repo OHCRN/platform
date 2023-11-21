@@ -40,7 +40,7 @@ type FormFieldValue<V extends string> = V;
 
 interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
-	error?: string; // TODO harmonize error dictionary & RHF errors
+	error?: any; // TODO harmonize error dictionary & RHF errors
 	label: string;
 	name: FormFieldName<T>;
 	required?: boolean;

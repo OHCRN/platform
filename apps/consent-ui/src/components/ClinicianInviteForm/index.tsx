@@ -37,8 +37,8 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
-
-const guardianInfoFields: Partial<keyof TempValidationSchema>[] = [
+const guardianInfoFields = [
+	// const guardianInfoFields: Partial<keyof ClinicianInviteForm>[] = [
 	'guardianName',
 	'guardianPhoneNumber',
 	'guardianEmailAddress',
@@ -61,11 +61,11 @@ const ClinicianInviteFormEl = ({
 		register,
 		unregister,
 		watch,
-	} = useForm<TempValidationSchema>({
-		resolver: zodResolver(tempValidationSchema),
+	} = useForm<ClinicianInviteForm>({
+		resolver: zodResolver(ClinicianInviteForm),
 	});
 
-	const onSubmit: SubmitHandler<TempValidationSchema> = (data: any) => {
+	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data: any) => {
 		console.log('SUBMIT DATA', data);
 		try {
 			axios.post('http://localhost:8080/invites', { body: data });
@@ -83,7 +83,7 @@ const ClinicianInviteFormEl = ({
 			setShowGuardianFields(true);
 		} else {
 			setShowGuardianFields(false);
-			guardianInfoFields.forEach((field) => {
+			guardianInfoFields.forEach((field: any) => {
 				unregister(field);
 			});
 		}
@@ -116,6 +116,22 @@ const ClinicianInviteFormEl = ({
 					name="participantPreferredName"
 					register={register}
 				/>
+				<TextFieldSet
+					error={errors.participantPhoneNumber?.type}
+					label={labelsDict['phone'] || ''}
+					name="participantPhoneNumber"
+					register={register}
+					required
+					type="tel"
+				/>
+				<TextFieldSet
+					error={errors.participantEmailAddress?.type}
+					label={labelsDict['email'] || ''}
+					name="participantEmailAddress"
+					register={register}
+					required
+					type="email"
+				/>
 
 				<Controller
 					name="consentGroup"
@@ -138,8 +154,11 @@ const ClinicianInviteFormEl = ({
 
 			{showGuardianFields && (
 				<div style={{ background: 'lightgrey' }}>
-					{/* guardian fields are marked required in the UI - they're required if they're visible,
-						i.e. if the user has indicated the participant is a minor */}
+					{/*
+					 * guardian fields are marked required in the UI & optional in zod schema
+					 * because they're required if they're visible,
+					 * i.e. if the user has indicated the participant is a minor
+					 */}
 					<p>{textDict['enter-guardian-info']}</p>
 					<TextFieldSet
 						error={errors.guardianName?.type}
