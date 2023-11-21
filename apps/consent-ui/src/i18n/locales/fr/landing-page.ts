@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { LandingPageDictionary } from '@/i18n/locales/en/landing-page';
+import { LandingPageDictionary } from 'src/i18n/locales/en/landing-page';
 
 const dictionary = {
 	title: "Bienvenue dans le registre de l'OHCRN",

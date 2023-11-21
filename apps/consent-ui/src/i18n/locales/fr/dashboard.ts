@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { DashboardDictionary } from '@/i18n/locales/en/dashboard';
+import { DashboardDictionary } from 'src/i18n/locales/en/dashboard';
 
 const dictionary = {
 	'review-ohcrn-consents': 'Review OHCRN Consents',

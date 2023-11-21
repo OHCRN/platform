@@ -22,10 +22,10 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { Suspense } from 'react';
 
-import packageJson from '@/package.json';
-import GithubLogo from '@/public/github.svg';
-import OvertureLogo from '@/public/overture.svg';
-import { ValidLanguage, getTranslation } from '@/i18n';
+import packageJson from 'package.json';
+import GithubLogo from 'src/public/github.svg';
+import OvertureLogo from 'src/public/overture.svg';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';

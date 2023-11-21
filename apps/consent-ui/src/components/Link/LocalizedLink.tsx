@@ -20,9 +20,9 @@
 import Link from 'next/link';
 import urlJoin from 'url-join';
 
-import { defaultLanguage } from '@/i18n/settings';
-import routesByLocale from '@/i18n/routes/routesByLocale.json';
-import { ValidLanguage } from '@/i18n';
+import { defaultLanguage } from 'src/i18n/settings';
+import routesByLocale from 'src/i18n/routes/routesByLocale.json';
+import { ValidLanguage } from 'src/i18n';
 
 import LinkButton from '../Button/LinkButton';
 
