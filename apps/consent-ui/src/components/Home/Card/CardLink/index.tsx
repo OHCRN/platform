@@ -19,9 +19,9 @@
 
 import clsx from 'clsx';
 
-import LocalizedLink from '@/components/Link/LocalizedLink';
-import { RouteName } from '@/components/Link/types';
-import { ValidLanguage } from '@/i18n';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
+import { RouteName } from 'src/components/Link/types';
+import { ValidLanguage } from 'src/i18n';
 
 import styles from './CardLink.module.scss';
 

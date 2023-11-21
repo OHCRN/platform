@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentReleaseDataDictionary } from '@/i18n/locales/en/consent-release-data';
+import { ConsentReleaseDataDictionary } from 'src/i18n/locales/en/consent-release-data';
 
 const dictionary = {} satisfies ConsentReleaseDataDictionary;
 

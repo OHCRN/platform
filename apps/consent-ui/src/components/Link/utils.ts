@@ -17,10 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import routesByLocale from '@/i18n/routes/routesByLocale.json';
-import { RouteName, RouteNameEnum, RouteParams } from '@/components/Link/types';
-import { ValidLanguage } from '@/i18n';
-import { supportedLanguages } from '@/i18n/settings';
+import routesByLocale from 'src/i18n/routes/routesByLocale.json';
+import { RouteName, RouteNameEnum, RouteParams } from 'src/components/Link/types';
+import { ValidLanguage } from 'src/i18n';
+import { supportedLanguages } from 'src/i18n/settings';
 
 export const getUnselectedLang = (lang: ValidLanguage): ValidLanguage => {
 	return supportedLanguages.filter((l) => l !== lang)[0];

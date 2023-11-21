@@ -18,28 +18,7 @@
 			}
 		],
 		"resolveJsonModule": true,
-		"baseUrl": "src/",
-		"paths": {
-			"@/app": ["app/index"],
-			"@/app/*": ["app/*"],
-			"@/components": ["components/index"],
-			"@/components/*": ["components/*"],
-			"@/config": ["config/index"],
-			"@/config/*": ["config/*"],
-			"@/constants": ["constants/index"],
-			"@/constants/*": ["constants/*"],
-			"@/hooks": ["hooks/index"],
-			"@/hooks/*": ["hooks/*"],
-			"@/i18n": ["i18n/index"],
-			"@/i18n/*": ["i18n/*"],
-			"@/middleware": ["middleware.ts"],
-			"@/public": ["public/index"],
-			"@/public/*": ["public/*"],
-			"@/services": ["services/index"],
-			"@/services/*": ["services/*"],
-			"@/theme": ["theme/index"],
-			"@/theme/*": ["theme/*"]
-		}
+		"baseUrl": "."
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
 	"exclude": ["node_modules"]

@@ -18,8 +18,8 @@
  */
 import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
-import { GetTranslation } from '@/i18n/types';
-import dictionaries from '@/i18n/locales';
+import { GetTranslation } from 'src/i18n/types';
+import dictionaries from 'src/i18n/locales';
 
 /**
  * ```

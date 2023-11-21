@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AncestryDictionary } from '@/i18n/locales/en/ancestry';
+import { AncestryDictionary } from 'src/i18n/locales/en/ancestry';
 
 const dictionary = {
 	ABORIGINAL_FROM_CENTRAL_SOUTH_AMERICA_EXCEPT_ARAWAK_AND_MAYA:

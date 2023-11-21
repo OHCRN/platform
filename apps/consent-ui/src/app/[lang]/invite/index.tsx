@@ -18,14 +18,14 @@
  */
 
 import Link from 'next/link';
-import ClinicianInviteFormEl from '@/components/ClinicianInviteForm';
+import ClinicianInviteFormEl from 'src/components/ClinicianInviteForm';
 import {
 	ClinicianInviteFormTextDictionary,
 	ConsentGroupOption,
-} from '@/components/ClinicianInviteForm/types';
-import { getTranslation, ValidLanguage } from '@/i18n';
-// import { FormErrorsDictionary } from '@/i18n/locales/en/form-errors';
-import { FormLabelsDictionary } from '@/i18n/locales/en/form-labels';
+} from 'src/components/ClinicianInviteForm/types';
+import { getTranslation, ValidLanguage } from 'src/i18n';
+// import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import { CONSENT_GROUPS } from 'types/entities';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {

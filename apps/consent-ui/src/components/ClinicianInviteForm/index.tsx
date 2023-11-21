@@ -25,11 +25,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { ClinicianInviteForm, ConsentGroup, ConsentToBeContacted } from 'types/entities';
 
-import { FormLabelsDictionary } from '@/i18n/locales/en/form-labels';
-import TextFieldSet from '@/components/Form/fieldsets/TextFieldSet';
-import RequiredAsterisk from '@/components/Form/RequiredAsterisk';
-import CheckboxFieldSet from '@/components/Form/fieldsets/CheckboxFieldSet';
-import SelectFieldSet from '@/components/Form/fieldsets/SelectFieldSet';
+import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
+import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
+import RequiredAsterisk from 'src/components/Form/RequiredAsterisk';
+import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
+import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 

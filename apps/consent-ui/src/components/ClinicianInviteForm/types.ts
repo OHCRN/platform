@@ -17,10 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ClinicianInviteFormDictionary } from '@/i18n/locales/en/clinician-invite-form';
-import { FormErrorsDictionary } from '@/i18n/locales/en/form-errors';
-import { FormsDictionary } from '@/i18n/locales/en/forms';
-import { ConsentGroupDictionary } from '@/i18n/locales/en/consent-group';
+import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { FormsDictionary } from 'src/i18n/locales/en/forms';
+import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
 
 import { FormSelectOption } from '../Form/types';
 

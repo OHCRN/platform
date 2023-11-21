@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { ComponentProps } from 'react';
 import Link from 'next/link';
 
-import { ValidLanguage } from '@/i18n';
+import { ValidLanguage } from 'src/i18n';
 
 const VALID_ROUTE_NAMES = [
 	'home',
