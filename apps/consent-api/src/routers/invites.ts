@@ -19,11 +19,12 @@
 
 import { Router } from 'express';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorResponse, ResponseValidationErrorResponse } from 'types/httpErrors';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
+import { createInvite } from '../service/create.js';
 
 /**
  * @openapi
@@ -71,9 +72,27 @@ router.post(
 	'/',
 	recaptchaMiddleware,
 	withRequestBodyValidation(ClinicianInviteSchema, async (req, res) => {
-		return res
-			.status(500)
-			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+		try {
+			const invite = await createInvite(req.body.data);
+			if (invite.success) {
+				return res.status(201).send(invite.data);
+			} else {
+				// ClinicianInviteResponse failed validation from Data Mapper even though the POST request was successful
+				return res
+					.status(500)
+					.send(
+						ResponseValidationErrorResponse(
+							invite.error,
+							'ClinicianInviteResponse from Data Mapper was malformed',
+						),
+					);
+			}
+		} catch (error) {
+			// TODO: E2E error handling -> this will be any error from the POST request to data-mapper that could have bubbled up from pi-das or consent-das
+			res
+				.status(500)
+				.send(ErrorResponse('NOT_IMPLEMENTED', 'Error handling has not been implemented yet'));
+		}
 	}),
 );
 

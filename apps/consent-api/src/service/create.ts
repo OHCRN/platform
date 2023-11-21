@@ -17,6 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
+import urlJoin from 'url-join';
+
+import { getAppConfig } from '../config.js';
+
+import axiosClient from './axiosClient.js';
+
 export const createResponse = async ({
 	consentQuestionId,
 	participantId,
@@ -34,4 +41,51 @@ export const createResponse = async ({
 
 	// TODO: POST to data-mapper, then return the result
 	return updateObj;
+};
+
+/**
+ * Creates clinician invite by sending input to data-mapper, which separates data between
+ * Consent and PI DAS and then returns the combined data object from both DB entries
+ * @async
+ * @param data Clinician Invite form input
+ * @returns Created Clinician Invite data as Zod.SafeParseReturnType
+ */
+export const createInvite = async ({
+	participantFirstName,
+	participantLastName,
+	participantEmailAddress,
+	participantPhoneNumber,
+	participantPreferredName,
+	guardianName,
+	guardianPhoneNumber,
+	guardianEmailAddress,
+	guardianRelationship,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianInstitutionalEmailAddress,
+	clinicianTitleOrRole,
+	consentGroup,
+	consentToBeContacted,
+}: ClinicianInviteRequest): Promise<
+	Zod.SafeParseReturnType<ClinicianInviteResponse, ClinicianInviteResponse>
+> => {
+	const { dataMapperUrl } = getAppConfig();
+	const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'invites'), {
+		participantFirstName,
+		participantLastName,
+		participantEmailAddress,
+		participantPhoneNumber,
+		participantPreferredName,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+		clinicianFirstName,
+		clinicianLastName,
+		clinicianInstitutionalEmailAddress,
+		clinicianTitleOrRole,
+		consentGroup,
+		consentToBeContacted,
+	});
+	return ClinicianInviteResponse.safeParse(data);
 };
