@@ -61,9 +61,7 @@ const ClinicianInviteSchema = z.object({ data: ClinicianInviteRequest });
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message: string
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
  *       500:
  *         description: Server error
  */
