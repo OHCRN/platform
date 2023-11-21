@@ -21,49 +21,69 @@ import { ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { SingleValue } from 'react-select';
 
-export type FormFieldType = 'checkbox' | 'date' | 'radio' | 'select' | 'text' | 'textWithCheckbox';
+export type FormFieldTypeCheckboxRadio = 'checkbox' | 'radio';
+export type FormFieldType =
+	| FormFieldTypeCheckboxRadio
+	| 'date'
+	| 'select'
+	| 'text'
+	| 'textWithCheckbox';
 export type FormTextInputType = 'email' | 'tel' | 'text';
+export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
 
-// field sets
+// setup types for react-hook-forms API
+type FormFieldName<T extends FieldValues> = Path<T>;
+type FormFieldRegister<T extends FieldValues> = UseFormRegister<T>;
+type FormFieldValue<V extends string> = V;
+
+// fieldsets that use the FieldSet component
 
 interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
 	error?: string; // TODO harmonize error dictionary & RHF errors
-	name: Path<T>;
+	label: string;
+	name: FormFieldName<T>;
 	required?: boolean;
 }
 
 export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
 	children: ReactNode;
-	label: string;
-};
-
-export type FormCheckboxFieldSetProps<
-	T extends FieldValues,
-	V extends string,
-> = FormFieldSetSharedProps<T> & {
-	description: ReactNode;
-	register: UseFormRegister<T>;
-	title?: string;
-	value: V;
 };
 
 export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	label: string;
-	register: UseFormRegister<T>;
+	register: FormFieldRegister<T>;
 	type?: FormTextInputType;
+};
+
+export type FormSelectFieldSetProps<
+	T extends FieldValues,
+	V extends string,
+> = FormFieldSetSharedProps<T> & {
+	value: FormFieldValue<V>;
+};
+
+// unique fieldsets
+
+export type FormCheckboxFieldSetProps<T extends FieldValues, V extends string> = Omit<
+	FormFieldSetSharedProps<T>,
+	'label' // uses title & description instead
+> & {
+	description: ReactNode;
+	register: FormFieldRegister<T>;
+	title?: string;
+	value: FormFieldValue<V>;
 };
 
 // field inputs
 
 interface FormInputSharedProps<T extends FieldValues> {
 	className?: string;
-	name: Path<T>;
+	name: FormFieldName<T>;
 	required: boolean;
 }
 
 type FormRegisteredInputProps<T extends FieldValues> = FormInputSharedProps<T> & {
-	register: UseFormRegister<T>;
+	register: FormFieldRegister<T>;
 };
 
 export type FormTextInputProps<T extends FieldValues> = FormRegisteredInputProps<T> & {
@@ -74,13 +94,11 @@ export type FormCheckboxRadioInputProps<
 	T extends FieldValues,
 	V extends string,
 > = FormRegisteredInputProps<T> & {
-	type: FormFieldType;
-	value: V;
+	type: FormFieldTypeCheckboxRadio;
+	value: FormFieldValue<V>;
 };
 
 // select input props
-
-export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
 
 export type FormSelectInputProps<
 	T extends FieldValues,
@@ -89,10 +107,10 @@ export type FormSelectInputProps<
 	onChange: (val: FormSelectOnChangeArg<V>) => void;
 	options: FormSelectOption<V>[];
 	placeholder: string;
-	value?: V;
+	value: FormFieldValue<V>;
 };
 
 export type FormSelectOption<V extends string> = {
 	label: string;
-	value: V;
+	value: FormFieldValue<V>;
 };
