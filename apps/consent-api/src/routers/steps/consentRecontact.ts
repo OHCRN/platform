@@ -18,9 +18,10 @@
  */
 
 import { Router } from 'express';
-import { ConsentRecontactRequest, ZodError } from 'types/entities';
+import { ConsentRecontactRequest } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
-import logger from '../logger.js';
+import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
@@ -56,21 +57,16 @@ const router = Router();
  *       500:
  *         description: Server error
  */
-router.post('/', async (req, res) => {
-	// TODO: implement when auth layer is ready
-	try {
-		const data = ConsentRecontactRequest.parse(req.body);
-		// TODO: make updates and return modified data
-		res.status(201).send(data);
-	} catch (error) {
-		logger.error(error);
-		if (error instanceof ZodError) {
-			res.status(400).send({ message: 'Bad Request' });
-		} else {
-			res.status(500).send({ message: 'Server error' });
-		}
-	}
-});
+router.post(
+	'/',
+	withRequestBodyValidation(ConsentRecontactRequest, async (req, res) => {
+		// TODO: implement when auth layer is ready
+
+		return res
+			.status(500)
+			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	}),
+);
 
 /**
  * @openapi
@@ -98,14 +94,8 @@ router.post('/', async (req, res) => {
  */
 router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
-	try {
-		// TODO: actually retrieve user data
-		const data = {};
-		res.status(200).send(data);
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
+
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;

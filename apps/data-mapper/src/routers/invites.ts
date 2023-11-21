@@ -18,58 +18,60 @@
  */
 
 import { Router } from 'express';
-import { User, UserRole } from 'types/entities';
+import { ClinicianInviteRequest, ZodError } from 'types/entities';
 
-/**
- * @openapi
- * tags:
- *   - name: User
- *     description: User info
- */
+import logger from '../logger.js';
+import { createInvite } from '../services/create.js';
 
 const router = Router();
 
 /**
  * @openapi
- * /user:
- *   get:
+ * tags:
+ *   - name: Clinician Invites
+ *     description: Clinician invites management
+ */
+
+/**
+ * @openapi
+ * /invites:
+ *   post:
  *     tags:
- *       - User
- *     name: Get User Info
- *     description: Retrieve user login information
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: session
- *         in: header
- *         required: true
- *         description: User session token
- *         schema:
- *           type: string
+ *       - Clinician Invites
+ *     name: Create Clinician Invite
+ *     description: Submit relevant Clinician Invite data to PI DAS and Consent DAS
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ClinicianInviteRequest'
  *     responses:
- *       200:
+ *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 user:
- *                   $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: Bad Request
  *       500:
  *         description: Server error
  */
-router.get('/', async (req, res) => {
-	// TODO: implement when authentication layer is ready
-	const user: User = {
-		firstName: 'Homer',
-		lastName: 'Simpson',
-		email: 'homer.simpson@example.com',
-		role: UserRole.enum.USER,
-		emailVerified: true,
-		enabled2FA: false,
-	};
-	return res.status(200).send({ user });
+router.post('/', async (req, res) => {
+	logger.info(`POST /invites`); // TODO: remove
+	try {
+		const data = ClinicianInviteRequest.parse(req.body);
+		const invite = await createInvite(data);
+		res.status(201).send(invite);
+	} catch (error) {
+		logger.error(error);
+		if (error instanceof ZodError) {
+			res.status(400).send({ error: 'Bad Request' });
+		} else {
+			res.status(500).send({ error: 'Error creating clinician invite' });
+		}
+	}
 });
 
 export default router;

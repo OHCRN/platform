@@ -17,30 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import errorHandler from 'error-handler';
-import express from 'express';
+import urlJoin from 'url-join';
+import { ConsentClinicianInviteRequest, ConsentClinicianInviteResponse } from 'types/entities';
 
-import { AppConfig } from './config.js';
-import logger from './logger.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
-import ParticipantRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
+import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
+import axiosClient from '../axiosClient.js';
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/clinician-invites', ClinicianInviteRouter);
-
-	// Error Handler should be last function added so that
-	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler({ logger }));
-
-	return app;
+export const createInviteConsentData = async ({
+	id,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianInstitutionalEmailAddress,
+	clinicianTitleOrRole,
+	consentGroup,
+	consentToBeContacted,
+}: ConsentClinicianInviteRequest): Promise<ConsentClinicianInviteResponse> => {
+	const { consentDasUrl } = getAppConfig();
+	try {
+		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), {
+			clinicianInviteId: id,
+			clinicianFirstName,
+			clinicianLastName,
+			clinicianInstitutionalEmailAddress,
+			clinicianTitleOrRole,
+			consentGroup,
+			consentToBeContacted,
+		});
+		// converts all nulls to undefined
+		return ConsentClinicianInviteResponse.parse(result.data.clinicianInvite);
+	} catch (error) {
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
+	}
 };
-
-export default App;

@@ -19,30 +19,44 @@
 
 import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { SchemaObject } from 'openapi3-ts/oas31';
 
-import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 import { ClinicianInviteBase } from './ClinicianInvite.js';
 
-export const ClinicianInviteForm = ClinicianInviteBase.omit({
+export const ConsentClinicianInviteRequest = ClinicianInviteBase.pick({
 	id: true,
-	inviteSentDate: true,
-}).refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
+	clinicianFirstName: true,
+	clinicianLastName: true,
+	clinicianInstitutionalEmailAddress: true,
+	clinicianTitleOrRole: true,
+	consentGroup: true,
+	consentToBeContacted: true,
 });
 
-export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
-export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);
+export type ConsentClinicianInviteRequest = z.infer<typeof ConsentClinicianInviteRequest>;
+export const ConsentClinicianInviteRequestSchema: SchemaObject = generateSchema(
+	ConsentClinicianInviteRequest,
+);
+
+export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
+	id: true,
+	inviteSentDate: true,
+	inviteAcceptedDate: true,
+	inviteAccepted: true,
+	clinicianFirstName: true,
+	clinicianLastName: true,
+	clinicianInstitutionalEmailAddress: true,
+	clinicianTitleOrRole: true,
+	consentGroup: true,
+	consentToBeContacted: true,
+}).extend({
+	inviteAcceptedDate: z.coerce
+		.date()
+		.nullable()
+		.transform((input) => input ?? undefined),
+});
+
+export type ConsentClinicianInviteResponse = z.infer<typeof ConsentClinicianInviteResponse>;
+export const ConsentClinicianInviteResponseSchema: SchemaObject = generateSchema(
+	ConsentClinicianInviteResponse,
+);

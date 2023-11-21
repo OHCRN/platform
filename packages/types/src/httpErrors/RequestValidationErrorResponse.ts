@@ -17,30 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import errorHandler from 'error-handler';
-import express from 'express';
+import { ZodError, typeToFlattenedError } from 'zod';
 
-import { AppConfig } from './config.js';
-import logger from './logger.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
-import ParticipantRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
+import { ErrorResponse } from './ErrorResponse.js';
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.port);
-	app.use(bodyParser.json());
+export const REQUEST_VALIDATION_ERROR = 'RequestValidationError';
 
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/clinician-invites', ClinicianInviteRouter);
-
-	// Error Handler should be last function added so that
-	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler({ logger }));
-
-	return app;
+export type RequestValidationError<T> = ErrorResponse & {
+	details: typeToFlattenedError<T>;
 };
 
-export default App;
+/**
+ * Convert a ZodError from ZodSchema validation into an HTTP Error response message
+ * of type `REQUEST_VALIDATION_ERROR`.
+ * @param error Zod Error from parse
+ * @returns
+ */
+export const RequestValidationErrorResponse = <T>(
+	error: ZodError<T>,
+	customMessage?: string,
+): RequestValidationError<T> => ({
+	error: REQUEST_VALIDATION_ERROR,
+	message: customMessage ?? 'Request body is invalid for this request.',
+	details: error.flatten(),
+});

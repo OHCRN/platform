@@ -18,62 +18,18 @@
  */
 
 import { Router } from 'express';
-import { ConsentQuestionId } from 'types/entities';
-
-import logger from '../logger.js';
+import { ErrorResponse } from 'types/httpErrors';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/informed-consent:
- *   post:
- *     tags:
- *       - Consent Wizard
- *     name: Submit Informed Consent
- *     description: Form submission for Consent Wizard - Informed Consent
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/InformedConsentRequest'
- *     responses:
- *       201:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/InformedConsentResponse'
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
- *       500:
- *         description: Server error
- */
-router.post('/', async (req, res) => {
-	logger.info(`POST /wizard/steps/informed-consent`);
-	// TODO: implement when auth layer is ready
-	try {
-		logger.info(`Submitted informed consent`);
-		res.status(201).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
-});
-
-/**
- * @openapi
- * /wizard/steps/informed-consent:
+ * /wizard/steps/review-sign:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Retrieve Informed Consent
- *     description: Participant's latest response for Consent Wizard - Informed Consent
+ *     name: Retrieve Review & Sign
+ *     description: Participant's latest response for Consent Wizard - Review & Sign
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -82,7 +38,7 @@ router.post('/', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InformedConsentResponse'
+ *               $ref: '#/components/schemas/ConsentReviewSignResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -91,15 +47,42 @@ router.post('/', async (req, res) => {
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/informed-consent`);
 	// TODO: implement when auth layer is ready
-	try {
-		logger.info(`Retrieved informed consent`);
-		res.status(200).send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
+
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+});
+
+/**
+ * @openapi
+ * /wizard/steps/review-sign:
+ *   post:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Submit Review & Sign
+ *     description: Form submission for Consent Wizard - Review & Sign
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized. Authorization information is missing or invalid.
+ *       403:
+ *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Server error
+ */
+router.post('/', async (req, res) => {
+	// TODO: implement when auth layer is ready
+
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;

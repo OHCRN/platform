@@ -22,7 +22,7 @@ import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ConsentWizardProgressSchema as ConsentWizardProgress,
-	ClinicianInviteFormSchema as ClinicianInviteForm,
+	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	InformedConsentResponseSchema as InformedConsentResponse,
 	InformedConsentRequestSchema as InformedConsentRequest,
 	ConsentReleaseDataRequestSchema as ConsentReleaseDataRequest,
@@ -79,7 +79,7 @@ const options = swaggerJsdoc({
 		components: {
 			schemas: {
 				ConsentWizardProgress,
-				ClinicianInviteForm,
+				ClinicianInviteRequest,
 				InformedConsentRequest,
 				InformedConsentResponse,
 				ConsentReleaseDataRequest,
@@ -93,7 +93,7 @@ const options = swaggerJsdoc({
 			},
 		},
 	},
-	apis: ['./src/routers/*'],
+	apis: ['./src/routers/**/*.ts'],
 });
 
 const router = Router();

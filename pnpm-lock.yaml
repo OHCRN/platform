@@ -55,6 +55,9 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
+      error-handler:
+        specifier: workspace:^
+        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -64,6 +67,9 @@ importers:
       types:
         specifier: workspace:^
         version: link:../../packages/types
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -74,6 +80,9 @@ importers:
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.17
+      '@types/express-serve-static-core':
+        specifier: ^4.17.41
+        version: 4.17.41
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -386,6 +395,12 @@ importers:
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      logger:
+        specifier: workspace:^
+        version: link:../logger
+      types:
+        specifier: workspace:^
+        version: link:../types
     devDependencies:
       '@types/express':
         specifier: ^4.17.17
@@ -1179,8 +1194,8 @@ packages:
       '@types/node': 20.1.3
     dev: true
 
-  /@types/express-serve-static-core@4.17.34:
-    resolution: {integrity: sha512-fvr49XlCGoUj2Pp730AItckfjat4WNb0lb3kfrLWffd+RLeoGAMsq7UOy04PAPtoL01uKwcp6u8nhzpgpDYr3w==}
+  /@types/express-serve-static-core@4.17.41:
+    resolution: {integrity: sha512-OaJ7XLaelTgrvlZD8/aa0vvvxZdUmlCn6MtWeB7TkiKW70BQLc9XEPpDLPdbo52ZhXUCrznlWdCHWxJWtdyajA==}
     dependencies:
       '@types/node': 20.1.3
       '@types/qs': 6.9.7
@@ -1192,7 +1207,7 @@ packages:
     resolution: {integrity: sha512-Q4FmmuLGBG58btUnfS1c1r/NQdlp3DMfGDGig8WhfpA2YRUtEkxAjkZb0yvplJGYdF1fsQ81iMDcH24sSCNC/Q==}
     dependencies:
       '@types/body-parser': 1.19.2
-      '@types/express-serve-static-core': 4.17.34
+      '@types/express-serve-static-core': 4.17.41
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.1
     dev: true
@@ -1292,7 +1307,7 @@ packages:
     resolution: {integrity: sha512-rClGrMuyS/3j0ETa1Ui7s6GkLhfZGKZL3ZrChLeAiACBE/tRc1wq8SNZESUuluxhLj9FkUefRs2l6bCIArWBiQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
-      '@typescript-eslint/parser': 6.2.0
+      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
       eslint: ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
@@ -2418,7 +2433,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: ^2.27.5
+      eslint-plugin-import: '*'
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.14.0

@@ -1,8 +1,12 @@
 import urlJoin from 'url-join';
+import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
 
+import logger from '../logger.js';
 import { getAppConfig } from '../config.js';
 
 import axiosClient from './axiosClient.js';
+import { createInvitePiData } from './das/pi.js';
+import { createInviteConsentData } from './das/consent.js';
 
 // PI-DAS
 const createParticipantPiData = async ({
@@ -100,4 +104,61 @@ export const createParticipant = async ({
 		ohipNumber: participantOhipNumber,
 		emailVerified: participantConsentData.emailVerified,
 	};
+};
+
+/**
+ * Creates clinician invite in the PI DAS first to get an inviteId,
+ * then uses the same inviteId to create a corresponding entry in the Consent DAS
+ * @async
+ * @param {ClinicianInviteRequest} data
+ * @returns {Promise<ClinicianInviteResponse>} Created Clinician Invite data
+ */
+export const createInvite = async ({
+	participantFirstName,
+	participantLastName,
+	participantEmailAddress,
+	participantPhoneNumber,
+	participantPreferredName,
+	guardianName,
+	guardianPhoneNumber,
+	guardianEmailAddress,
+	guardianRelationship,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianInstitutionalEmailAddress,
+	clinicianTitleOrRole,
+	consentGroup,
+	consentToBeContacted,
+}: ClinicianInviteRequest): Promise<ClinicianInviteResponse> => {
+	try {
+		const invitePiData = await createInvitePiData({
+			participantFirstName,
+			participantLastName,
+			participantEmailAddress,
+			participantPhoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		});
+		const inviteConsentData = await createInviteConsentData({
+			id: invitePiData.id,
+			clinicianFirstName,
+			clinicianLastName,
+			clinicianInstitutionalEmailAddress,
+			clinicianTitleOrRole,
+			consentGroup,
+			consentToBeContacted,
+		});
+		// validate Consent and PI data together
+		return ClinicianInviteResponse.parse({
+			...invitePiData,
+			...inviteConsentData,
+		});
+	} catch (error) {
+		logger.error(error);
+		// TODO: rollback/delete invites already created
+		throw error; // TODO: remove and send custom error schema
+	}
 };

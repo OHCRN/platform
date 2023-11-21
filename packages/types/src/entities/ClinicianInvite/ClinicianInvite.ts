@@ -18,12 +18,14 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentGroup } from './ConsentGroup.js';
-import { Name } from './Name.js';
-import { PhoneNumber } from './PhoneNumber.js';
-import { NanoId } from './NanoId.js';
-import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
+import { ConsentGroup } from '../ConsentGroup.js';
+import { Name } from '../Name.js';
+import { PhoneNumber } from '../PhoneNumber.js';
+import { NanoId } from '../NanoId.js';
+import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
 
 export const ClinicianInviteBase = z.object({
 	id: NanoId,
@@ -47,7 +49,23 @@ export const ClinicianInviteBase = z.object({
 	consentToBeContacted: z.boolean(),
 });
 
-export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
+export const ClinicianInviteRequest = ClinicianInviteBase.pick({
+	clinicianFirstName: true,
+	clinicianLastName: true,
+	clinicianInstitutionalEmailAddress: true,
+	clinicianTitleOrRole: true,
+	participantFirstName: true,
+	participantLastName: true,
+	participantEmailAddress: true,
+	participantPhoneNumber: true,
+	participantPreferredName: true,
+	consentGroup: true,
+	guardianName: true,
+	guardianPhoneNumber: true,
+	guardianEmailAddress: true,
+	guardianRelationship: true,
+	consentToBeContacted: true,
+}).refine((input) => {
 	const {
 		consentGroup,
 		guardianName,
@@ -64,4 +82,25 @@ export const ClinicianInvite = ClinicianInviteBase.refine((input) => {
 	);
 });
 
-export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
+export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;
+export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteRequest);
+
+export const ClinicianInviteResponse = ClinicianInviteBase.refine((input) => {
+	const {
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	} = input;
+	return hasRequiredGuardianInformation(
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	);
+});
+
+export type ClinicianInviteResponse = z.infer<typeof ClinicianInviteResponse>;
+export const ClinicianInviteResponseSchema: SchemaObject = generateSchema(ClinicianInviteResponse);

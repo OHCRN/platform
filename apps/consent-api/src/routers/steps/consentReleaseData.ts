@@ -18,19 +18,64 @@
  */
 
 import { Router } from 'express';
+import { ConsentReleaseDataRequest } from 'types/entities';
+import { ErrorResponse } from 'types/httpErrors';
 
-import logger from '../logger.js';
+import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/review-sign:
+ * /wizard/steps/consent-to-release-data:
+ *   post:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Submit Consent to Release Data
+ *     description: Form submission for Consent Wizard - Consent to Release Data
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ConsentReleaseDataRequest'
+ *     responses:
+ *       201:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
+ *       400:
+ *         description: Bad Request
+ *       401:
+ *         description: Unauthorized. Authorization information is missing or invalid.
+ *       403:
+ *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Server error
+ */
+router.post(
+	'/',
+	withRequestBodyValidation(ConsentReleaseDataRequest, async (req, res) => {
+		// TODO: implement when auth layer is ready
+
+		return res
+			.status(500)
+			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+	}),
+);
+
+/**
+ * @openapi
+ * /wizard/steps/consent-to-release-data:
  *   get:
  *     tags:
  *       - Consent Wizard
- *     name: Retrieve Review & Sign
- *     description: Participant's latest response for Consent Wizard - Review & Sign
+ *     name: Retrieve Consent to Release Data
+ *     description: Participant's latest response for Consent Wizard - Consent to Release Data
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -39,7 +84,7 @@ const router = Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsentReviewSignResponse'
+ *               $ref: '#/components/schemas/ConsentReleaseDataResponse'
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
  *       403:
@@ -49,52 +94,8 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
 	// TODO: implement when auth layer is ready
-	try {
-		// TODO: retrieve user data
-		const data = {};
-		res.status(200).send(data);
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
-});
 
-/**
- * @openapi
- * /wizard/steps/review-sign:
- *   post:
- *     tags:
- *       - Consent Wizard
- *     name: Submit Review & Sign
- *     description: Form submission for Consent Wizard - Review & Sign
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       201:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
- *       500:
- *         description: Server error
- */
-router.post('/', async (req, res) => {
-	// TODO: implement when auth layer is ready
-	try {
-		// TODO: verify participant data and update lifecycleState to CONSENTED
-		res.status(201).send({ message: 'Success!' });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
-	}
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 export default router;

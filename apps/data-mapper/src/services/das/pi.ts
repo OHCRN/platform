@@ -17,35 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import axios from 'axios';
-import { Request, Response, NextFunction } from 'express';
+import urlJoin from 'url-join';
+import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/entities';
 
-const verifyRecaptcha = async (recaptchaToken?: string | null) => {
-	if (!recaptchaToken) {
-		// token not required for dev, but will be processed if provided.
-		return process.env.NODE_ENV === 'development';
-	}
+import { getAppConfig } from '../../config.js';
+import logger from '../../logger.js';
+import axiosClient from '../axiosClient.js';
 
+export const createInvitePiData = async ({
+	participantFirstName,
+	participantLastName,
+	participantEmailAddress,
+	participantPhoneNumber,
+	participantPreferredName,
+	guardianName,
+	guardianPhoneNumber,
+	guardianEmailAddress,
+	guardianRelationship,
+}: PIClinicianInviteRequest): Promise<PIClinicianInviteResponse> => {
+	const { piDasUrl } = getAppConfig();
 	try {
-		const recaptchaVerification = await axios.post(
-			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-		);
-		console.log('success?');
-		return !!recaptchaVerification.data.success;
+		const result = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), {
+			participantFirstName,
+			participantLastName,
+			participantEmailAddress,
+			participantPhoneNumber,
+			participantPreferredName,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		});
+		// converts all nulls to undefined
+		return PIClinicianInviteResponse.parse(result.data.invite);
 	} catch (error) {
-		console.error('reCAPTCHA error', error);
-		return false;
-	}
-};
-
-export const recaptchaMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-	const { recaptchaToken } = req.body;
-
-	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-
-	if (recaptchaVerified) {
-		next();
-	} else {
-		res.status(500).send('reCAPTCHA error');
+		logger.error(error);
+		throw error; // TODO: remove and send custom error schema
 	}
 };
