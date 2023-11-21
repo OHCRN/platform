@@ -36,7 +36,6 @@ import genderDictionary from './gender';
 import geneticsClinicDictionary from './genetics-clinic';
 import headerDictionary from './header';
 import informedConsentDictionary from './informed-consent';
-import inviteDictionary from './invite';
 import landingPageDictionary from './landing-page';
 import molecularLabDictionary from './molecular-lab';
 import provinceDictionary from './province';
@@ -64,7 +63,6 @@ const dictionaries = {
 	header: headerDictionary,
 	'history-of-cancer': historyOfCancerDictionary,
 	'informed-consent': informedConsentDictionary,
-	invite: inviteDictionary,
 	'landing-page': landingPageDictionary,
 	'molecular-lab': molecularLabDictionary,
 	province: provinceDictionary,

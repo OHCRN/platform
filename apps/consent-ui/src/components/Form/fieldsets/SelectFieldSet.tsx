@@ -17,18 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroup } from 'types/entities';
+import FieldSet from './FieldSet';
+import SelectInput from './inputs/SelectInput';
 
-import { InviteDictionary } from 'src/i18n/locales/en/invite';
+const SelectFieldSet = ({
+	error,
+	label,
+	name,
+	onChange,
+	options,
+	placeholder,
+	required = false,
+	value,
+}: any) => (
+	<FieldSet error={error} label={label} name={name} required={required}>
+		<SelectInput
+			name={name}
+			onChange={onChange}
+			options={options}
+			placeholder={placeholder}
+			required
+			value={value}
+		/>
+	</FieldSet>
+);
 
-const dictionary = {
-	[ConsentGroup.enum.ADULT_CONSENT]: "Consentement d'un adulte (>18)",
-	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
-		"Consentement d'un adulte faisant appel à un décideur suppléant supplémentaire (>18)",
-	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR]: "Consentement du tuteur d'un mineur",
-	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
-		"Consentement du tuteur d'un mineur (y compris le consentement)",
-	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Consentement des jeunes adultes (<18 ans)',
-} satisfies InviteDictionary;
-
-export default dictionary;
+export default SelectFieldSet;

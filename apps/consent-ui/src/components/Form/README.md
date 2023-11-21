@@ -18,17 +18,17 @@ Libraries used:
 ## Common use cases
 
 - Conditionally-displayed fields:
-  - Look at guardian fields in ClinicianInviteForm.
+  - When hiding the conditional fields, use the `unregister` method from `useForm()`.
+  - Example: guardian fields in ClinicianInviteForm.
 
 ## Parts of a form
 
 ### Fieldsets
 
 - `Fieldset` is an HTML element that contains an input or group of inputs, and their label, description, legend, and other associated elements.
-- The `<FieldSet />` component is used for most of the form fields, e.g. the ones that have a label on the left and input on the right (at desktop width). For other types of fields, use a more specific fieldset component, such as `<CheckboxFieldSet />`.
+- The `<FieldSet />` component is used for most of the form fields in Consent UI, e.g. the ones that have a label on the left and input on the right, at desktop width. For other types of fields, use a more specific fieldset component, such as `<CheckboxFieldSet />`.
 
 #### Inputs
 
-- Nest these components inside a fieldset component, rather than using them directly in a form.
-- This folder contains only low-level components: HTML elements or components imported directly from libraries.
-- Inputs should receive styling from their parent fieldset. Inputs shouldn't be styled on their own - these components are for logic only.
+- This folder contains low-level components (native HTML elements, or components imported from libraries) and logic for registering or controlling these components with React-Hook-Form.
+- Styling should be handled in the parent `fieldset`, not at this level.

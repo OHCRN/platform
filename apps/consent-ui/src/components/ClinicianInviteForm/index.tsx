@@ -28,9 +28,8 @@ import { ConsentGroup, ConsentToBeContacted } from 'types/entities';
 
 import TextFieldSet from '../Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from '../Form/RequiredAsterisk';
-import FieldSet from '../Form/fieldsets/FieldSet';
 import CheckboxFieldSet from '../Form/fieldsets/CheckboxFieldSet';
-import SelectInput from '../Form/fieldsets/inputs/SelectInput';
+import SelectFieldSet from '../Form/fieldsets/SelectFieldSet';
 
 import {
 	ClinicianInviteFormTextDictionary,
@@ -41,8 +40,8 @@ import {
 } from './types';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
-	'GUARDIAN_CONSENT_OF_MINOR',
-	'GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT',
+	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
 
 const guardianInfoFields: TempFieldNames[] = [
@@ -82,8 +81,7 @@ const ClinicianInviteFormEl = ({
 	};
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
-	const watchConsentGroup =
-		watch(TempFieldNames.enum.consentGroup) || ConsentGroup.enum.ADULT_CONSENT;
+	const watchConsentGroup = watch('consentGroup');
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
 		if (watchConsentGroup && consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
@@ -97,12 +95,6 @@ const ClinicianInviteFormEl = ({
 		}
 	}, [unregister, watchConsentGroup]);
 
-	// NOTE doesn't work. uncomment to see TS error
-	// const translateError: string = (error?: any) => {
-	// 	const errorKey = Object.keys(error)[0];
-	// 	(error && errorDict[errorKey]) || '';
-	// };
-
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 600, width: '90%' }}>
 			<div>
@@ -113,43 +105,38 @@ const ClinicianInviteFormEl = ({
 				<TextFieldSet
 					error={errors.participantFirstName?.type}
 					label={labelsDict['first-name'] || ''}
-					name={TempFieldNames.enum.participantFirstName}
+					name="participantFirstName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
 					error={errors.participantLastName?.type}
 					label={labelsDict['last-name'] || ''}
-					name={TempFieldNames.enum.participantLastName}
+					name="participantLastName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
 					error={errors.participantPreferredName?.type}
 					label={labelsDict['preferred-name'] || ''}
-					name={TempFieldNames.enum.participantPreferredName}
+					name="participantPreferredName"
 					register={register}
 				/>
 
 				<Controller
-					name={TempFieldNames.enum.consentGroup}
+					name="consentGroup"
 					control={control}
 					render={({ field: { onChange, value } }) => (
-						<FieldSet
+						<SelectFieldSet
 							error={errors.consentGroup?.type}
 							label={labelsDict['consent-group'] || ''}
-							name={TempFieldNames.enum.consentGroup}
+							name="consentGroup"
+							onChange={onChange}
+							options={consentGroupOptions}
+							placeholder={textDict['select-placeholder'] || ''}
 							required
-						>
-							<SelectInput
-								name={TempFieldNames.enum.consentGroup}
-								onChange={onChange}
-								options={consentGroupOptions}
-								placeholder={textDict['select-placeholder'] || ''}
-								required
-								value={value}
-							/>
-						</FieldSet>
+							value={value}
+						/>
 					)}
 					rules={{ required: true }}
 				/>
@@ -163,14 +150,14 @@ const ClinicianInviteFormEl = ({
 					<TextFieldSet
 						error={errors.guardianName?.type}
 						label={labelsDict['guardian-name'] || ''}
-						name={TempFieldNames.enum.guardianName}
+						name="guardianName"
 						register={register}
 						required
 					/>
 					<TextFieldSet
 						error={errors.guardianPhoneNumber?.type}
 						label={labelsDict['guardian-phone'] || ''}
-						name={TempFieldNames.enum.guardianPhoneNumber}
+						name="guardianPhoneNumber"
 						register={register}
 						required
 						type="tel"
@@ -178,7 +165,7 @@ const ClinicianInviteFormEl = ({
 					<TextFieldSet
 						error={errors.guardianEmailAddress?.type}
 						label={labelsDict['email'] || ''}
-						name={TempFieldNames.enum.guardianEmailAddress}
+						name="guardianEmailAddress"
 						register={register}
 						required
 						type="email"
@@ -186,7 +173,7 @@ const ClinicianInviteFormEl = ({
 					<TextFieldSet
 						error={errors.guardianRelationship?.type}
 						label={labelsDict['guardian-relationship'] || ''}
-						name={TempFieldNames.enum.guardianRelationship}
+						name="guardianRelationship"
 						register={register}
 						required
 					/>
@@ -204,7 +191,7 @@ const ClinicianInviteFormEl = ({
 				<CheckboxFieldSet
 					description={textDict['consent-contact-description']}
 					error={errors.consentToBeContacted?.type}
-					name={TempFieldNames.enum.consentToBeContacted}
+					name="consentToBeContacted"
 					register={register}
 					required
 					title={labelsDict['consent-contact']}
@@ -217,28 +204,28 @@ const ClinicianInviteFormEl = ({
 				<TextFieldSet
 					error={errors.clinicianTitleOrRole?.type}
 					label={labelsDict['clinician-title-or-role'] || ''}
-					name={TempFieldNames.enum.clinicianTitleOrRole}
+					name="clinicianTitleOrRole"
 					register={register}
 					required
 				/>
 				<TextFieldSet
 					error={errors.clinicianFirstName?.type}
 					label={labelsDict['clinician-first-name'] || ''}
-					name={TempFieldNames.enum.clinicianFirstName}
+					name="clinicianFirstName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
 					error={errors.clinicianLastName?.type}
 					label={labelsDict['clinician-last-name'] || ''}
-					name={TempFieldNames.enum.clinicianLastName}
+					name="clinicianLastName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
 					error={errors.clinicianInstitutionalEmailAddress?.type}
 					label={labelsDict['clinician-institutional-email-address'] || ''}
-					name={TempFieldNames.enum.clinicianInstitutionalEmailAddress}
+					name="clinicianInstitutionalEmailAddress"
 					register={register}
 					required
 					type="email"

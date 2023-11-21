@@ -26,7 +26,7 @@ import {
 import { getTranslation, ValidLanguage } from 'src/i18n';
 // import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
-import { ConsentGroup } from 'types/entities';
+import { CONSENT_GROUPS } from 'types/entities';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -69,13 +69,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		'upload-file-link': translate('clinician-invite-form', 'upload-file-link'),
 	};
 
-	const consentGroupOptions: ConsentGroupOption[] = [
-		ConsentGroup.enum.ADULT_CONSENT,
-		ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
-		ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
-		ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-		ConsentGroup.enum.YOUNG_ADULT_CONSENT,
-	].map((group) => ({
+	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
 		label: translate('consent-group', group),
 		value: group,
 	}));
