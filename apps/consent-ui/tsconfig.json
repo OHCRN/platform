@@ -1,36 +1,46 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "baseUrl": ".",
-    "resolveJsonModule": true
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"resolveJsonModule": true,
+		"baseUrl": "src/",
+		"paths": {
+			"@/app": ["app/index"],
+			"@/app/*": ["app/*"],
+			"@/components": ["components/index"],
+			"@/components/*": ["components/*"],
+			"@/config": ["config/index"],
+			"@/config/*": ["config/*"],
+			"@/constants": ["constants/index"],
+			"@/constants/*": ["constants/*"],
+			"@/hooks": ["hooks/index"],
+			"@/hooks/*": ["hooks/*"],
+			"@/i18n": ["i18n/index"],
+			"@/i18n/*": ["i18n/*"],
+			"@/middleware": ["middleware.ts"],
+			"@/public": ["public/index"],
+			"@/public/*": ["public/*"],
+			"@/services": ["services/index"],
+			"@/services/*": ["services/*"],
+			"@/theme": ["theme/index"],
+			"@/theme/*": ["theme/*"]
+		}
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }

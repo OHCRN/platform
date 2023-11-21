@@ -17,11 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import PatientIcon from 'src/components/Icons/Family';
-import DoctorIcon from 'src/components/Icons/Doctor';
-import RightArrow from 'src/components/Icons/Arrow';
-import Chevron from 'src/components/Icons/Chevron';
+import { ValidLanguage, getTranslation } from '@/i18n';
+import PatientIcon from '@/components/Icons/Family';
+import DoctorIcon from '@/components/Icons/Doctor';
+import RightArrow from '@/components/Icons/Arrow';
+import Chevron from '@/components/Icons/Chevron';
 
 import styles from './Card.module.scss';
 import CardLink from './CardLink';

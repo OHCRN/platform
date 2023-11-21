@@ -21,7 +21,7 @@
 
 import { ReactNode, createContext, useContext } from 'react';
 
-import { AppConfig, defaultAppConfig } from 'src/config';
+import { AppConfig, defaultAppConfig } from '@/config';
 
 const AppConfigContext = createContext(defaultAppConfig);
 

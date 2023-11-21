@@ -20,10 +20,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { TranslationFunction } from 'src/i18n';
-import OICRLogo from 'src/public/oicr.svg';
-import InstagramLogo from 'src/public/instagram.svg';
-import TwitterLogo from 'src/public/twitter.svg';
+import { TranslationFunction } from '@/i18n';
+import OICRLogo from '@/public/oicr.svg';
+import InstagramLogo from '@/public/instagram.svg';
+import TwitterLogo from '@/public/twitter.svg';
 
 import styles from './Footer.module.scss';
 

@@ -23,20 +23,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
-import { ConsentGroup, ConsentToBeContacted } from 'types/entities';
+import { ClinicianInviteForm, ConsentGroup, ConsentToBeContacted } from 'types/entities';
 
-import TextFieldSet from '../Form/fieldsets/TextFieldSet';
-import RequiredAsterisk from '../Form/RequiredAsterisk';
-import CheckboxFieldSet from '../Form/fieldsets/CheckboxFieldSet';
-import SelectFieldSet from '../Form/fieldsets/SelectFieldSet';
+import { FormLabelsDictionary } from '@/i18n/locales/en/form-labels';
+import TextFieldSet from '@/components/Form/fieldsets/TextFieldSet';
+import RequiredAsterisk from '@/components/Form/RequiredAsterisk';
+import CheckboxFieldSet from '@/components/Form/fieldsets/CheckboxFieldSet';
+import SelectFieldSet from '@/components/Form/fieldsets/SelectFieldSet';
 
-import {
-	ClinicianInviteFormTextDictionary,
-	ConsentGroupOption,
-	TempValidationSchema,
-	tempValidationSchema,
-} from './types';
+import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
