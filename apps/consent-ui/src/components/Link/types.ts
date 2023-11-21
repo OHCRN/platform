@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { ValidLanguage } from 'src/i18n';
 
+import { ButtonProps } from '../Button/types';
+
 const VALID_ROUTE_NAMES = [
 	'home',
 	'invite',
@@ -31,6 +33,7 @@ export type Route =
 	  };
 
 export type LocalizedLinkProps = Omit<ComponentProps<typeof Link>, 'href'> &
+	ButtonProps &
 	Route & {
 		linkLang: ValidLanguage;
 	};

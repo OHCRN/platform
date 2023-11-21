@@ -19,6 +19,7 @@
 
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
+
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/Header/LanguageToggle';

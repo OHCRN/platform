@@ -33,10 +33,12 @@ describe('PostalCode', () => {
 		expect(PostalCode.safeParse('T4B 0V').success).false;
 		expect(PostalCode.safeParse('T4B-0V').success).false;
 	});
-	it('Can contain lowercase letters', () => {
-		// these are parsed into uppercase, so should not cause an error
+	it('Can contain lowercase letters and transforms all letters to uppercase', () => {
 		expect(PostalCode.safeParse('t4b0v7').success).true;
+		expect(PostalCode.parse('t4b0v7')).to.equal('T4B0V7');
+
 		expect(PostalCode.safeParse('T4B0v7').success).true;
+		expect(PostalCode.parse('T4B0v7')).to.equal('T4B0V7');
 	});
 	it('Must contain characters in the correct order', () => {
 		expect(PostalCode.safeParse('T4B07V').success).false;

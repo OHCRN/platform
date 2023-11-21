@@ -17,20 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
+import errorHandler from 'error-handler';
 
 import { AppConfig } from './config.js';
-import SwaggerRouter from './routers/swagger.js';
-import UserRouter from './routers/user.js';
-import StatusRouter from './routers/status.js';
-import ParticipantRouter from './routers/participants.js';
+import logger from './logger.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
-import ParticipantResponseRouter from './routers/participantResponses.js';
 import ConsentCompletionRouter from './routers/consentCompletion.js';
 import ClinicianInviteRouter from './routers/invites.js';
-import RecaptchaRouter from './routers/recaptcha.js';
+import ParticipantResponseRouter from './routers/participantResponses.js';
+import ParticipantRouter from './routers/participants.js';
+import StatusRouter from './routers/status.js';
+import SwaggerRouter from './routers/swagger.js';
+import UserRouter from './routers/user.js';
 import WizardRouter from './routers/wizard.js';
 
 const App = (config: AppConfig) => {
@@ -45,20 +46,24 @@ const App = (config: AppConfig) => {
 		);
 	}
 
-	app.set('port', config.port);
+	app.set('port', config.express.port);
 	app.use(bodyParser.json());
 
 	// set up routers
 	app.use('/api-docs', SwaggerRouter);
-	app.use('/user', UserRouter);
-	app.use('/status', StatusRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
+
 	app.use('/consent-completion', ConsentCompletionRouter);
+	app.use('/consent-questions', ConsentQuestionRouter);
 	app.use('/invites', ClinicianInviteRouter);
-	app.use('/recaptcha', RecaptchaRouter);
+	app.use('/participant-responses', ParticipantResponseRouter);
+	app.use('/participants', ParticipantRouter);
+	app.use('/status', StatusRouter);
+	app.use('/user', UserRouter);
 	app.use('/wizard', WizardRouter);
+
+	// Error Handler should be last function added so that
+	// it can capture thrown errors from all previous handlers
+	app.use(errorHandler({ logger }));
 
 	return app;
 };

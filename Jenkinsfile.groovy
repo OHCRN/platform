@@ -83,9 +83,20 @@ pipeline {
             steps {
                 container('node') {
                     sh 'npx --yes pnpm install'
+                    sh 'npx --yes pnpm generate'
+                    sh 'npx --yes pnpm build'
                 }
             }
         }
+
+        stage('Test') {
+            steps {
+                container('node') {
+                    sh 'npx --yes pnpm run test'
+                }
+            }
+        }
+
 
         stage('Build') {
             steps {

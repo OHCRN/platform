@@ -20,8 +20,6 @@
 import { Router } from 'express';
 import { User, UserRole } from 'types/entities';
 
-import logger from '../logger.js';
-
 /**
  * @openapi
  * tags:
@@ -62,7 +60,6 @@ const router = Router();
  *         description: Server error
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /user`);
 	// TODO: implement when authentication layer is ready
 	const user: User = {
 		firstName: 'Homer',
@@ -72,7 +69,7 @@ router.get('/', async (req, res) => {
 		emailVerified: true,
 		enabled2FA: false,
 	};
-	res.status(200).send({ user });
+	return res.status(200).send({ user });
 });
 
 export default router;

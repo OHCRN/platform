@@ -21,7 +21,6 @@ import { LandingPageDictionary } from 'src/i18n/locales/en/landing-page';
 
 const dictionary = {
 	title: "Bienvenue dans le registre de l'OHCRN",
-	'hero-background-img-alt': '',
 	'ohcrn-description':
 		'Le Réseau ontarien de recherche sur le cancer héréditaire (OHCRN) recueille des informations sur les personnes présentant un risque élevé de développer un cancer. Nous aidons les chercheurs à collecter des données afin qu’ils puissent détecter le cancer plus tôt et le traiter plus efficacement.',
 	'more-about-ohcrn': "En savoir plus sur l'OHCRN",

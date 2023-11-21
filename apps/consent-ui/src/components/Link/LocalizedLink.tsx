@@ -24,6 +24,8 @@ import { defaultLanguage } from 'src/i18n/settings';
 import routesByLocale from 'src/i18n/routes/routesByLocale.json';
 import { ValidLanguage } from 'src/i18n';
 
+import LinkButton from '../Button/LinkButton';
+
 import { LocalizedLinkProps } from './types';
 import { addParamsToUrl } from './utils';
 
@@ -33,6 +35,13 @@ const LocalizedLink = ({
 	linkLang,
 	className,
 	children,
+	role,
+	variant,
+	color,
+	size,
+	action,
+	LeftIcon,
+	RightIcon,
 	...rest
 }: LocalizedLinkProps) => {
 	let locale = linkLang;
@@ -57,9 +66,27 @@ const LocalizedLink = ({
 	}
 	const fullPath = `/${urlJoin(locale, href)}`;
 	return (
-		<Link href={fullPath} className={className} {...rest}>
-			{children}
-		</Link>
+		<>
+			{role === 'button' ? (
+				<LinkButton
+					href={fullPath}
+					variant={variant}
+					color={color}
+					size={size}
+					action={action}
+					className={className}
+					LeftIcon={LeftIcon}
+					RightIcon={RightIcon}
+					{...rest}
+				>
+					{children}
+				</LinkButton>
+			) : (
+				<Link href={fullPath} className={className} {...rest}>
+					{children}
+				</Link>
+			)}
+		</>
 	);
 };
 

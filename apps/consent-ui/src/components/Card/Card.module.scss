@@ -1,0 +1,32 @@
+.card {
+	background-color: theme('colors.grayscale.100');
+	color: theme('colors.grayscale.800');
+	padding: theme('padding.sm');
+	height: fit-content;
+	display: flex;
+	gap: 1.5rem;
+
+	@media (min-width: theme('screens.sm')) {
+	  padding: 1.5rem theme('padding.md');
+	}
+
+	h2 {
+		font-size: theme('fontSize.xl');
+	}
+}
+
+.column {
+	flex-direction: column;
+}
+
+.shadow-sm {
+	box-shadow: theme('dropShadow.sm');
+}
+
+.shadow-base {
+	box-shadow: theme('dropShadow.base');
+}
+
+.shadow-lg {
+	box-shadow: theme('dropShadow.lg');
+}

@@ -19,11 +19,11 @@
 
 import React from 'react';
 
-function Chevron({ classes }: { classes?: string }) {
+function Chevron({ className }: { className?: string }) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			className={classes}
+			className={className}
 			width="21"
 			height="62"
 			fill="none"

@@ -21,36 +21,30 @@ import Image from 'next/image';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/Button/LinkButton';
-import RightArrow from 'src/components/Icons/Arrow';
-import BackgroundImage from 'src/public/background.png';
+import BackgroundImage from 'src/public/landing-page.jpg';
 import { OHCRN_HOME_LINK } from 'src/constants';
 
+import LandingPageCard from './LandingPageCard';
 import styles from './Home.module.scss';
-import Card from './Card/Card';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 	return (
 		<div className={styles.heroContainer}>
-			<Image
-				src={BackgroundImage}
-				alt={translate('landing-page', 'hero-background-img-alt')}
-				priority
-				className={styles.backgroundImg}
-			/>
-			<div className={styles.gradientOverlay}></div>
+			<div className={styles.backgroundImg}>
+				<Image src={BackgroundImage} alt="" priority placeholder="blur" />
+			</div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
 					<h1>{translate('landing-page', 'title')}</h1>
 					<p>
 						<b>{translate('landing-page', 'ohcrn-description')}</b>
 					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" layout="icon">
+					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
 						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
-						<RightArrow />
 					</LinkButton>
 				</div>
-				<Card currentLang={currentLang} />
+				<LandingPageCard currentLang={currentLang} />
 			</div>
 		</div>
 	);
