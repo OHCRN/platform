@@ -30,45 +30,50 @@ import { ConsentToBeContacted } from './ConsentToBeContacted.js';
 
 export const ClinicianInviteBase = z.object({
 	clinicianFirstName: Name,
-	clinicianLastName: Name,
 	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianTitleOrRole: z.string().min(1),
+	clinicianLastName: Name,
+	clinicianTitleOrRole: Name,
+	consentGroup: ConsentGroup,
+	consentToBeContacted: ConsentToBeContacted,
+	guardianEmailAddress: z.string().email().optional().or(z.literal('')),
+	guardianName: Name.optional().or(z.literal('')),
+	guardianPhoneNumber: PhoneNumber.optional().or(z.literal('')),
+	guardianRelationship: Name.optional().or(z.literal('')),
+	participantEmailAddress: z.string().email(),
 	participantFirstName: Name,
 	participantLastName: Name,
-	participantEmailAddress: z.string().email(),
 	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name.optional(),
-	consentGroup: ConsentGroup,
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianEmailAddress: z.string().email().optional(),
-	guardianRelationship: Name.optional(),
-	consentToBeContacted: ConsentToBeContacted,
+	participantPreferredName: Name.optional().or(z.literal('')),
 });
 
-export const ClinicianInvite = ClinicianInviteBase.and(
-	z.object({
-		id: NanoId,
-		inviteSentDate: z.coerce.date(),
-		inviteAcceptedDate: z.coerce.date().optional(),
-		inviteAccepted: z.boolean().default(false),
-	}),
-).refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
+export const refineClinicianInvite = <T extends z.ZodTypeAny>(schema: T) =>
+	schema.refine((input) => {
+		const {
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		} = input;
+		return hasRequiredGuardianInformation(
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		);
+	});
+
+export const ClinicianInvite = refineClinicianInvite(
+	ClinicianInviteBase.and(
+		z.object({
+			id: NanoId,
+			inviteSentDate: z.coerce.date(),
+			inviteAcceptedDate: z.coerce.date().optional(),
+			inviteAccepted: z.boolean().default(false),
+		}),
+	),
+);
 
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
 export const ClinicianInviteSchema: SchemaObject = generateSchema(ClinicianInvite);

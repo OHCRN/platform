@@ -21,25 +21,9 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
-import { ClinicianInviteBase } from './ClinicianInvite.js';
+import { ClinicianInviteBase, refineClinicianInvite } from './ClinicianInvite.js';
 
-export const ClinicianInviteForm = ClinicianInviteBase.refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
+export const ClinicianInviteForm = refineClinicianInvite(ClinicianInviteBase);
 
 export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
 export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);
