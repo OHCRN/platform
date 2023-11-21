@@ -31,6 +31,6 @@ EXAMPLE END -->
 - [ ] Manual testing completed
 - [ ] Builds locally without errors or warnings
 - [ ] Tests are updated (if required) and passing
-- [ ] PR feedback has been addressed
+- [ ] PR feedback has been addressed **if applicable**
 - [ ] New environment variables added to `.env.schema` files, `README.md`
 - [ ] Added copyrights to new files
