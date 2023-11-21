@@ -20,9 +20,9 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import Card from 'src/components/Card';
-import { getTranslation, ValidLanguage } from 'src/i18n';
-import ConsentsImage from 'src/public/consents.jpeg';
+import Card from '@/components/Card';
+import { getTranslation, ValidLanguage } from '@/i18n';
+import ConsentsImage from '@/public/consents.jpeg';
 
 import LocalizedLink from '../Link/LocalizedLink';
 

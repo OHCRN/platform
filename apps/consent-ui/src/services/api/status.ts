@@ -20,8 +20,8 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { APIStatus } from 'types/services';
 
-import { API } from 'src/constants';
-import { axiosClient } from 'src/services/api';
+import { API } from '@/constants';
+import { axiosClient } from '@/services/api';
 
 const getAPIStatus = async () => {
 	return await axiosClient

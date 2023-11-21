@@ -18,13 +18,13 @@
  */
 import clsx from 'clsx';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import PatientIcon from 'src/components/Icons/Family';
-import DoctorIcon from 'src/components/Icons/Doctor';
-import RightArrow from 'src/components/Icons/Arrow';
-import Chevron from 'src/components/Icons/Chevron';
-import Card from 'src/components/Card';
-import CardLink from 'src/components/Card/CardLink';
+import { ValidLanguage, getTranslation } from '@/i18n';
+import PatientIcon from '@/components/Icons/Family';
+import DoctorIcon from '@/components/Icons/Doctor';
+import RightArrow from '@/components/Icons/Arrow';
+import Chevron from '@/components/Icons/Chevron';
+import Card from '@/components/Card';
+import CardLink from '@/components/Card/CardLink';
 
 import styles from './LandingPageCard.module.scss';
 

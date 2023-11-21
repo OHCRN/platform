@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
+import { ValidLanguage, getTranslation } from '@/i18n';
 
 import styles from './Footer.module.scss';
 import Versions from './Versions';

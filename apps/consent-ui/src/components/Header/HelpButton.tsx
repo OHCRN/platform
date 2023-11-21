@@ -1,7 +1,7 @@
 'use client';
 
-import Button from 'src/components/Button';
-import Help from 'src/components/Icons/Help';
+import Button from '@/components/Button';
+import Help from '@/components/Icons/Help';
 
 import styles from './Header.module.scss';
 

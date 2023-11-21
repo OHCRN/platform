@@ -19,7 +19,7 @@
 
 import clsx from 'clsx';
 
-import RightArrow from 'src/components/Icons/Arrow';
+import RightArrow from '@/components/Icons/Arrow';
 
 import { ButtonProps as BaseProps } from './types';
 import styles from './Button.module.scss';

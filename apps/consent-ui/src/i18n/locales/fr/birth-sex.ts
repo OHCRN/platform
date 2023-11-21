@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { BirthSexDictionary } from 'src/i18n/locales/en/birth-sex';
+import { BirthSexDictionary } from '@/i18n/locales/en/birth-sex';
 
 const dictionary = {
 	FEMALE: 'Female',

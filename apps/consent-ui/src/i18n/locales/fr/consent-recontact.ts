@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentRecontactDictionary } from 'src/i18n/locales/en/consent-recontact';
+import { ConsentRecontactDictionary } from '@/i18n/locales/en/consent-recontact';
 
 const dictionary = {} satisfies ConsentRecontactDictionary;
 

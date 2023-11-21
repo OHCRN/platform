@@ -21,9 +21,9 @@
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
-import { ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from 'src/components/Link/utils';
+import { ValidLanguage } from '@/i18n';
+import LocalizedLink from '@/components/Link/LocalizedLink';
+import { getLinkNameByPath, getUnselectedLang } from '@/components/Link/utils';
 
 function LanguageToggle({
 	currentLang,

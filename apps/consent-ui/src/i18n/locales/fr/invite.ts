@@ -19,7 +19,7 @@
 
 import { ConsentGroup } from 'types/entities';
 
-import { InviteDictionary } from 'src/i18n/locales/en/invite';
+import { InviteDictionary } from '@/i18n/locales/en/invite';
 
 const dictionary = {
 	[ConsentGroup.enum.ADULT_CONSENT]: "Consentement d'un adulte (>18)",

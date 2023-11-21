@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { InformedConsentDictionary } from 'src/i18n/locales/en/informed-consent';
+import { InformedConsentDictionary } from '@/i18n/locales/en/informed-consent';
 
 const dictionary = {} satisfies InformedConsentDictionary;
 

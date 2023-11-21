@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GenderDictionary } from 'src/i18n/locales/en/gender';
+import { GenderDictionary } from '@/i18n/locales/en/gender';
 
 const dictionary = {
 	GENDER_FLUID: 'Gender Fluid',

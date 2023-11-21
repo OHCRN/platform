@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
-import HomeComponent from 'src/components/Home';
+import { ValidLanguage } from '@/i18n';
+import HomeComponent from '@/components/Home';
 
 export default async function Home({ params: { lang } }: { params: { lang: ValidLanguage } }) {
 	return <HomeComponent currentLang={lang} />;

@@ -21,8 +21,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { ValidLanguage } from 'src/i18n';
-import { getAPIStatus } from 'src/services/api';
+import { ValidLanguage } from '@/i18n';
+import { getAPIStatus } from '@/services/api';
 
 import APIVersionLabel from './APIVersionLabel';
 

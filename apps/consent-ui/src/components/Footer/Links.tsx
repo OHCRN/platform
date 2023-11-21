@@ -20,8 +20,8 @@
 import Link from 'next/link';
 import clsx from 'clsx';
 
-import { TranslationFunction } from 'src/i18n';
-import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
+import { TranslationFunction } from '@/i18n';
+import { FooterDictionary } from '@/i18n/locales/en/footer.js';
 
 import styles from './Footer.module.scss';
 

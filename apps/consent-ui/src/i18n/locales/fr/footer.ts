@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FooterDictionary } from 'src/i18n/locales/en/footer';
+import { FooterDictionary } from '@/i18n/locales/en/footer';
 
 const dictionary = {
 	'oicr-logo-alt': 'Link to OICR Home',
