@@ -19,9 +19,9 @@
 
 import axios from 'axios';
 import { RequestHandler } from 'express';
+import { ErrorResponse } from 'types/httpErrors';
 
 import { getAppConfig } from '../config.js';
-import { ErrorResponse } from 'types/httpErrors';
 
 const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	const config = getAppConfig();
