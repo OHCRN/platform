@@ -27,6 +27,7 @@ import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
 import { FormSelectOption } from '../Form/types';
 
 // TODO ClinicianInviteFormDictionary shouldn't be partial in final version
+// i.e. when styling/page is complete.
 export type ClinicianInviteFormTextDictionary = Partial<
 	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
 >;
@@ -35,39 +36,21 @@ export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
 
 // TEMP submit doesn't work if there's fields missing
 // so work with a reduced schema
-const TEMP_FIELD_NAMES = [
-	'clinicianInstitutionalEmailAddress',
-	'clinicianFirstName',
-	'clinicianLastName',
-	'clinicianTitleOrRole',
-	'consentGroup',
-	'consentToBeContacted',
-	'guardianEmailAddress',
-	'guardianName',
-	'guardianPhoneNumber',
-	'guardianRelationship',
-	'participantFirstName',
-	'participantLastName',
-	'participantPreferredName',
-] as const;
-
-export const TempFieldNames = z.enum(TEMP_FIELD_NAMES);
-export type TempFieldNames = z.infer<typeof TempFieldNames>;
 
 export const tempValidationSchema = z.object({
-	[TempFieldNames.enum.clinicianFirstName]: Name,
-	[TempFieldNames.enum.clinicianInstitutionalEmailAddress]: z.string().email(),
-	[TempFieldNames.enum.clinicianLastName]: Name,
-	[TempFieldNames.enum.clinicianTitleOrRole]: Name,
-	[TempFieldNames.enum.consentGroup]: ConsentGroup,
-	[TempFieldNames.enum.consentToBeContacted]: ConsentToBeContacted,
-	[TempFieldNames.enum.guardianEmailAddress]: z.string().email().optional(),
-	[TempFieldNames.enum.guardianName]: Name.optional(),
-	[TempFieldNames.enum.guardianPhoneNumber]: PhoneNumber.optional(),
-	[TempFieldNames.enum.guardianRelationship]: Name.optional(),
-	[TempFieldNames.enum.participantFirstName]: Name,
-	[TempFieldNames.enum.participantLastName]: Name,
-	[TempFieldNames.enum.participantPreferredName]: Name.optional(),
+	clinicianFirstName: Name,
+	clinicianInstitutionalEmailAddress: z.string().email(),
+	clinicianLastName: Name,
+	clinicianTitleOrRole: Name,
+	consentGroup: ConsentGroup,
+	consentToBeContacted: ConsentToBeContacted,
+	guardianEmailAddress: z.string().email().optional(),
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianRelationship: Name.optional(),
+	participantFirstName: Name,
+	participantLastName: Name,
+	participantPreferredName: Name.optional(),
 });
 
 export type TempValidationSchema = z.infer<typeof tempValidationSchema>;

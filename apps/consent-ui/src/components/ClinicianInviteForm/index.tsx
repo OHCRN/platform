@@ -34,7 +34,6 @@ import SelectFieldSet from '../Form/fieldsets/SelectFieldSet';
 import {
 	ClinicianInviteFormTextDictionary,
 	ConsentGroupOption,
-	TempFieldNames,
 	TempValidationSchema,
 	tempValidationSchema,
 } from './types';
@@ -44,7 +43,7 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
 
-const guardianInfoFields: TempFieldNames[] = [
+const guardianInfoFields: Partial<keyof TempValidationSchema>[] = [
 	'guardianName',
 	'guardianPhoneNumber',
 	'guardianEmailAddress',
