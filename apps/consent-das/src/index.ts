@@ -22,6 +22,7 @@ import bodyParser from 'body-parser';
 import errorHandler from 'error-handler';
 
 import { AppConfig } from './config.js';
+import logger from './logger.js';
 import SwaggerRouter from './routers/swagger.js';
 import ParticipantRouter from './routers/participants.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
@@ -32,13 +33,16 @@ const App = (config: AppConfig) => {
 	const app = express();
 	app.set('port', config.port);
 	app.use(bodyParser.json());
-	app.use(errorHandler);
 
 	app.use('/api-docs', SwaggerRouter);
 	app.use('/participants', ParticipantRouter);
 	app.use('/consent-questions', ConsentQuestionRouter);
 	app.use('/participant-responses', ParticipantResponseRouter);
 	app.use('/clinician-invites', ClinicianInviteRouter);
+
+	// Error Handler should be last function added so that
+	// it can capture thrown errors from all previous handlers
+	app.use(errorHandler({ logger }));
 
 	return app;
 };

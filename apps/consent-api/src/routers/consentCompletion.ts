@@ -23,7 +23,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
 	const status = Math.random() >= 0.5 ? 'COMPLETE' : 'INCOMPLETE';
-	res.status(200).send({ status });
+	return res.status(200).send({ status });
 });
 
 export default router;

@@ -17,19 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Router } from 'express';
+import { ZodError, typeToFlattenedError } from 'zod';
 
-import { recaptchaMiddleware } from '../utils/recaptcha.js';
+import { ErrorResponse } from './ErrorResponse.js';
 
-const router = Router();
+export const REQUEST_VALIDATION_ERROR = 'RequestValidationError';
 
-// TEST ENDPOINT
-// remove after adding an endpoint that uses recaptcha
+export type RequestValidationError<T> = ErrorResponse & {
+	details: typeToFlattenedError<T>;
+};
 
-router.post('/', recaptchaMiddleware, async (req, res) => {
-	const { inputData } = req.body;
-
-	res.status(200).send({ message: 'reCAPTCHA success', inputData });
+/**
+ * Convert a ZodError from ZodSchema validation into an HTTP Error response message
+ * of type `REQUEST_VALIDATION_ERROR`.
+ * @param error Zod Error from parse
+ * @returns
+ */
+export const RequestValidationErrorResponse = <T>(
+	error: ZodError<T>,
+	customMessage?: string,
+): RequestValidationError<T> => ({
+	error: REQUEST_VALIDATION_ERROR,
+	message: customMessage ?? 'Request body is invalid for this request.',
+	details: error.flatten(),
 });
-
-export default router;

@@ -93,7 +93,7 @@ const options = swaggerJsdoc({
 			},
 		},
 	},
-	apis: ['./src/routers/*'],
+	apis: ['./src/routers/**/*.ts'],
 });
 
 const router = Router();

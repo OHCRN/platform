@@ -17,35 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import axios from 'axios';
-import { Request, Response, NextFunction } from 'express';
-
-const verifyRecaptcha = async (recaptchaToken?: string | null) => {
-	if (!recaptchaToken) {
-		// token not required for dev, but will be processed if provided.
-		return process.env.NODE_ENV === 'development';
-	}
-
-	try {
-		const recaptchaVerification = await axios.post(
-			`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-		);
-		console.log('success?');
-		return !!recaptchaVerification.data.success;
-	} catch (error) {
-		console.error('reCAPTCHA error', error);
-		return false;
-	}
+export type ErrorResponse = {
+	error: string;
+	message: string;
 };
 
-export const recaptchaMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-	const { recaptchaToken } = req.body;
-
-	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
-
-	if (recaptchaVerified) {
-		next();
-	} else {
-		res.status(500).send('reCAPTCHA error');
-	}
-};
+export const ErrorResponse = (error: string, message: string) => ({ error, message });

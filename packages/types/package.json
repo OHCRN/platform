@@ -5,6 +5,7 @@
 	"exports": {
 		".": "./dist/index.js",
 		"./services": "./dist/services/index.js",
+		"./httpErrors": "./dist/httpErrors/index.js",
 		"./entities": "./dist/entities/index.js",
 		"./package.json": "./package.json"
 	},

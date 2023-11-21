@@ -55,7 +55,7 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
 	const participants = await getParticipants();
-	res.send({ participants: [participants] });
+	return res.send({ participants: [participants] });
 });
 
 /**
@@ -87,10 +87,10 @@ router.get('/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
 		const participant = await getParticipant(id);
-		res.status(200).send({ participant });
+		return res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
-		res.status(404).send({ error: 'Participant not found' });
+		return res.status(404).send({ error: 'Participant not found' });
 	}
 });
 
@@ -132,7 +132,7 @@ router.get('/:id/consent-questions/:consentQuestionId', async (req, res) => {
 		consentQuestionId,
 	);
 
-	res.status(200).send({ latestResponse });
+	return res.status(200).send({ latestResponse });
 });
 
 export default router;
