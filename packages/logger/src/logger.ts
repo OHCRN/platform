@@ -84,19 +84,15 @@ const Logger = (config?: RecursivePartial<LoggerConfig>) => {
 	 */
 	const createNamedLogger = (...moduleNames: string[]): Logger => {
 		/* ===== Logging ===== */
-
-		const formatObjectMessage = (message: object) => {
-			if (message === null) {
-				return message;
-			}
-			// format object nicely
-			return `\n${unknownToString(message, { space: 2 })}\n`;
+		const formatMessage = (message: any) => {
+			const messageAsString = unknownToString(message, { space: 2 });
+			return typeof message === 'object' && message !== null
+				? `\n${messageAsString}\n`
+				: messageAsString;
 		};
 
 		const buildServiceMessage = (...messages: any[]) => {
-			const combinedMessages: string = messages
-				.map((i) => (typeof i === 'object' ? formatObjectMessage(i) : unknownToString(i)))
-				.join(' - ');
+			const combinedMessages: string = messages.map(formatMessage).join(' - ');
 			const moduleLabel = moduleNames.length > 0 ? `[${[...moduleNames].join('.')}]` : '';
 			return [moduleLabel, combinedMessages].join(' ');
 		};
