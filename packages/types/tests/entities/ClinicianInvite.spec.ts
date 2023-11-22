@@ -19,32 +19,37 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ConsentGroup, ConsentToBeContacted, ClinicianInvite } from '../../src/entities/index.js';
+import {
+	ConsentGroup,
+	ConsentToBeContacted,
+	ClinicianInviteForm,
+} from '../../src/entities/index.js';
 
-describe('ClinicianInvite', () => {
+describe('ClinicianInviteForm', () => {
 	it('Must define conditionally required fields on condition', () => {
 		expect(
-			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				inviteSentDate: new Date(),
+			ClinicianInviteForm.safeParse({
 				clinicianFirstName: 'Homer',
-				clinicianLastName: 'Simpson',
 				clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
+				clinicianLastName: 'Simpson',
 				clinicianTitleOrRole: 'Doctor',
-				participantFirstName: 'Bart',
-				participantLastName: 'Simpson',
-				participantEmailAddress: 'bart.simpson@example.com',
-				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
+				guardianEmailAddress: 'marge@email.com',
 				guardianName: 'Marge Simpson',
 				guardianPhoneNumber: '1234567890',
-				guardianEmailAddress: 'marge.simpson@example.com',
-				guardianRelationship: 'Wife',
-				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
+				guardianRelationship: 'Mother',
+				id: 'CVCFbeKH2Njl1G41vCQme',
+				inviteSentDate: new Date(),
+				participantEmailAddress: 'bart.simpson@example.com',
+				participantFirstName: 'Bart',
+				participantLastName: 'Simpson',
+				participantPhoneNumber: '6471234567',
+				participantPreferredName: '',
 			}).success,
 		).true;
 		expect(
-			ClinicianInvite.safeParse({
+			ClinicianInviteForm.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -56,25 +61,31 @@ describe('ClinicianInvite', () => {
 				participantEmailAddress: 'bart.simpson@example.com',
 				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
-				guardianName: 'Marge Simpson',
-				guardianRelationship: 'Wife', // missing guardianEmailAddress and guardianPhoneNumber
+				guardianName: '',
+				guardianRelationship: 'Wife', // missing some guardian fields
+				guardianEmailAddress: undefined,
+				guardianPhoneNumber: '',
 				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
 			}).success,
 		).false;
 		expect(
-			ClinicianInvite.safeParse({
-				id: 'CVCFbeKH2Njl1G41vCQme',
-				inviteSentDate: new Date(),
+			ClinicianInviteForm.safeParse({
 				clinicianFirstName: 'Homer',
-				clinicianLastName: 'Simpson',
 				clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
+				clinicianLastName: 'Simpson',
 				clinicianTitleOrRole: 'Doctor',
-				participantFirstName: 'Bart',
-				participantLastName: 'Simpson',
-				participantEmailAddress: 'bart.simpson@example.com',
-				participantPhoneNumber: '6471234567',
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
 				consentToBeContacted: ConsentToBeContacted.enum.CONSENTED,
+				guardianEmailAddress: '',
+				guardianName: undefined,
+				guardianPhoneNumber: '',
+				guardianRelationship: '',
+				id: 'CVCFbeKH2Njl1G41vCQme',
+				inviteSentDate: new Date(),
+				participantEmailAddress: 'bart.simpson@example.com',
+				participantFirstName: 'Bart',
+				participantLastName: 'Simpson',
+				participantPhoneNumber: '6471234567',
 			}).success,
 		).false;
 	});

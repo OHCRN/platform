@@ -21,6 +21,8 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
+import { asOptionalField } from '../utils.js';
+
 import { ConsentGroup } from './ConsentGroup.js';
 import { Name } from './Name.js';
 import { PhoneNumber } from './PhoneNumber.js';
@@ -28,23 +30,35 @@ import { NanoId } from './NanoId.js';
 import { hasRequiredGuardianInformation } from './ParticipantIdentification.js';
 import { ConsentToBeContacted } from './ConsentToBeContacted.js';
 
-export const ClinicianInviteBase = z.object({
-	clinicianFirstName: Name,
-	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianLastName: Name,
-	clinicianTitleOrRole: Name,
-	consentGroup: ConsentGroup,
-	consentToBeContacted: ConsentToBeContacted,
-	guardianEmailAddress: z.string().email().optional().or(z.literal('')),
-	guardianName: Name.optional().or(z.literal('')),
-	guardianPhoneNumber: PhoneNumber.optional().or(z.literal('')),
-	guardianRelationship: Name.optional().or(z.literal('')),
-	participantEmailAddress: z.string().email(),
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name.optional().or(z.literal('')),
+export const ClinicianInviteGuardianFieldsRequired = z.object({
+	guardianEmailAddress: z.string().email(),
+	guardianName: Name,
+	guardianPhoneNumber: PhoneNumber,
+	guardianRelationship: Name,
 });
+
+export const ClinicianInviteGuardianFieldsOptional = z.object({
+	guardianEmailAddress: asOptionalField(z.string().email()),
+	guardianName: asOptionalField(Name),
+	guardianPhoneNumber: asOptionalField(PhoneNumber),
+	guardianRelationship: asOptionalField(Name),
+});
+
+export const ClinicianInviteBase = ClinicianInviteGuardianFieldsOptional.and(
+	z.object({
+		clinicianFirstName: Name,
+		clinicianInstitutionalEmailAddress: z.string().email(),
+		clinicianLastName: Name,
+		clinicianTitleOrRole: Name,
+		consentGroup: ConsentGroup,
+		consentToBeContacted: ConsentToBeContacted,
+		participantEmailAddress: z.string().email(),
+		participantFirstName: Name,
+		participantLastName: Name,
+		participantPhoneNumber: PhoneNumber,
+		participantPreferredName: asOptionalField(Name),
+	}),
+);
 
 export const refineClinicianInvite = <T extends z.ZodTypeAny>(schema: T) =>
 	schema.refine((input) => {
