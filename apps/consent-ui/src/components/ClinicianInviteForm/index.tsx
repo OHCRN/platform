@@ -31,6 +31,8 @@ import RequiredAsterisk from 'src/components/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
 
+import Form from '../Form';
+
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
@@ -78,7 +80,7 @@ const ClinicianInviteFormEl = ({
 	const watchConsentGroup = watch('consentGroup');
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
-		if (watchConsentGroup && consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
+		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
 			// guardian fields are registered on render
 			setShowGuardianFields(true);
 		} else {
@@ -90,7 +92,7 @@ const ClinicianInviteFormEl = ({
 	}, [unregister, watchConsentGroup]);
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 600, width: '90%' }}>
+		<Form onSubmit={handleSubmit(onSubmit)}>
 			<div>
 				<h3>{textDict['patient-information']}</h3>
 				<p>
@@ -245,10 +247,8 @@ const ClinicianInviteFormEl = ({
 				/>
 			</div>
 
-			<button type="submit" onClick={handleSubmit(onSubmit)}>
-				Submit
-			</button>
-		</form>
+			<button type="submit">Submit</button>
+		</Form>
 	);
 };
 
