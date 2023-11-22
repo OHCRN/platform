@@ -30,10 +30,15 @@ import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 import Form from '../Form';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
+
+// TODO fix types. errors.field?.type equals required in code but displays as invalid_type in the browser.
+const getErrorFromDictionary = (dictionary: any, errorType: any) =>
+	(errorType && dictionary[errorType]) || '';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -49,10 +54,12 @@ const guardianInfoFields = [
 
 const ClinicianInviteFormEl = ({
 	consentGroupOptions,
+	errorDict,
 	labelsDict,
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
+	errorDict: Record<string, string>;
 	labelsDict: Partial<FormLabelsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
@@ -99,27 +106,27 @@ const ClinicianInviteFormEl = ({
 					<RequiredAsterisk /> {textDict['indicates-required-field']}
 				</p>
 				<TextFieldSet
-					error={errors.participantFirstName?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['first-name'] || ''}
 					name="participantFirstName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
-					error={errors.participantLastName?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['last-name'] || ''}
 					name="participantLastName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
-					error={errors.participantPreferredName?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['preferred-name'] || ''}
 					name="participantPreferredName"
 					register={register}
 				/>
 				<TextFieldSet
-					error={errors.participantPhoneNumber?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['phone'] || ''}
 					name="participantPhoneNumber"
 					register={register}
@@ -127,7 +134,7 @@ const ClinicianInviteFormEl = ({
 					type="tel"
 				/>
 				<TextFieldSet
-					error={errors.participantEmailAddress?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['email'] || ''}
 					name="participantEmailAddress"
 					register={register}
@@ -140,7 +147,7 @@ const ClinicianInviteFormEl = ({
 					control={control}
 					render={({ field: { onChange, value } }) => (
 						<SelectFieldSet
-							error={errors.consentGroup?.type}
+							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 							label={labelsDict['consent-group'] || ''}
 							name="consentGroup"
 							onChange={onChange}
@@ -163,14 +170,14 @@ const ClinicianInviteFormEl = ({
 					 */}
 					<p>{textDict['enter-guardian-info']}</p>
 					<TextFieldSet
-						error={errors.guardianName?.type}
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 						label={labelsDict['guardian-name'] || ''}
 						name="guardianName"
 						register={register}
 						required
 					/>
 					<TextFieldSet
-						error={errors.guardianPhoneNumber?.type}
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 						label={labelsDict['guardian-phone'] || ''}
 						name="guardianPhoneNumber"
 						register={register}
@@ -178,7 +185,7 @@ const ClinicianInviteFormEl = ({
 						type="tel"
 					/>
 					<TextFieldSet
-						error={errors.guardianEmailAddress?.type}
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 						label={labelsDict['email'] || ''}
 						name="guardianEmailAddress"
 						register={register}
@@ -186,7 +193,7 @@ const ClinicianInviteFormEl = ({
 						type="email"
 					/>
 					<TextFieldSet
-						error={errors.guardianRelationship?.type}
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 						label={labelsDict['guardian-relationship'] || ''}
 						name="guardianRelationship"
 						register={register}
@@ -205,7 +212,7 @@ const ClinicianInviteFormEl = ({
 				<p>{textDict['after-registering']}</p>
 				<CheckboxFieldSet
 					description={textDict['consent-contact-description']}
-					error={errors.consentToBeContacted?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					name="consentToBeContacted"
 					register={register}
 					required
@@ -217,28 +224,28 @@ const ClinicianInviteFormEl = ({
 			<div>
 				<h3>{textDict['clinician-information']}</h3>
 				<TextFieldSet
-					error={errors.clinicianTitleOrRole?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['clinician-title-or-role'] || ''}
 					name="clinicianTitleOrRole"
 					register={register}
 					required
 				/>
 				<TextFieldSet
-					error={errors.clinicianFirstName?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['clinician-first-name'] || ''}
 					name="clinicianFirstName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
-					error={errors.clinicianLastName?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['clinician-last-name'] || ''}
 					name="clinicianLastName"
 					register={register}
 					required
 				/>
 				<TextFieldSet
-					error={errors.clinicianInstitutionalEmailAddress?.type}
+					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 					label={labelsDict['clinician-institutional-email-address'] || ''}
 					name="clinicianInstitutionalEmailAddress"
 					register={register}
