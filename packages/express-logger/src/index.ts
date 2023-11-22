@@ -21,7 +21,7 @@ import { RequestHandler } from 'express';
 import ExpressRequestLogger from 'express-requests-logger';
 import { LogLevel, LogLevels, Logger } from 'logger';
 
-import { MiddlewareData } from './types.js';
+import { MiddlewareData } from './dependencyDataTypes.js';
 
 export type ExpressLoggerConfig = {
 	logger: Logger;
@@ -100,17 +100,37 @@ const transformLogger = (original: Logger) => {
 
 const swaggerUiPaths = ['api-docs', 'swagger-ui', 'favicon'];
 
-const expressLogger = (config: ExpressLoggerConfig): RequestHandler => {
+/**
+ * Creates an express middleware that will log all incoming requests using the provided logger.
+ *
+ * By default, all paths associated with swagger API docs at path `api-docs` will be excluded from logging.
+ *
+ * The middleware can be configured to:
+ * 1. Exclude URLs: provide an array of strings to `{excludeUrls: ['example']}`, any request to a route
+ *    that includes the given string in its path will not be logged.
+ *
+ * @example
+ * ```
+ * import express from 'express';
+ * import ExpressLogger from 'express-logger';
+ * import logger from './logger';
+ *
+ * const app = express();
+ * app.use(ExpressLogger({ logger, excludeUrls: ['health'] }));
+ * ```
+ *
+ * @param config
+ * @returns
+ */
+const ExpressLogger = (config: ExpressLoggerConfig): RequestHandler => {
 	const { logger } = config;
 
 	return ExpressRequestLogger({
 		doubleAudit: false,
 		logger: transformLogger(logger),
 
-		maskBody: ['recaptchaToken'],
-
 		excludeURLs: [...(config.excludeURLs || []), ...swaggerUiPaths],
 	});
 };
 
-export default expressLogger;
+export default ExpressLogger;
