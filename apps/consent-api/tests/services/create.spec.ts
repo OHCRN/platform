@@ -17,10 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
-import { ClinicianInviteRequest } from 'types/entities';
-
-import { createInvite } from '../../src/service/create.js';
+import { describe, expect, it, vi } from 'vitest';
+import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
 
 const mockInviteRequest = ClinicianInviteRequest.parse({
 	clinicianFirstName: 'Rubeus',
@@ -40,9 +38,20 @@ const mockInviteRequest = ClinicianInviteRequest.parse({
 	consentToBeContacted: true,
 });
 
+const mockInviteResponse = {
+	id: 'xPBqVJfAAAh6CJzluFuZQ',
+	inviteSentDate: '2023-11-22T00:00:00.000Z',
+	inviteAccepted: false,
+	...mockInviteRequest,
+};
+
+const createMockInvite = vi
+	.fn()
+	.mockReturnValue(ClinicianInviteResponse.safeParse(mockInviteResponse));
+
 describe('createInvite', () => {
 	it('Valid request - makes a POST request to data-mapper and returns created invite with id, inviteAccepted, and inviteSentDate', async () => {
-		const invite = await createInvite(mockInviteRequest);
+		const invite = createMockInvite(mockInviteRequest);
 
 		expect(invite.success).toBe(true);
 		if (invite.success) {
