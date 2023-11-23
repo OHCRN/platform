@@ -17,24 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-
-import { AppConfig } from './config.js';
-import ClinicianInviteRouter from './routers/invites.js';
-import ParticipantsRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
-
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantsRouter);
-	app.use('/invites', ClinicianInviteRouter);
-
-	return app;
-};
-
-export default App;
+/**
+ * Values of an object's property types, as a union.
+ * If the object is readonly (ie. `as const`) the values will be read as literals
+ *
+ * Example:
+ * ```
+ * const model = { a: 'hello', b: 100};
+ * type ModelValues = Values<typeof model>; // string | number
+ *
+ * const modelAsConst = { a: 'hello', b: 100} as const;
+ * type ModelAsConstValues = Values<typeof modelAsConst>; // 'hello' | 100
+ * ```
+ */
+export type Values<T> = T extends infer U ? U[keyof U] : never;
