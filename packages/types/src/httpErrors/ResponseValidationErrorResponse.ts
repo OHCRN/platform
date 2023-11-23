@@ -17,14 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ZodError, typeToFlattenedError } from 'zod';
+import { ZodError, ZodIssue } from 'zod';
 
 import { ErrorResponse } from './ErrorResponse.js';
 
 export const RESPONSE_VALIDATION_ERROR = 'ResponseValidationError';
 
-export type ResponseValidationError<T> = ErrorResponse & {
-	details: typeToFlattenedError<T>;
+export type ResponseValidationError = ErrorResponse & {
+	details: ZodIssue[];
 };
 
 /**
@@ -36,8 +36,8 @@ export type ResponseValidationError<T> = ErrorResponse & {
 export const ResponseValidationErrorResponse = <T>(
 	error: ZodError<T>,
 	customMessage?: string,
-): ResponseValidationError<T> => ({
+): ResponseValidationError => ({
 	error: RESPONSE_VALIDATION_ERROR,
 	message: customMessage ?? 'Response body is invalid for this request.',
-	details: error.flatten(),
+	details: error.issues,
 });
