@@ -5,7 +5,7 @@ export const getAppConfig = () => {
 	return {
 		isProduction: process.env.NODE_ENV === 'production',
 		express: {
-			port: process.env.PORT || '8081',
+			port: process.env.PORT || '8084',
 		},
 	};
 };
