@@ -17,10 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it, vi } from 'vitest';
-import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
+import { describe, expect, it, vi, afterEach } from 'vitest';
+import request from 'supertest';
+import { ClinicianInviteResponse } from 'types/entities';
+import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
 
-const mockInviteRequest = ClinicianInviteRequest.parse({
+import App from '../../src/index.js';
+import { getAppConfig } from '../../src/config.js';
+
+const mockInviteRequest = {
 	clinicianFirstName: 'Rubeus',
 	clinicianLastName: 'Hagrid',
 	clinicianInstitutionalEmailAddress: 'rubeus.hagrid@example.com',
@@ -36,7 +41,7 @@ const mockInviteRequest = ClinicianInviteRequest.parse({
 	guardianEmailAddress: 'sirius.black@example.com',
 	guardianRelationship: 'Guardian',
 	consentToBeContacted: true,
-});
+};
 
 const mockInviteResponse = {
 	id: 'xPBqVJfAAAh6CJzluFuZQ',
@@ -45,21 +50,45 @@ const mockInviteResponse = {
 	...mockInviteRequest,
 };
 
-const createMockInvite = vi
-	.fn()
-	.mockReturnValue(ClinicianInviteResponse.safeParse(mockInviteResponse));
+const mockCreateInvite = () => {
+	vi.mock('../../src/service/create.js', () => {
+		// mock the createInvite service so we don't need to make an API call to data-mapper
+		return { createInvite: () => ClinicianInviteResponse.safeParse(mockInviteResponse) };
+	});
+};
 
-describe('createInvite', () => {
+describe('POST /invites', () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	it('Valid request - makes a POST request to data-mapper and returns created invite with id, inviteAccepted, and inviteSentDate', async () => {
-		const invite = createMockInvite(mockInviteRequest);
+		mockCreateInvite();
+		const appConfig = getAppConfig();
+		const response = await request(App(appConfig)).post('/invites').send({
+			recaptchaToken: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe', // test recaptchaToken key
+			data: mockInviteRequest,
+		});
 
-		expect(invite.success).toBe(true);
-		if (invite.success) {
-			const response = invite.data;
-			expect(response).toContain(mockInviteRequest);
-			expect(response.id).toBeDefined();
-			expect(response.inviteAccepted).toBe(false);
-			expect(response.inviteSentDate).toBeDefined();
+		expect(response.status).toEqual(201);
+		expect(response.body).toStrictEqual(mockInviteResponse);
+	});
+
+	it('Invalid request - missing consentToBeContacted should return RequestValidationError', async () => {
+		mockCreateInvite();
+		const appConfig = getAppConfig();
+		const response = await request(App(appConfig))
+			.post('/invites')
+			.send({
+				recaptchaToken: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe', // test recaptchaToken key
+				data: { ...mockInviteRequest, consentToBeContacted: undefined },
+			});
+
+		expect(response.status).toEqual(400);
+		expect(response.error);
+		if (response.error) {
+			const errorResponse = JSON.parse(response.error.text);
+			expect(errorResponse.error).toStrictEqual(REQUEST_VALIDATION_ERROR);
 		}
 	});
 });
