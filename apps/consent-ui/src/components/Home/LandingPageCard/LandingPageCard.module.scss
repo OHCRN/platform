@@ -3,6 +3,10 @@
 		max-width: 45rem;
 	}
 
+	@media (min-width: theme('screens.sm')) {
+		padding: 24px 48px 30px !important;
+	}
+
 	strong {
 		color: theme('colors.secondary.500');
 		text-decoration-line: underline;

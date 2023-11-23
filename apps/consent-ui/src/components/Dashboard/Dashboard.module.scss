@@ -1,5 +1,6 @@
 .dashboard {
 	width: 100%;
+	max-width: 1200px;
 	padding: theme('padding.sm');
 	@media (min-width: theme('screens.md')) {
 		padding: theme('padding.md') theme('padding.lg');
