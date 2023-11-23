@@ -22,7 +22,7 @@ import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 
-import withRequestBodyValidation from '../../src/middleware/withRequestBodyValidation.js';
+import withRequestBodyValidation from '../src/index.js';
 
 const TestSchema = z.object({ someString: z.string(), someNumber: z.number() });
 const validTestBody: z.infer<typeof TestSchema> = {
@@ -47,7 +47,7 @@ const getMockResponse = (): Response => {
 	return mockResponse;
 };
 
-describe('withRequestBodyValidation', () => {
+describe('withRequestValidation', () => {
 	afterEach(() => {
 		vi.restoreAllMocks();
 	});

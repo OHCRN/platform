@@ -18,10 +18,9 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
 import { ConsentResearchParticipationRequest } from 'types/entities';
 import { ErrorResponse } from 'types/httpErrors';
-
-import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
@@ -59,7 +58,7 @@ const router = Router();
  */
 router.post(
 	'/',
-	withRequestBodyValidation(ConsentResearchParticipationRequest, async (req, res) => {
+	withRequestValidation(ConsentResearchParticipationRequest, async (req, res) => {
 		// TODO: implement when auth layer is ready
 
 		return res

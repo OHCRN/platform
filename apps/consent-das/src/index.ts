@@ -19,7 +19,7 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import errorHandler from 'error-handler';
+import errorHandler from 'express-error-handler';
 
 import { AppConfig } from './config.js';
 import logger from './logger.js';

@@ -18,12 +18,12 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
 import { ClinicianInviteRequest } from 'types/entities';
 import { ErrorResponse } from 'types/httpErrors';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
-import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
 
 /**
  * @openapi
@@ -70,7 +70,7 @@ const ClinicianInviteSchema = z.object({ data: ClinicianInviteRequest });
 router.post(
 	'/',
 	recaptchaMiddleware,
-	withRequestBodyValidation(ClinicianInviteSchema, async (req, res) => {
+	withRequestValidation(ClinicianInviteSchema, async (req, res) => {
 		return res
 			.status(500)
 			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));

@@ -55,12 +55,15 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
+      express-request-validation:
+        specifier: workspace:^
+        version: link:../../packages/express-request-validation
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -101,12 +104,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -331,12 +334,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -390,7 +393,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(eslint-config-prettier@8.8.0)(eslint@8.40.0)(prettier@3.0.3)
 
-  packages/error-handler:
+  packages/express-error-handler:
     dependencies:
       express:
         specifier: ^4.18.2
@@ -405,6 +408,25 @@ importers:
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.17
+
+  packages/express-request-validation:
+    dependencies:
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      types:
+        specifier: workspace:^
+        version: link:../types
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.17
+        version: 4.17.17
+      '@types/express-serve-static-core':
+        specifier: ^4.17.41
+        version: 4.17.41
 
   packages/logger:
     dependencies:
@@ -1592,7 +1614,7 @@ packages:
     dev: true
 
   /array-flatten@1.1.1:
-    resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
+    resolution: {integrity: sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=}
     dev: false
 
   /array-includes@3.1.6:
@@ -2028,7 +2050,7 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
   /cookie-signature@1.0.6:
-    resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+    resolution: {integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=}
     dev: false
 
   /cookie@0.5.0:
@@ -2905,7 +2927,7 @@ packages:
     dev: false
 
   /fresh@0.5.2:
-    resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
+    resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -3613,7 +3635,7 @@ packages:
     dev: false
 
   /merge-descriptors@1.0.1:
-    resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
+    resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
     dev: false
 
   /merge-stream@2.0.0:
@@ -5209,7 +5231,7 @@ packages:
     dev: false
 
   /utils-merge@1.0.1:
-    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
+    resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
     dev: false
 

@@ -18,10 +18,9 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
 import { ConsentReleaseDataRequest } from 'types/entities';
 import { ErrorResponse } from 'types/httpErrors';
-
-import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 
 const router = Router();
 
@@ -59,7 +58,7 @@ const router = Router();
  */
 router.post(
 	'/',
-	withRequestBodyValidation(ConsentReleaseDataRequest, async (req, res) => {
+	withRequestValidation(ConsentReleaseDataRequest, async (req, res) => {
 		// TODO: implement when auth layer is ready
 
 		return res

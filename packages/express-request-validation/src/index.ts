@@ -38,7 +38,9 @@ import { ZodSchema } from 'zod';
  *
  * @example
  * ```
- * router.post('/', withRequestBodyValidation(ExampleSchema, (request, response, next) => {
+ * import withRequestValidation from 'express-request-validation';
+ *
+ * router.post('/', withRequestValidation(ExampleSchema, (request, response, next) => {
  * 	const { body } = request;
  * 	// TS knows the structure of `body` from `ExampleSchema`. It is already validated, you can use it immediately
  * 	const output = doSomethingWithBody(body);
@@ -46,7 +48,7 @@ import { ZodSchema } from 'zod';
  * });
  * ```
  */
-function withRequestBodyValidation<ReqBody>(
+function withRequestValidation<ReqBody>(
 	bodySchema: ZodSchema<ReqBody>,
 	handler: RequestHandler<ParamsDictionary, any, ReqBody>,
 ): RequestHandler {
@@ -65,4 +67,4 @@ function withRequestBodyValidation<ReqBody>(
 	};
 }
 
-export default withRequestBodyValidation;
+export default withRequestValidation;

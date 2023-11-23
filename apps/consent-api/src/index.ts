@@ -20,7 +20,7 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import errorHandler from 'error-handler';
+import errorHandler from 'express-error-handler';
 
 import { AppConfig } from './config.js';
 import logger from './logger.js';
