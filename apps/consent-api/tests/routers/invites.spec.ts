@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it, vi, afterEach } from 'vitest';
+import { describe, expect, it, vi, afterAll } from 'vitest';
 import request from 'supertest';
 import { ClinicianInviteResponse } from 'types/entities';
 import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
@@ -25,63 +25,65 @@ import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
 import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';
 
-const mockInviteRequest = {
-	clinicianFirstName: 'Rubeus',
-	clinicianLastName: 'Hagrid',
-	clinicianInstitutionalEmailAddress: 'rubeus.hagrid@example.com',
-	clinicianTitleOrRole: 'Physician',
-	participantFirstName: 'Harry',
-	participantLastName: 'Potter',
-	participantEmailAddress: 'harry.potter@example.com',
-	participantPhoneNumber: '3111972720',
-	participantPreferredName: 'The Chosen One',
-	consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
-	guardianName: 'Sirius Black',
-	guardianPhoneNumber: '2465930649',
-	guardianEmailAddress: 'sirius.black@example.com',
-	guardianRelationship: 'Guardian',
-	consentToBeContacted: true,
-};
+const mocks = vi.hoisted(() => {
+	// vi.mock() gets 'hoisted' to the top of the file, so need to declare variables used in any vi.mock() here
+	// read more in the docs: https://vitest.dev/api/vi#vi-mock
+	const inviteRequest = {
+		clinicianFirstName: 'Rubeus',
+		clinicianLastName: 'Hagrid',
+		clinicianInstitutionalEmailAddress: 'rubeus.hagrid@example.com',
+		clinicianTitleOrRole: 'Physician',
+		participantFirstName: 'Harry',
+		participantLastName: 'Potter',
+		participantEmailAddress: 'harry.potter@example.com',
+		participantPhoneNumber: '3111972720',
+		participantPreferredName: 'The Chosen One',
+		consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
+		guardianName: 'Sirius Black',
+		guardianPhoneNumber: '2465930649',
+		guardianEmailAddress: 'sirius.black@example.com',
+		guardianRelationship: 'Guardian',
+		consentToBeContacted: true,
+	};
 
-const mockInviteResponse = {
-	id: 'xPBqVJfAAAh6CJzluFuZQ',
-	inviteSentDate: '2023-11-22T00:00:00.000Z',
-	inviteAccepted: false,
-	...mockInviteRequest,
-};
+	const inviteResponse = {
+		id: 'xPBqVJfAAAh6CJzluFuZQ',
+		inviteSentDate: '2023-11-22T00:00:00.000Z',
+		inviteAccepted: false,
+		...inviteRequest,
+	};
+	return { inviteRequest, inviteResponse };
+});
 
-const mockCreateInvite = () => {
-	vi.mock('../../src/service/create.js', () => {
-		// mock the createInvite service so we don't need to make an API call to data-mapper
-		return { createInvite: () => ClinicianInviteResponse.safeParse(mockInviteResponse) };
-	});
-};
+vi.mock('../../src/services/create.js', () => {
+	// mock the createInvite service so we don't need to make an API call to data-mapper
+	return { createInvite: () => ClinicianInviteResponse.safeParse(mocks.inviteResponse) };
+});
+// TODO: can remove when env vars setup in jenkins is figured out, find out why setting RECAPTCHA_SECRET_KEY wont work
+vi.stubEnv('NODE_ENV', 'development');
 
 describe('POST /invites', () => {
-	afterEach(() => {
+	afterAll(() => {
 		vi.restoreAllMocks();
+		vi.unstubAllEnvs();
 	});
 
 	it('Valid request - makes a POST request to data-mapper and returns created invite with id, inviteAccepted, and inviteSentDate', async () => {
-		mockCreateInvite();
 		const appConfig = getAppConfig();
 		const response = await request(App(appConfig)).post('/invites').send({
-			recaptchaToken: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe', // test recaptchaToken key
-			data: mockInviteRequest,
+			data: mocks.inviteRequest,
 		});
 
 		expect(response.status).toEqual(201);
-		expect(response.body).toStrictEqual(mockInviteResponse);
+		expect(response.body).toStrictEqual(mocks.inviteResponse);
 	});
 
 	it('Invalid request - missing consentToBeContacted should return RequestValidationError', async () => {
-		mockCreateInvite();
 		const appConfig = getAppConfig();
 		const response = await request(App(appConfig))
 			.post('/invites')
 			.send({
-				recaptchaToken: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe', // test recaptchaToken key
-				data: { ...mockInviteRequest, consentToBeContacted: undefined },
+				data: { ...mocks.inviteRequest, consentToBeContacted: undefined },
 			});
 
 		expect(response.status).toEqual(400);
