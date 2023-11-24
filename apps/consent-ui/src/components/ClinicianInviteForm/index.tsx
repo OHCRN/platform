@@ -30,8 +30,11 @@ import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
+import useRecaptcha from 'src/hooks/useRecaptcha';
+import Notification from 'src/components/Notification';
 
 import Form from '../Form';
+import RecaptchaCheckbox from '../RecaptchaCheckbox';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 
@@ -73,13 +76,44 @@ const ClinicianInviteFormComponent = ({
 		resolver: zodResolver(ClinicianInviteForm),
 	});
 
+	const [successMessageDemo, setSuccessMessageDemo] = useState('');
+
+	const {
+		getRecaptchaToken,
+		onRecaptchaChange,
+		recaptchaCheckboxRef,
+		recaptchaError,
+		resetRecaptcha,
+		setRecaptchaError,
+	} = useRecaptcha();
+
 	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data: any) => {
 		console.log('SUBMIT DATA', data);
-		try {
-			axios.post('http://localhost:8080/invites', { body: data });
-		} catch (e) {
-			console.log(e);
+		const recaptchaToken = getRecaptchaToken();
+
+		if (recaptchaToken) {
+			axios
+				.post('http://localhost:8080/invites', { body: data, recaptchaToken })
+				.then(() => {
+					setRecaptchaError('');
+					resetRecaptcha();
+					setSuccessMessageDemo('Form submitted successfully!');
+				})
+				.catch((e) => {
+					console.error(e);
+					setSuccessMessageDemo('');
+					setRecaptchaError('Something went wrong, please try again');
+				});
+		} else {
+			setSuccessMessageDemo('');
+			setRecaptchaError('Please complete captcha');
 		}
+	};
+
+	const handleRecaptchaChangeDemo = () => {
+		const token = getRecaptchaToken();
+		token && setRecaptchaError('');
+		onRecaptchaChange();
 	};
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
@@ -253,7 +287,22 @@ const ClinicianInviteFormComponent = ({
 				/>
 			</div>
 
+			{recaptchaError && (
+				<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+			)}
+
+			<div style={{ margin: '25px 0' }}>
+				<RecaptchaCheckbox
+					onChange={handleRecaptchaChangeDemo}
+					recaptchaCheckboxRef={recaptchaCheckboxRef}
+				/>
+			</div>
+
 			<button type="submit">Submit</button>
+
+			{successMessageDemo && (
+				<Notification level="success" variant="small" title={successMessageDemo} />
+			)}
 		</Form>
 	);
 };
