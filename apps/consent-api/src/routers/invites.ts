@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ErrorResponse, ResponseValidationErrorResponse } from 'types/httpErrors';
+import { ErrorResponse } from 'types/httpErrors';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
@@ -75,21 +75,12 @@ router.post(
 			if (invite.success) {
 				return res.status(201).send(invite.data);
 			} else {
-				// ClinicianInviteResponse failed validation from Data Mapper even though the POST request was successful
 				return res
 					.status(500)
-					.send(
-						ResponseValidationErrorResponse(
-							invite.error,
-							'ClinicianInviteResponse from Data Mapper was malformed',
-						),
-					);
+					.send(ErrorResponse('SERVER_ERROR', invite.message || 'An unexpected error occurred'));
 			}
 		} catch (error) {
-			// TODO: E2E error handling -> this will be any error from the POST request to data-mapper that could have bubbled up from pi-das or consent-das
-			res
-				.status(500)
-				.send(ErrorResponse('NOT_IMPLEMENTED', 'Error handling has not been implemented yet'));
+			res.status(500).send(ErrorResponse('SERVER_ERROR', 'An unexpected error occurred'));
 		}
 	}),
 );

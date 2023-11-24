@@ -17,10 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { AxiosError } from 'axios';
 import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
+import { Result, failure, success } from 'types/httpErrors';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
+import logger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 
@@ -48,44 +51,35 @@ export const createResponse = async ({
  * Consent and PI DAS and then returns the combined data object from both DB entries
  * @async
  * @param data Clinician Invite form input
- * @returns Created Clinician Invite data as Zod.SafeParseReturnType
+ * @returns Result with created invite or message indicating failure
  */
-export const createInvite = async ({
-	participantFirstName,
-	participantLastName,
-	participantEmailAddress,
-	participantPhoneNumber,
-	participantPreferredName,
-	guardianName,
-	guardianPhoneNumber,
-	guardianEmailAddress,
-	guardianRelationship,
-	clinicianFirstName,
-	clinicianLastName,
-	clinicianInstitutionalEmailAddress,
-	clinicianTitleOrRole,
-	consentGroup,
-	consentToBeContacted,
-}: ClinicianInviteRequest): Promise<
-	Zod.SafeParseReturnType<ClinicianInviteResponse, ClinicianInviteResponse>
-> => {
+export const createInvite = async (
+	inviteRequest: ClinicianInviteRequest,
+): Promise<Result<ClinicianInviteResponse>> => {
 	const { dataMapperUrl } = getAppConfig();
-	const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'invites'), {
-		participantFirstName,
-		participantLastName,
-		participantEmailAddress,
-		participantPhoneNumber,
-		participantPreferredName,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-		clinicianFirstName,
-		clinicianLastName,
-		clinicianInstitutionalEmailAddress,
-		clinicianTitleOrRole,
-		consentGroup,
-		consentToBeContacted,
-	});
-	return ClinicianInviteResponse.safeParse(data);
+	try {
+		const { data, status } = await axiosClient.post(
+			urlJoin(dataMapperUrl, 'invites'),
+			inviteRequest,
+		);
+
+		if (status !== 201) {
+			// received a non 201 response but didn't get caught as an error
+			logger.error(`[Data-Mapper] 'POST /invites' received ${status} status`);
+			return failure('');
+		}
+
+		const invite = ClinicianInviteResponse.safeParse(data);
+		if (!invite.success) {
+			logger.error(`[Data-Mapper] 😱 'POST /invites' had an invalid response`, invite.error.issues);
+			return failure('');
+		}
+		return success(invite.data);
+	} catch (error) {
+		if (error instanceof AxiosError) {
+			// TODO: E2E error handling → this could be any error from requests to data-mapper, pi-das or consent-das
+			return failure(error.message);
+		}
+		return failure('');
+	}
 };
