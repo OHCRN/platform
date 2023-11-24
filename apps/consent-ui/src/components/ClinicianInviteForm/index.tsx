@@ -24,6 +24,7 @@ import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { ClinicianInviteForm, ConsentGroup, ConsentToBeContacted } from 'types/entities';
+import urlJoin from 'url-join';
 
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
@@ -35,6 +36,7 @@ import Notification from 'src/components/Notification';
 
 import Form from '../Form';
 import RecaptchaCheckbox from '../RecaptchaCheckbox';
+import { useAppConfigContext } from '../AppConfigContextProvider';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 
@@ -65,6 +67,8 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: Partial<FormLabelsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
+	const { CONSENT_API_URL } = useAppConfigContext();
+
 	const {
 		control,
 		formState: { errors },
@@ -93,7 +97,7 @@ const ClinicianInviteFormComponent = ({
 
 		if (recaptchaToken) {
 			axios
-				.post('http://localhost:8080/invites', { body: data, recaptchaToken })
+				.post(urlJoin(CONSENT_API_URL, 'invites'), { data, recaptchaToken })
 				.then(() => {
 					setRecaptchaError('');
 					resetRecaptcha();
