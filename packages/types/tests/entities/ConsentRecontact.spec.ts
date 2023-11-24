@@ -19,12 +19,16 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ConsentQuestionId, ConsentRecontactBase } from '../../src/entities/index.js';
+import {
+	ConsentQuestionId,
+	ConsentRecontactRequest,
+	ConsentRecontactResponse,
+} from '../../src/entities/index.js';
 
-describe('ConsentRecontactBase', () => {
+describe('ConsentRecontactRequest', () => {
 	it('Parses correctly when secondary contact consent is indicated and required fields are provided', () => {
 		expect(
-			ConsentRecontactBase.safeParse({
+			ConsentRecontactRequest.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
 				secondaryContactFirstName: 'Marge',
@@ -35,7 +39,7 @@ describe('ConsentRecontactBase', () => {
 	});
 	it('Parsing fails when secondary contact consent is indicated and required fields are NOT provided', () => {
 		expect(
-			ConsentRecontactBase.safeParse({
+			ConsentRecontactRequest.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
 				secondaryContactFirstName: 'Marge',
@@ -43,7 +47,7 @@ describe('ConsentRecontactBase', () => {
 			}).success,
 		).false;
 		expect(
-			ConsentRecontactBase.safeParse({
+			ConsentRecontactRequest.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true, // secondary contact info not provided
 			}).success,
@@ -51,7 +55,7 @@ describe('ConsentRecontactBase', () => {
 	});
 	it('Parses correctly when secondary contact consent is NOT indicated and required fields are NOT provided', () => {
 		expect(
-			ConsentRecontactBase.safeParse({
+			ConsentRecontactRequest.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
 			}).success,
@@ -61,7 +65,59 @@ describe('ConsentRecontactBase', () => {
 		// TODO: update this test once the expected behaviour is mapped out
 		// i.e. if a user consents to secondary contact then goes back and deselects, do we delete the contact info?
 		expect(
-			ConsentRecontactBase.safeParse({
+			ConsentRecontactRequest.safeParse({
+				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
+				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
+				secondaryContactFirstName: 'Marge', // secondary contact info all provided
+				secondaryContactLastName: 'Simpson',
+				secondaryContactPhoneNumber: '6471234567',
+			}).success,
+		).true;
+	});
+});
+
+// same tests as ConsentRecontactRequest
+describe('ConsentRecontactResponse', () => {
+	it('Parses correctly when secondary contact consent is indicated and required fields are provided', () => {
+		expect(
+			ConsentRecontactResponse.safeParse({
+				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
+				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
+				secondaryContactFirstName: 'Marge',
+				secondaryContactLastName: 'Simpson',
+				secondaryContactPhoneNumber: '6471234567',
+			}).success,
+		).true;
+	});
+	it('Parsing fails when secondary contact consent is indicated and required fields are NOT provided', () => {
+		expect(
+			ConsentRecontactResponse.safeParse({
+				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: false,
+				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true,
+				secondaryContactFirstName: 'Marge',
+				secondaryContactLastName: 'Simpson', // missing secondaryContactPhoneNumber
+			}).success,
+		).false;
+		expect(
+			ConsentRecontactResponse.safeParse({
+				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
+				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: true, // secondary contact info not provided
+			}).success,
+		).false;
+	});
+	it('Parses correctly when secondary contact consent is NOT indicated and required fields are NOT provided', () => {
+		expect(
+			ConsentRecontactResponse.safeParse({
+				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
+				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
+			}).success,
+		).true;
+	});
+	it('Parses correctly when secondary contact consent is NOT indicated and required fields are provided', () => {
+		// TODO: update this test once the expected behaviour is mapped out
+		// i.e. if a user consents to secondary contact then goes back and deselects, do we delete the contact info?
+		expect(
+			ConsentRecontactResponse.safeParse({
 				[ConsentQuestionId.enum.RECONTACT__FUTURE_RESEARCH]: true,
 				[ConsentQuestionId.enum.RECONTACT__SECONDARY_CONTACT]: false,
 				secondaryContactFirstName: 'Marge', // secondary contact info all provided

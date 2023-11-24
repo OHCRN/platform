@@ -17,8 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import createLogger from 'logger';
+import createLogger, { LogLevels } from 'logger';
 
-const logger = createLogger('PI-DAS');
+import { getAppConfig } from './config.js';
+
+const config = getAppConfig();
+
+const logger = createLogger({
+	logFile: !config.isProduction,
+	level: config.isProduction ? LogLevels.INFO : LogLevels.DEBUG,
+}).forModule('PI-DAS');
 
 export default logger;

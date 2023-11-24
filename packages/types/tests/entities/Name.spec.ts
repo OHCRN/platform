@@ -29,6 +29,7 @@ describe('Name', () => {
 		expect(Name.safeParse("D'oh").success).false;
 		expect(Name.safeParse('Homer_Simpson').success).false;
 		expect(Name.safeParse('-Homer Simpson').success).false;
+		expect(Name.safeParse('Homer Simpson1').success).false;
 		expect(Name.safeParse(undefined).success).false;
 		expect(Name.safeParse(null).success).false;
 		expect(Name.safeParse('').success).false;
