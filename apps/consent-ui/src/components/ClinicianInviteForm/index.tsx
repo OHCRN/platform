@@ -30,7 +30,6 @@ import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 import Form from '../Form';
 
@@ -44,15 +43,15 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
-const guardianInfoFields = [
-	// const guardianInfoFields: Partial<keyof ClinicianInviteForm>[] = [
+
+const guardianInfoFields: Partial<keyof ClinicianInviteForm>[] = [
 	'guardianName',
 	'guardianPhoneNumber',
 	'guardianEmailAddress',
 	'guardianRelationship',
 ];
 
-const ClinicianInviteFormEl = ({
+const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
 	errorDict,
 	labelsDict,
@@ -88,12 +87,12 @@ const ClinicianInviteFormEl = ({
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
 		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
-			// guardian fields are registered on render
+			// guardian fields are registered on render, in their input components
 			setShowGuardianFields(true);
 		} else {
 			setShowGuardianFields(false);
-			guardianInfoFields.forEach((field: any) => {
-				unregister(field);
+			guardianInfoFields.forEach((field: Partial<keyof ClinicianInviteForm>) => {
+				unregister(String(field));
 			});
 		}
 	}, [unregister, watchConsentGroup]);
@@ -164,8 +163,8 @@ const ClinicianInviteFormEl = ({
 			{showGuardianFields && (
 				<div style={{ background: 'lightgrey' }}>
 					{/*
-					 * guardian fields are marked required in the UI & optional in zod schema
-					 * because they're required if they're visible,
+					 * guardian fields are marked required in the UI & optional in zod schema.
+					 * they're required if they're visible,
 					 * i.e. if the user has indicated the participant is a minor
 					 */}
 					<p>{textDict['enter-guardian-info']}</p>
@@ -259,4 +258,4 @@ const ClinicianInviteFormEl = ({
 	);
 };
 
-export default ClinicianInviteFormEl;
+export default ClinicianInviteFormComponent;

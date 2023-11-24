@@ -27,8 +27,6 @@ const RequiredAsterisk = ({
 }: {
 	className?: string;
 	required?: boolean;
-}) => {
-	return required && <span className={clsx(styles.base, className)}>*</span>;
-};
+}) => required && <span className={clsx(styles.base, className)}>*</span>;
 
 export default RequiredAsterisk;

@@ -20,13 +20,12 @@
 import Link from 'next/link';
 import { CONSENT_GROUPS } from 'types/entities';
 
-import ClinicianInviteFormEl from 'src/components/ClinicianInviteForm';
+import ClinicianInviteFormComponent from 'src/components/ClinicianInviteForm';
 import {
 	ClinicianInviteFormTextDictionary,
 	ConsentGroupOption,
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-// import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
@@ -80,7 +79,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-			<ClinicianInviteFormEl
+			<ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}
 				errorDict={errorDict}
 				labelsDict={labelsDict}
