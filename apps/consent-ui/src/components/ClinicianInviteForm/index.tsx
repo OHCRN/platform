@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import { ClinicianInviteForm, ConsentGroup, ConsentToBeContacted } from 'types/entities';
+import { ClinicianInviteForm, ConsentGroup } from 'types/entities';
 import urlJoin from 'url-join';
 
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
@@ -254,7 +254,7 @@ const ClinicianInviteFormComponent = ({
 					register={register}
 					required
 					title={labelsDict['consent-contact']}
-					value={ConsentToBeContacted.enum.CONSENTED}
+					value="CHECKED"
 				/>
 			</div>
 
