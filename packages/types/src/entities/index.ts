@@ -20,7 +20,7 @@
 export * from './Ancestry.js';
 export * from './BirthSex.js';
 export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
+// export * from './ClinicianInvite/index.js';
 export * from './ClinicianInviteForm.js';
 export * from './ConsentCategory.js';
 export * from './ConsentGroup.js';
@@ -28,6 +28,7 @@ export * from './ConsentQuestion.js';
 export * from './ConsentRecontact.js';
 export * from './ConsentReleaseData.js';
 export * from './ConsentResearchParticipation.js';
+export * from './ConsentReviewSign.js';
 export * from './ConsentToBeContacted.js';
 export * from './ConsentWizardProgress.js';
 export * from './Error.js';
