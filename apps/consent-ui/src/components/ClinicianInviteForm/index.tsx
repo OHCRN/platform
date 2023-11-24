@@ -130,7 +130,7 @@ const ClinicianInviteFormComponent = ({
 		} else {
 			setShowGuardianFields(false);
 			guardianInfoFields.forEach((field: Partial<keyof ClinicianInviteForm>) => {
-				unregister(String(field));
+				unregister(field);
 			});
 		}
 	}, [unregister, watchConsentGroup]);

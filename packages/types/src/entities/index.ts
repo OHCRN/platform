@@ -21,7 +21,6 @@ export * from './Ancestry.js';
 export * from './BirthSex.js';
 export * from './ClinicalProfile.js';
 export * from './ClinicianInvite/index.js';
-export * from './ClinicianInviteForm.js';
 export * from './ConsentCategory.js';
 export * from './ConsentGroup.js';
 export * from './ConsentQuestion.js';

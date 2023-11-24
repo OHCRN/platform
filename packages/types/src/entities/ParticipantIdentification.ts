@@ -27,7 +27,6 @@ import { Name } from './Name.js';
 import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
 import { LifecycleState } from './LifecycleState.js';
-import { ClinicianInviteGuardianFieldsRequired } from './ClinicianInvite.js';
 
 export const hasRequiredGuardianInformation = (
 	consentGroup: ConsentGroup,
@@ -42,12 +41,19 @@ export const hasRequiredGuardianInformation = (
 		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
 		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
 	return requiresGuardianInformation
-		? ClinicianInviteGuardianFieldsRequired.safeParse({
-				guardianEmailAddress,
-				guardianName,
-				guardianPhoneNumber,
-				guardianRelationship,
-		  }).success
+		? z
+				.object({
+					guardianEmailAddress: z.string().email(),
+					guardianName: Name,
+					guardianPhoneNumber: PhoneNumber,
+					guardianRelationship: Name,
+				})
+				.safeParse({
+					guardianEmailAddress,
+					guardianName,
+					guardianPhoneNumber,
+					guardianRelationship,
+				}).success
 		: true;
 };
 
