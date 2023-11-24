@@ -17,24 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-
-import { AppConfig } from './config.js';
-import ClinicianInviteRouter from './routers/invites.js';
-import ParticipantsRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
-
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantsRouter);
-	app.use('/invites', ClinicianInviteRouter);
-
-	return app;
+/**
+ * Makes all properties optional recursively including nested objects and the objects inside arrays.
+ */
+export type RecursivePartial<T = object> = {
+	[P in keyof T]?: T[P] extends Array<infer I>
+		? Array<RecursivePartial<I>>
+		: T[P] extends Record<string, any>
+		? RecursivePartial<T[P]>
+		: T[P];
 };
-
-export default App;

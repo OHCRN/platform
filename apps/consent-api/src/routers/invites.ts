@@ -24,7 +24,7 @@ import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
-import { createInvite } from '../service/create.js';
+import { createInvite } from '../services/create.js';
 
 /**
  * @openapi
