@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ErrorResponse } from 'types/httpErrors';
+import { ConflictErrorResponse, ErrorResponse } from 'types/httpErrors';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
@@ -81,7 +81,7 @@ router.post(
 					return res.status(500).json(ErrorResponse('ServerError', invite.message));
 				}
 				case 'INVITE_EXISTS': {
-					return res.status(400).json(ErrorResponse('ClincianInviteAlreadyExists', invite.message));
+					return res.status(400).json(ConflictErrorResponse(invite.target ?? [], invite.message));
 				}
 			}
 		} catch (error) {

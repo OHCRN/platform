@@ -70,10 +70,18 @@ export const createInvite = async (
 
 		return success(invite.data);
 	} catch (error) {
-		if (error instanceof AxiosError) {
+		if (error instanceof AxiosError && error.response) {
 			// TODO: E2E error handling → this could be any error from requests to data-mapper, pi-das or consent-das
-			logger.error('POST /invites', 'AxiosError handling create invite request.', error.message);
-			return failure('SYSTEM_ERROR', error.message);
+			const { data, status } = error.response;
+			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+
+			if (status === 409) {
+				return failure('INVITE_EXISTS', data.error, [
+					// TODO: populate with conflict fields
+				]);
+			}
+
+			return failure('SYSTEM_ERROR', data.error);
 		}
 		logger.error('POST /invites', 'Unexpected error handling create invite request.', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
