@@ -3,6 +3,7 @@ export type Success<T> = { status: 'SUCCESS'; data: T };
 export type Failure<T = void, FailureStatus = string> = {
 	status: FailureStatus;
 	message: string;
+	target?: string[]; // list of target fields pertaining to the error, for example `emailAddress` for a conflict error
 	data: T;
 };
 
@@ -38,9 +39,11 @@ export const success = <T>(data: T): Success<T> => ({ status: 'SUCCESS', data })
 export const failure = <FailureStatus>(
 	status: FailureStatus,
 	message: string,
+	target?: string[],
 ): Failure<void, FailureStatus> => ({
 	status,
 	message,
+	target,
 	data: undefined,
 });
 
@@ -53,8 +56,10 @@ export const alternate = <T, FailureStatus>(
 	status: FailureStatus,
 	data: T,
 	message: string,
+	target?: string[],
 ): Failure<T, FailureStatus> => ({
 	status,
+	target,
 	data,
 	message,
 });
