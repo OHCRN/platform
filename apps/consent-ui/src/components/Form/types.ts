@@ -64,14 +64,14 @@ export type FormSelectFieldSetProps<
 
 // unique fieldsets
 
-export type FormCheckboxFieldSetProps<T extends FieldValues, V extends string> = Omit<
+export type FormCheckboxFieldSetProps<T extends FieldValues, V extends boolean> = Omit<
 	FormFieldSetSharedProps<T>,
 	'label' // uses title & description instead
 > & {
 	description: ReactNode;
 	register: FormFieldRegister<T>;
 	title?: string;
-	value: FormFieldValue<V>;
+	value: V;
 };
 
 // field inputs
@@ -90,12 +90,18 @@ export type FormTextInputProps<T extends FieldValues> = FormRegisteredInputProps
 	type: FormTextInputType;
 };
 
-export type FormCheckboxRadioInputProps<
+export type FormRadioInputProps<
 	T extends FieldValues,
 	V extends string,
 > = FormRegisteredInputProps<T> & {
-	type: FormFieldTypeCheckboxRadio;
 	value: FormFieldValue<V>;
+};
+
+export type FormCheckboxInputProps<
+	T extends FieldValues,
+	V extends boolean,
+> = FormRegisteredInputProps<T> & {
+	value: V;
 };
 
 // select input props

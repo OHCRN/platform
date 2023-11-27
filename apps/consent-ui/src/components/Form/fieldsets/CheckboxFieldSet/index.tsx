@@ -24,9 +24,9 @@ import clsx from 'clsx';
 
 import RequiredAsterisk from '../../RequiredAsterisk';
 import { FormCheckboxFieldSetProps } from '../../types';
-import CheckboxRadioInput from '../inputs/CheckboxRadioInput';
+import CheckboxInput from '../inputs/CheckboxInput';
 
-const CheckboxFieldSet = <T extends FieldValues, V extends string>({
+const CheckboxFieldSet = <T extends FieldValues, V extends boolean>({
 	className,
 	description,
 	error,
@@ -45,13 +45,7 @@ const CheckboxFieldSet = <T extends FieldValues, V extends string>({
 				</h4>
 			)}
 			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxRadioInput
-					required={required}
-					name={name}
-					register={register}
-					value={value}
-					type="checkbox"
-				/>
+				<CheckboxInput required={required} name={name} register={register} value={value} />
 				<span className="checkbox-fieldset__description">
 					{description}
 					{required && !title && <RequiredAsterisk />}

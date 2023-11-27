@@ -33,5 +33,6 @@ describe('Name', () => {
 		expect(Name.safeParse(undefined).success).false;
 		expect(Name.safeParse(null).success).false;
 		expect(Name.safeParse('').success).false;
+		expect(Name.safeParse(' ').success).false;
 	});
 });

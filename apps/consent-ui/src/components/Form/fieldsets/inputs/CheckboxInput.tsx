@@ -22,23 +22,22 @@
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormCheckboxRadioInputProps } from '../../types';
+import { FormCheckboxInputProps } from '../../types';
 
-const CheckboxRadioInput = <T extends FieldValues, V extends string>({
+const CheckboxInput = <T extends FieldValues, V extends boolean>({
 	className,
 	name,
-	type,
 	register,
 	required,
 	value,
-}: FormCheckboxRadioInputProps<T, V>) => (
+}: FormCheckboxInputProps<T, V>) => (
 	<input
-		{...register(name, { required })}
+		{...register(name)}
 		aria-required={required}
-		className={clsx(`${type}-input`, className)}
-		type={type}
-		value={value}
+		className={clsx('checkbox-input', className)}
+		type="checkbox"
+		checked={value}
 	/>
 );
 
-export default CheckboxRadioInput;
+export default CheckboxInput;

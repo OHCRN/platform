@@ -37,5 +37,6 @@ describe('PhoneNumber', () => {
 		expect(PhoneNumber.safeParse(undefined).success).false;
 		expect(PhoneNumber.safeParse(null).success).false;
 		expect(PhoneNumber.safeParse('').success).false;
+		expect(PhoneNumber.safeParse(' ').success).false;
 	});
 });
