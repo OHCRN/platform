@@ -22,7 +22,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteForm, ConsentGroup } from 'types/entities';
 import urlJoin from 'url-join';
 
@@ -69,19 +69,19 @@ const ClinicianInviteFormComponent = ({
 }) => {
 	const { CONSENT_API_URL } = useAppConfigContext();
 
-	const {
-		control,
-		formState: { errors },
-		handleSubmit,
-		register,
-		unregister,
-		watch,
-	} = useForm<ClinicianInviteForm>({
+	// setup react-hook-forms
+	const methods = useForm<ClinicianInviteForm>({
 		resolver: zodResolver(ClinicianInviteForm),
 	});
 
-	const [successMessageDemo, setSuccessMessageDemo] = useState('');
+	const {
+		formState: { errors },
+		handleSubmit,
+		unregister,
+		watch,
+	} = methods;
 
+	// setup recaptcha
 	const {
 		getRecaptchaToken,
 		onRecaptchaChange,
@@ -91,7 +91,16 @@ const ClinicianInviteFormComponent = ({
 		setRecaptchaError,
 	} = useRecaptcha();
 
-	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data: any) => {
+	const handleRecaptchaChangeDemo = () => {
+		const token = getRecaptchaToken();
+		token && setRecaptchaError('');
+		onRecaptchaChange();
+	};
+
+	// submit form
+	const [successMessageDemo, setSuccessMessageDemo] = useState('');
+	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data, event) => {
+		event?.preventDefault();
 		console.log('SUBMIT DATA', data);
 		const recaptchaToken = getRecaptchaToken();
 
@@ -114,12 +123,6 @@ const ClinicianInviteFormComponent = ({
 		}
 	};
 
-	const handleRecaptchaChangeDemo = () => {
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
-		onRecaptchaChange();
-	};
-
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
 	const watchConsentGroup = watch('consentGroup');
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
@@ -136,178 +139,156 @@ const ClinicianInviteFormComponent = ({
 	}, [unregister, watchConsentGroup]);
 
 	return (
-		<Form onSubmit={handleSubmit(onSubmit)}>
-			<div>
-				<h3>{textDict['patient-information']}</h3>
-				<p>
-					<RequiredAsterisk /> {textDict['indicates-required-field']}
-				</p>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['first-name'] || ''}
-					name="participantFirstName"
-					register={register}
-					required
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['last-name'] || ''}
-					name="participantLastName"
-					register={register}
-					required
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['preferred-name'] || ''}
-					name="participantPreferredName"
-					register={register}
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['phone'] || ''}
-					name="participantPhoneNumber"
-					register={register}
-					required
-					type="tel"
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['email'] || ''}
-					name="participantEmailAddress"
-					register={register}
-					required
-					type="email"
-				/>
-
-				<Controller
-					name="consentGroup"
-					control={control}
-					render={({ field: { onChange, value } }) => (
-						<SelectFieldSet
-							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-							label={labelsDict['consent-group'] || ''}
-							name="consentGroup"
-							onChange={onChange}
-							options={consentGroupOptions}
-							placeholder={textDict['select-placeholder'] || ''}
-							required
-							value={value}
-						/>
-					)}
-					rules={{ required: true }}
-				/>
-			</div>
-
-			{showGuardianFields && (
-				<div style={{ background: 'lightgrey' }}>
-					{/*
-					 * guardian fields are marked required in the UI & optional in zod schema.
-					 * they're required if they're visible,
-					 * i.e. if the user has indicated the participant is a minor
-					 */}
-					<p>{textDict['enter-guardian-info']}</p>
+		<FormProvider {...methods}>
+			<Form onSubmit={handleSubmit(onSubmit)}>
+				<div>
+					<h3>{textDict['patient-information']}</h3>
+					<p>
+						<RequiredAsterisk /> {textDict['indicates-required-field']}
+					</p>
 					<TextFieldSet
 						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-						label={labelsDict['guardian-name'] || ''}
-						name="guardianName"
-						register={register}
+						label={labelsDict['first-name'] || ''}
+						name="participantFirstName"
 						required
 					/>
 					<TextFieldSet
 						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-						label={labelsDict['guardian-phone'] || ''}
-						name="guardianPhoneNumber"
-						register={register}
+						label={labelsDict['last-name'] || ''}
+						name="participantLastName"
+						required
+					/>
+					<TextFieldSet
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						label={labelsDict['preferred-name'] || ''}
+						name="participantPreferredName"
+					/>
+					<TextFieldSet
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						label={labelsDict['phone'] || ''}
+						name="participantPhoneNumber"
 						required
 						type="tel"
 					/>
 					<TextFieldSet
 						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
 						label={labelsDict['email'] || ''}
-						name="guardianEmailAddress"
-						register={register}
+						name="participantEmailAddress"
 						required
 						type="email"
 					/>
-					<TextFieldSet
+
+					<SelectFieldSet
 						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-						label={labelsDict['guardian-relationship'] || ''}
-						name="guardianRelationship"
-						register={register}
+						label={labelsDict['consent-group'] || ''}
+						name="consentGroup"
+						options={consentGroupOptions}
+						placeholder={textDict['select-placeholder'] || ''}
 						required
 					/>
-					<p>
-						{textDict['upload-file-description-1']}
-						<a href="">{textDict['upload-file-link']}</a>
-						{textDict['upload-file-description-2']}
-						{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
-					</p>
 				</div>
-			)}
 
-			<div>
-				<p>{textDict['after-registering']}</p>
-				<CheckboxFieldSet
-					description={textDict['consent-contact-description']}
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					name="consentToBeContacted"
-					register={register}
-					required
-					title={labelsDict['consent-contact']}
-					value="CHECKED"
-				/>
-			</div>
+				{showGuardianFields && (
+					<div style={{ background: 'lightgrey' }}>
+						{/*
+						 * guardian fields are marked required in the UI & optional in zod schema.
+						 * they're required if they're visible,
+						 * i.e. if the user has indicated the participant is a minor
+						 */}
+						<p>{textDict['enter-guardian-info']}</p>
+						<TextFieldSet
+							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							label={labelsDict['guardian-name'] || ''}
+							name="guardianName"
+							required
+						/>
+						<TextFieldSet
+							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							label={labelsDict['guardian-phone'] || ''}
+							name="guardianPhoneNumber"
+							required
+							type="tel"
+						/>
+						<TextFieldSet
+							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							label={labelsDict['email'] || ''}
+							name="guardianEmailAddress"
+							required
+							type="email"
+						/>
+						<TextFieldSet
+							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							label={labelsDict['guardian-relationship'] || ''}
+							name="guardianRelationship"
+							required
+						/>
+						<p>
+							{textDict['upload-file-description-1']}
+							<a href="">{textDict['upload-file-link']}</a>
+							{textDict['upload-file-description-2']}
+							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
+						</p>
+					</div>
+				)}
 
-			<div>
-				<h3>{textDict['clinician-information']}</h3>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['clinician-title-or-role'] || ''}
-					name="clinicianTitleOrRole"
-					register={register}
-					required
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['clinician-first-name'] || ''}
-					name="clinicianFirstName"
-					register={register}
-					required
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['clinician-last-name'] || ''}
-					name="clinicianLastName"
-					register={register}
-					required
-				/>
-				<TextFieldSet
-					error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
-					label={labelsDict['clinician-institutional-email-address'] || ''}
-					name="clinicianInstitutionalEmailAddress"
-					register={register}
-					required
-					type="email"
-				/>
-			</div>
+				<div>
+					<p>{textDict['after-registering']}</p>
+					<CheckboxFieldSet
+						description={textDict['consent-contact-description']}
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						name="consentToBeContacted"
+						required
+						title={labelsDict['consent-contact']}
+					/>
+				</div>
 
-			{recaptchaError && (
-				<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
-			)}
+				<div>
+					<h3>{textDict['clinician-information']}</h3>
+					<TextFieldSet
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						label={labelsDict['clinician-title-or-role'] || ''}
+						name="clinicianTitleOrRole"
+						required
+					/>
+					<TextFieldSet
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						label={labelsDict['clinician-first-name'] || ''}
+						name="clinicianFirstName"
+						required
+					/>
+					<TextFieldSet
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						label={labelsDict['clinician-last-name'] || ''}
+						name="clinicianLastName"
+						required
+					/>
+					<TextFieldSet
+						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						label={labelsDict['clinician-institutional-email-address'] || ''}
+						name="clinicianInstitutionalEmailAddress"
+						required
+						type="email"
+					/>
+				</div>
 
-			<div style={{ margin: '25px 0' }}>
-				<RecaptchaCheckbox
-					onChange={handleRecaptchaChangeDemo}
-					recaptchaCheckboxRef={recaptchaCheckboxRef}
-				/>
-			</div>
+				{recaptchaError && (
+					<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+				)}
 
-			<button type="submit">Submit</button>
+				<div style={{ margin: '25px 0' }}>
+					<RecaptchaCheckbox
+						onChange={handleRecaptchaChangeDemo}
+						recaptchaCheckboxRef={recaptchaCheckboxRef}
+					/>
+				</div>
 
-			{successMessageDemo && (
-				<Notification level="success" variant="small" title={successMessageDemo} />
-			)}
-		</Form>
+				<button type="submit">Submit</button>
+
+				{successMessageDemo && (
+					<Notification level="success" variant="small" title={successMessageDemo} />
+				)}
+			</Form>
+		</FormProvider>
 	);
 };
 

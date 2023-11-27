@@ -17,29 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
+
+import { FormSelectFieldSetProps } from '../types';
+
 import FieldSet from './FieldSet';
 import SelectInput from './inputs/SelectInput';
 
-const SelectFieldSet = ({
+const SelectFieldSet = <T extends FieldValues, V extends string>({
 	error,
 	label,
 	name,
-	onChange,
 	options,
 	placeholder,
 	required = false,
-	value,
-}: any) => (
-	<FieldSet error={error} label={label} name={name} required={required}>
-		<SelectInput
-			name={name}
-			onChange={onChange}
-			options={options}
-			placeholder={placeholder}
-			required
-			value={value}
+}: FormSelectFieldSetProps<T, V>) => {
+	const { control } = useFormContext();
+	return (
+		<Controller
+			name="consentGroup"
+			control={control}
+			render={({ field: { onChange, value } }) => (
+				<FieldSet error={error} label={label} name={name} required={required}>
+					<SelectInput
+						name={name}
+						onChange={onChange}
+						options={options}
+						placeholder={placeholder}
+						required
+						value={value}
+					/>
+				</FieldSet>
+			)}
+			rules={{ required: true }}
 		/>
-	</FieldSet>
-);
+	);
+};
 
 export default SelectFieldSet;

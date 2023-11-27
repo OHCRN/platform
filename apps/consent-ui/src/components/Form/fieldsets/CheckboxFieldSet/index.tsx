@@ -26,15 +26,14 @@ import RequiredAsterisk from '../../RequiredAsterisk';
 import { FormCheckboxFieldSetProps } from '../../types';
 import CheckboxInput from '../inputs/CheckboxInput';
 
-const CheckboxFieldSet = <T extends FieldValues, V extends boolean>({
+const CheckboxFieldSet = <T extends FieldValues>({
 	className,
 	description,
 	error,
 	name,
 	required = false,
 	title,
-	value,
-}: FormCheckboxFieldSetProps<T, V>) => {
+}: FormCheckboxFieldSetProps<T>) => {
 	return (
 		<fieldset className={clsx('checkbox-fieldset', className)}>
 			{title && (
@@ -44,7 +43,7 @@ const CheckboxFieldSet = <T extends FieldValues, V extends boolean>({
 				</h4>
 			)}
 			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} value={value} />
+				<CheckboxInput required={required} name={name} />
 				<span className="checkbox-fieldset__description">
 					{description}
 					{required && !title && <RequiredAsterisk />}

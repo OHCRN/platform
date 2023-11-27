@@ -57,45 +57,39 @@ export type FormSelectFieldSetProps<
 	T extends FieldValues,
 	V extends string,
 > = FormFieldSetSharedProps<T> & {
-	value: FormFieldValue<V>;
+	options: FormSelectOption<V>[];
+	placeholder: string;
 };
 
 // unique fieldsets
 
-export type FormCheckboxFieldSetProps<T extends FieldValues, V extends boolean> = Omit<
+export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
 	FormFieldSetSharedProps<T>,
 	'label' // uses title & description instead
 > & {
 	description: ReactNode;
 	title?: string;
-	value: V;
 };
 
 // field inputs
 
-export interface FormInputSharedProps<T extends FieldValues> {
+export interface FormInputProps<T extends FieldValues> {
 	className?: string;
 	name: FormFieldName<T>;
 	required: boolean;
 }
 
-export type FormTextInputProps<T extends FieldValues> = FormInputSharedProps<T> & {
+export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
 	type: FormTextInputType;
 };
 
-export type FormRadioInputProps<
-	T extends FieldValues,
-	V extends string,
-> = FormInputSharedProps<T> & {
+export type FormRadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	value: FormFieldValue<V>;
 };
 
-// select input props
+// select input
 
-export type FormSelectInputProps<
-	T extends FieldValues,
-	V extends string,
-> = FormInputSharedProps<T> & {
+export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	onChange: (val: FormSelectOnChangeArg<V>) => void;
 	options: FormSelectOption<V>[];
 	placeholder: string;

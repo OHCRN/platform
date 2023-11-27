@@ -22,13 +22,9 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormInputSharedProps } from '../../types';
+import { FormInputProps } from '../../types';
 
-const CheckboxInput = <T extends FieldValues>({
-	className,
-	name,
-	required,
-}: FormInputSharedProps<T>) => {
+const CheckboxInput = <T extends FieldValues>({ className, name, required }: FormInputProps<T>) => {
 	const { register } = useFormContext();
 	return (
 		<input
