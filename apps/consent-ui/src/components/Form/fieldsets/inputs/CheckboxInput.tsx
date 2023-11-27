@@ -22,22 +22,21 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormCheckboxInputProps } from '../../types';
+import { FormInputSharedProps } from '../../types';
 
-const CheckboxInput = <T extends FieldValues, V extends boolean>({
+const CheckboxInput = <T extends FieldValues>({
 	className,
 	name,
 	required,
-	value,
-}: FormCheckboxInputProps<T, V>) => {
+}: FormInputSharedProps<T>) => {
 	const { register } = useFormContext();
 	return (
 		<input
 			{...register(name)}
 			aria-required={required}
 			className={clsx('checkbox-input', className)}
+			id={name}
 			type="checkbox"
-			checked={value}
 		/>
 	);
 };

@@ -34,6 +34,7 @@ const RadioInput = <T extends FieldValues, V extends string>({
 		<input
 			{...register(name)}
 			className={clsx('radio-input', className)}
+			id={`${name}-${value}`}
 			type="radio"
 			value={value}
 		/>

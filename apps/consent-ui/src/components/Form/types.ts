@@ -73,7 +73,7 @@ export type FormCheckboxFieldSetProps<T extends FieldValues, V extends boolean> 
 
 // field inputs
 
-interface FormInputSharedProps<T extends FieldValues> {
+export interface FormInputSharedProps<T extends FieldValues> {
 	className?: string;
 	name: FormFieldName<T>;
 	required: boolean;
@@ -88,13 +88,6 @@ export type FormRadioInputProps<
 	V extends string,
 > = FormInputSharedProps<T> & {
 	value: FormFieldValue<V>;
-};
-
-export type FormCheckboxInputProps<
-	T extends FieldValues,
-	V extends boolean,
-> = FormInputSharedProps<T> & {
-	value: V;
 };
 
 // select input props
