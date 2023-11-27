@@ -25,6 +25,7 @@ import { z } from 'zod';
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
 import { createInvite } from '../services/create.js';
+import logger from '../logger.js';
 
 /**
  * @openapi
@@ -72,15 +73,20 @@ router.post(
 	withRequestBodyValidation(ClinicianInviteSchema, async (req, res) => {
 		try {
 			const invite = await createInvite(req.body.data);
-			if (invite.success) {
-				return res.status(201).send(invite.data);
-			} else {
-				return res
-					.status(500)
-					.send(ErrorResponse('SERVER_ERROR', invite.message || 'An unexpected error occurred'));
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).send(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse('ServerError', invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(400).json(ErrorResponse('ClincianInviteAlreadyExists', invite.message));
+				}
 			}
 		} catch (error) {
-			res.status(500).send(ErrorResponse('SERVER_ERROR', 'An unexpected error occurred'));
+			logger.debug(`Unexpected error handling create invite request.`, error);
+			res.status(500).send(ErrorResponse('ServerError', 'An unexpected error occurred'));
 		}
 	}),
 );

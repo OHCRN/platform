@@ -23,7 +23,7 @@ import { Result, failure, success } from 'types/httpErrors';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
-import logger from '../logger.js';
+import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 
@@ -46,6 +46,7 @@ export const createResponse = async ({
 	return updateObj;
 };
 
+type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
 /**
  * Creates clinician invite by sending input to data-mapper, which separates data between
  * Consent and PI DAS and then returns the combined data object from both DB entries
@@ -55,31 +56,26 @@ export const createResponse = async ({
  */
 export const createInvite = async (
 	inviteRequest: ClinicianInviteRequest,
-): Promise<Result<ClinicianInviteResponse>> => {
+): Promise<Result<ClinicianInviteResponse, CreateInviteFailureStatus>> => {
 	const { dataMapperUrl } = getAppConfig();
+	const logger = serviceLogger.forModule('DataMapperClient');
 	try {
-		const { data, status } = await axiosClient.post(
-			urlJoin(dataMapperUrl, 'invites'),
-			inviteRequest,
-		);
-
-		if (status !== 201) {
-			// received a non 201 response but didn't get caught as an error
-			logger.error(`[Data-Mapper] 'POST /invites' received ${status} status`);
-			return failure('');
-		}
-
+		const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'invites'), inviteRequest);
 		const invite = ClinicianInviteResponse.safeParse(data);
+
 		if (!invite.success) {
-			logger.error(`[Data-Mapper] 😱 'POST /invites' had an invalid response`, invite.error.issues);
-			return failure('');
+			logger.error('POST /invites', 'Received invalid data in response.', invite.error.issues);
+			return failure('SYSTEM_ERROR', invite.error.message);
 		}
+
 		return success(invite.data);
 	} catch (error) {
 		if (error instanceof AxiosError) {
 			// TODO: E2E error handling → this could be any error from requests to data-mapper, pi-das or consent-das
-			return failure(error.message);
+			logger.error('POST /invites', 'AxiosError handling create invite request.', error.message);
+			return failure('SYSTEM_ERROR', error.message);
 		}
-		return failure('');
+		logger.error('POST /invites', 'Unexpected error handling create invite request.', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
