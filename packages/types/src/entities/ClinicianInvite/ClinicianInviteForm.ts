@@ -21,11 +21,12 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ClinicianInviteBase } from './ClinicianInvite.js';
 import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
 
-export const ClinicianInviteForm = ClinicianInviteBase.extend({
-	consentToBeContacted: z.string().min(1),
+import { ClinicianInviteRequestFields } from './ClinicianInvite.js';
+
+export const ClinicianInviteForm = ClinicianInviteRequestFields.extend({
+	consentToBeContacted: z.literal(true),
 }).refine((input) => {
 	const {
 		consentGroup,
