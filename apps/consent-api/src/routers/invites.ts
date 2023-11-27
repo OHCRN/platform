@@ -19,13 +19,15 @@
 
 import { Router } from 'express';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ConflictErrorResponse, ErrorResponse } from 'types/httpErrors';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpErrors';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
 import { createInvite } from '../services/create.js';
 import logger from '../logger.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 /**
  * @openapi
@@ -78,7 +80,7 @@ router.post(
 					return res.status(201).send(invite.data);
 				}
 				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse('ServerError', invite.message));
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
 				}
 				case 'INVITE_EXISTS': {
 					return res.status(400).json(ConflictErrorResponse(invite.target ?? [], invite.message));
@@ -86,7 +88,7 @@ router.post(
 			}
 		} catch (error) {
 			logger.debug(`Unexpected error handling create invite request.`, error);
-			res.status(500).send(ErrorResponse('ServerError', 'An unexpected error occurred'));
+			res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
 		}
 	}),
 );

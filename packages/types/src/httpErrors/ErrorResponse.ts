@@ -17,9 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+export enum ErrorName {
+	SERVER_ERROR = 'ServerError',
+	CONFLICT_ERROR = 'ConflictError',
+	REQUEST_VALIDATION_ERROR = 'RequestValidationError',
+	RECAPTCHA_ERROR = 'RecaptchaError',
+}
+
 export type ErrorResponse = {
-	error: string;
+	error: ErrorName | 'NOT_IMPLEMENTED'; // TODO: remove once all routes are implemented
 	message: string;
 };
 
-export const ErrorResponse = (error: string, message: string) => ({ error, message });
+export const ErrorResponse = (error: ErrorName | 'NOT_IMPLEMENTED', message: string) => ({
+	error,
+	message,
+});

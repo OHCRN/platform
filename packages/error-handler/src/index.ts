@@ -18,8 +18,10 @@
  */
 
 import { ErrorRequestHandler } from 'express';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorName, ErrorResponse } from 'types/httpErrors';
 import { Logger } from 'logger';
+
+const { SERVER_ERROR } = ErrorName;
 
 /**
  * Create default response for unhandled errors to be json instead of html.
@@ -40,7 +42,7 @@ const errorHandler =
 
 		const message = (err.message && `${err.message}`) || 'An error occurred.';
 
-		return res.status(500).json(ErrorResponse('ServerError', message));
+		return res.status(500).json(ErrorResponse(SERVER_ERROR, message));
 	};
 
 export default errorHandler;

@@ -19,9 +19,9 @@
 
 import { ZodError, ZodIssue } from 'zod';
 
-import { ErrorResponse } from './ErrorResponse.js';
+import { ErrorResponse, ErrorName } from './ErrorResponse.js';
 
-export const REQUEST_VALIDATION_ERROR = 'RequestValidationError';
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 export type RequestValidationError = ErrorResponse & {
 	details: ZodIssue[];

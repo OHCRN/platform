@@ -19,10 +19,12 @@
 
 import { describe, expect, it, vi, afterAll } from 'vitest';
 import request from 'supertest';
-import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
+import { ErrorName } from 'types/httpErrors';
 
 import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';
+
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const mocks = vi.hoisted(() => {
 	// vi.mock() gets 'hoisted' to the top of the file, so need to declare variables used in any vi.mock() here

@@ -17,9 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorResponse } from './ErrorResponse.js';
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
-export const CONFLICT_ERROR = 'ConflictError';
+const { CONFLICT_ERROR } = ErrorName;
 
 export type ConflictError = ErrorResponse & {
 	target: string[];

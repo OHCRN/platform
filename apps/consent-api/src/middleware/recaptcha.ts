@@ -19,7 +19,9 @@
 
 import axios from 'axios';
 import { RequestHandler } from 'express';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorName, ErrorResponse } from 'types/httpErrors';
+
+const { RECAPTCHA_ERROR } = ErrorName;
 
 import { getAppConfig } from '../config.js';
 
@@ -71,6 +73,6 @@ export const recaptchaMiddleware: RequestHandler = async (req, res, next) => {
 		next();
 	} else {
 		// TODO: Need a formatted error for reCAPTCHA validation failures
-		res.status(400).json(ErrorResponse('RecaptchaError', 'Valid reCAPTCHA token is required.'));
+		res.status(400).json(ErrorResponse(RECAPTCHA_ERROR, 'Valid reCAPTCHA token is required.'));
 	}
 };
