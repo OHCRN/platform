@@ -19,7 +19,6 @@
 
 import { describe, expect, it, vi, afterAll } from 'vitest';
 import request from 'supertest';
-import { ClinicianInviteResponse } from 'types/entities';
 import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
 
 import App from '../../src/index.js';
@@ -57,7 +56,7 @@ const mocks = vi.hoisted(() => {
 
 vi.mock('../../src/services/create.js', () => {
 	// mock the createInvite service so we don't need to make an API call to data-mapper
-	return { createInvite: () => ClinicianInviteResponse.safeParse(mocks.inviteResponse) };
+	return { createInvite: () => ({ status: 'SUCCESS', data: mocks.inviteResponse }) };
 });
 // TODO: can remove when env vars setup in jenkins is figured out, find out why setting RECAPTCHA_SECRET_KEY wont work
 vi.stubEnv('NODE_ENV', 'development');
