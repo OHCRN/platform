@@ -19,7 +19,7 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { FormRadioInputProps } from '../../types';
@@ -27,15 +27,17 @@ import { FormRadioInputProps } from '../../types';
 const RadioInput = <T extends FieldValues, V extends string>({
 	className,
 	name,
-	register,
 	value,
-}: FormRadioInputProps<T, V>) => (
-	<input
-		{...register(name)}
-		className={clsx('radio-input', className)}
-		type="radio"
-		value={value}
-	/>
-);
+}: FormRadioInputProps<T, V>) => {
+	const { register } = useFormContext();
+	return (
+		<input
+			{...register(name)}
+			className={clsx('radio-input', className)}
+			type="radio"
+			value={value}
+		/>
+	);
+};
 
 export default RadioInput;

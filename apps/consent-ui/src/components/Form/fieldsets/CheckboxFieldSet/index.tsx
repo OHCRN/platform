@@ -31,7 +31,6 @@ const CheckboxFieldSet = <T extends FieldValues, V extends boolean>({
 	description,
 	error,
 	name,
-	register,
 	required = false,
 	title,
 	value,
@@ -45,7 +44,7 @@ const CheckboxFieldSet = <T extends FieldValues, V extends boolean>({
 				</h4>
 			)}
 			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} register={register} value={value} />
+				<CheckboxInput required={required} name={name} value={value} />
 				<span className="checkbox-fieldset__description">
 					{description}
 					{required && !title && <RequiredAsterisk />}

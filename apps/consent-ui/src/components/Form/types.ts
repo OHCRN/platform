@@ -18,7 +18,7 @@
  */
 
 import { ReactNode } from 'react';
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path } from 'react-hook-form';
 import { SingleValue } from 'react-select';
 
 export type FormFieldTypeCheckboxRadio = 'checkbox' | 'radio';
@@ -33,7 +33,6 @@ export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormS
 
 // setup types for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
-type FormFieldRegister<T extends FieldValues> = UseFormRegister<T>;
 type FormFieldValue<V extends string> = V;
 
 // fieldsets that use the FieldSet component
@@ -51,7 +50,6 @@ export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T
 };
 
 export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	register: FormFieldRegister<T>;
 	type?: FormTextInputType;
 };
 
@@ -69,7 +67,6 @@ export type FormCheckboxFieldSetProps<T extends FieldValues, V extends boolean> 
 	'label' // uses title & description instead
 > & {
 	description: ReactNode;
-	register: FormFieldRegister<T>;
 	title?: string;
 	value: V;
 };
@@ -82,25 +79,21 @@ interface FormInputSharedProps<T extends FieldValues> {
 	required: boolean;
 }
 
-type FormRegisteredInputProps<T extends FieldValues> = FormInputSharedProps<T> & {
-	register: FormFieldRegister<T>;
-};
-
-export type FormTextInputProps<T extends FieldValues> = FormRegisteredInputProps<T> & {
+export type FormTextInputProps<T extends FieldValues> = FormInputSharedProps<T> & {
 	type: FormTextInputType;
 };
 
 export type FormRadioInputProps<
 	T extends FieldValues,
 	V extends string,
-> = FormRegisteredInputProps<T> & {
+> = FormInputSharedProps<T> & {
 	value: FormFieldValue<V>;
 };
 
 export type FormCheckboxInputProps<
 	T extends FieldValues,
 	V extends boolean,
-> = FormRegisteredInputProps<T> & {
+> = FormInputSharedProps<T> & {
 	value: V;
 };
 

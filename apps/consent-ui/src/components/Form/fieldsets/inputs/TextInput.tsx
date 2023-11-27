@@ -19,7 +19,7 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { FormTextInputProps } from '../../types';
@@ -27,17 +27,19 @@ import { FormTextInputProps } from '../../types';
 const TextInput = <T extends FieldValues>({
 	className,
 	name,
-	register,
 	required = false,
 	type = 'text',
-}: FormTextInputProps<T>) => (
-	<input
-		{...register(name)}
-		aria-required={required}
-		className={clsx(`${type}-input`, className)}
-		id={name}
-		type={type}
-	/>
-);
+}: FormTextInputProps<T>) => {
+	const { register } = useFormContext();
+	return (
+		<input
+			{...register(name)}
+			aria-required={required}
+			className={clsx(`${type}-input`, className)}
+			id={name}
+			type={type}
+		/>
+	);
+};
 
 export default TextInput;

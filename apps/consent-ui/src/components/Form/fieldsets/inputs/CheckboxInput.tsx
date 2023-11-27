@@ -19,7 +19,7 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { FormCheckboxInputProps } from '../../types';
@@ -27,17 +27,19 @@ import { FormCheckboxInputProps } from '../../types';
 const CheckboxInput = <T extends FieldValues, V extends boolean>({
 	className,
 	name,
-	register,
 	required,
 	value,
-}: FormCheckboxInputProps<T, V>) => (
-	<input
-		{...register(name)}
-		aria-required={required}
-		className={clsx('checkbox-input', className)}
-		type="checkbox"
-		checked={value}
-	/>
-);
+}: FormCheckboxInputProps<T, V>) => {
+	const { register } = useFormContext();
+	return (
+		<input
+			{...register(name)}
+			aria-required={required}
+			className={clsx('checkbox-input', className)}
+			type="checkbox"
+			checked={value}
+		/>
+	);
+};
 
 export default CheckboxInput;
