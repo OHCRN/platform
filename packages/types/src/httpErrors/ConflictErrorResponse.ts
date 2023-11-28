@@ -26,8 +26,8 @@ export type ConflictError = ErrorResponse & {
 };
 
 /**
- * Creates a ConflictError type providing the target fields and error message detailing the conflict.
- * @param target list of target fields that are creating the conflict e.g. `['participantEmailAddress']`
+ * Creates a ConflictErrorResponse containing the target fields causing the conflict and a message detailing it.
+ * @param target list of target fields that are causing the conflict e.g. `['participantEmailAddress']`
  * @param customMessage
  * @returns
  */
