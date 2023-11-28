@@ -47,7 +47,7 @@ export const ClinicianInviteFormValidation = z
 		participantFirstName: Name,
 		participantLastName: Name,
 		participantPhoneNumber: PhoneNumber,
-		participantPreferredName: asOptionalField(Name),
+		participantPreferredName: asOptionalField(Name), // TODO not working
 	})
 	.refine((input) => {
 		const {

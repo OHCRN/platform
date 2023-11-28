@@ -33,7 +33,6 @@ export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormS
 
 // setup types for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
-type FormFieldValue<V extends string> = V;
 
 // fieldsets that use the FieldSet component
 
@@ -84,7 +83,7 @@ export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
 };
 
 export type FormRadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	value: FormFieldValue<V>;
+	value: V;
 };
 
 // select input
@@ -93,10 +92,10 @@ export type FormSelectInputProps<T extends FieldValues, V extends string> = Form
 	onChange: (val: FormSelectOnChangeArg<V>) => void;
 	options: FormSelectOption<V>[];
 	placeholder: string;
-	value: FormFieldValue<V>;
+	value: V;
 };
 
 export type FormSelectOption<V extends string> = {
 	label: string;
-	value: FormFieldValue<V>;
+	value: V;
 };
