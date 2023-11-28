@@ -17,12 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it, vi, afterAll } from 'vitest';
+import { describe, expect, it, vi, afterAll, beforeAll } from 'vitest';
 import request from 'supertest';
 import { ErrorName } from 'types/httpResponses';
 
 import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';
+
+import { mockEnv } from './config.js';
 
 const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
@@ -53,17 +55,19 @@ const mocks = vi.hoisted(() => {
 		inviteAccepted: false,
 		...inviteRequest,
 	};
-	return { inviteRequest, inviteResponse };
+
+	const createInvite = () => ({ status: 'SUCCESS', data: mocks.inviteResponse });
+
+	return { inviteRequest, inviteResponse, createInvite };
 });
 
 vi.mock('../../src/services/create.js', () => {
 	// mock the createInvite service so we don't need to make an API call to data-mapper
-	return { createInvite: () => ({ status: 'SUCCESS', data: mocks.inviteResponse }) };
+	return { createInvite: mocks.createInvite };
 });
-// TODO: can remove when env vars setup in jenkins is figured out, find out why setting RECAPTCHA_SECRET_KEY wont work
-vi.stubEnv('NODE_ENV', 'development');
 
 describe('POST /invites', () => {
+	beforeAll(() => mockEnv());
 	afterAll(() => {
 		vi.restoreAllMocks();
 		vi.unstubAllEnvs();
