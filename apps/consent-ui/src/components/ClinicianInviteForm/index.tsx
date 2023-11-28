@@ -88,7 +88,7 @@ const ClinicianInviteFormComponent = ({
 		setRecaptchaError,
 	} = useRecaptcha();
 
-	const handleRecaptchaChangeDemo = () => {
+	const handleRecaptchaChange = () => {
 		const token = getRecaptchaToken();
 		token && setRecaptchaError('');
 		onRecaptchaChange();
@@ -96,6 +96,8 @@ const ClinicianInviteFormComponent = ({
 
 	// submit form
 	const [successMessageDemo, setSuccessMessageDemo] = useState('');
+	// TODO remove and redirect to homepage
+
 	const onSubmit: SubmitHandler<ClinicianInviteFormValidation> = (data, event) => {
 		event?.preventDefault();
 		console.log('SUBMIT DATA', data);
@@ -274,7 +276,7 @@ const ClinicianInviteFormComponent = ({
 
 				<div style={{ margin: '25px 0' }}>
 					<RecaptchaCheckbox
-						onChange={handleRecaptchaChangeDemo}
+						onChange={handleRecaptchaChange}
 						recaptchaCheckboxRef={recaptchaCheckboxRef}
 					/>
 				</div>
