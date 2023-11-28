@@ -100,7 +100,7 @@ const ClinicianInviteFormComponent = ({
 
 	const onSubmit: SubmitHandler<ClinicianInviteFormValidation> = (data, event) => {
 		event?.preventDefault();
-		console.log('SUBMIT DATA', data);
+
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
