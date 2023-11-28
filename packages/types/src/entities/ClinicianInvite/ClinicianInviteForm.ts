@@ -21,7 +21,6 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 
-import { asOptionalField } from '../../utils.js';
 import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
 import { Name } from '../Name.js';
 import { PhoneNumber } from '../PhoneNumber.js';
@@ -40,14 +39,14 @@ export const ClinicianInviteFormValidation = z
 		consentGroup: ConsentGroup,
 		consentToBeContacted: z.literal(true),
 		guardianEmailAddress: z.string().email().optional(),
-		guardianName: asOptionalField(Name),
-		guardianPhoneNumber: asOptionalField(PhoneNumber),
-		guardianRelationship: asOptionalField(Name),
+		guardianName: Name.optional(),
+		guardianPhoneNumber: PhoneNumber.optional(),
+		guardianRelationship: Name.optional(),
 		participantEmailAddress: z.string().email(),
 		participantFirstName: Name,
 		participantLastName: Name,
 		participantPhoneNumber: PhoneNumber,
-		participantPreferredName: asOptionalField(Name), // TODO not working
+		participantPreferredName: Name.optional(),
 	})
 	.refine((input) => {
 		const {

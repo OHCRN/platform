@@ -27,14 +27,13 @@ import {
 } from 'src/components/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
-	// TODO fix types. errors.field?.type equals required in code but displays as invalid_type in the browser.
-	const errorDict = {
-		invalid_type: translate('form-errors', 'required'),
-		invalid_string: translate('form-errors', 'required'),
+	const errorsDict: FormErrorsDictionary = {
+		required: translate('form-errors', 'required'),
 	};
 
 	const labelsDict: Partial<FormLabelsDictionary> = {
@@ -82,7 +81,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 			<ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}
-				errorDict={errorDict}
+				errorsDict={errorsDict}
 				labelsDict={labelsDict}
 				textDict={textDict}
 			/>

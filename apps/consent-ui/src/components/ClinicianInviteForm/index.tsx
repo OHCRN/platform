@@ -33,16 +33,13 @@ import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
 import useRecaptcha from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/Notification';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 
 import Form from '../Form';
 import RecaptchaCheckbox from '../RecaptchaCheckbox';
 import { useAppConfigContext } from '../AppConfigContextProvider';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
-
-// TODO fix types. errors.field?.type equals required in code but displays as invalid_type in the browser.
-const getErrorFromDictionary = (dictionary: any, errorType: any) =>
-	(errorType && dictionary[errorType]) || '';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -58,12 +55,12 @@ const guardianInfoFields: Partial<keyof ClinicianInviteFormValidation>[] = [
 
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
-	errorDict,
+	errorsDict,
 	labelsDict,
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
-	errorDict: Record<string, string>;
+	errorsDict: FormErrorsDictionary;
 	labelsDict: Partial<FormLabelsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
@@ -147,31 +144,31 @@ const ClinicianInviteFormComponent = ({
 						<RequiredAsterisk /> {textDict['indicates-required-field']}
 					</p>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['first-name'] || ''}
 						name="participantFirstName"
 						required
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['last-name'] || ''}
 						name="participantLastName"
 						required
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['preferred-name'] || ''}
 						name="participantPreferredName"
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['phone'] || ''}
 						name="participantPhoneNumber"
 						required
 						type="tel"
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['email'] || ''}
 						name="participantEmailAddress"
 						required
@@ -179,7 +176,7 @@ const ClinicianInviteFormComponent = ({
 					/>
 
 					<SelectFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['consent-group'] || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
@@ -197,27 +194,27 @@ const ClinicianInviteFormComponent = ({
 						 */}
 						<p>{textDict['enter-guardian-info']}</p>
 						<TextFieldSet
-							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							error={errors.participantFirstName?.type && errorsDict['required']}
 							label={labelsDict['guardian-name'] || ''}
 							name="guardianName"
 							required
 						/>
 						<TextFieldSet
-							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							error={errors.participantFirstName?.type && errorsDict['required']}
 							label={labelsDict['guardian-phone'] || ''}
 							name="guardianPhoneNumber"
 							required
 							type="tel"
 						/>
 						<TextFieldSet
-							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							error={errors.participantFirstName?.type && errorsDict['required']}
 							label={labelsDict['email'] || ''}
 							name="guardianEmailAddress"
 							required
 							type="email"
 						/>
 						<TextFieldSet
-							error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+							error={errors.participantFirstName?.type && errorsDict['required']}
 							label={labelsDict['guardian-relationship'] || ''}
 							name="guardianRelationship"
 							required
@@ -235,7 +232,7 @@ const ClinicianInviteFormComponent = ({
 					<p>{textDict['after-registering']}</p>
 					<CheckboxFieldSet
 						description={textDict['consent-contact-description']}
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						name="consentToBeContacted"
 						required
 						title={labelsDict['consent-contact']}
@@ -245,25 +242,25 @@ const ClinicianInviteFormComponent = ({
 				<div>
 					<h3>{textDict['clinician-information']}</h3>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['clinician-title-or-role'] || ''}
 						name="clinicianTitleOrRole"
 						required
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['clinician-first-name'] || ''}
 						name="clinicianFirstName"
 						required
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['clinician-last-name'] || ''}
 						name="clinicianLastName"
 						required
 					/>
 					<TextFieldSet
-						error={getErrorFromDictionary(errorDict, errors.participantFirstName?.type)}
+						error={errors.participantFirstName?.type && errorsDict['required']}
 						label={labelsDict['clinician-institutional-email-address'] || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
