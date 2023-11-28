@@ -22,17 +22,20 @@ import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 const { CONFLICT_ERROR } = ErrorName;
 
 export type ConflictError = ErrorResponse & {
-	target: string[];
+	onFields: string[];
 };
 
 /**
  * Creates a ConflictErrorResponse containing the target fields causing the conflict and a message detailing it.
- * @param target list of target fields that are causing the conflict e.g. `['participantEmailAddress']`
+ * @param onFields list of onFields fields that are causing the conflict e.g. `['participantEmailAddress']`
  * @param customMessage
  * @returns
  */
-export const ConflictErrorResponse = (target: string[], customMessage?: string): ConflictError => ({
+export const ConflictErrorResponse = (
+	onFields: string[],
+	customMessage?: string,
+): ConflictError => ({
 	error: CONFLICT_ERROR,
 	message: customMessage ?? 'There was a conflict with existing data.',
-	target,
+	onFields,
 });
