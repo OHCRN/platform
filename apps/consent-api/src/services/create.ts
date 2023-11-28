@@ -27,6 +27,8 @@ import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 
+const logger = serviceLogger.forModule('DataMapperClient');
+
 export const createResponse = async ({
 	consentQuestionId,
 	participantId,
@@ -58,7 +60,6 @@ export const createInvite = async (
 	inviteRequest: ClinicianInviteRequest,
 ): Promise<Result<ClinicianInviteResponse, CreateInviteFailureStatus>> => {
 	const { dataMapperUrl } = getAppConfig();
-	const logger = serviceLogger.forModule('DataMapperClient');
 	try {
 		const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'invites'), inviteRequest);
 		const invite = ClinicianInviteResponse.safeParse(data);
