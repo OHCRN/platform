@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpErrors';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';

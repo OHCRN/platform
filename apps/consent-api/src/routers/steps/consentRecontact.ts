@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import { ConsentRecontactRequest } from 'types/entities';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorResponse } from 'types/httpResponses';
 
 import withRequestBodyValidation from '../../middleware/withRequestBodyValidation.js';
 

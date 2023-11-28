@@ -19,7 +19,7 @@
 
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
-import { RequestValidationErrorResponse } from 'types/httpErrors';
+import { RequestValidationErrorResponse } from 'types/httpResponses';
 import { ZodSchema } from 'zod';
 
 /**

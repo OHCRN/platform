@@ -19,7 +19,7 @@
 
 import { AxiosError } from 'axios';
 import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
-import { Result, failure, success } from 'types/httpErrors';
+import { Result, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';

@@ -19,7 +19,7 @@
 
 import axios from 'axios';
 import { RequestHandler } from 'express';
-import { ErrorName, ErrorResponse } from 'types/httpErrors';
+import { ErrorName, ErrorResponse } from 'types/httpResponses';
 
 import { getAppConfig } from '../config.js';
 import serviceLogger from '../logger.js';

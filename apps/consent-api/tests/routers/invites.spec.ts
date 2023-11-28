@@ -19,7 +19,7 @@
 
 import { describe, expect, it, vi, afterAll } from 'vitest';
 import request from 'supertest';
-import { ErrorName } from 'types/httpErrors';
+import { ErrorName } from 'types/httpResponses';
 
 import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';

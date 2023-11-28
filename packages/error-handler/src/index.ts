@@ -18,7 +18,7 @@
  */
 
 import { ErrorRequestHandler } from 'express';
-import { ErrorName, ErrorResponse } from 'types/httpErrors';
+import { ErrorName, ErrorResponse } from 'types/httpResponses';
 import { Logger } from 'logger';
 
 const { SERVER_ERROR } = ErrorName;

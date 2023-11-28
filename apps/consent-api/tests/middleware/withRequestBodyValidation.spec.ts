@@ -20,7 +20,7 @@ import { Request, Response } from 'express';
 import { RequestHandler } from 'express-serve-static-core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
-import { ErrorName } from 'types/httpErrors';
+import { ErrorName } from 'types/httpResponses';
 
 import withRequestBodyValidation from '../../src/middleware/withRequestBodyValidation.js';
 
