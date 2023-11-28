@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ClinicianInviteForm, ConsentGroup } from 'types/entities';
+import { ClinicianInviteFormValidation, ConsentGroup } from 'types/entities';
 import urlJoin from 'url-join';
 
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
@@ -49,7 +49,7 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
 
-const guardianInfoFields: Partial<keyof ClinicianInviteForm>[] = [
+const guardianInfoFields: Partial<keyof ClinicianInviteFormValidation>[] = [
 	'guardianName',
 	'guardianPhoneNumber',
 	'guardianEmailAddress',
@@ -70,8 +70,8 @@ const ClinicianInviteFormComponent = ({
 	const { CONSENT_API_URL } = useAppConfigContext();
 
 	// setup react-hook-forms
-	const methods = useForm<ClinicianInviteForm>({
-		resolver: zodResolver(ClinicianInviteForm),
+	const methods = useForm<ClinicianInviteFormValidation>({
+		resolver: zodResolver(ClinicianInviteFormValidation),
 	});
 
 	const {
@@ -99,7 +99,7 @@ const ClinicianInviteFormComponent = ({
 
 	// submit form
 	const [successMessageDemo, setSuccessMessageDemo] = useState('');
-	const onSubmit: SubmitHandler<ClinicianInviteForm> = (data, event) => {
+	const onSubmit: SubmitHandler<ClinicianInviteFormValidation> = (data, event) => {
 		event?.preventDefault();
 		console.log('SUBMIT DATA', data);
 		const recaptchaToken = getRecaptchaToken();
@@ -132,7 +132,7 @@ const ClinicianInviteFormComponent = ({
 			setShowGuardianFields(true);
 		} else {
 			setShowGuardianFields(false);
-			guardianInfoFields.forEach((field: Partial<keyof ClinicianInviteForm>) => {
+			guardianInfoFields.forEach((field: Partial<keyof ClinicianInviteFormValidation>) => {
 				unregister(field);
 			});
 		}

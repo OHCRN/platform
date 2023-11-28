@@ -49,25 +49,7 @@ export const ClinicianInviteBase = z.object({
 	consentToBeContacted: z.boolean(),
 });
 
-export const ClinicianInviteRequestFields = ClinicianInviteBase.pick({
-	clinicianFirstName: true,
-	clinicianLastName: true,
-	clinicianInstitutionalEmailAddress: true,
-	clinicianTitleOrRole: true,
-	participantFirstName: true,
-	participantLastName: true,
-	participantEmailAddress: true,
-	participantPhoneNumber: true,
-	participantPreferredName: true,
-	consentGroup: true,
-	guardianName: true,
-	guardianPhoneNumber: true,
-	guardianEmailAddress: true,
-	guardianRelationship: true,
-	consentToBeContacted: true,
-});
-
-export const ClinicianInviteRequest = ClinicianInviteRequestFields.pick({
+export const ClinicianInviteRequest = ClinicianInviteBase.pick({
 	clinicianFirstName: true,
 	clinicianLastName: true,
 	clinicianInstitutionalEmailAddress: true,

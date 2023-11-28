@@ -21,28 +21,52 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 
+import { asOptionalField } from '../../utils.js';
 import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
+import { Name } from '../Name.js';
+import { PhoneNumber } from '../PhoneNumber.js';
+import { ConsentGroup } from '../ConsentGroup.js';
 
-import { ClinicianInviteRequestFields } from './ClinicianInvite.js';
+// this is specifically for validating the Clinician Invite form in consent UI
+// using the zod resolver in react-hook-form.
+// keep it separate from API schemas.
 
-export const ClinicianInviteForm = ClinicianInviteRequestFields.extend({
-	consentToBeContacted: z.literal(true),
-}).refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
+export const ClinicianInviteFormValidation = z
+	.object({
+		clinicianFirstName: Name,
+		clinicianInstitutionalEmailAddress: z.string().email(),
+		clinicianLastName: Name,
+		clinicianTitleOrRole: z.string().trim().nonempty(),
+		consentGroup: ConsentGroup,
+		consentToBeContacted: z.literal(true),
+		guardianEmailAddress: z.string().email().optional(),
+		guardianName: asOptionalField(Name),
+		guardianPhoneNumber: asOptionalField(PhoneNumber),
+		guardianRelationship: asOptionalField(Name),
+		participantEmailAddress: z.string().email(),
+		participantFirstName: Name,
+		participantLastName: Name,
+		participantPhoneNumber: PhoneNumber,
+		participantPreferredName: asOptionalField(Name),
+	})
+	.refine((input) => {
+		const {
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		} = input;
+		return hasRequiredGuardianInformation(
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		);
+	});
 
-export type ClinicianInviteForm = z.infer<typeof ClinicianInviteForm>;
-export const ClinicianInviteFormSchema: SchemaObject = generateSchema(ClinicianInviteForm);
+export type ClinicianInviteFormValidation = z.infer<typeof ClinicianInviteFormValidation>;
+export const ClinicianInviteFormValidationSchema: SchemaObject = generateSchema(
+	ClinicianInviteFormValidation,
+);
