@@ -67,7 +67,7 @@ These are the permitted values for the `error` field of an `ErrorResponse`, indi
 
 ### Using `Result` as a Return Type
 
-You can make the return type of a service function `Result<T, FailureStatus>` by setting the data type to be returned `T` and the different `FailureStatus` expected values. Having a specific return type for the `FailureStatus` in particular is beneficial because it allows us to enforce the types of statuses that the router (or another service calling this service) can expect to receive, and handle accordingly. Below is an example of how this is used in the `createInvite` service in Consent API.
+You can set the return type of a service function `Result<T, FailureStatus>` by specifying the type of data `T` to be returned if successful, and the different `FailureStatus` types to be returned if the service fails. Having a specific return type for the `FailureStatus` is beneficial because it allows us to enforce the types of statuses that the router (or another service calling this service) can expect to receive, and handle accordingly. Below is an example of how this is used in the `createInvite` service in Consent API.
 
 ```ts
 type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
@@ -98,6 +98,7 @@ const invite = await createInvite(req.body.data);
 ```
 
 It's helpful to point out: TS can detect that every `status` case has been caught in the `switch` statement, and flag any code below it as unreachable.
+
 ![Unreachable code](./images/error-handling-unreachable-code.png)
 
 And importantly, if we tried writing a case for a status that was not specified, we get a TS error:

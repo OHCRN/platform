@@ -40,7 +40,7 @@ const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 		const recaptchaVerification = await axios.post(
 			`https://www.google.com/recaptcha/api/siteverify?secret=${config.recaptcha.secretKey}&response=${recaptchaToken}`,
 		);
-		logger.info('Successful ReCAPTCHA verification');
+		logger.debug('Successful ReCAPTCHA verification');
 		return !!recaptchaVerification.data.success;
 	} catch (error) {
 		logger.error('ReCAPTCHA error', error);
