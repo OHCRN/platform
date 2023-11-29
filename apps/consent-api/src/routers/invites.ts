@@ -87,7 +87,7 @@ router.post(
 				}
 			}
 		} catch (error) {
-			logger.debug(`Unexpected error handling create invite request.`, error);
+			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
 			res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
 		}
 	}),

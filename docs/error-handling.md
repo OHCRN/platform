@@ -32,15 +32,23 @@ Note that the `Failure` type is allowed to return `data` — this can be a fallb
 
 >**A word about generic types**: by using a generic type for the `data` field we enforce the type of data that can be returned. Similarly, by enforcing the `status` type of `Failure`, we can enforce the different statuses that can be returned in the case of a service failure, and handle those appropriately. See more about this in the [Using `Result` as a Return Type](#using-result-as-a-return-type) section.
 
-The `Result<T, FailureStatus>` type encapsulates the possible return types of any service function:
+The `Result<T, FailureStatus>` type encapsulates the possible return types of a service function as either a `Success` or `Failure`. In particular, it represents a response that on success will include data of type `T`, otherwise a message will be returned in place of the data explaining the failure.
+
 ```ts
-/**
- * Represents a response that on success will include data of type T,
- * otherwise a message will be returned in place of the data explaining the failure.
- * The failure object has data type of void.
- */
 export type Result<T, FailureStatus = string> = Success<T> | Failure<void, FailureStatus>
 ```
+
+
+### The `Either` Type
+
+Similar to the `Result` type, the `Either` type represents a response that on success will include data of type A, but on failure will return data of type B.
+
+```ts
+export type Either<A, B> = Success<A> | Failure<B>;
+```
+
+This is useful when you might want to return fallback data in the case of a failure, but it differs from the type of the successful data.
+
 
 ### Error Types
 
@@ -95,16 +103,6 @@ It's helpful to point out: TS can detect that every `status` case has been caugh
 And importantly, if we tried writing a case for a status that was not specified, we get a TS error:
 
 ![Failure Status typing](./images/error-handling-failure-statuses.png)
-
-### The `Either` Type
-
-The `Either` type represents a response that on success will include data of type A, and on failure will return data of type B. 
-
-```ts
-export type Either<A, B> = Success<A> | Failure<B>;
-```
-
-This is useful when you might want to return fallback data in the case of a failure, but it differs from the type of the successful data.
 
 ### `success()`, `failure()`, and `alternate()`
 
