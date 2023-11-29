@@ -83,7 +83,7 @@ router.post(
 					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
 				}
 				case 'INVITE_EXISTS': {
-					return res.status(409).json(ConflictErrorResponse(invite.onFields, invite.message));
+					return res.status(409).json(ConflictErrorResponse(invite.message));
 				}
 			}
 		} catch (error) {

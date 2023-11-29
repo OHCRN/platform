@@ -19,7 +19,7 @@
 
 import { AxiosError } from 'axios';
 import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
-import { Result, conflict, failure, success } from 'types/httpResponses';
+import { Result, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
@@ -48,8 +48,7 @@ export const createResponse = async ({
 	return updateObj;
 };
 
-type CreateInviteFailureStatus = 'SYSTEM_ERROR';
-type CreateInviteConflictStatus = 'INVITE_EXISTS';
+type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
 /**
  * Creates clinician invite by sending input to data-mapper, which separates data between
  * Consent and PI DAS and then returns the combined data object from both DB entries
@@ -59,9 +58,7 @@ type CreateInviteConflictStatus = 'INVITE_EXISTS';
  */
 export const createInvite = async (
 	inviteRequest: ClinicianInviteRequest,
-): Promise<
-	Result<ClinicianInviteResponse, CreateInviteFailureStatus, CreateInviteConflictStatus>
-> => {
+): Promise<Result<ClinicianInviteResponse, CreateInviteFailureStatus>> => {
 	const { dataMapperUrl } = getAppConfig();
 	try {
 		const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'invites'), inviteRequest);
@@ -80,13 +77,7 @@ export const createInvite = async (
 			logger.error('POST /invites', 'AxiosError handling create invite request', data);
 
 			if (status === 409) {
-				return conflict(
-					'INVITE_EXISTS',
-					[
-						// TODO: populate with conflict fields
-					],
-					data.error,
-				);
+				return failure('INVITE_EXISTS', data.error);
 			}
 
 			return failure('SYSTEM_ERROR', data.error);

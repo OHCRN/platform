@@ -85,12 +85,12 @@ const invite = await createInvite(req.body.data);
 		case 'INVITE_EXISTS': {
 			return res.status(409).json(ConflictErrorResponse(invite.message));
 		}
-		default:
-			logger.error('Received an unexpected failure from `createInvite`');
-			return res.status(500).json(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
 	}
 					
 ```
+
+It's helpful to point out: TS can detect that every `status` case has been caught in the `switch` statement, and flag any code below it as unreachable.
+![Unreachable code](./images/error-handling-unreachable-code.png)
 
 And importantly, if we tried writing a case for a status that was not specified, we get a TS error:
 

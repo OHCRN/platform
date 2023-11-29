@@ -5,9 +5,6 @@ export type Failure<T = void, FailureStatus = string> = {
 	message: string;
 	data: T;
 };
-export type Conflict<T = void, ConflictStatus = string> = Failure<T, ConflictStatus> & {
-	onFields: string[];
-};
 
 /**
  * Represents a response that on success will include data of type A,
@@ -20,10 +17,7 @@ export type Either<A, B> = Success<A> | Failure<B>;
  * otherwise a message will be returned in place of the data explaining the failure.
  * The failure object has data type of void.
  */
-export type Result<T, FailureStatus = string, ConflictStatus = string> =
-	| Success<T>
-	| Failure<void, FailureStatus>
-	| Conflict<void, ConflictStatus>;
+export type Result<T, FailureStatus = string> = Success<T> | Failure<void, FailureStatus>;
 
 /* ******************* *
    Convenience Methods 
@@ -48,24 +42,6 @@ export const failure = <FailureStatus>(
 	status,
 	message,
 	data: undefined,
-});
-
-/**
- * Create a response indicating a conflict with a status naming the reason and message describing the conflict.
- * @param status status name
- * @param onFields list of field names causing the conflict
- * @param message message detailing the conflict
- * @returns {Conflict} `{status: string, message: string, data: undefined, onFields: string[]}`
- */
-export const conflict = <ConflictStatus>(
-	status: ConflictStatus,
-	onFields: string[],
-	message: string,
-): Conflict<void, ConflictStatus> => ({
-	status,
-	message,
-	data: undefined,
-	onFields,
 });
 
 /**

@@ -23,8 +23,7 @@ import { ErrorName } from 'types/httpResponses';
 
 import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';
-
-import { mockEnv } from './config.js';
+import { mockEnv } from '../config.js';
 
 const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
