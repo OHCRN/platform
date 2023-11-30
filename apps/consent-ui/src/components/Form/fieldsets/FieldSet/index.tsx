@@ -35,7 +35,7 @@ const FieldSet = <T extends FieldValues>({
 		<fieldset className={clsx('fieldset', className)}>
 			<label htmlFor={name}>
 				{label}
-				<RequiredAsterisk required={required} />
+				{required && <RequiredAsterisk />}
 			</label>
 			{children}
 			{error && <p style={{ color: 'red' }}>{error}</p>}
