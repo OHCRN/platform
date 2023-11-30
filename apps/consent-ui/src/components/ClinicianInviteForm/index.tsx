@@ -20,11 +20,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteFormValidation, ConsentGroup } from 'types/entities';
-import urlJoin from 'url-join';
 
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
@@ -34,10 +32,11 @@ import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
 import useRecaptcha from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { axiosClient } from 'src/services/api/axiosClient';
+import { API } from 'src/constants';
 
 import Form from '../Form';
 import RecaptchaCheckbox from '../RecaptchaCheckbox';
-import { useAppConfigContext } from '../AppConfigContextProvider';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 
@@ -64,8 +63,6 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: Partial<FormLabelsDictionary>;
 	textDict: ClinicianInviteFormTextDictionary;
 }) => {
-	const { CONSENT_API_URL } = useAppConfigContext();
-
 	// setup react-hook-forms
 	const methods = useForm<ClinicianInviteFormValidation>({
 		resolver: zodResolver(ClinicianInviteFormValidation),
@@ -104,8 +101,8 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
-			axios
-				.post(urlJoin(CONSENT_API_URL, 'invites'), { data, recaptchaToken })
+			axiosClient
+				.post(API.INVITES, { data, recaptchaToken })
 				.then(() => {
 					setRecaptchaError('');
 					resetRecaptcha();
