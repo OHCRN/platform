@@ -224,6 +224,7 @@ const ClinicianInviteFormComponent = ({
 						<p>
 							{textDict['upload-file-description-1']}
 							<a href="">{textDict['upload-file-link']}</a>
+							{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
 							{textDict['upload-file-description-2']}
 							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 						</p>
