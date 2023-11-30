@@ -41,19 +41,10 @@ export const hasRequiredGuardianInformation = (
 		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
 		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
 	return requiresGuardianInformation
-		? z
-				.object({
-					guardianEmailAddress: z.string().email(),
-					guardianName: Name,
-					guardianPhoneNumber: PhoneNumber,
-					guardianRelationship: Name,
-				})
-				.safeParse({
-					guardianEmailAddress,
-					guardianName,
-					guardianPhoneNumber,
-					guardianRelationship,
-				}).success
+		? guardianName !== undefined &&
+				guardianPhoneNumber !== undefined &&
+				guardianEmailAddress !== undefined &&
+				guardianRelationship !== undefined
 		: true;
 };
 
