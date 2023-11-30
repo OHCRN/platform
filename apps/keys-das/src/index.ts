@@ -17,17 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
 import bodyParser from 'body-parser';
+import express from 'express';
 
 import { AppConfig } from './config.js';
-import SwaggerRouter from './routers/swagger.js';
-import OhipKeysRouter from './routers/ohipKeys.js';
 import ClinicalProfileKeysRouter from './routers/clinicalProfileKeys.js';
+import OhipKeysRouter from './routers/ohipKeys.js';
+import SwaggerRouter from './routers/swagger.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
-	app.set('port', config.port);
+	app.set('port', config.express.port);
 	app.use(bodyParser.json());
 
 	app.use('/api-docs', SwaggerRouter);

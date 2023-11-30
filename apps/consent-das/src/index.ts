@@ -17,21 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import express from 'express';
 import bodyParser from 'body-parser';
 import errorHandler from 'error-handler';
+import express from 'express';
 
 import { AppConfig } from './config.js';
 import logger from './logger.js';
-import SwaggerRouter from './routers/swagger.js';
-import ParticipantRouter from './routers/participants.js';
+import ClinicianInviteRouter from './routers/clinicianInvites.js';
 import ConsentQuestionRouter from './routers/consentQuestions.js';
 import ParticipantResponseRouter from './routers/participantResponses.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
+import ParticipantRouter from './routers/participants.js';
+import SwaggerRouter from './routers/swagger.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
-	app.set('port', config.port);
+	app.set('port', config.express.port);
 	app.use(bodyParser.json());
 
 	app.use('/api-docs', SwaggerRouter);

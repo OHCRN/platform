@@ -17,24 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-
-import { AppConfig } from './config.js';
-import ClinicianInviteRouter from './routers/invites.js';
-import ParticipantsRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
-
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantsRouter);
-	app.use('/invites', ClinicianInviteRouter);
-
-	return app;
-};
-
-export default App;
+/**
+ * Strip aliases out from the top level of the TS reported type.
+ * This will display type as an object with {key: value} pairs instead as an alias name.
+ *
+ * Helpful when wrestling with IntelliSense type resolution. Has no functional impact.
+ */
+export type Expand<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
