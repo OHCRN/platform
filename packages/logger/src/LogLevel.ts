@@ -17,24 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
+import { Values } from 'types/common';
 
-import { AppConfig } from './config.js';
-import ClinicianInviteRouter from './routers/invites.js';
-import ParticipantsRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
-
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantsRouter);
-	app.use('/invites', ClinicianInviteRouter);
-
-	return app;
-};
-
-export default App;
+export const LogLevels = {
+	DEBUG: 'debug',
+	INFO: 'info',
+	WARN: 'warn',
+	ERROR: 'error',
+} as const;
+export type LogLevel = Values<typeof LogLevels>;

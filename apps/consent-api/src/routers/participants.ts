@@ -23,7 +23,7 @@ import {
 	getLatestParticipantResponseByParticipantIdAndQuestionId,
 	getParticipant,
 	getParticipants,
-} from '../service/search.js';
+} from '../services/search.js';
 import logger from '../logger.js';
 
 /**
