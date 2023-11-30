@@ -1,9 +1,14 @@
+# Participant Registration Flow
+
+### Registration Flow Part A
+#### Creating the User in Keycloak + OHCRN
+
 ```mermaid
 sequenceDiagram
     participant client as consent-ui-client
     participant server as consent-ui-server
     participant keycloak-ui
-    participant keycloak as keycloak-admin
+    participant keycloak as keycloak-admin-api
     participant consent-api
     participant data-mapper
     participant pi-das
@@ -30,10 +35,26 @@ sequenceDiagram
     Note over consent-das: new Participant created with participantId
     consent-das->>-data-mapper: success response
     data-mapper->>-consent-api: success response with participant data
+    consent-api->>consent-api: send welcome email to participant or guardian
     consent-api->>-server: successfully created participant
-    server->>-client: redirect to registration page w/modal login prompt
-    Note over client: modal prompt can be triggered on /registration ui route w/query params 
-    client->>+server: User clicks "login", triggering signIn() event
+    server->>-client: redirect to registration page w/login prompt
+```
+
+When the user is redirected back to the login prompt screen, they can choose either to continue to login and complete the entire flow (Part B), or pause and finish later.
+
+### Registration Flow Part B
+#### User Login and Email Verification
+
+```mermaid
+sequenceDiagram
+    participant client as consent-ui-client
+    participant server as consent-ui-server
+    participant keycloak-ui
+    participant keycloak as keycloak-admin-api
+    participant consent-api
+
+    Note over client: access login via modal or header button
+    client->>+server: User clicks "login"
     server->>server: next-auth login session initiated with necessary cookies
     server->>+keycloak-ui: login to keycloak, at /auth
     Note over keycloak-ui: user enters email + password
