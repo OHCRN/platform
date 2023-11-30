@@ -39,7 +39,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 			{title && (
 				<h4>
 					{title}
-					{required && <RequiredAsterisk />}
+					<RequiredAsterisk required={required} />
 				</h4>
 			)}
 			<label htmlFor={name} className="checkbox-fieldset__label">

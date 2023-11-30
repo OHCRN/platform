@@ -35,7 +35,7 @@ export const ClinicianInviteFormValidation = z
 		clinicianFirstName: Name,
 		clinicianInstitutionalEmailAddress: z.string().email(),
 		clinicianLastName: Name,
-		clinicianTitleOrRole: z.string().trim().nonempty(),
+		clinicianTitleOrRole: z.string().trim().min(1),
 		consentGroup: ConsentGroup,
 		consentToBeContacted: z.literal(true),
 		guardianEmailAddress: z.string().email().optional(),
