@@ -20,6 +20,7 @@
 import en from 'src/i18n/locales/en/index';
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birth-sex';
+import clinicianInviteDictionary from 'src/i18n/locales/fr/clinician-invite';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consent-category';
 import consentGroupDictionary from 'src/i18n/locales/fr/consent-group';
@@ -43,6 +44,7 @@ import historyOfCancerDictionary from 'src/i18n/locales/fr/history-of-cancer';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	'birth-sex': birthSexDictionary,
+	'clinician-invite': clinicianInviteDictionary,
 	common: commonDictionary,
 	'consent-category': consentCategoryDictionary,
 	'consent-group': consentGroupDictionary,

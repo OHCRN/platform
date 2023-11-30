@@ -19,6 +19,7 @@
 
 import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birth-sex';
+import clinicianInviteDictionary from './clinician-invite';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consent-category';
 import consentGroupDictionary from './consent-group';
@@ -42,6 +43,7 @@ import historyOfCancerDictionary from './history-of-cancer';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	'birth-sex': birthSexDictionary,
+	'clinician-invite': clinicianInviteDictionary,
 	common: commonDictionary,
 	'consent-category': consentCategoryDictionary,
 	'consent-group': consentGroupDictionary,

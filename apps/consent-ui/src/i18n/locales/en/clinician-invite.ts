@@ -17,28 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import SideImageLayout from 'src/components/Layouts/SideImageLayout';
-import { getTranslation, ValidLanguage } from 'src/i18n';
+const dictionary = {
+	'clinician-patient-registration': 'Clinician Patient Registration',
+	'register-your-patient': 'Register Your Patient',
+	'invite-your-patients': 'Invite your patients to participate in the OHCRN Registry.',
+} satisfies Record<string, string>;
 
-const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+export type ClinicianInviteDictionary = Record<keyof typeof dictionary, string>;
 
-	// get all translations for the page & the form
-
-	const textDict = {
-		'clinician-patient-registration': translate(
-			'clinician-invite',
-			'clinician-patient-registration',
-		),
-		'register-your-patient': translate('clinician-invite', 'register-your-patient'),
-		'invite-your-patients': translate('clinician-invite', 'invite-your-patients'),
-	};
-
-	return (
-		<SideImageLayout currentLang={currentLang} title={textDict['clinician-patient-registration']}>
-			<div style={{ border: '2px solid grey', width: '100%' }}>form goes here</div>
-		</SideImageLayout>
-	);
-};
-
-export default ClinicianRegistration;
+export default dictionary;
