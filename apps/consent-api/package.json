@@ -23,6 +23,7 @@
 		"cors": "^2.8.5",
 		"error-handler": "workspace:^",
 		"express": "^4.18.2",
+		"express-logger": "workspace:^",
 		"logger": "workspace:^",
 		"types": "workspace:^",
 		"zod": "^3.21.4"

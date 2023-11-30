@@ -17,29 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import * as dotenv from 'dotenv';
+import { LogLevel } from './LogLevel.js';
 
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
-
-export type AppConfig = {
-	env: {
-		isProduction: boolean;
-		isTest: boolean;
-	};
-	logs: {
-		level: LogLevel;
-	};
-};
-
-export const getAppConfig = (): AppConfig => {
-	dotenv.config();
-	return {
-		env: {
-			isProduction: process.env.NODE_ENV === 'production',
-			isTest: process.env.TEST_MODE === 'true',
-		},
-		logs: {
-			level: (process.env.LOG_LEVEL as LogLevel) || 'info',
-		},
-	};
+export type LoggerConfig = {
+	silent: boolean;
+	level: LogLevel;
+	logFile: boolean;
 };

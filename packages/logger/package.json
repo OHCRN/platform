@@ -1,24 +1,25 @@
 {
-  "name": "logger",
-  "version": "0.1.0",
-  "description": "OHCRN Platform Logger",
-  "exports": "./dist/index.js",
-  "types": "dist/index.d.ts",
-  "type": "module",
-  "engines": {
+	"name": "logger",
+	"version": "0.1.0",
+	"description": "OHCRN Platform Logger",
+	"exports": "./dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
+	"engines": {
 		"node": ">=18"
 	},
-  "scripts": {
-    "build": "tsc"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "winston": "^3.10.0"
-  },
-  "devDependencies": {
-    "dotenv": "^16.3.1",
-    "eslint-config-ohcrn": "workspace:^"
-  }
+	"scripts": {
+		"build": "tsc"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"winston": "^3.10.0"
+	},
+	"devDependencies": {
+		"dotenv": "^16.3.1",
+		"eslint-config-ohcrn": "workspace:^",
+		"types": "workspace:^"
+	}
 }
