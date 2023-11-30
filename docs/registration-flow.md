@@ -1,7 +1,7 @@
 # Participant Registration Flow
 
 ### Registration Flow Part A
-#### Creating the User in Keycloak + OHCRN
+#### Creating the User in Keycloak + OHCRN Backend
 
 ```mermaid
 sequenceDiagram
@@ -19,8 +19,6 @@ sequenceDiagram
     server->>+keycloak: retrieve client app token from /token endpoint using client id + secret
     keycloak->>server: respond with client token
     server->>keycloak: POST to admin/realms/<realm-name>/users endpoint with required fields + client token
-    Note over keycloak: { firstName, lastName, email, password, requiredActions: ["VERIFY_EMAIL"] }
-    Note over keycloak: custom attributes: { isGuardian, if isGuardian incl. participantFirstName }
     keycloak->>server: empty success response
     server->>keycloak: GET request to fetch user by email
     keycloak->>-server: success response with user data
@@ -65,7 +63,7 @@ sequenceDiagram
     keycloak-ui->>-server: return auth token/code from keycloak
     server->>+keycloak-ui: sends auth code identifying login success
     keycloak-ui->>-server: responds with tokens: id, access and refresh
-    server->>server: store account info in session (callback in next-auth).
+    server->>server: store account info in session
     Note over server: TBD what we store in session, at minimum keycloak_id
     Note over server: requests to consent-api will now be user authenticated
     server->>+consent-api: GET /user with session info (keycloak_id)
