@@ -22,7 +22,8 @@ import { ConsentCategory, ConsentStatus, ConsentWizardProgress } from 'types/ent
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import Card from 'src/components/Card';
 import ProgressHeader from 'src/components/ProgressHeader';
-import NavigationBack from 'src/components/NavigationBack';
+import PaddedContainer from 'src/components/PaddedContainer';
+import BackToDashboard from 'src/components/BackToDashboard';
 
 import styles from './ConsentWizard.module.scss';
 
@@ -64,11 +65,8 @@ const ConsentWizard = async ({
 	});
 
 	return (
-		<NavigationBack
-			currentLang={currentLang}
-			backLabel={translate('common', 'back-to-dashboard')}
-			backLinkName={'dashboard'}
-		>
+		<PaddedContainer>
+			<BackToDashboard currentLang={currentLang} />
 			<div className={styles.wizard}>
 				<div className={styles.header}>
 					<h3>{translate('consent-wizard', 'heading')}</h3>
@@ -87,7 +85,7 @@ const ConsentWizard = async ({
 					</div>
 				</Card>
 			</div>
-		</NavigationBack>
+		</PaddedContainer>
 	);
 };
 

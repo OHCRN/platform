@@ -23,8 +23,8 @@ import Image from 'next/image';
 import Card from 'src/components/Card';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/public/consents.jpeg';
-
-import LocalizedLink from '../Link/LocalizedLink';
+import PaddedContainer from 'src/components/PaddedContainer';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
 
 import styles from './Dashboard.module.scss';
 
@@ -34,7 +34,7 @@ const consentStatus: (typeof statuses)[number] = statuses[Math.floor(Math.random
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = await getTranslation(currentLang);
 	return (
-		<div className={styles.dashboard}>
+		<PaddedContainer>
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])}>
 				<div className={styles['consents-img']}>
 					<Image src={ConsentsImage} alt="" />
@@ -69,7 +69,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 					</div>
 				</div>
 			</Card>
-		</div>
+		</PaddedContainer>
 	);
 };
 

@@ -17,34 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import RightArrow from 'src/components/Icons/Arrow';
+import { getTranslation, ValidLanguage } from 'src/i18n';
 
-import styles from './NavigationBack.module.scss';
+import LocalizedLink from '../Link/LocalizedLink';
+import RightArrow from '../Icons/Arrow';
 
-const NavigationBack = async ({
-	children,
-	currentLang,
-	backLabel,
-	backLinkName,
-}: {
-	children: React.ReactNode;
-	currentLang: ValidLanguage;
-	backLabel: string;
-	backLinkName: React.ComponentProps<typeof LocalizedLink>['name'];
-}) => {
+import styles from './BackToDashboard.module.scss';
+
+const BackToDashboard = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
 	return (
-		<div className={styles.layout}>
-			<div className={styles.links}>
-				<LocalizedLink name={backLinkName} linkLang={currentLang} className={styles.link}>
-					<RightArrow className={styles.arrow} />
-					{backLabel}
-				</LocalizedLink>
-			</div>
-			{children}
+		<div className={styles.links}>
+			<LocalizedLink name={'dashboard'} linkLang={currentLang} className={styles.link}>
+				<RightArrow className={styles.arrow} />
+				{translate('common', 'back-to-dashboard')}
+			</LocalizedLink>
 		</div>
 	);
 };
 
-export default NavigationBack;
+export default BackToDashboard;

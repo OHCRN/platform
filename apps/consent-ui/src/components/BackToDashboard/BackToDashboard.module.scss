@@ -1,20 +1,10 @@
-.layout {
-	@media (min-width: theme('screens.sm')) {
-		margin: 2rem 1rem;
-	}
-	@media (min-width: theme('screens.md')) {
-		margin: 2rem 3rem;
-	}
-	
-	margin: 1rem;
-	width: 100%;
-}
-
 .links {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	margin-bottom: 1rem;
+	gap: 1rem;
+	width: 100%;
 }
 
 .link {

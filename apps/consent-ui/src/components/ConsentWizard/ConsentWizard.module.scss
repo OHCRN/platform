@@ -8,6 +8,11 @@
 }
 
 .wizard {
+	@media (min-width: theme('screens.md')) {
+		margin: auto;
+		max-width: 1300px;
+	}
+
 	.consent-form {
 		gap: 0.5rem;
 
@@ -17,7 +22,7 @@
 		@media (min-width: theme('screens.md')) {
 			padding: 2rem;
 		}
-		
+
 		.content {
 			@media (min-width: theme('screens.md')) {
 				padding: 0 1rem;
