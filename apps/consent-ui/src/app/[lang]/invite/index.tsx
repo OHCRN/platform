@@ -19,6 +19,7 @@
 
 import SideImageLayout from 'src/components/Layouts/SideImageLayout';
 import { getTranslation, ValidLanguage } from 'src/i18n';
+import inviteSidebarJpg from 'src/public/invite-sidebar.jpg';
 
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -35,7 +36,11 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 	};
 
 	return (
-		<SideImageLayout currentLang={currentLang} title={textDict['clinician-patient-registration']}>
+		<SideImageLayout
+			sidebarImage={inviteSidebarJpg}
+			currentLang={currentLang}
+			title={textDict['clinician-patient-registration']}
+		>
 			<div style={{ border: '2px solid grey', width: '100%' }}>form goes here</div>
 		</SideImageLayout>
 	);

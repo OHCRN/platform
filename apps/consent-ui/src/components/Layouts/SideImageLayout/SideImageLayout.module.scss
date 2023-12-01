@@ -44,11 +44,19 @@
 .sidebar {
 	flex: 0 1 33%;
 	min-width: 16rem;
-	max-width: 32rem;
+	max-width: 32.8125rem;
+	background: theme('colors.grayscale.800');
+	position: relative;
+	height: 100%;
 }
 
 .sidebarText {
 	padding: 2.5rem;
+}
+
+.sidebarText {
+	position: absolute;
+	inset: 0;
 }
 
 .logoImg {

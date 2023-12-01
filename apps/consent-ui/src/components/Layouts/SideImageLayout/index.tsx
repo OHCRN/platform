@@ -18,12 +18,15 @@
  */
 
 import Link from 'next/link';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import LanguageToggle from 'src/components/Header/LanguageToggle';
+import { getUnselectedLang } from 'src/components/Link/utils';
+import HelpButton from 'src/components/Header/HelpButton';
 
 import styles from './SideImageLayout.module.scss';
 
@@ -41,13 +44,18 @@ const SideImageLayout = ({
 	headerAction?: { topText: string; bottomText: string; url: string };
 	showLogin?: boolean;
 	sidebarClassName?: string;
-	sidebarImage?: string;
+	sidebarImage: StaticImageData;
 	title: string;
 }) => {
 	const translate = getTranslation(currentLang);
+	const langToSelect = getUnselectedLang(currentLang);
+
 	return (
 		<div className={clsx(styles.container)}>
 			<div className={clsx(styles.sidebar, sidebarClassName)}>
+				<div className={clsx(styles.sidebarImage)}>
+					<Image src={sidebarImage} alt="" />
+				</div>
 				<div className={clsx(styles.sidebarText)}>
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
@@ -58,7 +66,6 @@ const SideImageLayout = ({
 					</Link>
 					<h1 className={clsx(styles.title)}>{title}</h1>
 				</div>
-				{sidebarImage && sidebarImage}
 			</div>
 			<div className={clsx(styles.mobileTabletHeader)}>
 				<h1 className={clsx(styles.title)}>{title}</h1>
@@ -66,7 +73,12 @@ const SideImageLayout = ({
 			<div className={clsx(styles.main)}>
 				<div className={clsx(styles.content)}>
 					<div className={clsx(styles.desktopHeader)}>
-						<div className={clsx(styles.leftButtons)}>french help</div>
+						<div className={clsx(styles.leftButtons)}>
+							<LanguageToggle currentLang={currentLang}>
+								<span className={styles['toggle-full']}>{translate('header', langToSelect)}</span>
+							</LanguageToggle>
+							<HelpButton label={translate('header', 'help')} />
+						</div>
 						<div className={clsx(styles.rightButtons)}>
 							{showLogin && 'TODO login'}
 							<br />
