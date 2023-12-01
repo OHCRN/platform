@@ -37,10 +37,18 @@ const SelectInput = <T extends FieldValues, V extends string>({
 			aria-required={required}
 			instanceId={name}
 			name={name}
-			onChange={(val: FormSelectOnChangeArg<V>) =>
-				// the value could be a string or {label, value} object
-				onChange(typeof val === 'string' ? val : val?.value || null)
-			}
+			onChange={(val: FormSelectOnChangeArg<V>) => {
+				// in react-select the value can be a string or object.
+				// in our implementation it should be {label, value},
+				// with the label being translated.
+				let onChangeParam = '';
+				if (typeof val === 'string') {
+					onChangeParam = val;
+				} else if (val?.value !== undefined) {
+					onChangeParam = val.value;
+				}
+				return onChange(onChangeParam);
+			}}
 			options={options}
 			placeholder={placeholder}
 			value={options.find((option) => option.value === value) || ''}
