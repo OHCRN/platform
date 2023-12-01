@@ -30,10 +30,12 @@ const TextFieldSet = <T extends FieldValues>({
 	name,
 	required = false,
 	type = 'text',
-}: FormTextFieldSetProps<T>) => (
-	<FieldSet error={error} label={label} name={name} required={required}>
-		<TextInput name={name} required={required} type={type} />
-	</FieldSet>
-);
+}: FormTextFieldSetProps<T>) => {
+	return (
+		<FieldSet error={error} label={label} name={name} required={required}>
+			<TextInput name={name} required={required} type={type} />
+		</FieldSet>
+	);
+};
 
 export default TextFieldSet;

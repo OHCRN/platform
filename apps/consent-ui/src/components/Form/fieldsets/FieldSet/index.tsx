@@ -37,7 +37,9 @@ const FieldSet = <T extends FieldValues>({
 				{label}
 				{required && <RequiredAsterisk />}
 			</label>
+
 			{children}
+
 			{error && <p style={{ color: 'red' }}>{error}</p>}
 		</fieldset>
 	);

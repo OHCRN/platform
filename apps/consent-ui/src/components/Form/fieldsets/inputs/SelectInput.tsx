@@ -31,19 +31,21 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	placeholder = '',
 	required,
 	value,
-}: FormSelectInputProps<T, V>) => (
-	<Select
-		aria-required={required}
-		instanceId={name}
-		name={name}
-		onChange={(val: FormSelectOnChangeArg<V>) =>
-			// the value could be a string or {label, value} object
-			onChange(typeof val === 'string' ? val : val?.value || null)
-		}
-		options={options}
-		placeholder={placeholder}
-		value={options.find((option) => option.value === value) || ''}
-	/>
-);
+}: FormSelectInputProps<T, V>) => {
+	return (
+		<Select
+			aria-required={required}
+			instanceId={name}
+			name={name}
+			onChange={(val: FormSelectOnChangeArg<V>) =>
+				// the value could be a string or {label, value} object
+				onChange(typeof val === 'string' ? val : val?.value || null)
+			}
+			options={options}
+			placeholder={placeholder}
+			value={options.find((option) => option.value === value) || ''}
+		/>
+	);
+};
 
 export default SelectInput;
