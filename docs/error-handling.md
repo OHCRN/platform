@@ -72,6 +72,10 @@ These are the permitted values for the `error` field of an `ErrorResponse`, indi
 | `REQUEST_VALIDATION_ERROR` | 400    | A request was made with an invalid request body.                                                                                                                                   |
 | `RECAPTCHA_ERROR`          | 400    | A ReCAPTCHA token could not be verified.                                                                                                                                           |
 
+Most errors that we might receive are not relevant information that the client can respond to; for these types of errors we default to sending a `500 ServerError` and logging the actual error. These errors don’t need to be handled uniquely, simply returning a `Failure` with a status of `"SYSTEM_ERROR"` and the message `"An unexpected error occurred."` from services, which gets received by routers and sent as a `500 ServerError` response with that message is sufficient. 
+
+We only need to ensure specific error handling at each level above where an error occurred if that error requires passing information to the client through the appropriate HTTP response. For example, for the “Participant email already exists” error in the Clinician Invite flow, because it originates in the PI DAS and we would want the client to receive a `409 ConflictError`, we need to make sure Data Mapper and Consent API can distinguish it as a conflict error and send the appropriate response.
+
 ## Usage
 
 ### Using `Result` as a Return Type

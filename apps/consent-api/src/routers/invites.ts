@@ -65,8 +65,12 @@ const ClinicianInviteSchema = z.object({ data: ClinicianInviteRequest });
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Server error
+ *         description: ServerError - An unexpected error occurred.
  */
 
 router.post(
