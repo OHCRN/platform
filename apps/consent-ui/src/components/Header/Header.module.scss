@@ -14,21 +14,21 @@
 		}
 	}
 	.help {
-	@apply hidden;
-	@media (min-width: theme('screens.md')) {
-		@apply flex;
-		margin-right: 1rem;
-	}
-	.helpButton {
-		gap: 0.5rem;
-		padding-left: 0.2rem;
-		padding-right: 0.9rem;
-		svg {
-			width: 1.4rem;
-			height: fit-content;
+		@apply hidden;
+		@media (min-width: theme('screens.md')) {
+			@apply flex;
+			margin-right: 1rem;
+		}
+		.helpButton {
+			gap: 0.5rem;
+			padding-left: 0.2rem;
+			padding-right: 0.9rem;
+			svg {
+				width: 1.4rem;
+				height: fit-content;
+			}
 		}
 	}
-}
 }
 
 .headerItem {
@@ -54,20 +54,5 @@
 	@media (min-width: theme('screens.md')) {
 		height: 61px;
 		width: 250px;
-	}
-}
-
-.toggle-full {
-	@apply hidden;
-	@media (min-width: theme('screens.md')) {
-		@apply flex;
-	}
-}
-
-.toggle-abbr {
-	@apply uppercase;
-	@apply flex;
-	@media (min-width: theme('screens.md')) {
-		@apply hidden;
 	}
 }

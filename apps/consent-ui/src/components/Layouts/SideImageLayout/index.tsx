@@ -74,9 +74,7 @@ const SideImageLayout = ({
 				<div className={clsx(styles.content)}>
 					<div className={clsx(styles.desktopHeader)}>
 						<div className={clsx(styles.leftButtons)}>
-							<LanguageToggle currentLang={currentLang}>
-								<span className={styles['toggle-full']}>{translate('header', langToSelect)}</span>
-							</LanguageToggle>
+							<LanguageToggle currentLang={currentLang} />
 							<HelpButton label={translate('header', 'help')} />
 						</div>
 						<div className={clsx(styles.rightButtons)}>
