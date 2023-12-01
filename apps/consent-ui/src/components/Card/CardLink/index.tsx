@@ -37,7 +37,12 @@ const CardLink = async ({
 	children: React.ReactNode;
 }) => {
 	return (
-		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
+		<LocalizedLink
+			name={name}
+			linkLang={currentLang}
+			defaultStyle={false}
+			className={clsx(styles.button, className)}
+		>
 			{children}
 		</LocalizedLink>
 	);

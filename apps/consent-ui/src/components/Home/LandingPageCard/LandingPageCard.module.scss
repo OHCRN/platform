@@ -3,16 +3,6 @@
 		max-width: 45rem;
 	}
 
-	strong {
-		color: theme('colors.secondary.500');
-		text-decoration-line: underline;
-		transition: color 200ms;
-
-		&:hover {
-			color: theme('colors.secondary.400');
-		}
-	}
-
 	.icon {
 		color: theme('colors.secondary.500');
 	}

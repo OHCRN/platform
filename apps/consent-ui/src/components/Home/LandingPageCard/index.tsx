@@ -25,6 +25,7 @@ import RightArrow from 'src/components/Icons/Arrow';
 import Chevron from 'src/components/Icons/Chevron';
 import Card from 'src/components/Card';
 import CardLink from 'src/components/Card/CardLink';
+import linkStyles from 'src/components/Link/LocalizedLink.module.scss';
 
 import styles from './LandingPageCard.module.scss';
 
@@ -40,13 +41,17 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 			{/* mobile view */}
 			<CardLink name={'register'} currentLang={currentLang} className={styles.mobile}>
 				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
-				<strong>{translate('landing-page', 'participants-register-today')}</strong>
+				<strong className={linkStyles.link}>
+					{translate('landing-page', 'participants-register-today')}
+				</strong>
 				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
 
 			<CardLink name={'invite'} currentLang={currentLang} className={styles.mobile}>
 				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
-				<strong>{translate('landing-page', 'clinicians-register-today')}</strong>
+				<strong className={linkStyles.link}>
+					{translate('landing-page', 'clinicians-register-today')}
+				</strong>
 				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
 
@@ -55,7 +60,9 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
 				<span>
 					{translate('landing-page', 'long-participants-register-today')}{' '}
-					<strong>{translate('landing-page', 'register-yourself-today')}</strong>
+					<strong className={linkStyles.link}>
+						{translate('landing-page', 'register-yourself-today')}
+					</strong>
 				</span>
 				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>
@@ -64,7 +71,9 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
 				<span>
 					{translate('landing-page', 'long-clinicians-register-today')}{' '}
-					<strong>{translate('landing-page', 'register-patient-today')}</strong>
+					<strong className={linkStyles.link}>
+						{translate('landing-page', 'register-patient-today')}
+					</strong>
 				</span>
 				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>
