@@ -19,9 +19,23 @@
 
 import { vi } from 'vitest';
 
-export const mockEnv = () => {
-	vi.stubEnv('NODE_ENV', 'development');
-	vi.stubEnv('PORT', '8080');
-	vi.stubEnv('RECAPTCHA_SECRET_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'); // SECRET TEST KEY
-	vi.stubEnv('DATA_MAPPER_URL', 'http://localhost:8081');
+import * as config from '../src/config.js';
+import { AppConfig } from '../src/config.js';
+
+export const mockEnv = (values?: Partial<AppConfig>) => {
+	// Need to set the NODE_ENV since there are currently places in teh code checking the process.env.NODE_ENV directly instead of relying on our config.
+	vi.stubEnv('NODE_ENV', values?.isProduction ? 'production' : 'development');
+
+	const defaultConfig: AppConfig = {
+		dataMapperUrl: 'http://localhost:8081',
+		express: {
+			port: '8080',
+		},
+		isProduction: false,
+		recaptcha: {
+			secretKey: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
+		},
+	};
+
+	vi.spyOn(config, 'getAppConfig').mockReturnValue({ ...defaultConfig, ...values });
 };
