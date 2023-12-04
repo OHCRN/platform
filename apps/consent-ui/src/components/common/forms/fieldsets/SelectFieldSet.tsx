@@ -17,17 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
-import { FormsDictionary } from 'src/i18n/locales/en/forms';
-import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 
-import { FormSelectOption } from '../Form/types';
+import { FormSelectFieldSetProps } from '../Form/types';
 
-// TODO ClinicianInviteFormDictionary shouldn't be partial in final version
-// i.e. when styling/page is complete.
-export type ClinicianInviteFormTextDictionary = Partial<
-	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
->;
+import FieldSet from './FieldSet';
+import SelectInput from './inputs/SelectInput';
 
-export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
+const SelectFieldSet = <T extends FieldValues, V extends string>({
+	error,
+	label,
+	name,
+	options,
+	placeholder,
+	required = false,
+}: FormSelectFieldSetProps<T, V>) => {
+	const { control } = useFormContext();
+	return (
+		<Controller
+			name="consentGroup"
+			control={control}
+			render={({ field: { onChange, value } }) => (
+				<FieldSet error={error} label={label} name={name} required={required}>
+					<SelectInput
+						name={name}
+						onChange={onChange}
+						options={options}
+						placeholder={placeholder}
+						required
+						value={value}
+					/>
+				</FieldSet>
+			)}
+			rules={{ required: true }}
+		/>
+	);
+};
+
+export default SelectFieldSet;

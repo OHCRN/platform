@@ -22,24 +22,23 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormTextInputProps } from '../../types';
+import { FormRadioInputProps } from '../../Form/types';
 
-const TextInput = <T extends FieldValues>({
+const RadioInput = <T extends FieldValues, V extends string>({
 	className,
 	name,
-	required = false,
-	type = 'text',
-}: FormTextInputProps<T>) => {
+	value,
+}: FormRadioInputProps<T, V>) => {
 	const { register } = useFormContext();
 	return (
 		<input
 			{...register(name)}
-			aria-required={required}
-			className={clsx(`${type}-input`, className)}
-			id={name}
-			type={type}
+			className={clsx('radio-input', className)}
+			id={`${name}-${value}`}
+			type="radio"
+			value={value}
 		/>
 	);
 };
 
-export default TextInput;
+export default RadioInput;

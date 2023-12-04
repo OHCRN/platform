@@ -25,18 +25,18 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteRequest, ConsentGroup } from 'types/entities';
 
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
-import TextFieldSet from 'src/components/Form/fieldsets/TextFieldSet';
-import RequiredAsterisk from 'src/components/Form/RequiredAsterisk';
-import CheckboxFieldSet from 'src/components/Form/fieldsets/CheckboxFieldSet';
-import SelectFieldSet from 'src/components/Form/fieldsets/SelectFieldSet';
+import TextFieldSet from 'src/components/common/forms/fieldsets/TextFieldSet';
+import RequiredAsterisk from 'src/components/common/forms/RequiredAsterisk';
+import CheckboxFieldSet from 'src/components/common/forms/fieldsets/CheckboxFieldSet';
+import SelectFieldSet from 'src/components/common/forms/fieldsets/SelectFieldSet';
 import useRecaptcha from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { API } from 'src/constants';
 
-import Form from '../Form';
-import RecaptchaCheckbox from '../RecaptchaCheckbox';
+import Form from '../../../common/forms/Form';
+import RecaptchaCheckbox from '../../../common/forms/RecaptchaCheckbox';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 

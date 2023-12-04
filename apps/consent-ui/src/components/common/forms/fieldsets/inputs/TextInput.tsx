@@ -19,39 +19,27 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormCheckboxFieldSetProps } from '../../types';
-import CheckboxInput from '../inputs/CheckboxInput';
+import { FormTextInputProps } from '../../Form/types';
 
-const CheckboxFieldSet = <T extends FieldValues>({
+const TextInput = <T extends FieldValues>({
 	className,
-	description,
-	error,
 	name,
 	required = false,
-	title,
-}: FormCheckboxFieldSetProps<T>) => {
+	type = 'text',
+}: FormTextInputProps<T>) => {
+	const { register } = useFormContext();
 	return (
-		<fieldset className={clsx('checkbox-fieldset', className)}>
-			{title && (
-				<h4>
-					{title}
-					{required && <RequiredAsterisk />}
-				</h4>
-			)}
-			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} />
-				<span className="checkbox-fieldset__description">
-					{description}
-					{required && !title && <RequiredAsterisk />}
-				</span>
-			</label>
-			{error && <span style={{ color: 'red' }}>{error}</span>}
-		</fieldset>
+		<input
+			{...register(name)}
+			aria-required={required}
+			className={clsx(`${type}-input`, className)}
+			id={name}
+			type={type}
+		/>
 	);
 };
 
-export default CheckboxFieldSet;
+export default TextInput;

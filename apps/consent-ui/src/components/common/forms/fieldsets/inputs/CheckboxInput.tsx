@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2022 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
  * GNU Affero General Public License along with this program.
- * If not, see <http://www.gnu.org/licenses/>.
+ *  If not, see <http://www.gnu.org/licenses/>.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -19,41 +19,22 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
-import Select from 'react-select';
+import { FieldValues, useFormContext } from 'react-hook-form';
+import clsx from 'clsx';
 
-import { FormSelectInputProps, FormSelectOnChangeArg } from '../../types';
+import { FormInputProps } from '../../Form/types';
 
-const SelectInput = <T extends FieldValues, V extends string>({
-	name,
-	onChange,
-	options,
-	placeholder = '',
-	required,
-	value,
-}: FormSelectInputProps<T, V>) => {
+const CheckboxInput = <T extends FieldValues>({ className, name, required }: FormInputProps<T>) => {
+	const { register } = useFormContext();
 	return (
-		<Select
+		<input
+			{...register(name)}
 			aria-required={required}
-			instanceId={name}
-			name={name}
-			onChange={(val: FormSelectOnChangeArg<V>) => {
-				// in react-select the value can be a string or object.
-				// in our implementation it should be {label, value},
-				// with the label being translated.
-				let onChangeParam = '';
-				if (typeof val === 'string') {
-					onChangeParam = val;
-				} else if (val?.value !== undefined) {
-					onChangeParam = val.value;
-				}
-				return onChange(onChangeParam);
-			}}
-			options={options}
-			placeholder={placeholder}
-			value={options.find((option) => option.value === value) || ''}
+			className={clsx('checkbox-input', className)}
+			id={name}
+			type="checkbox"
 		/>
 	);
 };
 
-export default SelectInput;
+export default CheckboxInput;

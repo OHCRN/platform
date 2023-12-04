@@ -17,26 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinician-invite-form';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { FormsDictionary } from 'src/i18n/locales/en/forms';
+import { ConsentGroupDictionary } from 'src/i18n/locales/en/consent-group';
+import { FormSelectOption } from 'src/components/common/forms/Form/types';
 
-// eslint-disable-next-line import/no-named-as-default
-import ReCAPTCHA from 'react-google-recaptcha';
+// TODO ClinicianInviteFormDictionary shouldn't be partial in final version
+// i.e. when styling/page is complete.
+export type ClinicianInviteFormTextDictionary = Partial<
+	ClinicianInviteFormDictionary & FormsDictionary & FormErrorsDictionary
+>;
 
-import { useAppConfigContext } from '../AppConfigContextProvider';
-import { RecaptchaCheckboxRef } from '../../hooks/useRecaptcha';
-
-const RecaptchaCheckbox = ({
-	onChange,
-	recaptchaCheckboxRef,
-}: {
-	onChange: () => void;
-	recaptchaCheckboxRef: RecaptchaCheckboxRef;
-}) => {
-	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
-
-	return RECAPTCHA_SITE_KEY ? (
-		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
-	) : null;
-};
-
-export default RecaptchaCheckbox;
+export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;

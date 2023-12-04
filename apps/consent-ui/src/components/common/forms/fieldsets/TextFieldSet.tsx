@@ -17,28 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { FieldValues } from 'react-hook-form';
 
-import { FieldValues, useFormContext } from 'react-hook-form';
-import clsx from 'clsx';
+import { FormTextFieldSetProps } from '../Form/types';
 
-import { FormRadioInputProps } from '../../types';
+import TextInput from './inputs/TextInput';
+import FieldSet from './FieldSet';
 
-const RadioInput = <T extends FieldValues, V extends string>({
-	className,
+const TextFieldSet = <T extends FieldValues>({
+	error,
+	label,
 	name,
-	value,
-}: FormRadioInputProps<T, V>) => {
-	const { register } = useFormContext();
+	required = false,
+	type = 'text',
+}: FormTextFieldSetProps<T>) => {
 	return (
-		<input
-			{...register(name)}
-			className={clsx('radio-input', className)}
-			id={`${name}-${value}`}
-			type="radio"
-			value={value}
-		/>
+		<FieldSet error={error} label={label} name={name} required={required}>
+			<TextInput name={name} required={required} type={type} />
+		</FieldSet>
 	);
 };
 
-export default RadioInput;
+export default TextFieldSet;

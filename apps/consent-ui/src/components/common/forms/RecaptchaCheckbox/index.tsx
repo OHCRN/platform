@@ -17,32 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FieldValues } from 'react-hook-form';
-import clsx from 'clsx';
+'use client';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormFieldSetProps } from '../../types';
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha';
 
-const FieldSet = <T extends FieldValues>({
-	children,
-	className,
-	error,
-	label,
-	name,
-	required = false,
-}: FormFieldSetProps<T>) => {
-	return (
-		<fieldset className={clsx('fieldset', className)}>
-			<label htmlFor={name}>
-				{label}
-				{required && <RequiredAsterisk />}
-			</label>
+import { useAppConfigContext } from '../../../AppConfigContextProvider';
+import { RecaptchaCheckboxRef } from '../../../../hooks/useRecaptcha';
 
-			{children}
+const RecaptchaCheckbox = ({
+	onChange,
+	recaptchaCheckboxRef,
+}: {
+	onChange: () => void;
+	recaptchaCheckboxRef: RecaptchaCheckboxRef;
+}) => {
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
 
-			{error && <p style={{ color: 'red' }}>{error}</p>}
-		</fieldset>
-	);
+	return RECAPTCHA_SITE_KEY ? (
+		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
+	) : null;
 };
 
-export default FieldSet;
+export default RecaptchaCheckbox;

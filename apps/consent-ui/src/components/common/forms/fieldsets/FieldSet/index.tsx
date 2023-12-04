@@ -18,24 +18,31 @@
  */
 
 import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-import { FormTextFieldSetProps } from '../types';
+import RequiredAsterisk from '../../RequiredAsterisk';
+import { FormFieldSetProps } from '../../Form/types';
 
-import TextInput from './inputs/TextInput';
-import FieldSet from './FieldSet';
-
-const TextFieldSet = <T extends FieldValues>({
+const FieldSet = <T extends FieldValues>({
+	children,
+	className,
 	error,
 	label,
 	name,
 	required = false,
-	type = 'text',
-}: FormTextFieldSetProps<T>) => {
+}: FormFieldSetProps<T>) => {
 	return (
-		<FieldSet error={error} label={label} name={name} required={required}>
-			<TextInput name={name} required={required} type={type} />
-		</FieldSet>
+		<fieldset className={clsx('fieldset', className)}>
+			<label htmlFor={name}>
+				{label}
+				{required && <RequiredAsterisk />}
+			</label>
+
+			{children}
+
+			{error && <p style={{ color: 'red' }}>{error}</p>}
+		</fieldset>
 	);
 };
 
-export default TextFieldSet;
+export default FieldSet;

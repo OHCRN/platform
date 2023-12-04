@@ -17,41 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Controller, FieldValues, useFormContext } from 'react-hook-form';
+'use client';
 
-import { FormSelectFieldSetProps } from '../types';
+import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-import FieldSet from './FieldSet';
-import SelectInput from './inputs/SelectInput';
+import RequiredAsterisk from '../../RequiredAsterisk';
+import { FormCheckboxFieldSetProps } from '../../Form/types';
+import CheckboxInput from '../inputs/CheckboxInput';
 
-const SelectFieldSet = <T extends FieldValues, V extends string>({
+const CheckboxFieldSet = <T extends FieldValues>({
+	className,
+	description,
 	error,
-	label,
 	name,
-	options,
-	placeholder,
 	required = false,
-}: FormSelectFieldSetProps<T, V>) => {
-	const { control } = useFormContext();
+	title,
+}: FormCheckboxFieldSetProps<T>) => {
 	return (
-		<Controller
-			name="consentGroup"
-			control={control}
-			render={({ field: { onChange, value } }) => (
-				<FieldSet error={error} label={label} name={name} required={required}>
-					<SelectInput
-						name={name}
-						onChange={onChange}
-						options={options}
-						placeholder={placeholder}
-						required
-						value={value}
-					/>
-				</FieldSet>
+		<fieldset className={clsx('checkbox-fieldset', className)}>
+			{title && (
+				<h4>
+					{title}
+					{required && <RequiredAsterisk />}
+				</h4>
 			)}
-			rules={{ required: true }}
-		/>
+			<label htmlFor={name} className="checkbox-fieldset__label">
+				<CheckboxInput required={required} name={name} />
+				<span className="checkbox-fieldset__description">
+					{description}
+					{required && !title && <RequiredAsterisk />}
+				</span>
+			</label>
+			{error && <span style={{ color: 'red' }}>{error}</span>}
+		</fieldset>
 	);
 };
 
-export default SelectFieldSet;
+export default CheckboxFieldSet;

@@ -20,11 +20,11 @@
 import Link from 'next/link';
 import { CONSENT_GROUPS } from 'types/entities';
 
-import ClinicianInviteFormComponent from 'src/components/ClinicianInviteForm';
+import ClinicianInviteFormComponent from 'src/components/views/invite/ClinicianInviteForm';
 import {
 	ClinicianInviteFormTextDictionary,
 	ConsentGroupOption,
-} from 'src/components/ClinicianInviteForm/types';
+} from 'src/components/views/invite/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
