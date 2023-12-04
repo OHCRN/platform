@@ -18,10 +18,15 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { PIClinicianInviteRequest } from 'types/entities';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 
 import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
 import logger from '../logger.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 // TODO: update JSDoc comments when custom error handling is implemented
 /**
@@ -110,73 +115,42 @@ router.get('/:inviteId', async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               participantFirstName:
- *                 type: string
- *                 required: true
- *               participantLastName:
- *                 type: string
- *                 required: true
- *               participantEmailAddress:
- *                 type: string
- *                 format: email
- *                 required: true
- *               participantPhoneNumber:
- *                 type: string
- *                 required: true
- *               participantPreferredName:
- *                 type: string
- *               guardianName:
- *                 type: string
- *               guardianPhoneNumber:
- *                 type: string
- *               guardianEmailAddress:
- *                 type: string
- *                 format: email
- *               guardianRelationship:
- *                 type: string
- *               clinicianInviteId:
- *                 type: string
+ *             $ref: '#/components/schemas/ClinicianInviteRequest'
  *     responses:
  *       201:
- *         description: The clinician invite was successfully created.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Error creating clinician invite.
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', async (req, res) => {
-	logger.info('POST /clinician-invites');
-	const {
-		participantFirstName,
-		participantLastName,
-		participantEmailAddress,
-		participantPhoneNumber,
-		participantPreferredName,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-		clinicianInviteId,
-	} = req.body;
-	// TODO: add validation
-	try {
-		const invite = await createClinicianInvite({
-			participantFirstName,
-			participantLastName,
-			participantEmailAddress,
-			participantPhoneNumber,
-			participantPreferredName,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-			clinicianInviteId,
-		});
-		res.status(201).send({ invite });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error creating clinician invite' });
-	}
-});
+router.post(
+	'/',
+	withRequestValidation(PIClinicianInviteRequest, async (req, res) => {
+		try {
+			const invite = await createClinicianInvite(req.body);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
+			res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		}
+	}),
+);
 
 export default router;
