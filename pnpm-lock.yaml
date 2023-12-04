@@ -54,21 +54,27 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       express-logger:
         specifier: workspace:^
         version: link:../../packages/express-logger
+      express-request-validation:
+        specifier: workspace:^
+        version: link:../../packages/express-request-validation
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
       types:
         specifier: workspace:^
         version: link:../../packages/types
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -85,6 +91,9 @@ importers:
       '@types/express-serve-static-core':
         specifier: ^4.17.41
         version: 4.17.41
+      '@types/supertest':
+        specifier: ^2.0.16
+        version: 2.0.16
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -94,6 +103,9 @@ importers:
       nodemon:
         specifier: ^2.0.22
         version: 2.0.22
+      supertest:
+        specifier: ^6.3.3
+        version: 6.3.3
 
   apps/consent-das:
     dependencies:
@@ -103,12 +115,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -342,12 +354,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -401,7 +413,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(eslint-config-prettier@8.8.0)(eslint@8.40.0)(prettier@3.0.3)
 
-  packages/error-handler:
+  packages/express-error-handler:
     dependencies:
       express:
         specifier: ^4.18.2
@@ -438,6 +450,25 @@ importers:
       '@types/express-requests-logger':
         specifier: ^3.0.4
         version: 3.0.4
+
+  packages/express-request-validation:
+    dependencies:
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      types:
+        specifier: workspace:^
+        version: link:../types
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.17
+        version: 4.17.17
+      '@types/express-serve-static-core':
+        specifier: ^4.17.41
+        version: 4.17.41
 
   packages/logger:
     dependencies:
@@ -1684,6 +1715,13 @@ packages:
       '@types/node': 20.1.3
     dev: true
 
+  /@types/cookiejar@2.1.5:
+    resolution:
+      {
+        integrity: sha512-he+DHOWReW0nghN24E1WUqM0efK4kI9oTqDm6XmK8ZPe2djZ90BSNdGnIyCLzCPw7/pogPlGbzI2wHGGmi4O/Q==,
+      }
+    dev: true
+
   /@types/cors@2.8.14:
     resolution:
       {
@@ -1868,6 +1906,25 @@ packages:
       '@types/node': 20.1.3
     dev: true
 
+  /@types/superagent@4.1.22:
+    resolution:
+      {
+        integrity: sha512-GMaOrnnUsjChvH8zlzdDPARRXky8bU3E8xsU/fOclgqsINekbwDu1+wzJzJaGzZP91SGpOutf5Te5pm5M/qCWg==,
+      }
+    dependencies:
+      '@types/cookiejar': 2.1.5
+      '@types/node': 20.1.3
+    dev: true
+
+  /@types/supertest@2.0.16:
+    resolution:
+      {
+        integrity: sha512-6c2ogktZ06tr2ENoZivgm7YnprnhYE4ZoXGMY+oA7IuAf17M8FWvujXZGmxLv8y0PTyts4x5A+erSwVUFA8XSg==,
+      }
+    dependencies:
+      '@types/superagent': 4.1.22
+    dev: true
+
   /@types/swagger-jsdoc@6.0.1:
     resolution:
       {
@@ -1906,7 +1963,7 @@ packages:
       }
     engines: { node: ^16.0.0 || >=18.0.0 }
     peerDependencies:
-      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
+      '@typescript-eslint/parser': 6.2.0
       eslint: ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
@@ -2364,6 +2421,13 @@ packages:
       get-intrinsic: 1.2.1
       is-array-buffer: 3.0.2
       is-shared-array-buffer: 1.0.2
+    dev: true
+
+  /asap@2.0.6:
+    resolution:
+      {
+        integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==,
+      }
     dev: true
 
   /assertion-error@1.1.0:
@@ -2878,7 +2942,6 @@ packages:
     engines: { node: '>= 0.8' }
     dependencies:
       delayed-stream: 1.0.0
-    dev: false
 
   /commander@4.1.1:
     resolution:
@@ -2905,6 +2968,13 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /component-emitter@1.3.1:
+    resolution:
+      {
+        integrity: sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==,
+      }
+    dev: true
 
   /concat-map@0.0.1:
     resolution:
@@ -2957,6 +3027,13 @@ packages:
       }
     engines: { node: '>= 0.6' }
     dev: false
+
+  /cookiejar@2.1.4:
+    resolution:
+      {
+        integrity: sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==,
+      }
+    dev: true
 
   /cors@2.8.5:
     resolution:
@@ -3183,6 +3260,16 @@ packages:
       }
     engines: { node: '>=8' }
     dev: false
+
+  /dezalgo@1.0.4:
+    resolution:
+      {
+        integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==,
+      }
+    dependencies:
+      asap: 2.0.6
+      wrappy: 1.0.2
+    dev: true
 
   /didyoumean@1.2.2:
     resolution:
@@ -3554,7 +3641,7 @@ packages:
     engines: { node: ^14.18.0 || >=16.0.0 }
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: '*'
+      eslint-plugin-import: ^2.27.5
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.14.0
@@ -4019,6 +4106,13 @@ packages:
       }
     dev: true
 
+  /fast-safe-stringify@2.1.1:
+    resolution:
+      {
+        integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==,
+      }
+    dev: true
+
   /fastq@1.15.0:
     resolution:
       {
@@ -4154,7 +4248,18 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: false
+
+  /formidable@2.1.2:
+    resolution:
+      {
+        integrity: sha512-CM3GuJ57US06mlpQ47YcunuUZ9jpm8Vx+P2CGt2j7HpgkKZO/DJYQ0Bobim8G6PFQmK5lOqOOdUXboU+h73A4g==,
+      }
+    dependencies:
+      dezalgo: 1.0.4
+      hexoid: 1.0.0
+      once: 1.4.0
+      qs: 6.11.0
+    dev: true
 
   /forwarded@0.2.0:
     resolution:
@@ -4522,6 +4627,14 @@ packages:
     engines: { node: '>= 0.4.0' }
     dependencies:
       function-bind: 1.1.1
+
+  /hexoid@1.0.0:
+    resolution:
+      {
+        integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==,
+      }
+    engines: { node: '>=8' }
+    dev: true
 
   /hoist-non-react-statics@3.3.2:
     resolution:
@@ -5338,7 +5451,6 @@ packages:
     engines: { node: '>= 0.6' }
     dependencies:
       mime-db: 1.52.0
-    dev: false
 
   /mime@1.6.0:
     resolution:
@@ -5348,6 +5460,15 @@ packages:
     engines: { node: '>=4' }
     hasBin: true
     dev: false
+
+  /mime@2.6.0:
+    resolution:
+      {
+        integrity: sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==,
+      }
+    engines: { node: '>=4.0.0' }
+    hasBin: true
+    dev: true
 
   /mimic-fn@2.1.0:
     resolution:
@@ -5400,6 +5521,7 @@ packages:
         integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==,
       }
     hasBin: true
+    requiresBuild: true
     dependencies:
       minimist: 1.2.8
     dev: false
@@ -5522,6 +5644,7 @@ packages:
         integrity: sha512-zIdGUrPRFTUELUvr3Gmc7KZ2Sw/h1PiVM0Af/oHB6zgnV1ikqSfRk+TOufi79aHYCW3NiOXmr1BP5nWbzojLaA==,
       }
     hasBin: true
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -6297,7 +6420,6 @@ packages:
     engines: { node: '>=0.6' }
     dependencies:
       side-channel: 1.0.4
-    dev: false
 
   /queue-microtask@1.2.3:
     resolution:
@@ -6578,6 +6700,7 @@ packages:
         integrity: sha512-J5xnxTyqaiw06JjMftq7L9ouA448dw/E7dKghkP9WpKNuwmARNNg+Gk8/u5ryb9N/Yo2+z3MCwuqFK/+qPOPfQ==,
       }
     hasBin: true
+    requiresBuild: true
     dependencies:
       glob: 6.0.4
     dev: false
@@ -7133,6 +7256,40 @@ packages:
       pirates: 4.0.5
       ts-interface-checker: 0.1.13
     dev: false
+
+  /superagent@8.1.2:
+    resolution:
+      {
+        integrity: sha512-6WTxW1EB6yCxV5VFOIPQruWGHqc3yI7hEmZK6h+pyk69Lk/Ut7rLUY6W/ONF2MjBuGjvmMiIpsrVJ2vjrHlslA==,
+      }
+    engines: { node: '>=6.4.0 <13 || >=14' }
+    dependencies:
+      component-emitter: 1.3.1
+      cookiejar: 2.1.4
+      debug: 4.3.4
+      fast-safe-stringify: 2.1.1
+      form-data: 4.0.0
+      formidable: 2.1.2
+      methods: 1.1.2
+      mime: 2.6.0
+      qs: 6.11.0
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /supertest@6.3.3:
+    resolution:
+      {
+        integrity: sha512-EMCG6G8gDu5qEqRQ3JjjPs6+FYT1a7Hv5ApHvtSghmOFJYtsU5S+pSb6Y2EUeCEY3CmEL3mmQ8YWlPOzQomabA==,
+      }
+    engines: { node: '>=6.4.0' }
+    dependencies:
+      methods: 1.1.2
+      superagent: 8.1.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /supports-color@5.5.0:
     resolution:

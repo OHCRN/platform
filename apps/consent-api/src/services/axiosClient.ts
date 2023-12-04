@@ -16,28 +16,10 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import axios from 'axios';
 
-import { ZodError, typeToFlattenedError } from 'zod';
-
-import { ErrorResponse } from './ErrorResponse.js';
-
-export const REQUEST_VALIDATION_ERROR = 'RequestValidationError';
-
-export type RequestValidationError<T> = ErrorResponse & {
-	details: typeToFlattenedError<T>;
-};
-
-/**
- * Convert a ZodError from ZodSchema validation into an HTTP Error response message
- * of type `REQUEST_VALIDATION_ERROR`.
- * @param error Zod Error from parse
- * @returns
- */
-export const RequestValidationErrorResponse = <T>(
-	error: ZodError<T>,
-	customMessage?: string,
-): RequestValidationError<T> => ({
-	error: REQUEST_VALIDATION_ERROR,
-	message: customMessage ?? 'Request body is invalid for this request.',
-	details: error.flatten(),
+const axiosClient = axios.create({
+	headers: { 'Content-Type': 'application/json' },
 });
+
+export default axiosClient;

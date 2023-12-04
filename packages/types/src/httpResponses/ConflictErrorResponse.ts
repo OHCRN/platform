@@ -17,30 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorRequestHandler } from 'express';
-import { ErrorResponse } from 'types/httpErrors';
-import { Logger } from 'logger';
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
+
+const { CONFLICT_ERROR } = ErrorName;
+
+export type ConflictError = ErrorResponse;
 
 /**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
+ * Creates a ConflictErrorResponse containing a message detailing the conflict and the fields causing it.
+ * @param customMessage
  * @returns
  */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
-
-		if (res.headersSent) {
-			return next(err);
-		}
-
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
-
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
-
-		return res.status(500).json(ErrorResponse('ServerError', message));
-	};
-
-export default errorHandler;
+export const ConflictErrorResponse = (customMessage?: string): ConflictError => ({
+	error: CONFLICT_ERROR,
+	message: customMessage ?? 'There was a conflict with existing data.',
+});

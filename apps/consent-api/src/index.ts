@@ -19,8 +19,8 @@
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import errorHandler from 'error-handler';
 import express from 'express';
+import errorHandler from 'express-error-handler';
 import ExpressLogger from 'express-logger';
 
 import { AppConfig } from './config.js';

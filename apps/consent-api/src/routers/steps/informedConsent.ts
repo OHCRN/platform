@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import { ConsentQuestionId } from 'types/entities';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorResponse } from 'types/httpResponses';
 
 import logger from '../../logger.js';
 

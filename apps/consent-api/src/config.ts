@@ -4,6 +4,7 @@ export const getAppConfig = () => {
 	dotenv.config();
 	return {
 		isProduction: process.env.NODE_ENV === 'production',
+		dataMapperUrl: process.env.DATA_MAPPER_URL || 'http://localhost:8081',
 		express: {
 			port: process.env.PORT || '8080',
 		},

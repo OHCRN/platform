@@ -17,34 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-import errorHandler from 'express-error-handler';
+import { ErrorRequestHandler } from 'express';
+import { ErrorName, ErrorResponse } from 'types/httpResponses';
+import { Logger } from 'logger';
 
-import { AppConfig } from './config.js';
-import logger from './logger.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
-import ConsentQuestionRouter from './routers/consentQuestions.js';
-import ParticipantResponseRouter from './routers/participantResponses.js';
-import ParticipantRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
+const { SERVER_ERROR } = ErrorName;
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
+/**
+ * Create default response for unhandled errors to be json instead of html.
+ *
+ *
+ * @returns
+ */
+const errorHandler =
+	(params: { logger?: Logger }): ErrorRequestHandler =>
+	(err, req, res, next) => {
+		const { logger } = params;
 
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/clinician-invites', ClinicianInviteRouter);
+		if (res.headersSent) {
+			return next(err);
+		}
 
-	// Error Handler should be last function added so that
-	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler({ logger }));
+		logger?.error(`Unhandled error thrown from request`, req.url, err);
 
-	return app;
-};
+		const message = (err.message && `${err.message}`) || 'An error occurred.';
 
-export default App;
+		return res.status(500).json(ErrorResponse(SERVER_ERROR, message));
+	};
+
+export default errorHandler;

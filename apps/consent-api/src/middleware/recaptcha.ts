@@ -19,9 +19,14 @@
 
 import axios from 'axios';
 import { RequestHandler } from 'express';
+import { ErrorName, ErrorResponse } from 'types/httpResponses';
 
 import { getAppConfig } from '../config.js';
-import { ErrorResponse } from 'types/httpErrors';
+import serviceLogger from '../logger.js';
+
+const logger = serviceLogger.forModule('ReCAPTCHAVerification');
+
+const { RECAPTCHA_ERROR } = ErrorName;
 
 const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 	const config = getAppConfig();
@@ -35,10 +40,10 @@ const verifyRecaptcha = async (recaptchaToken?: string | null) => {
 		const recaptchaVerification = await axios.post(
 			`https://www.google.com/recaptcha/api/siteverify?secret=${config.recaptcha.secretKey}&response=${recaptchaToken}`,
 		);
-		console.log('success?');
+		logger.debug('Successful ReCAPTCHA verification');
 		return !!recaptchaVerification.data.success;
 	} catch (error) {
-		console.error('reCAPTCHA error', error);
+		logger.error('ReCAPTCHA error', error);
 		return false;
 	}
 };
@@ -68,9 +73,8 @@ export const recaptchaMiddleware: RequestHandler = async (req, res, next) => {
 	const recaptchaVerified = await verifyRecaptcha(recaptchaToken);
 
 	if (recaptchaVerified) {
-		next();
-	} else {
-		// TODO: Need a formatted error for reCAPTCHA validation failures
-		res.status(400).json(ErrorResponse('RecaptchaError', 'Valid reCAPTCHA token is required.'));
+		return next();
 	}
+	// TODO: Need a formatted error for reCAPTCHA validation failures
+	return res.status(400).json(ErrorResponse(RECAPTCHA_ERROR, 'Valid reCAPTCHA token is required.'));
 };
