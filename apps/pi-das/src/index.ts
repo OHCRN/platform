@@ -29,7 +29,7 @@ import SwaggerRouter from './routers/swagger.js';
 
 const App = (config: AppConfig) => {
 	const app = express();
-	app.set('port', config.port);
+	app.set('port', config.express.port);
 	app.use(bodyParser.json());
 
 	app.use('/api-docs', SwaggerRouter);

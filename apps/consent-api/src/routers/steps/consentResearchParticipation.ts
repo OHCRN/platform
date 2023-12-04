@@ -20,7 +20,7 @@
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
 import { ConsentResearchParticipationRequest } from 'types/entities';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorResponse } from 'types/httpResponses';
 
 const router = Router();
 

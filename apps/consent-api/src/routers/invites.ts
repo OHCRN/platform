@@ -20,10 +20,14 @@
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ErrorResponse } from 'types/httpErrors';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
+import { createInvite } from '../services/create.js';
+import logger from '../logger.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 /**
  * @openapi
@@ -60,20 +64,36 @@ const ClinicianInviteSchema = z.object({ data: ClinicianInviteRequest });
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message: string
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Server error
+ *         description: ServerError - An unexpected error occurred.
  */
 
 router.post(
 	'/',
 	recaptchaMiddleware,
 	withRequestValidation(ClinicianInviteSchema, async (req, res) => {
-		return res
-			.status(500)
-			.send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
+		try {
+			const invite = await createInvite(req.body.data);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
+			res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		}
 	}),
 );
 
