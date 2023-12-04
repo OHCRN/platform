@@ -16,33 +16,10 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import axios from 'axios';
 
-import { ErrorRequestHandler } from 'express';
-import { ErrorName, ErrorResponse } from 'types/httpResponses';
-import { Logger } from 'logger';
+const axiosClient = axios.create({
+	headers: { 'Content-Type': 'application/json' },
+});
 
-const { SERVER_ERROR } = ErrorName;
-
-/**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
- * @returns
- */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
-
-		if (res.headersSent) {
-			return next(err);
-		}
-
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
-
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
-
-		return res.status(500).json(ErrorResponse(SERVER_ERROR, message));
-	};
-
-export default errorHandler;
+export default axiosClient;

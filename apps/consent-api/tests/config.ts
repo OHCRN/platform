@@ -17,32 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorRequestHandler } from 'express';
-import { ErrorName, ErrorResponse } from 'types/httpResponses';
-import { Logger } from 'logger';
+import { vi } from 'vitest';
 
-const { SERVER_ERROR } = ErrorName;
+import * as config from '../src/config.js';
+import { AppConfig } from '../src/config.js';
 
-/**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
- * @returns
- */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
+export const mockEnv = (values?: Partial<AppConfig>) => {
+	// Need to set the NODE_ENV since there are currently places in teh code checking the process.env.NODE_ENV directly instead of relying on our config.
+	vi.stubEnv('NODE_ENV', values?.isProduction ? 'production' : 'development');
 
-		if (res.headersSent) {
-			return next(err);
-		}
-
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
-
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
-
-		return res.status(500).json(ErrorResponse(SERVER_ERROR, message));
+	const defaultConfig: AppConfig = {
+		dataMapperUrl: 'http://localhost:8081',
+		express: {
+			port: '8080',
+		},
+		isProduction: false,
+		recaptcha: {
+			secretKey: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
+		},
 	};
 
-export default errorHandler;
+	vi.spyOn(config, 'getAppConfig').mockReturnValue({ ...defaultConfig, ...values });
+};

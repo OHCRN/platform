@@ -18,11 +18,13 @@
  */
 import { Request, Response } from 'express';
 import { RequestHandler } from 'express-serve-static-core';
-import { REQUEST_VALIDATION_ERROR } from 'types/httpErrors';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
+import { ErrorName } from 'types/httpResponses';
 
 import withRequestBodyValidation from '../../src/middleware/withRequestBodyValidation.js';
+
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const TestSchema = z.object({ someString: z.string(), someNumber: z.number() });
 const validTestBody: z.infer<typeof TestSchema> = {
