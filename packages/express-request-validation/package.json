@@ -2,8 +2,8 @@
 	"name": "express-request-validation",
 	"version": "0.1.0",
 	"description": "OHCRN Platform Error Handler",
-	"exports": "./dist/index.js",
-	"types": "dist/index.d.ts",
+	"exports": "./dist/src/index.js",
+	"types": "dist/src/index.d.ts",
 	"type": "module",
 	"engines": {
 		"node": ">=18"
