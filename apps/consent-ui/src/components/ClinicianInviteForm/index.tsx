@@ -91,10 +91,6 @@ const ClinicianInviteFormComponent = ({
 		onRecaptchaChange();
 	};
 
-	// submit form
-	const [successMessageDemo, setSuccessMessageDemo] = useState('');
-	// TODO remove and redirect to homepage
-
 	const onSubmit: SubmitHandler<ClinicianInviteRequest> = (data, event) => {
 		event?.preventDefault();
 
@@ -106,15 +102,12 @@ const ClinicianInviteFormComponent = ({
 				.then(() => {
 					setRecaptchaError('');
 					resetRecaptcha();
-					setSuccessMessageDemo('Form submitted successfully!');
 				})
 				.catch((e) => {
 					console.error(e);
-					setSuccessMessageDemo('');
 					setRecaptchaError('Something went wrong, please try again');
 				});
 		} else {
-			setSuccessMessageDemo('');
 			setRecaptchaError('Please complete captcha');
 		}
 	};
@@ -280,10 +273,6 @@ const ClinicianInviteFormComponent = ({
 				</div>
 
 				<button type="submit">Submit</button>
-
-				{successMessageDemo && (
-					<Notification level="success" variant="small" title={successMessageDemo} />
-				)}
 			</Form>
 		</FormProvider>
 	);
