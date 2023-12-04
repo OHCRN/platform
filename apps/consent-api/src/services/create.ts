@@ -37,7 +37,7 @@ export const createResponse = async ({
 	consentQuestionId: string;
 	participantId: string;
 	response: boolean;
-}): Promise<any> => {
+}) => {
 	const updateObj = {
 		consentQuestionId,
 		participantId,

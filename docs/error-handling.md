@@ -18,7 +18,7 @@ Every API service function can result in either a success or a failure. To stand
 
 ```ts
 export type Success<T> = { status: 'SUCCESS'; data: T };
-export type Failure<T = void, FailureStatus = string> = {
+export type Failure<FailureStatus extends string, T = void> = {
 	status: FailureStatus;
 	message: string;
 	data: T;
@@ -32,23 +32,15 @@ Both types have a `status` field which indicates the status of the result, and a
 
 Note that the `Failure` type is allowed to return `data` — this can be a fallback response of type `T` to return in the case of failure, however it defaults to `void` as in most cases we just want to return an error message.
 
-> **A word about generic types**: by using a generic type for the `data` field we enforce the type of data that can be returned. Similarly, by enforcing the `status` type of `Failure`, we can enforce the different statuses that can be returned in the case of a service failure, and handle those appropriately. See more about this in the [Using `Result` as a Return Type](#using-result-as-a-return-type) section.
+> **A word about generic types**: by using a generic type for the `data` field we enforce the type of data that can be returned. Similarly, by enforcing the `status` type of `Failure`, we can enforce the different statuses that can be returned in the case of a service failure, and handle those appropriately. By enforcing it to `extend string`, the status must be a string value. See more about this in the [Using `Result` as a Return Type](#using-result-as-a-return-type) section.
 
-The `Result<T, FailureStatus>` type encapsulates the possible return types of a service function as either a `Success` or `Failure`. In particular, it represents a response that on success will include data of type `T`, otherwise a message will be returned in place of the data explaining the failure.
-
-```ts
-export type Result<T, FailureStatus = string> = Success<T> | Failure<void, FailureStatus>;
-```
-
-### The `Either` Type
-
-Similar to the `Result` type, the `Either` type represents a response that on success will include data of type A, but on failure will return data of type B.
+The `Result<T, FailureStatus>` type encapsulates the possible return types of a service function as either a `Success` or `Failure`. In particular, it represents a response that on success will include data of type `T`, otherwise a message will be returned in place of the data explaining the failure and optional data to be returned as a fallback.
 
 ```ts
-export type Either<A, B> = Success<A> | Failure<B>;
+export type Result<T, FailureStatus extends string, FailureData = void> =
+	| Success<T>
+	| Failure<FailureStatus, FailureData>;
 ```
-
-This is useful when you might want to return fallback data in the case of a failure, but it differs from the type of the successful data.
 
 ### Error Types
 
@@ -72,7 +64,7 @@ These are the permitted values for the `error` field of an `ErrorResponse`, indi
 | `REQUEST_VALIDATION_ERROR` | 400    | A request was made with an invalid request body.                                                                                                                                   |
 | `RECAPTCHA_ERROR`          | 400    | A ReCAPTCHA token could not be verified.                                                                                                                                           |
 
-Most errors that we might receive are not relevant information that the client can respond to; for these types of errors we default to sending a `500 ServerError` and logging the actual error. These errors don’t need to be handled uniquely, simply returning a `Failure` with a status of `"SYSTEM_ERROR"` and the message `"An unexpected error occurred."` from services, which gets received by routers and sent as a `500 ServerError` response with that message is sufficient. 
+Most errors that we might receive are not relevant information that the client can respond to; for these types of errors we default to sending a `500 ServerError` and logging the actual error. These errors don’t need to be handled uniquely, simply returning a `Failure` with a status of `"SYSTEM_ERROR"` and the message `"An unexpected error occurred."` from services, which gets received by routers and sent as a `500 ServerError` response with that message is sufficient.
 
 We only need to ensure specific error handling at each level above where an error occurred if that error requires passing information to the client through the appropriate HTTP response. For example, for the “Participant email already exists” error in the Clinician Invite flow, because it originates in the PI DAS and we would want the client to receive a `409 ConflictError`, we need to make sure Data Mapper and Consent API can distinguish it as a conflict error and send the appropriate response.
 
@@ -133,9 +125,10 @@ Some convenient methods have been added to `Result.ts` to construct `Success` an
   	return failure('SYSTEM_ERROR', invite.error); // returns { status: "SYSTEM_ERROR", message: invite.error }
   }
   ```
-- `alternate()` constructs a `Failure` for the `Either` response type, that accepts the same parameters as `failure()` but with the addition of a `data` parameter, so it can provide a fallback data response
+- `alternate()` constructs a `Failure` that accepts the same parameters as `failure()` but with the addition of a `data` parameter, so it can provide a fallback data response
   ```ts
   if (!invite.success) {
   	return alternate('SYSTEM_ERROR', invite.default, invite.error); // returns { status: "SYSTEM_ERROR", data: invite.default, message: invite.error }
   }
   ```
+  It's important to note that this method couldn't be combined with `failure()` because `data` takes a generic type, which makes it difficult for TS to infer the type correctly and ensure that `undefined` is compatible with the type `T` if we make `data` an optional parameter

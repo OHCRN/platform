@@ -81,7 +81,7 @@ router.post(
 			const invite = await createInvite(req.body.data);
 			switch (invite.status) {
 				case 'SUCCESS': {
-					return res.status(201).send(invite.data);
+					return res.status(201).json(invite.data);
 				}
 				case 'SYSTEM_ERROR': {
 					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
