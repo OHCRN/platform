@@ -43,15 +43,11 @@
 	background: theme('colors.grayscale.800');
 	position: relative;
 	height: 100%;
-}
-
-.sidebarText {
-	padding: 2.5rem;
-}
-
-.sidebarText {
-	position: absolute;
-	inset: 0;
+	.sidebarContent {
+		padding: 2.5rem;
+		position: absolute;
+		inset: 0;
+	}
 }
 
 .logoImg {

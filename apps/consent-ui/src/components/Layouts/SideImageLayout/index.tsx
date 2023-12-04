@@ -55,7 +55,7 @@ const SideImageLayout = ({
 				<div className={styles.sidebarImage}>
 					<Image src={sidebarImage} alt="" />
 				</div>
-				<div className={clsx(styles.sidebarText)}>
+				<div className={clsx(styles.sidebarContent)}>
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
 							src={OICRLogoEN}

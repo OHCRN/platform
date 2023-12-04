@@ -24,8 +24,6 @@ import inviteSidebarJpg from 'src/public/invite-sidebar.jpg';
 const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
-	// get all translations for the page & the form
-
 	const textDict = {
 		'clinician-patient-registration': translate(
 			'clinician-invite',
@@ -42,7 +40,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 			headerAction={{
 				topText: textDict['if-participant'],
 				bottomText: textDict['register-here'],
-				url: '#',
+				url: 'register',
 			}}
 			sidebarImage={inviteSidebarJpg}
 			title={textDict['clinician-patient-registration']}
