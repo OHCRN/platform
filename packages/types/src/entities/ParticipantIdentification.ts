@@ -27,16 +27,24 @@ import { Name } from './Name.js';
 import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
 import { LifecycleState } from './LifecycleState.js';
+import { InviteGuardianFields } from './index.js';
 
 export const hasRequiredGuardianInformation = (
-	consentGroup: ConsentGroup,
-	guardianName?: Name,
-	guardianPhoneNumber?: PhoneNumber,
-	guardianEmailAddress?: string,
-	guardianRelationship?: Name,
+	props: {
+		consentGroup: ConsentGroup;
+	} & InviteGuardianFields,
 ) => {
 	// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
 	// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
+
+	const {
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	} = props;
+
 	const requiresGuardianInformation =
 		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
 		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
@@ -73,21 +81,6 @@ export const ParticipantIdentification = z
 		guardianEmailAddress: z.string().email().optional(),
 		guardianRelationship: Name.optional(),
 	})
-	.refine((input) => {
-		const {
-			consentGroup,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		} = input;
-		return hasRequiredGuardianInformation(
-			consentGroup,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		);
-	});
+	.refine(hasRequiredGuardianInformation);
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;

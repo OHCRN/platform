@@ -21,35 +21,16 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ClinicianInviteBase } from './ClinicianInvite.js';
+import { ClinicianInvite, InviteClinicianFields, InviteEntity } from './ClinicianInvite.js';
+import { NanoId } from '../NanoId.js';
 
-export const ConsentClinicianInviteRequest = ClinicianInviteBase.pick({
-	id: true,
-	clinicianFirstName: true,
-	clinicianLastName: true,
-	clinicianInstitutionalEmailAddress: true,
-	clinicianTitleOrRole: true,
-	consentGroup: true,
-	consentToBeContacted: true,
-});
-
+export const ConsentClinicianInviteRequest = z.object({ id: NanoId }).merge(InviteClinicianFields);
 export type ConsentClinicianInviteRequest = z.infer<typeof ConsentClinicianInviteRequest>;
 export const ConsentClinicianInviteRequestSchema: SchemaObject = generateSchema(
 	ConsentClinicianInviteRequest,
 );
 
-export const ConsentClinicianInviteResponse = ClinicianInviteBase.pick({
-	id: true,
-	inviteSentDate: true,
-	inviteAcceptedDate: true,
-	inviteAccepted: true,
-	clinicianFirstName: true,
-	clinicianLastName: true,
-	clinicianInstitutionalEmailAddress: true,
-	clinicianTitleOrRole: true,
-	consentGroup: true,
-	consentToBeContacted: true,
-}).extend({
+export const ConsentClinicianInviteResponse = InviteEntity.merge(InviteClinicianFields).extend({
 	inviteAcceptedDate: z.coerce
 		.date()
 		.nullable()
