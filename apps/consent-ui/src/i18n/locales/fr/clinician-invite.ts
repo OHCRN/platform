@@ -20,9 +20,11 @@
 import { ClinicianInviteDictionary } from '../en/clinician-invite';
 
 const dictionary = {
-	'clinician-patient-registration': 'Clinician Patient Registration',
-	'register-your-patient': 'Register Your Patient',
-	'invite-your-patients': 'Invite your patients to participate in the OHCRN Registry.',
+	'clinician-patient-registration': 'Inscription des patients cliniciens',
+	'register-your-patient': 'Enregistrez votre patient',
+	'invite-your-patients': 'Invitez vos patients à participer au registre OHCRN.',
+	'if-participant': 'Si vous êtes un participant :',
+	'register-here': 'Inscrivez-vous ici',
 } satisfies ClinicianInviteDictionary;
 
 export default dictionary;

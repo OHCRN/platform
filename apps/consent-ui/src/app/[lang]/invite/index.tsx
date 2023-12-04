@@ -32,16 +32,24 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 			'clinician-patient-registration',
 		),
 		'register-your-patient': translate('clinician-invite', 'register-your-patient'),
-		'invite-your-patients': translate('clinician-invite', 'invite-your-patients'),
+		'if-participant': translate('clinician-invite', 'if-participant'),
+		'register-here': translate('clinician-invite', 'register-here'),
 	};
 
 	return (
 		<SideImageLayout
-			sidebarImage={inviteSidebarJpg}
 			currentLang={currentLang}
+			headerAction={{
+				topText: textDict['if-participant'],
+				bottomText: textDict['register-here'],
+				url: '#',
+			}}
+			sidebarImage={inviteSidebarJpg}
 			title={textDict['clinician-patient-registration']}
 		>
-			<div style={{ border: '2px solid grey', width: '100%' }}>form goes here</div>
+			<div style={{ border: '2px solid grey', width: '100%' }}>
+				TODO replace with clinician invite form
+			</div>
 		</SideImageLayout>
 	);
 };

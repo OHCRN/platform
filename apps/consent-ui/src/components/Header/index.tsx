@@ -27,6 +27,7 @@ import OhcrnImage from 'src/public/ohcrn_large.svg';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
+import HelpButton2 from './HelpButton';
 import HeaderWrapper from './HeaderWrapper';
 
 const icons: {
@@ -58,6 +59,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				{/* TODO: implement real help button, ticket TBD */}
 				<div className={styles.help}>
 					<HelpButton label={translate('header', 'help')} />
+					<HelpButton2 label={translate('header', 'help')} />
 				</div>
 				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 				{/* TODO: implement user menu, ticket TBD */}

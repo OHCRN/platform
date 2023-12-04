@@ -21,6 +21,8 @@ const dictionary = {
 	'clinician-patient-registration': 'Clinician Patient Registration',
 	'register-your-patient': 'Register Your Patient',
 	'invite-your-patients': 'Invite your patients to participate in the OHCRN Registry.',
+	'if-participant': "If you're a Participant:",
+	'register-here': 'Register here',
 } satisfies Record<string, string>;
 
 export type ClinicianInviteDictionary = Record<keyof typeof dictionary, string>;

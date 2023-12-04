@@ -17,43 +17,42 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
+import Link from 'next/link';
 
 import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/Header/LanguageToggle';
-import { getUnselectedLang } from 'src/components/Link/utils';
 import HelpButton from 'src/components/Header/HelpButton';
+import ChevronSvg from 'src/public/chevron-large.svg';
+import LocalizedLink from 'src/components/Link/LocalizedLink';
+import { RouteName } from 'src/components/Link/types';
 
 import styles from './SideImageLayout.module.scss';
 
 const SideImageLayout = ({
 	children,
+	className,
 	currentLang,
 	headerAction,
-	showLogin = false,
-	sidebarClassName,
 	sidebarImage,
 	title,
 }: {
 	children: ReactNode;
+	className?: string;
 	currentLang: ValidLanguage;
-	headerAction?: { topText: string; bottomText: string; url: string };
-	showLogin?: boolean;
-	sidebarClassName?: string;
+	headerAction?: { topText: string; bottomText: string; url: RouteName };
 	sidebarImage: StaticImageData;
 	title: string;
 }) => {
 	const translate = getTranslation(currentLang);
-	const langToSelect = getUnselectedLang(currentLang);
 
 	return (
-		<div className={clsx(styles.container)}>
-			<div className={clsx(styles.sidebar, sidebarClassName)}>
-				<div className={clsx(styles.sidebarImage)}>
+		<div className={clsx(styles.container, className)}>
+			<div className={styles.sidebar}>
+				<div className={styles.sidebarImage}>
 					<Image src={sidebarImage} alt="" />
 				</div>
 				<div className={clsx(styles.sidebarText)}>
@@ -64,25 +63,34 @@ const SideImageLayout = ({
 							className={styles.logoImg}
 						/>
 					</Link>
-					<h1 className={clsx(styles.title)}>{title}</h1>
+					<h1 className={styles.title}>{title}</h1>
 				</div>
 			</div>
-			<div className={clsx(styles.mobileTabletHeader)}>
-				<h1 className={clsx(styles.title)}>{title}</h1>
+			<div className={styles.mobileTabletHeader}>
+				<h1 className={styles.title}>{title}</h1>
 			</div>
-			<div className={clsx(styles.main)}>
-				<div className={clsx(styles.content)}>
-					<div className={clsx(styles.desktopHeader)}>
-						<div className={clsx(styles.leftButtons)}>
+			<div className={styles.main}>
+				<div className={styles.content}>
+					<div className={styles.desktopHeader}>
+						<div className={styles.leftButtons}>
 							<LanguageToggle currentLang={currentLang} />
 							<HelpButton label={translate('header', 'help')} />
 						</div>
-						<div className={clsx(styles.rightButtons)}>
-							{showLogin && 'TODO login'}
-							<br />
-							<div className={clsx(styles.registerButton)}>
-								{headerAction?.topText} <br /> {headerAction?.bottomText}
-							</div>
+						<div className={styles.rightButtons}>
+							{/* TODO add login button, in registration layout ticket */}
+							{headerAction && (
+								<LocalizedLink
+									className={styles.headerAction}
+									linkLang={currentLang}
+									name={headerAction.url}
+								>
+									<div className={styles.text}>
+										<span>{headerAction.topText}</span>
+										<span className={styles.bottomText}>{headerAction.bottomText}</span>
+									</div>
+									<Image src={ChevronSvg} alt="" className={styles.chevron} />
+								</LocalizedLink>
+							)}
 						</div>
 					</div>
 					{children}
