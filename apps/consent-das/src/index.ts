@@ -18,8 +18,8 @@
  */
 
 import bodyParser from 'body-parser';
-import errorHandler from 'error-handler';
 import express from 'express';
+import errorHandler from 'express-error-handler';
 
 import { AppConfig } from './config.js';
 import logger from './logger.js';

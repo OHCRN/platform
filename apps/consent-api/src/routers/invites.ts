@@ -18,12 +18,12 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
 import { ClinicianInviteRequest } from 'types/entities';
 import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 import { z } from 'zod';
 
 import { recaptchaMiddleware } from '../middleware/recaptcha.js';
-import withRequestBodyValidation from '../middleware/withRequestBodyValidation.js';
 import { createInvite } from '../services/create.js';
 import logger from '../logger.js';
 
@@ -76,7 +76,7 @@ const ClinicianInviteSchema = z.object({ data: ClinicianInviteRequest });
 router.post(
 	'/',
 	recaptchaMiddleware,
-	withRequestBodyValidation(ClinicianInviteSchema, async (req, res) => {
+	withRequestValidation(ClinicianInviteSchema, async (req, res) => {
 		try {
 			const invite = await createInvite(req.body.data);
 			switch (invite.status) {

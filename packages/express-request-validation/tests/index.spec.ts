@@ -22,7 +22,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 import { ErrorName } from 'types/httpResponses';
 
-import withRequestBodyValidation from '../../src/middleware/withRequestBodyValidation.js';
+import withRequestBodyValidation from '../src/index.js';
 
 const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
@@ -49,7 +49,7 @@ const getMockResponse = (): Response => {
 	return mockResponse;
 };
 
-describe('withRequestBodyValidation', () => {
+describe('withRequestValidation', () => {
 	afterEach(() => {
 		vi.restoreAllMocks();
 	});

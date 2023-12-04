@@ -55,15 +55,18 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       express-logger:
         specifier: workspace:^
         version: link:../../packages/express-logger
+      express-request-validation:
+        specifier: workspace:^
+        version: link:../../packages/express-request-validation
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -113,12 +116,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -343,12 +346,12 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      error-handler:
-        specifier: workspace:^
-        version: link:../../packages/error-handler
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-error-handler:
+        specifier: workspace:^
+        version: link:../../packages/express-error-handler
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -402,7 +405,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(eslint-config-prettier@8.8.0)(eslint@8.40.0)(prettier@3.0.3)
 
-  packages/error-handler:
+  packages/express-error-handler:
     dependencies:
       express:
         specifier: ^4.18.2
@@ -439,6 +442,25 @@ importers:
       '@types/express-requests-logger':
         specifier: ^3.0.4
         version: 3.0.4
+
+  packages/express-request-validation:
+    dependencies:
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      types:
+        specifier: workspace:^
+        version: link:../types
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.17
+        version: 4.17.17
+      '@types/express-serve-static-core':
+        specifier: ^4.17.41
+        version: 4.17.41
 
   packages/logger:
     dependencies:
@@ -1661,7 +1683,7 @@ packages:
     dev: true
 
   /array-flatten@1.1.1:
-    resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
+    resolution: {integrity: sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=}
     dev: false
 
   /array-includes@3.1.6:
@@ -2114,7 +2136,7 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
   /cookie-signature@1.0.6:
-    resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+    resolution: {integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=}
     dev: false
 
   /cookie@0.5.0:
@@ -3035,7 +3057,7 @@ packages:
     dev: false
 
   /fresh@0.5.2:
-    resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
+    resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -3129,6 +3151,7 @@ packages:
 
   /glob@6.0.4:
     resolution: {integrity: sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==}
+    requiresBuild: true
     dependencies:
       inflight: 1.0.6
       inherits: 2.0.4
@@ -3763,7 +3786,7 @@ packages:
     dev: false
 
   /merge-descriptors@1.0.1:
-    resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
+    resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
     dev: false
 
   /merge-stream@2.0.0:
@@ -3837,6 +3860,7 @@ packages:
   /mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
+    requiresBuild: true
     dependencies:
       minimist: 1.2.8
     dev: false
@@ -3888,6 +3912,7 @@ packages:
 
   /nan@2.18.0:
     resolution: {integrity: sha512-W7tfG7vMOGtD30sHoZSSc/JVYiyDPEyQVso/Zz+/uQd0B0L46gtC+pHha5FFMRpil6fm/AoEcRWyOVi4+E/f8w==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -3917,6 +3942,7 @@ packages:
   /ncp@2.0.0:
     resolution: {integrity: sha512-zIdGUrPRFTUELUvr3Gmc7KZ2Sw/h1PiVM0Af/oHB6zgnV1ikqSfRk+TOufi79aHYCW3NiOXmr1BP5nWbzojLaA==}
     hasBin: true
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -4622,6 +4648,7 @@ packages:
   /rimraf@2.4.5:
     resolution: {integrity: sha512-J5xnxTyqaiw06JjMftq7L9ouA448dw/E7dKghkP9WpKNuwmARNNg+Gk8/u5ryb9N/Yo2+z3MCwuqFK/+qPOPfQ==}
     hasBin: true
+    requiresBuild: true
     dependencies:
       glob: 6.0.4
     dev: false
@@ -5439,7 +5466,7 @@ packages:
     dev: false
 
   /utils-merge@1.0.1:
-    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
+    resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
     dev: false
 
