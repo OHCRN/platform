@@ -20,6 +20,10 @@
 import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import {
+	PIClinicianInviteRequestSchema as ClinicianInviteRequest,
+	PIClinicianInviteResponseSchema as ClinicianInviteResponse,
+} from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 
@@ -61,6 +65,12 @@ const options = swaggerJsdoc({
 					url: '/',
 				},
 			],
+		},
+		components: {
+			schemas: {
+				ClinicianInviteRequest,
+				ClinicianInviteResponse,
+			},
 		},
 	},
 	apis: ['./src/routers/*'],
