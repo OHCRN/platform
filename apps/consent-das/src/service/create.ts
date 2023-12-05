@@ -100,15 +100,13 @@ export const createClinicianInvite = async (
 		.create({
 			data: inviteRequest,
 		})
-		.then(
-			(invite) => success(invite),
-			(error) => {
-				logger.error(
-					'POST /invites',
-					'Unexpected error handling create invite request.',
-					error.message,
-				);
-				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
-			},
-		);
+		.then((invite) => success(invite))
+		.catch((error) => {
+			logger.error(
+				'POST /invites',
+				'Unexpected error handling create invite request.',
+				error.message,
+			);
+			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+		});
 };
