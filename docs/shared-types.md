@@ -46,6 +46,8 @@ Both of these convert the schema to a `ZodEffects` type which "is a wrapper clas
 
 Zod's [`parse()`](https://zod.dev/?id=parse) method simultaneously validates the data and can also coerce any data types or transform fields, as outlined in the Zod schema.
 
+>**Note**: Zod's `parse` does **not** throw an error if it encounters unrecognized fields, it simply parses those out of the output. To disallow unknown fields, see [`strict()`](https://zod.dev/?id=strict).
+
 ### Converting `null` values to `undefined`
 Optional fields will be `undefined` if a value is not provided. However, in the DB, `undefined` values will be stored as `null`, so any data from a DAS response will need to go through a conversion step before being returned to the Data Mapper.
 

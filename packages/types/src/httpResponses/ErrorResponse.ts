@@ -17,34 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-import errorHandler from 'express-error-handler';
+export enum ErrorName {
+	SERVER_ERROR = 'ServerError',
+	CONFLICT_ERROR = 'ConflictError',
+	REQUEST_VALIDATION_ERROR = 'RequestValidationError',
+	RECAPTCHA_ERROR = 'RecaptchaError',
+}
 
-import { AppConfig } from './config.js';
-import logger from './logger.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
-import ConsentQuestionRouter from './routers/consentQuestions.js';
-import ParticipantResponseRouter from './routers/participantResponses.js';
-import ParticipantRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
-
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/clinician-invites', ClinicianInviteRouter);
-
-	// Error Handler should be last function added so that
-	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler({ logger }));
-
-	return app;
+export type ErrorResponse = {
+	error: ErrorName | 'NOT_IMPLEMENTED'; // TODO: remove once all routes are implemented
+	message: string;
 };
 
-export default App;
+export const ErrorResponse = (error: ErrorName | 'NOT_IMPLEMENTED', message: string) => ({
+	error,
+	message,
+});

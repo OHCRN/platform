@@ -18,7 +18,7 @@
  */
 
 import bodyParser from 'body-parser';
-import errorHandler from 'error-handler';
+import errorHandler from 'express-error-handler';
 import express from 'express';
 
 import { AppConfig } from './config.js';

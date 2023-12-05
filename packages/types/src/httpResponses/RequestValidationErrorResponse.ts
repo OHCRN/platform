@@ -17,9 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export type ErrorResponse = {
-	error: string;
-	message: string;
+import { ZodError, ZodIssue } from 'zod';
+
+import { ErrorResponse, ErrorName } from './ErrorResponse.js';
+
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
+
+export type RequestValidationError = ErrorResponse & {
+	details: ZodIssue[];
 };
 
-export const ErrorResponse = (error: string, message: string) => ({ error, message });
+/**
+ * Convert a ZodError from ZodSchema validation into an HTTP Error response message
+ * of type `REQUEST_VALIDATION_ERROR`.
+ * @param error Zod Error from parse
+ * @returns
+ */
+export const RequestValidationErrorResponse = <T>(
+	error: ZodError<T>,
+	customMessage?: string,
+): RequestValidationError => ({
+	error: REQUEST_VALIDATION_ERROR,
+	message: customMessage ?? 'Request body is invalid for this request.',
+	details: error.issues,
+});
