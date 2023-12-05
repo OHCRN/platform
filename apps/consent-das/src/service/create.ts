@@ -1,3 +1,6 @@
+import { ConsentClinicianInviteRequest } from 'types/entities';
+import { Result, failure, success } from 'types/httpResponses';
+
 import prisma, {
 	Participant,
 	ConsentQuestion,
@@ -8,6 +11,9 @@ import prisma, {
 	ConsentQuestionId,
 	LifecycleState,
 } from '../prismaClient.js';
+import serviceLogger from '../logger.js';
+
+const logger = serviceLogger.forModule('PrismaClient');
 
 export const createParticipant = async ({
 	emailVerified,
@@ -81,40 +87,28 @@ export const createParticipantResponse = async ({
 	return result;
 };
 
-export const createClinicianInvite = async ({
-	clinicianFirstName,
-	clinicianInstitutionalEmailAddress,
-	clinicianInviteId,
-	clinicianLastName,
-	clinicianTitleOrRole,
-	consentGroup,
-	consentToBeContacted,
-	inviteAcceptedDate,
-	inviteAccepted,
-}: {
-	clinicianFirstName: string;
-	clinicianInstitutionalEmailAddress: string;
-	clinicianInviteId?: string;
-	clinicianLastName: string;
-	clinicianTitleOrRole: string;
-	consentGroup: ConsentGroup;
-	consentToBeContacted: boolean;
-	inviteAcceptedDate?: Date;
-	inviteAccepted?: boolean;
-}): Promise<ClinicianInvite> => {
-	// TODO: add error handling
-	const result = await prisma.clinicianInvite.create({
-		data: {
-			clinicianFirstName,
-			clinicianInstitutionalEmailAddress,
-			clinicianLastName,
-			clinicianTitleOrRole,
-			consentGroup,
-			consentToBeContacted,
-			id: clinicianInviteId,
-			inviteAcceptedDate,
-			inviteAccepted,
-		},
-	});
-	return result;
+type CreateInviteFailureStatus = 'SYSTEM_ERROR';
+/**
+ * Creates a ClinicianInvite entry in the Consent DB
+ * @param inviteRequest Clinician Invite data
+ * @returns ClinicianInvite object from Consent DB
+ */
+export const createClinicianInvite = async (
+	inviteRequest: ConsentClinicianInviteRequest,
+): Promise<Result<ClinicianInvite, CreateInviteFailureStatus>> => {
+	return await prisma.clinicianInvite
+		.create({
+			data: inviteRequest,
+		})
+		.then(
+			(invite) => success(invite),
+			(error) => {
+				logger.error(
+					'POST /invites',
+					'Unexpected error handling create invite request.',
+					error.message,
+				);
+				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+			},
+		);
 };

@@ -36,7 +36,7 @@ export const createInviteConsentData = async ({
 	const { consentDasUrl } = getAppConfig();
 	try {
 		const result = await axiosClient.post(urlJoin(consentDasUrl, 'clinician-invites'), {
-			clinicianInviteId: id,
+			id,
 			clinicianFirstName,
 			clinicianLastName,
 			clinicianInstitutionalEmailAddress,
@@ -45,7 +45,7 @@ export const createInviteConsentData = async ({
 			consentToBeContacted,
 		});
 		// converts all nulls to undefined
-		return ConsentClinicianInviteResponse.parse(result.data.clinicianInvite);
+		return ConsentClinicianInviteResponse.parse(result.data);
 	} catch (error) {
 		logger.error(error);
 		throw error; // TODO: remove and send custom error schema
