@@ -31,20 +31,20 @@ const Left = ({ translate }: { translate: TranslationFunction }) => {
 	return (
 		<div className={styles.left}>
 			<Link href="#" className={styles.icon}>
-				<Image src={OICRLogo} alt={translate('footer', 'oicr-logo-alt')} className={styles.oicr} />
+				<Image src={OICRLogo} alt={translate('footer', 'oicrLogoAlt')} className={styles.oicr} />
 			</Link>
 			<div className={styles.mediaIcons}>
 				<Link href="#" className={styles.icon}>
 					<Image
 						src={InstagramLogo}
-						alt={translate('footer', 'instagram-logo-alt')}
+						alt={translate('footer', 'instagramLogoAlt')}
 						className={styles.instagram}
 					/>
 				</Link>
 				<Link href="#" className={styles.icon}>
 					<Image
 						src={TwitterLogo}
-						alt={translate('footer', 'twitter-logo-alt')}
+						alt={translate('footer', 'twitterLogoAlt')}
 						className={styles.twitter}
 					/>
 				</Link>

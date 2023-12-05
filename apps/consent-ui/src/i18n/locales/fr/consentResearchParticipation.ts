@@ -17,12 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { HistoryOfCancerDictionary } from '../en/history-of-cancer';
+import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
 
-const dictionary = {
-	YES: 'Oui',
-	NO: 'Non',
-	UNKNOWN: 'Inconnu',
-} satisfies HistoryOfCancerDictionary;
+const dictionary = {} satisfies ConsentResearchParticipationDictionary;
 
 export default dictionary;

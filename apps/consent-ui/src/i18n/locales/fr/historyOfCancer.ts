@@ -17,8 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentRecontactDictionary } from 'src/i18n/locales/en/consent-recontact';
+import { HistoryOfCancerDictionary } from '../en/historyOfCancer';
 
-const dictionary = {} satisfies ConsentRecontactDictionary;
+const dictionary = {
+	YES: 'Oui',
+	NO: 'Non',
+	UNKNOWN: 'Inconnu',
+} satisfies HistoryOfCancerDictionary;
 
 export default dictionary;

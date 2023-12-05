@@ -17,15 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroupDictionary } from '../en/consent-group';
+import { MolecularLabDictionary } from '../en/molecularLab';
 
 const dictionary = {
-	ADULT_CONSENT: 'Adult Consent (>18)',
-	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
-		'Adult Consent using a Substitute Additional Decision Maker (>18)',
-	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
-	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
-	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
-} satisfies ConsentGroupDictionary;
+	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: "Children's Hospital of Eastern Ontario, Ottawa",
+	HAMILTON_HEALTH_SCIENCES_HAMILTON: 'Hamilton Health Sciences, Hamilton',
+	HOSPITAL_FOR_SICK_CHILDREN_TORONTO: 'Hospital For Sick Children, Toronto',
+	KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON: 'Kingston Health Sciences Centre, Kingston',
+	LONDON_HEALTH_SCIENCES_CENTRE_LONDON: 'London Health Sciences Centre, London',
+	NORTH_YORK_GENERAL_HOSPITAL_TORONTO: 'North York General Hospital, Toronto',
+	SINAI_HEALTH_SYSTEM_TORONTO: 'Sinai Health System, Toronto',
+	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners, Mississauga',
+	UNIVERSITY_HEALTH_NETWORK_TORONTO: 'University Health Network, Toronto',
+} satisfies MolecularLabDictionary;
 
 export default dictionary;

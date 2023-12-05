@@ -32,21 +32,21 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 	const translate = getTranslation(currentLang);
 	return (
 		<Card dropShadow="none" className={styles['landing-page-card']}>
-			<h2>{translate('landing-page', 'join-ohcrn')}</h2>
+			<h2>{translate('landingPage', 'joinOhcrn')}</h2>
 			<p>
-				<b>{translate('landing-page', 'join-ohcrn-description')}</b>
+				<b>{translate('landingPage', 'joinOhcrnDescription')}</b>
 			</p>
 
 			{/* mobile view */}
 			<CardLink name={'register'} currentLang={currentLang} className={styles.mobile}>
 				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
-				<strong>{translate('landing-page', 'participants-register-today')}</strong>
+				<strong>{translate('landingPage', 'participantsRegisterToday')}</strong>
 				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
 
 			<CardLink name={'invite'} currentLang={currentLang} className={styles.mobile}>
 				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
-				<strong>{translate('landing-page', 'clinicians-register-today')}</strong>
+				<strong>{translate('landingPage', 'cliniciansRegisterToday')}</strong>
 				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
 
@@ -54,8 +54,8 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 			<CardLink name={'register'} currentLang={currentLang} className={styles.tablet}>
 				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
 				<span>
-					{translate('landing-page', 'long-participants-register-today')}{' '}
-					<strong>{translate('landing-page', 'register-yourself-today')}</strong>
+					{translate('landingPage', 'longParticipantsRegisterToday')}{' '}
+					<strong>{translate('landingPage', 'registerYourselfToday')}</strong>
 				</span>
 				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>
@@ -63,8 +63,8 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 			<CardLink name={'invite'} currentLang={currentLang} className={styles.tablet}>
 				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
 				<span>
-					{translate('landing-page', 'long-clinicians-register-today')}{' '}
-					<strong>{translate('landing-page', 'register-patient-today')}</strong>
+					{translate('landingPage', 'longCliniciansRegisterToday')}{' '}
+					<strong>{translate('landingPage', 'registerPatientToday')}</strong>
 				</span>
 				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>

@@ -48,7 +48,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					<Image
 						src={icon}
 						priority
-						alt={translate('header', 'logo-alt-text')}
+						alt={translate('header', 'logoAltText')}
 						className={styles.logo}
 					/>
 				</Link>

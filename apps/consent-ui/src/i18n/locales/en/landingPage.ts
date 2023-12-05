@@ -17,18 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { MolecularLabDictionary } from '../en/molecular-lab';
-
 const dictionary = {
-	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: "Children's Hospital of Eastern Ontario, Ottawa",
-	HAMILTON_HEALTH_SCIENCES_HAMILTON: 'Hamilton Health Sciences, Hamilton',
-	HOSPITAL_FOR_SICK_CHILDREN_TORONTO: 'Hospital For Sick Children, Toronto',
-	KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON: 'Kingston Health Sciences Centre, Kingston',
-	LONDON_HEALTH_SCIENCES_CENTRE_LONDON: 'London Health Sciences Centre, London',
-	NORTH_YORK_GENERAL_HOSPITAL_TORONTO: 'North York General Hospital, Toronto',
-	SINAI_HEALTH_SYSTEM_TORONTO: 'Sinai Health System, Toronto',
-	TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA: 'Trillium Health Partners, Mississauga',
-	UNIVERSITY_HEALTH_NETWORK_TORONTO: 'University Health Network, Toronto',
-} satisfies MolecularLabDictionary;
+	title: 'Welcome to the OHCRN Registry',
+	ohcrnDescription:
+		'Ontario Hereditary Cancer Research Network (OHCRN) collects information on individuals with a high chance of getting cancer. We help researchers collect data so they can find cancer earlier and treat it more effectively.',
+	moreAboutOhcrn: 'More About OHCRN',
+	joinOhcrn: 'Join OHCRN',
+	joinOhcrnDescription:
+		'Help researchers understand the prevention, early detection, and treatment of hereditary cancers.',
+	participantsRegisterToday: 'Participants register yourself today',
+	longParticipantsRegisterToday:
+		'Are you a carrier of a hereditary cancer syndrome? Have you had genetic testing for hereditary cancer in Ontario?',
+	registerYourselfToday: 'Register yourself today',
+	cliniciansRegisterToday: 'Clinicians register your patient today',
+	longCliniciansRegisterToday:
+		'Are you a clinician caring for a patient who is a carrier for a hereditary cancer syndrome?',
+	registerPatientToday: 'Register your patient today',
+} satisfies Record<string, string>;
+
+export type LandingPageDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;
