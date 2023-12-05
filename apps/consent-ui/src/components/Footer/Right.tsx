@@ -32,7 +32,7 @@ const Right = ({ translate }: { translate: TranslationFunction }) => {
 				<Image
 					src={ONGovtLogo}
 					alt={translate('footer', 'onGovtLogoAlt')}
-					className={styles['onGov']}
+					className={styles['on-gov']}
 				/>
 			</Link>
 		</div>
