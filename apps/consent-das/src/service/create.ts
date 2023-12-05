@@ -11,6 +11,7 @@ import prisma, {
 	ConsentQuestionId,
 	LifecycleState,
 } from '../prismaClient.js';
+import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
@@ -87,7 +88,7 @@ export const createParticipantResponse = async ({
 	return result;
 };
 
-type CreateInviteFailureStatus = 'SYSTEM_ERROR';
+type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
 /**
  * Creates a ClinicianInvite entry in the Consent DB
  * @param inviteRequest Clinician Invite data
@@ -102,6 +103,22 @@ export const createClinicianInvite = async (
 		})
 		.then((invite) => success(invite))
 		.catch((error) => {
+			if (error instanceof PrismaClientKnownRequestError) {
+				if (error.code === 'P2002') {
+					// Prisma error code P2002 indicates "Unique constraint failed"
+					// See docs: https://www.prisma.io/docs/reference/api-reference/error-reference#p2002
+					logger.info('POST /invites', 'Unique constraint failed creating invite.', error.message);
+					return failure(
+						'INVITE_EXISTS',
+						`An invite already exists with that '${error.meta?.target ?? 'data'}'`,
+					);
+				}
+				logger.error('POST /invites', error.code, error.message);
+				return failure(
+					'SYSTEM_ERROR',
+					`An unexpected error occurred in the PrismaClient - ${error.code}`,
+				);
+			}
 			logger.error(
 				'POST /invites',
 				'Unexpected error handling create invite request.',

@@ -20,7 +20,7 @@
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
 import { ConsentClinicianInviteRequest } from 'types/entities';
-import { ErrorName, ErrorResponse } from 'types/httpResponses';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 
 import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
@@ -142,6 +142,9 @@ router.post(
 				}
 				case 'SYSTEM_ERROR': {
 					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
 				}
 			}
 		} catch (error) {
