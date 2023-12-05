@@ -18,10 +18,14 @@
  */
 
 import { Router } from 'express';
-import { ClinicianInviteRequest, ZodError } from 'types/entities';
+import withRequestValidation from 'express-request-validation';
+import { ClinicianInviteRequest } from 'types/entities';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 
 import logger from '../logger.js';
 import { createInvite } from '../services/create.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 const router = Router();
 
@@ -54,24 +58,33 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ClinicianInviteResponse'
  *       400:
- *         description: Bad Request
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Server error
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', async (req, res) => {
-	logger.info(`POST /invites`); // TODO: remove
-	try {
-		const data = ClinicianInviteRequest.parse(req.body);
-		const invite = await createInvite(data);
-		res.status(201).send(invite);
-	} catch (error) {
-		logger.error(error);
-		if (error instanceof ZodError) {
-			res.status(400).send({ error: 'Bad Request' });
-		} else {
-			res.status(500).send({ error: 'Error creating clinician invite' });
+router.post(
+	'/',
+	withRequestValidation(ClinicianInviteRequest, async (req, res) => {
+		try {
+			const invite = await createInvite(req.body);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
+			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
 		}
-	}
-});
+	}),
+);
 
 export default router;

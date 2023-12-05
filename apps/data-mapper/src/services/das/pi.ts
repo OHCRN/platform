@@ -17,41 +17,50 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { AxiosError } from 'axios';
 import urlJoin from 'url-join';
 import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/entities';
+import { Result, failure, success } from 'types/httpResponses';
 
 import { getAppConfig } from '../../config.js';
-import logger from '../../logger.js';
+import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
+import { CreateInviteFailureStatus } from '../create.js';
 
-export const createInvitePiData = async ({
-	participantFirstName,
-	participantLastName,
-	participantEmailAddress,
-	participantPhoneNumber,
-	participantPreferredName,
-	guardianName,
-	guardianPhoneNumber,
-	guardianEmailAddress,
-	guardianRelationship,
-}: PIClinicianInviteRequest): Promise<PIClinicianInviteResponse> => {
+const logger = serviceLogger.forModule('PIClient');
+
+/**
+ * Makes request to PI DAS to create a Clinician Invite
+ * @param inviteRequest Clinician Invite data
+ * @returns ClinicianInvite object from PI DB
+ */
+export const createInvitePiData = async (
+	inviteRequest: PIClinicianInviteRequest,
+): Promise<Result<PIClinicianInviteResponse, CreateInviteFailureStatus>> => {
 	const { piDasUrl } = getAppConfig();
 	try {
-		const result = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), {
-			participantFirstName,
-			participantLastName,
-			participantEmailAddress,
-			participantPhoneNumber,
-			participantPreferredName,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-		});
+		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), inviteRequest);
 		// converts all nulls to undefined
-		return PIClinicianInviteResponse.parse(result.data);
+		const invite = PIClinicianInviteResponse.safeParse(data);
+
+		if (!invite.success) {
+			logger.error('POST /invites', 'Received invalid data in response', invite.error.issues);
+			return failure('SYSTEM_ERROR', invite.error.message);
+		}
+
+		return success(invite.data);
 	} catch (error) {
-		logger.error(error);
-		throw error; // TODO: remove and send custom error schema
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+
+			if (status === 409) {
+				return failure('INVITE_EXISTS', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
