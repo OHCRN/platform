@@ -49,7 +49,7 @@ export const createInvitePiData = async ({
 			guardianRelationship,
 		});
 		// converts all nulls to undefined
-		return PIClinicianInviteResponse.parse(result.data.invite);
+		return PIClinicianInviteResponse.parse(result.data);
 	} catch (error) {
 		logger.error(error);
 		throw error; // TODO: remove and send custom error schema
