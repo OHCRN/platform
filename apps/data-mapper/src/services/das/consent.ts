@@ -25,10 +25,10 @@ import { Result, failure, success } from 'types/httpResponses';
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
+import { CreateInviteFailureStatus } from '../create.js';
 
 const logger = serviceLogger.forModule('ConsentClient');
 
-type CreateInviteFailureStatus = 'SYSTEM_ERROR';
 /**
  * Makes request to PI DAS to create a Clinician Invite
  * @param inviteRequest Clinician Invite data
@@ -54,8 +54,13 @@ export const createInviteConsentData = async (
 		return success(invite.data);
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
-			const { data } = error.response;
+			const { data, status } = error.response;
 			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+
+			if (status === 409) {
+				return failure('INVITE_EXISTS', data.message);
+			}
+
 			return failure('SYSTEM_ERROR', data.message);
 		}
 		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
