@@ -81,14 +81,14 @@ type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
 export const createClinicianInvite = async (
 	inviteRequest: PIClinicianInviteRequest,
 ): Promise<Result<ClinicianInvite, CreateInviteFailureStatus>> => {
-	return await prisma.clinicianInvite
+	return prisma.clinicianInvite
 		.create({
 			data: inviteRequest,
 		})
-		.then(
-			(invite) => success(invite),
-			(error) => {
-				if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002') {
+		.then((invite) => success(invite))
+		.catch((error) => {
+			if (error instanceof PrismaClientKnownRequestError) {
+				if (error.code === 'P2002') {
 					// Prisma error code P2002 indicates "Unique constraint failed"
 					// See docs: https://www.prisma.io/docs/reference/api-reference/error-reference#p2002
 					logger.info('POST /invites', 'Unique constraint failed creating invite.', error.message);
@@ -97,12 +97,17 @@ export const createClinicianInvite = async (
 						`An invite already exists with that '${error.meta?.target ?? 'data'}'`,
 					);
 				}
-				logger.error(
-					'POST /invites',
-					'Unexpected error handling create invite request.',
-					error.message,
+				logger.error('POST /invites', error.code, error.message);
+				return failure(
+					'SYSTEM_ERROR',
+					`An unexpected error occurred in the PrismaClient - ${error.code}`,
 				);
-				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
-			},
-		);
+			}
+			logger.error(
+				'POST /invites',
+				'Unexpected error handling create invite request.',
+				error.message,
+			);
+			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+		});
 };
