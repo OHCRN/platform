@@ -12,9 +12,11 @@
 }
 
 .card {
+	padding: 16px;
 	position: relative;
 	margin: 10rem 15px auto;
 	@media (min-width: theme('screens.sm')) {
+		padding: 1.5rem 3rem;
 		margin: 10rem 50px auto;
 	}
 	@media (min-width: theme('screens.md')) {

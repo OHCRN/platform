@@ -1,4 +1,10 @@
 .landing-page-card {
+	padding: 16px;
+
+	@media (min-width: theme('screens.sm')) {
+		padding: 24px 48px 30px;
+	}
+
 	@media (min-width: theme('screens.md')) {
 		max-width: 45rem;
 	}

@@ -35,7 +35,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 	const translate = getTranslation(currentLang);
 	return (
 		<PaddedContainer>
-			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])}>
+			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])} layout="row">
 				<div className={styles['consents-img']}>
 					<Image src={ConsentsImage} alt="" />
 				</div>
