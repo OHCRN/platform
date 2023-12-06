@@ -17,20 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export enum ErrorName {
-	SERVER_ERROR = 'ServerError',
-	NOT_FOUND_ERROR = 'NotFoundError',
-	CONFLICT_ERROR = 'ConflictError',
-	REQUEST_VALIDATION_ERROR = 'RequestValidationError',
-	RECAPTCHA_ERROR = 'RecaptchaError',
-}
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
-export type ErrorResponse = {
-	error: ErrorName | 'NOT_IMPLEMENTED'; // TODO: remove once all routes are implemented
-	message: string;
-};
+const { NOT_FOUND_ERROR } = ErrorName;
 
-export const ErrorResponse = (error: ErrorName | 'NOT_IMPLEMENTED', message: string) => ({
-	error,
-	message,
+export type NotFound = ErrorResponse;
+
+/**
+ * Creates a NotFoundErrorResponse containing a message detailing the conflict and the fields causing it.
+ * @param customMessage
+ * @returns
+ */
+export const NotFoundErrorResponse = (customMessage?: string): NotFound => ({
+	error: NOT_FOUND_ERROR,
+	message: customMessage ?? 'The requested data could not be found.',
 });

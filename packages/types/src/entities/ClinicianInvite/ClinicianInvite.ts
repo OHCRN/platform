@@ -104,3 +104,12 @@ export const ClinicianInviteResponse = ClinicianInviteBase.refine((input) => {
 
 export type ClinicianInviteResponse = z.infer<typeof ClinicianInviteResponse>;
 export const ClinicianInviteResponseSchema: SchemaObject = generateSchema(ClinicianInviteResponse);
+
+export const DeleteClinicianInviteRequest = ClinicianInviteBase.pick({
+	id: true,
+});
+
+export type DeleteClinicianInviteRequest = z.infer<typeof DeleteClinicianInviteRequest>;
+export const DeleteClinicianInviteRequestSchema: SchemaObject = generateSchema(
+	DeleteClinicianInviteRequest,
+);

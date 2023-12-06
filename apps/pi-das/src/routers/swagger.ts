@@ -23,6 +23,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	PIClinicianInviteRequestSchema as ClinicianInviteRequest,
 	PIClinicianInviteResponseSchema as ClinicianInviteResponse,
+	DeleteClinicianInviteRequestSchema as DeleteClinicianInviteRequest,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -70,6 +71,7 @@ const options = swaggerJsdoc({
 			schemas: {
 				ClinicianInviteRequest,
 				ClinicianInviteResponse,
+				DeleteClinicianInviteRequest,
 			},
 		},
 	},

@@ -19,11 +19,17 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { PIClinicianInviteRequest } from 'types/entities';
-import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
+import { DeleteClinicianInviteRequest, PIClinicianInviteRequest } from 'types/entities';
+import {
+	ConflictErrorResponse,
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+} from 'types/httpResponses';
 
 import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
 import { createClinicianInvite } from '../service/create.js';
+import { deleteClinicianInvite } from '../service/delete.js';
 import logger from '../logger.js';
 
 const { SERVER_ERROR } = ErrorName;
@@ -149,6 +155,55 @@ router.post(
 		} catch (error) {
 			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
 			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		}
+	}),
+);
+
+/**
+ * @openapi
+ * /clinician-invites:
+ *   delete:
+ *     tags:
+ *       - Clinician Invites
+ *     produces: application/json
+ *     name: Delete Clinician Invite
+ *     description: Deletes a clinician invite
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DeleteClinicianInviteRequest'
+ *     responses:
+ *       201:
+ *         description: OK
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.delete(
+	'/',
+	withRequestValidation(DeleteClinicianInviteRequest, async (req, res) => {
+		try {
+			const invite = await deleteClinicianInvite(req.body);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_DOES_NOT_EXIST': {
+					return res.status(404).json(NotFoundErrorResponse(invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 		}
 	}),
 );
