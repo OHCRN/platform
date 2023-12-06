@@ -17,7 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { DeleteClinicianInviteRequest } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
 
 import prisma from '../prismaClient.js';
@@ -33,14 +32,12 @@ const DeleteInviteSuccess = { message: 'success' };
  * @param id Clinician Invite ID
  * @returns
  */
-export const deleteClinicianInvite = async ({
-	id,
-}: DeleteClinicianInviteRequest): Promise<
-	Result<typeof DeleteInviteSuccess, DeleteInviteFailureStatus>
-> => {
+export const deleteClinicianInvite = async (
+	inviteId: string,
+): Promise<Result<typeof DeleteInviteSuccess, DeleteInviteFailureStatus>> => {
 	return await prisma.clinicianInvite
 		.delete({
-			where: { id },
+			where: { id: inviteId },
 		})
 		.then(() => success(DeleteInviteSuccess))
 		.catch((error) => {
@@ -48,7 +45,7 @@ export const deleteClinicianInvite = async ({
 				if (error.code === 'P2025') {
 					// Prisma error code P2025 indicates the record does not exist
 					// See docs: https://www.prisma.io/docs/reference/api-reference/error-reference#p2025
-					const errorMessage = `Invite with id '${id}' does not exist.`;
+					const errorMessage = `Invite with id '${inviteId}' does not exist.`;
 					logger.error('DELETE /invites', errorMessage, error.message);
 					return failure('INVITE_DOES_NOT_EXIST', errorMessage);
 				}

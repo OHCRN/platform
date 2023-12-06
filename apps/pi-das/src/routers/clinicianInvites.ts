@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { DeleteClinicianInviteRequest, PIClinicianInviteRequest } from 'types/entities';
+import { PIClinicianInviteRequest } from 'types/entities';
 import {
 	ConflictErrorResponse,
 	ErrorName,
@@ -170,11 +170,13 @@ router.post(
  *     description: Deletes a clinician invite
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/DeleteClinicianInviteRequest'
+ *     parameters:
+ *       - name: inviteId
+ *         in: path
+ *         required: true
+ *         description: ID of the clinician invite to be deleted
+ *         schema:
+ *           type: string
  *     responses:
  *       201:
  *         description: OK
@@ -185,27 +187,25 @@ router.post(
  *       500:
  *         description: ServerError - An unexpected error occurred.
  */
-router.delete(
-	'/',
-	withRequestValidation(DeleteClinicianInviteRequest, async (req, res) => {
-		try {
-			const invite = await deleteClinicianInvite(req.body);
-			switch (invite.status) {
-				case 'SUCCESS': {
-					return res.status(201).json(invite.data);
-				}
-				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
-				}
-				case 'INVITE_DOES_NOT_EXIST': {
-					return res.status(404).json(NotFoundErrorResponse(invite.message));
-				}
+router.delete('/:inviteId', async (req, res) => {
+	try {
+		const { inviteId } = req.params;
+		const invite = await deleteClinicianInvite(inviteId);
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(201).json(invite.data);
 			}
-		} catch (error) {
-			logger.error('POST /invites', 'Unexpected error handling create invite request', error);
-			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
 		}
-	}),
-);
+	} catch (error) {
+		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+	}
+});
 
 export default router;
