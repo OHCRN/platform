@@ -112,7 +112,9 @@ export const createParticipant = async ({
 export type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
 /**
  * Creates clinician invite in the PI DAS first to get an inviteId,
- * then uses the same inviteId to create a corresponding entry in the Consent DAS
+ * then uses the same inviteId to create a corresponding entry in the Consent DAS.
+ * Makes a request to delete the created invite in PI DAS if an error occurs during
+ * creation of entry in Consent DAS.
  * @async
  * @param data Clinician Invite request
  * @returns Created Clinician Invite data
@@ -134,8 +136,19 @@ export const createInvite = async ({
 	consentGroup,
 	consentToBeContacted,
 }: ClinicianInviteRequest): Promise<Result<ClinicianInviteResponse, CreateInviteFailureStatus>> => {
+	/**
+	 * Steps:
+	 * 1) Creates invite in PI DAS
+	 * 2) If error creating PI invite, returns the resulting `failure()` with an error status and message
+	 * 3) If success, creates invite in Consent DAS with the same ID
+	 * 4) If error creating Consent invite, deletes the previously created PI invite,
+	 *    and returns the resulting `failure()` with an error status and message
+	 * 5) If success, parses the combination of PI and Consent invites to validate response object
+	 * 6) If error parsing, returns `failure()` with a SYSTEM_ERROR and Zod error message
+	 * 7) If success, returns created invite
+	 */
 	try {
-		const piInvite = await createInvitePiData({
+		const piInviteResult = await createInvitePiData({
 			participantFirstName,
 			participantLastName,
 			participantEmailAddress,
@@ -147,12 +160,12 @@ export const createInvite = async ({
 			guardianRelationship,
 		});
 
-		if (piInvite.status !== 'SUCCESS') {
-			return piInvite;
+		if (piInviteResult.status !== 'SUCCESS') {
+			return piInviteResult;
 		}
 
-		const consentInvite = await createInviteConsentData({
-			id: piInvite.data.id,
+		const consentInviteResult = await createInviteConsentData({
+			id: piInviteResult.data.id,
 			clinicianFirstName,
 			clinicianLastName,
 			clinicianInstitutionalEmailAddress,
@@ -161,27 +174,24 @@ export const createInvite = async ({
 			consentToBeContacted,
 		});
 
-		if (consentInvite.status !== 'SUCCESS') {
+		if (consentInviteResult.status !== 'SUCCESS') {
 			// TODO: rollback/delete invite already created in PI
-			return consentInvite;
+			return consentInviteResult;
 		}
 
-		// validate Consent and PI data together
 		const invite = ClinicianInviteResponse.safeParse({
-			...piInvite.data,
-			...consentInvite.data,
+			...piInviteResult.data,
+			...consentInviteResult.data,
 		});
 
 		if (!invite.success) {
 			logger.error('POST /invites', 'Received invalid data in response.', invite.error.issues);
-			// TODO: rollback/delete invites already created
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
 		return success(invite.data);
 	} catch (error) {
 		logger.error('POST /invites', 'Unexpected error handling create invite request.', error);
-		// TODO: rollback/delete invites already created
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
