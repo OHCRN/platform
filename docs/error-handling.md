@@ -132,3 +132,14 @@ Some convenient methods have been added to `Result.ts` to construct `Success` an
   }
   ```
   It's important to note that this method couldn't be combined with `failure()` because `data` takes a generic type, which makes it difficult for TS to infer the type correctly and ensure that `undefined` is compatible with the type `T` if we make `data` an optional parameter
+
+## Other Notes
+
+### Prisma Errors
+
+When implementing services in the DAS that query the Prisma client, it's helpful to look at their documentation for [error references](https://www.prisma.io/docs/reference/api-reference/error-reference). This lists all possible errors that can return from making a request. In particular, the [error codes](https://www.prisma.io/docs/reference/api-reference/error-reference#error-codes) are most useful in distinguishing the type of error that occurred. Listed below are some common codes:
+
+| Prisma Client Code | Message |
+| --- | --- |
+| [P2002](https://www.prisma.io/docs/reference/api-reference/error-reference#p2002) | "Unique constraint failed on the {constraint}” |
+| [P2025](https://www.prisma.io/docs/reference/api-reference/error-reference#p2025) | "An operation failed because it depends on one or more records that were required but not found. {cause}” |

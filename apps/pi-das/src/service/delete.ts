@@ -43,8 +43,6 @@ export const deleteClinicianInvite = async (
 		.catch((error) => {
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === 'P2025') {
-					// Prisma error code P2025 indicates the record does not exist
-					// See docs: https://www.prisma.io/docs/reference/api-reference/error-reference#p2025
 					const errorMessage = `Invite with id '${inviteId}' does not exist.`;
 					logger.error('DELETE /invites', errorMessage, error.message);
 					return failure('INVITE_DOES_NOT_EXIST', errorMessage);
