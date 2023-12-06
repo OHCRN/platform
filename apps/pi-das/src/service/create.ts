@@ -91,11 +91,11 @@ export const createClinicianInvite = async (
 				if (error.code === 'P2002') {
 					// Prisma error code P2002 indicates "Unique constraint failed"
 					// See docs: https://www.prisma.io/docs/reference/api-reference/error-reference#p2002
-					logger.info('POST /invites', 'Unique constraint failed creating invite.', error.message);
-					return failure(
-						'INVITE_EXISTS',
-						`An invite already exists with that '${error.meta?.target ?? 'data'}'`,
-					);
+					const errorMessage = `An invite already exists with that '${
+						error.meta?.target ?? 'data'
+					}'`;
+					logger.error('POST /invites', errorMessage, error.message);
+					return failure('INVITE_EXISTS', errorMessage);
 				}
 				logger.error('POST /invites', error.code, error.message);
 				return failure(
