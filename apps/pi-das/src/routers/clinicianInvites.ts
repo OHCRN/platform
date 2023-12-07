@@ -111,7 +111,11 @@ router.get('/:inviteId', async (req, res) => {
 			}
 		}
 	} catch (error) {
-		logger.error('GET /invites/:inviteId', 'Unexpected error handling get invite request', error);
+		logger.error(
+			'GET /clinician-invites/:inviteId',
+			'Unexpected error handling get invite request',
+			error,
+		);
 		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });

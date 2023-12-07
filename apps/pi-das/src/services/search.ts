@@ -38,16 +38,20 @@ export const getClinicianInvite = async (
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === 'P2025') {
 					const errorMessage = `Invite with id '${inviteId}' does not exist.`;
-					logger.error('GET /invites', errorMessage, error.message);
+					logger.error('GET /clinician-invites/:inviteId', errorMessage, error.message);
 					return failure('INVITE_DOES_NOT_EXIST', errorMessage);
 				}
-				logger.error('GET /invites', error.code, error.message);
+				logger.error('GET /clinician-invites/:inviteId', error.code, error.message);
 				return failure(
 					'SYSTEM_ERROR',
 					`An unexpected error occurred in the PrismaClient - ${error.code}`,
 				);
 			}
-			logger.error('GET /invites', 'Unexpected error handling get invite request.', error.message);
+			logger.error(
+				'GET /clinician-invites/:inviteId',
+				'Unexpected error handling get invite request.',
+				error.message,
+			);
 			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 		});
 };
