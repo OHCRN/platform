@@ -27,9 +27,9 @@ import {
 	NotFoundErrorResponse,
 } from 'types/httpResponses';
 
-import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
-import { createClinicianInvite } from '../service/create.js';
-import { deleteClinicianInvite } from '../service/delete.js';
+import { getClinicianInvite, getClinicianInvites } from '../services/search.js';
+import { createClinicianInvite } from '../services/create.js';
+import { deleteClinicianInvite } from '../services/delete.js';
 import logger from '../logger.js';
 
 const { SERVER_ERROR } = ErrorName;
