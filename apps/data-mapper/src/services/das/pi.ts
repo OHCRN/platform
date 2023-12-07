@@ -26,8 +26,49 @@ import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
 import { CreateInviteFailureStatus } from '../create.js';
+import { GetInviteFailureStatus } from '../search.js';
 
 const logger = serviceLogger.forModule('PIClient');
+
+/**
+ * Makes request to PI DAS to fetch a Clinician Invite
+ * @param inviteId
+ * @returns ClinicianInvite object from PI DB
+ */
+export const getInvitePiData = async (
+	inviteId: string,
+): Promise<Result<PIClinicianInviteResponse, GetInviteFailureStatus>> => {
+	const { piDasUrl } = getAppConfig();
+	try {
+		const { data } = await axiosClient.get(urlJoin(piDasUrl, 'clinician-invites', inviteId));
+		// converts all nulls to undefined
+		const invite = PIClinicianInviteResponse.safeParse(data);
+
+		if (!invite.success) {
+			logger.error(
+				'GET /invites/:inviteId',
+				'Received invalid data in response',
+				invite.error.issues,
+			);
+			return failure('SYSTEM_ERROR', invite.error.message);
+		}
+
+		return success(invite.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('GET /invites/:inviteId', 'AxiosError handling get invite request', data);
+
+			if (status === 404) {
+				return failure('INVITE_DOES_NOT_EXIST', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('GET /invites/:inviteId', 'Unexpected error handling get invite request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
 
 /**
  * Makes request to PI DAS to create a Clinician Invite
