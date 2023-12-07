@@ -20,7 +20,12 @@
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
 import { ConsentClinicianInviteRequest } from 'types/entities';
-import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
+import {
+	ConflictErrorResponse,
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+} from 'types/httpResponses';
 
 import { getClinicianInvite, getClinicianInvites } from '../services/search.js';
 import { createClinicianInvite } from '../services/create.js';
@@ -76,28 +81,42 @@ router.get('/', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: inviteId
- *         in: path
- *         description: Clinician Invite ID
- *         required: true
- *         schema:
- *           type: string
+ *      - name: inviteId
+ *        in: path
+ *        description: Invite ID
+ *        required: true
+ *        schema:
+ *          type: string
  *     responses:
  *       200:
- *         description: The clinician invite was successfully retrieved.
+ *         description: OK
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
  *       500:
- *         description: Error retrieving clinician invite.
+ *         description: ServerError - An unexpected error occurred.
  */
 router.get('/:inviteId', async (req, res) => {
-	logger.info('GET /clinician-invites/:inviteId');
-	const { inviteId } = req.params;
-	// TODO: add validation
 	try {
-		const clinicianInvite = await getClinicianInvite(inviteId);
-		res.status(200).send({ clinicianInvite });
+		const { inviteId } = req.params;
+		const invite = await getClinicianInvite(inviteId);
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(invite.data);
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving clinician invite' });
+		logger.error(
+			'GET /clinician-invites/:inviteId',
+			'Unexpected error handling get invite request',
+			error,
+		);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 
@@ -148,7 +167,7 @@ router.post(
 				}
 			}
 		} catch (error) {
-			logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+			logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
 			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 		}
 	}),
