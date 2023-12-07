@@ -22,8 +22,8 @@ import withRequestValidation from 'express-request-validation';
 import { ConsentClinicianInviteRequest } from 'types/entities';
 import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 
-import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
-import { createClinicianInvite } from '../service/create.js';
+import { getClinicianInvite, getClinicianInvites } from '../services/search.js';
+import { createClinicianInvite } from '../services/create.js';
 import logger from '../logger.js';
 
 const { SERVER_ERROR } = ErrorName;
