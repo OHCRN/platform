@@ -21,8 +21,8 @@ import { Router } from 'express';
 import { ConsentQuestionId } from 'types/entities';
 
 import { Prisma } from '../generated/client/index.js';
-import { getParticipantResponses } from '../service/search.js';
-import { createParticipantResponse } from '../service/create.js';
+import { getParticipantResponses } from '../services/search.js';
+import { createParticipantResponse } from '../services/create.js';
 import logger from '../logger.js';
 
 // TODO: update JSDoc comments when custom error handling is implemented
