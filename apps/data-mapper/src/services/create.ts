@@ -6,7 +6,7 @@ import serviceLogger from '../logger.js';
 import { getAppConfig } from '../config.js';
 
 import axiosClient from './axiosClient.js';
-import { createInvitePiData } from './das/pi.js';
+import { createInvitePiData, deleteInvitePiData } from './das/pi.js';
 import { createInviteConsentData } from './das/consent.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
@@ -175,7 +175,16 @@ export const createInvite = async ({
 		});
 
 		if (consentInviteResult.status !== 'SUCCESS') {
-			// TODO: rollback/delete invite already created in PI
+			// Unable to create invite in Consent DB, rollback invite already created in PI
+			const deletePiInvite = await deleteInvitePiData(piInviteResult.data.id);
+			if (deletePiInvite.status !== 'SUCCESS') {
+				logger.error(
+					'DELETE /invites',
+					'Error deleting existing PI invite',
+					deletePiInvite.message,
+				);
+				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+			}
 			return consentInviteResult;
 		}
 

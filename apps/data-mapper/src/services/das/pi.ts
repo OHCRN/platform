@@ -19,7 +19,6 @@
 
 import { AxiosError } from 'axios';
 import urlJoin from 'url-join';
-import { AxiosError } from 'axios';
 import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
 
