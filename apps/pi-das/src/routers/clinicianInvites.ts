@@ -145,11 +145,11 @@ router.post(
 				case 'SUCCESS': {
 					return res.status(201).json(invite.data);
 				}
-				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
-				}
 				case 'INVITE_EXISTS': {
 					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
 				}
 			}
 		} catch (error) {
@@ -193,11 +193,11 @@ router.delete('/:inviteId', async (req, res) => {
 			case 'SUCCESS': {
 				return res.status(200).json(invite.data);
 			}
-			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
-			}
 			case 'INVITE_DOES_NOT_EXIST': {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
 			}
 		}
 	} catch (error) {
