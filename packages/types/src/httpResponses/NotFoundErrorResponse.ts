@@ -21,14 +21,12 @@ import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
 const { NOT_FOUND_ERROR } = ErrorName;
 
-export type NotFound = ErrorResponse;
-
 /**
  * Creates a NotFoundErrorResponse containing a message detailing the conflict and the fields causing it.
  * @param customMessage
  * @returns
  */
-export const NotFoundErrorResponse = (customMessage?: string): NotFound => ({
+export const NotFoundErrorResponse = (customMessage?: string): ErrorResponse => ({
 	error: NOT_FOUND_ERROR,
 	message: customMessage ?? 'The requested data could not be found.',
 });

@@ -145,11 +145,11 @@ router.post(
 				case 'SUCCESS': {
 					return res.status(201).json(invite.data);
 				}
-				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
-				}
 				case 'INVITE_EXISTS': {
 					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
 				}
 			}
 		} catch (error) {
@@ -178,10 +178,8 @@ router.post(
  *         schema:
  *           type: string
  *     responses:
- *       201:
+ *       200:
  *         description: OK
- *       400:
- *         description: RequestValidationError - The request body was invalid.
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
@@ -193,13 +191,13 @@ router.delete('/:inviteId', async (req, res) => {
 		const invite = await deleteClinicianInvite(inviteId);
 		switch (invite.status) {
 			case 'SUCCESS': {
-				return res.status(201).json(invite.data);
-			}
-			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(200).json(invite.data);
 			}
 			case 'INVITE_DOES_NOT_EXIST': {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
 			}
 		}
 	} catch (error) {

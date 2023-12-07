@@ -35,7 +35,7 @@ const DeleteInviteSuccess = { message: 'success' };
 export const deleteClinicianInvite = async (
 	inviteId: string,
 ): Promise<Result<typeof DeleteInviteSuccess, DeleteInviteFailureStatus>> => {
-	return await prisma.clinicianInvite
+	return prisma.clinicianInvite
 		.delete({
 			where: { id: inviteId },
 		})
