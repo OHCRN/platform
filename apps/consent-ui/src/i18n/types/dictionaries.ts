@@ -33,8 +33,7 @@ export type GetSingleTranslation = <SelectedNamespace extends DictionariesNamesp
 export type GetAllTranslations = <SelectedNamespace extends DictionariesNamespace>(
 	namespace: SelectedNamespace,
 	params?: {
-		[key in keyof Dictionaries[ValidLanguage][SelectedNamespace]]: {
-			// [key: string]: {
+		[key in keyof Partial<Dictionaries[ValidLanguage][SelectedNamespace]>]: {
 			[key: string]: string | number;
 		};
 	},

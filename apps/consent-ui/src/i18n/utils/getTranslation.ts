@@ -80,14 +80,15 @@ export const getTranslation: GetTranslation = (language) => {
 			return translations || {};
 		}
 
-		//
-		//
+		const translationsWithParams = Object.keys(params).reduce(
+			(acc, curr) => ({
+				...acc,
+				[curr]: replaceParams(translations[curr], params[curr]),
+			}),
+			{},
+		);
 
-		const translationsWithParams = Object.keys(params).map((key: string) => ({
-			[key]: replaceParams(translations[key], params[key]),
-		}));
-
-		return Object.assign(translations, translationsWithParams);
+		return { ...translations, ...translationsWithParams };
 	};
 	return { translate, translateAll };
 };

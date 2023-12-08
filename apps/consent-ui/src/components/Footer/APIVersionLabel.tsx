@@ -27,7 +27,10 @@ const APIVersionLabel = async ({
 	currentLang: ValidLanguage;
 }) => {
 	const { translate, translateAll } = getTranslation(currentLang);
-	const footerDict = translateAll('footer');
+	const footerDict = translateAll('footer', {
+		ohcrnRegistry: { registryVersion: 'beep' },
+		api: { apiVersion: 'boop' },
+	});
 	console.log(footerDict);
 
 	return <span>{translate('footer', 'api', { apiVersion })}</span>;
