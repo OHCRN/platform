@@ -18,7 +18,7 @@
  */
 import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
-import { GetTranslation } from 'src/i18n/types';
+import { GetAllTranslations, GetSingleTranslation, GetTranslation } from 'src/i18n/types';
 import dictionaries from 'src/i18n/locales';
 
 /**
@@ -38,7 +38,7 @@ import dictionaries from 'src/i18n/locales';
  * 		'sampleSentence': 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.'
  * 	}
  * }
- * const translate = getTranslation('en')
+ * const { translate } = getTranslation('en')
  * translate('common', 'sampleSentence', { dayOfWeek: 'Thursday', dayOfMonth: 'October' }) would call replaceParams as:
  * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
  * // returns 'Translated this string on a Thursday in October.'
@@ -56,14 +56,38 @@ const replaceParams = (
 // TODO: is there a way to enforce this function for server side use only?
 export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
-	return (namespace, key, params) => {
+	const translate: GetSingleTranslation = (namespace, key, params) => {
 		// TODO: consider throwing error if translation not a string/undefined
 		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
 		// warning log and `|| ''` is currently provided as a stopgap
-		if (!(dictionary && namespace && key)) {
+		if (!(dictionary && dictionary[namespace] && dictionary[namespace][key])) {
 			console.warn(`Missing translation in ${language} dictionary!`);
 		}
 		const translation = `${dictionary[namespace][key] || ''}`;
 		return replaceParams(translation, params);
 	};
+	const translateAll: GetAllTranslations = (namespace, params) => {
+		// TODO: consider throwing error if translation not a string/undefined
+		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
+		// warning log and `|| {}` is currently provided as a stopgap
+		if (!(dictionary && dictionary[namespace])) {
+			console.warn(`Missing translation in ${language} dictionary!`);
+		}
+
+		const translations = dictionary[namespace];
+
+		if (!params) {
+			return translations || {};
+		}
+
+		//
+		//
+
+		const translationsWithParams = Object.keys(params).map((key: string) => ({
+			[key]: replaceParams(translations[key], params[key]),
+		}));
+
+		return Object.assign(translations, translationsWithParams);
+	};
+	return { translate, translateAll };
 };

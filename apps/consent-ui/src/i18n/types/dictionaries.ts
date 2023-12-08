@@ -22,14 +22,27 @@ import dictionaries from '../locales/index.js';
 import { ValidLanguage } from './languages';
 
 export type Dictionaries = typeof dictionaries;
-export type Namespace = keyof Dictionaries[ValidLanguage];
+export type DictionariesNamespace = keyof Dictionaries[ValidLanguage];
 
-export type GetTranslation = (
-	language: ValidLanguage,
-) => <SelectedNamespace extends Namespace>(
+export type GetSingleTranslation = <SelectedNamespace extends DictionariesNamespace>(
 	namespace: SelectedNamespace,
 	label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
 	params?: { [key: string]: string | number },
 ) => string;
+
+export type GetAllTranslations = <SelectedNamespace extends DictionariesNamespace>(
+	namespace: SelectedNamespace,
+	params?: {
+		[key in keyof Dictionaries[ValidLanguage][SelectedNamespace]]: {
+			// [key: string]: {
+			[key: string]: string | number;
+		};
+	},
+) => { [key: string]: string };
+
+export type GetTranslation = (language: ValidLanguage) => {
+	translate: GetSingleTranslation;
+	translateAll: GetAllTranslations;
+};
 
 export type TranslationFunction = ReturnType<GetTranslation>;

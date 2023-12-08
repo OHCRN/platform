@@ -31,7 +31,7 @@ import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>

@@ -61,7 +61,7 @@ const ConsentForm = async ({
 	currentLang: ValidLanguage;
 	section: ConsentCategory;
 }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	return (
 		<div>
 			<h2>{translate('consentCategory', section)}</h2>

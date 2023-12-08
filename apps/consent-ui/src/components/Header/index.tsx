@@ -38,7 +38,7 @@ const icons: {
 };
 
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
