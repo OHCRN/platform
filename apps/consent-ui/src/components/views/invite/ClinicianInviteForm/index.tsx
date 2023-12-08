@@ -22,7 +22,7 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ClinicianInviteRequest, ConsentGroup } from 'types/entities';
+import { ClinicianInviteRequest, ConsentGroup, InviteGuardianFields } from 'types/entities';
 
 import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
 import TextFieldSet from 'src/components/common/forms/fieldsets/TextFieldSet';
@@ -45,7 +45,7 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
 
-const guardianInfoFields: Partial<keyof ClinicianInviteRequest>[] = [
+const guardianInfoFields: (keyof InviteGuardianFields)[] = [
 	'guardianName',
 	'guardianPhoneNumber',
 	'guardianEmailAddress',

@@ -49,7 +49,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 					/>
 				</FieldSet>
 			)}
-			rules={{ required: true }}
+			rules={{ required }}
 		/>
 	);
 };

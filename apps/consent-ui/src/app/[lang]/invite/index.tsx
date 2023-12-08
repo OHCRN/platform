@@ -36,7 +36,7 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		required: translate('form-errors', 'required'),
 	};
 
-	const labelsDict: Partial<FormLabelsDictionary> = {
+	const labelsDict = {
 		'consent-group': translate('form-labels', 'consent-group'),
 		'first-name': translate('form-labels', 'first-name'),
 		'last-name': translate('form-labels', 'last-name'),
@@ -55,13 +55,14 @@ const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLangua
 		'guardian-name': translate('form-labels', 'guardian-name'),
 		'guardian-phone': translate('form-labels', 'guardian-phone'),
 		'guardian-relationship': translate('form-labels', 'guardian-relationship'),
-	};
+	} satisfies FormLabelsDictionary;
 
 	const textDict: ClinicianInviteFormTextDictionary = {
 		'consent-contact-description': translate(
 			'clinician-invite-form',
 			'consent-contact-description',
 		),
+		'clinician-information': translate('clinician-invite-form', 'clinician-information'),
 		'indicates-required-field': translate('forms', 'indicates-required-field'),
 		'patient-information': translate('clinician-invite-form', 'patient-information'),
 		'select-placeholder': translate('forms', 'select-placeholder'),

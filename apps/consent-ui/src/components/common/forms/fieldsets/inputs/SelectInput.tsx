@@ -35,7 +35,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	return (
 		<Select
 			aria-required={required}
-			instanceId={name}
+			inputId={name}
 			name={name}
 			onChange={(val: FormSelectOnChangeArg<V>) => {
 				// in react-select the value can be a string or object.
