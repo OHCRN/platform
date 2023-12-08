@@ -44,7 +44,11 @@ export const createInvitePiData = async (
 		const invite = PIClinicianInviteResponse.safeParse(data);
 
 		if (!invite.success) {
-			logger.error('POST /invites', 'Received invalid data in response', invite.error.issues);
+			logger.error(
+				'POST /clinician-invites',
+				'Received invalid data in response',
+				invite.error.issues,
+			);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -52,7 +56,7 @@ export const createInvitePiData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+			logger.error('POST /clinician-invites', 'AxiosError handling create invite request', data);
 
 			if (status === 409) {
 				return failure('INVITE_EXISTS', data.message);
@@ -60,7 +64,11 @@ export const createInvitePiData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		logger.error(
+			'POST /clinician-invites',
+			'Unexpected error handling create invite request',
+			error,
+		);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
@@ -81,7 +89,7 @@ export const deleteInvitePiData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('DELETE /invites', 'AxiosError handling delete invite request', data);
+			logger.error('DELETE /clinician-invites', 'AxiosError handling delete invite request', data);
 
 			if (status === 404) {
 				return failure('INVITE_DOES_NOT_EXIST', data.message);
@@ -89,7 +97,11 @@ export const deleteInvitePiData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
+		logger.error(
+			'DELETE /clinician-invites',
+			'Unexpected error handling delete invite request',
+			error,
+		);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

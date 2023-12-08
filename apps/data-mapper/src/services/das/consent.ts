@@ -30,9 +30,9 @@ import { CreateInviteFailureStatus } from '../create.js';
 const logger = serviceLogger.forModule('ConsentClient');
 
 /**
- * Makes request to PI DAS to create a Clinician Invite
+ * Makes request to Consent DAS to create a Clinician Invite
  * @param inviteRequest Clinician Invite data
- * @returns ClinicianInvite object from PI DB
+ * @returns ClinicianInvite object from Consent DB
  */
 export const createInviteConsentData = async (
 	inviteRequest: ConsentClinicianInviteRequest,
@@ -47,7 +47,11 @@ export const createInviteConsentData = async (
 		const invite = ConsentClinicianInviteResponse.safeParse(data);
 
 		if (!invite.success) {
-			logger.error('POST /invites', 'Received invalid data in response', invite.error.issues);
+			logger.error(
+				'POST /clinician-invites',
+				'Received invalid data in response',
+				invite.error.issues,
+			);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -55,7 +59,7 @@ export const createInviteConsentData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+			logger.error('POST /clinician-invites', 'AxiosError handling create invite request', data);
 
 			if (status === 409) {
 				return failure('INVITE_EXISTS', data.message);
@@ -63,7 +67,11 @@ export const createInviteConsentData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		logger.error(
+			'POST /clinician-invites',
+			'Unexpected error handling create invite request',
+			error,
+		);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
