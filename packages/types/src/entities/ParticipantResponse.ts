@@ -20,12 +20,26 @@
 import { z } from 'zod';
 
 import { NanoId } from './NanoId.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
 export const ParticipantResponse = z.object({
 	id: NanoId,
-	consentQuestionId: z.string().trim(),
+	consentQuestionId: ConsentQuestionId,
 	participantId: NanoId,
 	response: z.boolean(),
 });
 
 export type ParticipantResponse = z.infer<typeof ParticipantResponse>;
+
+const SORT_ORDERS = ['asc', 'desc'] as const;
+export const SortOrder = z.enum(SORT_ORDERS);
+export type SortOrder = z.infer<typeof SortOrder>;
+
+export const ParticipantResponseRequest = ParticipantResponse.pick({
+	consentQuestionId: true,
+	participantId: true,
+}).extend({
+	sortOrder: SortOrder.default('desc'),
+});
+
+export type ParticipantResponseRequest = z.infer<typeof ParticipantResponseRequest>;
