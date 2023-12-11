@@ -27,7 +27,7 @@ import {
 	NotFoundErrorResponse,
 } from 'types/httpResponses';
 
-import { getClinicianInvite, getClinicianInvites } from '../services/search.js';
+import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
 import { createClinicianInvite } from '../services/create.js';
 import logger from '../logger.js';
 
@@ -98,7 +98,7 @@ router.get('/', async (req, res) => {
 router.get('/:inviteId', async (req, res) => {
 	try {
 		const { inviteId } = req.params;
-		const invite = await getClinicianInvite(inviteId);
+		const invite = await getClinicianInviteById(inviteId);
 		switch (invite.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(invite.data);
