@@ -17,34 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-import errorHandler from 'express-error-handler';
+import { vi } from 'vitest';
 
-import { AppConfig } from './config.js';
-import logger from './logger.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
-import ConsentQuestionRouter from './routers/consentQuestions.js';
-import ParticipantResponseRouter from './routers/participantResponses.js';
-import ParticipantRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
+import * as config from '../src/config.js';
+import { AppConfig } from '../src/config.js';
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
+export const mockEnv = (values?: Partial<AppConfig>) => {
+	// Need to set the NODE_ENV since there are currently places in teh code checking the process.env.NODE_ENV directly instead of relying on our config.
+	vi.stubEnv('NODE_ENV', values?.isProduction ? 'production' : 'development');
 
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/clinician-invites', ClinicianInviteRouter);
+	const defaultConfig: AppConfig = {
+		dataMapperUrl: 'http://localhost:8081',
+		express: {
+			port: '8080',
+		},
+		isProduction: false,
+		recaptcha: {
+			secretKey: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
+		},
+	};
 
-	// Error Handler should be last function added so that
-	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler({ logger }));
-
-	return app;
+	vi.spyOn(config, 'getAppConfig').mockReturnValue({ ...defaultConfig, ...values });
 };
-
-export default App;

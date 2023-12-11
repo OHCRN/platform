@@ -6,7 +6,7 @@
 		".": "./dist/index.js",
 		"./common": "./dist/common/index.js",
 		"./entities": "./dist/entities/index.js",
-		"./httpErrors": "./dist/httpErrors/index.js",
+		"./httpResponses": "./dist/httpResponses/index.js",
 		"./services": "./dist/services/index.js",
 		"./package.json": "./package.json"
 	},

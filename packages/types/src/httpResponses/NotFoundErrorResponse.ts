@@ -17,34 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bodyParser from 'body-parser';
-import express from 'express';
-import errorHandler from 'express-error-handler';
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
-import { AppConfig } from './config.js';
-import logger from './logger.js';
-import ClinicianInviteRouter from './routers/clinicianInvites.js';
-import ConsentQuestionRouter from './routers/consentQuestions.js';
-import ParticipantResponseRouter from './routers/participantResponses.js';
-import ParticipantRouter from './routers/participants.js';
-import SwaggerRouter from './routers/swagger.js';
+const { NOT_FOUND_ERROR } = ErrorName;
 
-const App = (config: AppConfig) => {
-	const app = express();
-	app.set('port', config.express.port);
-	app.use(bodyParser.json());
-
-	app.use('/api-docs', SwaggerRouter);
-	app.use('/participants', ParticipantRouter);
-	app.use('/consent-questions', ConsentQuestionRouter);
-	app.use('/participant-responses', ParticipantResponseRouter);
-	app.use('/clinician-invites', ClinicianInviteRouter);
-
-	// Error Handler should be last function added so that
-	// it can capture thrown errors from all previous handlers
-	app.use(errorHandler({ logger }));
-
-	return app;
-};
-
-export default App;
+/**
+ * Creates a NotFoundErrorResponse containing a message detailing the conflict and the fields causing it.
+ * @param customMessage
+ * @returns
+ */
+export const NotFoundErrorResponse = (customMessage?: string): ErrorResponse => ({
+	error: NOT_FOUND_ERROR,
+	message: customMessage ?? 'The requested data could not be found.',
+});

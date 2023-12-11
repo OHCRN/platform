@@ -17,30 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorRequestHandler } from 'express';
-import { ErrorResponse } from 'types/httpErrors';
-import { Logger } from 'logger';
+export enum ErrorName {
+	SERVER_ERROR = 'ServerError',
+	NOT_FOUND_ERROR = 'NotFoundError',
+	CONFLICT_ERROR = 'ConflictError',
+	REQUEST_VALIDATION_ERROR = 'RequestValidationError',
+	RECAPTCHA_ERROR = 'RecaptchaError',
+}
 
-/**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
- * @returns
- */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
+export type ErrorResponse = {
+	error: ErrorName | 'NOT_IMPLEMENTED'; // TODO: remove once all routes are implemented
+	message: string;
+};
 
-		if (res.headersSent) {
-			return next(err);
-		}
-
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
-
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
-
-		return res.status(500).json(ErrorResponse('ServerError', message));
-	};
-
-export default errorHandler;
+export const ErrorResponse = (error: ErrorName | 'NOT_IMPLEMENTED', message: string) => ({
+	error,
+	message,
+});

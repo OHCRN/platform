@@ -17,9 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export type ErrorResponse = {
-	error: string;
-	message: string;
-};
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
-export const ErrorResponse = (error: string, message: string) => ({ error, message });
+const { CONFLICT_ERROR } = ErrorName;
+
+/**
+ * Creates a ConflictErrorResponse containing a message detailing the conflict and the fields causing it.
+ * @param customMessage
+ * @returns
+ */
+export const ConflictErrorResponse = (customMessage?: string): ErrorResponse => ({
+	error: CONFLICT_ERROR,
+	message: customMessage ?? 'There was a conflict with existing data.',
+});

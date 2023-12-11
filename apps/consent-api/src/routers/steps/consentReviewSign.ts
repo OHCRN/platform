@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ErrorResponse } from 'types/httpErrors';
+import { ErrorResponse } from 'types/httpResponses';
 
 const router = Router();
 
