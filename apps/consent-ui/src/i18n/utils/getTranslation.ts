@@ -18,7 +18,7 @@
  */
 import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
-import { GetAllTranslations, GetSingleTranslation, GetTranslation } from 'src/i18n/types';
+import { GetSingleTranslation, GetTranslation } from 'src/i18n/types';
 import dictionaries from 'src/i18n/locales';
 
 /**
@@ -38,7 +38,7 @@ import dictionaries from 'src/i18n/locales';
  * 		'sampleSentence': 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.'
  * 	}
  * }
- * const { translate } = getTranslation('en')
+ * const translate = getTranslation('en')
  * translate('common', 'sampleSentence', { dayOfWeek: 'Thursday', dayOfMonth: 'October' }) would call replaceParams as:
  * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
  * // returns 'Translated this string on a Thursday in October.'
@@ -66,29 +66,6 @@ export const getTranslation: GetTranslation = (language) => {
 		const translation = `${dictionary[namespace][key] || ''}`;
 		return replaceParams(translation, params);
 	};
-	const translateAll: GetAllTranslations = (namespace, params) => {
-		// TODO: consider throwing error if translation not a string/undefined
-		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
-		// warning log and `|| {}` is currently provided as a stopgap
-		if (!(dictionary && dictionary[namespace])) {
-			console.warn(`Missing translation in ${language} dictionary!`);
-		}
 
-		const translations = dictionary[namespace];
-
-		if (!params) {
-			return translations || {};
-		}
-
-		const translationsWithParams = Object.keys(params).reduce(
-			(acc, curr) => ({
-				...acc,
-				[curr]: replaceParams(translations[curr], params[curr]),
-			}),
-			{},
-		);
-
-		return { ...translations, ...translationsWithParams };
-	};
-	return { translate, translateAll };
+	return translate;
 };

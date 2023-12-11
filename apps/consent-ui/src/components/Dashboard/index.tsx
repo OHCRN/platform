@@ -32,7 +32,7 @@ const statuses = ['disabled', 'incomplete', 'complete'] as const;
 const consentStatus: (typeof statuses)[number] = statuses[Math.floor(Math.random() * 3)];
 
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = await getTranslation(currentLang);
+	const translate = await getTranslation(currentLang);
 	return (
 		<div className={styles.dashboard}>
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])}>

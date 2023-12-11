@@ -28,7 +28,7 @@ import LandingPageCard from './LandingPageCard';
 import styles from './Home.module.scss';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 	return (
 		<div className={styles.heroContainer}>
 			<div className={styles.backgroundImg}>

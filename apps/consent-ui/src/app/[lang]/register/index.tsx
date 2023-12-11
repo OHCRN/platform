@@ -23,7 +23,7 @@ import { getTranslation, ValidLanguage } from 'src/i18n';
 import RegistrationForm from 'src/components/RegistrationForm';
 
 const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 	return (
 		<div>
 			<h2>{translate('common', 'register')}</h2>

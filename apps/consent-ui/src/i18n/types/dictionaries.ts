@@ -30,18 +30,6 @@ export type GetSingleTranslation = <SelectedNamespace extends DictionariesNamesp
 	params?: { [key: string]: string | number },
 ) => string;
 
-export type GetAllTranslations = <SelectedNamespace extends DictionariesNamespace>(
-	namespace: SelectedNamespace,
-	params?: {
-		[key in keyof Partial<Dictionaries[ValidLanguage][SelectedNamespace]>]: {
-			[key: string]: string | number;
-		};
-	},
-) => { [key: string]: string };
-
-export type GetTranslation = (language: ValidLanguage) => {
-	translate: GetSingleTranslation;
-	translateAll: GetAllTranslations;
-};
+export type GetTranslation = (language: ValidLanguage) => GetSingleTranslation;
 
 export type TranslationFunction = ReturnType<GetTranslation>;

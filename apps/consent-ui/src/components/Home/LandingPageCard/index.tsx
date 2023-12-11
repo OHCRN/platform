@@ -29,7 +29,7 @@ import CardLink from 'src/components/Card/CardLink';
 import styles from './LandingPageCard.module.scss';
 
 const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 	return (
 		<Card dropShadow="none" className={styles['landing-page-card']}>
 			<h2>{translate('landingPage', 'joinOhcrn')}</h2>
