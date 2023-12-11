@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
 			return res.status(400).json(RequestValidationErrorResponse(request.error));
 		}
 
-		const consentQuestions = await getConsentQuestions(request.data);
+		const consentQuestions = await getConsentQuestions(request.data.category);
 		switch (consentQuestions.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(consentQuestions.data);

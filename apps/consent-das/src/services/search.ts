@@ -70,14 +70,12 @@ export const getConsentQuestion = async (
 type GetConsentQuestionFailureStatus = 'SYSTEM_ERROR';
 /**
  * Fetches all consent questions, optionally filtered by category
- * @param
+ * @param category Optional category to filter
  * @returns Array of consent questions
  */
-export const getConsentQuestions = async ({
-	category,
-}: {
-	category?: ConsentCategory;
-}): Promise<Result<ConsentQuestion[], GetConsentQuestionFailureStatus>> => {
+export const getConsentQuestions = async (
+	category?: ConsentCategory,
+): Promise<Result<ConsentQuestion[], GetConsentQuestionFailureStatus>> => {
 	return await prisma.consentQuestion
 		.findMany({
 			where: {
