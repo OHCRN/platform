@@ -17,12 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { AxiosError } from 'axios';
 import urlJoin from 'url-join';
-import { ConsentClinicianInviteRequest, ConsentClinicianInviteResponse } from 'types/entities';
+import {
+	ConsentCategory,
+	ConsentClinicianInviteRequest,
+	ConsentClinicianInviteResponse,
+	ConsentQuestionArray,
+	ConsentQuestionId,
+	ParticipantResponseArray,
+} from 'types/entities';
+import { Result, failure, success } from 'types/httpResponses';
 
 import { getAppConfig } from '../../config.js';
 import logger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
+import { GetResponsesFailureStatus } from '../search.js';
 
 export const createInviteConsentData = async ({
 	id,
@@ -49,5 +59,99 @@ export const createInviteConsentData = async ({
 	} catch (error) {
 		logger.error(error);
 		throw error; // TODO: remove and send custom error schema
+	}
+};
+
+/**
+ * Fetches all consent questions under the specified category
+ * @param category Consent category i.e. step name in Consent Wizard
+ * @returns Consent questions for the category
+ */
+export const getConsentQuestionsByCategory = async (
+	category: ConsentCategory,
+): Promise<Result<ConsentQuestionArray, GetResponsesFailureStatus>> => {
+	try {
+		const { consentDasUrl } = getAppConfig();
+		const { data } = await axiosClient.get(
+			urlJoin(consentDasUrl, 'consent-questions', `?category=${category}`),
+		);
+
+		const consentQuestions = ConsentQuestionArray.safeParse(data.questions); // TODO: remove .questions
+
+		if (!consentQuestions.success) {
+			logger.error(
+				'GET /consent-questions',
+				'Received invalid data in response',
+				consentQuestions.error.issues,
+			);
+			return failure('SYSTEM_ERROR', consentQuestions.error.message);
+		}
+
+		return success(consentQuestions.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data } = error.response;
+			logger.error('GET /consent-questions', 'AxiosError retrieving consent questions', data);
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('GET /consent-questions', 'Unexpected error retrieving consent questions', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+/**
+ * Fetches all participant responses for a given consent question
+ * sorted in order of most to least recent
+ * @param consentQuestionId
+ * @returns Array of all responses sorted by most to least recent
+ */
+export const getParticipantResponsesByQuestionId = async ({
+	participantId,
+	consentQuestionId,
+}: {
+	participantId: string;
+	consentQuestionId: ConsentQuestionId;
+}): Promise<Result<ParticipantResponseArray, GetResponsesFailureStatus>> => {
+	try {
+		const { consentDasUrl } = getAppConfig();
+		const { data } = await axiosClient.get(
+			urlJoin(consentDasUrl, 'participant-responses', participantId, consentQuestionId),
+		);
+
+		const participantResponses = ParticipantResponseArray.safeParse(data);
+
+		if (!participantResponses.success) {
+			logger.error(
+				'GET /participant-responses/:participantId/:consentQuestionId',
+				'Received invalid data in response',
+				participantResponses.error.issues,
+			);
+			return failure('SYSTEM_ERROR', participantResponses.error.message);
+		}
+
+		return success(participantResponses.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+
+			if (status === 404) {
+				return failure('PARTICIPANT_DOES_NOT_EXIST', data.message);
+			}
+
+			logger.error(
+				'GET /participant-responses/:participantId/:consentQuestionId',
+				'AxiosError retrieving consent questions',
+				data,
+			);
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error(
+			'GET /participant-responses/:participantId/:consentQuestionId',
+			'Unexpected error retrieving consent questions',
+			error,
+		);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

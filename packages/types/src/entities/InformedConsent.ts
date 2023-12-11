@@ -24,7 +24,7 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 import { ConsentQuestionId } from './ConsentQuestion.js';
 
 export const InformedConsentBase = z.object({
-	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.boolean(),
+	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.boolean().optional(), // TODO: verify if this can be optional
 });
 
 export const InformedConsentRequest = InformedConsentBase;

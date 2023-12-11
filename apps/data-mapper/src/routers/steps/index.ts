@@ -17,35 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { Router } from 'express';
 
-import { ConsentCategory } from './ConsentCategory.js';
+import InformedConsentRouter from './informedConsent.js';
 
-const CONSENT_QUESTION_IDS = [
-	'INFORMED_CONSENT__READ_AND_UNDERSTAND',
-	'RECONTACT__FUTURE_RESEARCH',
-	'RECONTACT__SECONDARY_CONTACT',
-	'RELEASE_DATA__CLINICAL_AND_GENETIC',
-	'RELEASE_DATA__DE_IDENTIFIED',
-	'RESEARCH_PARTICIPATION__CONTACT_INFORMATION',
-	'RESEARCH_PARTICIPATION__FUTURE_RESEARCH',
-	'REVIEW_SIGN__SIGNED',
-] as const;
+const router = Router();
 
-export const ConsentQuestionId = z.enum(CONSENT_QUESTION_IDS);
-export type ConsentQuestionId = z.infer<typeof ConsentQuestionId>;
-export const ConsentQuestionIdSchema: SchemaObject = generateSchema(ConsentQuestionId);
+router.use('/informed-consent', InformedConsentRouter);
 
-export const ConsentQuestion = z.object({
-	id: ConsentQuestionId,
-	isActive: z.boolean(),
-	category: ConsentCategory,
-});
-
-export type ConsentQuestion = z.infer<typeof ConsentQuestion>;
-export const ConsentQuestionSchema: SchemaObject = generateSchema(ConsentQuestion);
-
-export const ConsentQuestionArray = z.array(ConsentQuestion);
-export type ConsentQuestionArray = z.infer<typeof ConsentQuestionArray>;
+export default router;

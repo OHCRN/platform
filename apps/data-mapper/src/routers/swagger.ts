@@ -23,6 +23,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ClinicianInviteResponseSchema as ClinicianInviteResponse,
+	InformedConsentResponseSchema as InformedConsentResponse,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -69,10 +70,11 @@ const options = swaggerJsdoc({
 			schemas: {
 				ClinicianInviteResponse,
 				ClinicianInviteRequest,
+				InformedConsentResponse,
 			},
 		},
 	},
-	apis: ['./src/routers/*'],
+	apis: ['./src/routers/**/*.ts'],
 });
 
 const router = Router();

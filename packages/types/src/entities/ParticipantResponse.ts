@@ -28,8 +28,10 @@ export const ParticipantResponse = z.object({
 	participantId: NanoId,
 	response: z.boolean(),
 });
-
 export type ParticipantResponse = z.infer<typeof ParticipantResponse>;
+
+export const ParticipantResponseArray = z.array(ParticipantResponse);
+export type ParticipantResponseArray = z.infer<typeof ParticipantResponseArray>;
 
 const SORT_ORDERS = ['asc', 'desc'] as const;
 export const SortOrder = z.enum(SORT_ORDERS);
