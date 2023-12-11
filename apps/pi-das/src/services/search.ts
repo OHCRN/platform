@@ -24,7 +24,7 @@ export const getParticipants = async (): Promise<Participant[]> => {
 
 type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
 
-export const getClinicianInvite = async (
+export const getClinicianInviteById = async (
 	inviteId: string,
 ): Promise<Result<ClinicianInvite, GetInviteFailureStatus>> => {
 	return prisma.clinicianInvite
@@ -38,20 +38,16 @@ export const getClinicianInvite = async (
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === 'P2025') {
 					const errorMessage = `Invite with id '${inviteId}' does not exist.`;
-					logger.error('GET /clinician-invites/:inviteId', errorMessage, error.message);
+					logger.error(errorMessage, error.message);
 					return failure('INVITE_DOES_NOT_EXIST', errorMessage);
 				}
-				logger.error('GET /clinician-invites/:inviteId', error.code, error.message);
+				logger.error(error.code, error.message);
 				return failure(
 					'SYSTEM_ERROR',
 					`An unexpected error occurred in the PrismaClient - ${error.code}`,
 				);
 			}
-			logger.error(
-				'GET /clinician-invites/:inviteId',
-				'Unexpected error handling get invite request.',
-				error.message,
-			);
+			logger.error('Unexpected error handling get invite request.', error.message);
 			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 		});
 };
