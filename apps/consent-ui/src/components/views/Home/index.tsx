@@ -17,13 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import Image from 'next/image';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import LinkButton from 'src/components/common/Button/LinkButton';
+import BackgroundImage from 'src/public/landing-page.jpg';
+import { OHCRN_HOME_LINK } from 'src/constants';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+import LandingPageCard from './LandingPageCard';
+import styles from './Home.module.scss';
+
+const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
 	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
+		<div className={styles.heroContainer}>
+			<div className={styles.backgroundImg}>
+				<Image src={BackgroundImage} alt="" priority placeholder="blur" />
+			</div>
+			<div className={styles.hero}>
+				<div className={styles.heroText}>
+					<h1>{translate('landing-page', 'title')}</h1>
+					<p>
+						<b>{translate('landing-page', 'ohcrn-description')}</b>
+					</p>
+					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
+						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
+					</LinkButton>
+				</div>
+				<LandingPageCard currentLang={currentLang} />
+			</div>
+		</div>
 	);
-}
+};
+
+export default HomeComponent;
