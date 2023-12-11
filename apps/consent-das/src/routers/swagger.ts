@@ -26,6 +26,8 @@ import {
 	ConsentQuestionSchema as ConsentQuestion,
 	ConsentQuestionIdSchema as ConsentQuestionId,
 	LifecycleStateSchema as LifecycleState,
+	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
+	ConsentClinicianInviteResponseSchema as ClinicianInviteResponse,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -76,6 +78,8 @@ const options = swaggerJsdoc({
 				ConsentQuestion,
 				ConsentQuestionId,
 				LifecycleState,
+				ClinicianInviteRequest,
+				ClinicianInviteResponse,
 			},
 		},
 	},
