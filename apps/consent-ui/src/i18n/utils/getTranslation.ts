@@ -18,7 +18,7 @@
  */
 import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
-import { GetSingleTranslation, GetTranslation } from 'src/i18n/types';
+import { GetTranslation } from 'src/i18n/types';
 import dictionaries from 'src/i18n/locales';
 
 /**
@@ -56,16 +56,14 @@ const replaceParams = (
 // TODO: is there a way to enforce this function for server side use only?
 export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
-	const translate: GetSingleTranslation = (namespace, key, params) => {
+	return (namespace, key, params) => {
 		// TODO: consider throwing error if translation not a string/undefined
 		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
 		// warning log and `|| ''` is currently provided as a stopgap
-		if (!(dictionary && dictionary[namespace] && dictionary[namespace][key])) {
+		if (!(dictionary && namespace && key)) {
 			console.warn(`Missing translation in ${language} dictionary!`);
 		}
 		const translation = `${dictionary[namespace][key] || ''}`;
 		return replaceParams(translation, params);
 	};
-
-	return translate;
 };
