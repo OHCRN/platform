@@ -35,6 +35,8 @@ const CONSENT_QUESTION_IDS = [
 ] as const;
 
 export const ConsentQuestionId = z.enum(CONSENT_QUESTION_IDS);
+export type ConsentQuestionId = z.infer<typeof ConsentQuestionId>;
+export const ConsentQuestionIdSchema: SchemaObject = generateSchema(ConsentQuestionId);
 
 export const ConsentQuestion = z.object({
 	id: ConsentQuestionId,
@@ -43,6 +45,9 @@ export const ConsentQuestion = z.object({
 });
 
 export type ConsentQuestion = z.infer<typeof ConsentQuestion>;
-export type ConsentQuestionId = z.infer<typeof ConsentQuestionId>;
 export const ConsentQuestionSchema: SchemaObject = generateSchema(ConsentQuestion);
-export const ConsentQuestionIdSchema: SchemaObject = generateSchema(ConsentQuestionId);
+
+export const ConsentQuestionsRequest = z.object({
+	category: ConsentCategory.optional(),
+});
+export type ConsentQuestionsRequest = z.infer<typeof ConsentQuestionsRequest>;

@@ -35,20 +35,16 @@ export const getParticipant = async (
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === 'P2025') {
 					const errorMessage = `Participant with id '${participantId}' does not exist.`;
-					logger.error('GET /:participantId/:consentQuestionId', errorMessage, error.message);
+					logger.error(errorMessage, error.message);
 					return failure('PARTICIPANT_DOES_NOT_EXIST', errorMessage);
 				}
-				logger.error('GET /:participantId/:consentQuestionId', error.code, error.message);
+				logger.error(error.code, error.message);
 				return failure(
 					'SYSTEM_ERROR',
 					`An unexpected error occurred in the PrismaClient - ${error.code}`,
 				);
 			}
-			logger.error(
-				'GET /:participantId/:consentQuestionId',
-				'Unexpected error handling get participant request.',
-				error.message,
-			);
+			logger.error('Unexpected error handling get participant request.', error.message);
 			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 		});
 };
@@ -71,15 +67,35 @@ export const getConsentQuestion = async (
 	return result;
 };
 
-export const getConsentQuestions = async (
-	category?: ConsentCategory,
-): Promise<ConsentQuestion[]> => {
-	// TODO: add error handling
-	const result = await prisma.consentQuestion.findMany({
-		where: {
-			AND: [{ category }], // returns all consent questions if category is undefined
-		},
-	});
+type GetConsentQuestionFailureStatus = 'SYSTEM_ERROR';
+/**
+ * Fetches all consent questions, optionally filtered by category
+ * @param
+ * @returns Array of consent questions
+ */
+export const getConsentQuestions = async ({
+	category,
+}: {
+	category?: ConsentCategory;
+}): Promise<Result<ConsentQuestion[], GetConsentQuestionFailureStatus>> => {
+	const result = await prisma.consentQuestion
+		.findMany({
+			where: {
+				AND: [{ category }], // returns all consent questions if category is undefined
+			},
+		})
+		.then((data) => success(data))
+		.catch((error) => {
+			if (error instanceof PrismaClientKnownRequestError) {
+				logger.error(error.code, error.message);
+				return failure(
+					'SYSTEM_ERROR',
+					`An unexpected error occurred in the PrismaClient - ${error.code}`,
+				);
+			}
+			logger.error('Unexpected error retrieving consent questions.', error.message);
+			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+		});
 	return result;
 };
 
@@ -120,17 +136,13 @@ export const getParticipantResponses = async ({
 		.then((data) => success(data))
 		.catch((error) => {
 			if (error instanceof PrismaClientKnownRequestError) {
-				logger.error('GET /:participantId/:consentQuestionId', error.code, error.message);
+				logger.error(error.code, error.message);
 				return failure(
 					'SYSTEM_ERROR',
 					`An unexpected error occurred in the PrismaClient - ${error.code}`,
 				);
 			}
-			logger.error(
-				'GET /:participantId/:consentQuestionId',
-				'Unexpected error handling get participant response request.',
-				error.message,
-			);
+			logger.error('Unexpected error retrieving participant responses.', error.message);
 			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 		});
 };
