@@ -22,8 +22,8 @@
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { useAppConfigContext } from '../../../providers/AppConfigContextProvider';
-import { RecaptchaCheckboxRef } from '../../../../hooks/useRecaptcha';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+import { RecaptchaCheckboxRef } from 'src/hooks/useRecaptcha';
 
 const RecaptchaCheckbox = ({
 	onChange,
