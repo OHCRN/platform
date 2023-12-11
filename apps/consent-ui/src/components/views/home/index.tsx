@@ -25,7 +25,7 @@ import BackgroundImage from 'src/public/landing-page.jpg';
 import { OHCRN_HOME_LINK } from 'src/constants';
 
 import LandingPageCard from './LandingPageCard';
-import styles from './home.module.scss';
+import styles from './Home.module.scss';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
