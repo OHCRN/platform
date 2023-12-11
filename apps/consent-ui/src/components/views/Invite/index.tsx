@@ -17,11 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import DashboardComponent from 'src/components/common/Dashboard';
-import { ValidLanguage } from 'src/i18n';
+import Link from 'next/link';
 
-const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	return <DashboardComponent currentLang={currentLang} />;
+import { getTranslation, ValidLanguage } from 'src/i18n';
+
+const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
+	return (
+		<div>
+			<h2>{translate('common', 'invite')}</h2>
+			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
+		</div>
+	);
 };
 
-export default Dashboard;
+export default Invite;

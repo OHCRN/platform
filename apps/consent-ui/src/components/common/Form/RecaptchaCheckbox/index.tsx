@@ -17,18 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
+'use client';
 
-import { getTranslation, ValidLanguage } from 'src/i18n';
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha';
 
-const ClinicianRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
-	return (
-		<div>
-			<h2>{translate('common', 'invite')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
-		</div>
-	);
+import { useAppConfigContext } from '../../../providers/AppConfigContextProvider';
+import { RecaptchaCheckboxRef } from '../../../../hooks/useRecaptcha';
+
+const RecaptchaCheckbox = ({
+	onChange,
+	recaptchaCheckboxRef,
+}: {
+	onChange: () => void;
+	recaptchaCheckboxRef: RecaptchaCheckboxRef;
+}) => {
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
+
+	return RECAPTCHA_SITE_KEY ? (
+		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
+	) : null;
 };
 
-export default ClinicianRegistration;
+export default RecaptchaCheckbox;
