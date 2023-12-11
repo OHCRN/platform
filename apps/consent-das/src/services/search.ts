@@ -78,7 +78,7 @@ export const getConsentQuestions = async ({
 }: {
 	category?: ConsentCategory;
 }): Promise<Result<ConsentQuestion[], GetConsentQuestionFailureStatus>> => {
-	const result = await prisma.consentQuestion
+	return await prisma.consentQuestion
 		.findMany({
 			where: {
 				AND: [{ category }], // returns all consent questions if category is undefined
@@ -96,7 +96,6 @@ export const getConsentQuestions = async ({
 			logger.error('Unexpected error retrieving consent questions.', error.message);
 			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 		});
-	return result;
 };
 
 /**
