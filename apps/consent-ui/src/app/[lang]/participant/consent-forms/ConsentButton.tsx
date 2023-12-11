@@ -23,7 +23,7 @@ import urlJoin from 'url-join';
 import { useEffect, useState } from 'react';
 
 import Button from 'src/components/common/Button';
-import { useAppConfigContext } from 'src/components/common/AppConfigContextProvider';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 
 const ConsentButton = () => {
 	const appConfig = useAppConfigContext();

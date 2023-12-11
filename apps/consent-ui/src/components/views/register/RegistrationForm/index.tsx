@@ -26,7 +26,7 @@ import urlJoin from 'url-join';
 import Button from 'src/components/common/Button';
 import useRecaptcha from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/RecaptchaCheckbox';
-import { useAppConfigContext } from 'src/components/common/AppConfigContextProvider';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 import Notification from 'src/components/common/Notification';
 import { useModal } from 'src/components/common/Modal';
 

@@ -22,7 +22,7 @@
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { useAppConfigContext } from '../AppConfigContextProvider';
+import { useAppConfigContext } from '../../providers/AppConfigContextProvider';
 import { RecaptchaCheckboxRef } from '../../../hooks/useRecaptcha';
 
 const RecaptchaCheckbox = ({
