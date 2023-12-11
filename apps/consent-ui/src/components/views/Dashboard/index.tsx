@@ -23,8 +23,7 @@ import Image from 'next/image';
 import Card from 'src/components/common/Card';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/public/consents.jpeg';
-
-import LocalizedLink from '../../common/Link/LocalizedLink';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
 import styles from './Dashboard.module.scss';
 
