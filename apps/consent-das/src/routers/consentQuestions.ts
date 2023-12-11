@@ -20,9 +20,9 @@
 import { Router } from 'express';
 import { ConsentCategory, ConsentQuestionId } from 'types/entities';
 
-import { updateConsentQuestionIsActive } from '../service/update.js';
-import { getConsentQuestion, getConsentQuestions } from '../service/search.js';
-import { createConsentQuestion } from '../service/create.js';
+import { updateConsentQuestionIsActive } from '../services/update.js';
+import { getConsentQuestion, getConsentQuestions } from '../services/search.js';
+import { createConsentQuestion } from '../services/create.js';
 import logger from '../logger.js';
 
 // TODO: update JSDoc comments when custom error handling is implemented
