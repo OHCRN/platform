@@ -17,26 +17,61 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import clsx from 'clsx';
 
-// eslint-disable-next-line import/no-named-as-default
-import ReCAPTCHA from 'react-google-recaptcha';
+import RightArrow from 'src/components/common/Icons/Arrow';
 
-import { useAppConfigContext } from '../AppConfigContextProvider';
-import { RecaptchaCheckboxRef } from '../../hooks/useRecaptcha';
+import { ButtonProps as BaseProps } from './types';
+import styles from './Button.module.scss';
 
-const RecaptchaCheckbox = ({
-	onChange,
-	recaptchaCheckboxRef,
-}: {
-	onChange: () => void;
-	recaptchaCheckboxRef: RecaptchaCheckboxRef;
-}) => {
-	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
+interface ButtonProps extends BaseProps {
+	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
+	disabled?: boolean;
+}
 
-	return RECAPTCHA_SITE_KEY ? (
-		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
-	) : null;
+const Button = ({
+	children,
+	onClick,
+	variant = 'primary',
+	color = 'default',
+	size = 'base',
+	action,
+	disabled = false,
+	className = '',
+	LeftIcon,
+	RightIcon,
+}: ButtonProps) => {
+	return (
+		<button
+			className={clsx(
+				styles.base,
+				styles[variant],
+				styles[color],
+				styles[size],
+				(action === 'prev' || LeftIcon) && styles['left-icon'],
+				(action === 'next' || RightIcon) && styles['right-icon'],
+				className,
+			)}
+			disabled={disabled}
+			onClick={onClick}
+		>
+			{action === 'prev' ? (
+				<div>
+					<RightArrow className={styles['left-arrow']} />
+				</div>
+			) : (
+				LeftIcon && <div>{LeftIcon}</div>
+			)}
+			{children}
+			{action === 'next' ? (
+				<div>
+					<RightArrow />
+				</div>
+			) : (
+				RightIcon && <div>{RightIcon}</div>
+			)}
+		</button>
+	);
 };
 
-export default RecaptchaCheckbox;
+export default Button;

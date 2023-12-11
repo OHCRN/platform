@@ -19,12 +19,12 @@
 import clsx from 'clsx';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import PatientIcon from 'src/components/Icons/Family';
-import DoctorIcon from 'src/components/Icons/Doctor';
-import RightArrow from 'src/components/Icons/Arrow';
-import Chevron from 'src/components/Icons/Chevron';
-import Card from 'src/components/Card';
-import CardLink from 'src/components/Card/CardLink';
+import PatientIcon from 'src/components/common/Icons/Family';
+import DoctorIcon from 'src/components/common/Icons/Doctor';
+import RightArrow from 'src/components/common/Icons/Arrow';
+import Chevron from 'src/components/common/Icons/Chevron';
+import Card from 'src/components/common/Card';
+import CardLink from 'src/components/common/Card/CardLink';
 
 import styles from './LandingPageCard.module.scss';
 

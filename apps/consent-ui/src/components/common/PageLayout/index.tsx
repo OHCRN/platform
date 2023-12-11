@@ -17,30 +17,31 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
-
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import { RouteName } from 'src/components/Link/types';
 import { ValidLanguage } from 'src/i18n';
+import Container from 'src/components/common/Container';
+import Header from 'src/components/common/Header';
+import Footer from 'src/components/common/Footer';
 
-import styles from './CardLink.module.scss';
+import ModalProvider from '../Modal';
 
-const CardLink = async ({
-	name,
-	currentLang,
-	className,
+import styles from './PageLayout.module.scss';
+
+const PageLayout = async ({
 	children,
+	currentLang,
 }: {
-	name: RouteName;
-	currentLang: ValidLanguage;
-	className?: string;
 	children: React.ReactNode;
+	currentLang: ValidLanguage;
 }) => {
 	return (
-		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
-			{children}
-		</LocalizedLink>
+		<ModalProvider>
+			<Container>
+				<Header currentLang={currentLang} />
+				<main className={styles.main}>{children}</main>
+				<Footer currentLang={currentLang} />
+			</Container>
+		</ModalProvider>
 	);
 };
 
-export default CardLink;
+export default PageLayout;

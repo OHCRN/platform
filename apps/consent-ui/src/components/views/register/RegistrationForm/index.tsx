@@ -23,12 +23,12 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-import Button from 'src/components/Button';
+import Button from 'src/components/common/Button';
 import useRecaptcha from 'src/hooks/useRecaptcha';
-import RecaptchaCheckbox from 'src/components/RecaptchaCheckbox';
-import { useAppConfigContext } from 'src/components/AppConfigContextProvider';
-import Notification from 'src/components/Notification';
-import { useModal } from 'src/components/Modal';
+import RecaptchaCheckbox from 'src/components/common/RecaptchaCheckbox';
+import { useAppConfigContext } from 'src/components/common/AppConfigContextProvider';
+import Notification from 'src/components/common/Notification';
+import { useModal } from 'src/components/common/Modal';
 
 const RegistrationForm = () => {
 	const appConfig = useAppConfigContext();

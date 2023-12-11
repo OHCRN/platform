@@ -20,7 +20,7 @@
 import Link from 'next/link';
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import RegistrationForm from 'src/components/RegistrationForm';
+import RegistrationForm from 'src/components/views/register/RegistrationForm';
 
 const ParticipantRegistration = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);

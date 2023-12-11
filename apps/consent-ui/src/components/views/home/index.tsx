@@ -17,36 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import Image from 'next/image';
 
-import { ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from 'src/components/Link/utils';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import LinkButton from 'src/components/common/Button/LinkButton';
+import BackgroundImage from 'src/public/landing-page.jpg';
+import { OHCRN_HOME_LINK } from 'src/constants';
 
-function LanguageToggle({
-	currentLang,
-	children,
-}: {
-	currentLang: ValidLanguage;
-	children: ReactNode;
-}) {
-	const langToSelect = getUnselectedLang(currentLang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, currentLang);
+import LandingPageCard from './LandingPageCard';
+import styles from './home.module.scss';
 
+const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
 	return (
-		<LocalizedLink
-			name={linkName}
-			linkLang={langToSelect}
-			role="button"
-			color="blue"
-			variant="secondary"
-		>
-			{children}
-		</LocalizedLink>
+		<div className={styles.heroContainer}>
+			<div className={styles.backgroundImg}>
+				<Image src={BackgroundImage} alt="" priority placeholder="blur" />
+			</div>
+			<div className={styles.hero}>
+				<div className={styles.heroText}>
+					<h1>{translate('landing-page', 'title')}</h1>
+					<p>
+						<b>{translate('landing-page', 'ohcrn-description')}</b>
+					</p>
+					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
+						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
+					</LinkButton>
+				</div>
+				<LandingPageCard currentLang={currentLang} />
+			</div>
+		</div>
 	);
-}
+};
 
-export default LanguageToggle;
+export default HomeComponent;

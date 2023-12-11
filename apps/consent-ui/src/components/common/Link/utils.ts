@@ -18,7 +18,7 @@
  */
 
 import routesByLocale from 'src/i18n/routes/routesByLocale.json';
-import { RouteName, RouteNameEnum, RouteParams } from 'src/components/Link/types';
+import { RouteName, RouteNameEnum, RouteParams } from 'src/components/common/Link/types';
 import { ValidLanguage } from 'src/i18n';
 import { supportedLanguages } from 'src/i18n/settings';
 

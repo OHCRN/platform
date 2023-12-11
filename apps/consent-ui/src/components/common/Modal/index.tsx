@@ -30,9 +30,9 @@ import {
 } from 'react';
 import { useDetectClickOutside } from 'react-detect-click-outside';
 
-import Card from 'src/components/Card';
-import Button from 'src/components/Button';
-import LinkButton from 'src/components/Button/LinkButton';
+import Card from 'src/components/common/Card';
+import Button from 'src/components/common/Button';
+import LinkButton from 'src/components/common/Button/LinkButton';
 
 import { ModalConfig, ModalContextType, defaultModalContext } from './types';
 import styles from './Modal.module.scss';

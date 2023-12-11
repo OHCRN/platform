@@ -20,7 +20,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import Card from 'src/components/Card';
+import Card from 'src/components/common/Card';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/public/consents.jpeg';
 

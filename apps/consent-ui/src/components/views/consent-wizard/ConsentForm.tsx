@@ -21,8 +21,8 @@ import Link from 'next/link';
 import { ConsentCategory } from 'types/entities';
 
 import { getTranslation, TranslationFunction, ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import { RouteName } from 'src/components/Link/types';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { RouteName } from 'src/components/common/Link/types';
 
 // TODO: for demoing localized named links, consent form sections will be routed to properly in a later ticket
 export const PathList = ({

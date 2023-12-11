@@ -20,7 +20,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import RightArrow from 'src/components/Icons/Arrow';
+import RightArrow from 'src/components/common/Icons/Arrow';
 
 import { ButtonProps } from './types';
 import styles from './Button.module.scss';

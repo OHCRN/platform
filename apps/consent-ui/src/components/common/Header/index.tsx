@@ -22,9 +22,9 @@ import Image, { StaticImageData } from 'next/image';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
-import LanguageToggle from 'src/components/Header/LanguageToggle';
+import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import OhcrnImage from 'src/public/ohcrn_large.svg';
-import { getUnselectedLang } from 'src/components/Link/utils';
+import { getUnselectedLang } from 'src/components/common/Link/utils';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';

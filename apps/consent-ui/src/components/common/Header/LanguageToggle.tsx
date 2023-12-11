@@ -17,31 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+'use client';
+import { usePathname } from 'next/navigation';
+import { ReactNode } from 'react';
+
 import { ValidLanguage } from 'src/i18n';
-import Container from 'src/components/Container';
-import Header from 'src/components/Header';
-import Footer from 'src/components/Footer';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getLinkNameByPath, getUnselectedLang } from 'src/components/common/Link/utils';
 
-import ModalProvider from '../Modal';
-
-import styles from './PageLayout.module.scss';
-
-const PageLayout = async ({
-	children,
+function LanguageToggle({
 	currentLang,
+	children,
 }: {
-	children: React.ReactNode;
 	currentLang: ValidLanguage;
-}) => {
-	return (
-		<ModalProvider>
-			<Container>
-				<Header currentLang={currentLang} />
-				<main className={styles.main}>{children}</main>
-				<Footer currentLang={currentLang} />
-			</Container>
-		</ModalProvider>
-	);
-};
+	children: ReactNode;
+}) {
+	const langToSelect = getUnselectedLang(currentLang);
+	const path = usePathname();
+	const linkName = getLinkNameByPath(path, currentLang);
 
-export default PageLayout;
+	return (
+		<LocalizedLink
+			name={linkName}
+			linkLang={langToSelect}
+			role="button"
+			color="blue"
+			variant="secondary"
+		>
+			{children}
+		</LocalizedLink>
+	);
+}
+
+export default LanguageToggle;

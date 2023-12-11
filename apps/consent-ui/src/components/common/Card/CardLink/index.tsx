@@ -19,59 +19,28 @@
 
 import clsx from 'clsx';
 
-import RightArrow from 'src/components/Icons/Arrow';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { RouteName } from 'src/components/common/Link/types';
+import { ValidLanguage } from 'src/i18n';
 
-import { ButtonProps as BaseProps } from './types';
-import styles from './Button.module.scss';
+import styles from './CardLink.module.scss';
 
-interface ButtonProps extends BaseProps {
-	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
-	disabled?: boolean;
-}
-
-const Button = ({
+const CardLink = async ({
+	name,
+	currentLang,
+	className,
 	children,
-	onClick,
-	variant = 'primary',
-	color = 'default',
-	size = 'base',
-	action,
-	disabled = false,
-	className = '',
-	LeftIcon,
-	RightIcon,
-}: ButtonProps) => {
+}: {
+	name: RouteName;
+	currentLang: ValidLanguage;
+	className?: string;
+	children: React.ReactNode;
+}) => {
 	return (
-		<button
-			className={clsx(
-				styles.base,
-				styles[variant],
-				styles[color],
-				styles[size],
-				(action === 'prev' || LeftIcon) && styles['left-icon'],
-				(action === 'next' || RightIcon) && styles['right-icon'],
-				className,
-			)}
-			disabled={disabled}
-			onClick={onClick}
-		>
-			{action === 'prev' ? (
-				<div>
-					<RightArrow className={styles['left-arrow']} />
-				</div>
-			) : (
-				LeftIcon && <div>{LeftIcon}</div>
-			)}
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
 			{children}
-			{action === 'next' ? (
-				<div>
-					<RightArrow />
-				</div>
-			) : (
-				RightIcon && <div>{RightIcon}</div>
-			)}
-		</button>
+		</LocalizedLink>
 	);
 };
 
-export default Button;
+export default CardLink;

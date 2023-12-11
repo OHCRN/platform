@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import DashboardComponent from 'src/components/Dashboard';
+import DashboardComponent from 'src/components/common/Dashboard';
 import { ValidLanguage } from 'src/i18n';
 
 const Dashboard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
