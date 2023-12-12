@@ -56,7 +56,6 @@ export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;
 
 export const InviteEntity = z.object({
 	id: NanoId,
-
 	inviteSentDate: z.coerce.date(),
 	inviteAcceptedDate: z.coerce.date().optional(),
 	inviteAccepted: z.boolean().default(false),
@@ -64,7 +63,9 @@ export const InviteEntity = z.object({
 
 export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
 	.merge(InviteParticipantFields)
-	.refine(hasRequiredGuardianInformation);
+	.refine(hasRequiredGuardianInformation, {
+		message: 'Guardian contact fields are required for that consentGroup',
+	});
 export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;
 export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteRequest);
 
