@@ -135,11 +135,13 @@ export const getInformedConsentResponses = async (
 			return participantResponsesResult;
 		}
 
-		const informedConsentResponses = InformedConsentResponse.safeParse(participantResponsesResult);
+		const informedConsentResponses = InformedConsentResponse.safeParse(
+			participantResponsesResult.data,
+		);
 
 		if (!informedConsentResponses.success) {
 			logger.error(
-				'Received invalid data in response retrieving Informed Consent responses.',
+				'Received invalid data fetching Informed Consent responses.',
 				informedConsentResponses.error.issues,
 			);
 			return failure('SYSTEM_ERROR', informedConsentResponses.error.message);
