@@ -18,10 +18,15 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { ConsentClinicianInviteRequest } from 'types/entities';
+import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
 
-import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
-import { createClinicianInvite } from '../service/create.js';
+import { getClinicianInvite, getClinicianInvites } from '../services/search.js';
+import { createClinicianInvite } from '../services/create.js';
 import logger from '../logger.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 // TODO: update JSDoc comments when custom error handling is implemented
 /**
@@ -111,72 +116,42 @@ router.get('/:inviteId', async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               clinicianFirstName:
- *                 type: string
- *                 required: true
- *               clinicianInstitutionalEmailAddress:
- *                 type: string
- *                 format: email
- *                 required: true
- *               clinicianLastName:
- *                 type: string
- *                 required: true
- *               clinicianTitleOrRole:
- *                 type: string
- *                 required: true
- *               consentGroup:
- *                 $ref: '#/components/schemas/ConsentGroup'
- *                 required: true
- *               consentToBeContacted:
- *                 type: boolean
- *                 required: true
- *               inviteAcceptedDate:
- *                 type: string
- *                 format: date
- *               inviteAccepted:
- *                 type: boolean
- *               clinicianInviteId:
- *                 type: string
+ *             $ref: '#/components/schemas/ClinicianInviteRequest'
  *     responses:
  *       201:
- *         description: The clinician invite was successfully created.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Error creating clinician invite.
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', async (req, res) => {
-	logger.info('POST /clinician-invites');
-	const {
-		clinicianFirstName,
-		clinicianInstitutionalEmailAddress,
-		clinicianInviteId,
-		clinicianLastName,
-		clinicianTitleOrRole,
-		consentGroup,
-		consentToBeContacted,
-		inviteAcceptedDate,
-		inviteAccepted,
-	} = req.body;
-	// TODO: add validation
-	try {
-		const parsedInviteAcceptedDate = inviteAcceptedDate ? new Date(inviteAcceptedDate) : undefined;
-		const clinicianInvite = await createClinicianInvite({
-			clinicianFirstName,
-			clinicianInstitutionalEmailAddress,
-			clinicianInviteId,
-			clinicianLastName,
-			clinicianTitleOrRole,
-			consentGroup,
-			consentToBeContacted,
-			inviteAcceptedDate: parsedInviteAcceptedDate,
-			inviteAccepted,
-		});
-		res.status(201).send({ clinicianInvite });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error creating clinician invite' });
-	}
-});
+router.post(
+	'/',
+	withRequestValidation(ConsentClinicianInviteRequest, async (req, res) => {
+		try {
+			const invite = await createClinicianInvite(req.body);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		}
+	}),
+);
 
 export default router;

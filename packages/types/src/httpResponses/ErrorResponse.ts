@@ -19,6 +19,7 @@
 
 export enum ErrorName {
 	SERVER_ERROR = 'ServerError',
+	NOT_FOUND_ERROR = 'NotFoundError',
 	CONFLICT_ERROR = 'ConflictError',
 	REQUEST_VALIDATION_ERROR = 'RequestValidationError',
 	RECAPTCHA_ERROR = 'RecaptchaError',
