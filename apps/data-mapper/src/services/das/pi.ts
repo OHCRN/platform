@@ -18,7 +18,9 @@
  */
 
 import urlJoin from 'url-join';
+import { AxiosError } from 'axios';
 import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/entities';
+import { Result, failure, success } from 'types/httpResponses';
 
 import { getAppConfig } from '../../config.js';
 import logger from '../../logger.js';
@@ -49,9 +51,38 @@ export const createInvitePiData = async ({
 			guardianRelationship,
 		});
 		// converts all nulls to undefined
-		return PIClinicianInviteResponse.parse(result.data.invite);
+		return PIClinicianInviteResponse.parse(result.data);
 	} catch (error) {
 		logger.error(error);
 		throw error; // TODO: remove and send custom error schema
+	}
+};
+
+type DeleteInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+/**
+ * Makes request to PI DAS to delete a Clinician Invite
+ * @param inviteId ID of invite to be deleted
+ * @returns
+ */
+export const deleteInvitePiData = async (
+	inviteId: string,
+): Promise<Result<null, DeleteInviteFailureStatus>> => {
+	const { piDasUrl } = getAppConfig();
+	try {
+		await axiosClient.delete(urlJoin(piDasUrl, `clinician-invites/${inviteId}`));
+		return success(null);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('DELETE /invites', 'AxiosError handling delete invite request', data);
+
+			if (status === 404) {
+				return failure('INVITE_DOES_NOT_EXIST', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
