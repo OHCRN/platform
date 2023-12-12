@@ -19,24 +19,25 @@
 
 const dictionary = {
 	title: 'Clinician Patient Registration',
-	'main-title': 'Register Your Patient',
-	'main-description': 'Invite your patients to participate in the OHCRN registry.',
-	'patient-information': 'Patient Information',
-	'consentGroup-tooltip': 'This will determine if a guardian must be involved with consents.',
-	'phone-tooltip': 'If we contact them, it will be for health updates and consent.',
-	'email-tooltip': 'The patient will receive an invitation to this account.',
+	mainTitle: 'Register Your Patient',
+	mainDescription: 'Invite your patients to participate in the OHCRN registry.',
+	patientInformation: 'Patient Information',
+	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
+	phoneTooltip: 'If we contact them, it will be for health updates and consent.',
+	emailTooltip: 'The patient will receive an invitation to this account.',
 	'after-registering':
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
-	'consentContact-description':
+	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
-	'clinician-information': 'Clinician Information',
-	'clinician-email-tooltip': 'We require this to confirm your authority to register patients.',
-	'enter-guardian-info': "Please enter the guardian's information below:",
-	'upload-file-description-1':
+	clinicianInformation: 'Clinician Information',
+	clinicianEmailTooltip: 'We require this to confirm your authority to register patients.',
+	enterGuardianInfo: "Please enter the guardian's information below:",
+	uploadFileDescription1:
 		'The participant is part of the "Guardian Consent of a Minor (including Assent)" group. Please ',
 	'upload-file-link': 'download a copy of the assent form',
-	'upload-file-description-2':
+	uploadFileDescription2:
 		' and have your participant (who is a minor) read and sign the assent form. Use the upload button below to submit a completed assent form signed by the minor.',
+	uploadFileLink: '#',
 } satisfies Record<string, string>;
 
 export type ClinicianInviteFormDictionary = Record<keyof typeof dictionary, string>;

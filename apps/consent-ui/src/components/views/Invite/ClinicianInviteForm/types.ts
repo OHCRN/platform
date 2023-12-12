@@ -18,7 +18,6 @@
  */
 
 import { ConsentGroupDictionary } from 'src/i18n/locales/en/consentGroup';
-
 import { ClinicianInviteFormDictionary } from 'src/i18n/locales/en/clinicianInviteForm';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { FormsDictionary } from 'src/i18n/locales/en/forms';

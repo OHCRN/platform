@@ -20,8 +20,8 @@
 import { FormsDictionary } from '../en/forms';
 
 const dictionary = {
-	'indicates-required-field': 'indique un champ obligatoire',
-	'select-placeholder': 'Choisissez-en un',
+	indicatesRequiredField: 'indique un champ obligatoire',
+	selectPlaceholder: 'Choisissez-en un',
 } satisfies FormsDictionary;
 
 export default dictionary;

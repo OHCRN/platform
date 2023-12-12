@@ -21,8 +21,9 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ClinicianInvite, InviteClinicianFields, InviteEntity } from './ClinicianInvite.js';
 import { NanoId } from '../NanoId.js';
+
+import { InviteClinicianFields, InviteEntity } from './ClinicianInvite.js';
 
 export const ConsentClinicianInviteRequest = z.object({ id: NanoId }).merge(InviteClinicianFields);
 export type ConsentClinicianInviteRequest = z.infer<typeof ConsentClinicianInviteRequest>;

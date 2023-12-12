@@ -18,8 +18,8 @@
  */
 
 const dictionary = {
-	'indicates-required-field': 'indicates required field',
-	'select-placeholder': 'Select an option...',
+	indicatesRequiredField: 'indicates required field',
+	selectPlaceholder: 'Select an option...',
 } satisfies Record<string, string>;
 
 export type FormsDictionary = Record<keyof typeof dictionary, string>;

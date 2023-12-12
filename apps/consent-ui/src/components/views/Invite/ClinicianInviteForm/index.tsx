@@ -130,9 +130,9 @@ const ClinicianInviteFormComponent = ({
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<div>
-					<h3>{textDict['patient-information']}</h3>
+					<h3>{textDict['patientInformation']}</h3>
 					<p>
-						<RequiredAsterisk /> {textDict['indicates-required-field']}
+						<RequiredAsterisk /> {textDict['indicatesRequiredField']}
 					</p>
 					<TextFieldSet
 						error={errors.participantFirstName?.type && errorsDict['required']}
@@ -171,7 +171,7 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict['consentGroup'] || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
-						placeholder={textDict['select-placeholder'] || ''}
+						placeholder={textDict['selectPlaceholder'] || ''}
 						required
 					/>
 				</div>
@@ -183,7 +183,7 @@ const ClinicianInviteFormComponent = ({
 						 * they're required if they're visible,
 						 * i.e. if the user has indicated the participant is a minor
 						 */}
-						<p>{textDict['enter-guardian-info']}</p>
+						<p>{textDict['enterGuardianInfo']}</p>
 						<TextFieldSet
 							error={errors.guardianName?.type && errorsDict['required']}
 							label={labelsDict['guardianName'] || ''}
@@ -211,10 +211,10 @@ const ClinicianInviteFormComponent = ({
 							required
 						/>
 						<p>
-							{textDict['upload-file-description-1']}
+							{textDict['uploadFileDescription1']}
 							<a href="">{textDict['upload-file-link']}</a>
 							{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
-							{textDict['upload-file-description-2']}
+							{textDict['uploadFileDescription2']}
 							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 						</p>
 					</div>
@@ -223,7 +223,7 @@ const ClinicianInviteFormComponent = ({
 				<div>
 					<p>{textDict['after-registering']}</p>
 					<CheckboxFieldSet
-						description={textDict['consentContact-description']}
+						description={textDict['consentContactDescription']}
 						error={errors.consentToBeContacted?.type && errorsDict['required']}
 						name="consentToBeContacted"
 						required
@@ -232,7 +232,7 @@ const ClinicianInviteFormComponent = ({
 				</div>
 
 				<div>
-					<h3>{textDict['clinician-information']}</h3>
+					<h3>{textDict['clinicianInformation']}</h3>
 					<TextFieldSet
 						error={errors.clinicianTitleOrRole?.type && errorsDict['required']}
 						label={labelsDict['clinicianTitleOrRole'] || ''}
