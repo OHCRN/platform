@@ -1,4 +1,4 @@
-import { ParticipantResponseRequest } from 'types/entities';
+import { ParticipantResponsesRequest } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
 
 import prisma, {
@@ -107,7 +107,7 @@ export const getParticipantResponses = async ({
 	participantId,
 	consentQuestionId,
 	sortOrder,
-}: ParticipantResponseRequest): Promise<
+}: ParticipantResponsesRequest): Promise<
 	Result<ParticipantResponse[], GetParticipantFailureStatus>
 > => {
 	// Consent Question ID has already been verified

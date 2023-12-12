@@ -42,11 +42,11 @@ const SORT_ORDERS = ['asc', 'desc'] as const;
 export const SortOrder = z.enum(SORT_ORDERS);
 export type SortOrder = z.infer<typeof SortOrder>;
 
-export const ParticipantResponseRequest = ParticipantResponse.pick({
+export const ParticipantResponsesRequest = ParticipantResponse.pick({
 	consentQuestionId: true,
 	participantId: true,
 }).extend({
 	sortOrder: SortOrder.default('desc'),
 });
 
-export type ParticipantResponseRequest = z.infer<typeof ParticipantResponseRequest>;
+export type ParticipantResponsesRequest = z.infer<typeof ParticipantResponsesRequest>;

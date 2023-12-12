@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ParticipantResponseRequest } from 'types/entities';
+import { ParticipantResponsesRequest } from 'types/entities';
 import {
 	ErrorName,
 	ErrorResponse,
@@ -85,7 +85,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		const { participantId, consentQuestionId } = req.params;
 		const sortOrder = req.query['sort-order'];
 
-		const request = ParticipantResponseRequest.safeParse({
+		const request = ParticipantResponsesRequest.safeParse({
 			participantId,
 			consentQuestionId,
 			sortOrder,
