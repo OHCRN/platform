@@ -1,0 +1,42 @@
+components:
+  schemas:
+    ClinicianInviteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "abc123"
+        participantFirstName:
+          type: string
+          example: "John"
+        participantLastName:
+          type: string
+          example: "Doe"
+        participantEmailAddress:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        participantPhoneNumber:
+          type: string
+          example: "1234567890"
+        participantPreferredName:
+          type: string
+          example: "Johnny"
+          nullable: true
+        guardianName:
+          type: string
+          example: "Jane Doe"
+          nullable: true
+        guardianPhoneNumber:
+          type: string
+          example: "9876543210"
+          nullable: true
+        guardianEmailAddress:
+          type: string
+          format: email
+          example: "jane.doe@example.com"
+          nullable: true
+        guardianRelationship:
+          type: string
+          example: "Parent"
+          nullable: true
