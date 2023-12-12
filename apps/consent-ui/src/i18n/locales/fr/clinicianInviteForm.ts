@@ -17,21 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ClinicianInviteFormDictionary } from '../en/clinician-invite-form';
+import { ClinicianInviteFormDictionary } from '../en/clinicianInviteForm';
 
 const dictionary = {
 	title: 'Inscription des patients cliniciens',
 	'main-title': 'Enregistrez votre patient',
 	'main-description': 'Invitez vos patients à participer au registre OHCRN.',
 	'patient-information': 'Informations sur les patients',
-	'consent-group-tooltip':
+	'consentGroup-tooltip':
 		'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
 	'phone-tooltip':
 		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
 	'email-tooltip': 'Le patient recevra une invitation sur ce compte.',
 	'after-registering':
 		"Après votre inscription, nous devrons collecter certains consentements et données importants. Votre patient aura accès à la mise à jour de son dossier, mais s'il a besoin d'aide, nous pouvons le contacter.",
-	'consent-contact-description':
+	'consentContact-description':
 		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
 	'clinician-information': 'Informations sur le clinicien',
 	'clinician-email-tooltip':

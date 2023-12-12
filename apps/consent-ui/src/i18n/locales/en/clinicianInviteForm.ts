@@ -22,12 +22,12 @@ const dictionary = {
 	'main-title': 'Register Your Patient',
 	'main-description': 'Invite your patients to participate in the OHCRN registry.',
 	'patient-information': 'Patient Information',
-	'consent-group-tooltip': 'This will determine if a guardian must be involved with consents.',
+	'consentGroup-tooltip': 'This will determine if a guardian must be involved with consents.',
 	'phone-tooltip': 'If we contact them, it will be for health updates and consent.',
 	'email-tooltip': 'The patient will receive an invitation to this account.',
 	'after-registering':
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
-	'consent-contact-description':
+	'consentContact-description':
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	'clinician-information': 'Clinician Information',
 	'clinician-email-tooltip': 'We require this to confirm your authority to register patients.',

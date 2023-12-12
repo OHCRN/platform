@@ -19,7 +19,7 @@
 
 import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birthSex';
-import clinicianInviteFormDictionary from './clinician-invite-form';
+import clinicianInviteFormDictionary from './clinicianInviteForm';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
 import consentGroupDictionary from './consentGroup';
@@ -30,8 +30,8 @@ import consentReviewSignDictionary from './consentReviewSign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
 import formsDictionary from './forms';
-import formLabelsDictionary from './form-labels';
-import formErrorsDictionary from './form-errors';
+import formLabelsDictionary from './formLabels';
+import formErrorsDictionary from './formErrors';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
@@ -45,7 +45,7 @@ import historyOfCancerDictionary from './historyOfCancer';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
-	'clinician-invite-form': clinicianInviteFormDictionary,
+	clinicianInviteForm: clinicianInviteFormDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,
@@ -56,8 +56,8 @@ const dictionaries = {
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
 	forms: formsDictionary,
-	'form-errors': formErrorsDictionary,
-	'form-labels': formLabelsDictionary,
+	formErrors: formErrorsDictionary,
+	formLabels: formLabelsDictionary,
 	gender: genderDictionary,
 	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,

@@ -17,10 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormErrorsDictionary } from '../en/form-errors';
+import { FormLabelsDictionary } from '../en/formLabels';
 
 const dictionary = {
-	required: 'Veuillez remplir le champ requis.',
-} satisfies FormErrorsDictionary;
+	clinicianFirstName: 'Prénom du clinicien',
+	clinicianInstitutionalEmailAddress: 'Adresse e-mail institutionnelle du clinicien',
+	clinicianLastName: 'Surnom du clinicien',
+	clinicianTitleOrRole: 'Titre ou rôle du clinicien',
+	consentContact: 'Consentement à être contacté',
+	consentGroup: 'Groupe de consentement',
+	firstName: 'Prénom',
+	guardianEmail: 'Addresse e-mail du gardien',
+	guardianName: 'Nom du gardien',
+	guardianPhone: 'Numéro de téléphone du gardien',
+	guardianRelationship: 'Relation du gardien avec le participant',
+	lastName: 'Nom de famille',
+	preferredName: 'Nom préféré',
+	email: 'Adresse e-mail',
+	phone: 'Numéro de téléphone',
+} satisfies FormLabelsDictionary;
 
 export default dictionary;

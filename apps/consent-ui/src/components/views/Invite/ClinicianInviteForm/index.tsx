@@ -24,14 +24,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteRequest, ConsentGroup, InviteGuardianFields } from 'types/entities';
 
-import { FormLabelsDictionary } from 'src/i18n/locales/en/form-labels';
+import { FormLabelsDictionary } from 'src/i18n/locales/en/formLabels';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
 import useRecaptcha from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/common/Notification';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { API } from 'src/constants';
 import Form from 'src/components/common/Form';
@@ -136,19 +136,19 @@ const ClinicianInviteFormComponent = ({
 					</p>
 					<TextFieldSet
 						error={errors.participantFirstName?.type && errorsDict['required']}
-						label={labelsDict['first-name'] || ''}
+						label={labelsDict['firstName'] || ''}
 						name="participantFirstName"
 						required
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict['required']}
-						label={labelsDict['last-name'] || ''}
+						label={labelsDict['lastName'] || ''}
 						name="participantLastName"
 						required
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict['required']}
-						label={labelsDict['preferred-name'] || ''}
+						label={labelsDict['preferredName'] || ''}
 						name="participantPreferredName"
 					/>
 					<TextFieldSet
@@ -168,7 +168,7 @@ const ClinicianInviteFormComponent = ({
 
 					<SelectFieldSet
 						error={errors.consentGroup?.type && errorsDict['required']}
-						label={labelsDict['consent-group'] || ''}
+						label={labelsDict['consentGroup'] || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
 						placeholder={textDict['select-placeholder'] || ''}
@@ -186,13 +186,13 @@ const ClinicianInviteFormComponent = ({
 						<p>{textDict['enter-guardian-info']}</p>
 						<TextFieldSet
 							error={errors.guardianName?.type && errorsDict['required']}
-							label={labelsDict['guardian-name'] || ''}
+							label={labelsDict['guardianName'] || ''}
 							name="guardianName"
 							required
 						/>
 						<TextFieldSet
 							error={errors.guardianPhoneNumber?.type && errorsDict['required']}
-							label={labelsDict['guardian-phone'] || ''}
+							label={labelsDict['guardianPhone'] || ''}
 							name="guardianPhoneNumber"
 							required
 							type="tel"
@@ -206,7 +206,7 @@ const ClinicianInviteFormComponent = ({
 						/>
 						<TextFieldSet
 							error={errors.guardianRelationship?.type && errorsDict['required']}
-							label={labelsDict['guardian-relationship'] || ''}
+							label={labelsDict['guardianRelationship'] || ''}
 							name="guardianRelationship"
 							required
 						/>
@@ -223,11 +223,11 @@ const ClinicianInviteFormComponent = ({
 				<div>
 					<p>{textDict['after-registering']}</p>
 					<CheckboxFieldSet
-						description={textDict['consent-contact-description']}
+						description={textDict['consentContact-description']}
 						error={errors.consentToBeContacted?.type && errorsDict['required']}
 						name="consentToBeContacted"
 						required
-						title={labelsDict['consent-contact']}
+						title={labelsDict['consentContact']}
 					/>
 				</div>
 
@@ -235,25 +235,25 @@ const ClinicianInviteFormComponent = ({
 					<h3>{textDict['clinician-information']}</h3>
 					<TextFieldSet
 						error={errors.clinicianTitleOrRole?.type && errorsDict['required']}
-						label={labelsDict['clinician-title-or-role'] || ''}
+						label={labelsDict['clinicianTitleOrRole'] || ''}
 						name="clinicianTitleOrRole"
 						required
 					/>
 					<TextFieldSet
 						error={errors.clinicianFirstName?.type && errorsDict['required']}
-						label={labelsDict['clinician-first-name'] || ''}
+						label={labelsDict['clinicianFirstName'] || ''}
 						name="clinicianFirstName"
 						required
 					/>
 					<TextFieldSet
 						error={errors.clinicianLastName?.type && errorsDict['required']}
-						label={labelsDict['clinician-last-name'] || ''}
+						label={labelsDict['clinicianLastName'] || ''}
 						name="clinicianLastName"
 						required
 					/>
 					<TextFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict['required']}
-						label={labelsDict['clinician-institutional-email-address'] || ''}
+						label={labelsDict['clinicianInstitutionalEmailAddress'] || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
 						type="email"

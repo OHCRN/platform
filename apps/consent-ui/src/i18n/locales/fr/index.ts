@@ -19,7 +19,7 @@
 
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
-import clinicianInviteFormDictionary from 'src/i18n/locales/fr/clinician-invite-form';
+import clinicianInviteFormDictionary from 'src/i18n/locales/fr/clinicianInviteForm';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
@@ -30,8 +30,8 @@ import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
 import en from 'src/i18n/locales/en/index';
 import footerDictionary from 'src/i18n/locales/fr/footer';
-import formErrorsDictionary from 'src/i18n/locales/fr/form-errors';
-import formLabelsDictionary from 'src/i18n/locales/fr/form-labels';
+import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
+import formLabelsDictionary from 'src/i18n/locales/fr/formLabels';
 import formsDictionary from 'src/i18n/locales/fr/forms';
 import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
@@ -46,7 +46,7 @@ import registerDictionary from 'src/i18n/locales/fr/register';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
-	'clinician-invite-form': clinicianInviteFormDictionary,
+	clinicianInviteForm: clinicianInviteFormDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,
@@ -57,8 +57,8 @@ const dictionaries = {
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
 	forms: formsDictionary,
-	'form-errors': formErrorsDictionary,
-	'form-labels': formLabelsDictionary,
+	formErrors: formErrorsDictionary,
+	formLabels: formLabelsDictionary,
 	gender: genderDictionary,
 	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,

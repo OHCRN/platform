@@ -17,24 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	'clinician-first-name': 'Clinician First Name',
-	'clinician-institutional-email-address': 'Clinician Institutional Email Address',
-	'clinician-last-name': 'Clinician Last Name',
-	'clinician-title-or-role': 'Clinician Title/Role',
-	'consent-contact': 'Consent to be Contacted',
-	'consent-group': 'Consent Group',
-	'first-name': 'First Name',
-	'guardian-email': "Guardian's Email Address",
-	'guardian-name': "Guardian's Name",
-	'guardian-phone': "Guardian's Phone Number",
-	'guardian-relationship': "Guardian's Relationship to Participant",
-	'last-name': 'Last Name',
-	'preferred-name': 'Preferred Name',
-	email: 'Email Address',
-	phone: 'Phone Number',
-} satisfies Record<string, string>;
+import { FormErrorsDictionary } from '../en/formErrors';
 
-export type FormLabelsDictionary = Record<keyof typeof dictionary, string>;
+const dictionary = {
+	required: 'Veuillez remplir le champ requis.',
+} satisfies FormErrorsDictionary;
 
 export default dictionary;

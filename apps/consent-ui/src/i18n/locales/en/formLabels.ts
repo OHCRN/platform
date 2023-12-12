@@ -17,24 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormLabelsDictionary } from '../en/form-labels';
-
 const dictionary = {
-	'clinician-first-name': 'Prénom du clinicien',
-	'clinician-institutional-email-address': 'Adresse e-mail institutionnelle du clinicien',
-	'clinician-last-name': 'Surnom du clinicien',
-	'clinician-title-or-role': 'Titre ou rôle du clinicien',
-	'consent-contact': 'Consentement à être contacté',
-	'consent-group': 'Groupe de consentement',
-	'first-name': 'Prénom',
-	'guardian-email': 'Addresse e-mail du gardien',
-	'guardian-name': 'Nom du gardien',
-	'guardian-phone': 'Numéro de téléphone du gardien',
-	'guardian-relationship': 'Relation du gardien avec le participant',
-	'last-name': 'Nom de famille',
-	'preferred-name': 'Nom préféré',
-	email: 'Adresse e-mail',
-	phone: 'Numéro de téléphone',
-} satisfies FormLabelsDictionary;
+	clinicianFirstName: 'Clinician First Name',
+	clinicianInstitutionalEmailAddress: 'Clinician Institutional Email Address',
+	clinicianLastName: 'Clinician Last Name',
+	clinicianTitleOrRole: 'Clinician Title/Role',
+	consentContact: 'Consent to be Contacted',
+	consentGroup: 'Consent Group',
+	firstName: 'First Name',
+	guardianEmail: "Guardian's Email Address",
+	guardianName: "Guardian's Name",
+	guardianPhone: "Guardian's Phone Number",
+	guardianRelationship: "Guardian's Relationship to Participant",
+	lastName: 'Last Name',
+	preferredName: 'Preferred Name',
+	email: 'Email Address',
+	phone: 'Phone Number',
+} satisfies Record<string, string>;
+
+export type FormLabelsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;
