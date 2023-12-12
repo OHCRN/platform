@@ -17,13 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+'use client';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
-	);
-}
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+import { RecaptchaCheckboxRef } from 'src/hooks/useRecaptcha';
+
+const RecaptchaCheckbox = ({
+	onChange,
+	recaptchaCheckboxRef,
+}: {
+	onChange: () => void;
+	recaptchaCheckboxRef: RecaptchaCheckboxRef;
+}) => {
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
+
+	return RECAPTCHA_SITE_KEY ? (
+		<ReCAPTCHA ref={recaptchaCheckboxRef} sitekey={RECAPTCHA_SITE_KEY} onChange={onChange} />
+	) : null;
+};
+
+export default RecaptchaCheckbox;

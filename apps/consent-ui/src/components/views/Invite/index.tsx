@@ -17,13 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import Link from 'next/link';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+import { getTranslation, ValidLanguage } from 'src/i18n';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
 	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
+		<div>
+			<h2>{translate('common', 'invite')}</h2>
+			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
+		</div>
 	);
-}
+};
+
+export default Invite;

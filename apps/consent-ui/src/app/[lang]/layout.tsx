@@ -21,8 +21,8 @@ import { Montserrat } from 'next/font/google';
 
 import { ValidLanguage } from 'src/i18n';
 import { supportedLanguages } from 'src/i18n/settings';
-import PageLayout from 'src/components/PageLayout';
-import AppConfigContextProvider from 'src/components/AppConfigContextProvider';
+import PageLayout from 'src/components/common/PageLayout';
+import AppConfigContextProvider from 'src/components/providers/AppConfigContextProvider';
 import { getClientAppConfig } from 'src/config';
 
 import '../globals.css';

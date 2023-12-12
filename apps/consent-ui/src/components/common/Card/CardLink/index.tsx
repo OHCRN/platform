@@ -17,13 +17,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import clsx from 'clsx';
 
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { RouteName } from 'src/components/common/Link/types';
 import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+import styles from './CardLink.module.scss';
+
+const CardLink = async ({
+	name,
+	currentLang,
+	className,
+	children,
+}: {
+	name: RouteName;
+	currentLang: ValidLanguage;
+	className?: string;
+	children: React.ReactNode;
+}) => {
 	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
+		<LocalizedLink name={name} linkLang={currentLang} className={clsx(styles.button, className)}>
+			{children}
+		</LocalizedLink>
 	);
-}
+};
+
+export default CardLink;
