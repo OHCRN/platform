@@ -36,19 +36,19 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		<div className={styles.versions}>
 			<div className={styles.credit}>
 				<span>
-					<b>{translate('footer', 'powered-by')}: </b>
+					<b>{translate('footer', 'poweredBy')}: </b>
 				</span>
 				<Link href="#" className={clsx(styles.icon, styles.overture)}>
-					<Image src={OvertureLogo} alt={translate('footer', 'overture-alt')} />
+					<Image src={OvertureLogo} alt={translate('footer', 'overtureAlt')} />
 				</Link>
 				<Link href="#" className={styles.icon}>
-					<Image src={GithubLogo} alt={translate('footer', 'github-alt')} />
+					<Image src={GithubLogo} alt={translate('footer', 'githubAlt')} />
 				</Link>
 			</div>
 			<div className={styles.copyright}>
 				<span>{translate('footer', 'copyright', { year: new Date().getFullYear() })} </span>
 				<span>
-					{translate('footer', 'ohcrn-registry', { registryVersion: packageJson.version })} -{' '}
+					{translate('footer', 'ohcrnRegistry', { registryVersion: packageJson.version })} -{' '}
 				</span>
 				<Suspense fallback={<span />}>
 					<APIVersion currentLang={currentLang} />

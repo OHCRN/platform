@@ -17,13 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { BirthSexDictionary } from 'src/i18n/locales/en/birth-sex';
+import { ConsentReleaseDataDictionary } from 'src/i18n/locales/en/consentReleaseData';
 
-const dictionary = {
-	FEMALE: 'Female',
-	INTERSEX: 'Intersex',
-	MALE: 'Male',
-	PREFER_NOT_TO_ANSWER: 'Prefer not to answer',
-} satisfies BirthSexDictionary;
+const dictionary = {} satisfies ConsentReleaseDataDictionary;
 
 export default dictionary;

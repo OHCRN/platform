@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consent-research-participation';
+import { ConsentRecontactDictionary } from 'src/i18n/locales/en/consentRecontact';
 
-const dictionary = {} satisfies ConsentResearchParticipationDictionary;
+const dictionary = {} satisfies ConsentRecontactDictionary;
 
 export default dictionary;

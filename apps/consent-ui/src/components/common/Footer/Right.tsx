@@ -31,7 +31,7 @@ const Right = ({ translate }: { translate: TranslationFunction }) => {
 			<Link href="#">
 				<Image
 					src={ONGovtLogo}
-					alt={translate('footer', 'on-govt-logo-alt')}
+					alt={translate('footer', 'onGovtLogoAlt')}
 					className={styles['on-gov']}
 				/>
 			</Link>
