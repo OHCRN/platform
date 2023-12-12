@@ -23,7 +23,7 @@ const dictionary = {
 	dashboard: 'Dashboard',
 	consent: 'Consent Forms',
 	invite: 'Clinician Invite',
-	'consent-forms': 'Consent Forms',
+	consentForms: 'Consent Forms',
 } satisfies Record<string, string>;
 
 export type CommonDictionary = Record<keyof typeof dictionary, string>;
