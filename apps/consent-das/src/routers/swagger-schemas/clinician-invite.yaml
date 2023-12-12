@@ -1,0 +1,38 @@
+components:
+  schemas:
+    ClinicianInviteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "clmarsvhd000008jngksv"
+        clinicianFirstName:
+          type: string
+          example: "John"
+        clinicianInstitutionalEmailAddress:
+          type: string
+          format: email
+          example: "john.doe@institution.com"
+        clinicianLastName:
+          type: string
+          example: "Doe"
+        clinicianTitleOrRole:
+          type: string
+          example: "Doctor"
+        consentGroup:
+          $ref: '#/components/schemas/ConsentGroup'
+        consentToBeContacted:
+          type: boolean
+          example: true
+        inviteSentDate:
+          type: string
+          format: date-time
+          example: "2023-01-01T12:00:00Z"
+        inviteAcceptedDate:
+          type: string
+          format: date-time
+          example: "2023-01-02T12:00:00Z"
+          nullable: true
+        inviteAccepted:
+          type: boolean
+          example: false

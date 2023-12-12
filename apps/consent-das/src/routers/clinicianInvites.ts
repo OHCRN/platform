@@ -90,6 +90,10 @@ router.get('/', async (req, res) => {
  *     responses:
  *       200:
  *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
