@@ -5,7 +5,7 @@ components:
       properties:
         id:
           type: string
-          example: "abc123"
+          example: "clmarsvhd000008jngksv"
         participantFirstName:
           type: string
           example: "John"
