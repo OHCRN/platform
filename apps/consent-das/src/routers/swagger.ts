@@ -27,7 +27,6 @@ import {
 	ConsentQuestionIdSchema as ConsentQuestionId,
 	LifecycleStateSchema as LifecycleState,
 	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
-	ConsentClinicianInviteResponseSchema as ClinicianInviteResponse,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -79,11 +78,10 @@ const options = swaggerJsdoc({
 				ConsentQuestionId,
 				LifecycleState,
 				ClinicianInviteRequest,
-				ClinicianInviteResponse,
 			},
 		},
 	},
-	apis: ['./src/routers/*'],
+	apis: ['./src/routers/*.ts', './src/routers/swagger-schemas/*.yaml'],
 });
 
 const router = Router();
