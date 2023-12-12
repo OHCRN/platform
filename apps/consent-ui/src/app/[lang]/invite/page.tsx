@@ -18,9 +18,8 @@
  */
 
 import { ValidLanguage } from 'src/i18n';
-
-import ClinicianRegistration from '.';
+import Invite from 'src/components/views/Invite';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ClinicianRegistration currentLang={lang} />;
+	return <Invite currentLang={lang} />;
 }

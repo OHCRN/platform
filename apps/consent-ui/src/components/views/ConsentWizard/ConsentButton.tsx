@@ -17,13 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+'use client';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+import urlJoin from 'url-join';
+import { useEffect, useState } from 'react';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+import Button from 'src/components/common/Button';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+
+const ConsentButton = () => {
+	const appConfig = useAppConfigContext();
+	const [isComplete, setIsComplete] = useState<boolean>(false);
+
+	useEffect(() => {
+		const url = urlJoin(appConfig.CONSENT_API_URL, 'consent-completion');
+		fetch(url, { cache: 'no-store' })
+			.then((res) => res.json())
+			.then((data) => setIsComplete(data.status === 'COMPLETE'))
+			.catch((e: Error) => {
+				console.log(e);
+				setIsComplete(false);
+				return false;
+			});
+	}, [appConfig.CONSENT_API_URL]);
+
 	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
+		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>
+			{isComplete ? 'Download Consent PDF' : 'Complete Consent Forms'}
+			{appConfig.FEATURE_FLAG && ' 🔥'}
+		</Button>
 	);
-}
+};
+
+export default ConsentButton;

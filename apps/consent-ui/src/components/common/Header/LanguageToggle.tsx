@@ -17,13 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+'use client';
+import { usePathname } from 'next/navigation';
+import { ReactNode } from 'react';
 
 import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getLinkNameByPath, getUnselectedLang } from 'src/components/common/Link/utils';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+function LanguageToggle({
+	currentLang,
+	children,
+}: {
+	currentLang: ValidLanguage;
+	children: ReactNode;
+}) {
+	const langToSelect = getUnselectedLang(currentLang);
+	const path = usePathname();
+	const linkName = getLinkNameByPath(path, currentLang);
+
 	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
+		<LocalizedLink
+			name={linkName}
+			linkLang={langToSelect}
+			role="button"
+			color="blue"
+			variant="secondary"
+		>
+			{children}
+		</LocalizedLink>
 	);
 }
+
+export default LanguageToggle;

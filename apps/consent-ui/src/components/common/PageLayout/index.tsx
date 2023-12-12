@@ -17,13 +17,31 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
-
 import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+import Container from 'src/components/common/Container';
+import Header from 'src/components/common/Header';
+import Footer from 'src/components/common/Footer';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+import ModalProvider from '../Modal';
+
+import styles from './PageLayout.module.scss';
+
+const PageLayout = async ({
+	children,
+	currentLang,
+}: {
+	children: React.ReactNode;
+	currentLang: ValidLanguage;
+}) => {
 	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
+		<ModalProvider>
+			<Container>
+				<Header currentLang={currentLang} />
+				<main className={styles.main}>{children}</main>
+				<Footer currentLang={currentLang} />
+			</Container>
+		</ModalProvider>
 	);
-}
+};
+
+export default PageLayout;

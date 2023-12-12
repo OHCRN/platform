@@ -17,13 +17,61 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import clsx from 'clsx';
 
-import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
+import RightArrow from 'src/components/common/Icons/Arrow';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return (
-		<ConsentForm currentLang={lang} section={ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION} />
-	);
+import { ButtonProps as BaseProps } from './types';
+import styles from './Button.module.scss';
+
+interface ButtonProps extends BaseProps {
+	onClick: (e: React.SyntheticEvent<HTMLElement>) => any;
+	disabled?: boolean;
 }
+
+const Button = ({
+	children,
+	onClick,
+	variant = 'primary',
+	color = 'default',
+	size = 'base',
+	action,
+	disabled = false,
+	className = '',
+	LeftIcon,
+	RightIcon,
+}: ButtonProps) => {
+	return (
+		<button
+			className={clsx(
+				styles.base,
+				styles[variant],
+				styles[color],
+				styles[size],
+				(action === 'prev' || LeftIcon) && styles['left-icon'],
+				(action === 'next' || RightIcon) && styles['right-icon'],
+				className,
+			)}
+			disabled={disabled}
+			onClick={onClick}
+		>
+			{action === 'prev' ? (
+				<div>
+					<RightArrow className={styles['left-arrow']} />
+				</div>
+			) : (
+				LeftIcon && <div>{LeftIcon}</div>
+			)}
+			{children}
+			{action === 'next' ? (
+				<div>
+					<RightArrow />
+				</div>
+			) : (
+				RightIcon && <div>{RightIcon}</div>
+			)}
+		</button>
+	);
+};
+
+export default Button;
