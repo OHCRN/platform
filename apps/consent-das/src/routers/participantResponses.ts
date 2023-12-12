@@ -69,6 +69,10 @@ const router = Router();
  *     responses:
  *       200:
  *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ParticipantResponseArray'
  *       400:
  *         description: RequestValidationError - Invalid request.
  *       404:

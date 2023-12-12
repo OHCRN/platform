@@ -18,6 +18,8 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { NanoId } from './NanoId.js';
 import { ConsentQuestionId } from './ConsentQuestion.js';
@@ -30,6 +32,11 @@ export const ParticipantResponse = z.object({
 });
 
 export type ParticipantResponse = z.infer<typeof ParticipantResponse>;
+
+export const ParticipantResponseArray = z.array(ParticipantResponse);
+export type ParticipantResponseArray = z.infer<typeof ParticipantResponseArray>;
+export const ParticipantResponseArraySchema: SchemaObject =
+	generateSchema(ParticipantResponseArray);
 
 const SORT_ORDERS = ['asc', 'desc'] as const;
 export const SortOrder = z.enum(SORT_ORDERS);

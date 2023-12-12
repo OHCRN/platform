@@ -57,6 +57,10 @@ const router = Router();
  *     responses:
  *       200:
  *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ConsentQuestionArray'
  *       400:
  *         description: RequestValidationError - The request body was invalid.
  *       500:
