@@ -36,12 +36,12 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 			</div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
-					<h1>{translate('landing-page', 'title')}</h1>
+					<h1>{translate('landingPage', 'title')}</h1>
 					<p>
-						<b>{translate('landing-page', 'ohcrn-description')}</b>
+						<b>{translate('landingPage', 'ohcrnDescription')}</b>
 					</p>
 					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
-						<b>{translate('landing-page', 'more-about-ohcrn')}</b>
+						<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
 					</LinkButton>
 				</div>
 				<LandingPageCard currentLang={currentLang} />

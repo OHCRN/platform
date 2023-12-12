@@ -17,24 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	title: 'Welcome to the OHCRN Registry',
-	'ohcrn-description':
-		'Ontario Hereditary Cancer Research Network (OHCRN) collects information on individuals with a high chance of getting cancer. We help researchers collect data so they can find cancer earlier and treat it more effectively.',
-	'more-about-ohcrn': 'More About OHCRN',
-	'join-ohcrn': 'Join OHCRN',
-	'join-ohcrn-description':
-		'Help researchers understand the prevention, early detection, and treatment of hereditary cancers.',
-	'participants-register-today': 'Participants register yourself today',
-	'long-participants-register-today':
-		'Are you a carrier of a hereditary cancer syndrome? Have you had genetic testing for hereditary cancer in Ontario?',
-	'register-yourself-today': 'Register yourself today',
-	'clinicians-register-today': 'Clinicians register your patient today',
-	'long-clinicians-register-today':
-		'Are you a clinician caring for a patient who is a carrier for a hereditary cancer syndrome?',
-	'register-patient-today': 'Register your patient today',
-} satisfies Record<string, string>;
+import { ConsentGroupDictionary } from '../en/consentGroup';
 
-export type LandingPageDictionary = Record<keyof typeof dictionary, string>;
+const dictionary = {
+	ADULT_CONSENT: 'Adult Consent (>18)',
+	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
+		'Adult Consent using a Substitute Additional Decision Maker (>18)',
+	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
+	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
+} satisfies ConsentGroupDictionary;
 
 export default dictionary;

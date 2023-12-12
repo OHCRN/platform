@@ -46,7 +46,7 @@ export const PathList = ({
 			{paths.map(({ name, key }) => (
 				<li key={name} className={key === section ? 'font-bold' : ''}>
 					<LocalizedLink name={name} linkLang={currentLang}>
-						{translate('consent-category', key)}
+						{translate('consentCategory', key)}
 					</LocalizedLink>
 				</li>
 			))}
@@ -64,7 +64,7 @@ const ConsentForm = async ({
 	const translate = getTranslation(currentLang);
 	return (
 		<div>
-			<h2>{translate('consent-category', section)}</h2>
+			<h2>{translate('consentCategory', section)}</h2>
 			<PathList section={section} translate={translate} currentLang={currentLang} />
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 		</div>

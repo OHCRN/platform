@@ -17,24 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { LandingPageDictionary } from 'src/i18n/locales/en/landing-page';
+import { LandingPageDictionary } from 'src/i18n/locales/en/landingPage';
 
 const dictionary = {
 	title: "Bienvenue dans le registre de l'OHCRN",
-	'ohcrn-description':
+	ohcrnDescription:
 		'Le Réseau ontarien de recherche sur le cancer héréditaire (OHCRN) recueille des informations sur les personnes présentant un risque élevé de développer un cancer. Nous aidons les chercheurs à collecter des données afin qu’ils puissent détecter le cancer plus tôt et le traiter plus efficacement.',
-	'more-about-ohcrn': "En savoir plus sur l'OHCRN",
-	'join-ohcrn': 'Rejoignez le OHCRN',
-	'join-ohcrn-description':
+	moreAboutOhcrn: "En savoir plus sur l'OHCRN",
+	joinOhcrn: 'Rejoignez le OHCRN',
+	joinOhcrnDescription:
 		'Aidez les chercheurs à comprendre la prévention, la détection précoce et le traitement des cancers héréditaires.',
-	'participants-register-today': "Les participants s'inscrivent aujourd'hui",
-	'long-participants-register-today':
+	participantsRegisterToday: "Les participants s'inscrivent aujourd'hui",
+	longParticipantsRegisterToday:
 		"Êtes-vous porteur d'un syndrome de cancer héréditaire ? Avez-vous subi des tests génétiques pour le cancer héréditaire en Ontario?",
-	'register-yourself-today': "Inscrivez-vous aujourd'hui",
-	'clinicians-register-today': "Les cliniciens inscrivent votre patient aujourd'hui",
-	'long-clinicians-register-today':
+	registerYourselfToday: "Inscrivez-vous aujourd'hui",
+	cliniciansRegisterToday: "Les cliniciens inscrivent votre patient aujourd'hui",
+	longCliniciansRegisterToday:
 		'Êtes-vous un clinicien qui s’occupe d’un patient porteur d’un syndrome de cancer héréditaire ?',
-	'register-patient-today': "Enregistrez votre patient aujourd'hui",
+	registerPatientToday: "Enregistrez votre patient aujourd'hui",
 } satisfies LandingPageDictionary;
 
 export default dictionary;

@@ -27,6 +27,7 @@ const APIVersionLabel = async ({
 	currentLang: ValidLanguage;
 }) => {
 	const translate = getTranslation(currentLang);
+
 	return <span>{translate('footer', 'api', { apiVersion })}</span>;
 };
 

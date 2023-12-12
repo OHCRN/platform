@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GeneticsClinicDictionary } from 'src/i18n/locales/en/genetics-clinic';
+import { GeneticsClinicDictionary } from 'src/i18n/locales/en/geneticsClinic';
 
 const dictionary = {
 	CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA: 'Children’s Hospital of Eastern Ontario (Ottawa)',

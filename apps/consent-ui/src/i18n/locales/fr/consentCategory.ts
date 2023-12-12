@@ -17,8 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentReleaseDataDictionary } from 'src/i18n/locales/en/consent-release-data';
+import { ConsentCategoryDictionary } from '../en/consentCategory';
 
-const dictionary = {} satisfies ConsentReleaseDataDictionary;
+const dictionary = {
+	INFORMED_CONSENT: 'Consentement éclairé',
+	CONSENT_RELEASE_DATA: 'Consentement à la divulgation de données',
+	CONSENT_RESEARCH_PARTICIPATION: 'Consentement à la participation à la recherche',
+	CONSENT_RECONTACT: 'Consentement à la reprise de contact',
+	CONSENT_REVIEW_SIGN: 'Examen et signature',
+} satisfies ConsentCategoryDictionary;
 
 export default dictionary;

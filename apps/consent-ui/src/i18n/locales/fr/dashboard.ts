@@ -20,11 +20,11 @@
 import { DashboardDictionary } from 'src/i18n/locales/en/dashboard';
 
 const dictionary = {
-	'review-ohcrn-consents': 'Review OHCRN Consents',
-	'review-consents-description':
+	reviewOhcrnConsents: 'Review OHCRN Consents',
+	reviewConsentsDescription:
 		'A step-by-step guide to help you review and agree to the consents that are required for participating in the OHCRN registry.',
-	'complete-consent-forms': 'Complete Consent Forms',
-	'download-consent-forms': 'Download Consent PDF',
+	completeConsentForms: 'Complete Consent Forms',
+	downloadConsentForms: 'Download Consent PDF',
 } satisfies DashboardDictionary;
 
 export default dictionary;
