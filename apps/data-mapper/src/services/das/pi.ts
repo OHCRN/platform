@@ -41,15 +41,11 @@ export const getInvitePiData = async (
 	const { piDasUrl } = getAppConfig();
 	try {
 		const { data } = await axiosClient.get(urlJoin(piDasUrl, 'clinician-invites', inviteId));
-		// converts all nulls to undefined
-		const invite = PIClinicianInviteResponse.safeParse(data);
+
+		const invite = PIClinicianInviteResponse.safeParse(data); // converts all nulls to undefined
 
 		if (!invite.success) {
-			logger.error(
-				'GET /invites/:inviteId',
-				'Received invalid data in response',
-				invite.error.issues,
-			);
+			logger.error('Received invalid data in get invite response', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -57,7 +53,7 @@ export const getInvitePiData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('GET /invites/:inviteId', 'AxiosError handling get invite request', data);
+			logger.error('AxiosError handling get invite request', data);
 
 			if (status === 404) {
 				return failure('INVITE_DOES_NOT_EXIST', data.message);
@@ -65,7 +61,7 @@ export const getInvitePiData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('GET /invites/:inviteId', 'Unexpected error handling get invite request', error);
+		logger.error('Unexpected error handling get invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
@@ -81,11 +77,11 @@ export const createInvitePiData = async (
 	const { piDasUrl } = getAppConfig();
 	try {
 		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'clinician-invites'), inviteRequest);
-		// converts all nulls to undefined
-		const invite = PIClinicianInviteResponse.safeParse(data);
+
+		const invite = PIClinicianInviteResponse.safeParse(data); // converts all nulls to undefined
 
 		if (!invite.success) {
-			logger.error('POST /invites', 'Received invalid data in response', invite.error.issues);
+			logger.error('Received invalid data in create invite response', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -93,7 +89,7 @@ export const createInvitePiData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+			logger.error('AxiosError handling create invite request', data);
 
 			if (status === 409) {
 				return failure('INVITE_EXISTS', data.message);
@@ -101,7 +97,7 @@ export const createInvitePiData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		logger.error('Unexpected error handling create invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
@@ -122,7 +118,7 @@ export const deleteInvitePiData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('DELETE /invites', 'AxiosError handling delete invite request', data);
+			logger.error('AxiosError handling delete invite request', data);
 
 			if (status === 404) {
 				return failure('INVITE_DOES_NOT_EXIST', data.message);
@@ -130,7 +126,7 @@ export const deleteInvitePiData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
+		logger.error('Unexpected error handling delete invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

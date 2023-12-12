@@ -27,7 +27,7 @@ import {
 	NotFoundErrorResponse,
 } from 'types/httpResponses';
 
-import { getClinicianInvite, getClinicianInvites } from '../services/search.js';
+import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
 import { createClinicianInvite } from '../services/create.js';
 import { deleteClinicianInvite } from '../services/delete.js';
 import logger from '../logger.js';
@@ -89,20 +89,38 @@ router.get('/', async (req, res) => {
  *          type: string
  *     responses:
  *       200:
- *         description: The clinician invite was successfully retrieved.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
  *       500:
- *         description: Error retrieving clinician invite.
+ *         description: ServerError - An unexpected error occurred.
  */
 router.get('/:inviteId', async (req, res) => {
-	logger.info('GET /clinician-invites/:inviteId');
-	const { inviteId } = req.params;
-	// TODO: add validation
 	try {
-		const invite = await getClinicianInvite(inviteId);
-		res.status(200).send({ invite });
+		const { inviteId } = req.params;
+		const invite = await getClinicianInviteById(inviteId);
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(invite.data);
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving clinician invite' });
+		logger.error(
+			'GET /clinician-invites/:inviteId',
+			'Unexpected error handling get invite request',
+			error,
+		);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 
@@ -180,6 +198,10 @@ router.post(
  *     responses:
  *       200:
  *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
@@ -201,7 +223,7 @@ router.delete('/:inviteId', async (req, res) => {
 			}
 		}
 	} catch (error) {
-		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
 		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });

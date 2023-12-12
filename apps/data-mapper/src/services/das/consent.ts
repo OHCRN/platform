@@ -41,15 +41,11 @@ export const getInviteConsentData = async (
 	const { consentDasUrl } = getAppConfig();
 	try {
 		const { data } = await axiosClient.get(urlJoin(consentDasUrl, 'clinician-invites', inviteId));
-		// converts all nulls to undefined
-		const invite = ConsentClinicianInviteResponse.safeParse(data);
+
+		const invite = ConsentClinicianInviteResponse.safeParse(data); // converts all nulls to undefined
 
 		if (!invite.success) {
-			logger.error(
-				'GET /invites/:inviteId',
-				'Received invalid data in response',
-				invite.error.issues,
-			);
+			logger.error('Received invalid data in get invite response', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -57,7 +53,7 @@ export const getInviteConsentData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('GET /invites/:inviteId', 'AxiosError handling get invite request', data);
+			logger.error('AxiosError handling get invite request', data);
 
 			if (status === 404) {
 				return failure('INVITE_DOES_NOT_EXIST', data.message);
@@ -65,15 +61,15 @@ export const getInviteConsentData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('GET /invites/:inviteId', 'Unexpected error handling get invite request', error);
+		logger.error('Unexpected error handling get invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
 
 /**
- * Makes request to PI DAS to create a Clinician Invite
+ * Makes request to Consent DAS to create a Clinician Invite
  * @param inviteRequest Clinician Invite data
- * @returns ClinicianInvite object from PI DB
+ * @returns ClinicianInvite object from Consent DB
  */
 export const createInviteConsentData = async (
 	inviteRequest: ConsentClinicianInviteRequest,
@@ -84,11 +80,11 @@ export const createInviteConsentData = async (
 			urlJoin(consentDasUrl, 'clinician-invites'),
 			inviteRequest,
 		);
-		// converts all nulls to undefined
-		const invite = ConsentClinicianInviteResponse.safeParse(data);
+
+		const invite = ConsentClinicianInviteResponse.safeParse(data); // converts all nulls to undefined
 
 		if (!invite.success) {
-			logger.error('POST /invites', 'Received invalid data in response', invite.error.issues);
+			logger.error('Received invalid data in create invite response', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -96,7 +92,7 @@ export const createInviteConsentData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('POST /invites', 'AxiosError handling create invite request', data);
+			logger.error('AxiosError handling create invite request', data);
 
 			if (status === 409) {
 				return failure('INVITE_EXISTS', data.message);
@@ -104,7 +100,7 @@ export const createInviteConsentData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('POST /invites', 'Unexpected error handling create invite request', error);
+		logger.error('Unexpected error handling create invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
