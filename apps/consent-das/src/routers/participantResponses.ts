@@ -111,7 +111,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	} catch (error) {
 		logger.error(
 			'GET /:participantId/:consentQuestionId',
-			'Unexpected error handling get invite request',
+			'Unexpected error retrieving participant response',
 			error,
 		);
 		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));

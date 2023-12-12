@@ -18,8 +18,8 @@ type GetParticipantFailureStatus = 'SYSTEM_ERROR' | 'PARTICIPANT_DOES_NOT_EXIST'
 /**
  * Fetches participant by ID from Consent DB.
  * If the participant does not exist, returns a failure with status `"PARTICIPANT_DOES_NOT_EXIST"`.
- * @param
- * @returns All participant responses for consent question
+ * @param participantId Participant ID in DB
+ * @returns Participant object from Consent DB
  */
 export const getParticipant = async (
 	participantId: string,
