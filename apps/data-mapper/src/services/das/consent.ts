@@ -43,15 +43,11 @@ export const createInviteConsentData = async (
 			urlJoin(consentDasUrl, 'clinician-invites'),
 			inviteRequest,
 		);
-		// converts all nulls to undefined
-		const invite = ConsentClinicianInviteResponse.safeParse(data);
+
+		const invite = ConsentClinicianInviteResponse.safeParse(data); // converts all nulls to undefined
 
 		if (!invite.success) {
-			logger.error(
-				'POST /clinician-invites',
-				'Received invalid data in response',
-				invite.error.issues,
-			);
+			logger.error('Received invalid data in create invite response', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
@@ -59,7 +55,7 @@ export const createInviteConsentData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('POST /clinician-invites', 'AxiosError handling create invite request', data);
+			logger.error('AxiosError handling create invite request', data);
 
 			if (status === 409) {
 				return failure('INVITE_EXISTS', data.message);
@@ -67,11 +63,7 @@ export const createInviteConsentData = async (
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error(
-			'POST /clinician-invites',
-			'Unexpected error handling create invite request',
-			error,
-		);
+		logger.error('Unexpected error handling create invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

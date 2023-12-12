@@ -9,7 +9,7 @@ import axiosClient from './axiosClient.js';
 import { createInvitePiData, deleteInvitePiData } from './das/pi.js';
 import { createInviteConsentData } from './das/consent.js';
 
-const logger = serviceLogger.forModule('PrismaClient');
+const logger = serviceLogger.forModule('DataMapperClient');
 
 // PI-DAS
 const createParticipantPiData = async ({
@@ -178,11 +178,7 @@ export const createInvite = async ({
 			// Unable to create invite in Consent DB, rollback invite already created in PI
 			const deletePiInvite = await deleteInvitePiData(piInviteResult.data.id);
 			if (deletePiInvite.status !== 'SUCCESS') {
-				logger.error(
-					'DELETE /invites',
-					'Error deleting existing PI invite',
-					deletePiInvite.message,
-				);
+				logger.error('Error deleting existing PI invite', deletePiInvite.message);
 				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 			}
 			return consentInviteResult;
@@ -194,13 +190,13 @@ export const createInvite = async ({
 		});
 
 		if (!invite.success) {
-			logger.error('POST /invites', 'Received invalid data in response.', invite.error.issues);
+			logger.error('Received invalid data in create invite response', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
 		return success(invite.data);
 	} catch (error) {
-		logger.error('POST /invites', 'Unexpected error handling create invite request.', error);
+		logger.error('Unexpected error handling create invite response', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
