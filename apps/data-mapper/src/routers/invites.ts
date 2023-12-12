@@ -49,7 +49,7 @@ const router = Router();
  *     tags:
  *       - Clinician Invites
  *     name: Get Clinician Invite
- *     description: Get relevant Clinician Invite data from PI DAS and Consent DAS 
+ *     description: Get relevant Clinician Invite data from PI DAS and Consent DAS
  *     security:
  *       - bearerAuth: []
  *     parameters:
