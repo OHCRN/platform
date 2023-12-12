@@ -17,7 +17,42 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroupDictionary } from 'src/i18n/locales/en/consentGroup';
-import { FormSelectOption } from 'src/components/common/Form/types';
+import formLabels from '../en/formLabels';
 
-export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
+const {
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	consentContact,
+	consentGroup,
+	email,
+	firstName,
+	guardianEmail,
+	guardianName,
+	guardianPhone,
+	guardianRelationship,
+	lastName,
+	preferredName,
+} = formLabels;
+
+const dictionary = {
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	consentContact,
+	consentGroup,
+	email,
+	firstName,
+	guardianEmail,
+	guardianName,
+	guardianPhone,
+	guardianRelationship,
+	lastName,
+	preferredName,
+} satisfies Record<string, string>;
+
+export type InviteFormLabelsDictionary = Record<keyof typeof dictionary, string>;
+
+export default dictionary;

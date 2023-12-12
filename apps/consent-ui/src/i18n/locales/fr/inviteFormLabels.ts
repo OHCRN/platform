@@ -17,11 +17,42 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormsDictionary } from '../en/forms';
+import { InviteFormLabelsDictionary } from '../en/inviteFormLabels';
+
+import formLabelsDictionary from './formLabels';
+
+const {
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	consentContact,
+	consentGroup,
+	email,
+	firstName,
+	guardianEmail,
+	guardianName,
+	guardianPhone,
+	guardianRelationship,
+	lastName,
+	preferredName,
+} = formLabelsDictionary;
 
 const dictionary = {
-	indicatesRequiredField: 'indique un champ obligatoire',
-	selectPlaceholder: 'Choisissez-en un',
-} satisfies FormsDictionary;
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	consentContact,
+	consentGroup,
+	email,
+	firstName,
+	guardianEmail,
+	guardianName,
+	guardianPhone,
+	guardianRelationship,
+	lastName,
+	preferredName,
+} satisfies InviteFormLabelsDictionary;
 
 export default dictionary;

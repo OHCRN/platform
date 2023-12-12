@@ -19,7 +19,6 @@
 
 import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birthSex';
-import clinicianInviteFormDictionary from './clinicianInviteForm';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
 import consentGroupDictionary from './consentGroup';
@@ -29,40 +28,43 @@ import consentResearchParticipationDictionary from './consentResearchParticipati
 import consentReviewSignDictionary from './consentReviewSign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
-import formsDictionary from './forms';
-import formLabelsDictionary from './formLabels';
 import formErrorsDictionary from './formErrors';
+import formLabelsDictionary from './formLabels';
+import formTextDictionary from './formText';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
+import historyOfCancerDictionary from './historyOfCancer';
 import informedConsentDictionary from './informedConsent';
+import inviteFormLabelsDictionary from './inviteFormLabels';
+import inviteFormTextDictionary from './inviteFormText';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
-import historyOfCancerDictionary from './historyOfCancer';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
-	clinicianInviteForm: clinicianInviteFormDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,
+	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentRecontact: consentRecontactDictionary,
 	consentReviewSign: consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
-	forms: formsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
+	formText: formTextDictionary,
 	gender: genderDictionary,
 	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,

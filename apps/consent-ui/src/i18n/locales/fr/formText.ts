@@ -17,7 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroupDictionary } from 'src/i18n/locales/en/consentGroup';
-import { FormSelectOption } from 'src/components/common/Form/types';
+import { FormTextDictionary } from '../en/formText';
 
-export type ConsentGroupOption = FormSelectOption<keyof ConsentGroupDictionary>;
+const dictionary = {
+	indicatesRequiredField: 'indique un champ obligatoire',
+	selectPlaceholder: 'Choisissez-en un',
+} satisfies FormTextDictionary;
+
+export default dictionary;

@@ -22,6 +22,6 @@ const dictionary = {
 	selectPlaceholder: 'Select an option...',
 } satisfies Record<string, string>;
 
-export type FormsDictionary = Record<keyof typeof dictionary, string>;
+export type FormTextDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

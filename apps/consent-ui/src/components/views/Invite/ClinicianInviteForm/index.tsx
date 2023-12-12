@@ -24,7 +24,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteRequest, ConsentGroup, InviteGuardianFields } from 'types/entities';
 
-import { FormLabelsDictionary } from 'src/i18n/locales/en/formLabels';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
@@ -36,8 +35,10 @@ import { axiosClient } from 'src/services/api/axiosClient';
 import { API } from 'src/constants';
 import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
+import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
+import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 
-import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
+import { ConsentGroupOption } from './types';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -59,8 +60,8 @@ const ClinicianInviteFormComponent = ({
 }: {
 	consentGroupOptions: ConsentGroupOption[];
 	errorsDict: FormErrorsDictionary;
-	labelsDict: Partial<FormLabelsDictionary>;
-	textDict: ClinicianInviteFormTextDictionary;
+	labelsDict: InviteFormLabelsDictionary;
+	textDict: InviteFormTextDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ClinicianInviteRequest>({
@@ -151,20 +152,6 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict['preferredName'] || ''}
 						name="participantPreferredName"
 					/>
-					<TextFieldSet
-						error={errors.participantPhoneNumber?.type && errorsDict['required']}
-						label={labelsDict['phone'] || ''}
-						name="participantPhoneNumber"
-						required
-						type="tel"
-					/>
-					<TextFieldSet
-						error={errors.participantEmailAddress?.type && errorsDict['required']}
-						label={labelsDict['email'] || ''}
-						name="participantEmailAddress"
-						required
-						type="email"
-					/>
 
 					<SelectFieldSet
 						error={errors.consentGroup?.type && errorsDict['required']}
@@ -212,7 +199,7 @@ const ClinicianInviteFormComponent = ({
 						/>
 						<p>
 							{textDict['uploadFileDescription1']}
-							<a href="">{textDict['upload-file-link']}</a>
+							<a href="">{textDict['uploadFileLink']}</a>
 							{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
 							{textDict['uploadFileDescription2']}
 							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
@@ -221,7 +208,7 @@ const ClinicianInviteFormComponent = ({
 				)}
 
 				<div>
-					<p>{textDict['after-registering']}</p>
+					<p>{textDict['afterRegistering']}</p>
 					<CheckboxFieldSet
 						description={textDict['consentContactDescription']}
 						error={errors.consentToBeContacted?.type && errorsDict['required']}

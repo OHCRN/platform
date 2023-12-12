@@ -17,29 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formText from './formText';
+
+const { indicatesRequiredField, selectPlaceholder } = formText;
+
 const dictionary = {
-	title: 'Clinician Patient Registration',
-	mainTitle: 'Register Your Patient',
-	mainDescription: 'Invite your patients to participate in the OHCRN registry.',
-	patientInformation: 'Patient Information',
-	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
-	phoneTooltip: 'If we contact them, it will be for health updates and consent.',
-	emailTooltip: 'The patient will receive an invitation to this account.',
-	'after-registering':
+	afterRegistering:
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
+	clinicianInformation: 'Clinician Information',
 	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
-	clinicianInformation: 'Clinician Information',
-	clinicianEmailTooltip: 'We require this to confirm your authority to register patients.',
-	enterGuardianInfo: "Please enter the guardian's information below:",
+	enterGuardianInfo: "Please enter the guardian's info below:",
+	indicatesRequiredField,
+	patientInformation: 'Patient Information',
+	selectPlaceholder,
 	uploadFileDescription1:
 		'The participant is part of the "Guardian Consent of a Minor (including Assent)" group. Please ',
-	'upload-file-link': 'download a copy of the assent form',
 	uploadFileDescription2:
 		' and have your participant (who is a minor) read and sign the assent form. Use the upload button below to submit a completed assent form signed by the minor.',
-	uploadFileLink: '#',
+	uploadFileLink: 'download a copy of the assent form',
 } satisfies Record<string, string>;
 
-export type ClinicianInviteFormDictionary = Record<keyof typeof dictionary, string>;
+export type InviteFormTextDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

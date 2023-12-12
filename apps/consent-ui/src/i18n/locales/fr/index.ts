@@ -19,7 +19,6 @@
 
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
-import clinicianInviteFormDictionary from 'src/i18n/locales/fr/clinicianInviteForm';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
@@ -32,12 +31,14 @@ import en from 'src/i18n/locales/en/index';
 import footerDictionary from 'src/i18n/locales/fr/footer';
 import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
 import formLabelsDictionary from 'src/i18n/locales/fr/formLabels';
-import formsDictionary from 'src/i18n/locales/fr/forms';
+import formTextDictionary from 'src/i18n/locales/fr/formText';
 import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
 import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
+import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
+import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
@@ -46,24 +47,25 @@ import registerDictionary from 'src/i18n/locales/fr/register';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
-	clinicianInviteForm: clinicianInviteFormDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,
+	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentRecontact: consentRecontactDictionary,
 	consentReviewSign: consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
-	forms: formsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
+	formText: formTextDictionary,
 	gender: genderDictionary,
 	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
