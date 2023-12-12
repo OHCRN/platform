@@ -65,22 +65,27 @@ export const ClinicianInviteRequest = ClinicianInviteBase.pick({
 	guardianEmailAddress: true,
 	guardianRelationship: true,
 	consentToBeContacted: true,
-}).refine((input) => {
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = input;
-	return hasRequiredGuardianInformation(
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	);
-});
+}).refine(
+	(input) => {
+		const {
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		} = input;
+		return hasRequiredGuardianInformation(
+			consentGroup,
+			guardianName,
+			guardianPhoneNumber,
+			guardianEmailAddress,
+			guardianRelationship,
+		);
+	},
+	{
+		message: 'Guardian contact fields are required for that consentGroup',
+	},
+);
 
 export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;
 export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteRequest);
