@@ -93,17 +93,13 @@ export const getInvite = async (
 		});
 
 		if (!invite.success) {
-			logger.error(
-				'GET /invites/:inviteId',
-				'Received invalid data in response.',
-				invite.error.issues,
-			);
+			logger.error('Received invalid data in get invite response.', invite.error.issues);
 			return failure('SYSTEM_ERROR', invite.error.message);
 		}
 
 		return success(invite.data);
 	} catch (error) {
-		logger.error('GET /invites/:inviteId', 'Unexpected error handling get invite request.', error);
+		logger.error('Unexpected error handling get invite request.', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
