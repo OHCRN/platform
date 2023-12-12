@@ -30,13 +30,12 @@ import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
 import useRecaptcha from 'src/hooks/useRecaptcha';
-import Notification from 'src/components/Notification';
+import Notification from 'src/components/common/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/form-errors';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { API } from 'src/constants';
-
-import Form from '../../../common/forms/Form';
-import RecaptchaCheckbox from '../../../common/forms/RecaptchaCheckbox';
+import Form from 'src/components/common/Form';
+import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 
 import { ClinicianInviteFormTextDictionary, ConsentGroupOption } from './types';
 
