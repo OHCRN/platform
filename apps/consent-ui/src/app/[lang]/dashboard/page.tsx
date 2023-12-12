@@ -18,8 +18,7 @@
  */
 
 import { ValidLanguage } from 'src/i18n';
-
-import Dashboard from '.';
+import Dashboard from 'src/components/views/Dashboard';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
 	return <Dashboard currentLang={lang} />;
