@@ -19,7 +19,7 @@
 
 import Image, { StaticImageData } from 'next/image';
 import clsx from 'clsx';
-import { Element, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import Link from 'next/link';
 
 import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
@@ -48,7 +48,7 @@ const SideImageLayout = ({
 	headerAction,
 	sidebarImage,
 	title,
-}: SideImageLayoutProps): Element => {
+}: SideImageLayoutProps): ReactElement => {
 	const translate = getTranslation(currentLang);
 
 	return (
