@@ -43,6 +43,12 @@ const router = Router();
  *     description: Participant's latest response for Consent Wizard - Informed Consent
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         schema:
+ *           $ref: '#/components/schemas/NanoId'
  *     responses:
  *       200:
  *         description: OK
