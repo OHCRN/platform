@@ -17,7 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+const dictionary = {
+	clinicianPatientRegistration: 'Clinician Patient Registration',
+	ifParticipant: "If you're a Participant:",
+	registerHere: 'Register here',
+	registerYourPatient: 'Register Your Patient',
+} satisfies Record<string, string>;
 
 export type InviteDictionary = Record<keyof typeof dictionary, string>;
 

@@ -19,7 +19,6 @@
 
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
-import clinicianInviteDictionary from 'src/i18n/locales/fr/clinician-invite';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
@@ -44,7 +43,6 @@ import registerDictionary from 'src/i18n/locales/fr/register';
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
-	clinicianInvite: clinicianInviteDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,

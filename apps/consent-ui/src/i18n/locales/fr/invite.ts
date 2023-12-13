@@ -17,18 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroup } from 'types/entities';
-
-import { InviteDictionary } from 'src/i18n/locales/en/invite';
+import { InviteDictionary } from '../en/invite';
 
 const dictionary = {
-	[ConsentGroup.enum.ADULT_CONSENT]: "Consentement d'un adulte (>18)",
-	[ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER]:
-		"Consentement d'un adulte faisant appel à un décideur suppléant supplémentaire (>18)",
-	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR]: "Consentement du tuteur d'un mineur",
-	[ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT]:
-		"Consentement du tuteur d'un mineur (y compris le consentement)",
-	[ConsentGroup.enum.YOUNG_ADULT_CONSENT]: 'Consentement des jeunes adultes (<18 ans)',
+	clinicianPatientRegistration: 'Inscription des patients cliniciens',
+	ifParticipant: 'Si vous êtes un participant :',
+	registerHere: 'Inscrivez-vous ici',
+	registerYourPatient: 'Enregistrez votre patient',
 } satisfies InviteDictionary;
 
 export default dictionary;

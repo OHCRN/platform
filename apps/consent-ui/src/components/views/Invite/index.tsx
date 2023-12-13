@@ -25,25 +25,22 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
 	const textDict = {
-		'clinician-patient-registration': translate(
-			'clinician-invite',
-			'clinician-patient-registration',
-		),
-		'register-your-patient': translate('clinician-invite', 'register-your-patient'),
-		'if-participant': translate('clinician-invite', 'if-participant'),
-		'register-here': translate('clinician-invite', 'register-here'),
+		clinicianPatientRegistration: translate('invite', 'clinicianPatientRegistration'),
+		registerYourPatient: translate('invite', 'registerYourPatient'),
+		ifParticipant: translate('invite', 'ifParticipant'),
+		registerHere: translate('invite', 'registerHere'),
 	};
 
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
 			headerAction={{
-				topText: textDict['if-participant'],
-				bottomText: textDict['register-here'],
+				topText: textDict.ifParticipant,
+				bottomText: textDict.registerHere,
 				url: 'register',
 			}}
 			sidebarImage={inviteSidebarJpg}
-			title={textDict['clinician-patient-registration']}
+			title={textDict['clinicianPatientRegistration']}
 		>
 			<div style={{ border: '2px solid grey', width: '100%' }}>
 				TODO replace with clinician invite form
