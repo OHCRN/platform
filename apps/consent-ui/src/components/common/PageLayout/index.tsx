@@ -22,7 +22,7 @@ import Container from 'src/components/common/Container';
 import Header from 'src/components/common/Header';
 import Footer from 'src/components/common/Footer';
 
-import ModalProvider from '../../common/Modal';
+import ModalProvider from '../Modal';
 
 import styles from './PageLayout.module.scss';
 
