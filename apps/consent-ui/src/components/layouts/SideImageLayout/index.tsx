@@ -32,15 +32,6 @@ import { RouteName } from 'src/components/common/Link/types';
 
 import styles from './SideImageLayout.module.scss';
 
-interface SideImageLayoutProps {
-	children: ReactNode;
-	className?: string;
-	currentLang: ValidLanguage;
-	desktopHeaderImage: StaticImageData;
-	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
-	title: string;
-}
-
 const SideImageLayout = ({
 	children,
 	className,
@@ -48,7 +39,14 @@ const SideImageLayout = ({
 	desktopHeaderImage,
 	desktopNavAction,
 	title,
-}: SideImageLayoutProps) => {
+}: {
+	children: ReactNode;
+	className?: string;
+	currentLang: ValidLanguage;
+	desktopHeaderImage: StaticImageData;
+	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
+	title: string;
+}) => {
 	const translate = getTranslation(currentLang);
 
 	return (
