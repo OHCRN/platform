@@ -17,8 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getUnselectedLang } from 'src/components/Link/utils';
-
+import { getUnselectedLang } from 'src/components/common/Link/utils';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import LanguageToggleButton from './LanguageToggleButton';
