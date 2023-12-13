@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import SideImageLayout from 'src/components/Layouts/SideImageLayout';
+import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import inviteSidebarJpg from 'src/public/invite-sidebar.jpg';
 
@@ -42,9 +42,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			sidebarImage={inviteSidebarJpg}
 			title={textDict['clinicianPatientRegistration']}
 		>
-			<div style={{ border: '2px solid grey', width: '100%' }}>
-				TODO replace with clinician invite form
-			</div>
+			clinician invite form
 		</SideImageLayout>
 	);
 };

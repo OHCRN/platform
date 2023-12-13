@@ -59,7 +59,7 @@ const SideImageLayout = ({
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
 							src={OICRLogoEN}
-							alt={translate('footer', 'oicr-logo-alt')}
+							alt={translate('footer', 'oicrLogoAlt')}
 							className={styles.logoImg}
 						/>
 					</Link>

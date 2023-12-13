@@ -34,6 +34,14 @@
 		font-size: 2.875rem;
 		line-height: 3.5rem;
 	}
+	@media (min-width: theme('screens.md')) {
+		font-size: 2.25rem;
+		line-height: 2.875rem;
+	}
+	@media (min-width: theme('screens.lg')) {
+		font-size: 2.875rem;
+		line-height: 3.5rem;
+	}
 }
 
 .sidebar {
@@ -42,7 +50,7 @@
 	max-width: 32.8125rem;
 	background: theme('colors.grayscale.800');
 	position: relative;
-	height: 100%;
+	// height: 100%;
 	.sidebarContent {
 		padding: 2.5rem;
 		position: absolute;
