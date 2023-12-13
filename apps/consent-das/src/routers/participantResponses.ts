@@ -66,6 +66,11 @@ const router = Router();
  *         required: true
  *         schema:
  *           $ref: '#/components/schemas/ConsentQuestionId'
+ *       - name: sort-order
+ *         in: query
+ *         description: Order to sort the responses, by submittedAt date (if not included, returns in descending order)
+ *         schema:
+ *           $ref: '#/components/schemas/SortOrder'
  *     responses:
  *       200:
  *         description: OK
@@ -101,6 +106,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		}
 
 		const participantResponses = await getParticipantResponses(request.data);
+
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(participantResponses.data);

@@ -29,6 +29,7 @@ import {
 	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ConsentQuestionArraySchema as ConsentQuestionArray,
 	ParticipantResponseArraySchema as ParticipantResponseArray,
+	SortOrderSchema as SortOrder,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -82,6 +83,7 @@ const options = swaggerJsdoc({
 				ClinicianInviteRequest,
 				ConsentQuestionArray,
 				ParticipantResponseArray,
+				SortOrder,
 			},
 		},
 	},

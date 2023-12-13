@@ -41,6 +41,7 @@ export const ParticipantResponseArraySchema: SchemaObject =
 const SORT_ORDERS = ['asc', 'desc'] as const;
 export const SortOrder = z.enum(SORT_ORDERS);
 export type SortOrder = z.infer<typeof SortOrder>;
+export const SortOrderSchema: SchemaObject = generateSchema(SortOrder);
 
 export const ParticipantResponsesRequest = ParticipantResponse.pick({
 	consentQuestionId: true,
