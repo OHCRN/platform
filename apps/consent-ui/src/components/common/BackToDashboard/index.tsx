@@ -18,9 +18,8 @@
  */
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
-
-import LocalizedLink from '../Link/LocalizedLink';
-import RightArrow from '../Icons/Arrow';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import RightArrow from 'src/components/common/Icons/Arrow';
 
 import styles from './BackToDashboard.module.scss';
 
