@@ -26,20 +26,20 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 
 	const textDict = {
 		clinicianPatientRegistration: translate('invite', 'clinicianPatientRegistration'),
-		registerYourPatient: translate('invite', 'registerYourPatient'),
 		ifParticipant: translate('invite', 'ifParticipant'),
 		registerHere: translate('invite', 'registerHere'),
+		registerYourPatient: translate('invite', 'registerYourPatient'),
 	};
 
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
+			desktopHeaderImage={inviteBg}
 			desktopNavAction={{
-				topText: textDict.ifParticipant,
 				bottomText: textDict.registerHere,
+				topText: textDict.ifParticipant,
 				url: 'register',
 			}}
-			desktopHeaderImage={inviteBg}
 			title={textDict['clinicianPatientRegistration']}
 		>
 			clinician invite form
