@@ -121,7 +121,7 @@ const ClinicianInviteFormComponent = ({
 			setShowGuardianFields(true);
 		} else {
 			setShowGuardianFields(false);
-			guardianInfoFields.forEach((field: Partial<keyof ClinicianInviteRequest>) => {
+			guardianInfoFields.forEach((field) => {
 				unregister(field);
 			});
 		}
