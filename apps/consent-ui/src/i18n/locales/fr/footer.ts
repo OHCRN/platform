@@ -20,20 +20,20 @@
 import { FooterDictionary } from 'src/i18n/locales/en/footer';
 
 const dictionary = {
-	'oicr-logo-alt': 'Link to OICR Home',
-	'instagram-logo-alt': 'Link to Instagram',
-	'twitter-logo-alt': 'Link to Twitter',
-	'on-govt-logo-alt': 'Link to Ontario Government Home',
-	'overture-alt': 'Link to Overture Home',
-	'github-alt': 'Link to GitHub',
+	oicrLogoAlt: 'Link to OICR Home',
+	instagramLogoAlt: 'Link to Instagram',
+	twitterLogoAlt: 'Link to Twitter',
+	onGovtLogoAlt: 'Link to Ontario Government Home',
+	overtureAlt: 'Link to Overture Home',
+	githubAlt: 'Link to GitHub',
 	about: 'à Propos de OHCRN',
 	help: "Centre d'Aide",
 	contact: 'Contacter',
 	privacy: 'Politique de Confidentialité',
 	terms: 'Termes & Conditions',
 	copyright: '© {{ year }} Ontario Hereditary Cancer Research Network. Tous droits réservés.',
-	'ohcrn-registry': 'Registre OHCRN {{ registryVersion }}',
-	'powered-by': 'Propulsé par',
+	ohcrnRegistry: 'Registre OHCRN {{ registryVersion }}',
+	poweredBy: 'Propulsé par',
 	api: 'API {{ apiVersion }}',
 } satisfies FooterDictionary;
 

@@ -18,49 +18,49 @@
  */
 
 import ancestryDictionary from './ancestry';
-import birthSexDictionary from './birth-sex';
+import birthSexDictionary from './birthSex';
 import clinicianInviteDictionary from './clinician-invite';
 import commonDictionary from './common';
-import consentCategoryDictionary from './consent-category';
-import consentGroupDictionary from './consent-group';
-import consentRecontactDictionary from './consent-recontact';
-import consentReleaseDataDictionary from './consent-release-data';
-import consentResearchParticipationDictionary from './consent-research-participation';
-import consentReviewSignDictionary from './consent-review-sign';
+import consentCategoryDictionary from './consentCategory';
+import consentGroupDictionary from './consentGroup';
+import consentRecontactDictionary from './consentRecontact';
+import consentReleaseDataDictionary from './consentReleaseData';
+import consentResearchParticipationDictionary from './consentResearchParticipation';
+import consentReviewSignDictionary from './consentReviewSign';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
 import genderDictionary from './gender';
-import geneticsClinicDictionary from './genetics-clinic';
+import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
-import informedConsentDictionary from './informed-consent';
+import historyOfCancerDictionary from './historyOfCancer';
+import informedConsentDictionary from './informedConsent';
 import inviteDictionary from './invite';
-import landingPageDictionary from './landing-page';
-import molecularLabDictionary from './molecular-lab';
+import landingPageDictionary from './landingPage';
+import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
-import historyOfCancerDictionary from './history-of-cancer';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
-	'birth-sex': birthSexDictionary,
-	'clinician-invite': clinicianInviteDictionary,
+	birthSex: birthSexDictionary,
+	clinicianInvite: clinicianInviteDictionary,
 	common: commonDictionary,
-	'consent-category': consentCategoryDictionary,
-	'consent-group': consentGroupDictionary,
-	'consent-release-data': consentReleaseDataDictionary,
-	'consent-research-participation': consentResearchParticipationDictionary,
-	'consent-recontact': consentRecontactDictionary,
-	'consent-review-sign': consentReviewSignDictionary,
+	consentCategory: consentCategoryDictionary,
+	consentGroup: consentGroupDictionary,
+	consentRecontact: consentRecontactDictionary,
+	consentReleaseData: consentReleaseDataDictionary,
+	consentResearchParticipation: consentResearchParticipationDictionary,
+	consentReviewSign: consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
 	gender: genderDictionary,
-	'genetics-clinic': geneticsClinicDictionary,
+	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,
-	'history-of-cancer': historyOfCancerDictionary,
-	'informed-consent': informedConsentDictionary,
+	historyOfCancer: historyOfCancerDictionary,
+	informedConsent: informedConsentDictionary,
 	invite: inviteDictionary,
-	'landing-page': landingPageDictionary,
-	'molecular-lab': molecularLabDictionary,
+	landingPage: landingPageDictionary,
+	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
 };
