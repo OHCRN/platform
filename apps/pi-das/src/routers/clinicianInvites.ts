@@ -18,10 +18,21 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { PIClinicianInviteRequest } from 'types/entities';
+import {
+	ConflictErrorResponse,
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+} from 'types/httpResponses';
 
-import { getClinicianInvite, getClinicianInvites } from '../service/search.js';
-import { createClinicianInvite } from '../service/create.js';
+import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
+import { createClinicianInvite } from '../services/create.js';
+import { deleteClinicianInvite } from '../services/delete.js';
 import logger from '../logger.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 // TODO: update JSDoc comments when custom error handling is implemented
 /**
@@ -78,20 +89,38 @@ router.get('/', async (req, res) => {
  *          type: string
  *     responses:
  *       200:
- *         description: The clinician invite was successfully retrieved.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
  *       500:
- *         description: Error retrieving clinician invite.
+ *         description: ServerError - An unexpected error occurred.
  */
 router.get('/:inviteId', async (req, res) => {
-	logger.info('GET /clinician-invites/:inviteId');
-	const { inviteId } = req.params;
-	// TODO: add validation
 	try {
-		const invite = await getClinicianInvite(inviteId);
-		res.status(200).send({ invite });
+		const { inviteId } = req.params;
+		const invite = await getClinicianInviteById(inviteId);
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(invite.data);
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving clinician invite' });
+		logger.error(
+			'GET /clinician-invites/:inviteId',
+			'Unexpected error handling get invite request',
+			error,
+		);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 
@@ -110,72 +139,92 @@ router.get('/:inviteId', async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               participantFirstName:
- *                 type: string
- *                 required: true
- *               participantLastName:
- *                 type: string
- *                 required: true
- *               participantEmailAddress:
- *                 type: string
- *                 format: email
- *                 required: true
- *               participantPhoneNumber:
- *                 type: string
- *                 required: true
- *               participantPreferredName:
- *                 type: string
- *               guardianName:
- *                 type: string
- *               guardianPhoneNumber:
- *                 type: string
- *               guardianEmailAddress:
- *                 type: string
- *                 format: email
- *               guardianRelationship:
- *                 type: string
- *               clinicianInviteId:
- *                 type: string
+ *             $ref: '#/components/schemas/ClinicianInviteRequest'
  *     responses:
  *       201:
- *         description: The clinician invite was successfully created.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Error creating clinician invite.
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', async (req, res) => {
-	logger.info('POST /clinician-invites');
-	const {
-		participantFirstName,
-		participantLastName,
-		participantEmailAddress,
-		participantPhoneNumber,
-		participantPreferredName,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-		clinicianInviteId,
-	} = req.body;
-	// TODO: add validation
+router.post(
+	'/',
+	withRequestValidation(PIClinicianInviteRequest, async (req, res) => {
+		try {
+			const invite = await createClinicianInvite(req.body);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
+			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		}
+	}),
+);
+
+/**
+ * @openapi
+ * /clinician-invites:
+ *   delete:
+ *     tags:
+ *       - Clinician Invites
+ *     produces: application/json
+ *     name: Delete Clinician Invite
+ *     description: Deletes a clinician invite
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: inviteId
+ *         in: path
+ *         required: true
+ *         description: ID of the clinician invite to be deleted
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.delete('/:inviteId', async (req, res) => {
 	try {
-		const invite = await createClinicianInvite({
-			participantFirstName,
-			participantLastName,
-			participantEmailAddress,
-			participantPhoneNumber,
-			participantPreferredName,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-			clinicianInviteId,
-		});
-		res.status(201).send({ invite });
+		const { inviteId } = req.params;
+		const invite = await deleteClinicianInvite(inviteId);
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(invite.data);
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error creating clinician invite' });
+		logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 

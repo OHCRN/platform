@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 
-import { createResponse } from '../services/participantResponses.js';
+import { createResponse } from '../services/create.js';
 
 /**
  * @openapi
