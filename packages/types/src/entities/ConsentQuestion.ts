@@ -49,6 +49,7 @@ export const ConsentQuestionSchema: SchemaObject = generateSchema(ConsentQuestio
 
 export const ConsentQuestionArray = z.array(ConsentQuestion);
 export type ConsentQuestionArray = z.infer<typeof ConsentQuestionArray>;
+export const ConsentQuestionArraySchema: SchemaObject = generateSchema(ConsentQuestionArray);
 
 export const ConsentQuestionsRequest = z.object({
 	category: ConsentCategory.optional(),

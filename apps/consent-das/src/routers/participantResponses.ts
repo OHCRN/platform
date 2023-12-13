@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ParticipantResponseRequest } from 'types/entities';
+import { ParticipantResponsesRequest } from 'types/entities';
 import {
 	ErrorName,
 	ErrorResponse,
@@ -66,9 +66,18 @@ const router = Router();
  *         required: true
  *         schema:
  *           $ref: '#/components/schemas/ConsentQuestionId'
+ *       - name: sort-order
+ *         in: query
+ *         description: Order to sort the responses, by submittedAt date (if not included, returns in descending order)
+ *         schema:
+ *           $ref: '#/components/schemas/SortOrder'
  *     responses:
  *       200:
  *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ParticipantResponseArray'
  *       400:
  *         description: RequestValidationError - Invalid request.
  *       404:
@@ -81,7 +90,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		const { participantId, consentQuestionId } = req.params;
 		const sortOrder = req.query['sort-order'];
 
-		const request = ParticipantResponseRequest.safeParse({
+		const request = ParticipantResponsesRequest.safeParse({
 			participantId,
 			consentQuestionId,
 			sortOrder,
@@ -97,6 +106,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		}
 
 		const participantResponses = await getParticipantResponses(request.data);
+
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(participantResponses.data);

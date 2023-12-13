@@ -57,6 +57,10 @@ const router = Router();
  *     responses:
  *       200:
  *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ConsentQuestionArray'
  *       400:
  *         description: RequestValidationError - The request body was invalid.
  *       500:
@@ -64,14 +68,15 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
 	try {
-		const request = ConsentQuestionsRequest.safeParse(req.query);
+		const queryParams = ConsentQuestionsRequest.safeParse(req.query);
 
-		if (!request.success) {
-			logger.error('GET /consent-questions', 'Received invalid consent category', request.error);
-			return res.status(400).json(RequestValidationErrorResponse(request.error));
+		if (!queryParams.success) {
+			logger.error('GET /consent-questions', 'Invalid consent category', queryParams.error);
+			return res.status(400).json(RequestValidationErrorResponse(queryParams.error));
 		}
 
-		const consentQuestions = await getConsentQuestions(request.data.category);
+		const consentQuestions = await getConsentQuestions(queryParams.data.category);
+
 		switch (consentQuestions.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(consentQuestions.data);
