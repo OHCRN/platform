@@ -19,7 +19,7 @@
 
 import Image, { StaticImageData } from 'next/image';
 import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { Element, ReactNode } from 'react';
 import Link from 'next/link';
 
 import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
@@ -32,6 +32,15 @@ import { RouteName } from 'src/components/common/Link/types';
 
 import styles from './SideImageLayout.module.scss';
 
+interface SideImageLayoutProps {
+	children: ReactNode;
+	className?: string;
+	currentLang: ValidLanguage;
+	headerAction?: { bottomText: string; topText: string; url: RouteName };
+	sidebarImage: StaticImageData;
+	title: string;
+}
+
 const SideImageLayout = ({
 	children,
 	className,
@@ -39,21 +48,14 @@ const SideImageLayout = ({
 	headerAction,
 	sidebarImage,
 	title,
-}: {
-	children: ReactNode;
-	className?: string;
-	currentLang: ValidLanguage;
-	headerAction?: { topText: string; bottomText: string; url: RouteName };
-	sidebarImage: StaticImageData;
-	title: string;
-}) => {
+}: SideImageLayoutProps): Element => {
 	const translate = getTranslation(currentLang);
 
 	return (
 		<div className={clsx(styles.container, className)}>
-			<div className={styles.sidebar}>
-				<Image className={styles.sidebarImage} src={sidebarImage} alt="" />
-				<div className={clsx(styles.sidebarContent)}>
+			<header className={styles.desktopHeader}>
+				<Image className={styles.image} src={sidebarImage} alt="" />
+				<div className={clsx(styles.content)}>
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
 							src={OICRLogoEN}
@@ -63,19 +65,18 @@ const SideImageLayout = ({
 					</Link>
 					<h1 className={styles.title}>{title}</h1>
 				</div>
-			</div>
-			<div className={styles.mobileTabletHeader}>
+			</header>
+			<header className={styles.mobileTabletHeader}>
 				<h1 className={styles.title}>{title}</h1>
-			</div>
+			</header>
 			<div className={styles.main}>
 				<div className={styles.content}>
-					<div className={styles.desktopHeader}>
+					<nav className={styles.desktopNav}>
 						<div className={styles.leftButtons}>
 							<LanguageToggle currentLang={currentLang} />
 							<HelpButton label={translate('header', 'help')} />
 						</div>
 						<div className={styles.rightButtons}>
-							{/* TODO add login button, in registration layout ticket */}
 							{headerAction && (
 								<LocalizedLink
 									className={styles.headerAction}
@@ -90,7 +91,7 @@ const SideImageLayout = ({
 								</LocalizedLink>
 							)}
 						</div>
-					</div>
+					</nav>
 					{children}
 				</div>
 			</div>

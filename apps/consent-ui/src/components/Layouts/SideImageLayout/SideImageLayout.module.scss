@@ -44,7 +44,7 @@
 	}
 }
 
-.sidebar {
+.desktopHeader {
 	flex: 0 1 33%;
 	min-width: 16rem;
 	max-width: 32.8125rem;
@@ -55,12 +55,12 @@
 	@media (min-width: theme('screens.lg')) {
 		min-height: 700px;
 	}
-	.sidebarContent {
+	.content {
 		padding: 2.5rem;
 		position: absolute;
 		inset: 0;
 	}
-	.sidebarImage {
+	.image {
 		position: absolute;
 		inset: 0;
 	}
@@ -88,14 +88,14 @@
 	max-width: 47.75rem;
 }
 
-.desktopHeader {
+.desktopNav {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5rem;
 }
 
-.sidebar,
-.desktopHeader {
+.desktopHeader,
+.desktopNav {
 	@media (max-width: theme('screens.md')) {
 		display: none;
 	}
