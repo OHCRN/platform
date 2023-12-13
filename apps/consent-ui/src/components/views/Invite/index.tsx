@@ -19,7 +19,7 @@
 
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import inviteSidebarJpg from 'src/public/invite-sidebar.jpg';
+import inviteBg from 'src/public/invite-bg.jpg';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -39,7 +39,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				bottomText: textDict.registerHere,
 				url: 'register',
 			}}
-			desktopHeaderImage={inviteSidebarJpg}
+			desktopHeaderImage={inviteBg}
 			title={textDict['clinicianPatientRegistration']}
 		>
 			clinician invite form
