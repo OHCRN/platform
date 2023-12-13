@@ -20,12 +20,12 @@
 import { CommonDictionary } from 'src/i18n/locales/en/common';
 
 const dictionary = {
-	home: "Page d'accueil",
-	register: 'Inscription du participant',
-	dashboard: 'Tableau de bord',
+	backToDashboard: 'Retour au tableau de bord',
 	consent: 'Formulaires de consentement',
+	dashboard: 'Tableau de bord',
+	home: "Page d'accueil",
 	invite: 'Invitation du clinicien',
-	'back-to-dashboard': 'Retour au tableau de bord',
+	register: 'Inscription du participant',
 } satisfies CommonDictionary;
 
 export default dictionary;

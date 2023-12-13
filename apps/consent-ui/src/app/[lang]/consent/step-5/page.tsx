@@ -19,7 +19,7 @@
 
 import { ConsentCategory } from 'types/entities';
 
-import ConsentWizard from 'src/components/ConsentWizard';
+import ConsentWizard from 'src/components/views/ConsentWizard';
 import { ValidLanguage } from 'src/i18n';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {

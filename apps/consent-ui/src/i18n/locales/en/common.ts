@@ -18,12 +18,12 @@
  */
 
 const dictionary = {
-	home: 'Homepage',
-	register: 'Participant Registration',
-	dashboard: 'Dashboard',
+	backToDashboard: 'Back to Dashboard',
 	consent: 'Consent Forms',
+	dashboard: 'Dashboard',
+	home: 'Homepage',
 	invite: 'Clinician Invite',
-	'back-to-dashboard': 'Back to Dashboard',
+	register: 'Participant Registration',
 } satisfies Record<string, string>;
 
 export type CommonDictionary = Record<keyof typeof dictionary, string>;

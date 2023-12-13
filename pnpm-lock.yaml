@@ -122,6 +122,9 @@ importers:
       express-error-handler:
         specifier: workspace:^
         version: link:../../packages/express-error-handler
+      express-request-validation:
+        specifier: workspace:^
+        version: link:../../packages/express-request-validation
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -232,6 +235,9 @@ importers:
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-request-validation:
+        specifier: workspace:^
+        version: link:../../packages/express-request-validation
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
@@ -352,6 +358,9 @@ importers:
       express-error-handler:
         specifier: workspace:^
         version: link:../../packages/express-error-handler
+      express-request-validation:
+        specifier: workspace:^
+        version: link:../../packages/express-request-validation
       logger:
         specifier: workspace:^
         version: link:../../packages/logger
