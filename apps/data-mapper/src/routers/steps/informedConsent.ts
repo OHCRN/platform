@@ -18,7 +18,13 @@
  */
 
 import { Router } from 'express';
-import { ErrorName, ErrorResponse, NotFoundErrorResponse } from 'types/httpResponses';
+import { NanoId } from 'types/entities';
+import {
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
+} from 'types/httpResponses';
 
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
@@ -29,7 +35,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/informed-consent:
+ * /wizard/steps/informed-consent/{participantId}:
  *   get:
  *     tags:
  *       - Consent Wizard
@@ -44,15 +50,24 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/InformedConsentResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
  *         description: ServerError - An unexpected error occurred.
  */
-router.get('/', async (req, res) => {
+router.get('/:participantId', async (req, res) => {
 	try {
-		const participantId = 'cllgostgz000008l3fk0w'; // TODO: get ID from session
-		const participantResponses = await getInformedConsentResponses(participantId);
+		const participantId = NanoId.safeParse(req.params.participantId);
+
+		if (!participantId.success) {
+			return res
+				.status(400)
+				.json(RequestValidationErrorResponse(participantId.error, 'Invalid Participant ID'));
+		}
+
+		const participantResponses = await getInformedConsentResponses(participantId.data);
 
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
@@ -67,7 +82,7 @@ router.get('/', async (req, res) => {
 		}
 	} catch (error) {
 		logger.error(
-			'GET /wizard/steps/informed-consent',
+			'GET /wizard/steps/informed-consent/:participantId',
 			'Unexpected error handling get invite request',
 			error,
 		);
