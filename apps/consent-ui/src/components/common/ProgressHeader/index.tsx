@@ -57,7 +57,7 @@ const ProgressHeader = async ({
 							)}
 							<h3 className={styles['desktop-step-name']}>{step.name}</h3>
 							<h3 className={styles['tablet-step-name']}>
-								{translate('consentWizard', 'tablet-progress-header', { step: index + 1 })}
+								{translate('consentWizard', 'tabletProgressHeader', { step: index + 1 })}
 							</h3>
 						</div>
 						{index != steps.length - 1 && (
@@ -70,7 +70,7 @@ const ProgressHeader = async ({
 			<div className={styles['mobile-header']}>
 				<InProgress className={styles['in-progress']} />
 				<h3>
-					{translate('consentWizard', 'mobile-progress-header', {
+					{translate('consentWizard', 'mobileProgressHeader', {
 						currentStep,
 						stepCount: steps.length,
 					})}

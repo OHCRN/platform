@@ -26,8 +26,8 @@ const dictionary = {
 	CONSENT_RESEARCH_PARTICIPATION: '3. Consent for Research Participation ',
 	CONSENT_RECONTACT: '4. Consent for Recontact',
 	CONSENT_REVIEW_SIGN: '5. Review and Sign',
-	'mobile-progress-header': 'Step {{currentStep}} of {{stepCount}}',
-	'tablet-progress-header': 'Step {{step}}',
+	mobileProgressHeader: 'Step {{currentStep}} of {{stepCount}}',
+	tabletProgressHeader: 'Step {{step}}',
 } satisfies Record<string, string>;
 
 export type ConsentWizardDictionary = Record<keyof typeof dictionary, string>;

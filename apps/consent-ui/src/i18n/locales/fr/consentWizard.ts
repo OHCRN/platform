@@ -28,8 +28,8 @@ const dictionary = {
 	CONSENT_RESEARCH_PARTICIPATION: '3. Consentement à la participation à la recherche',
 	CONSENT_RECONTACT: '4. Consentement à la reprise de contact',
 	CONSENT_REVIEW_SIGN: '5. Examen et signature',
-	'mobile-progress-header': 'Étape {{currentStep}} sur {{stepCount}}',
-	'tablet-progress-header': 'Étape {{step}}',
+	mobileProgressHeader: 'Étape {{currentStep}} sur {{stepCount}}',
+	tabletProgressHeader: 'Étape {{step}}',
 } satisfies ConsentWizardDictionary;
 
 export default dictionary;
