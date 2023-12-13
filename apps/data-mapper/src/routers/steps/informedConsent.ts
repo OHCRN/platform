@@ -53,6 +53,7 @@ router.get('/', async (req, res) => {
 	try {
 		const participantId = 'cllgostgz000008l3fk0w'; // TODO: get ID from session
 		const participantResponses = await getInformedConsentResponses(participantId);
+
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(participantResponses.data);

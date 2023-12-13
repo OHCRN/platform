@@ -65,7 +65,7 @@ export const getParticipant = async (participantId: string): Promise<any> => {
 };
 
 export type GetResponsesFailureStatus = 'SYSTEM_ERROR' | 'PARTICIPANT_DOES_NOT_EXIST';
-export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: boolean | undefined };
+export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: boolean };
 
 /**
  * Fetches all consent questions for the category
