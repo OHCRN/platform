@@ -18,10 +18,12 @@
  */
 
 import { Router } from 'express';
-import { ConsentQuestionId } from 'types/entities';
-import { ErrorResponse } from 'types/httpResponses';
+import { ErrorResponse, ErrorName } from 'types/httpResponses';
 
 import logger from '../../logger.js';
+import { getInformedConsentResponses } from '../../services/search.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 const router = Router();
 
@@ -83,19 +85,29 @@ router.post('/', async (req, res) => {
  *       403:
  *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
  *       500:
- *         description: Server error
+ *         description: ServerError - An unexpected error occurred.
  */
 router.get('/', async (req, res) => {
-	logger.info(`GET /wizard/steps/informed-consent`);
-	// TODO: implement when auth layer is ready
+	// TODO: remove and get from session when auth layer is ready
+	const participantId = 'cllgostgz000008l3fk0w';
 	try {
-		logger.info(`Retrieved informed consent`);
-		return res
-			.status(200)
-			.send({ [ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: true });
+		const participantResponses = await getInformedConsentResponses(participantId);
+
+		switch (participantResponses.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(participantResponses.data);
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, participantResponses.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		return res.status(500).send({ message: 'Server error' });
+		logger.error(
+			'GET /wizard/steps/informed-consent/:participantId',
+			'Unexpected error handling get invite request',
+			error,
+		);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 
