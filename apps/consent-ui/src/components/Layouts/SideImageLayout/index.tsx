@@ -52,9 +52,7 @@ const SideImageLayout = ({
 	return (
 		<div className={clsx(styles.container, className)}>
 			<div className={styles.sidebar}>
-				<div className={styles.sidebarImage}>
-					<Image src={sidebarImage} alt="" />
-				</div>
+				<Image className={styles.sidebarImage} src={sidebarImage} alt="" />
 				<div className={clsx(styles.sidebarContent)}>
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
