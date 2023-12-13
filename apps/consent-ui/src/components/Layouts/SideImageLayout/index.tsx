@@ -24,11 +24,11 @@ import Link from 'next/link';
 
 import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import LanguageToggle from 'src/components/Header/LanguageToggle';
-import HelpButton from 'src/components/Header/HelpButton';
+import LanguageToggle from 'src/components/common/Header/LanguageToggle';
+import HelpButton from 'src/components/common/Header/HelpButton';
 import ChevronSvg from 'src/public/chevron-large.svg';
-import LocalizedLink from 'src/components/Link/LocalizedLink';
-import { RouteName } from 'src/components/Link/types';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { RouteName } from 'src/components/common/Link/types';
 
 import styles from './SideImageLayout.module.scss';
 
