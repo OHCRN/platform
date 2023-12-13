@@ -34,12 +34,12 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
-			headerAction={{
+			desktopNavAction={{
 				topText: textDict.ifParticipant,
 				bottomText: textDict.registerHere,
 				url: 'register',
 			}}
-			sidebarImage={inviteSidebarJpg}
+			desktopHeaderImage={inviteSidebarJpg}
 			title={textDict['clinicianPatientRegistration']}
 		>
 			clinician invite form
