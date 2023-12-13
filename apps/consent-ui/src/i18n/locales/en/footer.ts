@@ -18,20 +18,20 @@
  */
 
 const dictionary = {
-	'oicr-logo-alt': 'Link to OICR Home',
-	'instagram-logo-alt': 'Link to Instagram',
-	'twitter-logo-alt': 'Link to Twitter',
-	'on-govt-logo-alt': 'Link to Ontario Government Home',
-	'overture-alt': 'Link to Overture Home',
-	'github-alt': 'Link to GitHub',
+	oicrLogoAlt: 'Link to OICR Home',
+	instagramLogoAlt: 'Link to Instagram',
+	twitterLogoAlt: 'Link to Twitter',
+	onGovtLogoAlt: 'Link to Ontario Government Home',
+	overtureAlt: 'Link to Overture Home',
+	githubAlt: 'Link to GitHub',
 	about: 'About OHCRN',
 	help: 'Help Centre',
 	contact: 'Contact',
 	privacy: 'Privacy Policy',
 	terms: 'Terms & Conditions',
 	copyright: '© {{ year }} Ontario Hereditary Cancer Research Network. All rights reserved.',
-	'ohcrn-registry': 'OHCRN Registry {{ registryVersion }}',
-	'powered-by': 'Powered by',
+	ohcrnRegistry: 'OHCRN Registry {{ registryVersion }}',
+	poweredBy: 'Powered by',
 	api: 'API {{ apiVersion }}',
 } satisfies Record<string, string>;
 
