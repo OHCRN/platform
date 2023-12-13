@@ -18,7 +18,6 @@
  */
 
 import ancestryDictionary from './ancestry';
-import birthSexDictionary from './birthSex';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
 import consentGroupDictionary from './consentGroup';
@@ -31,13 +30,14 @@ import footerDictionary from './footer';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
-import historyOfCancerDictionary from './historyOfCancer';
 import informedConsentDictionary from './informedConsent';
 import inviteDictionary from './invite';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
+import historyOfCancerDictionary from './historyOfCancer';
+import birthSexDictionary from './birthSex';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
@@ -45,9 +45,9 @@ const dictionaries = {
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,
-	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
+	consentRecontact: consentRecontactDictionary,
 	consentReviewSign: consentReviewSignDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
