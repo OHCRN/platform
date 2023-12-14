@@ -28,8 +28,6 @@ import { mockEnv } from '../config.js';
 const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const mocks = vi.hoisted(() => {
-	// vi.mock() gets 'hoisted' to the top of the file, so need to declare variables used in any vi.mock() here
-	// read more in the docs: https://vitest.dev/api/vi#vi-mock
 	const inviteRequest = {
 		clinicianFirstName: 'Rubeus',
 		clinicianLastName: 'Hagrid',
@@ -61,7 +59,6 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock('../../src/services/create.js', () => {
-	// mock the createInvite service so we don't need to make an API call to data-mapper
 	return { createInvite: mocks.createInvite };
 });
 
