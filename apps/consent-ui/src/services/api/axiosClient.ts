@@ -23,7 +23,6 @@ import { getAppConfig } from 'src/config';
 const initAxiosClient = () => {
 	const { CONSENT_API_URL } = getAppConfig(process.env);
 	return axios.create({
-		validateStatus: (status: number) => status === 200,
 		baseURL: CONSENT_API_URL,
 	});
 };
