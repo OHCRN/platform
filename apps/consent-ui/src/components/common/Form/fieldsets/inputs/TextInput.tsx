@@ -21,22 +21,34 @@
 
 import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
+import { SyntheticEvent } from 'react';
 
 import { FormTextInputProps } from '../../types';
 
 const TextInput = <T extends FieldValues>({
 	className,
 	name,
+	onBlur = () => {},
+	onFocus = () => {},
 	required = false,
 	type = 'text',
 }: FormTextInputProps<T>) => {
 	const { register } = useFormContext();
+	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
+	const handleBlur = (e: SyntheticEvent) => {
+		onBlur();
+		registerOnBlur(e);
+	};
 	return (
 		<input
-			{...register(name)}
 			aria-required={required}
 			className={clsx(`${type}-input`, className)}
 			id={name}
+			name={registerName}
+			onBlur={handleBlur}
+			onChange={onChange}
+			onFocus={onFocus}
+			ref={ref}
 			type={type}
 		/>
 	);

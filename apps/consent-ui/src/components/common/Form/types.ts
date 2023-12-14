@@ -49,6 +49,7 @@ export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T
 };
 
 export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	tooltipText?: string;
 	type?: FormTextInputType;
 };
 
@@ -79,6 +80,8 @@ export interface FormInputProps<T extends FieldValues> {
 }
 
 export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
+	onBlur?: () => void;
+	onFocus?: () => void;
 	type: FormTextInputType;
 };
 

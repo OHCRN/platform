@@ -18,6 +18,7 @@
  */
 
 import { FieldValues } from 'react-hook-form';
+import { useState } from 'react';
 
 import { FormTextFieldSetProps } from '../types';
 
@@ -29,11 +30,23 @@ const TextFieldSet = <T extends FieldValues>({
 	label,
 	name,
 	required = false,
+	tooltipText = '',
 	type = 'text',
 }: FormTextFieldSetProps<T>) => {
+	const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
+	const hideTooltip = () => setTooltipVisible(false);
+	const showTooltip = () => setTooltipVisible(true);
 	return (
 		<FieldSet error={error} label={label} name={name} required={required}>
-			<TextInput name={name} required={required} type={type} />
+			{tooltipText && tooltipVisible && <div>{tooltipText}</div>}
+			<TextInput
+				name={name}
+				onBlur={hideTooltip}
+				onFocus={showTooltip}
+				required={required}
+				type={type}
+			/>
+			{tooltipText && tooltipVisible && <div>{tooltipText}</div>}
 		</FieldSet>
 	);
 };
