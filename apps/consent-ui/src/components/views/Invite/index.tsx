@@ -61,6 +61,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		guardianName: translate('inviteFormLabels', 'guardianName'),
 		guardianPhone: translate('inviteFormLabels', 'guardianPhone'),
 		guardianRelationship: translate('inviteFormLabels', 'guardianRelationship'),
+		phone: translate('inviteFormLabels', 'phone'),
 	};
 
 	// TODO replace this object with translate namespace function https://github.com/OHCRN/platform/issues/313

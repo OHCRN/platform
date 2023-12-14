@@ -1,0 +1,13 @@
+.fieldSet {
+	@apply flex;
+	height: 3.75rem;
+	align-items: center;
+}
+
+.label {
+	width: 16rem;
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1.625rem;
+	margin-right: 1.5rem;
+}

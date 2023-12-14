@@ -19,10 +19,9 @@
 
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 
-import { FormSelectFieldSetProps } from '../types';
-
-import FieldSet from './FieldSet';
-import SelectInput from './inputs/SelectInput';
+import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
+import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
+import { FormSelectFieldSetProps } from 'src/components/common/Form/types';
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	error,

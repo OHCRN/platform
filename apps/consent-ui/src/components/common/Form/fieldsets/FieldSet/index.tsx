@@ -23,6 +23,8 @@ import clsx from 'clsx';
 import RequiredAsterisk from '../../RequiredAsterisk';
 import { FormFieldSetProps } from '../../types';
 
+import styles from './FieldSet.module.scss';
+
 const FieldSet = <T extends FieldValues>({
 	children,
 	className,
@@ -32,8 +34,8 @@ const FieldSet = <T extends FieldValues>({
 	required = false,
 }: FormFieldSetProps<T>) => {
 	return (
-		<fieldset className={clsx('fieldset', className)}>
-			<label htmlFor={name}>
+		<fieldset className={clsx('fieldset', styles.fieldSet, className)}>
+			<label htmlFor={name} className={styles.label}>
 				{label}
 				{required && <RequiredAsterisk />}
 			</label>

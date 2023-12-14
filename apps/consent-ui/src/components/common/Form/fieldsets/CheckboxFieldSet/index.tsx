@@ -39,14 +39,14 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	return (
 		<fieldset className={clsx(styles.checkboxFieldset, className)}>
 			{title && (
-				<h4>
+				<h4 className={styles.title}>
 					{title}
 					{required && <RequiredAsterisk />}
 				</h4>
 			)}
-			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} />
-				<span className="checkbox-fieldset__description">
+			<label htmlFor={name} className={styles.label}>
+				<CheckboxInput required={required} name={name} className={styles.checkboxInput} />
+				<span className={styles.description}>
 					{description}
 					{required && !title && <RequiredAsterisk />}
 				</span>

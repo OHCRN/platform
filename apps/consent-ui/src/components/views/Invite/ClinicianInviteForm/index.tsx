@@ -38,8 +38,10 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import FieldGroup from 'src/components/common/Form/FieldGroup';
+import Button from 'src/components/common/Button';
 
 import { ConsentGroupOption } from './types';
+import styles from './ClinicianInviteForm.module.scss';
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -132,8 +134,12 @@ const ClinicianInviteFormComponent = ({
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<FieldGroup>
-					<h3>{textDict['patientInformation']}</h3>
-					<p>
+					<h2 className={styles.pageTitle}>Register Your Patient</h2>
+					<p className={styles.pageSubtitle}>
+						Invite your patients to participate in the OHCRN Registry.
+					</p>
+					<h3 className={styles.sectionTitle}>{textDict['patientInformation']}</h3>
+					<p className={styles.smallText}>
 						<RequiredAsterisk /> {textDict['indicatesRequiredField']}
 					</p>
 					<TextFieldSet
@@ -161,6 +167,17 @@ const ClinicianInviteFormComponent = ({
 						options={consentGroupOptions}
 						placeholder={textDict['selectPlaceholder'] || ''}
 						required
+					/>
+
+					<TextFieldSet
+						error={errors.participantPhoneNumber?.type && errorsDict['required']}
+						label={labelsDict['phone'] || ''}
+						name="participantPhoneNumber"
+					/>
+					<TextFieldSet
+						error={errors.participantEmailAddress?.type && errorsDict['required']}
+						label={labelsDict['email'] || ''}
+						name="participantEmailAddress"
 					/>
 				</FieldGroup>
 
@@ -209,7 +226,7 @@ const ClinicianInviteFormComponent = ({
 				)}
 
 				<FieldGroup>
-					<p>{textDict['afterRegistering']}</p>
+					<p className={styles.afterRegistering}>{textDict['afterRegistering']}</p>
 					<CheckboxFieldSet
 						description={textDict['consentContactDescription']}
 						error={errors.consentToBeContacted?.type && errorsDict['required']}
@@ -220,7 +237,7 @@ const ClinicianInviteFormComponent = ({
 				</FieldGroup>
 
 				<FieldGroup>
-					<h3>{textDict['clinicianInformation']}</h3>
+					<h3 className={styles.sectionTitle}>{textDict['clinicianInformation']}</h3>
 					<TextFieldSet
 						error={errors.clinicianTitleOrRole?.type && errorsDict['required']}
 						label={labelsDict['clinicianTitleOrRole'] || ''}
@@ -248,18 +265,19 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FieldGroup>
 
-				{recaptchaError && (
-					<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
-				)}
+				<FieldGroup>
+					{recaptchaError && (
+						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+					)}
 
-				<div style={{ margin: '25px 0' }}>
-					<RecaptchaCheckbox
-						onChange={handleRecaptchaChange}
-						recaptchaCheckboxRef={recaptchaCheckboxRef}
-					/>
-				</div>
-
-				<button type="submit">Submit</button>
+					<div style={{ margin: '25px 0' }}>
+						<RecaptchaCheckbox
+							onChange={handleRecaptchaChange}
+							recaptchaCheckboxRef={recaptchaCheckboxRef}
+						/>
+					</div>
+					<Button type="submit">Submit</Button>
+				</FieldGroup>
 			</Form>
 		</FormProvider>
 	);

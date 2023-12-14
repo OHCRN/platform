@@ -20,10 +20,11 @@
 import { FieldValues } from 'react-hook-form';
 import { useState } from 'react';
 
-import { FormTextFieldSetProps } from '../types';
+import { FormTextFieldSetProps } from '../../types';
+import TextInput from '../inputs/TextInput';
+import FieldSet from '../FieldSet';
 
-import TextInput from './inputs/TextInput';
-import FieldSet from './FieldSet';
+import styles from './TextFieldSet.module.scss';
 
 const TextFieldSet = <T extends FieldValues>({
 	error,
@@ -40,6 +41,7 @@ const TextFieldSet = <T extends FieldValues>({
 		<FieldSet error={error} label={label} name={name} required={required}>
 			{tooltipText && tooltipVisible && <div>{tooltipText}</div>}
 			<TextInput
+				className={styles.textInput}
 				name={name}
 				onBlur={hideTooltip}
 				onFocus={showTooltip}
