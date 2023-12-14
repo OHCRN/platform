@@ -17,8 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+import clsx from 'clsx';
+import { FormEventHandler, ReactNode } from 'react';
 
-export type InviteDictionary = Record<keyof typeof dictionary, string>;
+import styles from './Form.module.scss';
 
-export default dictionary;
+const Form = ({
+	children,
+	className,
+	onSubmit,
+}: {
+	children: ReactNode;
+	className?: string;
+	onSubmit: FormEventHandler<HTMLFormElement>;
+}) => {
+	return (
+		<form onSubmit={onSubmit} className={clsx(styles.base, className)}>
+			{children}
+		</form>
+	);
+};
+
+export default Form;
