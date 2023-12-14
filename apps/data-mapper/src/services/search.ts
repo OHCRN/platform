@@ -1,15 +1,17 @@
 import urlJoin from 'url-join';
-import { ConsentCategory, ConsentQuestionId, InformedConsentResponse } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
+import { ConsentCategory, ConsentQuestionId, InformedConsentResponse } from 'types/entities';
 
 import { getAppConfig } from '../config.js';
-import logger from '../logger.js';
+import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 import {
 	getConsentQuestionsByCategory,
 	getParticipantResponsesByQuestionId,
 } from './das/consent.js';
+
+const logger = serviceLogger.forModule('SearchService');
 
 const { INFORMED_CONSENT } = ConsentCategory.enum;
 
