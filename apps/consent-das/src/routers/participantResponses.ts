@@ -88,7 +88,7 @@ const router = Router();
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	try {
 		const { participantId, consentQuestionId } = req.params;
-		const sortOrder = req.query['sort-order'];
+		const { sortOrder } = req.query;
 
 		const request = ParticipantResponsesRequest.safeParse({
 			participantId,
