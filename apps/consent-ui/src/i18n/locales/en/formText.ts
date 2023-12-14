@@ -17,22 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+const dictionary = {
+	indicatesRequiredField: 'indicates required field',
+	selectPlaceholder: 'Select an option...',
+} satisfies Record<string, string>;
 
-import { Name } from '../../src/entities/index.js';
+export type FormTextDictionary = Record<keyof typeof dictionary, string>;
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+export default dictionary;

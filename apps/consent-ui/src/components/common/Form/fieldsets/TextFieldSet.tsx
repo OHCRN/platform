@@ -17,22 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { FieldValues } from 'react-hook-form';
 
-import { Name } from '../../src/entities/index.js';
+import { FormTextFieldSetProps } from '../types';
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+import TextInput from './inputs/TextInput';
+import FieldSet from './FieldSet';
+
+const TextFieldSet = <T extends FieldValues>({
+	error,
+	label,
+	name,
+	required = false,
+	type = 'text',
+}: FormTextFieldSetProps<T>) => {
+	return (
+		<FieldSet error={error} label={label} name={name} required={required}>
+			<TextInput name={name} required={required} type={type} />
+		</FieldSet>
+	);
+};
+
+export default TextFieldSet;
