@@ -103,7 +103,7 @@ router.get('/', async (req, res) => {
 		}
 	} catch (error) {
 		logger.error(
-			'GET /wizard/steps/informed-consent/:participantId',
+			'GET /wizard/steps/informed-consent/',
 			'Unexpected error handling get invite request',
 			error,
 		);
