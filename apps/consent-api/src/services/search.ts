@@ -8,7 +8,7 @@ import { getAppConfig } from '../config.js';
 
 import axiosClient from './axiosClient.js';
 
-const logger = serviceLogger.forModule('DataMapperClient');
+const logger = serviceLogger.forModule('SearchService');
 
 // TODO: add Type instead of any
 export const getParticipant = async (id: string): Promise<any> => {
