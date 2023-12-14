@@ -37,6 +37,7 @@ import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
+import FieldGroup from 'src/components/common/Form/FieldGroup';
 
 import { ConsentGroupOption } from './types';
 
@@ -130,7 +131,7 @@ const ClinicianInviteFormComponent = ({
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<div>
+				<FieldGroup>
 					<h3>{textDict['patientInformation']}</h3>
 					<p>
 						<RequiredAsterisk /> {textDict['indicatesRequiredField']}
@@ -161,10 +162,10 @@ const ClinicianInviteFormComponent = ({
 						placeholder={textDict['selectPlaceholder'] || ''}
 						required
 					/>
-				</div>
+				</FieldGroup>
 
 				{showGuardianFields && (
-					<div style={{ background: 'lightgrey' }}>
+					<FieldGroup variant="grey">
 						{/*
 						 * guardian fields are marked required in the UI & optional in zod schema.
 						 * they're required if they're visible,
@@ -204,10 +205,10 @@ const ClinicianInviteFormComponent = ({
 							{textDict['uploadFileDescription2']}
 							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 						</p>
-					</div>
+					</FieldGroup>
 				)}
 
-				<div>
+				<FieldGroup>
 					<p>{textDict['afterRegistering']}</p>
 					<CheckboxFieldSet
 						description={textDict['consentContactDescription']}
@@ -216,9 +217,9 @@ const ClinicianInviteFormComponent = ({
 						required
 						title={labelsDict['consentContact']}
 					/>
-				</div>
+				</FieldGroup>
 
-				<div>
+				<FieldGroup>
 					<h3>{textDict['clinicianInformation']}</h3>
 					<TextFieldSet
 						error={errors.clinicianTitleOrRole?.type && errorsDict['required']}
@@ -245,7 +246,7 @@ const ClinicianInviteFormComponent = ({
 						required
 						type="email"
 					/>
-				</div>
+				</FieldGroup>
 
 				{recaptchaError && (
 					<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
