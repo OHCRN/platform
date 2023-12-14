@@ -27,7 +27,7 @@ import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 
-const logger = serviceLogger.forModule('DataMapperClient');
+const logger = serviceLogger.forModule('CreateService');
 
 export const createResponse = async ({
 	consentQuestionId,
