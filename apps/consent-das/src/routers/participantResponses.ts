@@ -68,7 +68,7 @@ const router = Router();
  *           $ref: '#/components/schemas/ConsentQuestionId'
  *       - name: sort-order
  *         in: query
- *         description: Order to sort the responses, by submittedAt date (if not included, returns in descending order)
+ *         description: sorts responses by submittedAt date, defaults to descending
  *         schema:
  *           $ref: '#/components/schemas/SortOrder'
  *     responses:
@@ -88,7 +88,7 @@ const router = Router();
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	try {
 		const { participantId, consentQuestionId } = req.params;
-		const sortOrder = req.query['sort-order'];
+		const { sortOrder } = req.query;
 
 		const request = ParticipantResponsesRequest.safeParse({
 			participantId,
@@ -97,6 +97,14 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		});
 
 		if (!request.success) {
+			const { issues } = request.error;
+			if (issues.some((issue) => issue.path.includes('participantId'))) {
+				// participantId is invalid, should result in 404
+				return res
+					.status(404)
+					.json(NotFoundErrorResponse(`Participant with id ${participantId} does not exist.`));
+			}
+
 			logger.error(
 				'GET /:participantId/:consentQuestionId',
 				'Received invalid request fetching participant response',

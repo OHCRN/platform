@@ -62,7 +62,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ConsentQuestionArray'
  *       400:
- *         description: RequestValidationError - The request body was invalid.
+ *         description: RequestValidationError - The query parameter was invalid.
  *       500:
  *         description: ServerError - An unexpected error occurred.
  */
