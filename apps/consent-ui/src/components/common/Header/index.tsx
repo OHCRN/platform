@@ -24,7 +24,6 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import OhcrnImage from 'src/public/ohcrn_large.svg';
-import { getUnselectedLang } from 'src/components/common/Link/utils';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
@@ -39,7 +38,6 @@ const icons: {
 
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
-	const langToSelect = getUnselectedLang(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
 		<HeaderWrapper currentLang={currentLang}>
@@ -55,10 +53,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			</div>
 			<div className={styles.right}>
 				<div className={styles.headerItem}>
-					<LanguageToggle currentLang={currentLang}>
-						<span className={styles['toggle-full']}>{translate('header', langToSelect)}</span>
-						<span className={styles['toggle-abbr']}>{langToSelect}</span>
-					</LanguageToggle>
+					<LanguageToggle currentLang={currentLang} />
 				</div>
 				{/* TODO: implement real help button, ticket TBD */}
 				<div className={styles.help}>

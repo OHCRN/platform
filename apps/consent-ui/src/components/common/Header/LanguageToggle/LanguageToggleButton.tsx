@@ -19,41 +19,38 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
-import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormCheckboxFieldSetProps } from '../../types';
-import CheckboxInput from '../inputs/CheckboxInput';
+import { ValidLanguage } from 'src/i18n';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getLinkNameByPath } from 'src/components/common/Link/utils';
 
-import styles from './CheckboxFieldSet.module.scss';
+import styles from './LanguageToggleButton.module.scss';
 
-const CheckboxFieldSet = <T extends FieldValues>({
-	className,
-	description,
-	error,
-	name,
-	required = false,
-	title,
-}: FormCheckboxFieldSetProps<T>) => {
+const LanguageToggleButton = ({
+	currentLang,
+	fullToggleLabel,
+	langToSelect,
+}: {
+	currentLang: ValidLanguage;
+	fullToggleLabel: string;
+	langToSelect: ValidLanguage;
+}) => {
+	const path = usePathname();
+	const linkName = getLinkNameByPath(path, currentLang);
+
 	return (
-		<fieldset className={clsx(styles.checkboxFieldset, className)}>
-			{title && (
-				<h4>
-					{title}
-					{required && <RequiredAsterisk />}
-				</h4>
-			)}
-			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} />
-				<span className="checkbox-fieldset__description">
-					{description}
-					{required && !title && <RequiredAsterisk />}
-				</span>
-			</label>
-			{error && <span style={{ color: 'red' }}>{error}</span>}
-		</fieldset>
+		<LocalizedLink
+			name={linkName}
+			linkLang={langToSelect}
+			role="button"
+			color="blue"
+			variant="secondary"
+		>
+			<span className={styles['toggle-full']}>{fullToggleLabel}</span>
+			<span className={styles['toggle-abbr']}>{langToSelect}</span>
+		</LocalizedLink>
 	);
 };
 
-export default CheckboxFieldSet;
+export default LanguageToggleButton;

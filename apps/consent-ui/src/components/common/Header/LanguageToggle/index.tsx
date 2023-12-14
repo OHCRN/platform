@@ -17,43 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { getUnselectedLang } from 'src/components/common/Link/utils';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 
-import { FieldValues } from 'react-hook-form';
-import clsx from 'clsx';
+import LanguageToggleButton from './LanguageToggleButton';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormCheckboxFieldSetProps } from '../../types';
-import CheckboxInput from '../inputs/CheckboxInput';
+const LanguageToggle = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
+	const langToSelect = getUnselectedLang(currentLang);
+	console.log(currentLang, langToSelect, translate('header', langToSelect));
 
-import styles from './CheckboxFieldSet.module.scss';
-
-const CheckboxFieldSet = <T extends FieldValues>({
-	className,
-	description,
-	error,
-	name,
-	required = false,
-	title,
-}: FormCheckboxFieldSetProps<T>) => {
 	return (
-		<fieldset className={clsx(styles.checkboxFieldset, className)}>
-			{title && (
-				<h4>
-					{title}
-					{required && <RequiredAsterisk />}
-				</h4>
-			)}
-			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} />
-				<span className="checkbox-fieldset__description">
-					{description}
-					{required && !title && <RequiredAsterisk />}
-				</span>
-			</label>
-			{error && <span style={{ color: 'red' }}>{error}</span>}
-		</fieldset>
+		<LanguageToggleButton
+			currentLang={currentLang}
+			langToSelect={langToSelect}
+			fullToggleLabel={translate('header', langToSelect)}
+		/>
 	);
 };
 
-export default CheckboxFieldSet;
+export default LanguageToggle;

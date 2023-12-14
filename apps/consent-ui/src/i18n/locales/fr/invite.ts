@@ -17,36 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { InviteDictionary } from '../en/invite';
 
-import { ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/common/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from 'src/components/common/Link/utils';
+const dictionary = {
+	clinicianPatientRegistration: 'Inscription des patients cliniciens',
+	ifParticipant: 'Si vous êtes un participant :',
+	registerHere: 'Inscrivez-vous ici',
+	registerYourPatient: 'Enregistrez votre patient',
+} satisfies InviteDictionary;
 
-function LanguageToggle({
-	currentLang,
-	children,
-}: {
-	currentLang: ValidLanguage;
-	children: ReactNode;
-}) {
-	const langToSelect = getUnselectedLang(currentLang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, currentLang);
-
-	return (
-		<LocalizedLink
-			name={linkName}
-			linkLang={langToSelect}
-			role="button"
-			color="blue"
-			variant="secondary"
-		>
-			{children}
-		</LocalizedLink>
-	);
-}
-
-export default LanguageToggle;
+export default dictionary;

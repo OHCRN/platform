@@ -3,7 +3,7 @@
 import Button from 'src/components/common/Button';
 import Help from 'src/components/common/Icons/Help';
 
-import styles from './Header.module.scss';
+import styles from './HelpButton.module.scss';
 
 const HelpButton = ({ label }: { label: string }) => {
 	return (
