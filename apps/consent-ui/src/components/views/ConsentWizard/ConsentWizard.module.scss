@@ -5,6 +5,10 @@
 	align-items: center;
 	gap: 0.5rem;
 	margin-bottom: 2rem;
+
+	h1 {
+		font-size: theme('fontSize.xl');
+	}
 }
 
 .wizard {

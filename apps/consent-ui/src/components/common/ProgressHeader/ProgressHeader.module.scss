@@ -9,6 +9,13 @@
 	gap: 0.5rem;
 }
 
+.desktop-step-name,
+.tablet-step-name,
+.mobile-step-name {
+	font-weight: 700;
+	font-size: theme('fontSize.lg');
+}
+
 .mobile-header {
 	@media (min-width: theme('screens.sm')) {
 		display: none;
@@ -56,7 +63,7 @@
 	width: 200%;
 	justify-self: center;
 	border-color: theme('colors.grayscale.500');
-	
+
 	@media (min-width: theme('screens.md')) {
 		margin-top: 1.5rem;
 	}

@@ -69,7 +69,7 @@ const ConsentWizard = async ({
 			<BackToDashboard currentLang={currentLang} />
 			<div className={styles.wizard}>
 				<div className={styles.header}>
-					<h3>{translate('consentWizard', 'heading')}</h3>
+					<h1>{translate('consentWizard', 'heading')}</h1>
 					<p>{translate('consentWizard', 'subheading')}</p>
 				</div>
 				<Card dropShadow="sm" className={styles['consent-form']}>

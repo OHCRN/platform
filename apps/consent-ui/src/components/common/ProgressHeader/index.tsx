@@ -55,10 +55,10 @@ const ProgressHeader = async ({
 							) : (
 								<Incomplete className={styles.incomplete} />
 							)}
-							<h3 className={styles['desktop-step-name']}>{step.name}</h3>
-							<h3 className={styles['tablet-step-name']}>
+							<span className={styles['desktop-step-name']}>{step.name}</span>
+							<span className={styles['tablet-step-name']}>
 								{translate('consentWizard', 'tabletProgressHeader', { step: index + 1 })}
-							</h3>
+							</span>
 						</div>
 						{index != steps.length - 1 && (
 							<hr className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />
@@ -69,12 +69,12 @@ const ProgressHeader = async ({
 			{/* Mobile screens */}
 			<div className={styles['mobile-header']}>
 				<InProgress className={styles['in-progress']} />
-				<h3>
+				<span className={styles['mobile-step-name']}>
 					{translate('consentWizard', 'mobileProgressHeader', {
 						currentStep,
 						stepCount: steps.length,
 					})}
-				</h3>
+				</span>
 			</div>
 		</>
 	);
