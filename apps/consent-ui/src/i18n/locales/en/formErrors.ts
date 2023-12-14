@@ -17,13 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { InviteDictionary } from '../en/invite';
-
 const dictionary = {
-	clinicianPatientRegistration: 'Inscription des patients cliniciens',
-	ifParticipant: 'Si vous êtes un participant :',
-	registerHere: 'Inscrivez-vous ici',
-	registerYourPatient: 'Enregistrez votre patient',
-} satisfies InviteDictionary;
+	required: 'Please fill out the required field.',
+} satisfies Record<string, string>;
+
+export type FormErrorsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;
