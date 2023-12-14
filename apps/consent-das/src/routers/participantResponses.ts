@@ -68,7 +68,7 @@ const router = Router();
  *           $ref: '#/components/schemas/ConsentQuestionId'
  *       - name: sort-order
  *         in: query
- *         description: Order to sort the responses, by submittedAt date (if not included, returns in descending order)
+ *         description: sorts responses by submittedAt date, defaults to descending
  *         schema:
  *           $ref: '#/components/schemas/SortOrder'
  *     responses:
