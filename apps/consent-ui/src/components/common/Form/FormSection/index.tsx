@@ -20,9 +20,9 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
-import styles from './FieldGroup.module.scss';
+import styles from './FormSection.module.scss';
 
-const FieldGroup = ({
+const FormSection = ({
 	children,
 	variant = 'white',
 }: {
@@ -32,4 +32,4 @@ const FieldGroup = ({
 	return <section className={clsx(styles.base, styles[variant])}>{children}</section>;
 };
 
-export default FieldGroup;
+export default FormSection;

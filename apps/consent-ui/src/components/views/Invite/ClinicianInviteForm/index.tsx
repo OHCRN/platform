@@ -37,7 +37,7 @@ import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
-import FieldGroup from 'src/components/common/Form/FieldGroup';
+import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
 
 import { ConsentGroupOption } from './types';
@@ -133,139 +133,139 @@ const ClinicianInviteFormComponent = ({
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<FieldGroup>
+				<FormSection>
 					<h2 className={styles.pageTitle}>Register Your Patient</h2>
 					<p className={styles.pageSubtitle}>
 						Invite your patients to participate in the OHCRN Registry.
 					</p>
-					<h3 className={styles.sectionTitle}>{textDict['patientInformation']}</h3>
+					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
 					<p className={styles.smallText}>
-						<RequiredAsterisk /> {textDict['indicatesRequiredField']}
+						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
 					<TextFieldSet
-						error={errors.participantFirstName?.type && errorsDict['required']}
-						label={labelsDict['firstName'] || ''}
+						error={errors.participantFirstName?.type && errorsDict.required}
+						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
 					/>
 					<TextFieldSet
-						error={errors.participantLastName?.type && errorsDict['required']}
-						label={labelsDict['lastName'] || ''}
+						error={errors.participantLastName?.type && errorsDict.required}
+						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
 					/>
 					<TextFieldSet
-						error={errors.participantPreferredName?.type && errorsDict['required']}
-						label={labelsDict['preferredName'] || ''}
+						error={errors.participantPreferredName?.type && errorsDict.required}
+						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
 					/>
 
 					<SelectFieldSet
-						error={errors.consentGroup?.type && errorsDict['required']}
-						label={labelsDict['consentGroup'] || ''}
+						error={errors.consentGroup?.type && errorsDict.required}
+						label={labelsDict.consentGroup || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
-						placeholder={textDict['selectPlaceholder'] || ''}
+						placeholder={textDict.selectPlaceholder || ''}
 						required
 					/>
 
 					<TextFieldSet
-						error={errors.participantPhoneNumber?.type && errorsDict['required']}
-						label={labelsDict['phone'] || ''}
+						error={errors.participantPhoneNumber?.type && errorsDict.required}
+						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
 					/>
 					<TextFieldSet
-						error={errors.participantEmailAddress?.type && errorsDict['required']}
-						label={labelsDict['email'] || ''}
+						error={errors.participantEmailAddress?.type && errorsDict.required}
+						label={labelsDict.email || ''}
 						name="participantEmailAddress"
 					/>
-				</FieldGroup>
+				</FormSection>
 
 				{showGuardianFields && (
-					<FieldGroup variant="grey">
+					<FormSection variant="grey">
 						{/*
 						 * guardian fields are marked required in the UI & optional in zod schema.
 						 * they're required if they're visible,
 						 * i.e. if the user has indicated the participant is a minor
 						 */}
-						<p>{textDict['enterGuardianInfo']}</p>
+						<p>{textDict.enterGuardianInfo}</p>
 						<TextFieldSet
-							error={errors.guardianName?.type && errorsDict['required']}
-							label={labelsDict['guardianName'] || ''}
+							error={errors.guardianName?.type && errorsDict.required}
+							label={labelsDict.guardianName || ''}
 							name="guardianName"
 							required
 						/>
 						<TextFieldSet
-							error={errors.guardianPhoneNumber?.type && errorsDict['required']}
-							label={labelsDict['guardianPhone'] || ''}
+							error={errors.guardianPhoneNumber?.type && errorsDict.required}
+							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
 							required
 							type="tel"
 						/>
 						<TextFieldSet
-							error={errors.guardianEmailAddress?.type && errorsDict['required']}
-							label={labelsDict['email'] || ''}
+							error={errors.guardianEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email || ''}
 							name="guardianEmailAddress"
 							required
 							type="email"
 						/>
 						<TextFieldSet
-							error={errors.guardianRelationship?.type && errorsDict['required']}
-							label={labelsDict['guardianRelationship'] || ''}
+							error={errors.guardianRelationship?.type && errorsDict.required}
+							label={labelsDict.guardianRelationship || ''}
 							name="guardianRelationship"
 							required
 						/>
 						<p>
-							{textDict['uploadFileDescription1']}
-							<a href="">{textDict['uploadFileLink']}</a>
+							{textDict.uploadFileDescription1}
+							<a href="">{textDict.uploadFileLink}</a>
 							{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
-							{textDict['uploadFileDescription2']}
+							{textDict.uploadFileDescription2}
 							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 						</p>
-					</FieldGroup>
+					</FormSection>
 				)}
 
-				<FieldGroup>
-					<p className={styles.afterRegistering}>{textDict['afterRegistering']}</p>
+				<FormSection>
+					<p className={styles.afterRegistering}>{textDict.afterRegistering}</p>
 					<CheckboxFieldSet
-						description={textDict['consentContactDescription']}
-						error={errors.consentToBeContacted?.type && errorsDict['required']}
+						description={textDict.consentContactDescription}
+						error={errors.consentToBeContacted?.type && errorsDict.required}
 						name="consentToBeContacted"
 						required
-						title={labelsDict['consentContact']}
+						title={labelsDict.consentContact}
 					/>
-				</FieldGroup>
+				</FormSection>
 
-				<FieldGroup>
-					<h3 className={styles.sectionTitle}>{textDict['clinicianInformation']}</h3>
+				<FormSection>
+					<h3 className={styles.sectionTitle}>{textDict.clinicianInformation}</h3>
 					<TextFieldSet
-						error={errors.clinicianTitleOrRole?.type && errorsDict['required']}
-						label={labelsDict['clinicianTitleOrRole'] || ''}
+						error={errors.clinicianTitleOrRole?.type && errorsDict.required}
+						label={labelsDict.clinicianTitleOrRole || ''}
 						name="clinicianTitleOrRole"
 						required
 					/>
 					<TextFieldSet
-						error={errors.clinicianFirstName?.type && errorsDict['required']}
-						label={labelsDict['clinicianFirstName'] || ''}
+						error={errors.clinicianFirstName?.type && errorsDict.required}
+						label={labelsDict.clinicianFirstName || ''}
 						name="clinicianFirstName"
 						required
 					/>
 					<TextFieldSet
-						error={errors.clinicianLastName?.type && errorsDict['required']}
-						label={labelsDict['clinicianLastName'] || ''}
+						error={errors.clinicianLastName?.type && errorsDict.required}
+						label={labelsDict.clinicianLastName || ''}
 						name="clinicianLastName"
 						required
 					/>
 					<TextFieldSet
-						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict['required']}
-						label={labelsDict['clinicianInstitutionalEmailAddress'] || ''}
+						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
+						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
 						type="email"
 					/>
-				</FieldGroup>
+				</FormSection>
 
-				<FieldGroup>
+				<FormSection>
 					{recaptchaError && (
 						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
 					)}
@@ -277,7 +277,7 @@ const ClinicianInviteFormComponent = ({
 						/>
 					</div>
 					<Button type="submit">Submit</Button>
-				</FieldGroup>
+				</FormSection>
 			</Form>
 		</FormProvider>
 	);
