@@ -13,7 +13,6 @@
 		theme('colors.secondary.500')
 	);
 	padding: 1rem;
-	margin-bottom: 1.88rem;
 	@media (min-width: theme('screens.sm')) {
 		padding: 1.5rem 2.44rem;
 		margin-bottom: 2.44rem;
@@ -26,7 +25,7 @@
 .title {
 	color: theme('colors.grayscale.100');
 	font-size: 2.25rem;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 2.875rem;
 	@media (min-width: theme('screens.sm')) {
 		font-size: 2.875rem;
@@ -69,7 +68,7 @@
 .main {
 	background: theme('colors.grayscale.100');
 	@apply basis-4/6 flex-grow flex-shrink-0;
-	padding: 0 1rem 2.8125rem;
+	padding: 1rem 0 2.8125rem;
 	@media (min-width: theme('screens.sm')) {
 		padding: 0 2.5rem 2.75rem;
 	}

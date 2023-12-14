@@ -29,7 +29,7 @@ const FormSection = ({
 	children: ReactNode;
 	variant?: 'grey' | 'white';
 }) => {
-	return <section className={clsx(styles.base, styles[variant])}>{children}</section>;
+	return <section className={clsx(styles.formSection, styles[variant])}>{children}</section>;
 };
 
 export default FormSection;
