@@ -9,7 +9,7 @@ import axiosClient from './axiosClient.js';
 import { getInvitePiData } from './das/pi.js';
 import { getInviteConsentData } from './das/consent.js';
 
-const logger = serviceLogger.forModule('DataMapperClient');
+const logger = serviceLogger.forModule('SearchService');
 
 // PI-DAS
 // TODO: add Type instead of any

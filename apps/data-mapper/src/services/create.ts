@@ -9,7 +9,7 @@ import axiosClient from './axiosClient.js';
 import { createInvitePiData, deleteInvitePiData } from './das/pi.js';
 import { createInviteConsentData } from './das/consent.js';
 
-const logger = serviceLogger.forModule('DataMapperClient');
+const logger = serviceLogger.forModule('CreateService');
 
 // PI-DAS
 const createParticipantPiData = async ({
