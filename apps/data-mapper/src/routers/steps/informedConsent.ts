@@ -18,13 +18,7 @@
  */
 
 import { Router } from 'express';
-import { NanoId } from 'types/entities';
-import {
-	ErrorName,
-	ErrorResponse,
-	NotFoundErrorResponse,
-	RequestValidationErrorResponse,
-} from 'types/httpResponses';
+import { ErrorName, ErrorResponse, NotFoundErrorResponse } from 'types/httpResponses';
 
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
@@ -65,15 +59,9 @@ const router = Router();
  */
 router.get('/:participantId', async (req, res) => {
 	try {
-		const participantId = NanoId.safeParse(req.params.participantId);
+		const { participantId } = req.params;
 
-		if (!participantId.success) {
-			return res
-				.status(400)
-				.json(RequestValidationErrorResponse(participantId.error, 'Invalid Participant ID'));
-		}
-
-		const participantResponses = await getInformedConsentResponses(participantId.data);
+		const participantResponses = await getInformedConsentResponses(participantId);
 
 		switch (participantResponses.status) {
 			case 'SUCCESS': {

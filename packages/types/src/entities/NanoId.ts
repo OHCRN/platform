@@ -18,11 +18,8 @@
  */
 
 import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { nanoId } from './Regex.js';
 
 export const NanoId = z.string().regex(nanoId);
 export type NanoId = z.infer<typeof NanoId>;
-export const NanoIdSchema: SchemaObject = generateSchema(NanoId);
