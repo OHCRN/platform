@@ -21,7 +21,7 @@ type GetParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST';
  * Fetches participant by ID from Consent DB.
  * If the participant does not exist, returns a failure with status `"PARTICIPANT_DOES_NOT_EXIST"`.
  * @param participantId Participant ID in DB
- * @returns Participant object from Consent DB
+ * @returns {Participant} Participant object from Consent DB
  */
 export const getParticipantById = async (
 	participantId: string,
@@ -72,7 +72,7 @@ export const getConsentQuestion = async (
 /**
  * Fetches all consent questions, optionally filtered by category
  * @param category Optional category to filter, returns all consent questions if category is undefined
- * @returns Array of consent questions
+ * @returns {ConsentQuestion[]} Array of consent questions
  */
 export const getConsentQuestions = async (
 	category?: ConsentCategory,
@@ -102,7 +102,7 @@ export const getConsentQuestions = async (
  * If the participant does not exist, returns a failure with status `"PARTICIPANT_DOES_NOT_EXIST"`.
  * Consent question should exist because it expects `consentQuestionId` to be a `ConsentQuestionId` enum value.
  * @param sortOrder defaults to descending to sort by most recently submitted responses first
- * @returns All participant responses for consent question
+ * @returns {ParticipantResponse[]} All participant responses for consent question
  */
 export const getParticipantResponses = async ({
 	participantId,
