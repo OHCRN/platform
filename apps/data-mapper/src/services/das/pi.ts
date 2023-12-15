@@ -33,7 +33,7 @@ const logger = serviceLogger.forModule('PIClient');
 /**
  * Makes request to PI DAS to fetch a Clinician Invite
  * @param inviteId
- * @returns ClinicianInvite object from PI DB
+ * @returns {PIClinicianInviteResponse} ClinicianInvite object from PI DB
  */
 export const getInvitePiData = async (
 	inviteId: string,
@@ -69,7 +69,7 @@ export const getInvitePiData = async (
 /**
  * Makes request to PI DAS to create a Clinician Invite
  * @param inviteRequest Clinician Invite data
- * @returns ClinicianInvite object from PI DB
+ * @returns {PIClinicianInviteResponse} ClinicianInvite object from PI DB
  */
 export const createInvitePiData = async (
 	inviteRequest: PIClinicianInviteRequest,
