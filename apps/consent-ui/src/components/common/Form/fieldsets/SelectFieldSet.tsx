@@ -17,22 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 
-import { Name } from '../../src/entities/index.js';
+import { FormSelectFieldSetProps } from '../types';
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+import FieldSet from './FieldSet';
+import SelectInput from './inputs/SelectInput';
+
+const SelectFieldSet = <T extends FieldValues, V extends string>({
+	error,
+	label,
+	name,
+	options,
+	placeholder,
+	required = false,
+}: FormSelectFieldSetProps<T, V>) => {
+	const { control } = useFormContext();
+	return (
+		<Controller
+			name="consentGroup"
+			control={control}
+			render={({ field: { onChange, value } }) => (
+				<FieldSet error={error} label={label} name={name} required={required}>
+					<SelectInput
+						name={name}
+						onChange={onChange}
+						options={options}
+						placeholder={placeholder}
+						required
+						value={value}
+					/>
+				</FieldSet>
+			)}
+			rules={{ required }}
+		/>
+	);
+};
+
+export default SelectFieldSet;

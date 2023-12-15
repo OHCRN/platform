@@ -17,22 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+'use client';
 
-import { Name } from '../../src/entities/index.js';
+import { FieldValues, useFormContext } from 'react-hook-form';
+import clsx from 'clsx';
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+import { FormTextInputProps } from '../../types';
+
+const TextInput = <T extends FieldValues>({
+	className,
+	name,
+	required = false,
+	type = 'text',
+}: FormTextInputProps<T>) => {
+	const { register } = useFormContext();
+	return (
+		<input
+			{...register(name)}
+			aria-required={required}
+			className={clsx(`${type}-input`, className)}
+			id={name}
+			type={type}
+		/>
+	);
+};
+
+export default TextInput;

@@ -17,22 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { FormLabelsDictionary } from '../en/formLabels';
 
-import { Name } from '../../src/entities/index.js';
+const dictionary = {
+	clinicianFirstName: 'Prénom du clinicien',
+	clinicianInstitutionalEmailAddress: 'Adresse e-mail institutionnelle du clinicien',
+	clinicianLastName: 'Surnom du clinicien',
+	clinicianTitleOrRole: 'Titre ou rôle du clinicien',
+	consentContact: 'Consentement à être contacté',
+	consentGroup: 'Groupe de consentement',
+	firstName: 'Prénom',
+	guardianEmail: 'Addresse e-mail du gardien',
+	guardianName: 'Nom du gardien',
+	guardianPhone: 'Numéro de téléphone du gardien',
+	guardianRelationship: 'Relation du gardien avec le participant',
+	lastName: 'Nom de famille',
+	preferredName: 'Nom préféré',
+	email: 'Adresse e-mail',
+	phone: 'Numéro de téléphone',
+} satisfies FormLabelsDictionary;
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+export default dictionary;

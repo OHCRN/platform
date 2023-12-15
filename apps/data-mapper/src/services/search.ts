@@ -1,6 +1,11 @@
 import urlJoin from 'url-join';
 import { Result, failure, success } from 'types/httpResponses';
-import { ConsentCategory, ConsentQuestionId, InformedConsentResponse } from 'types/entities';
+import {
+	ConsentCategory,
+	ConsentQuestionId,
+	ClinicianInviteResponse,
+	InformedConsentResponse,
+} from 'types/entities';
 
 import { getAppConfig } from '../config.js';
 import serviceLogger from '../logger.js';
@@ -8,8 +13,10 @@ import serviceLogger from '../logger.js';
 import axiosClient from './axiosClient.js';
 import {
 	getConsentQuestionsByCategory,
+	getInviteConsentData,
 	getParticipantResponsesByQuestionId,
 } from './das/consent.js';
+import { getInvitePiData } from './das/pi.js';
 
 const logger = serviceLogger.forModule('SearchService');
 
@@ -152,6 +159,48 @@ export const getInformedConsentResponses = async (
 		return success(informedConsentResponses.data);
 	} catch (error) {
 		logger.error('Unexpected error handling retrieving Informed Consent responses.', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+export type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+/**
+ * Fetches clinician invite in PI DAS first by inviteId,
+ * then uses the same inviteId to get the corresponding invite in Consent DAS
+ * Combines both invite objects and returns as Clinician Invite
+ * @async
+ * @param inviteId
+ * @returns {ClinicianInviteResponse} Clinician Invite
+ */
+export const getInvite = async (
+	inviteId: string,
+): Promise<Result<ClinicianInviteResponse, GetInviteFailureStatus>> => {
+	try {
+		const piInviteResult = await getInvitePiData(inviteId);
+
+		if (piInviteResult.status !== 'SUCCESS') {
+			return piInviteResult;
+		}
+
+		const consentInviteResult = await getInviteConsentData(inviteId);
+
+		if (consentInviteResult.status !== 'SUCCESS') {
+			return consentInviteResult;
+		}
+
+		const invite = ClinicianInviteResponse.safeParse({
+			...piInviteResult.data,
+			...consentInviteResult.data,
+		});
+
+		if (!invite.success) {
+			logger.error('Received invalid data in get invite response.', invite.error.issues);
+			return failure('SYSTEM_ERROR', invite.error.message);
+		}
+
+		return success(invite.data);
+	} catch (error) {
+		logger.error('Unexpected error handling get invite request.', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

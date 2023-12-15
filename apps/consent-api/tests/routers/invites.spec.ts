@@ -25,7 +25,7 @@ import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';
 import { mockEnv } from '../config.js';
 
-const { REQUEST_VALIDATION_ERROR } = ErrorName;
+const { REQUEST_VALIDATION_ERROR, NOT_FOUND_ERROR } = ErrorName;
 
 const mocks = vi.hoisted(() => {
 	// vi.mock() gets 'hoisted' to the top of the file, so need to declare variables used in any vi.mock() here
@@ -57,12 +57,29 @@ const mocks = vi.hoisted(() => {
 
 	const createInvite = () => ({ status: 'SUCCESS', data: mocks.inviteResponse });
 
-	return { inviteRequest, inviteResponse, createInvite };
+	const VALID_IDS = ['validId'];
+
+	const getInvite = (inviteId: string) => {
+		if (VALID_IDS.includes(inviteId)) {
+			return { status: 'SUCCESS', data: { ...mocks.inviteResponse, id: inviteId } };
+		}
+		return {
+			status: 'INVITE_DOES_NOT_EXIST',
+			message: `Invite with id ${inviteId} does not exist.`,
+		};
+	};
+
+	return { inviteRequest, inviteResponse, createInvite, getInvite };
 });
 
 vi.mock('../../src/services/create.js', () => {
 	// mock the createInvite service so we don't need to make an API call to data-mapper
 	return { createInvite: mocks.createInvite };
+});
+
+vi.mock('../../src/services/search.js', () => {
+	// mock the createInvite service so we don't need to make an API call to data-mapper
+	return { getInvite: mocks.getInvite };
 });
 
 describe('POST /invites', () => {
@@ -95,6 +112,34 @@ describe('POST /invites', () => {
 		if (response.error) {
 			const errorResponse = JSON.parse(response.error.text);
 			expect(errorResponse.error).toStrictEqual(REQUEST_VALIDATION_ERROR);
+		}
+	});
+});
+
+describe('GET /invites/:inviteId', () => {
+	beforeAll(() => mockEnv());
+	afterAll(() => {
+		vi.restoreAllMocks();
+		vi.unstubAllEnvs();
+	});
+
+	it('Valid request - makes a GET request to data-mapper and returns created invite', async () => {
+		const appConfig = getAppConfig();
+		const response = await request(App(appConfig)).get('/invites/validId');
+
+		expect(response.status).toEqual(200);
+		expect(response.body).toStrictEqual({ ...mocks.inviteResponse, id: 'validId' });
+	});
+
+	it('Invalid request - invalid ID should return NotFoundError', async () => {
+		const appConfig = getAppConfig();
+		const response = await request(App(appConfig)).get('/invites/invalidId');
+
+		expect(response.status).toEqual(404);
+		expect(response.error);
+		if (response.error) {
+			const errorResponse = JSON.parse(response.error.text);
+			expect(errorResponse.error).toStrictEqual(NOT_FOUND_ERROR);
 		}
 	});
 });

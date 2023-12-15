@@ -19,6 +19,7 @@
 
 // API
 export const API = {
+	INVITES: '/invites',
 	STATUS: '/status',
 };
 
