@@ -33,7 +33,7 @@ const logger = serviceLogger.forModule('ConsentClient');
 /**
  * Makes request to Consent DAS to fetch a Clinician Invite
  * @param inviteId
- * @returns ClinicianInvite object from Consent DB
+ * @returns {ConsentClinicianInviteResponse} ClinicianInvite object from Consent DB
  */
 export const getInviteConsentData = async (
 	inviteId: string,
@@ -69,7 +69,7 @@ export const getInviteConsentData = async (
 /**
  * Makes request to Consent DAS to create a Clinician Invite
  * @param inviteRequest Clinician Invite data
- * @returns ClinicianInvite object from Consent DB
+ * @returns {ConsentClinicianInviteResponse} ClinicianInvite object from Consent DB
  */
 export const createInviteConsentData = async (
 	inviteRequest: ConsentClinicianInviteRequest,

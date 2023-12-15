@@ -117,7 +117,7 @@ export type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
  * creation of entry in Consent DAS.
  * @async
  * @param data Clinician Invite request
- * @returns Created Clinician Invite data
+ * @returns {ClinicianInviteResponse} Created Clinician Invite data
  */
 export const createInvite = async ({
 	participantFirstName,

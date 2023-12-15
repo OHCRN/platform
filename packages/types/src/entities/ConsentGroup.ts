@@ -21,7 +21,7 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-const CONSENT_GROUPS = [
+export const CONSENT_GROUPS = [
 	'ADULT_CONSENT',
 	'ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER',
 	'GUARDIAN_CONSENT_OF_MINOR',

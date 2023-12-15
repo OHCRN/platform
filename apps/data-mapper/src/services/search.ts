@@ -69,7 +69,7 @@ export type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
  * Combines both invite objects and returns as Clinician Invite
  * @async
  * @param inviteId
- * @returns Clinician Invite
+ * @returns {ClinicianInviteResponse} Clinician Invite
  */
 export const getInvite = async (
 	inviteId: string,
