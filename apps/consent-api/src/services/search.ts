@@ -48,7 +48,7 @@ export type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
  * Retrieves clinician invite data from Consent and PI DAS
  * by making GET request to Data Mapper's `/invites` route
  * @param inviteId Clinician Invite ID
- * @returns Clinician Invite object
+ * @returns {ClinicianInviteResponse} Clinician Invite object
  */
 export const getInvite = async (
 	inviteId: string,
