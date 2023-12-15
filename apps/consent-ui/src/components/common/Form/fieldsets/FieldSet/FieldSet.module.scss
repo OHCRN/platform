@@ -1,8 +1,7 @@
 .fieldSet {
-	height: 3.75rem;
-	align-items: center;
+	margin-bottom: 0.25rem;
 	@media (min-width: theme('screens.sm')) {
-		@apply flex;
+		@apply flex items-center;
 		height: 3.75rem;
 	}
 }
@@ -11,6 +10,6 @@
 	width: 16rem;
 	font-size: 1rem;
 	font-weight: 700;
-	line-height: 1.625rem;
+	line-height: 1.25rem;
 	margin-right: 1.5rem;
 }
