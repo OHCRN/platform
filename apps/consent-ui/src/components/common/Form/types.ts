@@ -38,6 +38,7 @@ type FormFieldName<T extends FieldValues> = Path<T>;
 
 interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
+	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
 	label: string;
 	name: FormFieldName<T>;

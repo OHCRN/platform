@@ -22,22 +22,23 @@
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormCheckboxFieldSetProps } from '../../types';
-import CheckboxInput from '../inputs/CheckboxInput';
+import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
+import { FormCheckboxFieldSetProps } from 'src/components/common/Form/types';
+import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
 
 import styles from './CheckboxFieldSet.module.scss';
 
 const CheckboxFieldSet = <T extends FieldValues>({
 	className,
 	description,
+	disabled = false,
 	error,
 	name,
 	required = false,
 	title,
 }: FormCheckboxFieldSetProps<T>) => {
 	return (
-		<fieldset className={clsx(styles.checkboxFieldset, className)}>
+		<fieldset className={clsx(styles.checkboxFieldset, disabled && styles.disabled, className)}>
 			{title && (
 				<h4 className={styles.title}>
 					{title}
