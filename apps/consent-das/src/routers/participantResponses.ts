@@ -102,13 +102,6 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 				'Received invalid request fetching participant response',
 				error,
 			);
-			const { participantId: participantIdError, consentQuestionId: questionIdError } = error;
-			if (participantIdError || questionIdError) {
-				const message = participantIdError
-					? `Participant with id '${participantId}' does not exist.`
-					: `Question with id '${consentQuestionId}' does not exist.`;
-				return res.status(404).json(NotFoundErrorResponse(message));
-			}
 			return res.status(400).json(RequestValidationErrorResponse(request.error));
 		}
 
