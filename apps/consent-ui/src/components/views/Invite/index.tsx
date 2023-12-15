@@ -18,15 +18,72 @@
  */
 
 import Link from 'next/link';
+import { CONSENT_GROUPS } from 'types/entities';
 
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianInviteForm';
+import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
+import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
+import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
+
+	const errorsDict: FormErrorsDictionary = {
+		required: translate('formErrors', 'required'),
+	};
+
+	// TODO replace this object with translate namespace function https://github.com/OHCRN/platform/issues/313
+	const labelsDict: InviteFormLabelsDictionary = {
+		clinicianFirstName: translate('inviteFormLabels', 'clinicianFirstName'),
+		clinicianInstitutionalEmailAddress: translate(
+			'inviteFormLabels',
+			'clinicianInstitutionalEmailAddress',
+		),
+		consentGroup: translate('inviteFormLabels', 'consentGroup'),
+		email: translate('inviteFormLabels', 'email'),
+		firstName: translate('inviteFormLabels', 'firstName'),
+		lastName: translate('inviteFormLabels', 'lastName'),
+		preferredName: translate('inviteFormLabels', 'preferredName'),
+		clinicianLastName: translate('inviteFormLabels', 'clinicianLastName'),
+		clinicianTitleOrRole: translate('inviteFormLabels', 'clinicianTitleOrRole'),
+		consentContact: translate('inviteFormLabels', 'consentContact'),
+		guardianEmail: translate('inviteFormLabels', 'guardianEmail'),
+		guardianName: translate('inviteFormLabels', 'guardianName'),
+		guardianPhone: translate('inviteFormLabels', 'guardianPhone'),
+		guardianRelationship: translate('inviteFormLabels', 'guardianRelationship'),
+	};
+
+	// TODO replace this object with translate namespace function https://github.com/OHCRN/platform/issues/313
+	const textDict: InviteFormTextDictionary = {
+		afterRegistering: translate('inviteFormText', 'afterRegistering'),
+		clinicianInformation: translate('inviteFormText', 'clinicianInformation'),
+		consentContactDescription: translate('inviteFormText', 'consentContactDescription'),
+		enterGuardianInfo: translate('inviteFormText', 'enterGuardianInfo'),
+		indicatesRequiredField: translate('inviteFormText', 'indicatesRequiredField'),
+		patientInformation: translate('inviteFormText', 'patientInformation'),
+		selectPlaceholder: translate('inviteFormText', 'selectPlaceholder'),
+		uploadFileDescription1: translate('inviteFormText', 'uploadFileDescription1'),
+		uploadFileDescription2: translate('inviteFormText', 'uploadFileDescription2'),
+		uploadFileLink: translate('inviteFormText', 'uploadFileLink'),
+	};
+
+	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
+		label: translate('consentGroup', group),
+		value: group,
+	}));
+
 	return (
 		<div>
 			<h2>{translate('common', 'invite')}</h2>
 			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
+			<ClinicianInviteFormComponent
+				consentGroupOptions={consentGroupOptions}
+				errorsDict={errorsDict}
+				labelsDict={labelsDict}
+				textDict={textDict}
+			/>
 		</div>
 	);
 };

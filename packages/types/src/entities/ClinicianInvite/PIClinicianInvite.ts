@@ -24,36 +24,16 @@ import { SchemaObject } from 'openapi3-ts/oas31';
 import { Name } from '../Name.js';
 import { PhoneNumber } from '../PhoneNumber.js';
 
-import { ClinicianInviteBase } from './ClinicianInvite.js';
+import { InviteGuardianFields, InviteParticipantFields } from './ClinicianInvite.js';
+import { NanoId } from '../NanoId.js';
 
-export const PIClinicianInviteRequest = ClinicianInviteBase.pick({
-	participantFirstName: true,
-	participantLastName: true,
-	participantEmailAddress: true,
-	participantPhoneNumber: true,
-	participantPreferredName: true,
-	guardianName: true,
-	guardianPhoneNumber: true,
-	guardianEmailAddress: true,
-	guardianRelationship: true,
-});
+export const PIClinicianInviteRequest = InviteParticipantFields.merge(InviteGuardianFields);
 
 export type PIClinicianInviteRequest = z.infer<typeof PIClinicianInviteRequest>;
 export const PIClinicianInviteRequestSchema: SchemaObject =
 	generateSchema(PIClinicianInviteRequest);
 
-export const PIClinicianInviteResponse = ClinicianInviteBase.pick({
-	id: true,
-	participantFirstName: true,
-	participantLastName: true,
-	participantEmailAddress: true,
-	participantPhoneNumber: true,
-	participantPreferredName: true,
-	guardianName: true,
-	guardianPhoneNumber: true,
-	guardianEmailAddress: true,
-	guardianRelationship: true,
-}).extend({
+export const PIClinicianInviteResponse = PIClinicianInviteRequest.extend({ id: NanoId }).extend({
 	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
 	guardianName: Name.nullable().transform((input) => input ?? undefined),
 	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),

@@ -17,22 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+'use client';
 
-import { Name } from '../../src/entities/index.js';
+import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+import RequiredAsterisk from '../../RequiredAsterisk';
+import { FormCheckboxFieldSetProps } from '../../types';
+import CheckboxInput from '../inputs/CheckboxInput';
+
+const CheckboxFieldSet = <T extends FieldValues>({
+	className,
+	description,
+	error,
+	name,
+	required = false,
+	title,
+}: FormCheckboxFieldSetProps<T>) => {
+	return (
+		<fieldset className={clsx('checkbox-fieldset', className)}>
+			{title && (
+				<h4>
+					{title}
+					{required && <RequiredAsterisk />}
+				</h4>
+			)}
+			<label htmlFor={name} className="checkbox-fieldset__label">
+				<CheckboxInput required={required} name={name} />
+				<span className="checkbox-fieldset__description">
+					{description}
+					{required && !title && <RequiredAsterisk />}
+				</span>
+			</label>
+			{error && <span style={{ color: 'red' }}>{error}</span>}
+		</fieldset>
+	);
+};
+
+export default CheckboxFieldSet;

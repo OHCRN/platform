@@ -17,22 +17,42 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { InviteFormLabelsDictionary } from '../en/inviteFormLabels';
 
-import { Name } from '../../src/entities/index.js';
+import formLabelsDictionary from './formLabels';
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+const {
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	consentContact,
+	consentGroup,
+	email,
+	firstName,
+	guardianEmail,
+	guardianName,
+	guardianPhone,
+	guardianRelationship,
+	lastName,
+	preferredName,
+} = formLabelsDictionary;
+
+const dictionary = {
+	clinicianFirstName,
+	clinicianInstitutionalEmailAddress,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	consentContact,
+	consentGroup,
+	email,
+	firstName,
+	guardianEmail,
+	guardianName,
+	guardianPhone,
+	guardianRelationship,
+	lastName,
+	preferredName,
+} satisfies InviteFormLabelsDictionary;
+
+export default dictionary;
