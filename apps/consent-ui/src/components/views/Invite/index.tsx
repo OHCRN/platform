@@ -32,10 +32,11 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
 	const pageDict = {
-		clinicianPatientRegistration: translate('invite', 'clinicianPatientRegistration'),
-		ifParticipant: translate('invite', 'ifParticipant'),
-		registerHere: translate('invite', 'registerHere'),
-		registerYourPatient: translate('invite', 'registerYourPatient'),
+		clinicianPatientRegistration: translate('inviteFormPage', 'clinicianPatientRegistration'),
+		ifParticipant: translate('inviteFormPage', 'ifParticipant'),
+		inviteYourPatients: translate('inviteFormPage', 'inviteYourPatients'),
+		registerHere: translate('inviteFormPage', 'registerHere'),
+		registerYourPatient: translate('inviteFormPage', 'registerYourPatient'),
 	};
 
 	const errorsDict: FormErrorsDictionary = {
@@ -92,7 +93,9 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				topText: pageDict.ifParticipant,
 				url: 'register',
 			}}
-			title={pageDict.clinicianPatientRegistration}
+			mainSubtitle={pageDict.inviteYourPatients}
+			mainTitle={pageDict.registerYourPatient}
+			navTitle={pageDict.clinicianPatientRegistration}
 		>
 			<ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}

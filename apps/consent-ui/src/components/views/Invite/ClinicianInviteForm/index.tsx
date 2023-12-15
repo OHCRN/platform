@@ -39,9 +39,12 @@ import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
+import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
 
 import { ConsentGroupOption } from './types';
 import styles from './ClinicianInviteForm.module.scss';
+
+Object.assign(styles, layoutStyles);
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -134,10 +137,6 @@ const ClinicianInviteFormComponent = ({
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<FormSection>
-					<h2 className={styles.pageTitle}>Register Your Patient</h2>
-					<p className={styles.pageSubtitle}>
-						Invite your patients to participate in the OHCRN Registry.
-					</p>
 					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
 					<p className={styles.smallText}>
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}

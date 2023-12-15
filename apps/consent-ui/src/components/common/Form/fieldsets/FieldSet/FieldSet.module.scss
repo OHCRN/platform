@@ -1,7 +1,10 @@
 .fieldSet {
-	@apply flex;
 	height: 3.75rem;
 	align-items: center;
+	@media (min-width: theme('screens.sm')) {
+		@apply flex;
+		height: 3.75rem;
+	}
 }
 
 .label {

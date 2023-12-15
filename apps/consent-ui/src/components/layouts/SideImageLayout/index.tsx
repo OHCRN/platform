@@ -29,6 +29,7 @@ import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 import { RouteName } from 'src/components/common/Link/types';
+import FormSection from 'src/components/common/Form/FormSection';
 
 import styles from './SideImageLayout.module.scss';
 
@@ -38,14 +39,18 @@ const SideImageLayout = ({
 	currentLang,
 	desktopHeaderImage,
 	desktopNavAction,
-	title,
+	mainSubtitle,
+	mainTitle,
+	navTitle,
 }: {
 	children: ReactNode;
 	className?: string;
 	currentLang: ValidLanguage;
 	desktopHeaderImage: StaticImageData;
 	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
-	title: string;
+	mainSubtitle: ReactNode;
+	mainTitle: string;
+	navTitle: string;
 }) => {
 	const translate = getTranslation(currentLang);
 
@@ -61,11 +66,11 @@ const SideImageLayout = ({
 							className={styles.logoImg}
 						/>
 					</Link>
-					<h1 className={styles.title}>{title}</h1>
+					<h1 className={styles.title}>{navTitle}</h1>
 				</div>
 			</header>
 			<header className={styles.mobileTabletHeader}>
-				<h1 className={styles.title}>{title}</h1>
+				<h1 className={styles.title}>{navTitle}</h1>
 			</header>
 			<div className={styles.main}>
 				<div className={styles.content}>
@@ -90,6 +95,10 @@ const SideImageLayout = ({
 							)}
 						</div>
 					</nav>
+					<FormSection>
+						<h2 className={styles.mainTitle}>{mainTitle}</h2>
+						<p className={styles.mainSubtitle}>{mainSubtitle}</p>
+					</FormSection>
 					<div className={styles.childrenWrapper}>{children}</div>
 				</div>
 			</div>

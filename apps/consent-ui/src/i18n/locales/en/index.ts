@@ -36,8 +36,8 @@ import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
 import historyOfCancerDictionary from './historyOfCancer';
 import informedConsentDictionary from './informedConsent';
-import inviteDictionary from './invite';
 import inviteFormLabelsDictionary from './inviteFormLabels';
+import inviteFormPageDictionary from './inviteFormPage';
 import inviteFormTextDictionary from './inviteFormText';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
@@ -64,8 +64,8 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
-	invite: inviteDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormPage: inviteFormPageDictionary,
 	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,

@@ -92,6 +92,7 @@
 .desktopNav {
 	@apply flex justify-between;
 	margin-bottom: 5rem;
+	min-height: 4rem;
 }
 
 .desktopHeader,
@@ -121,4 +122,31 @@
 	.chevron {
 		width: 0.8125rem;
 	}
+}
+
+.mainTitle {
+	font-size: 1.5rem;
+	line-height: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.mainSubtitle {
+	font-size: 1rem;
+	line-height: 1.625rem;
+}
+
+.sectionTitle {
+	color: theme('colors.secondary.500');
+	font-size: 1.125rem;
+	font-weight: 700;
+	line-height: 1.75rem;
+	@media (min-width: theme('screens.md')) {
+		font-size: 1rem;
+	}
+}
+
+.smallText {
+	font-size: 0.875rem;
+	line-height: 1.5rem;
+	margin-bottom: 1rem;
 }

@@ -17,13 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { InviteDictionary } from '../en/invite';
+import { InviteFormPageDictionary } from '../en/inviteFormPage';
 
 const dictionary = {
 	clinicianPatientRegistration: 'Inscription des patients cliniciens',
 	ifParticipant: 'Si vous êtes un participant :',
+	inviteYourPatients: 'Invitez vos patients à participer au registre OHCRN.',
 	registerHere: 'Inscrivez-vous ici',
 	registerYourPatient: 'Enregistrez votre patient',
-} satisfies InviteDictionary;
+} satisfies InviteFormPageDictionary;
 
 export default dictionary;
