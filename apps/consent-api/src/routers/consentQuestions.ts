@@ -23,7 +23,7 @@ import {
 	getConsentQuestion,
 	getConsentQuestions,
 	// getLatestParticipantResponseByParticipantIdAndQuestionId,
-} from '../service/search.js';
+} from '../services/search.js';
 
 const router = Router();
 
@@ -67,7 +67,7 @@ const router = Router();
 router.get('/', async (req, res) => {
 	const searchParams = req.query;
 	const consentQuestions = await getConsentQuestions(searchParams);
-	res.status(200).send(consentQuestions);
+	return res.status(200).send(consentQuestions);
 });
 
 /**

@@ -18,9 +18,8 @@
  */
 
 import { ValidLanguage } from 'src/i18n';
-
-import ParticipantRegistration from '.';
+import Register from 'src/components/views/Register';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ParticipantRegistration currentLang={lang} />;
+	return <Register currentLang={lang} />;
 }

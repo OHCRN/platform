@@ -12,14 +12,18 @@
 		"test-runtime-vars": "NEXT_IS_BUILDING=true next build && FEATURE_FLAG=true next start"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "^3.3.2",
 		"autoprefixer": "10.4.14",
 		"axios": "^1.5.0",
 		"clsx": "^2.0.0",
 		"next": "13.4.12",
 		"postcss": "8.4.23",
 		"react": "18.2.0",
+		"react-detect-click-outside": "^1.1.7",
 		"react-dom": "18.2.0",
 		"react-google-recaptcha": "^3.1.0",
+		"react-hook-form": "^7.47.0",
+		"react-select": "^5.8.0",
 		"sass": "^1.64.0",
 		"sharp": "^0.32.6",
 		"tailwindcss": "3.3.2",

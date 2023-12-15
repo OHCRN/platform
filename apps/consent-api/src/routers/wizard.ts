@@ -19,10 +19,11 @@
 
 import { Router } from 'express';
 import { ConsentWizardProgress } from 'types/entities';
+import { ErrorResponse } from 'types/httpResponses';
 
 import logger from '../logger.js';
 
-import StepsRouter from './steps.js';
+import StepsRouter from './steps/index.js';
 
 /**
  * @openapi
@@ -65,9 +66,9 @@ router.use('/steps', StepsRouter);
  *         description: Server error
  */
 router.get('/pdf', async (req, res) => {
-	logger.info(`GET /wizard/pdf`);
 	// TODO: implement and update JSDocs responses schema
-	res.status(200).send({ message: 'Success' });
+
+	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
 });
 
 /**
@@ -110,7 +111,44 @@ router.get('/progress', async (req, res) => {
 		CONSENT_RECONTACT: 'COMPLETE',
 		CONSENT_REVIEW_SIGN: 'COMPLETE',
 	};
-	res.status(200).send({ status });
+	return res.status(200).send({ status });
+});
+
+/**
+ * @openapi
+ * /wizard/signatures:
+ *   post:
+ *     tags:
+ *       - Consent Wizard
+ *     name: Submit signature
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized. Authorization information is missing or invalid.
+ *       403:
+ *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       500:
+ *         description: Server error
+ */
+router.post('/signatures', async (req, res) => {
+	// TODO: implement when auth layer is ready
+	try {
+		// TODO: map out request body and processing - TBD here https://github.com/OHCRN/platform/issues/155
+		return res.status(201).send({ message: 'Success!' });
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ message: 'Server error' });
+	}
 });
 
 export default router;

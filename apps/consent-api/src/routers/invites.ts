@@ -18,10 +18,22 @@
  */
 
 import { Router } from 'express';
-import { ClinicianInviteForm } from 'types/entities';
+import withRequestValidation from 'express-request-validation';
+import { ClinicianInviteRequest } from 'types/entities';
+import {
+	ConflictErrorResponse,
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+} from 'types/httpResponses';
+import { z } from 'zod';
 
-import { recaptchaMiddleware } from '../utils/recaptcha.js';
+import { recaptchaMiddleware } from '../middleware/recaptcha.js';
+import { createInvite } from '../services/create.js';
 import logger from '../logger.js';
+import { getInvite } from '../services/search.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 /**
  * @openapi
@@ -32,6 +44,7 @@ import logger from '../logger.js';
 
 const router = Router();
 
+const ClinicianInviteSchema = z.object({ data: ClinicianInviteRequest });
 /**
  * @openapi
  * /invites:
@@ -50,29 +63,94 @@ const router = Router();
  *               recaptchaToken:
  *                 type: string
  *               data:
- *                 $ref: '#/components/schemas/ClinicianInviteForm'
+ *                 $ref: '#/components/schemas/ClinicianInviteRequest'
  *     responses:
  *       201:
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message: string
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Server error
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', recaptchaMiddleware, async (req, res) => {
-	logger.info(`POST /invites`);
+router.post(
+	'/',
+	recaptchaMiddleware,
+	withRequestValidation(ClinicianInviteSchema, async (req, res) => {
+		try {
+			const invite = await createInvite(req.body.data);
+			switch (invite.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(invite.data);
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				}
+				case 'INVITE_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(invite.message));
+				}
+			}
+		} catch (error) {
+			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
+			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		}
+	}),
+);
+
+/**
+ * @openapi
+ * /invites:
+ *   get:
+ *     tags:
+ *       - Clinician Invites
+ *     name: Get Clinician Invite
+ *     description: Get relevant Clinician Invite data from PI DAS and Consent DAS
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *      - name: inviteId
+ *        in: path
+ *        description: Invite ID
+ *        required: true
+ *        schema:
+ *          type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       404:
+ *         description: NotFoundError - The requested data could not be found.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.get('/:inviteId', async (req, res) => {
 	try {
-		const data = ClinicianInviteForm.parse(req.body.data);
-		// TODO: implement
-		logger.info(data && 'Created clinician invite');
-		res.status(201).send({ message: 'Success' });
+		const { inviteId } = req.params;
+
+		const invite = await getInvite(inviteId);
+
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(invite.data);
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ message: 'Server error' });
+		logger.error('GET /invites/:inviteId', `Unexpected error handling get invite request.`, error);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
 	}
 });
 

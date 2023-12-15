@@ -1,0 +1,36 @@
+.modal {
+	position: fixed;
+	inset: 0;
+	z-index: 10;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: theme('colors.grayscale.800');
+		opacity: 0.5;
+	}
+}
+
+.card {
+	position: relative;
+	margin: 10rem 15px auto;
+	@media (min-width: theme('screens.sm')) {
+		margin: 10rem 50px auto;
+	}
+	@media (min-width: theme('screens.md')) {
+		margin: 10rem auto auto;
+		max-width: 45rem;
+	}
+}
+
+.buttons {
+	margin-top: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	@media (min-width: theme('screens.sm')) {
+		justify-content: end;
+	}
+}

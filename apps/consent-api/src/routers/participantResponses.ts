@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 
-import { createResponse } from '../service/participantResponses.js';
+import { createResponse } from '../services/create.js';
 
 /**
  * @openapi
@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
 		participantId,
 		response,
 	});
-	res.status(201).send(result);
+	return res.status(201).send(result);
 });
 
 export default router;
