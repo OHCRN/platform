@@ -24,6 +24,7 @@ import {
 	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ClinicianInviteResponseSchema as ClinicianInviteResponse,
 	InformedConsentResponseSchema as InformedConsentResponse,
+	NanoIdSchema as NanoId,
 } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -71,6 +72,7 @@ const options = swaggerJsdoc({
 				ClinicianInviteResponse,
 				ClinicianInviteRequest,
 				InformedConsentResponse,
+				NanoId,
 			},
 		},
 	},
