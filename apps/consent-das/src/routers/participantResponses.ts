@@ -96,11 +96,10 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 		});
 
 		if (!request.success) {
-			const error = request.error.format();
 			logger.error(
 				'GET /:participantId/:consentQuestionId',
 				'Received invalid request fetching participant response',
-				error,
+				request.error.format(),
 			);
 			return res.status(400).json(RequestValidationErrorResponse(request.error));
 		}

@@ -70,7 +70,11 @@ router.get('/', async (req, res) => {
 		const queryParams = ConsentQuestionsRequest.safeParse(req.query);
 
 		if (!queryParams.success) {
-			logger.error('GET /consent-questions', 'Invalid consent category', queryParams.error);
+			logger.error(
+				'GET /consent-questions',
+				'Invalid consent category',
+				queryParams.error.format(),
+			);
 			return res.status(400).json(RequestValidationErrorResponse(queryParams.error));
 		}
 
