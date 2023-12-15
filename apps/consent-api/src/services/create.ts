@@ -27,7 +27,7 @@ import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 
-const logger = serviceLogger.forModule('DataMapperClient');
+const logger = serviceLogger.forModule('CreateService');
 
 export const createResponse = async ({
 	consentQuestionId,
@@ -54,7 +54,7 @@ type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
  * Consent and PI DAS and then returns the combined data object from both DB entries
  * @async
  * @param data Clinician Invite form input
- * @returns Result with created invite or message indicating failure
+ * @returns {ClinicianInviteResponse} Result with created invite or message indicating failure
  */
 export const createInvite = async (
 	inviteRequest: ClinicianInviteRequest,

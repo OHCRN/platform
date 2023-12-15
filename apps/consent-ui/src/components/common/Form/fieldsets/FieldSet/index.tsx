@@ -17,22 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { describe, expect, it } from 'vitest';
+import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
 
-import { Name } from '../../src/entities/index.js';
+import RequiredAsterisk from '../../RequiredAsterisk';
+import { FormFieldSetProps } from '../../types';
 
-describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
-	});
-});
+const FieldSet = <T extends FieldValues>({
+	children,
+	className,
+	error,
+	label,
+	name,
+	required = false,
+}: FormFieldSetProps<T>) => {
+	return (
+		<fieldset className={clsx('fieldset', className)}>
+			<label htmlFor={name}>
+				{label}
+				{required && <RequiredAsterisk />}
+			</label>
+
+			{children}
+
+			{error && <p style={{ color: 'red' }}>{error}</p>}
+		</fieldset>
+	);
+};
+
+export default FieldSet;
