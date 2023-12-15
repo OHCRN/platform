@@ -18,14 +18,34 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { NanoId } from './NanoId.js';
+import { ConsentQuestionId } from './ConsentQuestion.js';
 
-export const ParticipantResponse = z.object({
-	id: NanoId,
-	consentQuestionId: z.string().trim(),
+export const ParticipantResponseBase = z.object({
+	consentQuestionId: ConsentQuestionId,
 	participantId: NanoId,
-	response: z.boolean(),
 });
 
+export const ParticipantResponse = ParticipantResponseBase.extend({
+	id: NanoId,
+	response: z.boolean(),
+});
 export type ParticipantResponse = z.infer<typeof ParticipantResponse>;
+
+export const ParticipantResponseArray = z.array(ParticipantResponse);
+export type ParticipantResponseArray = z.infer<typeof ParticipantResponseArray>;
+export const ParticipantResponseArraySchema: SchemaObject =
+	generateSchema(ParticipantResponseArray);
+
+const SORT_ORDERS = ['asc', 'desc'] as const;
+export const SortOrder = z.enum(SORT_ORDERS);
+export type SortOrder = z.infer<typeof SortOrder>;
+export const SortOrderSchema: SchemaObject = generateSchema(SortOrder);
+
+export const ParticipantResponsesRequest = ParticipantResponseBase.extend({
+	sortOrder: SortOrder.default('desc'),
+});
+export type ParticipantResponsesRequest = z.infer<typeof ParticipantResponsesRequest>;
