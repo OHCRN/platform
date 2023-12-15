@@ -24,6 +24,7 @@ import clsx from 'clsx';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormCheckboxFieldSetProps } from 'src/components/common/Form/types';
+import InputError from 'src/components/common/Form/InputError';
 import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
 
 import styles from './CheckboxFieldSet.module.scss';
@@ -37,8 +38,16 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	required = false,
 	title,
 }: FormCheckboxFieldSetProps<T>) => {
+	console.log(error);
 	return (
-		<fieldset className={clsx(styles.checkboxFieldset, disabled && styles.disabled, className)}>
+		<fieldset
+			className={clsx(
+				styles.checkboxFieldset,
+				disabled && styles.disabled,
+				error && styles.error,
+				className,
+			)}
+		>
 			{title && (
 				<h4 className={styles.title}>
 					{title}
@@ -52,7 +61,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 					{required && !title && <RequiredAsterisk />}
 				</span>
 			</label>
-			{error && <span style={{ color: 'red' }}>{error}</span>}
+			{error && <InputError>{error}</InputError>}
 		</fieldset>
 	);
 };
