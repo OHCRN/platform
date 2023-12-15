@@ -73,7 +73,10 @@ export const getParticipant = async (participantId: string): Promise<any> => {
 	};
 };
 
-export type GetResponsesFailureStatus = 'SYSTEM_ERROR' | 'PARTICIPANT_DOES_NOT_EXIST';
+export type GetResponsesFailureStatus =
+	| 'SYSTEM_ERROR'
+	| 'PARTICIPANT_DOES_NOT_EXIST'
+	| 'INVALID_REQUEST';
 export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: boolean };
 
 /**

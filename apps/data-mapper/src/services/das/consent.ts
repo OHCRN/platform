@@ -32,9 +32,8 @@ import { Result, failure, success } from 'types/httpResponses';
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { GetResponsesFailureStatus } from '../search.js';
+import { GetInviteFailureStatus, GetResponsesFailureStatus } from '../search.js';
 import { CreateInviteFailureStatus } from '../create.js';
-import { GetInviteFailureStatus } from '../search.js';
 
 const logger = serviceLogger.forModule('ConsentClient');
 
@@ -183,6 +182,10 @@ export const getParticipantResponsesByQuestionId = async ({
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
+
+			if (status === 400) {
+				return failure('INVALID_REQUEST', data.message);
+			}
 
 			if (status === 404) {
 				return failure('PARTICIPANT_DOES_NOT_EXIST', data.message);

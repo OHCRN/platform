@@ -29,7 +29,7 @@ import { NanoId } from 'types/entities';
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
 
-const { SERVER_ERROR } = ErrorName;
+const { SERVER_ERROR, REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const router = Router();
 
@@ -83,6 +83,11 @@ router.get('/:participantId', async (req, res) => {
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(participantResponses.data);
+			}
+			case 'INVALID_REQUEST': {
+				return res
+					.status(400)
+					.json(ErrorResponse(REQUEST_VALIDATION_ERROR, participantResponses.message));
 			}
 			case 'PARTICIPANT_DOES_NOT_EXIST': {
 				return res.status(404).json(NotFoundErrorResponse(participantResponses.message));
