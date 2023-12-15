@@ -28,7 +28,6 @@ import logger from '../logger.js';
 
 const { SERVER_ERROR } = ErrorName;
 
-// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:

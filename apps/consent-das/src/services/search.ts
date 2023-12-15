@@ -145,7 +145,12 @@ export const getParticipantResponses = async ({
 };
 
 type GetInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
-
+/**
+ * Fetches clinician invite by ID from Consent DB.
+ * If the invite does not exist, returns a failure with status `"INVITE_DOES_NOT_EXIST"`.
+ * @param inviteId
+ * @returns {ClinicianInvite} Clinician Invite
+ */
 export const getClinicianInviteById = async (
 	inviteId: string,
 ): Promise<Result<ClinicianInvite, GetInviteFailureStatus>> => {
