@@ -20,10 +20,16 @@
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
 import { ClinicianInviteRequest } from 'types/entities';
-import { ConflictErrorResponse, ErrorName, ErrorResponse } from 'types/httpResponses';
+import {
+	ConflictErrorResponse,
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+} from 'types/httpResponses';
 
 import logger from '../logger.js';
 import { createInvite } from '../services/create.js';
+import { getInvite } from '../services/search.js';
 
 const { SERVER_ERROR } = ErrorName;
 
@@ -35,6 +41,56 @@ const router = Router();
  *   - name: Clinician Invites
  *     description: Clinician invites management
  */
+
+/**
+ * @openapi
+ * /invites:
+ *   get:
+ *     tags:
+ *       - Clinician Invites
+ *     name: Get Clinician Invite
+ *     description: Get relevant Clinician Invite data from PI DAS and Consent DAS
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *      - name: inviteId
+ *        in: path
+ *        description: Invite ID
+ *        required: true
+ *        schema:
+ *          type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       404:
+ *         description: NotFoundError - The requested data could not be found.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.get('/:inviteId', async (req, res) => {
+	try {
+		const { inviteId } = req.params;
+		const invite = await getInvite(inviteId);
+		switch (invite.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(invite.data);
+			}
+			case 'INVITE_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(invite.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+			}
+		}
+	} catch (error) {
+		logger.error('GET /invites/:inviteId', `Unexpected error handling get invite request.`, error);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+	}
+});
 
 /**
  * @openapi
