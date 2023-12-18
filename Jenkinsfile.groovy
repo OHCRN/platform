@@ -4,7 +4,7 @@ kind: Pod
 spec:
   containers:
   - name: node
-    image: node:18
+    image: node:18.19.0
     tty: true
     env:
     - name: DOCKER_HOST
