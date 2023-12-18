@@ -43,7 +43,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 						onChange={onChange}
 						options={options}
 						placeholder={placeholder}
-						required
+						required={required}
 						value={value}
 					/>
 				</FieldSet>

@@ -16,7 +16,7 @@
 	.help {
 		display: none;
 		@media (min-width: theme('screens.md')) {
-			@apply flex;
+			display: flex;
 			margin-right: 1rem;
 		}
 	}
