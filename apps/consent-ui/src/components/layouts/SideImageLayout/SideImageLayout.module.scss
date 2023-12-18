@@ -1,12 +1,14 @@
 .container {
-	@apply flex flex-col w-full;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 	@media (min-width: theme('screens.md')) {
-		@apply flex-row;
+		flex-direction: row;
 	}
 }
 
 .mobileTabletHeader {
-	@apply w-full;
+	width: 100%;
 	background-image: linear-gradient(
 		270deg,
 		theme('colors.other.400'),
@@ -19,7 +21,7 @@
 		margin-bottom: 2.44rem;
 	}
 	@media (min-width: theme('screens.md')) {
-		@apply hidden;
+		display: none;
 	}
 }
 
@@ -43,7 +45,10 @@
 }
 
 .desktopHeader {
-	@apply w-full basis-auto overflow-hidden relative;
+	width: 100%;
+	flex-basis: auto;
+	overflow: hidden;
+	position: relative;
 	min-width: 16rem;
 	max-width: 32.8125rem;
 	background: theme('colors.grayscale.800');
@@ -53,7 +58,8 @@
 	}
 	.content,
 	.image {
-		@apply absolute inset-0;
+		position: relative;
+		inset: 0;
 	}
 	.content {
 		padding: 2.5rem;
