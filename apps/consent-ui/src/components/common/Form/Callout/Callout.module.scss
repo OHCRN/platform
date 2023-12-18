@@ -1,0 +1,41 @@
+.callout {
+	@apply relative;
+	font-size: 0.75rem;
+	background: theme('colors.accent1.200');
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	border-color: transparent;
+	border-color: theme('colors.accent1.200');
+	&:before {
+		@apply absolute block w-0 h-0;
+		content: '';
+		border: 0.5rem solid transparent;
+	}
+	&.mobileTablet {
+		@apply w-full;
+		margin-bottom: 1rem;
+		&:before {
+			bottom: -1rem;
+			left: calc(50% - 0.5rem);
+			border-top-color: theme('colors.accent1.200');
+		}
+	}
+	&.desktop {
+		@apply hidden;
+		margin-left: 0.75rem;
+		&:before {
+			left: -1rem;
+			top: calc(50% - 0.5rem);
+			border-right-color: theme('colors.accent1.200');
+		}
+	}
+
+	@media (min-width: theme('screens.md')) {
+		&.mobileTablet {
+			@apply hidden;
+		}
+		&.desktop {
+			@apply block;
+		}
+	}
+}

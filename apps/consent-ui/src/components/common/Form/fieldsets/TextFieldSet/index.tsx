@@ -48,21 +48,23 @@ const TextFieldSet = <T extends FieldValues>({
 	console.log({ calloutText, calloutVisible });
 	return (
 		<FieldSet error={error} label={label} name={name} required={required}>
-			{calloutText && calloutVisible && (
-				<Callout variant="mobileTablet" id={`${name}-callout`}>
-					{calloutText}
-				</Callout>
-			)}
-			<TextInput
-				aria-describedby={`#${name}-callout`}
-				className={styles.textInput}
-				name={name}
-				onBlur={hideCallout}
-				onFocus={showCallout}
-				required={required}
-				type={type}
-			/>
-			{calloutText && calloutVisible && <Callout variant="desktop">{calloutText}</Callout>}
+			<div className={styles.wrapper}>
+				{calloutText && calloutVisible && (
+					<Callout variant="mobileTablet" id={`${name}-callout`}>
+						{calloutText}
+					</Callout>
+				)}
+				<TextInput
+					aria-describedby={`#${name}-callout`}
+					className={styles.textInput}
+					name={name}
+					onBlur={hideCallout}
+					onFocus={showCallout}
+					required={required}
+					type={type}
+				/>
+				{calloutText && calloutVisible && <Callout variant="desktop">{calloutText}</Callout>}
+			</div>
 		</FieldSet>
 	);
 };
