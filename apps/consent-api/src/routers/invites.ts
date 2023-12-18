@@ -19,12 +19,13 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { ClinicianInviteRequest } from 'types/entities';
+import { ClinicianInviteRequest, NanoId } from 'types/entities';
 import {
 	ConflictErrorResponse,
 	ErrorName,
 	ErrorResponse,
 	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
 } from 'types/httpResponses';
 import { z } from 'zod';
 
@@ -126,6 +127,8 @@ router.post(
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request parameter was invalid.
  *       404:
  *         description: NotFoundError - The requested data could not be found.
  *       500:
@@ -133,9 +136,13 @@ router.post(
  */
 router.get('/:inviteId', async (req, res) => {
 	try {
-		const { inviteId } = req.params;
+		const requestInviteId = NanoId.safeParse(req.params.inviteId);
 
-		const invite = await getInvite(inviteId);
+		if (!requestInviteId.success) {
+			logger.error('GET /invites/:inviteId', 'Received invalid inviteId', requestInviteId.error);
+			return res.status(400).json(RequestValidationErrorResponse(requestInviteId.error));
+		}
+		const invite = await getInvite(requestInviteId.data);
 
 		switch (invite.status) {
 			case 'SUCCESS': {
