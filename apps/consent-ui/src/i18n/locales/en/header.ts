@@ -19,7 +19,7 @@
 
 const dictionary = {
 	en: 'English',
-	fr: 'Français',
+	fr: 'Français',
 	logoAltText: 'OICR-OHCRN Logo',
 	help: 'Help',
 } satisfies Record<string, string>;

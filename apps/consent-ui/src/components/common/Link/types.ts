@@ -36,4 +36,5 @@ export type LocalizedLinkProps = Omit<ComponentProps<typeof Link>, 'href'> &
 	ButtonProps &
 	Route & {
 		linkLang: ValidLanguage;
+		defaultStyle?: boolean;
 	};
