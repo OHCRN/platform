@@ -46,7 +46,7 @@
 
 .desktopHeader {
 	width: 100%;
-	flex-basis: auto;
+	flex-basis: 33%;
 	overflow: hidden;
 	position: relative;
 	min-width: 16rem;
@@ -62,6 +62,7 @@
 		inset: 0;
 	}
 	.content {
+		position: absolute;
 		padding: 2.5rem;
 	}
 }
@@ -73,13 +74,14 @@
 }
 
 .main {
-	@apply basis-4/6 flex-grow flex-shrink-0;
+	flex: 1 0 66.7%;
 	padding: 0 1rem 2.8125rem;
 	@media (min-width: theme('screens.sm')) {
 		padding: 0 2.5rem 2.75rem;
 	}
 	@media (min-width: theme('screens.md')) {
-		@apply basis-auto flex flex-1;
+		display: flex;
+		flex: 1 1 auto;
 		padding: 1.5rem 4.375rem 2.75rem;
 	}
 }
@@ -89,24 +91,29 @@
 }
 
 .desktopNav {
-	@apply flex justify-between;
+	display: flex;
+	justify-content: space-between;
 	margin-bottom: 5rem;
 }
 
 .desktopHeader,
 .desktopNav {
 	@media (max-width: theme('screens.md')) {
-		@apply hidden;
+		display: none;
 	}
 }
 
 .leftButtons {
-	@apply flex;
+	display: flex;
 	gap: 1.88rem;
 }
 
 .desktopNavAction {
-	@apply flex items-center relative text-right w-auto;
+	display: flex;
+	align-items: center;
+	position: relative;
+	text-align: right;
+	width: auto;
 	gap: 1rem;
 	.text {
 		font-weight: 700;
@@ -114,7 +121,7 @@
 		line-height: 1.5rem;
 	}
 	.bottomText {
-		@apply block;
+		display: block;
 		color: theme('colors.secondary.500');
 	}
 	.chevron {
