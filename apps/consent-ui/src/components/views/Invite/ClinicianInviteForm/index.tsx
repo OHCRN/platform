@@ -142,6 +142,7 @@ const ClinicianInviteFormComponent = ({
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
 					<TextFieldSet
+						calloutText="Fugiat adipisicing commodo tempor do ullamco laboris et aliquip incididunt irure."
 						error={errors.participantFirstName?.type && errorsDict.required}
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"

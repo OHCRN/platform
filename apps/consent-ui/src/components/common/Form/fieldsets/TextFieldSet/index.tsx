@@ -20,37 +20,49 @@
 'use client';
 
 import { FieldValues } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-import { FormTextFieldSetProps } from '../../types';
-import TextInput from '../inputs/TextInput';
-import FieldSet from '../FieldSet';
+import { FormTextFieldSetProps } from 'src/components/common/Form/types';
+import useCallout from 'src/components/common/Form/Callout/useCallout';
+import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
+import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
+import Callout from 'src/components/common/Form/Callout';
 
 import styles from './TextFieldSet.module.scss';
 
 const TextFieldSet = <T extends FieldValues>({
+	calloutText = '',
 	error,
 	label,
 	name,
 	required = false,
-	tooltipText = '',
 	type = 'text',
 }: FormTextFieldSetProps<T>) => {
-	const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
-	const hideTooltip = () => setTooltipVisible(false);
-	const showTooltip = () => setTooltipVisible(true);
+	const { calloutVisible, hideCallout, showCallout } = useCallout();
+	// temporarily show the callout
+	useEffect(() => {
+		if (calloutText) {
+			showCallout();
+		}
+	}, [calloutText, showCallout]);
+	console.log({ calloutText, calloutVisible });
 	return (
 		<FieldSet error={error} label={label} name={name} required={required}>
-			{tooltipText && tooltipVisible && <div>{tooltipText}</div>}
+			{calloutText && calloutVisible && (
+				<Callout variant="mobileTablet" id={`${name}-callout`}>
+					{calloutText}
+				</Callout>
+			)}
 			<TextInput
+				aria-describedby={`#${name}-callout`}
 				className={styles.textInput}
 				name={name}
-				onBlur={hideTooltip}
-				onFocus={showTooltip}
+				onBlur={hideCallout}
+				onFocus={showCallout}
 				required={required}
 				type={type}
 			/>
-			{tooltipText && tooltipVisible && <div>{tooltipText}</div>}
+			{calloutText && calloutVisible && <Callout variant="desktop">{calloutText}</Callout>}
 		</FieldSet>
 	);
 };

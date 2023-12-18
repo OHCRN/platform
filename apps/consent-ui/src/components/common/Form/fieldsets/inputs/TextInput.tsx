@@ -32,6 +32,7 @@ const TextInput = <T extends FieldValues>({
 	onFocus = () => {},
 	required = false,
 	type = 'text',
+	ariaProps,
 }: FormTextInputProps<T>) => {
 	const { register } = useFormContext();
 	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
@@ -50,6 +51,7 @@ const TextInput = <T extends FieldValues>({
 			onFocus={onFocus}
 			ref={ref}
 			type={type}
+			{...ariaProps}
 		/>
 	);
 };

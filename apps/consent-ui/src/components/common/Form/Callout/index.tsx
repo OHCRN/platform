@@ -12,12 +12,18 @@ import styles from './Callout.module.scss';
 
 const Callout = ({
 	children,
+	id,
 	variant,
 }: {
 	children: ReactNode;
+	id?: string;
 	variant: 'desktop' | 'mobileTablet';
 }) => {
-	return <div className={clsx(styles.callout, styles[variant])}>{children}</div>;
+	return (
+		<div className={clsx(styles.callout, styles[variant])} id={id}>
+			{children}
+		</div>
+	);
 };
 
 export default Callout;

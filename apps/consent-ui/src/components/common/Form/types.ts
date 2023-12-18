@@ -50,7 +50,7 @@ export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T
 };
 
 export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	tooltipText?: string;
+	calloutText?: string;
 	type?: FormTextInputType;
 };
 
@@ -84,6 +84,7 @@ export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
 	onBlur?: () => void;
 	onFocus?: () => void;
 	type: FormTextInputType;
+	ariaProps?: AriaProps;
 };
 
 export type FormRadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
@@ -102,4 +103,13 @@ export type FormSelectInputProps<T extends FieldValues, V extends string> = Form
 export type FormSelectOption<V extends string> = {
 	label: string;
 	value: V;
+};
+
+// aria
+
+export type AriaProps = {
+	role?: string;
+	'aria-describedby'?: string;
+	'aria-labelledby'?: string;
+	'aria-label'?: string;
 };
