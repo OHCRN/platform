@@ -11,6 +11,9 @@ import { getInviteConsentData } from './das/consent.js';
 
 const logger = serviceLogger.forModule('SearchService');
 
+type SystemError = 'SYSTEM_ERROR';
+type InvalidRequest = 'INVALID_REQUEST';
+
 // PI-DAS
 // TODO: add Type instead of any
 const getParticipantPiData = async (participantId: string): Promise<any> => {
@@ -62,7 +65,7 @@ export const getParticipant = async (participantId: string): Promise<any> => {
 	};
 };
 
-export type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+export type GetInviteFailureStatus = SystemError | InvalidRequest | 'INVITE_DOES_NOT_EXIST';
 /**
  * Fetches clinician invite in PI DAS first by inviteId,
  * then uses the same inviteId to get the corresponding invite in Consent DAS
