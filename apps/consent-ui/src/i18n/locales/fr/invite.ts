@@ -22,6 +22,7 @@ import { InviteDictionary } from '../en/invite';
 const dictionary = {
 	clinicianPatientRegistration: 'Inscription des patients cliniciens',
 	ifParticipant: 'Si vous êtes un participant :',
+	inviteYourPatients: 'Invitez vos patients à participer au registre OHCRN.',
 	registerHere: 'Inscrivez-vous ici',
 	registerYourPatient: 'Enregistrez votre patient',
 } satisfies InviteDictionary;

@@ -20,6 +20,7 @@
 const dictionary = {
 	clinicianPatientRegistration: 'Clinician Patient Registration',
 	ifParticipant: "If you're a Participant:",
+	inviteYourPatients: 'Invite your patients to participate in the OHCRN Registry.',
 	registerHere: 'Register here',
 	registerYourPatient: 'Register Your Patient',
 } satisfies Record<string, string>;

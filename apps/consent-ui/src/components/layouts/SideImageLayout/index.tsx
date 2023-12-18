@@ -23,14 +23,25 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 
 import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
+import ChevronSvg from 'src/public/chevron-large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
-import ChevronSvg from 'src/public/chevron-large.svg';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 import { RouteName } from 'src/components/common/Link/types';
 
 import styles from './SideImageLayout.module.scss';
+
+interface SideImageLayoutProps {
+	children: ReactNode;
+	className?: string;
+	currentLang: ValidLanguage;
+	desktopHeaderImage: StaticImageData;
+	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
+	mainSubtitle: ReactNode;
+	mainTitle: string;
+	navTitle: string;
+}
 
 const SideImageLayout = ({
 	children,
@@ -38,15 +49,10 @@ const SideImageLayout = ({
 	currentLang,
 	desktopHeaderImage,
 	desktopNavAction,
-	title,
-}: {
-	children: ReactNode;
-	className?: string;
-	currentLang: ValidLanguage;
-	desktopHeaderImage: StaticImageData;
-	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
-	title: string;
-}) => {
+	mainSubtitle,
+	mainTitle,
+	navTitle,
+}: SideImageLayoutProps) => {
 	const translate = getTranslation(currentLang);
 
 	return (
@@ -61,11 +67,11 @@ const SideImageLayout = ({
 							className={styles.logoImg}
 						/>
 					</Link>
-					<h1 className={styles.title}>{title}</h1>
+					<h1 className={styles.title}>{navTitle}</h1>
 				</div>
 			</header>
 			<header className={styles.mobileTabletHeader}>
-				<h1 className={styles.title}>{title}</h1>
+				<h1 className={styles.title}>{navTitle}</h1>
 			</header>
 			<div className={styles.main}>
 				<div className={styles.content}>
@@ -90,7 +96,11 @@ const SideImageLayout = ({
 							)}
 						</div>
 					</nav>
-					{children}
+					<div>
+						<h2 className={styles.mainTitle}>{mainTitle}</h2>
+						<p className={styles.mainSubtitle}>{mainSubtitle}</p>
+					</div>
+					<div className={styles.childrenWrapper}>{children}</div>
 				</div>
 			</div>
 		</div>

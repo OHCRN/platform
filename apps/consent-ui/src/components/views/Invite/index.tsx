@@ -34,6 +34,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const pageDict = {
 		clinicianPatientRegistration: translate('invite', 'clinicianPatientRegistration'),
 		ifParticipant: translate('invite', 'ifParticipant'),
+		inviteYourPatients: translate('invite', 'inviteYourPatients'),
 		registerHere: translate('invite', 'registerHere'),
 		registerYourPatient: translate('invite', 'registerYourPatient'),
 	};
@@ -91,7 +92,9 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				topText: pageDict.ifParticipant,
 				url: 'register',
 			}}
-			title={pageDict.clinicianPatientRegistration}
+			mainSubtitle={pageDict.inviteYourPatients}
+			mainTitle={pageDict.registerYourPatient}
+			navTitle={pageDict.clinicianPatientRegistration}
 		>
 			<ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}
