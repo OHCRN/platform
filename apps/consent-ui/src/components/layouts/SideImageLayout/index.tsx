@@ -74,28 +74,28 @@ const SideImageLayout = ({
 				<h1 className={styles.title}>{navTitle}</h1>
 			</header>
 			<div className={styles.main}>
+				<nav className={styles.desktopNav}>
+					<div className={styles.leftButtons}>
+						<LanguageToggle currentLang={currentLang} />
+						<HelpButton label={translate('header', 'help')} />
+					</div>
+					<div className={styles.rightButtons}>
+						{desktopNavAction && (
+							<LocalizedLink
+								className={styles.desktopNavAction}
+								linkLang={currentLang}
+								name={desktopNavAction.url}
+							>
+								<div className={styles.text}>
+									<span>{desktopNavAction.topText}</span>
+									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
+								</div>
+								<Image src={ChevronSvg} alt="" className={styles.chevron} />
+							</LocalizedLink>
+						)}
+					</div>
+				</nav>
 				<div className={styles.content}>
-					<nav className={styles.desktopNav}>
-						<div className={styles.leftButtons}>
-							<LanguageToggle currentLang={currentLang} />
-							<HelpButton label={translate('header', 'help')} />
-						</div>
-						<div className={styles.rightButtons}>
-							{desktopNavAction && (
-								<LocalizedLink
-									className={styles.desktopNavAction}
-									linkLang={currentLang}
-									name={desktopNavAction.url}
-								>
-									<div className={styles.text}>
-										<span>{desktopNavAction.topText}</span>
-										<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
-									</div>
-									<Image src={ChevronSvg} alt="" className={styles.chevron} />
-								</LocalizedLink>
-							)}
-						</div>
-					</nav>
 					<div>
 						<h2 className={styles.mainTitle}>{mainTitle}</h2>
 						<p className={styles.mainSubtitle}>{mainSubtitle}</p>

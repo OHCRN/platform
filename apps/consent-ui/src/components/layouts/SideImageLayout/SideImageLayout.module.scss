@@ -74,14 +74,8 @@
 .main {
 	background: theme('colors.grayscale.100');
 	flex: 1 0 66.67%;
-	padding: 1rem 0 2.8125rem;
-	@media (min-width: theme('screens.sm')) {
-		padding: 0 2.5rem 2.75rem;
-	}
 	@media (min-width: theme('screens.md')) {
-		display: flex;
 		flex: 1 1 auto;
-		padding: 1.5rem 4.375rem 2.75rem;
 	}
 }
 
@@ -97,6 +91,8 @@
 }
 
 .desktopNav {
+	padding: 1.5rem 4rem 0;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5rem;
