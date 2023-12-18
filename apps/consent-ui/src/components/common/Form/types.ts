@@ -46,6 +46,7 @@ interface FormFieldSetSharedProps<T extends FieldValues> {
 }
 
 export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	calloutText?: ReactNode;
 	children: ReactNode;
 };
 

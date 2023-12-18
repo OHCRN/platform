@@ -9,9 +9,7 @@
 		background: theme('colors.grayscale.100');
 	}
 	@media (min-width: theme('screens.sm')) {
-		padding: 1rem 1.25rem 1rem 1.25rem;
-	}
-	@media (min-width: theme('screens.md')) {
-		padding: 1rem 1.5rem 1rem 1.5rem;
+		margin: 0 -1rem;
+		padding: 1rem;
 	}
 }

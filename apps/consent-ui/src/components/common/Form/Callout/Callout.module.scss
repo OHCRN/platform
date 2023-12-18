@@ -14,7 +14,9 @@
 		content: '';
 		border: 0.5rem solid transparent;
 	}
-	&.mobileTablet {
+	&.mobile,
+	&.tablet,
+	&.tabletDesktop {
 		width: 100%;
 		margin-bottom: 1rem;
 		&:before {
@@ -34,11 +36,18 @@
 	}
 
 	@media (min-width: theme('screens.md')) {
-		&.mobileTablet {
+		&.mobile,
+		&.tablet {
 			display: none;
 		}
 		&.desktop {
 			display: block;
 		}
+	}
+}
+
+@media (min-width: theme('screens.lg')) {
+	&.tabletDesktop {
+		display: none;
 	}
 }

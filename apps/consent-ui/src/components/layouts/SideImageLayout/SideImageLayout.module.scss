@@ -17,7 +17,6 @@
 	padding: 1rem;
 	@media (min-width: theme('screens.sm')) {
 		padding: 1.5rem 2.44rem;
-		margin-bottom: 2.44rem;
 	}
 	@media (min-width: theme('screens.md')) {
 		display: none;
@@ -73,34 +72,36 @@
 
 .main {
 	background: theme('colors.grayscale.100');
-	flex: 1 0 66.67%;
-	padding: 1rem 0 2.8125rem;
+	.content {
+		padding: 0 1rem;
+	}
 	@media (min-width: theme('screens.sm')) {
-		padding: 0 2.5rem 2.75rem;
+		flex: 1 0 66.67%;
+		.content {
+			max-width: 51.75rem;
+			padding: 2.44rem 2.5rem 0;
+		}
 	}
 	@media (min-width: theme('screens.md')) {
-		display: flex;
-		flex: 1 1 auto;
-		padding: 1.5rem 4.375rem 2.75rem;
+		flex: 1 1 66.67%;
+		.content {
+			padding: 0 2rem;
+		}
 	}
-}
-
-.content {
-	max-width: 47.75rem;
-}
-
-.childrenWrapper {
-	@media (min-width: theme('screens.md')) {
-		margin-left: -1.5rem;
-		margin-right: -1.5rem;
+	@media (min-width: theme('screens.lg')) {
+		.content {
+			padding: 0 4rem;
+		}
 	}
 }
 
 .desktopNav {
+	padding: 1.5rem 4rem 0;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5rem;
-	min-height: 4rem;
+	min-height: 6rem;
 }
 
 .desktopHeader,

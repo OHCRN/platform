@@ -32,6 +32,17 @@ import { RouteName } from 'src/components/common/Link/types';
 
 import styles from './SideImageLayout.module.scss';
 
+interface SideImageLayoutProps {
+	children: ReactNode;
+	className?: string;
+	currentLang: ValidLanguage;
+	desktopHeaderImage: StaticImageData;
+	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
+	mainSubtitle: ReactNode;
+	mainTitle: string;
+	navTitle: string;
+}
+
 const SideImageLayout = ({
 	children,
 	className,
@@ -41,16 +52,7 @@ const SideImageLayout = ({
 	mainSubtitle,
 	mainTitle,
 	navTitle,
-}: {
-	children: ReactNode;
-	className?: string;
-	currentLang: ValidLanguage;
-	desktopHeaderImage: StaticImageData;
-	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
-	mainSubtitle: ReactNode;
-	mainTitle: string;
-	navTitle: string;
-}) => {
+}: SideImageLayoutProps) => {
 	const translate = getTranslation(currentLang);
 
 	return (
@@ -72,33 +74,32 @@ const SideImageLayout = ({
 				<h1 className={styles.title}>{navTitle}</h1>
 			</header>
 			<div className={styles.main}>
-				<div className={styles.content}>
-					<nav className={styles.desktopNav}>
-						<div className={styles.leftButtons}>
-							<LanguageToggle currentLang={currentLang} />
-							<HelpButton label={translate('header', 'help')} />
-						</div>
-						<div className={styles.rightButtons}>
-							{desktopNavAction && (
-								<LocalizedLink
-									className={styles.desktopNavAction}
-									linkLang={currentLang}
-									name={desktopNavAction.url}
-								>
-									<div className={styles.text}>
-										<span>{desktopNavAction.topText}</span>
-										<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
-									</div>
-									<Image src={ChevronSvg} alt="" className={styles.chevron} />
-								</LocalizedLink>
-							)}
-						</div>
-					</nav>
-					<div>
-						<h2 className={styles.mainTitle}>{mainTitle}</h2>
-						<p className={styles.mainSubtitle}>{mainSubtitle}</p>
+				<nav className={styles.desktopNav}>
+					<div className={styles.leftButtons}>
+						<LanguageToggle currentLang={currentLang} />
+						<HelpButton label={translate('header', 'help')} />
 					</div>
-					<div className={styles.childrenWrapper}>{children}</div>
+					<div className={styles.rightButtons}>
+						{desktopNavAction && (
+							<LocalizedLink
+								className={styles.desktopNavAction}
+								linkLang={currentLang}
+								name={desktopNavAction.url}
+							>
+								<div className={styles.text}>
+									<span>{desktopNavAction.topText}</span>
+									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
+								</div>
+								<Image src={ChevronSvg} alt="" className={styles.chevron} />
+							</LocalizedLink>
+						)}
+					</div>
+				</nav>
+				<div className={styles.content}>
+					<h2 className={styles.mainTitle}>{mainTitle}</h2>
+					<p className={styles.mainSubtitle}>{mainSubtitle}</p>
+
+					{children}
 				</div>
 			</div>
 		</div>

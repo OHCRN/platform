@@ -17,44 +17,52 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 import { FieldValues } from 'react-hook-form';
-import { useEffect } from 'react';
+import clsx from 'clsx';
 
+import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormTextFieldSetProps } from 'src/components/common/Form/types';
+import InputError from 'src/components/common/Form/InputError';
 import useCallout from 'src/components/common/Form/Callout/useCallout';
-import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
-import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import Callout from 'src/components/common/Form/Callout';
+import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
+import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
 
 import styles from './TextFieldSet.module.scss';
 
+Object.assign(fieldSetStyles, styles);
+
 const TextFieldSet = <T extends FieldValues>({
-	calloutText = '',
+	calloutText,
+	className,
 	error,
 	label,
 	name,
 	required = false,
 	type = 'text',
 }: FormTextFieldSetProps<T>) => {
-	const { calloutVisible, hideCallout, showCallout } = useCallout();
-	// temporarily show the callout for dev
-	useEffect(() => {
-		if (calloutText) {
-			showCallout();
-		}
-	}, [calloutText, showCallout]);
+	const { showCallout, hideCallout, calloutVisible } = useCallout();
+
+	const ariaDescribedById = `${name}-callout`;
+
 	return (
-		<FieldSet error={error} label={label} name={name} required={required}>
-			<div className={styles.wrapper}>
-				{calloutText && calloutVisible && (
-					<Callout variant="mobileTablet" id={`${name}-callout`}>
-						{calloutText}
-					</Callout>
-				)}
+		<fieldset className={clsx(styles.fieldSet, className)}>
+			<Callout variant="tabletDesktop">calloutText</Callout>
+			{calloutVisible && calloutText && <Callout variant="tabletDesktop">calloutText</Callout>}
+			<label htmlFor={name} className={styles.label}>
+				{label}
+				{required && <RequiredAsterisk />}
+			</label>
+
+			{calloutVisible && calloutText && (
+				<Callout variant="mobile" id={ariaDescribedById}>
+					calloutText
+				</Callout>
+			)}
+
+			<div>
 				<TextInput
-					aria-describedby={`#${name}-callout`}
+					aria-describedby={`#${ariaDescribedById}`}
 					className={styles.textInput}
 					name={name}
 					onBlur={hideCallout}
@@ -62,9 +70,11 @@ const TextFieldSet = <T extends FieldValues>({
 					required={required}
 					type={type}
 				/>
-				{calloutText && calloutVisible && <Callout variant="desktop">{calloutText}</Callout>}
+				{error && <InputError>{error}</InputError>}
 			</div>
-		</FieldSet>
+
+			{calloutVisible && calloutText && <Callout variant="desktop">calloutText</Callout>}
+		</fieldset>
 	);
 };
 

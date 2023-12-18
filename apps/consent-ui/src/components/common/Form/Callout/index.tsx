@@ -26,6 +26,10 @@ import styles from './Callout.module.scss';
 // but it takes up space in the page -
 // it doesn't float on top of other components.
 
+// add id to use with aria-describedby on the related input.
+// if using multiple callouts with identical content for different breakpoints,
+// only add an id to one of the callouts.
+
 const Callout = ({
 	children,
 	id,
@@ -33,7 +37,7 @@ const Callout = ({
 }: {
 	children: ReactNode;
 	id?: string;
-	variant: 'desktop' | 'mobileTablet';
+	variant: 'mobile' | 'tablet' | 'tabletDesktop' | 'desktop';
 }) => {
 	return (
 		<div className={clsx(styles.callout, styles[variant])} id={id}>
