@@ -38,7 +38,6 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	required = false,
 	title,
 }: FormCheckboxFieldSetProps<T>) => {
-	console.log(error);
 	return (
 		<fieldset
 			className={clsx(

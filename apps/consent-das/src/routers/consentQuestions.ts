@@ -18,14 +18,16 @@
  */
 
 import { Router } from 'express';
-import { ConsentCategory, ConsentQuestionId } from 'types/entities';
+import { ConsentQuestionId, ConsentQuestionsRequest } from 'types/entities';
+import { ErrorName, ErrorResponse, RequestValidationErrorResponse } from 'types/httpResponses';
 
 import { updateConsentQuestionIsActive } from '../services/update.js';
 import { getConsentQuestion, getConsentQuestions } from '../services/search.js';
 import { createConsentQuestion } from '../services/create.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments when custom error handling is implemented
+const { SERVER_ERROR } = ErrorName;
+
 /**
  * @openapi
  * tags:
@@ -53,32 +55,42 @@ const router = Router();
  *           $ref: '#/components/schemas/ConsentCategory'
  *     responses:
  *       200:
- *         description: The list of questions was successfully retrieved.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ConsentQuestionArray'
  *       400:
- *         description: The specified category was invalid.
+ *         description: RequestValidationError - The query parameter was invalid.
  *       500:
- *         description: Error retrieving consent questions.
+ *         description: ServerError - An unexpected error occurred.
  */
 router.get('/', async (req, res) => {
-	logger.info('GET /consent-questions');
-	const { category } = req.query;
+	try {
+		const queryParams = ConsentQuestionsRequest.safeParse(req.query);
 
-	if (category) {
-		try {
-			const questions = await getConsentQuestions(ConsentCategory.parse(category));
-			res.status(200).send({ questions });
-		} catch (error) {
-			logger.error(error);
-			res.status(400).send({ error: 'The specified category was invalid' });
+		if (!queryParams.success) {
+			logger.error(
+				'GET /consent-questions',
+				'Invalid consent category',
+				queryParams.error.format(),
+			);
+			return res.status(400).json(RequestValidationErrorResponse(queryParams.error));
 		}
-	} else {
-		try {
-			const questions = await getConsentQuestions();
-			res.status(200).send({ questions });
-		} catch (error) {
-			logger.error(error);
-			res.status(500).send({ error: 'Error retrieving consent questions' });
+
+		const consentQuestions = await getConsentQuestions(queryParams.data.category);
+
+		switch (consentQuestions.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(consentQuestions.data);
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, consentQuestions.message));
+			}
 		}
+	} catch (error) {
+		logger.error('GET /consent-questions', 'Unexpected error retrieving consent questions', error);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 

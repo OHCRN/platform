@@ -17,34 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FieldValues } from 'react-hook-form';
-import clsx from 'clsx';
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormFieldSetProps } from '../../types';
+import { FormSelectFieldSetProps } from '../types';
 
-import styles from './FieldSet.module.scss';
+import FieldSet from './FieldSet';
+import SelectInput from './inputs/SelectInput';
 
-const FieldSet = <T extends FieldValues>({
-	children,
-	className,
+const SelectFieldSet = <T extends FieldValues, V extends string>({
 	error,
 	label,
 	name,
+	options,
+	placeholder,
 	required = false,
-}: FormFieldSetProps<T>) => {
+}: FormSelectFieldSetProps<T, V>) => {
+	const { control } = useFormContext();
 	return (
-		<fieldset className={clsx(styles.fieldSet, className)}>
-			<label htmlFor={name} className={styles.label}>
-				{label}
-				{required && <RequiredAsterisk />}
-			</label>
-
-			{children}
-
-			{error && <p style={{ color: 'red' }}>{error}</p>}
-		</fieldset>
+		<Controller
+			name="consentGroup"
+			control={control}
+			render={({ field: { onChange, value } }) => (
+				<FieldSet error={error} label={label} name={name} required={required}>
+					<SelectInput
+						name={name}
+						onChange={onChange}
+						options={options}
+						placeholder={placeholder}
+						required
+						value={value}
+					/>
+				</FieldSet>
+			)}
+			rules={{ required }}
+		/>
 	);
 };
 
-export default FieldSet;
+export default SelectFieldSet;
