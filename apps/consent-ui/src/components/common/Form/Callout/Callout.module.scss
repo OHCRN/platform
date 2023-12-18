@@ -1,5 +1,5 @@
 .callout {
-	@apply relative;
+	position: relative;
 	font-size: 0.75rem;
 	background: theme('colors.accent1.200');
 	border-radius: 0.5rem;
@@ -7,12 +7,15 @@
 	border-color: transparent;
 	border-color: theme('colors.accent1.200');
 	&:before {
-		@apply absolute block w-0 h-0;
+		position: absolute;
+		display: block;
+		width: 0;
+		height: 0;
 		content: '';
 		border: 0.5rem solid transparent;
 	}
 	&.mobileTablet {
-		@apply w-full;
+		width: 100%;
 		margin-bottom: 1rem;
 		&:before {
 			bottom: -1rem;
@@ -21,7 +24,7 @@
 		}
 	}
 	&.desktop {
-		@apply hidden;
+		display: none;
 		margin-left: 0.75rem;
 		&:before {
 			left: -1rem;
@@ -32,10 +35,10 @@
 
 	@media (min-width: theme('screens.md')) {
 		&.mobileTablet {
-			@apply hidden;
+			display: none;
 		}
 		&.desktop {
-			@apply block;
+			display: block;
 		}
 	}
 }

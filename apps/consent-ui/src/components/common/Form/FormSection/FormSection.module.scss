@@ -1,5 +1,5 @@
 .formSection {
-	@apply w-full;
+	width: 100%;
 	padding: 1rem;
 	&.grey {
 		background: theme('colors.grayscale.200');

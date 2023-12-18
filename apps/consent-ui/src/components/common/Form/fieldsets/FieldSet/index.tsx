@@ -20,8 +20,9 @@
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormFieldSetProps } from '../../types';
+import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
+import { FormFieldSetProps } from 'src/components/common/Form/types';
+import InputError from 'src/components/common/Form/InputError';
 
 import styles from './FieldSet.module.scss';
 
@@ -42,7 +43,7 @@ const FieldSet = <T extends FieldValues>({
 
 			{children}
 
-			{error && <p style={{ color: 'red' }}>{error}</p>}
+			{error && <InputError>{error}</InputError>}
 		</fieldset>
 	);
 };

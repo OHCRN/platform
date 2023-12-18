@@ -39,13 +39,12 @@ const TextFieldSet = <T extends FieldValues>({
 	type = 'text',
 }: FormTextFieldSetProps<T>) => {
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
-	// temporarily show the callout
+	// temporarily show the callout for dev
 	useEffect(() => {
 		if (calloutText) {
 			showCallout();
 		}
 	}, [calloutText, showCallout]);
-	console.log({ calloutText, calloutVisible });
 	return (
 		<FieldSet error={error} label={label} name={name} required={required}>
 			<div className={styles.wrapper}>

@@ -14,7 +14,7 @@
 		}
 	}
 	.help {
-		@apply hidden;
+		display: none;
 		@media (min-width: theme('screens.md')) {
 			@apply flex;
 			margin-right: 1rem;

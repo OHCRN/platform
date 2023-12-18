@@ -1,14 +1,14 @@
 .toggle-full {
-	@apply hidden;
+	display: none;
 	@media (min-width: theme('screens.md')) {
-		@apply flex;
+		display: flex;
 	}
 }
 
 .toggle-abbr {
-	@apply uppercase;
-	@apply flex;
+	text-transform: uppercase;
+	display: flex;
 	@media (min-width: theme('screens.md')) {
-		@apply hidden;
+		display: none;
 	}
 }

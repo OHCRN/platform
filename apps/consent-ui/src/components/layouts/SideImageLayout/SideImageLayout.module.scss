@@ -1,12 +1,14 @@
 .container {
-	@apply flex flex-col w-full;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 	@media (min-width: theme('screens.md')) {
-		@apply flex-row;
+		flex-direction: row;
 	}
 }
 
 .mobileTabletHeader {
-	@apply w-full;
+	width: 100%;
 	background-image: linear-gradient(
 		270deg,
 		theme('colors.other.400'),
@@ -18,7 +20,7 @@
 		margin-bottom: 2.44rem;
 	}
 	@media (min-width: theme('screens.md')) {
-		@apply hidden;
+		display: none;
 	}
 }
 
@@ -42,7 +44,9 @@
 }
 
 .desktopHeader {
-	@apply w-full overflow-hidden relative;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
 	flex-basis: 33%;
 	min-width: 20rem;
 	max-width: 32.8125rem;
@@ -53,7 +57,8 @@
 	}
 	.content,
 	.image {
-		@apply absolute inset-0;
+		position: absolute;
+		inset: 0;
 	}
 	.content {
 		padding: 2.5rem;
@@ -61,20 +66,21 @@
 }
 
 .logoImg {
-	@apply w-full;
+	width: 100%;
 	max-width: 21.875rem;
 	margin-bottom: 2.13rem;
 }
 
 .main {
 	background: theme('colors.grayscale.100');
-	@apply basis-4/6 flex-grow flex-shrink-0;
+	flex: 1 0 66.67%;
 	padding: 1rem 0 2.8125rem;
 	@media (min-width: theme('screens.sm')) {
 		padding: 0 2.5rem 2.75rem;
 	}
 	@media (min-width: theme('screens.md')) {
-		@apply basis-auto flex flex-1;
+		display: flex;
+		flex: 1 1 auto;
 		padding: 1.5rem 4.375rem 2.75rem;
 	}
 }
@@ -91,7 +97,8 @@
 }
 
 .desktopNav {
-	@apply flex justify-between;
+	display: flex;
+	justify-content: space-between;
 	margin-bottom: 5rem;
 	min-height: 4rem;
 }
@@ -99,17 +106,21 @@
 .desktopHeader,
 .desktopNav {
 	@media (max-width: theme('screens.md')) {
-		@apply hidden;
+		display: none;
 	}
 }
 
 .leftButtons {
-	@apply flex;
+	display: flex;
 	gap: 1.88rem;
 }
 
 .desktopNavAction {
-	@apply flex items-center relative text-right w-auto;
+	display: flex;
+	align-items: center;
+	position: relative;
+	text-align: right;
+	width: auto;
 	gap: 1rem;
 	.text {
 		font-weight: 700;
@@ -117,7 +128,7 @@
 		line-height: 1.5rem;
 	}
 	.bottomText {
-		@apply block;
+		display: block;
 		color: theme('colors.secondary.500');
 	}
 	.chevron {

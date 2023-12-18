@@ -1,13 +1,14 @@
 .textInput {
-	@apply block w-full;
+	display: block;
+	width: 100%;
 	border: 1px solid theme('colors.grayscale.500');
 	border-radius: 1.25rem;
 	height: 2.5rem;
 }
 
 .wrapper {
-	@apply block;
+	display: block;
 	@media (min-width: theme('screens.md')) {
-		@apply flex;
+		display: flex;
 	}
 }

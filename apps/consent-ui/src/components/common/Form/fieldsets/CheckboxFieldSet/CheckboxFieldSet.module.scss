@@ -9,24 +9,20 @@
 		display: block;
 		position: relative;
 	}
-
 	.checkboxInput {
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
 	}
-
 	.description {
 		font-size: 1rem;
 		line-height: 1.625rem;
 	}
-
 	&.disabled {
 		.label {
 			background: theme('colors.grayscale.200');
 		}
 	}
-
 	&.error {
 		.label {
 			border-color: theme('colors.error.500');
@@ -35,7 +31,6 @@
 			color: theme('colors.error.600');
 		}
 	}
-
 	&.checked {
 		.label {
 			background: theme('colors.primary.100');
