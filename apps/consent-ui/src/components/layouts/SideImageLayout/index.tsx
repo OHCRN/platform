@@ -96,11 +96,10 @@ const SideImageLayout = ({
 					</div>
 				</nav>
 				<div className={styles.content}>
-					<div>
-						<h2 className={styles.mainTitle}>{mainTitle}</h2>
-						<p className={styles.mainSubtitle}>{mainSubtitle}</p>
-					</div>
-					<div className={styles.childrenWrapper}>{children}</div>
+					<h2 className={styles.mainTitle}>{mainTitle}</h2>
+					<p className={styles.mainSubtitle}>{mainSubtitle}</p>
+
+					{children}
 				</div>
 			</div>
 		</div>
