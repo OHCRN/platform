@@ -18,14 +18,20 @@
  */
 
 import { Router } from 'express';
-import { ConsentQuestionId } from 'types/entities';
+import { ParticipantResponsesRequest } from 'types/entities';
+import {
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
+} from 'types/httpResponses';
 
-import { Prisma } from '../generated/client/index.js';
 import { getParticipantResponses } from '../services/search.js';
 import { createParticipantResponse } from '../services/create.js';
 import logger from '../logger.js';
 
-// TODO: update JSDoc comments when custom error handling is implemented
+const { SERVER_ERROR } = ErrorName;
+
 /**
  * @openapi
  * tags:
@@ -43,7 +49,7 @@ const router = Router();
  *       - Participant Responses
  *     produces: application/json
  *     name: Get Participant Responses
- *     description: Fetches list of Participant Responses by Consent Question ID and Participant ID, sorted by submittedAt date (defaults descending)
+ *     description: Fetches list of Participant Responses by Consent Question ID and Participant ID sorted by submittedAt date
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -59,28 +65,65 @@ const router = Router();
  *         required: true
  *         schema:
  *           $ref: '#/components/schemas/ConsentQuestionId'
+ *       - name: sortOrder
+ *         in: query
+ *         description: sorts responses by submittedAt date, defaults to descending
+ *         schema:
+ *           $ref: '#/components/schemas/SortOrder'
  *     responses:
  *       200:
- *         description: The participant responses were successfully retrieved.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ParticipantResponseArray'
+ *       400:
+ *         description: RequestValidationError - Invalid request.
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
  *       500:
- *         description: Error retrieving participant responses.
+ *         description: ServerError - An unexpected error occurred.
  */
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
-	logger.info('GET /participant-responses/:participantId/:consentQuestionId');
-	const { participantId, consentQuestionId } = req.params;
-	const { sort_order } = req.query;
 	try {
-		const parsedConsentQuestionId = ConsentQuestionId.parse(consentQuestionId);
-		const participant_responses = await getParticipantResponses(
+		const { participantId, consentQuestionId } = req.params;
+		const { sortOrder } = req.query;
+
+		const request = ParticipantResponsesRequest.safeParse({
 			participantId,
-			parsedConsentQuestionId,
-			// TODO: add validation in getParticipantResponses and fix `as Prisma.SortOrder`
-			sort_order as Prisma.SortOrder | undefined,
-		);
-		res.status(200).send({ participant_responses });
+			consentQuestionId,
+			sortOrder,
+		});
+
+		if (!request.success) {
+			logger.error(
+				'GET /:participantId/:consentQuestionId',
+				'Received invalid request fetching participant response',
+				request.error.format(),
+			);
+			return res.status(400).json(RequestValidationErrorResponse(request.error));
+		}
+
+		const participantResponses = await getParticipantResponses(request.data);
+
+		switch (participantResponses.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(participantResponses.data);
+			}
+			case 'PARTICIPANT_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(participantResponses.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ErrorResponse(SERVER_ERROR, participantResponses.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving participant responses' });
+		logger.error(
+			'GET /:participantId/:consentQuestionId',
+			'Unexpected error retrieving participant response',
+			error,
+		);
+		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
 

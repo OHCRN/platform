@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 
-import { getParticipant, getParticipants } from '../services/search.js';
+import { getParticipantById, getParticipants } from '../services/search.js';
 import { createParticipant } from '../services/create.js';
 import logger from '../logger.js';
 
@@ -88,7 +88,7 @@ router.get('/:participantId', async (req, res) => {
 	const { participantId } = req.params;
 	// TODO: add validation
 	try {
-		const participant = await getParticipant(participantId);
+		const participant = await getParticipantById(participantId);
 		res.status(200).send({ participant });
 	} catch (error) {
 		logger.error(error);
