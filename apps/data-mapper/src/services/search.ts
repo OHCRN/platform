@@ -22,6 +22,9 @@ const logger = serviceLogger.forModule('SearchService');
 
 const { INFORMED_CONSENT } = ConsentCategory.enum;
 
+type SystemError = 'SYSTEM_ERROR';
+type InvalidRequest = 'INVALID_REQUEST';
+
 // PI-DAS
 // TODO: add Type instead of any
 const getParticipantPiData = async (participantId: string): Promise<any> => {
@@ -73,10 +76,7 @@ export const getParticipant = async (participantId: string): Promise<any> => {
 	};
 };
 
-export type GetResponsesFailureStatus =
-	| 'SYSTEM_ERROR'
-	| 'PARTICIPANT_DOES_NOT_EXIST'
-	| 'INVALID_REQUEST';
+export type GetResponsesFailureStatus = SystemError | InvalidRequest | 'PARTICIPANT_DOES_NOT_EXIST';
 export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: boolean };
 
 /**
@@ -166,7 +166,7 @@ export const getInformedConsentResponses = async (
 	}
 };
 
-export type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+export type GetInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
 /**
  * Fetches clinician invite in PI DAS first by inviteId,
  * then uses the same inviteId to get the corresponding invite in Consent DAS

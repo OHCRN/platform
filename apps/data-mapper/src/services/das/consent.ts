@@ -139,7 +139,13 @@ export const getConsentQuestionsByCategory = async (
 		return success(consentQuestions.data);
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
-			const { data } = error.response;
+			const { data, status } = error.response;
+
+			if (status === 400) {
+				logger.error('Invalid request while retrieving consent questions', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
+
 			logger.error('AxiosError retrieving consent questions', data);
 
 			return failure('SYSTEM_ERROR', data.message);
@@ -184,18 +190,20 @@ export const getParticipantResponsesByQuestionId = async ({
 			const { data, status } = error.response;
 
 			if (status === 400) {
+				logger.error('Invalid request while retrieving participant responses', data);
 				return failure('INVALID_REQUEST', data.message);
 			}
 
 			if (status === 404) {
+				logger.error('Participant does not exist', data);
 				return failure('PARTICIPANT_DOES_NOT_EXIST', data.message);
 			}
 
-			logger.error('AxiosError retrieving consent questions', data);
+			logger.error('AxiosError retrieving participant responses', data);
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('Unexpected error retrieving consent questions', error);
+		logger.error('Unexpected error retrieving participant responses', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
