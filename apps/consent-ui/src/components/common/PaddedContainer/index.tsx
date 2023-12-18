@@ -17,13 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import styles from './PaddedContainer.module.scss';
 
-import ConsentWizard from 'src/components/views/ConsentWizard';
-import { ValidLanguage } from 'src/i18n';
+const PaddedContainer = ({ children }: { children: React.ReactNode }) => {
+	return <div className={styles.layout}>{children}</div>;
+};
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return (
-		<ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.CONSENT_REVIEW_SIGN} />
-	);
-}
+export default PaddedContainer;

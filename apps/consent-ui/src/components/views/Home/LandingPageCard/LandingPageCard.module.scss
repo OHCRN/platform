@@ -1,16 +1,12 @@
 .landing-page-card {
-	@media (min-width: theme('screens.md')) {
-		max-width: 45rem;
+	padding: 16px;
+
+	@media (min-width: theme('screens.sm')) {
+		padding: 24px 48px 30px;
 	}
 
-	strong {
-		color: theme('colors.secondary.500');
-		text-decoration-line: underline;
-		transition: color 200ms;
-
-		&:hover {
-			color: theme('colors.secondary.400');
-		}
+	@media (min-width: theme('screens.md')) {
+		max-width: 45rem;
 	}
 
 	.icon {

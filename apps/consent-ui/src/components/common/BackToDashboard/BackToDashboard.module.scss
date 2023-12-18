@@ -1,0 +1,23 @@
+.links {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 1rem;
+	gap: 1rem;
+	width: 100%;
+}
+
+.link {
+	@media (min-width: theme('screens.sm')) {
+		gap: 2rem;
+	}
+
+	display: inline-flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.arrow {
+	height: 0.9rem;
+	transform: rotate(180deg);
+}
