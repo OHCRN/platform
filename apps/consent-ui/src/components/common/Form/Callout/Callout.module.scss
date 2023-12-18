@@ -44,10 +44,10 @@
 			display: block;
 		}
 	}
-}
 
-@media (min-width: theme('screens.lg')) {
-	&.tabletDesktop {
-		display: none;
+	@media (min-width: theme('screens.lg')) {
+		&.tabletDesktop {
+			display: none;
+		}
 	}
 }

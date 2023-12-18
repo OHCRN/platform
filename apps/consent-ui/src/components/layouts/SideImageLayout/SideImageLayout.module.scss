@@ -96,18 +96,24 @@
 }
 
 .desktopNav {
-	padding: 1.5rem 4rem 0;
+	padding: 1.5rem 2rem 0;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5rem;
-	min-height: 6rem;
+	min-height: 4rem;
+	@media (min-width: theme('screens.xl')) {
+		min-height: 6rem;
+		padding-left: 4rem;
+		padding-right: 4rem;
+	}
 }
 
 .desktopHeader,
 .desktopNav {
-	@media (max-width: theme('screens.md')) {
-		display: none;
+	display: none;
+	@media (min-width: theme('screens.md')) {
+		display: flex;
 	}
 }
 

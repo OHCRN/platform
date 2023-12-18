@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+'use client';
+
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
@@ -47,8 +49,7 @@ const TextFieldSet = <T extends FieldValues>({
 
 	return (
 		<fieldset className={clsx(styles.fieldSet, className)}>
-			<Callout variant="tabletDesktop">calloutText</Callout>
-			{calloutVisible && calloutText && <Callout variant="tabletDesktop">calloutText</Callout>}
+			{calloutVisible && calloutText && <Callout variant="tabletDesktop">{calloutText}</Callout>}
 			<label htmlFor={name} className={styles.label}>
 				{label}
 				{required && <RequiredAsterisk />}
@@ -56,7 +57,7 @@ const TextFieldSet = <T extends FieldValues>({
 
 			{calloutVisible && calloutText && (
 				<Callout variant="mobile" id={ariaDescribedById}>
-					calloutText
+					{calloutText}
 				</Callout>
 			)}
 
@@ -73,7 +74,7 @@ const TextFieldSet = <T extends FieldValues>({
 				{error && <InputError>{error}</InputError>}
 			</div>
 
-			{calloutVisible && calloutText && <Callout variant="desktop">calloutText</Callout>}
+			{calloutVisible && calloutText && <Callout variant="desktop">{calloutText}</Callout>}
 		</fieldset>
 	);
 };
