@@ -19,6 +19,7 @@
 
 import Link from 'next/link';
 import urlJoin from 'url-join';
+import clsx from 'clsx';
 
 import { defaultLanguage } from 'src/i18n/settings';
 import routesByLocale from 'src/i18n/routes/routesByLocale.json';
@@ -28,12 +29,14 @@ import LinkButton from '../Button/LinkButton';
 
 import { LocalizedLinkProps } from './types';
 import { addParamsToUrl } from './utils';
+import styles from './LocalizedLink.module.scss';
 
 const LocalizedLink = ({
 	name,
 	params,
 	linkLang,
 	className,
+	defaultStyle = true,
 	children,
 	role,
 	variant,
@@ -82,7 +85,11 @@ const LocalizedLink = ({
 					{children}
 				</LinkButton>
 			) : (
-				<Link href={fullPath} className={className} {...rest}>
+				<Link
+					href={fullPath}
+					className={clsx(className, { [styles.link]: defaultStyle })}
+					{...rest}
+				>
 					{children}
 				</Link>
 			)}

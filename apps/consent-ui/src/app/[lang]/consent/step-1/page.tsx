@@ -19,9 +19,9 @@
 
 import { ConsentCategory } from 'types/entities';
 
+import ConsentWizard from 'src/components/views/ConsentWizard';
 import { ValidLanguage } from 'src/i18n';
-import ConsentForm from 'src/components/views/ConsentWizard/ConsentForm';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <ConsentForm currentLang={lang} section={ConsentCategory.enum.INFORMED_CONSENT} />;
+	return <ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.INFORMED_CONSENT} />;
 }
