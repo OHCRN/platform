@@ -83,7 +83,7 @@ export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: bool
  * Fetches all consent questions for the category
  * and returns the most recent responses for each question
  * @param
- * @returns Most recent participant response for each consent question in the category
+ * @returns {ParticipantResponsesByCategory} Most recent participant response for each consent question in the category
  */
 export const getParticipantResponsesByCategory = async ({
 	participantId,
@@ -115,11 +115,14 @@ export const getParticipantResponsesByCategory = async ({
 			});
 
 			if (responsesResult.status !== 'SUCCESS') {
+				// There was a problem returning one of the participant responses, return that failure and exit
 				return responsesResult;
 			}
 
-			const { consentQuestionId, response } = responsesResult.data[0]; // first item is most recent response
-			participantResponses[consentQuestionId] = response;
+			// Retrieve first item in list if exists (most recent response)
+			// TODO: verify if we want to represent as undefined or not for responses that don't exist
+			// Currently as implemented below it will set it to undefined, so express won't return that question ID as a key
+			participantResponses[consentQuestion.id] = responsesResult.data[0]?.response;
 		}
 
 		return success(participantResponses);
@@ -132,7 +135,7 @@ export const getParticipantResponsesByCategory = async ({
 /**
  * Retrieves most recent responses for each INFORMED_CONSENT question
  * @param participantId ID of participant to retrieve responses for
- * @returns
+ * @returns {InformedConsentResponse} most recent responses for Informed Consent
  */
 export const getInformedConsentResponses = async (
 	participantId: string,

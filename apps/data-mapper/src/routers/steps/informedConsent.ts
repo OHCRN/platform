@@ -31,6 +31,8 @@ import { getInformedConsentResponses } from '../../services/search.js';
 
 const { SERVER_ERROR, REQUEST_VALIDATION_ERROR } = ErrorName;
 
+const ROUTER_PATH = '/wizard/steps/informed-consent';
+
 const router = Router();
 
 /**
@@ -71,7 +73,7 @@ router.get('/:participantId', async (req, res) => {
 
 		if (!requestParticipantId.success) {
 			logger.error(
-				'GET /wizard/steps/informed-consent/:participantId',
+				`GET ${ROUTER_PATH}/:participantId`,
 				'Received invalid request fetching Informed Consent',
 				requestParticipantId.error.format(),
 			);
@@ -98,7 +100,7 @@ router.get('/:participantId', async (req, res) => {
 		}
 	} catch (error) {
 		logger.error(
-			'GET /wizard/steps/informed-consent/:participantId',
+			`GET ${ROUTER_PATH}/:participantId`,
 			'Unexpected error handling get Informed Consent request',
 			error,
 		);

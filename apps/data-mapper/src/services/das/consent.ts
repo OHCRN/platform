@@ -122,9 +122,10 @@ export const getConsentQuestionsByCategory = async (
 ): Promise<Result<ConsentQuestionArray, GetResponsesFailureStatus>> => {
 	try {
 		const { consentDasUrl } = getAppConfig();
-		const { data } = await axiosClient.get(
-			urlJoin(consentDasUrl, 'consent-questions', `?category=${category}`),
-		);
+		const consentQuestionsUrl = new URL(urlJoin(consentDasUrl, 'consent-questions'));
+		consentQuestionsUrl.searchParams.append('category', category);
+
+		const { data } = await axiosClient.get(consentQuestionsUrl.toString());
 
 		const consentQuestions = ConsentQuestionArray.safeParse(data);
 
