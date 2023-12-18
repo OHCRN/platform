@@ -42,7 +42,8 @@
 }
 
 .desktopHeader {
-	@apply w-full basis-40 overflow-hidden relative;
+	@apply w-full overflow-hidden relative;
+	flex-basis: 33%;
 	min-width: 20rem;
 	max-width: 32.8125rem;
 	background: theme('colors.grayscale.800');

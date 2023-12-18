@@ -29,7 +29,6 @@ import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 import { RouteName } from 'src/components/common/Link/types';
-import FormSection from 'src/components/common/Form/FormSection';
 
 import styles from './SideImageLayout.module.scss';
 
@@ -95,10 +94,10 @@ const SideImageLayout = ({
 							)}
 						</div>
 					</nav>
-					<FormSection>
+					<div>
 						<h2 className={styles.mainTitle}>{mainTitle}</h2>
 						<p className={styles.mainSubtitle}>{mainSubtitle}</p>
-					</FormSection>
+					</div>
 					<div className={styles.childrenWrapper}>{children}</div>
 				</div>
 			</div>
