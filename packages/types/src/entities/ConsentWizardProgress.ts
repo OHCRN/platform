@@ -24,7 +24,8 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 import { ConsentCategory } from './ConsentCategory.js';
 
 const CONSENT_STATUSES = ['INCOMPLETE', 'COMPLETE'] as const;
-const ConsentStatus = z.enum(CONSENT_STATUSES);
+export const ConsentStatus = z.enum(CONSENT_STATUSES);
+export type ConsentStatus = z.infer<typeof ConsentStatus>;
 
 export const ConsentWizardProgress = z.object({
 	[ConsentCategory.enum.INFORMED_CONSENT]: ConsentStatus,

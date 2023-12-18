@@ -1,0 +1,11 @@
+.layout {
+	@media (min-width: theme('screens.sm')) {
+		padding: 20px;
+	}
+	@media (min-width: theme('screens.md')) {
+		padding: 50px;
+	}
+	
+	padding: 15px;
+	width: 100%;
+}

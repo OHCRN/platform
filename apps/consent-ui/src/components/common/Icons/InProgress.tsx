@@ -17,13 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import React from 'react';
 
-import ConsentWizard from 'src/components/views/ConsentWizard';
-import { ValidLanguage } from 'src/i18n';
-
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+function InProgress({ className }: { className?: string }) {
 	return (
-		<ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.CONSENT_REVIEW_SIGN} />
+		<svg viewBox="0 0 53 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+			<g id="icons/inprogress">
+				<path
+					id="Oval"
+					d="M51.2066 25C51.2066 38.2146 40.0086 49 26.1033 49C12.198 49 1 38.2146 1 25C1 11.7854 12.198 1 26.1033 1C40.0086 1 51.2066 11.7854 51.2066 25Z"
+					stroke="currentColor"
+					strokeWidth="2"
+				/>
+				<ellipse id="Oval_2" cx="15.6617" cy="25" rx="3.13239" ry="3" fill="currentColor" />
+				<ellipse id="Oval_3" cx="26.1031" cy="25" rx="3.13239" ry="3" fill="currentColor" />
+				<ellipse id="Oval_4" cx="36.5445" cy="25" rx="3.13239" ry="3" fill="currentColor" />
+			</g>
+		</svg>
 	);
 }
+
+export default InProgress;
