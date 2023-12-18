@@ -85,6 +85,11 @@
 	@media (min-width: theme('screens.md')) {
 		flex: 1 1 66.67%;
 		.content {
+			padding: 0 2rem;
+		}
+	}
+	@media (min-width: theme('screens.lg')) {
+		.content {
 			padding: 0 4rem;
 		}
 	}
