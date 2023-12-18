@@ -47,3 +47,7 @@ Libraries used:
 - This folder contains low-level components (native HTML elements, or components imported from libraries) and logic for registering or controlling these components with React-Hook-Form.
 - Styling is in the parent fieldset component.
 - Inputs are imported into fieldsets, not directly into a form.
+
+### Submit button
+
+- Use <Button type="submit"> with no `onClick` prop.

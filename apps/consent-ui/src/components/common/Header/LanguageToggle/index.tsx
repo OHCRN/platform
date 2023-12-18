@@ -25,7 +25,6 @@ import LanguageToggleButton from './LanguageToggleButton';
 const LanguageToggle = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 	const langToSelect = getUnselectedLang(currentLang);
-	console.log(currentLang, langToSelect, translate('header', langToSelect));
 
 	return (
 		<LanguageToggleButton
