@@ -82,6 +82,7 @@ export interface FormInputProps<T extends FieldValues> {
 }
 
 export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
+	id: string;
 	onBlur?: () => void;
 	onFocus?: () => void;
 	type: FormTextInputType;

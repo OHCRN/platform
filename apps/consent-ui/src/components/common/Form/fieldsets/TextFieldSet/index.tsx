@@ -20,6 +20,7 @@
 'use client';
 
 import { FieldValues } from 'react-hook-form';
+import { useId } from 'react';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormTextFieldSetProps } from 'src/components/common/Form/types';
@@ -28,8 +29,7 @@ import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout'
 import Callout from 'src/components/common/Form/fieldsets/Callout';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
-
-import FieldSet from '../FieldSet';
+import FieldSet from 'src/components/common/Form/fieldsets//FieldSet';
 
 import styles from './TextFieldSet.module.scss';
 
@@ -46,26 +46,24 @@ const TextFieldSet = <T extends FieldValues>({
 }: FormTextFieldSetProps<T>) => {
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
 
-	const ariaDescribedById = `${name}-callout`;
+	const idPrefix = useId();
 
 	return (
 		<FieldSet className={className}>
-			{calloutVisible && calloutText && <Callout variant="tabletDesktop">{calloutText}</Callout>}
-			<label htmlFor={name} className={styles.label}>
-				{label}
-				{required && <RequiredAsterisk />}
-			</label>
-
-			{calloutVisible && calloutText && (
-				<Callout variant="mobile" id={ariaDescribedById}>
+			{calloutText && (
+				<Callout id={`${idPrefix}-callout`} isActive={calloutVisible} variant="smallDesktop">
 					{calloutText}
 				</Callout>
 			)}
-
+			<label htmlFor={`${idPrefix}-${name}`} className={styles.label}>
+				{label}
+				{required && <RequiredAsterisk />}
+			</label>
 			<div>
 				<TextInput
-					aria-describedby={`#${ariaDescribedById}`}
+					ariaProps={{ 'aria-describedby': `${idPrefix}-callout` }}
 					className={styles.textInput}
+					id={`${idPrefix}-${name}`}
 					name={name}
 					onBlur={hideCallout}
 					onFocus={showCallout}
@@ -74,8 +72,6 @@ const TextFieldSet = <T extends FieldValues>({
 				/>
 				{error && <InputError>{error}</InputError>}
 			</div>
-
-			{calloutVisible && calloutText && <Callout variant="desktop">{calloutText}</Callout>}
 		</FieldSet>
 	);
 };

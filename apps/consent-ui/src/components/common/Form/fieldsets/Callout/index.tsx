@@ -22,25 +22,20 @@ import clsx from 'clsx';
 
 import styles from './Callout.module.scss';
 
-// NOTE: this component visually resembles a tooltip,
-// but it takes up space in the page -
-// it doesn't float on top of other components.
-
-// add id to use with aria-describedby on the related input.
-// if using multiple callouts with identical content for different breakpoints,
-// only add an id to one of the callouts.
-
-const Callout = ({
-	children,
-	id,
-	variant,
-}: {
+interface CalloutProps {
 	children: ReactNode;
 	id?: string;
-	variant: 'mobile' | 'tablet' | 'tabletDesktop' | 'desktop';
-}) => {
+	isActive: boolean;
+	variant: 'default' | 'smallDesktop';
+}
+
+const Callout = ({ children, id, isActive = false, variant }: CalloutProps) => {
 	return (
-		<div className={clsx(styles.callout, styles[variant])} id={id}>
+		<div
+			className={clsx(styles.callout, styles[variant], isActive && styles.active)}
+			id={id}
+			role="tooltip"
+		>
 			{children}
 		</div>
 	);

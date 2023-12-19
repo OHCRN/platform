@@ -27,6 +27,7 @@ import { FormTextInputProps } from '../../types';
 
 const TextInput = <T extends FieldValues>({
 	className,
+	id,
 	name,
 	onBlur = () => {},
 	onFocus = () => {},
@@ -49,7 +50,7 @@ const TextInput = <T extends FieldValues>({
 		<input
 			aria-required={required}
 			className={clsx(`${type}-input`, className)}
-			id={name}
+			id={id}
 			name={registerName}
 			onBlur={handleBlur}
 			onChange={onChange}

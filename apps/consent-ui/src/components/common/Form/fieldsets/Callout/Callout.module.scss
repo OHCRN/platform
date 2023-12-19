@@ -14,18 +14,18 @@
 		content: '';
 		border: 0.5rem solid transparent;
 	}
-	&.mobile,
-	&.tablet,
-	&.tabletDesktop {
+	&.upToTablet,
+	&.upToSmallDesktop {
 		width: 100%;
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
 		&:before {
 			bottom: -1rem;
 			left: calc(50% - 0.5rem);
 			border-top-color: theme('colors.accent1.200');
 		}
 	}
-	&.desktop {
+	&.desktop,
+	&.largeDesktop {
 		display: none;
 		margin-left: 0.75rem;
 		&:before {
@@ -36,8 +36,7 @@
 	}
 
 	@media (min-width: theme('screens.md')) {
-		&.mobile,
-		&.tablet {
+		&.upToTablet {
 			display: none;
 		}
 		&.desktop {
@@ -46,7 +45,10 @@
 	}
 
 	@media (min-width: theme('screens.lg')) {
-		&.tabletDesktop {
+		&.upToSmallDesktop {
+			display: none;
+		}
+		&.largeDesktop {
 			display: none;
 		}
 	}

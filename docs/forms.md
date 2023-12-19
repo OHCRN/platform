@@ -32,7 +32,7 @@ Libraries used:
   - Use `watch` from React-Hook-Form and a `useEffect` hook to toggle conditional fields.
   - When toggling the conditional fields, use the `unregister` method from `useForm()`. Don't use `register`, though - the `register` method has been passed down to the input components and will run on render.
     - Unregistering works the same way for registered & controlled components.
-  - Example: Guardian fields in ClinicianInviteForm.
+  - Example: Guardian fields in `ClinicianInviteForm`.
 
 ## Parts of a form
 
@@ -50,4 +50,14 @@ Libraries used:
 
 ### Submit button
 
-- Use <Button type="submit"> with no `onClick` prop.
+- Use <Button type="submit"> with no `onClick` prop. This will trigger a submit event on the `form` element.
+
+### Callouts
+
+- Link callouts to inputs using a unique ID and `aria-describedby`.
+  - Only link the mobile/tablet callout to the input.
+  - `aria-describedby` will read the callout to screenreaders even if it's visually hidden.
+- Use 2 callout components: One for mobile and tablet (and optionally small desktop, 1024px-1280px) above the label, and one for desktop to the right of the input.
+  - This keeps the visual order and DOM order in sync.
+  - Use `upToSmallDesktop` and `largeDesktop` together.
+  - Use `upToTablet` and `desktop` together.
