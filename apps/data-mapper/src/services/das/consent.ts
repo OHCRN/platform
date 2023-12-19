@@ -115,7 +115,7 @@ export const createInviteConsentData = async (
 /**
  * Fetches all consent questions under the specified category
  * @param category Consent category i.e. step name in Consent Wizard
- * @returns Consent questions for the category
+ * @returns {ConsentQuestionArray} Consent questions for the category
  */
 export const getConsentQuestionsByCategory = async (
 	category: ConsentCategory,
@@ -160,7 +160,7 @@ export const getConsentQuestionsByCategory = async (
  * Fetches all participant responses for a given consent question
  * sorted in order of most to least recent
  * @param consentQuestionId
- * @returns Array of all responses sorted by most to least recent
+ * @returns {ParticipantResponseArray} Array of all responses sorted by most to least recent
  */
 export const getParticipantResponsesByQuestionId = async ({
 	participantId,
