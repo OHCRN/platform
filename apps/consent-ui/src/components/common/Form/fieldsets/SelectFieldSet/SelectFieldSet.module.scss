@@ -1,0 +1,17 @@
+// react-select doesn't work with hashed CSS classnames from CSS modules.
+// https://github.com/JedWatson/react-select/issues/4525
+
+.selectFieldSet {
+	:global {
+		.react-select-container {
+			width: 100%;
+		}
+		.react-select {
+			&__control {
+				height: 2.5rem;
+				border-radius: 1.25rem;
+				border: 1px solid theme('colors.grayscale.500');
+			}
+		}
+	}
+}

@@ -46,22 +46,23 @@ interface FormFieldSetSharedProps<T extends FieldValues> {
 }
 
 export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	calloutText?: ReactNode;
 	children: ReactNode;
 };
 
 export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	calloutText?: string;
+	calloutText?: ReactNode;
 	type?: FormTextInputType;
 };
 
 export type FormSelectFieldSetProps<
 	T extends FieldValues,
 	V extends string,
-> = FormFieldSetSharedProps<T> & {
-	options: FormSelectOption<V>[];
-	placeholder: string;
-};
+> = FormFieldSetSharedProps<T> &
+	FormCalloutProps & {
+		calloutText?: ReactNode;
+		options: FormSelectOption<V>[];
+		placeholder: string;
+	};
 
 // unique fieldsets
 
@@ -75,6 +76,13 @@ export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
 
 // field inputs
 
+// use if fieldset can have a callout
+export type FormCalloutProps = {
+	ariaProps?: { 'aria-describedby'?: string };
+	onBlur?: () => void;
+	onFocus?: () => void;
+};
+
 export interface FormInputProps<T extends FieldValues> {
 	className?: string;
 	id: string;
@@ -82,12 +90,10 @@ export interface FormInputProps<T extends FieldValues> {
 	required: boolean;
 }
 
-export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	onBlur?: () => void;
-	onFocus?: () => void;
-	type: FormTextInputType;
-	ariaProps?: AriaProps;
-};
+export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> &
+	FormCalloutProps & {
+		type: FormTextInputType;
+	};
 
 export type FormRadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	value: V;
@@ -95,12 +101,15 @@ export type FormRadioInputProps<T extends FieldValues, V extends string> = FormI
 
 // select input
 
-export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	onChange: (val: FormSelectOnChangeArg<V>) => void;
-	options: FormSelectOption<V>[];
-	placeholder: string;
-	value: V;
-};
+export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
+	FormCalloutProps & {
+		className: string;
+		classNamePrefix: string;
+		onChange: (val: FormSelectOnChangeArg<V>) => void;
+		options: FormSelectOption<V>[];
+		placeholder: string;
+		value: V;
+	};
 
 export type FormSelectOption<V extends string> = {
 	label: string;
@@ -109,14 +118,8 @@ export type FormSelectOption<V extends string> = {
 
 // other form components
 
-export type FieldLabelProps<T extends FieldValues> = {
+export interface FieldLabelProps<T extends FieldValues> {
 	children: ReactNode;
 	name: FormFieldName<T>;
 	required: boolean;
-};
-
-// aria
-
-export type AriaProps = {
-	'aria-describedby'?: string;
-};
+}

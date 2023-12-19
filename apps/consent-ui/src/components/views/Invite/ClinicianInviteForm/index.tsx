@@ -173,11 +173,13 @@ const ClinicianInviteFormComponent = ({
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
+						required
 					/>
 					<TextFieldSet
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
+						required
 					/>
 				</FormSection>
 

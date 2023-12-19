@@ -17,13 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Controller, FieldValues, useFormContext } from 'react-hook-form';
+'use client';
 
+import { useId } from 'react';
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
+import clsx from 'clsx';
+
+import Callout from 'src/components/common/Form/fieldsets/Callout';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
 import { FormSelectFieldSetProps } from 'src/components/common/Form/types';
+import InputError from 'src/components/common/Form/fieldsets/InputError';
+import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
+import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
+
+import styles from './SelectFieldSet.module.scss';
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
+	calloutText,
+	className,
 	error,
 	label,
 	name,
@@ -32,20 +44,41 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	required = false,
 }: FormSelectFieldSetProps<T, V>) => {
 	const { control } = useFormContext();
+	const { showCallout, hideCallout, calloutVisible } = useCallout();
+	const idPrefix = useId();
+
 	return (
 		<Controller
-			name="consentGroup"
 			control={control}
+			name={name}
 			render={({ field: { onChange, value } }) => (
-				<FieldSet error={error} label={label} name={name} required={required}>
-					<SelectInput
-						name={name}
-						onChange={onChange}
-						options={options}
-						placeholder={placeholder}
-						required={required}
-						value={value}
-					/>
+				<FieldSet className={clsx(styles.selectFieldSet, className)}>
+					{calloutText && (
+						<Callout id={`${idPrefix}-callout`} isActive={calloutVisible} variant="smallDesktop">
+							{calloutText}
+						</Callout>
+					)}
+					<FieldLabel name={`${idPrefix}-${name}`} required={required}>
+						{label}
+					</FieldLabel>
+
+					<div>
+						<SelectInput
+							ariaProps={{ 'aria-describedby': `${idPrefix}-callout` }}
+							className="react-select-container"
+							classNamePrefix="react-select"
+							id={`${idPrefix}-${name}`}
+							name={name}
+							onBlur={hideCallout}
+							onChange={onChange}
+							onFocus={showCallout}
+							options={options}
+							placeholder={placeholder}
+							required={required}
+							value={value}
+						/>
+						{error && <InputError>{error}</InputError>}
+					</div>
 				</FieldSet>
 			)}
 			rules={{ required }}

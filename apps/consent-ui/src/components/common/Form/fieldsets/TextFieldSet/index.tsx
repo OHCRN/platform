@@ -22,18 +22,15 @@
 import { FieldValues } from 'react-hook-form';
 import { useId } from 'react';
 
-import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormTextFieldSetProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 import Callout from 'src/components/common/Form/fieldsets/Callout';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
-import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
-import FieldSet from 'src/components/common/Form/fieldsets//FieldSet';
+import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
+import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 
 import styles from './TextFieldSet.module.scss';
-
-Object.assign(styles, fieldSetStyles);
 
 const TextFieldSet = <T extends FieldValues>({
 	calloutText,
@@ -45,7 +42,6 @@ const TextFieldSet = <T extends FieldValues>({
 	type = 'text',
 }: FormTextFieldSetProps<T>) => {
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
-
 	const idPrefix = useId();
 
 	return (
@@ -55,10 +51,9 @@ const TextFieldSet = <T extends FieldValues>({
 					{calloutText}
 				</Callout>
 			)}
-			<label htmlFor={`${idPrefix}-${name}`} className={styles.label}>
+			<FieldLabel name={`${idPrefix}-${name}`} required={required}>
 				{label}
-				{required && <RequiredAsterisk />}
-			</label>
+			</FieldLabel>
 			<div>
 				<TextInput
 					ariaProps={{ 'aria-describedby': `${idPrefix}-callout` }}

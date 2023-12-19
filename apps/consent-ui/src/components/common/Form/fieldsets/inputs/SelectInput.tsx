@@ -22,11 +22,16 @@
 import { FieldValues } from 'react-hook-form';
 import Select from 'react-select';
 
-import { FormSelectInputProps, FormSelectOnChangeArg } from '../../types';
+import { FormSelectInputProps, FormSelectOnChangeArg } from 'src/components/common/Form/types';
 
 const SelectInput = <T extends FieldValues, V extends string>({
+	ariaProps,
+	className,
+	classNamePrefix,
 	name,
+	onBlur,
 	onChange,
+	onFocus,
 	options,
 	placeholder = '',
 	required,
@@ -35,8 +40,13 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	return (
 		<Select
 			aria-required={required}
+			className={className}
+			classNamePrefix={classNamePrefix}
+			// react-select doesn't work with hashed CSS classnames from CSS modules.
+			// https://github.com/JedWatson/react-select/issues/4525
 			inputId={name}
 			name={name}
+			onBlur={onBlur}
 			onChange={(val: FormSelectOnChangeArg<V>) => {
 				// in react-select the value can be a string or object.
 				// in our implementation it should be {label, value},
@@ -49,9 +59,11 @@ const SelectInput = <T extends FieldValues, V extends string>({
 				}
 				return onChange(onChangeParam);
 			}}
+			onFocus={onFocus}
 			options={options}
 			placeholder={placeholder}
 			value={options.find((option) => option.value === value) || ''}
+			{...ariaProps}
 		/>
 	);
 };
