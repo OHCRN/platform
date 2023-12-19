@@ -17,10 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ReactNode } from 'react';
+
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
-import { FieldLabelProps } from 'src/components/common/Form/types';
 
 import styles from './FieldLabel.module.scss';
+
+interface FieldLabelProps {
+	children: ReactNode;
+	fieldId: string;
+	required: boolean;
+}
 
 const FieldLabel = ({ children, fieldId, required }: FieldLabelProps) => {
 	return (

@@ -88,6 +88,10 @@ export type FormRadioInputProps<T extends FieldValues, V extends string> = FormI
 
 // select input
 
+export interface FormSelectOption<V extends string> {
+	label: string;
+	value: V;
+}
 export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
 	FormFieldSetWithCalloutProps & {
 		className: string;
@@ -97,16 +101,3 @@ export type FormSelectInputProps<T extends FieldValues, V extends string> = Form
 		placeholder: string;
 		value: V;
 	};
-
-export interface FormSelectOption<V extends string> {
-	label: string;
-	value: V;
-}
-
-// other form components
-
-export interface FieldLabelProps {
-	children: ReactNode;
-	fieldId: string;
-	required: boolean;
-}

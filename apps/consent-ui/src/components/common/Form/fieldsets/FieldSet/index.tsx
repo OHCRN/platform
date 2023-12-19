@@ -22,7 +22,12 @@ import { ReactNode } from 'react';
 
 import styles from './FieldSet.module.scss';
 
-const FieldSet = ({ children, className }: { children: ReactNode; className?: string }) => {
+interface FieldSetProps {
+	children: ReactNode;
+	className?: string;
+}
+
+const FieldSet = ({ children, className }: FieldSetProps) => {
 	return <fieldset className={clsx(styles.fieldSet, className)}>{children}</fieldset>;
 };
 
