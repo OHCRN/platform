@@ -26,7 +26,7 @@ type FormFieldName<T extends FieldValues> = Path<T>;
 
 // fieldsets that use the FieldSet component
 
-type FormFieldSetVariants = { variant?: 'default' | 'smallDesktop' };
+type FormFieldSetVariants = { variant?: 'largeDesktop' | 'smallDesktop' };
 type FormFieldSetSharedProps<T extends FieldValues> = FormFieldSetVariants & {
 	className?: string;
 	disabled?: boolean;

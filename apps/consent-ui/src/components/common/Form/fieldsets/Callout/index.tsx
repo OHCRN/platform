@@ -27,10 +27,16 @@ interface CalloutProps {
 	className?: string;
 	id?: string;
 	isActive: boolean;
-	variant: 'default' | 'smallDesktop';
+	variant?: 'largeDesktop' | 'smallDesktop';
 }
 
-const Callout = ({ children, className, id, isActive = false, variant }: CalloutProps) => {
+const Callout = ({
+	children,
+	className,
+	id,
+	isActive = false,
+	variant = 'largeDesktop',
+}: CalloutProps) => {
 	return (
 		<div
 			className={clsx(styles.callout, className, styles[variant], isActive && styles.active)}

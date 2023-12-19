@@ -44,7 +44,7 @@ const TextFieldSet = <T extends FieldValues>({
 	name,
 	required = false,
 	type = 'text',
-	variant = 'default',
+	variant = 'largeDesktop',
 }: FormTextFieldSetProps<T>) => {
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
 	const idPrefix = useId();

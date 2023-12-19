@@ -25,10 +25,13 @@ import styles from './FieldSet.module.scss';
 interface FieldSetProps {
 	children: ReactNode;
 	className?: string;
+	variant?: 'largeDesktop' | 'smallDesktop';
 }
 
-const FieldSet = ({ children, className }: FieldSetProps) => {
-	return <fieldset className={clsx(styles.fieldSet, className)}>{children}</fieldset>;
+const FieldSet = ({ children, className, variant = 'largeDesktop' }: FieldSetProps) => {
+	return (
+		<fieldset className={clsx(styles.fieldSet, styles[variant], className)}>{children}</fieldset>
+	);
 };
 
 export default FieldSet;
