@@ -24,7 +24,7 @@ import clsx from 'clsx';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormCheckboxFieldSetProps } from 'src/components/common/Form/types';
-import InputError from 'src/components/common/Form/InputError';
+import InputError from 'src/components/common/Form/fieldsets/InputError';
 import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
 
 import styles from './CheckboxFieldSet.module.scss';

@@ -73,13 +73,13 @@
 .main {
 	background: theme('colors.grayscale.100');
 	.content {
-		padding: 0 1rem;
+		padding: 1.88rem 1rem;
 	}
 	@media (min-width: theme('screens.sm')) {
 		flex: 1 0 66.67%;
 		.content {
 			max-width: 51.75rem;
-			padding: 2.44rem 2.5rem 0;
+			padding: 2.44rem 2.5rem;
 		}
 	}
 	@media (min-width: theme('screens.md')) {
@@ -111,9 +111,8 @@
 
 .desktopHeader,
 .desktopNav {
-	display: none;
-	@media (min-width: theme('screens.md')) {
-		display: flex;
+	@media (max-width: theme('screens.md')) {
+		display: none;
 	}
 }
 

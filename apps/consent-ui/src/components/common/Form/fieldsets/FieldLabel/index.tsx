@@ -17,13 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { FieldValues } from 'react-hook-form';
 
-import styles from './FieldSet.module.scss';
+import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
+import { FieldLabelProps } from 'src/components/common/Form/types';
 
-const FieldSet = ({ children, className }: { children: ReactNode; className?: string }) => {
-	return <fieldset className={clsx(styles.fieldSet, className)}>{children}</fieldset>;
+import styles from './FieldLabel.module.scss';
+
+const FieldLabel = <T extends FieldValues>({ children, name, required }: FieldLabelProps<T>) => {
+	return (
+		<label htmlFor={name} className={styles.label}>
+			{children}
+			{required && <RequiredAsterisk />}
+		</label>
+	);
 };
 
-export default FieldSet;
+export default FieldLabel;

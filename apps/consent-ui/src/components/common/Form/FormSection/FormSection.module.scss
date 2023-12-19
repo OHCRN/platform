@@ -1,6 +1,7 @@
 .formSection {
-	width: 100%;
+	width: calc(100% + 2rem);
 	padding: 1rem;
+	margin: 0 -1rem;
 	&.grey {
 		background: theme('colors.grayscale.200');
 		border-radius: 0.3125rem;
@@ -9,7 +10,8 @@
 		background: theme('colors.grayscale.100');
 	}
 	@media (min-width: theme('screens.sm')) {
-		margin: 0 -1rem;
-		padding: 1rem;
+		&.grey {
+			border-radius: 0.3125rem;
+		}
 	}
 }

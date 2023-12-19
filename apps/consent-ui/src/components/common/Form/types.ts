@@ -106,11 +106,16 @@ export type FormSelectOption<V extends string> = {
 	value: V;
 };
 
+// other form components
+
+export type FieldLabelProps<T extends FieldValues> = {
+	children: ReactNode;
+	name: FormFieldName<T>;
+	required: boolean;
+};
+
 // aria
 
 export type AriaProps = {
-	role?: string;
 	'aria-describedby'?: string;
-	'aria-labelledby'?: string;
-	'aria-label'?: string;
 };
