@@ -18,6 +18,7 @@
  */
 
 import { ReactNode } from 'react';
+import clsx from 'clsx';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 
@@ -25,13 +26,14 @@ import styles from './FieldLabel.module.scss';
 
 interface FieldLabelProps {
 	children: ReactNode;
+	className?: string;
 	fieldId: string;
 	required: boolean;
 }
 
-const FieldLabel = ({ children, fieldId, required }: FieldLabelProps) => {
+const FieldLabel = ({ children, className, fieldId, required }: FieldLabelProps) => {
 	return (
-		<label htmlFor={fieldId} className={styles.label}>
+		<label htmlFor={fieldId} className={clsx(styles.label, className)}>
 			{children}
 			{required && <RequiredAsterisk />}
 			{/* TODO FORM add info button */}

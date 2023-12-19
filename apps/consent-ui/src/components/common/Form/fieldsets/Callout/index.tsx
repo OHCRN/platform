@@ -24,15 +24,16 @@ import styles from './Callout.module.scss';
 
 interface CalloutProps {
 	children: ReactNode;
+	className?: string;
 	id?: string;
 	isActive: boolean;
 	variant: 'default' | 'smallDesktop';
 }
 
-const Callout = ({ children, id, isActive = false, variant }: CalloutProps) => {
+const Callout = ({ children, className, id, isActive = false, variant }: CalloutProps) => {
 	return (
 		<div
-			className={clsx(styles.callout, styles[variant], isActive && styles.active)}
+			className={clsx(styles.callout, className, styles[variant], isActive && styles.active)}
 			id={id}
 			role="tooltip"
 		>

@@ -30,8 +30,11 @@ import Callout from 'src/components/common/Form/fieldsets/Callout';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
+import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
 
 import styles from './TextFieldSet.module.scss';
+
+Object.assign(styles, fieldSetStyles);
 
 const TextFieldSet = <T extends FieldValues>({
 	calloutText,
@@ -51,11 +54,11 @@ const TextFieldSet = <T extends FieldValues>({
 
 	return (
 		<FieldSet className={className}>
-			<FieldLabel fieldId={fieldId} required={required}>
+			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
 				{label}
 			</FieldLabel>
 
-			<div>
+			<div className={styles.inputGridArea}>
 				<TextInput
 					ariaProps={{ 'aria-describedby': calloutId }}
 					className={clsx(styles.textInput, error && styles.error, styles[variant])}
@@ -70,7 +73,12 @@ const TextFieldSet = <T extends FieldValues>({
 			</div>
 
 			{calloutText && (
-				<Callout id={calloutId} isActive={calloutVisible} variant={variant}>
+				<Callout
+					className={styles.calloutGridArea}
+					id={calloutId}
+					isActive={calloutVisible}
+					variant={variant}
+				>
 					{calloutText}
 				</Callout>
 			)}

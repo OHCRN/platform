@@ -56,11 +56,11 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			name={name}
 			render={({ field: { onChange, value } }) => (
 				<FieldSet className={clsx(styles.selectFieldSet, className)}>
-					<FieldLabel fieldId={fieldId} required={required}>
+					<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
 						{label}
 					</FieldLabel>
 
-					<div>
+					<div className={styles.inputGridArea}>
 						<SelectInput
 							ariaProps={{ 'aria-describedby': calloutId }}
 							className="react-select-container"

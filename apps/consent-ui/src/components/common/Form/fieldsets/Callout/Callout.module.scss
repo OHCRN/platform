@@ -1,4 +1,5 @@
 .callout {
+	grid-area: calloutGridArea;
 	position: relative;
 	font-size: 0.75rem;
 	background: theme('colors.accent1.200');
@@ -6,8 +7,8 @@
 	padding: 0.5rem;
 	border-color: transparent;
 	border-color: theme('colors.accent1.200');
-	order: -1; // display first on mobile
-	width: 100%;
+	// order: -1; // display first on mobile
+	// width: 100%;
 	margin-bottom: 0.5rem;
 	&:before {
 		position: absolute;
@@ -20,33 +21,37 @@
 		left: calc(50% - 0.5rem);
 		border-top-color: theme('colors.accent1.200');
 	}
-
-	&.desktop,
-	&.largeDesktop {
-		display: none;
-		margin-left: 0.75rem;
-		&:before {
-			left: -1rem;
-			top: calc(50% - 0.5rem);
-			border-right-color: theme('colors.accent1.200');
-		}
+	display: none;
+	&.active {
+		display: block;
 	}
 
-	@media (min-width: theme('screens.md')) {
-		&.upToTablet {
-			display: none;
-		}
-		&.desktop {
-			display: block;
-		}
-	}
+	// &.desktop,
+	// &.largeDesktop {
+	// 	display: none;
+	// 	margin-left: 0.75rem;
+	// 	&:before {
+	// 		left: -1rem;
+	// 		top: calc(50% - 0.5rem);
+	// 		border-right-color: theme('colors.accent1.200');
+	// 	}
+	// }
 
-	@media (min-width: theme('screens.lg')) {
-		&.upToSmallDesktop {
-			display: none;
-		}
-		&.largeDesktop {
-			display: none;
-		}
-	}
+	// @media (min-width: theme('screens.md')) {
+	// 	&.upToTablet {
+	// 		display: none;
+	// 	}
+	// 	&.desktop {
+	// 		display: block;
+	// 	}
+	// }
+
+	// @media (min-width: theme('screens.lg')) {
+	// 	&.upToSmallDesktop {
+	// 		display: none;
+	// 	}
+	// 	&.largeDesktop {
+	// 		display: none;
+	// 	}
+	// }
 }
