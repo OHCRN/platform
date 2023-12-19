@@ -109,23 +109,29 @@ And importantly, if we tried writing a case for a status that was not specified,
 
 ![Failure Status typing](./images/error-handling-failure-statuses.png)
 
-### `success()`, `failure()`, and `alternate()`
+### Convenient Methods
 
-Some convenient methods have been added to `Result.ts` to construct `Success` and `Failure` types.
+Some convenient methods have been added to `Result.ts` to construct and handle `Success` and `Failure` types.
 
-- `success()` constructs a `Success` and accepts the resulting data to return as an argument
+- `isSuccess()` takes a `Result` and narrows it down to one of `Success` or `Failure`. It returns a [type predicate](https://www.typescriptlang.org/docs/handbook/advanced-types.html#using-type-predicates), which essentially tells TS how to infer a type:
+  ```ts
+  if (!isSuccess(someResult)) {
+  	console.log(someResult.message); // doesn't complain that 'message' is `undefined`
+  }
+  ```
+- `success()` constructs a `Success` and accepts the resulting data to return as an argument:
   ```ts
   if (invite.success) {
   	return success(invite.data); // returns { status: "SUCCESS", data: invite.data }
   }
   ```
-- `failure()` constructs a basic `Failure` and accepts the failure status and message
+- `failure()` constructs a basic `Failure` and accepts the failure status and message:
   ```ts
   if (!invite.success) {
   	return failure('SYSTEM_ERROR', invite.error); // returns { status: "SYSTEM_ERROR", message: invite.error }
   }
   ```
-- `alternate()` constructs a `Failure` that accepts the same parameters as `failure()` but with the addition of a `data` parameter, so it can provide a fallback data response
+- `alternate()` constructs a `Failure` that accepts the same parameters as `failure()` but with the addition of a `data` parameter, so it can provide a fallback data response:
   ```ts
   if (!invite.success) {
   	return alternate('SYSTEM_ERROR', invite.default, invite.error); // returns { status: "SYSTEM_ERROR", data: invite.default, message: invite.error }
@@ -139,7 +145,7 @@ Some convenient methods have been added to `Result.ts` to construct `Success` an
 
 When implementing services in the DAS that query the Prisma client, it's helpful to look at their documentation for [error references](https://www.prisma.io/docs/reference/api-reference/error-reference). This lists all possible errors that can return from making a request. In particular, the [error codes](https://www.prisma.io/docs/reference/api-reference/error-reference#error-codes) are most useful in distinguishing the type of error that occurred. Listed below are some common codes:
 
-| Prisma Client Code | Message |
-| --- | --- |
-| [P2002](https://www.prisma.io/docs/reference/api-reference/error-reference#p2002) | "Unique constraint failed on the {constraint}” |
+| Prisma Client Code                                                                | Message                                                                                                   |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| [P2002](https://www.prisma.io/docs/reference/api-reference/error-reference#p2002) | "Unique constraint failed on the {constraint}”                                                            |
 | [P2025](https://www.prisma.io/docs/reference/api-reference/error-reference#p2025) | "An operation failed because it depends on one or more records that were required but not found. {cause}” |

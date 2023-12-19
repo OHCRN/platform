@@ -1,5 +1,5 @@
 import urlJoin from 'url-join';
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, failure, isSuccess, success } from 'types/httpResponses';
 import {
 	ConsentCategory,
 	ConsentQuestionId,
@@ -82,7 +82,6 @@ export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: bool
 /**
  * Fetches all consent questions for the category
  * and returns the most recent responses for each question
- * @param
  * @returns {ParticipantResponsesByCategory} Most recent participant response for each consent question in the category
  */
 export const getParticipantResponsesByCategory = async ({
@@ -100,30 +99,39 @@ export const getParticipantResponsesByCategory = async ({
 	 * 3) Return most recent response for each question
 	 */
 	try {
-		const consentQuestions = await getConsentQuestionsByCategory(consentCategory);
+		const consentQuestionsResult = await getConsentQuestionsByCategory(consentCategory);
 
-		if (consentQuestions.status !== 'SUCCESS') {
-			return failure('SYSTEM_ERROR', consentQuestions.message);
+		if (!isSuccess(consentQuestionsResult)) {
+			return consentQuestionsResult;
 		}
-
-		const participantResponses: ParticipantResponsesByCategory = {};
-
-		for (const consentQuestion of consentQuestions.data) {
-			const responsesResult = await getParticipantResponsesByQuestionId({
-				participantId,
-				consentQuestionId: consentQuestion.id,
-			});
-
-			if (responsesResult.status !== 'SUCCESS') {
-				// There was a problem returning one of the participant responses, return that failure and exit
-				return responsesResult;
-			}
-
-			// Retrieve first item in list if exists (most recent response)
-			// TODO: verify if we want to represent as undefined or not for responses that don't exist
-			// Currently as implemented below it will set it to undefined, so express won't return that question ID as a key
-			participantResponses[consentQuestion.id] = responsesResult.data[0]?.response;
+		// Fetch all ParticipantResponse entries by question
+		const responses = await Promise.all(
+			consentQuestionsResult.data.map(({ id: consentQuestionId }) =>
+				getParticipantResponsesByQuestionId({
+					participantId,
+					consentQuestionId,
+				}),
+			),
+		);
+		// Search for any failures and return the first one
+		const failedResponse = responses.find((result) => !isSuccess(result));
+		if (failedResponse && !isSuccess(failedResponse)) {
+			logger.error(
+				`Unable to retrieve ${consentCategory} participant reponses`,
+				failedResponse.message,
+			);
+			return failedResponse;
 		}
+		// Convert array of ParticipantResponses to key, value pair of the question ID, response
+		const participantResponses = responses
+			.filter(isSuccess)
+			.reduce<ParticipantResponsesByCategory>((participantResponses, { data }) => {
+				if (data.length) {
+					const { consentQuestionId, response } = data[0]; // retrieve the first (most recent) ParticipantResponse
+					participantResponses[consentQuestionId] = response;
+				}
+				return participantResponses;
+			}, {});
 
 		return success(participantResponses);
 	} catch (error) {
@@ -146,7 +154,7 @@ export const getInformedConsentResponses = async (
 			consentCategory: INFORMED_CONSENT,
 		});
 
-		if (participantResponsesResult.status !== 'SUCCESS') {
+		if (!isSuccess(participantResponsesResult)) {
 			return participantResponsesResult;
 		}
 
@@ -184,13 +192,13 @@ export const getInvite = async (
 	try {
 		const piInviteResult = await getInvitePiData(inviteId);
 
-		if (piInviteResult.status !== 'SUCCESS') {
+		if (!isSuccess(piInviteResult)) {
 			return piInviteResult;
 		}
 
 		const consentInviteResult = await getInviteConsentData(inviteId);
 
-		if (consentInviteResult.status !== 'SUCCESS') {
+		if (!isSuccess(consentInviteResult)) {
 			return consentInviteResult;
 		}
 
