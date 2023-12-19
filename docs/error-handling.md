@@ -113,7 +113,7 @@ And importantly, if we tried writing a case for a status that was not specified,
 
 Some convenient methods have been added to `Result.ts` to construct and handle `Success` and `Failure` types.
 
-- `isSuccess()` takes a `Result` and narrows it down to one of `Success` or `Failure`. It returns a [type predicate](https://www.typescriptlang.org/docs/handbook/advanced-types.html#using-type-predicates), which essentially tells TS how to infer a type:
+- `isSuccess()` takes a `Result` and narrows it down to one of `Success` or `Failure`. It returns a [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates), which essentially tells TS how to infer a type:
   ```ts
   if (!isSuccess(someResult)) {
   	console.log(someResult.message); // doesn't complain that 'message' is `undefined`
