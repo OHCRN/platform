@@ -46,11 +46,9 @@ export const getLatestParticipantResponseByParticipantIdAndQuestionId = async (
 export type GetResponsesFailureStatus = 'SYSTEM_ERROR';
 
 /**
- * Retrieves most recent responses for each INFORMED_CONSENT question
- * by making request to Data Mapper, which fetches all questions for the category
- * and then fetches the corresponding response per question
+ * Makes request to Data Mapper to get most recent responses for each INFORMED_CONSENT question
  * @param participantId ID of participant to retrieve responses for
- * @returns
+ * @returns {InformedConsentResponse} Informed Consent questions and responses
  */
 export const getInformedConsentResponses = async (
 	participantId: string,
