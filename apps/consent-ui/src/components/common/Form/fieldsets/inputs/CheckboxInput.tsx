@@ -24,14 +24,19 @@ import clsx from 'clsx';
 
 import { FormInputProps } from '../../types';
 
-const CheckboxInput = <T extends FieldValues>({ className, name, required }: FormInputProps<T>) => {
+const CheckboxInput = <T extends FieldValues>({
+	className,
+	id,
+	name,
+	required,
+}: FormInputProps<T>) => {
 	const { register } = useFormContext();
 	return (
 		<input
 			{...register(name)}
 			aria-required={required}
 			className={clsx('checkbox-input', className)}
-			id={name}
+			id={id}
 			type="checkbox"
 		/>
 	);

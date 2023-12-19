@@ -77,12 +77,12 @@ export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
 
 export interface FormInputProps<T extends FieldValues> {
 	className?: string;
+	id: string;
 	name: FormFieldName<T>;
 	required: boolean;
 }
 
 export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	id: string;
 	onBlur?: () => void;
 	onFocus?: () => void;
 	type: FormTextInputType;

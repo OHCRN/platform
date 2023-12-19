@@ -21,6 +21,7 @@
 
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
+import { useId } from 'react';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormCheckboxFieldSetProps } from 'src/components/common/Form/types';
@@ -38,6 +39,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	required = false,
 	title,
 }: FormCheckboxFieldSetProps<T>) => {
+	const idPrefix = useId();
 	return (
 		<fieldset
 			className={clsx(
@@ -53,13 +55,20 @@ const CheckboxFieldSet = <T extends FieldValues>({
 					{required && <RequiredAsterisk />}
 				</h4>
 			)}
-			<label htmlFor={name} className={styles.label}>
-				<CheckboxInput required={required} name={name} className={styles.checkboxInput} />
-				<span className={styles.description}>
-					{description}
-					{required && !title && <RequiredAsterisk />}
-				</span>
-			</label>
+			<div className={styles.checkboxWrapper}>
+				<CheckboxInput
+					required={required}
+					id={`${idPrefix}-${name}`}
+					name={name}
+					className={styles.checkboxInput}
+				/>
+				<label htmlFor={`${idPrefix}-${name}`} className={styles.label}>
+					<span className={styles.description}>
+						{description}
+						{required && !title && <RequiredAsterisk />}
+					</span>
+				</label>
+			</div>
 			{error && <InputError>{error}</InputError>}
 		</fieldset>
 	);
