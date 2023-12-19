@@ -43,6 +43,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 			className={className}
 			classNamePrefix={classNamePrefix}
 			// react-select doesn't work with hashed CSS classnames from CSS modules.
+			// className & classNamePrefix need to be strings, not hashed classNames.
 			// https://github.com/JedWatson/react-select/issues/4525
 			inputId={name}
 			name={name}

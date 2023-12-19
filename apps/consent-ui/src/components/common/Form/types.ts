@@ -21,16 +21,6 @@ import { ReactNode } from 'react';
 import { FieldValues, Path } from 'react-hook-form';
 import { SingleValue } from 'react-select';
 
-export type FormFieldTypeCheckboxRadio = 'checkbox' | 'radio';
-export type FormFieldType =
-	| FormFieldTypeCheckboxRadio
-	| 'date'
-	| 'select'
-	| 'text'
-	| 'textWithCheckbox';
-export type FormTextInputType = 'email' | 'tel' | 'text';
-export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
-
 // setup types for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
 
@@ -45,20 +35,24 @@ interface FormFieldSetSharedProps<T extends FieldValues> {
 	required?: boolean;
 }
 
-export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	children: ReactNode;
-};
+export interface FormFieldSetWithCalloutProps {
+	ariaProps?: { 'aria-describedby'?: string };
+	onBlur?: () => void;
+	onFocus?: () => void;
+}
 
+export type FormTextInputType = 'email' | 'tel' | 'text';
 export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
 	calloutText?: ReactNode;
 	type?: FormTextInputType;
 };
 
+export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
 export type FormSelectFieldSetProps<
 	T extends FieldValues,
 	V extends string,
 > = FormFieldSetSharedProps<T> &
-	FormCalloutProps & {
+	FormFieldSetWithCalloutProps & {
 		calloutText?: ReactNode;
 		options: FormSelectOption<V>[];
 		placeholder: string;
@@ -76,22 +70,15 @@ export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
 
 // field inputs
 
-// use if fieldset can have a callout
-export type FormCalloutProps = {
-	ariaProps?: { 'aria-describedby'?: string };
-	onBlur?: () => void;
-	onFocus?: () => void;
-};
-
 export interface FormInputProps<T extends FieldValues> {
 	className?: string;
-	id: string;
+	id: string; // use useId() to generate this
 	name: FormFieldName<T>;
 	required: boolean;
 }
 
 export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> &
-	FormCalloutProps & {
+	FormFieldSetWithCalloutProps & {
 		type: FormTextInputType;
 	};
 
@@ -102,7 +89,7 @@ export type FormRadioInputProps<T extends FieldValues, V extends string> = FormI
 // select input
 
 export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
-	FormCalloutProps & {
+	FormFieldSetWithCalloutProps & {
 		className: string;
 		classNamePrefix: string;
 		onChange: (val: FormSelectOnChangeArg<V>) => void;
@@ -111,15 +98,15 @@ export type FormSelectInputProps<T extends FieldValues, V extends string> = Form
 		value: V;
 	};
 
-export type FormSelectOption<V extends string> = {
+export interface FormSelectOption<V extends string> {
 	label: string;
 	value: V;
-};
+}
 
 // other form components
 
-export interface FieldLabelProps<T extends FieldValues> {
+export interface FieldLabelProps {
 	children: ReactNode;
-	name: FormFieldName<T>;
+	fieldId: string;
 	required: boolean;
 }

@@ -1,4 +1,5 @@
 // react-select doesn't work with hashed CSS classnames from CSS modules.
+// use :global, which has to be scoped to a hashed class.
 // https://github.com/JedWatson/react-select/issues/4525
 
 .selectFieldSet {

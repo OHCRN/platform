@@ -47,27 +47,25 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
 	const idPrefix = useId();
 
+	const fieldId = `${idPrefix}-${name}`;
+	const calloutId = `${idPrefix}-callout`;
+
 	return (
 		<Controller
 			control={control}
 			name={name}
 			render={({ field: { onChange, value } }) => (
 				<FieldSet className={clsx(styles.selectFieldSet, className)}>
-					{calloutText && (
-						<Callout id={`${idPrefix}-callout`} isActive={calloutVisible} variant="smallDesktop">
-							{calloutText}
-						</Callout>
-					)}
-					<FieldLabel name={`${idPrefix}-${name}`} required={required}>
+					<FieldLabel fieldId={fieldId} required={required}>
 						{label}
 					</FieldLabel>
 
 					<div>
 						<SelectInput
-							ariaProps={{ 'aria-describedby': `${idPrefix}-callout` }}
+							ariaProps={{ 'aria-describedby': calloutId }}
 							className="react-select-container"
 							classNamePrefix="react-select"
-							id={`${idPrefix}-${name}`}
+							id={fieldId}
 							name={name}
 							onBlur={hideCallout}
 							onChange={onChange}
@@ -79,6 +77,12 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 						/>
 						{error && <InputError>{error}</InputError>}
 					</div>
+
+					{calloutText && (
+						<Callout id={calloutId} isActive={calloutVisible} variant="smallDesktop">
+							{calloutText}
+						</Callout>
+					)}
 				</FieldSet>
 			)}
 			rules={{ required }}

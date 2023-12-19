@@ -44,21 +44,20 @@ const TextFieldSet = <T extends FieldValues>({
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
 	const idPrefix = useId();
 
+	const fieldId = `${idPrefix}-${name}`;
+	const calloutId = `${idPrefix}-callout`;
+
 	return (
 		<FieldSet className={className}>
-			{calloutText && (
-				<Callout id={`${idPrefix}-callout`} isActive={calloutVisible} variant="smallDesktop">
-					{calloutText}
-				</Callout>
-			)}
-			<FieldLabel name={`${idPrefix}-${name}`} required={required}>
+			<FieldLabel fieldId={fieldId} required={required}>
 				{label}
 			</FieldLabel>
+
 			<div>
 				<TextInput
-					ariaProps={{ 'aria-describedby': `${idPrefix}-callout` }}
+					ariaProps={{ 'aria-describedby': calloutId }}
 					className={styles.textInput}
-					id={`${idPrefix}-${name}`}
+					id={fieldId}
 					name={name}
 					onBlur={hideCallout}
 					onFocus={showCallout}
@@ -67,6 +66,12 @@ const TextFieldSet = <T extends FieldValues>({
 				/>
 				{error && <InputError>{error}</InputError>}
 			</div>
+
+			{calloutText && (
+				<Callout id={calloutId} isActive={calloutVisible} variant="smallDesktop">
+					{calloutText}
+				</Callout>
+			)}
 		</FieldSet>
 	);
 };

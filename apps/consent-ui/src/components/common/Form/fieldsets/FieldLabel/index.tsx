@@ -17,18 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FieldValues } from 'react-hook-form';
-
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FieldLabelProps } from 'src/components/common/Form/types';
 
 import styles from './FieldLabel.module.scss';
 
-const FieldLabel = <T extends FieldValues>({ children, name, required }: FieldLabelProps<T>) => {
+const FieldLabel = ({ children, fieldId, required }: FieldLabelProps) => {
 	return (
-		<label htmlFor={name} className={styles.label}>
+		<label htmlFor={fieldId} className={styles.label}>
 			{children}
 			{required && <RequiredAsterisk />}
+			{/* TODO FORM add info button */}
 		</label>
 	);
 };
