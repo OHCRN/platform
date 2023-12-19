@@ -68,10 +68,20 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	// TODO replace this object with translate namespace function https://github.com/OHCRN/platform/issues/313
 	const textDict: InviteFormTextDictionary = {
 		afterRegistering: translate('inviteFormText', 'afterRegistering'),
+		clinicianInstitutionalEmailAddressCallout: translate(
+			'inviteFormText',
+			'clinicianInstitutionalEmailAddressCallout',
+		),
 		clinicianInformation: translate('inviteFormText', 'clinicianInformation'),
 		consentContactDescription: translate('inviteFormText', 'consentContactDescription'),
+		consentGroupCallout: translate('inviteFormText', 'consentGroupCallout'),
 		enterGuardianInfo: translate('inviteFormText', 'enterGuardianInfo'),
 		indicatesRequiredField: translate('inviteFormText', 'indicatesRequiredField'),
+		participantEmailAddressCallout: translate('inviteFormText', 'participantEmailAddressCallout'),
+		participantFirstNameCallout: translate('inviteFormText', 'participantFirstNameCallout'),
+		participantLastNameCallout: translate('inviteFormText', 'participantLastNameCallout'),
+		participantPhoneNumberCallout: translate('inviteFormText', 'participantPhoneNumberCallout'),
+		participantPreferredNameCallout: translate('inviteFormText', 'participantPreferredNameCallout'),
 		patientInformation: translate('inviteFormText', 'patientInformation'),
 		selectPlaceholder: translate('inviteFormText', 'selectPlaceholder'),
 		uploadFileDescription1: translate('inviteFormText', 'uploadFileDescription1'),

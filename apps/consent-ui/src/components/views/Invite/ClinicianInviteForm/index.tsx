@@ -142,25 +142,28 @@ const ClinicianInviteFormComponent = ({
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
 					<TextFieldSet
-						calloutText="Fugiat adipisicing commodo tempor do ullamco laboris et aliquip incididunt irure."
+						calloutText={textDict.participantFirstNameCallout}
 						error={errors.participantFirstName?.type && errorsDict.required}
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
 					/>
 					<TextFieldSet
+						calloutText={textDict.participantLastNameCallout}
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
 					/>
 					<TextFieldSet
+						calloutText={textDict.participantPreferredNameCallout}
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
 					/>
 
 					<SelectFieldSet
+						calloutText={textDict.consentGroupCallout}
 						error={errors.consentGroup?.type && errorsDict.required}
 						label={labelsDict.consentGroup || ''}
 						name="consentGroup"
@@ -170,12 +173,14 @@ const ClinicianInviteFormComponent = ({
 					/>
 
 					<TextFieldSet
+						calloutText={textDict.participantPhoneNumberCallout}
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
 						required
 					/>
 					<TextFieldSet
+						calloutText={textDict.participantEmailAddressCallout}
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
@@ -259,6 +264,7 @@ const ClinicianInviteFormComponent = ({
 						required
 					/>
 					<TextFieldSet
+						calloutText={textDict.clinicianInstitutionalEmailAddressCallout}
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"

@@ -19,18 +19,35 @@
 
 import { InviteFormTextDictionary } from '../en/inviteFormText';
 
+import formCallouts from './formCallouts';
 import formText from './formText';
 
 const { indicatesRequiredField, selectPlaceholder } = formText;
+const {
+	clinicianInstitutionalEmailAddressCallout,
+	consentGroupCallout,
+	participantEmailAddressCallout,
+	participantFirstNameCallout,
+	participantLastNameCallout,
+	participantPhoneNumberCallout,
+	participantPreferredNameCallout,
+} = formCallouts;
 
 const dictionary = {
 	afterRegistering:
 		"Après votre inscription, nous devrons collecter certains consentements et données importants. Votre patient aura accès à la mise à jour de son dossier, mais s'il a besoin d'aide, nous pouvons le contacter.",
+	clinicianInstitutionalEmailAddressCallout,
 	clinicianInformation: 'Informations sur le clinicien',
+	consentGroupCallout,
 	consentContactDescription:
 		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
 	enterGuardianInfo: 'Veuillez saisir les informations du tuteur ci-dessous :',
 	indicatesRequiredField,
+	participantEmailAddressCallout,
+	participantFirstNameCallout,
+	participantLastNameCallout,
+	participantPhoneNumberCallout,
+	participantPreferredNameCallout,
 	patientInformation: 'Informations sur les patients',
 	selectPlaceholder,
 	uploadFileDescription1:

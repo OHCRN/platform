@@ -29,6 +29,7 @@ import consentReviewSignDictionary from './consentReviewSign';
 import consentWizardDictionary from './consentWizard';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
+import formCalloutsDictionary from './formCallouts';
 import formErrorsDictionary from './formErrors';
 import formLabelsDictionary from './formLabels';
 import formTextDictionary from './formText';
@@ -58,6 +59,7 @@ const dictionaries = {
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
+	formCallouts: formCalloutsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
 	formText: formTextDictionary,

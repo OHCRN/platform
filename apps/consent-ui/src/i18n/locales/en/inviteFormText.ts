@@ -17,18 +17,35 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formCallouts from './formCallouts';
 import formText from './formText';
 
 const { indicatesRequiredField, selectPlaceholder } = formText;
+const {
+	clinicianInstitutionalEmailAddressCallout,
+	consentGroupCallout,
+	participantEmailAddressCallout,
+	participantFirstNameCallout,
+	participantLastNameCallout,
+	participantPhoneNumberCallout,
+	participantPreferredNameCallout,
+} = formCallouts;
 
 const dictionary = {
 	afterRegistering:
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
+	clinicianInstitutionalEmailAddressCallout,
 	clinicianInformation: 'Clinician Information',
+	consentGroupCallout,
 	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	enterGuardianInfo: "Please enter the guardian's info below:",
 	indicatesRequiredField,
+	participantEmailAddressCallout,
+	participantFirstNameCallout,
+	participantLastNameCallout,
+	participantPhoneNumberCallout,
+	participantPreferredNameCallout,
 	patientInformation: 'Patient Information',
 	selectPlaceholder,
 	uploadFileDescription1:
