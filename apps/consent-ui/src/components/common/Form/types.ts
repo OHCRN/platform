@@ -26,14 +26,15 @@ type FormFieldName<T extends FieldValues> = Path<T>;
 
 // fieldsets that use the FieldSet component
 
-interface FormFieldSetSharedProps<T extends FieldValues> {
+type FormFieldSetVariants = { variant?: 'default' | 'smallDesktop' };
+type FormFieldSetSharedProps<T extends FieldValues> = FormFieldSetVariants & {
 	className?: string;
 	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
 	label: string;
 	name: FormFieldName<T>;
 	required?: boolean;
-}
+};
 
 export interface FormFieldSetWithCalloutProps {
 	ariaProps?: { 'aria-describedby'?: string };

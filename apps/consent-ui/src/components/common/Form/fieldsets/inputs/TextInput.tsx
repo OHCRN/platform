@@ -38,12 +38,10 @@ const TextInput = <T extends FieldValues>({
 	const { register } = useFormContext();
 	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
 	const handleBlur = (e: SyntheticEvent) => {
-		console.log('hello');
 		onBlur();
 		registerOnBlur(e);
 	};
 	const handleFocus = () => {
-		console.log('hello');
 		onFocus();
 	};
 	return (

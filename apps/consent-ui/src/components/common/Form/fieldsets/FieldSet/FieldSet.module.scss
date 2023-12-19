@@ -1,6 +1,9 @@
 .fieldSet {
 	margin-bottom: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.75em;
 	@media (min-width: theme('screens.sm')) {
-		@apply flex items-center;
+		flex-direction: row;
 	}
 }

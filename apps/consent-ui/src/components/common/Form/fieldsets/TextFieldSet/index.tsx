@@ -21,6 +21,7 @@
 
 import { FieldValues } from 'react-hook-form';
 import { useId } from 'react';
+import clsx from 'clsx';
 
 import { FormTextFieldSetProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
@@ -40,6 +41,7 @@ const TextFieldSet = <T extends FieldValues>({
 	name,
 	required = false,
 	type = 'text',
+	variant = 'default',
 }: FormTextFieldSetProps<T>) => {
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
 	const idPrefix = useId();
@@ -56,7 +58,7 @@ const TextFieldSet = <T extends FieldValues>({
 			<div>
 				<TextInput
 					ariaProps={{ 'aria-describedby': calloutId }}
-					className={styles.textInput}
+					className={clsx(styles.textInput, error && styles.error, styles[variant])}
 					id={fieldId}
 					name={name}
 					onBlur={hideCallout}
@@ -68,7 +70,7 @@ const TextFieldSet = <T extends FieldValues>({
 			</div>
 
 			{calloutText && (
-				<Callout id={calloutId} isActive={calloutVisible} variant="smallDesktop">
+				<Callout id={calloutId} isActive={calloutVisible} variant={variant}>
 					{calloutText}
 				</Callout>
 			)}
