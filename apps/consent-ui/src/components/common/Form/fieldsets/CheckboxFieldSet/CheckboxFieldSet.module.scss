@@ -15,15 +15,30 @@
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
+		appearance: none;
+		width: 1rem;
+		height: 1rem;
+		border-radius: 0.25rem;
+		border: 1px solid theme('colors.grayscale.500');
+		background: theme('colors.grayscale.100');
+		&:checked {
+			border: 0 none;
+			background-image: url('../../../../../public/checkbox-selected.svg');
+			& + .label {
+				background: theme('colors.primary.100');
+				border-color: theme('colors.primary.600');
+				.description {
+					color: theme('colors.primary.700');
+				}
+			}
+		}
+		&:disabled + .label {
+			background: theme('colors.grayscale.200');
+		}
 	}
 	.description {
 		font-size: 1rem;
 		line-height: 1.625rem;
-	}
-	&.disabled {
-		.label {
-			background: theme('colors.grayscale.200');
-		}
 	}
 	&.error {
 		.label {
@@ -32,12 +47,8 @@
 		.description {
 			color: theme('colors.error.600');
 		}
-	}
-	.checkboxInput:checked + .label {
-		background: theme('colors.primary.100');
-		border-color: theme('colors.primary.600');
-		.description {
-			color: theme('colors.primary.700');
+		.checkboxInput {
+			border-color: theme('colors.error.500');
 		}
 	}
 }
