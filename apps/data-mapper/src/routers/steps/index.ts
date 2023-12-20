@@ -17,13 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import { Router } from 'express';
 
-import ConsentWizard from 'src/components/views/ConsentWizard';
-import { ValidLanguage } from 'src/i18n';
+import InformedConsentRouter from './informedConsent.js';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return (
-		<ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.CONSENT_REVIEW_SIGN} />
-	);
-}
+const router = Router();
+
+router.use('/informed-consent', InformedConsentRouter);
+
+export default router;

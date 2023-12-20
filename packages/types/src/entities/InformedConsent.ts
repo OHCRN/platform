@@ -23,14 +23,14 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
 
-export const InformedConsentBase = z.object({
-	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.boolean(),
+export const InformedConsentRequest = z.object({
+	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.literal(true),
 });
-
-export const InformedConsentRequest = InformedConsentBase;
 export type InformedConsentRequest = z.infer<typeof InformedConsentRequest>;
 export const InformedConsentRequestSchema: SchemaObject = generateSchema(InformedConsentRequest);
 
-export const InformedConsentResponse = InformedConsentBase;
+export const InformedConsentResponse = z.object({
+	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.literal(true).optional(),
+});
 export type InformedConsentResponse = z.infer<typeof InformedConsentResponse>;
 export const InformedConsentResponseSchema: SchemaObject = generateSchema(InformedConsentResponse);

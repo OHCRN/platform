@@ -17,13 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+const dictionary = {
+	heading: 'OHCRN Consent Forms',
+	subheading:
+		'To be fully enrolled in OHCRN, please complete all required fields and submit the form.',
+	INFORMED_CONSENT: '1. Informed Consent',
+	CONSENT_RELEASE_DATA: '2. Consent to Data Release ',
+	CONSENT_RESEARCH_PARTICIPATION: '3. Consent for Research Participation ',
+	CONSENT_RECONTACT: '4. Consent for Recontact',
+	CONSENT_REVIEW_SIGN: '5. Review and Sign',
+	mobileProgressHeader: 'Step {{currentStep}} of {{stepCount}}',
+	tabletProgressHeader: 'Step {{step}}',
+} satisfies Record<string, string>;
 
-import ConsentWizard from 'src/components/views/ConsentWizard';
-import { ValidLanguage } from 'src/i18n';
+export type ConsentWizardDictionary = Record<keyof typeof dictionary, string>;
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return (
-		<ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.CONSENT_REVIEW_SIGN} />
-	);
-}
+export default dictionary;

@@ -26,6 +26,7 @@ import consentRecontactDictionary from './consentRecontact';
 import consentReleaseDataDictionary from './consentReleaseData';
 import consentResearchParticipationDictionary from './consentResearchParticipation';
 import consentReviewSignDictionary from './consentReviewSign';
+import consentWizardDictionary from './consentWizard';
 import dashboardDictionary from './dashboard';
 import footerDictionary from './footer';
 import formErrorsDictionary from './formErrors';
@@ -53,6 +54,7 @@ const dictionaries = {
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
 	consentReviewSign: consentReviewSignDictionary,
+	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
 	formErrors: formErrorsDictionary,

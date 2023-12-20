@@ -17,13 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
+import { ConsentWizardDictionary } from '../en/consentWizard';
 
-import ConsentWizard from 'src/components/views/ConsentWizard';
-import { ValidLanguage } from 'src/i18n';
+const dictionary = {
+	heading: 'OHCRN Formulaires de consentement',
+	subheading:
+		"Pour être pleinement inscrit à l'OHCRN, veuillez remplir tous les champs obligatoires et soumettre le formulaire.",
+	INFORMED_CONSENT: '1. Consentement éclairé',
+	CONSENT_RELEASE_DATA: '2. Consentement à la divulgation de données',
+	CONSENT_RESEARCH_PARTICIPATION: '3. Consentement à la participation à la recherche',
+	CONSENT_RECONTACT: '4. Consentement à la reprise de contact',
+	CONSENT_REVIEW_SIGN: '5. Examen et signature',
+	mobileProgressHeader: 'Étape {{currentStep}} sur {{stepCount}}',
+	tabletProgressHeader: 'Étape {{step}}',
+} satisfies ConsentWizardDictionary;
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return (
-		<ConsentWizard currentLang={lang} currentStep={ConsentCategory.enum.CONSENT_REVIEW_SIGN} />
-	);
-}
+export default dictionary;
