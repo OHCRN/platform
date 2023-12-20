@@ -109,7 +109,7 @@ And importantly, if we tried writing a case for a status that was not specified,
 
 ![Failure Status typing](./images/error-handling-failure-statuses.png)
 
-### Convenient Methods
+### Convenience Methods
 
 Some convenient methods have been added to `Result.ts` to construct and handle `Success` and `Failure` types.
 
