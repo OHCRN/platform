@@ -20,9 +20,10 @@
 import { describe, expect, it, vi, afterAll, beforeAll } from 'vitest';
 import request from 'supertest';
 
+import { mockEnv } from '../../config.js';
 import App from '../../../src/index.js';
 import { getAppConfig } from '../../../src/config.js';
-import { mockEnv } from '../../config.js';
+import { ROUTER_PATH as InformedConsentPath } from '../../../src/routers/steps/informedConsent.js';
 
 const mocks = vi.hoisted(() => {
 	const informedConsentResponses = {
@@ -41,7 +42,7 @@ vi.mock('../../../src/services/search.js', () => {
 	return { getInformedConsentResponses: mocks.getInformedConsentResponses };
 });
 
-describe('GET /wizard/steps/informed-consent', () => {
+describe(`GET ${InformedConsentPath}`, () => {
 	beforeAll(() => mockEnv());
 	afterAll(() => {
 		vi.restoreAllMocks();
@@ -50,7 +51,7 @@ describe('GET /wizard/steps/informed-consent', () => {
 
 	it('Valid request - makes a GET request to data-mapper and returns most recent participant responses for Informed Consent step', async () => {
 		const appConfig = getAppConfig();
-		const response = await request(App(appConfig)).get('/wizard/steps/informed-consent');
+		const response = await request(App(appConfig)).get(InformedConsentPath);
 
 		expect(response.status).toEqual(200);
 		expect(response.body).toStrictEqual(mocks.informedConsentResponses);

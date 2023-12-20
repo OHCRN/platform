@@ -25,6 +25,8 @@ import { getInformedConsentResponses } from '../../services/search.js';
 
 const { SERVER_ERROR } = ErrorName;
 
+export const ROUTER_PATH = '/wizard/steps/informed-consent/';
+
 const router = Router();
 
 /**
@@ -102,11 +104,7 @@ router.get('/', async (req, res) => {
 			}
 		}
 	} catch (error) {
-		logger.error(
-			'GET /wizard/steps/informed-consent/',
-			'Unexpected error handling get invite request',
-			error,
-		);
+		logger.error(`GET ${ROUTER_PATH}`, 'Unexpected error handling get invite request', error);
 		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
 	}
 });
