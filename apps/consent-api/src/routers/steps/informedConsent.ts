@@ -18,12 +18,10 @@
  */
 
 import { Router } from 'express';
-import { ErrorResponse, ErrorName } from 'types/httpResponses';
+import { ErrorResponse, ServerErrorResponse } from 'types/httpResponses';
 
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
-
-const { SERVER_ERROR } = ErrorName;
 
 export const ROUTER_PATH = '/wizard/steps/informed-consent/';
 
@@ -100,12 +98,12 @@ router.get('/', async (req, res) => {
 				return res.status(200).json(participantResponses.data);
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, participantResponses.message));
+				return res.status(500).json(ServerErrorResponse(participantResponses.message));
 			}
 		}
 	} catch (error) {
 		logger.error(`GET ${ROUTER_PATH}`, 'Unexpected error handling get invite request', error);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 

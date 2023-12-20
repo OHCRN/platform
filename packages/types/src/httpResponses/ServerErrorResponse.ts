@@ -17,30 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorRequestHandler } from 'express';
-import { ServerErrorResponse } from 'types/httpResponses';
-import { Logger } from 'logger';
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
+
+const { SERVER_ERROR } = ErrorName;
 
 /**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
+ * Creates a ServerError Response containing a message detailing the problem.
+ * @param customMessage
  * @returns
  */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
-
-		if (res.headersSent) {
-			return next(err);
-		}
-
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
-
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
-
-		return res.status(500).json(ServerErrorResponse(message));
-	};
-
-export default errorHandler;
+export const ServerErrorResponse = (customMessage?: string): ErrorResponse => ({
+	error: SERVER_ERROR,
+	message: customMessage ?? 'An unexpected error occurred.',
+});
