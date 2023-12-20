@@ -19,12 +19,13 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { PIClinicianInviteRequest } from 'types/entities';
+import { NanoId, PIClinicianInviteRequest } from 'types/entities';
 import {
 	ConflictErrorResponse,
 	ErrorName,
 	ErrorResponse,
 	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
 } from 'types/httpResponses';
 
 import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
@@ -94,6 +95,8 @@ router.get('/', async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request parameter was invalid.
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
@@ -101,8 +104,19 @@ router.get('/', async (req, res) => {
  */
 router.get('/:inviteId', async (req, res) => {
 	try {
-		const { inviteId } = req.params;
-		const invite = await getClinicianInviteById(inviteId);
+		const requestInviteId = NanoId.safeParse(req.params.inviteId);
+
+		if (!requestInviteId.success) {
+			logger.error(
+				'GET /clinician-invites/:inviteId',
+				'Received invalid inviteId',
+				requestInviteId.error,
+			);
+			return res.status(400).json(RequestValidationErrorResponse(requestInviteId.error));
+		}
+
+		const invite = await getClinicianInviteById(requestInviteId.data);
+
 		switch (invite.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(invite.data);

@@ -47,7 +47,7 @@ const mocks = vi.hoisted(() => {
 	};
 
 	const inviteResponse = {
-		id: 'xPBqVJfAAAh6CJzluFuZQ',
+		id: 'skdkCD1lBpC7Rn1WzwBPL',
 		inviteSentDate: '2023-11-22T00:00:00.000Z',
 		inviteAccepted: false,
 		...inviteRequest,
@@ -55,7 +55,7 @@ const mocks = vi.hoisted(() => {
 
 	const createInvite = () => ({ status: 'SUCCESS', data: mocks.inviteResponse });
 
-	const VALID_IDS = ['validId'];
+	const VALID_IDS = ['skdkCD1lBpC7Rn1WzwBPL'];
 
 	const getInvite = (inviteId: string) => {
 		if (VALID_IDS.includes(inviteId)) {
@@ -67,7 +67,7 @@ const mocks = vi.hoisted(() => {
 		};
 	};
 
-	return { inviteRequest, inviteResponse, createInvite, getInvite };
+	return { inviteRequest, inviteResponse, createInvite, getInvite, VALID_IDS };
 });
 
 vi.mock('../../src/services/create.js', () => {
@@ -75,7 +75,6 @@ vi.mock('../../src/services/create.js', () => {
 });
 
 vi.mock('../../src/services/search.js', () => {
-	// mock the createInvite service so we don't need to make an API call to data-mapper
 	return { getInvite: mocks.getInvite };
 });
 
@@ -122,15 +121,27 @@ describe('GET /invites/:inviteId', () => {
 
 	it('Valid request - makes a GET request to data-mapper and returns created invite', async () => {
 		const appConfig = getAppConfig();
-		const response = await request(App(appConfig)).get('/invites/validId');
+		const response = await request(App(appConfig)).get(`/invites/${mocks.VALID_IDS[0]}`);
 
 		expect(response.status).toEqual(200);
-		expect(response.body).toStrictEqual({ ...mocks.inviteResponse, id: 'validId' });
+		expect(response.body).toStrictEqual({ ...mocks.inviteResponse, id: mocks.VALID_IDS[0] });
 	});
 
-	it('Invalid request - invalid ID should return NotFoundError', async () => {
+	it('Invalid request - invalid invite ID should return RequestValidationError', async () => {
 		const appConfig = getAppConfig();
-		const response = await request(App(appConfig)).get('/invites/invalidId');
+		const response = await request(App(appConfig)).get(`/invites/invalidId`);
+
+		expect(response.status).toEqual(400);
+		expect(response.error);
+		if (response.error) {
+			const errorResponse = JSON.parse(response.error.text);
+			expect(errorResponse.error).toStrictEqual(REQUEST_VALIDATION_ERROR);
+		}
+	});
+
+	it('Invalid request - invite ID does not exist should return NotFoundError', async () => {
+		const appConfig = getAppConfig();
+		const response = await request(App(appConfig)).get(`/invites/skdkCD1lBpC7Rn1WzwBPP`);
 
 		expect(response.status).toEqual(404);
 		expect(response.error);

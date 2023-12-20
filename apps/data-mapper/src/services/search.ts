@@ -177,7 +177,7 @@ export const getInformedConsentResponses = async (
 	}
 };
 
-export type GetInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
+export type GetInviteFailureStatus = SystemError | InvalidRequest | 'INVITE_DOES_NOT_EXIST';
 /**
  * Fetches clinician invite in PI DAS first by inviteId,
  * then uses the same inviteId to get the corresponding invite in Consent DAS

@@ -6,6 +6,8 @@ import serviceLogger from '../logger.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
 
+type SystemError = 'SYSTEM_ERROR';
+
 export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
 	const result = await prisma.participant.findUniqueOrThrow({
@@ -22,7 +24,7 @@ export const getParticipants = async (): Promise<Participant[]> => {
 	return result;
 };
 
-type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+type GetInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
 
 export const getClinicianInviteById = async (
 	inviteId: string,

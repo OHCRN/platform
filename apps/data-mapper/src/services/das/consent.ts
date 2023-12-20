@@ -60,12 +60,18 @@ export const getInviteConsentData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-			logger.error('AxiosError handling get invite request', data);
+
+			if (status === 400) {
+				logger.error('Invalid request while retrieving invite', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
 
 			if (status === 404) {
+				logger.error('Invite does not exist', data);
 				return failure('INVITE_DOES_NOT_EXIST', data.message);
 			}
 
+			logger.error('AxiosError handling get invite request', data);
 			return failure('SYSTEM_ERROR', data.message);
 		}
 		logger.error('Unexpected error handling get invite request', error);
