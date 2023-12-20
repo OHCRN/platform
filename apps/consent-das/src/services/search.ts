@@ -14,14 +14,16 @@ import serviceLogger from '../logger.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
 
-type GetParticipantFailureStatus = 'SYSTEM_ERROR' | 'PARTICIPANT_DOES_NOT_EXIST';
+type SystemError = 'SYSTEM_ERROR';
+
+type GetParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST';
 /**
  * Fetches participant by ID from Consent DB.
  * If the participant does not exist, returns a failure with status `"PARTICIPANT_DOES_NOT_EXIST"`.
  * @param participantId Participant ID in DB
- * @returns Participant object from Consent DB
+ * @returns {Participant} Participant object from Consent DB
  */
-export const getParticipant = async (
+export const getParticipantById = async (
 	participantId: string,
 ): Promise<Result<Participant, GetParticipantFailureStatus>> => {
 	return prisma.participant
@@ -67,19 +69,18 @@ export const getConsentQuestion = async (
 	return result;
 };
 
-type GetConsentQuestionFailureStatus = 'SYSTEM_ERROR';
 /**
  * Fetches all consent questions, optionally filtered by category
- * @param category Optional category to filter
- * @returns Array of consent questions
+ * @param category Optional category to filter, returns all consent questions if category is undefined
+ * @returns {ConsentQuestion[]} Array of consent questions
  */
 export const getConsentQuestions = async (
 	category?: ConsentCategory,
-): Promise<Result<ConsentQuestion[], GetConsentQuestionFailureStatus>> => {
+): Promise<Result<ConsentQuestion[], SystemError>> => {
 	return await prisma.consentQuestion
 		.findMany({
 			where: {
-				AND: [{ category }], // returns all consent questions if category is undefined
+				AND: [{ category }],
 			},
 		})
 		.then((data) => success(data))
@@ -100,8 +101,8 @@ export const getConsentQuestions = async (
  * Fetches all participant responses for specified consent question from Consent DB.
  * If the participant does not exist, returns a failure with status `"PARTICIPANT_DOES_NOT_EXIST"`.
  * Consent question should exist because it expects `consentQuestionId` to be a `ConsentQuestionId` enum value.
- * @param
- * @returns All participant responses for consent question
+ * @param sortOrder defaults to descending to sort by most recently submitted responses first
+ * @returns {ParticipantResponse[]} All participant responses for consent question
  */
 export const getParticipantResponses = async ({
 	participantId,
@@ -112,7 +113,7 @@ export const getParticipantResponses = async ({
 > => {
 	// Consent Question ID has already been verified
 	// Check that participant exists, return failure if not
-	const participantResult = await getParticipant(participantId);
+	const participantResult = await getParticipantById(participantId);
 
 	if (participantResult.status !== 'SUCCESS') {
 		return participantResult;
@@ -126,7 +127,6 @@ export const getParticipantResponses = async ({
 				consentQuestionId,
 			},
 			orderBy: {
-				// defaults to sort by most recently submitted responses first (descending)
 				submittedAt: sortOrder,
 			},
 		})
@@ -144,8 +144,13 @@ export const getParticipantResponses = async ({
 		});
 };
 
-type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
-
+type GetInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
+/**
+ * Fetches clinician invite by ID from Consent DB.
+ * If the invite does not exist, returns a failure with status `"INVITE_DOES_NOT_EXIST"`.
+ * @param inviteId
+ * @returns {ClinicianInvite} Clinician Invite
+ */
 export const getClinicianInviteById = async (
 	inviteId: string,
 ): Promise<Result<ClinicianInvite, GetInviteFailureStatus>> => {

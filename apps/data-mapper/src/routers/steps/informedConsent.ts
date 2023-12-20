@@ -18,18 +18,20 @@
  */
 
 import { Router } from 'express';
-import { NanoId } from 'types/entities';
 import {
 	ErrorName,
 	ErrorResponse,
 	NotFoundErrorResponse,
 	RequestValidationErrorResponse,
 } from 'types/httpResponses';
+import { NanoId } from 'types/entities';
 
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
 
-const { SERVER_ERROR } = ErrorName;
+const { SERVER_ERROR, REQUEST_VALIDATION_ERROR } = ErrorName;
+
+const ROUTER_PATH = '/wizard/steps/informed-consent';
 
 const router = Router();
 
@@ -57,7 +59,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/InformedConsentResponse'
  *       400:
- *         description: RequestValidationError - The request body was invalid.
+ *         description: RequestValidationError - The request parameters were invalid.
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
@@ -65,19 +67,29 @@ const router = Router();
  */
 router.get('/:participantId', async (req, res) => {
 	try {
-		const participantId = NanoId.safeParse(req.params.participantId);
+		const { participantId } = req.params;
 
-		if (!participantId.success) {
-			return res
-				.status(400)
-				.json(RequestValidationErrorResponse(participantId.error, 'Invalid Participant ID'));
+		const requestParticipantId = NanoId.safeParse(participantId);
+
+		if (!requestParticipantId.success) {
+			logger.error(
+				`GET ${ROUTER_PATH}/:participantId`,
+				'Received invalid request fetching Informed Consent',
+				requestParticipantId.error.format(),
+			);
+			return res.status(400).json(RequestValidationErrorResponse(requestParticipantId.error));
 		}
 
-		const participantResponses = await getInformedConsentResponses(participantId.data);
+		const participantResponses = await getInformedConsentResponses(requestParticipantId.data);
 
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(participantResponses.data);
+			}
+			case 'INVALID_REQUEST': {
+				return res
+					.status(400)
+					.json(ErrorResponse(REQUEST_VALIDATION_ERROR, participantResponses.message));
 			}
 			case 'PARTICIPANT_DOES_NOT_EXIST': {
 				return res.status(404).json(NotFoundErrorResponse(participantResponses.message));
@@ -88,8 +100,8 @@ router.get('/:participantId', async (req, res) => {
 		}
 	} catch (error) {
 		logger.error(
-			'GET /wizard/steps/informed-consent/:participantId',
-			'Unexpected error handling get invite request',
+			`GET ${ROUTER_PATH}/:participantId`,
+			'Unexpected error handling get Informed Consent request',
 			error,
 		);
 		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));

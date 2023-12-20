@@ -1,17 +1,29 @@
 import urlJoin from 'url-join';
-import { ConsentCategory, ConsentQuestionId, InformedConsentResponse } from 'types/entities';
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, failure, isSuccess, success } from 'types/httpResponses';
+import {
+	ConsentCategory,
+	ConsentQuestionId,
+	ClinicianInviteResponse,
+	InformedConsentResponse,
+} from 'types/entities';
 
 import { getAppConfig } from '../config.js';
-import logger from '../logger.js';
+import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 import {
 	getConsentQuestionsByCategory,
+	getInviteConsentData,
 	getParticipantResponsesByQuestionId,
 } from './das/consent.js';
+import { getInvitePiData } from './das/pi.js';
+
+const logger = serviceLogger.forModule('SearchService');
 
 const { INFORMED_CONSENT } = ConsentCategory.enum;
+
+type SystemError = 'SYSTEM_ERROR';
+type InvalidRequest = 'INVALID_REQUEST';
 
 // PI-DAS
 // TODO: add Type instead of any
@@ -64,14 +76,13 @@ export const getParticipant = async (participantId: string): Promise<any> => {
 	};
 };
 
-export type GetResponsesFailureStatus = 'SYSTEM_ERROR' | 'PARTICIPANT_DOES_NOT_EXIST';
+export type GetResponsesFailureStatus = SystemError | InvalidRequest | 'PARTICIPANT_DOES_NOT_EXIST';
 export type ParticipantResponsesByCategory = { [key in ConsentQuestionId]?: boolean };
 
 /**
  * Fetches all consent questions for the category
  * and returns the most recent responses for each question
- * @param
- * @returns Most recent participant response for each consent question in the category
+ * @returns {ParticipantResponsesByCategory} Most recent participant response for each consent question in the category
  */
 export const getParticipantResponsesByCategory = async ({
 	participantId,
@@ -88,27 +99,39 @@ export const getParticipantResponsesByCategory = async ({
 	 * 3) Return most recent response for each question
 	 */
 	try {
-		const consentQuestions = await getConsentQuestionsByCategory(consentCategory);
+		const consentQuestionsResult = await getConsentQuestionsByCategory(consentCategory);
 
-		if (consentQuestions.status !== 'SUCCESS') {
-			return failure('SYSTEM_ERROR', consentQuestions.message);
+		if (!isSuccess(consentQuestionsResult)) {
+			return consentQuestionsResult;
 		}
-
-		const participantResponses: ParticipantResponsesByCategory = {};
-
-		for (const consentQuestion of consentQuestions.data) {
-			const responsesResult = await getParticipantResponsesByQuestionId({
-				participantId,
-				consentQuestionId: consentQuestion.id,
-			});
-
-			if (responsesResult.status !== 'SUCCESS') {
-				return responsesResult;
-			}
-
-			const { consentQuestionId, response } = responsesResult.data[0]; // first item is most recent response
-			participantResponses[consentQuestionId] = response;
+		// Fetch all ParticipantResponse entries by question
+		const responses = await Promise.all(
+			consentQuestionsResult.data.map(({ id: consentQuestionId }) =>
+				getParticipantResponsesByQuestionId({
+					participantId,
+					consentQuestionId,
+				}),
+			),
+		);
+		// Search for any failures and return the first one
+		const failedResponse = responses.find((result) => !isSuccess(result));
+		if (failedResponse && !isSuccess(failedResponse)) {
+			logger.error(
+				`Unable to retrieve ${consentCategory} participant reponses`,
+				failedResponse.message,
+			);
+			return failedResponse;
 		}
+		// Convert array of ParticipantResponses to key, value pair of the question ID, response
+		const participantResponses = responses
+			.filter(isSuccess)
+			.reduce<ParticipantResponsesByCategory>((participantResponses, { data }) => {
+				if (data.length) {
+					const { consentQuestionId, response } = data[0]; // retrieve the first (most recent) ParticipantResponse
+					participantResponses[consentQuestionId] = response;
+				}
+				return participantResponses;
+			}, {});
 
 		return success(participantResponses);
 	} catch (error) {
@@ -120,7 +143,7 @@ export const getParticipantResponsesByCategory = async ({
 /**
  * Retrieves most recent responses for each INFORMED_CONSENT question
  * @param participantId ID of participant to retrieve responses for
- * @returns
+ * @returns {InformedConsentResponse} most recent responses for Informed Consent
  */
 export const getInformedConsentResponses = async (
 	participantId: string,
@@ -131,7 +154,7 @@ export const getInformedConsentResponses = async (
 			consentCategory: INFORMED_CONSENT,
 		});
 
-		if (participantResponsesResult.status !== 'SUCCESS') {
+		if (!isSuccess(participantResponsesResult)) {
 			return participantResponsesResult;
 		}
 
@@ -150,6 +173,48 @@ export const getInformedConsentResponses = async (
 		return success(informedConsentResponses.data);
 	} catch (error) {
 		logger.error('Unexpected error handling retrieving Informed Consent responses.', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+export type GetInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
+/**
+ * Fetches clinician invite in PI DAS first by inviteId,
+ * then uses the same inviteId to get the corresponding invite in Consent DAS
+ * Combines both invite objects and returns as Clinician Invite
+ * @async
+ * @param inviteId
+ * @returns {ClinicianInviteResponse} Clinician Invite
+ */
+export const getInvite = async (
+	inviteId: string,
+): Promise<Result<ClinicianInviteResponse, GetInviteFailureStatus>> => {
+	try {
+		const piInviteResult = await getInvitePiData(inviteId);
+
+		if (!isSuccess(piInviteResult)) {
+			return piInviteResult;
+		}
+
+		const consentInviteResult = await getInviteConsentData(inviteId);
+
+		if (!isSuccess(consentInviteResult)) {
+			return consentInviteResult;
+		}
+
+		const invite = ClinicianInviteResponse.safeParse({
+			...piInviteResult.data,
+			...consentInviteResult.data,
+		});
+
+		if (!invite.success) {
+			logger.error('Received invalid data in get invite response.', invite.error.issues);
+			return failure('SYSTEM_ERROR', invite.error.message);
+		}
+
+		return success(invite.data);
+	} catch (error) {
+		logger.error('Unexpected error handling get invite request.', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

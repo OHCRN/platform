@@ -32,15 +32,51 @@ import { Result, failure, success } from 'types/httpResponses';
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { GetResponsesFailureStatus } from '../search.js';
+import { GetInviteFailureStatus, GetResponsesFailureStatus } from '../search.js';
 import { CreateInviteFailureStatus } from '../create.js';
 
 const logger = serviceLogger.forModule('ConsentClient');
 
 /**
+ * Makes request to Consent DAS to fetch a Clinician Invite
+ * @param inviteId
+ * @returns {ConsentClinicianInviteResponse} ClinicianInvite object from Consent DB
+ */
+export const getInviteConsentData = async (
+	inviteId: string,
+): Promise<Result<ConsentClinicianInviteResponse, GetInviteFailureStatus>> => {
+	const { consentDasUrl } = getAppConfig();
+	try {
+		const { data } = await axiosClient.get(urlJoin(consentDasUrl, 'clinician-invites', inviteId));
+
+		const invite = ConsentClinicianInviteResponse.safeParse(data); // converts all nulls to undefined
+
+		if (!invite.success) {
+			logger.error('Received invalid data in get invite response', invite.error.issues);
+			return failure('SYSTEM_ERROR', invite.error.message);
+		}
+
+		return success(invite.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('AxiosError handling get invite request', data);
+
+			if (status === 404) {
+				return failure('INVITE_DOES_NOT_EXIST', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error handling get invite request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+/**
  * Makes request to Consent DAS to create a Clinician Invite
  * @param inviteRequest Clinician Invite data
- * @returns ClinicianInvite object from Consent DB
+ * @returns {ConsentClinicianInviteResponse} ClinicianInvite object from Consent DB
  */
 export const createInviteConsentData = async (
 	inviteRequest: ConsentClinicianInviteRequest,
@@ -79,16 +115,17 @@ export const createInviteConsentData = async (
 /**
  * Fetches all consent questions under the specified category
  * @param category Consent category i.e. step name in Consent Wizard
- * @returns Consent questions for the category
+ * @returns {ConsentQuestionArray} Consent questions for the category
  */
 export const getConsentQuestionsByCategory = async (
 	category: ConsentCategory,
 ): Promise<Result<ConsentQuestionArray, GetResponsesFailureStatus>> => {
 	try {
 		const { consentDasUrl } = getAppConfig();
-		const { data } = await axiosClient.get(
-			urlJoin(consentDasUrl, 'consent-questions', `?category=${category}`),
-		);
+		const consentQuestionsUrl = new URL(urlJoin(consentDasUrl, 'consent-questions'));
+		consentQuestionsUrl.searchParams.append('category', category);
+
+		const { data } = await axiosClient.get(consentQuestionsUrl.toString());
 
 		const consentQuestions = ConsentQuestionArray.safeParse(data);
 
@@ -103,7 +140,13 @@ export const getConsentQuestionsByCategory = async (
 		return success(consentQuestions.data);
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
-			const { data } = error.response;
+			const { data, status } = error.response;
+
+			if (status === 400) {
+				logger.error('Invalid request while retrieving consent questions', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
+
 			logger.error('AxiosError retrieving consent questions', data);
 
 			return failure('SYSTEM_ERROR', data.message);
@@ -117,7 +160,7 @@ export const getConsentQuestionsByCategory = async (
  * Fetches all participant responses for a given consent question
  * sorted in order of most to least recent
  * @param consentQuestionId
- * @returns Array of all responses sorted by most to least recent
+ * @returns {ParticipantResponseArray} Array of all responses sorted by most to least recent
  */
 export const getParticipantResponsesByQuestionId = async ({
 	participantId,
@@ -147,15 +190,21 @@ export const getParticipantResponsesByQuestionId = async ({
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
 
+			if (status === 400) {
+				logger.error('Invalid request while retrieving participant responses', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
+
 			if (status === 404) {
+				logger.error('Participant does not exist', data);
 				return failure('PARTICIPANT_DOES_NOT_EXIST', data.message);
 			}
 
-			logger.error('AxiosError retrieving consent questions', data);
+			logger.error('AxiosError retrieving participant responses', data);
 
 			return failure('SYSTEM_ERROR', data.message);
 		}
-		logger.error('Unexpected error retrieving consent questions', error);
+		logger.error('Unexpected error retrieving participant responses', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

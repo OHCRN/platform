@@ -1,6 +1,6 @@
 import urlJoin from 'url-join';
 import { AxiosError } from 'axios';
-import { InformedConsentResponse } from 'types/entities';
+import { ClinicianInviteResponse, InformedConsentResponse } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
 
 import serviceLogger from '../logger.js';
@@ -76,6 +76,43 @@ export const getInformedConsentResponses = async (
 			return failure('SYSTEM_ERROR', data.message);
 		}
 		logger.error('Unexpected error handling Informed Consent request.', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+export type GetInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+/**
+ * Retrieves clinician invite data from Consent and PI DAS
+ * by making GET request to Data Mapper's `/invites` route
+ * @param inviteId Clinician Invite ID
+ * @returns {ClinicianInviteResponse} Clinician Invite object
+ */
+export const getInvite = async (
+	inviteId: string,
+): Promise<Result<ClinicianInviteResponse, GetInviteFailureStatus>> => {
+	try {
+		const { dataMapperUrl } = getAppConfig();
+		const { data } = await axiosClient.get(urlJoin(dataMapperUrl, 'invites', inviteId));
+		const invite = ClinicianInviteResponse.safeParse(data);
+
+		if (!invite.success) {
+			logger.error('Received invalid data in get invite response', invite.error.issues);
+			return failure('SYSTEM_ERROR', invite.error.message);
+		}
+
+		return success(invite.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('AxiosError handling get invite request', data);
+
+			if (status === 404) {
+				return failure('INVITE_DOES_NOT_EXIST', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error handling get invite request', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

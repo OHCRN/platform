@@ -17,29 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
+import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
 import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentResearchParticipation';
 import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
+import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
+import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
+import en from 'src/i18n/locales/en/index';
+import footerDictionary from 'src/i18n/locales/fr/footer';
+import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
+import formLabelsDictionary from 'src/i18n/locales/fr/formLabels';
+import formTextDictionary from 'src/i18n/locales/fr/formText';
+import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
+import headerDictionary from 'src/i18n/locales/fr/header';
+import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
+import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
+import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
-import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
-
-import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
-import footerDictionary from 'src/i18n/locales/fr/footer';
-import genderDictionary from 'src/i18n/locales/fr/gender';
-import headerDictionary from 'src/i18n/locales/fr/header';
-import inviteDictionary from 'src/i18n/locales/fr/invite';
 import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerDictionary from 'src/i18n/locales/fr/register';
-import commonDictionary from 'src/i18n/locales/fr/common';
-import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
-import en from 'src/i18n/locales/en/index';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
@@ -47,18 +51,23 @@ const dictionaries = {
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
 	consentGroup: consentGroupDictionary,
+	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentRecontact: consentRecontactDictionary,
 	consentReviewSign: consentReviewSignDictionary,
+	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
+	formErrors: formErrorsDictionary,
+	formLabels: formLabelsDictionary,
+	formText: formTextDictionary,
 	gender: genderDictionary,
 	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
-	invite: inviteDictionary,
+	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,

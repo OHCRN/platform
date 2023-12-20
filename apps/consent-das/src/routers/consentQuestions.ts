@@ -28,7 +28,6 @@ import logger from '../logger.js';
 
 const { SERVER_ERROR } = ErrorName;
 
-// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -62,7 +61,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ConsentQuestionArray'
  *       400:
- *         description: RequestValidationError - The request body was invalid.
+ *         description: RequestValidationError - The query parameter was invalid.
  *       500:
  *         description: ServerError - An unexpected error occurred.
  */
@@ -71,7 +70,11 @@ router.get('/', async (req, res) => {
 		const queryParams = ConsentQuestionsRequest.safeParse(req.query);
 
 		if (!queryParams.success) {
-			logger.error('GET /consent-questions', 'Invalid consent category', queryParams.error);
+			logger.error(
+				'GET /consent-questions',
+				'Invalid consent category',
+				queryParams.error.format(),
+			);
 			return res.status(400).json(RequestValidationErrorResponse(queryParams.error));
 		}
 

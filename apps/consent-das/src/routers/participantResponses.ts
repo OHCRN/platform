@@ -32,7 +32,6 @@ import logger from '../logger.js';
 
 const { SERVER_ERROR } = ErrorName;
 
-// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -50,7 +49,7 @@ const router = Router();
  *       - Participant Responses
  *     produces: application/json
  *     name: Get Participant Responses
- *     description: Fetches list of Participant Responses by Consent Question ID and Participant ID, sorted by submittedAt date (defaults descending)
+ *     description: Fetches list of Participant Responses by Consent Question ID and Participant ID sorted by submittedAt date
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -66,9 +65,9 @@ const router = Router();
  *         required: true
  *         schema:
  *           $ref: '#/components/schemas/ConsentQuestionId'
- *       - name: sort-order
+ *       - name: sortOrder
  *         in: query
- *         description: Order to sort the responses, by submittedAt date (if not included, returns in descending order)
+ *         description: sorts responses by submittedAt date, defaults to descending
  *         schema:
  *           $ref: '#/components/schemas/SortOrder'
  *     responses:
@@ -88,7 +87,7 @@ const router = Router();
 router.get('/:participantId/:consentQuestionId', async (req, res) => {
 	try {
 		const { participantId, consentQuestionId } = req.params;
-		const sortOrder = req.query['sort-order'];
+		const { sortOrder } = req.query;
 
 		const request = ParticipantResponsesRequest.safeParse({
 			participantId,
@@ -100,7 +99,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 			logger.error(
 				'GET /:participantId/:consentQuestionId',
 				'Received invalid request fetching participant response',
-				request.error,
+				request.error.format(),
 			);
 			return res.status(400).json(RequestValidationErrorResponse(request.error));
 		}
