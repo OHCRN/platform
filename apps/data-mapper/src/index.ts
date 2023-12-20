@@ -23,6 +23,7 @@ import express from 'express';
 import { AppConfig } from './config.js';
 import ClinicianInviteRouter from './routers/invites.js';
 import ParticipantsRouter from './routers/participants.js';
+import WizardRouter from './routers/wizard.js';
 import SwaggerRouter from './routers/swagger.js';
 
 const App = (config: AppConfig) => {
@@ -33,6 +34,7 @@ const App = (config: AppConfig) => {
 	app.use('/api-docs', SwaggerRouter);
 	app.use('/participants', ParticipantsRouter);
 	app.use('/invites', ClinicianInviteRouter);
+	app.use('/wizard', WizardRouter);
 
 	return app;
 };

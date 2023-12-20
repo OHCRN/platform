@@ -19,14 +19,21 @@
 
 import { AxiosError } from 'axios';
 import urlJoin from 'url-join';
-import { ConsentClinicianInviteRequest, ConsentClinicianInviteResponse } from 'types/entities';
+import {
+	ConsentCategory,
+	ConsentClinicianInviteRequest,
+	ConsentClinicianInviteResponse,
+	ConsentQuestionArray,
+	ConsentQuestionId,
+	ParticipantResponseArray,
+} from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
 
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
+import { GetInviteFailureStatus, GetResponsesFailureStatus } from '../search.js';
 import { CreateInviteFailureStatus } from '../create.js';
-import { GetInviteFailureStatus } from '../search.js';
 
 const logger = serviceLogger.forModule('ConsentClient');
 
@@ -101,6 +108,103 @@ export const createInviteConsentData = async (
 			return failure('SYSTEM_ERROR', data.message);
 		}
 		logger.error('Unexpected error handling create invite request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+/**
+ * Fetches all consent questions under the specified category
+ * @param category Consent category i.e. step name in Consent Wizard
+ * @returns {ConsentQuestionArray} Consent questions for the category
+ */
+export const getConsentQuestionsByCategory = async (
+	category: ConsentCategory,
+): Promise<Result<ConsentQuestionArray, GetResponsesFailureStatus>> => {
+	try {
+		const { consentDasUrl } = getAppConfig();
+		const consentQuestionsUrl = new URL(urlJoin(consentDasUrl, 'consent-questions'));
+		consentQuestionsUrl.searchParams.append('category', category);
+
+		const { data } = await axiosClient.get(consentQuestionsUrl.toString());
+
+		const consentQuestions = ConsentQuestionArray.safeParse(data);
+
+		if (!consentQuestions.success) {
+			logger.error(
+				'Received invalid data fetching consent questions',
+				consentQuestions.error.issues,
+			);
+			return failure('SYSTEM_ERROR', consentQuestions.error.message);
+		}
+
+		return success(consentQuestions.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+
+			if (status === 400) {
+				logger.error('Invalid request while retrieving consent questions', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
+
+			logger.error('AxiosError retrieving consent questions', data);
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error retrieving consent questions', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+/**
+ * Fetches all participant responses for a given consent question
+ * sorted in order of most to least recent
+ * @param consentQuestionId
+ * @returns {ParticipantResponseArray} Array of all responses sorted by most to least recent
+ */
+export const getParticipantResponsesByQuestionId = async ({
+	participantId,
+	consentQuestionId,
+}: {
+	participantId: string;
+	consentQuestionId: ConsentQuestionId;
+}): Promise<Result<ParticipantResponseArray, GetResponsesFailureStatus>> => {
+	try {
+		const { consentDasUrl } = getAppConfig();
+		const { data } = await axiosClient.get(
+			urlJoin(consentDasUrl, 'participant-responses', participantId, consentQuestionId),
+		);
+
+		const participantResponses = ParticipantResponseArray.safeParse(data);
+
+		if (!participantResponses.success) {
+			logger.error(
+				'Received invalid data fetching participant responses',
+				participantResponses.error.issues,
+			);
+			return failure('SYSTEM_ERROR', participantResponses.error.message);
+		}
+
+		return success(participantResponses.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+
+			if (status === 400) {
+				logger.error('Invalid request while retrieving participant responses', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
+
+			if (status === 404) {
+				logger.error('Participant does not exist', data);
+				return failure('PARTICIPANT_DOES_NOT_EXIST', data.message);
+			}
+
+			logger.error('AxiosError retrieving participant responses', data);
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error retrieving participant responses', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
