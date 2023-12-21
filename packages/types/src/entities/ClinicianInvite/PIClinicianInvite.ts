@@ -23,9 +23,9 @@ import { SchemaObject } from 'openapi3-ts/oas31';
 
 import { Name } from '../Name.js';
 import { PhoneNumber } from '../PhoneNumber.js';
+import { NanoId } from '../NanoId.js';
 
 import { InviteGuardianFields, InviteParticipantFields } from './ClinicianInvite.js';
-import { NanoId } from '../NanoId.js';
 
 export const PIClinicianInviteRequest = InviteParticipantFields.merge(InviteGuardianFields);
 

@@ -105,7 +105,7 @@ router.post(
 
 /**
  * @openapi
- * /invites:
+ * /invites/{inviteId}:
  *   get:
  *     tags:
  *       - Clinician Invites
