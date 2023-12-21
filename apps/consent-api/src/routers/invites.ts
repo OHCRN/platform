@@ -22,10 +22,9 @@ import withRequestValidation from 'express-request-validation';
 import { ClinicianInviteRequest, NanoId } from 'types/entities';
 import {
 	ConflictErrorResponse,
-	ErrorName,
-	ErrorResponse,
 	NotFoundErrorResponse,
 	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 import { z } from 'zod';
 
@@ -33,8 +32,6 @@ import { recaptchaMiddleware } from '../middleware/recaptcha.js';
 import { createInvite } from '../services/create.js';
 import logger from '../logger.js';
 import { getInvite } from '../services/search.js';
-
-const { SERVER_ERROR } = ErrorName;
 
 /**
  * @openapi
@@ -90,7 +87,7 @@ router.post(
 					return res.status(201).json(invite.data);
 				}
 				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+					return res.status(500).json(ServerErrorResponse(invite.message));
 				}
 				case 'INVITE_EXISTS': {
 					return res.status(409).json(ConflictErrorResponse(invite.message));
@@ -98,7 +95,7 @@ router.post(
 			}
 		} catch (error) {
 			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
-			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+			return res.status(500).json(ServerErrorResponse());
 		}
 	}),
 );
@@ -152,12 +149,12 @@ router.get('/:inviteId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(500).json(ServerErrorResponse(invite.message));
 			}
 		}
 	} catch (error) {
 		logger.error('GET /invites/:inviteId', `Unexpected error handling get invite request.`, error);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
