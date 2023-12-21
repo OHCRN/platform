@@ -27,6 +27,7 @@ import { Name } from './Name.js';
 import { OhipNumber } from './OhipNumber.js';
 import { NanoId } from './NanoId.js';
 import { LifecycleState } from './LifecycleState.js';
+
 import { InviteGuardianFields } from './index.js';
 
 export const hasRequiredGuardianInformation = (
