@@ -26,8 +26,10 @@ type FormFieldName<T extends FieldValues> = Path<T>;
 
 // fieldsets that use the FieldSet component
 
-type FormFieldSetVariants = { variant?: 'largeDesktop' | 'smallDesktop' };
-type FormFieldSetSharedProps<T extends FieldValues> = FormFieldSetVariants & {
+export type DesktopSizeVariant = 'largeDesktop' | 'smallDesktop';
+
+export type DesktopSizeVariantProp = { variant?: DesktopSizeVariant };
+type FormFieldSetSharedProps<T extends FieldValues> = DesktopSizeVariantProp & {
 	className?: string;
 	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315

@@ -20,15 +20,16 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
+import { DesktopSizeVariantProp } from 'src/components/common/Form/types';
+
 import styles from './Callout.module.scss';
 
-interface CalloutProps {
+type CalloutProps = DesktopSizeVariantProp & {
 	children: ReactNode;
 	className?: string;
 	id?: string;
 	isActive: boolean;
-	variant?: 'largeDesktop' | 'smallDesktop';
-}
+};
 
 const Callout = ({
 	children,

@@ -20,13 +20,14 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
+import { DesktopSizeVariantProp } from 'src/components/common/Form/types';
+
 import styles from './FieldSet.module.scss';
 
-interface FieldSetProps {
+type FieldSetProps = DesktopSizeVariantProp & {
 	children: ReactNode;
 	className?: string;
-	variant?: 'largeDesktop' | 'smallDesktop';
-}
+};
 
 const FieldSet = ({ children, className, variant = 'largeDesktop' }: FieldSetProps) => {
 	return (

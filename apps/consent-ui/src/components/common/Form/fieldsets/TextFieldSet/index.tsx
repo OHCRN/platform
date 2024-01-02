@@ -53,7 +53,7 @@ const TextFieldSet = <T extends FieldValues>({
 	const calloutId = `${idPrefix}-callout`;
 
 	return (
-		<FieldSet className={className}>
+		<FieldSet className={className} variant={variant}>
 			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
 				{label}
 			</FieldLabel>

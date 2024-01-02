@@ -36,9 +36,9 @@
 			@include desktopFieldSet;
 		}
 	}
-	@media (min-width: theme('screens.lg')) {
-		&.smallDesktop {
-			@include desktopFieldSet;
-		}
-	}
+	// @media (min-width: theme('screens.lg')) {
+	// 	&.smallDesktop {
+	// 		@include desktopFieldSet;
+	// 	}
+	// }
 }
