@@ -20,7 +20,7 @@
 import formCallouts from './formCallouts';
 import formText from './formText';
 
-const { indicatesRequiredField, selectPlaceholder } = formText;
+const { indicatesRequiredField, selectPlaceholder, submit } = formText;
 const {
 	clinicianInstitutionalEmailAddressCallout,
 	consentGroupCallout,
@@ -53,6 +53,7 @@ const dictionary = {
 	uploadFileDescription2:
 		' and have your participant (who is a minor) read and sign the assent form. Use the upload button below to submit a completed assent form signed by the minor.',
 	uploadFileLink: 'download a copy of the assent form',
+	submit,
 } satisfies Record<string, string>;
 
 export type InviteFormTextDictionary = Record<keyof typeof dictionary, string>;

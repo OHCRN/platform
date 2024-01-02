@@ -22,7 +22,7 @@ import { InviteFormTextDictionary } from '../en/inviteFormText';
 import formCallouts from './formCallouts';
 import formText from './formText';
 
-const { indicatesRequiredField, selectPlaceholder } = formText;
+const { indicatesRequiredField, selectPlaceholder, submit } = formText;
 const {
 	clinicianInstitutionalEmailAddressCallout,
 	consentGroupCallout,
@@ -55,6 +55,7 @@ const dictionary = {
 	uploadFileDescription2:
 		"et demandez à votre participant (qui est mineur) de lire et de signer le formulaire d'assentiment. Utilisez le bouton de téléchargement ci-dessous pour soumettre un formulaire de consentement complété et signé par le mineur.",
 	uploadFileLink: "télécharger une copie du formulaire d'accord",
+	submit,
 } satisfies InviteFormTextDictionary;
 
 export default dictionary;

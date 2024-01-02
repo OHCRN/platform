@@ -87,6 +87,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		uploadFileDescription1: translate('inviteFormText', 'uploadFileDescription1'),
 		uploadFileDescription2: translate('inviteFormText', 'uploadFileDescription2'),
 		uploadFileLink: translate('inviteFormText', 'uploadFileLink'),
+		submit: translate('inviteFormText', 'submit'),
 	};
 
 	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({

@@ -284,7 +284,7 @@ const ClinicianInviteFormComponent = ({
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
 						/>
 					</div>
-					<Button type="submit">Submit</Button>
+					<Button type="submit">{textDict.submit}</Button>
 				</FormSection>
 			</Form>
 		</FormProvider>
