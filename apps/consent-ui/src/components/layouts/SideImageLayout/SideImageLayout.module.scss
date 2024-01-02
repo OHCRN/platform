@@ -51,6 +51,10 @@
 	max-width: 32.8125rem;
 	background: theme('colors.grayscale.800');
 	min-height: 600px;
+	display: none;
+	@media (min-width: theme('screens.md')) {
+		display: block;
+	}
 	@media (min-width: theme('screens.lg')) {
 		min-height: 700px;
 	}
@@ -98,21 +102,17 @@
 .desktopNav {
 	padding: 1.5rem 2rem 0;
 	width: 100%;
-	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5rem;
 	min-height: 4rem;
+	display: none;
+	@media (min-width: theme('screens.md')) {
+		display: flex;
+	}
 	@media (min-width: theme('screens.xl')) {
 		min-height: 6rem;
 		padding-left: 4rem;
 		padding-right: 4rem;
-	}
-}
-
-.desktopHeader,
-.desktopNav {
-	@media (max-width: theme('screens.md')) {
-		display: none;
 	}
 }
 
