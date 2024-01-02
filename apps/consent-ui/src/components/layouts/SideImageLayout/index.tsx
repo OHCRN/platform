@@ -83,6 +83,7 @@ const SideImageLayout = ({
 						{desktopNavAction && (
 							<LocalizedLink
 								className={styles.desktopNavAction}
+								defaultStyle={false}
 								linkLang={currentLang}
 								name={desktopNavAction.url}
 							>
