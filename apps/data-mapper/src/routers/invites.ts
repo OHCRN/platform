@@ -19,19 +19,21 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { ClinicianInviteRequest } from 'types/entities';
+import { ClinicianInviteRequest, NanoId } from 'types/entities';
 import {
 	ConflictErrorResponse,
 	ErrorName,
 	ErrorResponse,
 	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 
 import logger from '../logger.js';
 import { createInvite } from '../services/create.js';
 import { getInvite } from '../services/search.js';
 
-const { SERVER_ERROR } = ErrorName;
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const router = Router();
 
@@ -66,6 +68,8 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request parameter was invalid.
  *       404:
  *         description: NotFoundError - The requested data could not be found.
  *       500:
@@ -73,22 +77,31 @@ const router = Router();
  */
 router.get('/:inviteId', async (req, res) => {
 	try {
-		const { inviteId } = req.params;
-		const invite = await getInvite(inviteId);
+		const requestInviteId = NanoId.safeParse(req.params.inviteId);
+
+		if (!requestInviteId.success) {
+			logger.error('GET /invites/:inviteId', 'Received invalid inviteId', requestInviteId.error);
+			return res.status(400).json(RequestValidationErrorResponse(requestInviteId.error));
+		}
+		const invite = await getInvite(requestInviteId.data);
+
 		switch (invite.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(invite.data);
+			}
+			case 'INVALID_REQUEST': {
+				return res.status(400).json(ErrorResponse(REQUEST_VALIDATION_ERROR, invite.message));
 			}
 			case 'INVITE_DOES_NOT_EXIST': {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(500).json(ServerErrorResponse(invite.message));
 			}
 		}
 	} catch (error) {
 		logger.error('GET /invites/:inviteId', `Unexpected error handling get invite request.`, error);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -133,12 +146,12 @@ router.post(
 					return res.status(409).json(ConflictErrorResponse(invite.message));
 				}
 				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+					return res.status(500).json(ServerErrorResponse(invite.message));
 				}
 			}
 		} catch (error) {
 			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
-			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+			return res.status(500).json(ServerErrorResponse());
 		}
 	}),
 );

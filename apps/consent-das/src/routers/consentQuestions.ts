@@ -19,14 +19,12 @@
 
 import { Router } from 'express';
 import { ConsentQuestionId, ConsentQuestionsRequest } from 'types/entities';
-import { ErrorName, ErrorResponse, RequestValidationErrorResponse } from 'types/httpResponses';
+import { RequestValidationErrorResponse, ServerErrorResponse } from 'types/httpResponses';
 
 import { updateConsentQuestionIsActive } from '../services/update.js';
 import { getConsentQuestion, getConsentQuestions } from '../services/search.js';
 import { createConsentQuestion } from '../services/create.js';
 import logger from '../logger.js';
-
-const { SERVER_ERROR } = ErrorName;
 
 /**
  * @openapi
@@ -85,12 +83,12 @@ router.get('/', async (req, res) => {
 				return res.status(200).json(consentQuestions.data);
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, consentQuestions.message));
+				return res.status(500).json(ServerErrorResponse(consentQuestions.message));
 			}
 		}
 	} catch (error) {
 		logger.error('GET /consent-questions', 'Unexpected error retrieving consent questions', error);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -127,7 +125,7 @@ router.get('/:consentQuestionId', async (req, res) => {
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving consent questions' });
+		res.status(500).json(ServerErrorResponse('Error retrieving consent questions'));
 	}
 });
 
@@ -169,7 +167,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ question });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating consent question' });
+		res.status(500).json(ServerErrorResponse('Error creating consent question'));
 	}
 });
 
@@ -219,7 +217,7 @@ router.patch('/:consentQuestionId', async (req, res) => {
 		res.status(200).send({ question });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error updating consent question active state' });
+		res.status(500).json(ServerErrorResponse('Error updating consent question active state'));
 	}
 });
 

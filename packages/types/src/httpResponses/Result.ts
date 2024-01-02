@@ -39,6 +39,18 @@ export type Result<T, FailureStatus extends string, FailureData = void> =
  * ******************* */
 
 /**
+ * Determines if the Result is a Success type by its status
+ * and returns the type predicate so TS can infer the Result as a Success
+ * @param result
+ * @returns {boolean} Whether the Result was a Success or not
+ */
+export function isSuccess<T, FailureStatus extends string, FailureData>(
+	result: Result<T, FailureStatus, FailureData>,
+): result is Success<T> {
+	return result.status === 'SUCCESS';
+}
+
+/**
  * Create a successful response for a Result or Either type, with data of the success type
  * @param {T} data
  * @returns {Success<T>} `{status: 'SUCCESS', data}`

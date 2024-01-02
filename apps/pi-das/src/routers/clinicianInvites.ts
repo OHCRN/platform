@@ -19,12 +19,12 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { PIClinicianInviteRequest } from 'types/entities';
+import { NanoId, PIClinicianInviteRequest } from 'types/entities';
 import {
 	ConflictErrorResponse,
-	ErrorName,
-	ErrorResponse,
 	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 
 import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
@@ -32,9 +32,6 @@ import { createClinicianInvite } from '../services/create.js';
 import { deleteClinicianInvite } from '../services/delete.js';
 import logger from '../logger.js';
 
-const { SERVER_ERROR } = ErrorName;
-
-// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -66,7 +63,7 @@ router.get('/', async (req, res) => {
 		const invites = await getClinicianInvites();
 		res.status(200).send({ invites });
 	} catch (error) {
-		res.status(500).send({ error: 'Error retrieving clinician invites' });
+		res.status(500).json(ServerErrorResponse('Error retrieving clinician invites'));
 	}
 });
 
@@ -94,6 +91,8 @@ router.get('/', async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ClinicianInviteResponse'
+ *       400:
+ *         description: RequestValidationError - The request parameter was invalid.
  *       404:
  *         description: NotFoundError - That requested data could not be found.
  *       500:
@@ -101,8 +100,19 @@ router.get('/', async (req, res) => {
  */
 router.get('/:inviteId', async (req, res) => {
 	try {
-		const { inviteId } = req.params;
-		const invite = await getClinicianInviteById(inviteId);
+		const requestInviteId = NanoId.safeParse(req.params.inviteId);
+
+		if (!requestInviteId.success) {
+			logger.error(
+				'GET /clinician-invites/:inviteId',
+				'Received invalid inviteId',
+				requestInviteId.error,
+			);
+			return res.status(400).json(RequestValidationErrorResponse(requestInviteId.error));
+		}
+
+		const invite = await getClinicianInviteById(requestInviteId.data);
+
 		switch (invite.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(invite.data);
@@ -111,7 +121,7 @@ router.get('/:inviteId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(500).json(ServerErrorResponse(invite.message));
 			}
 		}
 	} catch (error) {
@@ -120,7 +130,7 @@ router.get('/:inviteId', async (req, res) => {
 			'Unexpected error handling get invite request',
 			error,
 		);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -167,12 +177,12 @@ router.post(
 					return res.status(409).json(ConflictErrorResponse(invite.message));
 				}
 				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+					return res.status(500).json(ServerErrorResponse(invite.message));
 				}
 			}
 		} catch (error) {
 			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
-			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+			return res.status(500).json(ServerErrorResponse());
 		}
 	}),
 );
@@ -219,12 +229,12 @@ router.delete('/:inviteId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(500).json(ServerErrorResponse(invite.message));
 			}
 		}
 	} catch (error) {
 		logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
