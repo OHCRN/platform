@@ -22,7 +22,7 @@ import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 const { NOT_FOUND_ERROR } = ErrorName;
 
 /**
- * Creates a NotFoundErrorResponse containing a message detailing the conflict and the fields causing it.
+ * Creates a NotFoundError Response containing a message detailing the conflict and the fields causing it.
  * @param customMessage
  * @returns
  */

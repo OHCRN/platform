@@ -17,12 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { Router } from 'express';
 
-import { nanoId } from './Regex.js';
+import StepsRouter from './steps/index.js';
 
-export const NanoId = z.string().regex(nanoId);
-export type NanoId = z.infer<typeof NanoId>;
-export const NanoIdSchema: SchemaObject = generateSchema(NanoId);
+/**
+ * @openapi
+ * tags:
+ *   - name: Consent Wizard
+ *     description: Consent wizard steps and status
+ */
+
+const router = Router();
+
+router.use('/steps', StepsRouter);
+
+export default router;

@@ -18,54 +18,27 @@
  */
 
 import { Router } from 'express';
-import { ErrorResponse, ServerErrorResponse } from 'types/httpResponses';
+import {
+	ErrorName,
+	ErrorResponse,
+	NotFoundErrorResponse,
+	RequestValidationErrorResponse,
+	ServerErrorResponse,
+} from 'types/httpResponses';
+import { NanoId } from 'types/entities';
 
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
 
-export const ROUTER_PATH = '/wizard/steps/informed-consent/';
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
+
+const ROUTER_PATH = '/wizard/steps/informed-consent';
 
 const router = Router();
 
 /**
  * @openapi
- * /wizard/steps/informed-consent:
- *   post:
- *     tags:
- *       - Consent Wizard
- *     name: Submit Informed Consent
- *     description: Form submission for Consent Wizard - Informed Consent
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/InformedConsentRequest'
- *     responses:
- *       201:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/InformedConsentResponse'
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
- *       500:
- *         description: Server error
- */
-router.post('/', async (req, res) => {
-	// TODO: implement when auth layer is ready
-
-	return res.status(500).send(ErrorResponse('NOT_IMPLEMENTED', 'Route has not been implemented.'));
-});
-
-/**
- * @openapi
- * /wizard/steps/informed-consent:
+ * /wizard/steps/informed-consent/{participantId}:
  *   get:
  *     tags:
  *       - Consent Wizard
@@ -73,6 +46,12 @@ router.post('/', async (req, res) => {
  *     description: Participant's latest response for Consent Wizard - Informed Consent
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - name: participantId
+ *         in: path
+ *         description: Participant ID
+ *         schema:
+ *           $ref: '#/components/schemas/NanoId'
  *     responses:
  *       200:
  *         description: OK
@@ -80,29 +59,52 @@ router.post('/', async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/InformedConsentResponse'
- *       401:
- *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
+ *       400:
+ *         description: RequestValidationError - The request parameters were invalid.
+ *       404:
+ *         description: NotFoundError - That requested data could not be found.
  *       500:
  *         description: ServerError - An unexpected error occurred.
  */
-router.get('/', async (req, res) => {
-	// TODO: remove and get from session when auth layer is ready
-	const participantId = 'cllgostgz000008l3fk0w';
+router.get('/:participantId', async (req, res) => {
 	try {
-		const participantResponses = await getInformedConsentResponses(participantId);
+		const { participantId } = req.params;
+
+		const requestParticipantId = NanoId.safeParse(participantId);
+
+		if (!requestParticipantId.success) {
+			logger.error(
+				`GET ${ROUTER_PATH}/:participantId`,
+				'Received invalid request fetching Informed Consent',
+				requestParticipantId.error.format(),
+			);
+			return res.status(400).json(RequestValidationErrorResponse(requestParticipantId.error));
+		}
+
+		const participantResponses = await getInformedConsentResponses(requestParticipantId.data);
 
 		switch (participantResponses.status) {
 			case 'SUCCESS': {
 				return res.status(200).json(participantResponses.data);
+			}
+			case 'INVALID_REQUEST': {
+				return res
+					.status(400)
+					.json(ErrorResponse(REQUEST_VALIDATION_ERROR, participantResponses.message));
+			}
+			case 'PARTICIPANT_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(participantResponses.message));
 			}
 			case 'SYSTEM_ERROR': {
 				return res.status(500).json(ServerErrorResponse(participantResponses.message));
 			}
 		}
 	} catch (error) {
-		logger.error(`GET ${ROUTER_PATH}`, 'Unexpected error handling get invite request', error);
+		logger.error(
+			`GET ${ROUTER_PATH}/:participantId`,
+			'Unexpected error handling get Informed Consent request',
+			error,
+		);
 		return res.status(500).json(ServerErrorResponse());
 	}
 });

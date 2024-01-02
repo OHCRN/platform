@@ -23,7 +23,7 @@ import * as config from '../src/config.js';
 import { AppConfig } from '../src/config.js';
 
 export const mockEnv = (values?: Partial<AppConfig>) => {
-	// Need to set the NODE_ENV since there are currently places in teh code checking the process.env.NODE_ENV directly instead of relying on our config.
+	// Need to set the NODE_ENV since there are currently places in the code checking the process.env.NODE_ENV directly instead of relying on our config.
 	vi.stubEnv('NODE_ENV', values?.isProduction ? 'production' : 'development');
 
 	const defaultConfig: AppConfig = {
