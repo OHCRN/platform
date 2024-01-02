@@ -17,12 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { Router } from 'express';
 
-import { nanoId } from './Regex.js';
+import InformedConsentRouter from './informedConsent.js';
 
-export const NanoId = z.string().regex(nanoId);
-export type NanoId = z.infer<typeof NanoId>;
-export const NanoIdSchema: SchemaObject = generateSchema(NanoId);
+const router = Router();
+
+router.use('/informed-consent', InformedConsentRouter);
+
+export default router;
