@@ -19,23 +19,22 @@
 
 'use client';
 
-import { ReactNode, useId } from 'react';
-import { Controller, FieldValues, useFormContext } from 'react-hook-form';
+import { useId } from 'react';
+import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
-import { FormFieldSetSharedProps, FormSelectOption } from 'src/components/common/Form/types';
+import { FormFieldSetWithCalloutProps, FormSelectOption } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 
 import styles from './SelectFieldSet.module.scss';
 
-type SelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> & {
-	ariaProps?: { 'aria-describedby'?: string };
-	calloutText?: ReactNode;
-	onBlur?: () => void;
-	onFocus?: () => void;
+type SelectFieldSetProps<
+	T extends FieldValues,
+	V extends string,
+> = FormFieldSetWithCalloutProps<T> & {
 	options: FormSelectOption<V>[];
 	placeholder: string;
 };
@@ -43,6 +42,7 @@ type SelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSet
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	calloutText,
 	className,
+	// disabled TODO FORM
 	error,
 	label,
 	name,
@@ -51,7 +51,6 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	required = false,
 	withNarrowDesktopLayout = false,
 }: SelectFieldSetProps<T, V>) => {
-	const { control } = useFormContext();
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
 	const idPrefix = useId();
@@ -59,39 +58,30 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	const calloutId = `${idPrefix}-callout`;
 
 	return (
-		<Controller
-			control={control}
-			name={name}
-			render={({ field: { onChange, value } }) => (
-				<FieldSet
-					calloutId={calloutId}
-					calloutText={calloutText}
-					calloutVisible={calloutVisible}
-					className={clsx(styles.selectFieldSet, className)}
-					fieldId={fieldId}
-					label={label}
-					required={required}
-					withNarrowDesktopLayout={withNarrowDesktopLayout}
-				>
-					<SelectInput
-						ariaProps={{ 'aria-describedby': calloutId }}
-						className={clsx('react-select-container', error && 'react-select__has-error')}
-						classNamePrefix="react-select"
-						id={fieldId}
-						name={name}
-						onBlur={hideCallout}
-						onChange={onChange}
-						onFocus={showCallout}
-						options={options}
-						placeholder={placeholder}
-						required={required}
-						value={value}
-					/>
-					{error && <InputError>{error}</InputError>}
-				</FieldSet>
-			)}
-			rules={{ required }}
-		/>
+		<FieldSet
+			calloutId={calloutId}
+			calloutText={calloutText}
+			calloutVisible={calloutVisible}
+			className={clsx(styles.selectFieldSet, className)}
+			fieldId={fieldId}
+			label={label}
+			required={required}
+			withNarrowDesktopLayout={withNarrowDesktopLayout}
+		>
+			<SelectInput
+				ariaProps={{ 'aria-describedby': calloutId }}
+				// disabled={disabled} TODO FORM
+				hasError={!!error}
+				id={fieldId}
+				name={name}
+				onBlur={hideCallout}
+				onFocus={showCallout}
+				options={options}
+				placeholder={placeholder}
+				required={required}
+			/>
+			{error && <InputError>{error}</InputError>}
+		</FieldSet>
 	);
 };
 

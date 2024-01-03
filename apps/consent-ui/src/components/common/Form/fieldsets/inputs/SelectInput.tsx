@@ -19,65 +19,67 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import Select, { SingleValue } from 'react-select';
 
 import { FormInputProps, FormSelectOption } from 'src/components/common/Form/types';
 
 type SelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
 type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	ariaProps?: { 'aria-describedby'?: string };
-	className: string;
-	classNamePrefix: string;
-	onBlur?: () => void;
-	onChange: (val: SelectOnChangeArg<V>) => void;
-	onFocus?: () => void;
+	hasError: boolean;
 	options: FormSelectOption<V>[];
 	placeholder: string;
-	value: V;
 };
 
 const SelectInput = <T extends FieldValues, V extends string>({
-	ariaProps,
-	className,
-	classNamePrefix,
+	ariaProps = {},
+	// disabled TO DO FORM
+	hasError = false,
 	name,
-	onBlur,
-	onChange,
-	onFocus,
+	onBlur = () => {},
+	onFocus = () => {},
 	options,
 	placeholder = '',
 	required,
-	value,
 }: SelectInputProps<T, V>) => {
+	const { control } = useFormContext();
+
 	return (
-		<Select
-			aria-required={required}
-			className={className}
-			classNamePrefix={classNamePrefix}
-			// react-select doesn't work with hashed CSS classnames from CSS modules.
-			// className & classNamePrefix need to be strings, not hashed classNames.
-			// https://github.com/JedWatson/react-select/issues/4525
-			inputId={name}
+		<Controller
+			control={control}
 			name={name}
-			onBlur={onBlur}
-			onChange={(val: SelectOnChangeArg<V>) => {
-				// in react-select the value can be a string or object.
-				// in our implementation it should be {label, value},
-				// with the label being translated.
-				let onChangeParam = '';
-				if (typeof val === 'string') {
-					onChangeParam = val;
-				} else if (val?.value !== undefined) {
-					onChangeParam = val.value;
-				}
-				return onChange(onChangeParam);
-			}}
-			onFocus={onFocus}
-			options={options}
-			placeholder={placeholder}
-			value={options.find((option) => option.value === value) || ''}
-			{...ariaProps}
+			render={({ field: { onChange, value } }) => (
+				<Select
+					aria-required={required}
+					className={clsx('react-select-container', hasError && 'react-select__has-error')}
+					classNamePrefix="react-select"
+					// react-select doesn't work with hashed CSS classnames from CSS modules.
+					// className & classNamePrefix need to be strings, not hashed classNames.
+					// https://github.com/JedWatson/react-select/issues/4525
+					inputId={name}
+					name={name}
+					onBlur={onBlur}
+					onChange={(val: SelectOnChangeArg<V>) => {
+						// in react-select the value can be a string or object.
+						// in our implementation it should be {label, value},
+						// with the label being translated.
+						let onChangeParam = '';
+						if (typeof val === 'string') {
+							onChangeParam = val;
+						} else if (val?.value !== undefined) {
+							onChangeParam = val.value;
+						}
+						return onChange(onChangeParam);
+					}}
+					onFocus={onFocus}
+					options={options}
+					placeholder={placeholder}
+					value={options.find((option) => option.value === value) || ''}
+					{...ariaProps}
+				/>
+			)}
+			rules={{ required }}
 		/>
 	);
 };

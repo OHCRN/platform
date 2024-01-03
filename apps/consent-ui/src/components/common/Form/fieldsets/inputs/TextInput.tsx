@@ -20,41 +20,41 @@
 'use client';
 
 import { FieldValues, useFormContext } from 'react-hook-form';
-import clsx from 'clsx';
 import { SyntheticEvent } from 'react';
 
 import { FormInputProps, FormTextInputType } from 'src/components/common/Form/types';
 
 type TextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	ariaProps?: { 'aria-describedby'?: string };
-	onBlur?: () => void;
-	onFocus?: () => void;
 	type: FormTextInputType;
 };
 
 const TextInput = <T extends FieldValues>({
+	ariaProps = {},
 	className,
+	// disabled TO DO FORM
 	id,
 	name,
 	onBlur = () => {},
 	onFocus = () => {},
 	required = false,
 	type = 'text',
-	ariaProps,
 }: TextInputProps<T>) => {
 	const { register } = useFormContext();
 	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
+
 	const handleBlur = (e: SyntheticEvent) => {
 		onBlur();
 		registerOnBlur(e);
 	};
+
 	const handleFocus = () => {
 		onFocus();
 	};
+
 	return (
 		<input
 			aria-required={required}
-			className={clsx(`${type}-input`, className)}
+			className={className}
 			id={id}
 			name={registerName}
 			onBlur={handleBlur}

@@ -20,10 +20,10 @@
 'use client';
 
 import { FieldValues } from 'react-hook-form';
-import { ReactNode, useId } from 'react';
+import { useId } from 'react';
 import clsx from 'clsx';
 
-import { FormFieldSetSharedProps, FormTextInputType } from 'src/components/common/Form/types';
+import { FormFieldSetWithCalloutProps, FormTextInputType } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
@@ -31,8 +31,7 @@ import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 
 import styles from './TextFieldSet.module.scss';
 
-type TextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	calloutText?: ReactNode;
+type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithCalloutProps<T> & {
 	type?: FormTextInputType;
 };
 

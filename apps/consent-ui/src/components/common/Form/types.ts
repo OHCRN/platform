@@ -17,14 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ReactNode } from 'react';
 import { FieldValues, Path } from 'react-hook-form';
 
-// setup types for react-hook-forms API
+// for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
 
-// fieldsets that use the FieldSet component
+// fieldsets
 
-export type FormFieldSetSharedProps<T extends FieldValues> = {
+export interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
 	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
@@ -32,14 +33,21 @@ export type FormFieldSetSharedProps<T extends FieldValues> = {
 	name: FormFieldName<T>;
 	required?: boolean;
 	withNarrowDesktopLayout?: boolean;
+}
+
+export type FormFieldSetWithCalloutProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	calloutText?: ReactNode;
 };
 
 // field inputs
 
 export interface FormInputProps<T extends FieldValues> {
+	ariaProps?: Record<string, string>;
 	className?: string;
 	id: string; // use useId() to generate this
 	name: FormFieldName<T>;
+	onBlur?: () => void;
+	onFocus?: () => void;
 	required: boolean;
 }
 
