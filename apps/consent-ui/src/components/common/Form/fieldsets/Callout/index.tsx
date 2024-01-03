@@ -20,27 +20,31 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { DesktopSizeVariantProp } from 'src/components/common/Form/types';
-
 import styles from './Callout.module.scss';
 
-type CalloutProps = DesktopSizeVariantProp & {
+interface CalloutProps {
 	children: ReactNode;
 	className?: string;
 	id?: string;
 	isActive: boolean;
-};
+	withNarrowDesktopLayout?: boolean;
+}
 
 const Callout = ({
 	children,
 	className,
 	id,
 	isActive = false,
-	variant = 'largeDesktop',
+	withNarrowDesktopLayout = false,
 }: CalloutProps) => {
 	return (
 		<div
-			className={clsx(styles.callout, className, styles[variant], isActive && styles.active)}
+			className={clsx(
+				styles.callout,
+				className,
+				!withNarrowDesktopLayout && styles.wideDesktop,
+				isActive && styles.active,
+			)}
 			id={id}
 			role="tooltip"
 		>

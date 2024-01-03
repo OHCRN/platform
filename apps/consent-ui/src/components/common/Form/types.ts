@@ -24,15 +24,14 @@ type FormFieldName<T extends FieldValues> = Path<T>;
 
 // fieldsets that use the FieldSet component
 
-export type DesktopSizeVariantProp = { variant?: 'largeDesktop' | 'smallDesktop' };
-
-export type FormFieldSetSharedProps<T extends FieldValues> = DesktopSizeVariantProp & {
+export type FormFieldSetSharedProps<T extends FieldValues> = {
 	className?: string;
 	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
 	label: string;
 	name: FormFieldName<T>;
 	required?: boolean;
+	withNarrowDesktopLayout?: boolean;
 };
 
 export interface FormFieldSetWithCalloutProps {

@@ -44,7 +44,7 @@ const TextFieldSet = <T extends FieldValues>({
 	name,
 	required = false,
 	type = 'text',
-	variant = 'largeDesktop',
+	withNarrowDesktopLayout = false,
 }: TextFieldSetProps<T>) => {
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
@@ -61,11 +61,11 @@ const TextFieldSet = <T extends FieldValues>({
 			fieldId={fieldId}
 			label={label}
 			required={required}
-			variant={variant}
+			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<TextInput
 				ariaProps={{ 'aria-describedby': calloutId }}
-				className={clsx(styles.textInput, error && styles.error, styles[variant])}
+				className={clsx(styles.textInput, error && styles.error)}
 				id={fieldId}
 				name={name}
 				onBlur={hideCallout}

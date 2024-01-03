@@ -1,9 +1,3 @@
-@mixin desktopFieldSet {
-	grid-template-columns: minmax(20%, 9rem) auto minmax(20%, 13rem);
-	grid-template-areas: 'label input callout';
-	grid-column-gap: 0.5rem;
-}
-
 .fieldSet {
 	display: grid;
 	grid-template-columns: 100%;
@@ -32,13 +26,10 @@
 			'label input';
 	}
 	@media (min-width: theme('screens.md')) {
-		&.largeDesktop {
-			@include desktopFieldSet;
+		&.wideDesktop {
+			grid-template-columns: minmax(20%, 9rem) auto minmax(20%, 13rem);
+			grid-template-areas: 'label input callout';
+			grid-column-gap: 0.5rem;
 		}
 	}
-	// @media (min-width: theme('screens.lg')) {
-	// 	&.smallDesktop {
-	// 		@include desktopFieldSet;
-	// 	}
-	// }
 }

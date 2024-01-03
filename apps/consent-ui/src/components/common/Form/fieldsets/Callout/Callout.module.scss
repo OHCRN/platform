@@ -35,13 +35,15 @@
 	}
 
 	@media (min-width: theme('screens.md')) {
-		&.largeDesktop {
-			@include desktopCallout;
-		}
-	}
-	@media (min-width: theme('screens.lg')) {
-		&.smallDesktop {
-			@include desktopCallout;
+		&.wideDesktop {
+			margin-left: 0.75rem;
+			margin-bottom: 0;
+			&:before {
+				left: -1rem;
+				top: 0.75rem;
+				border-top-color: transparent;
+				border-right-color: theme('colors.accent1.200');
+			}
 		}
 	}
 }

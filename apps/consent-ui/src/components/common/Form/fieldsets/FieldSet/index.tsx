@@ -21,12 +21,11 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 import Callout from 'src/components/common/Form/fieldsets/Callout';
-import { DesktopSizeVariantProp } from 'src/components/common/Form/types';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 
 import styles from './FieldSet.module.scss';
 
-export type FieldSetProps = DesktopSizeVariantProp & {
+export interface FieldSetProps {
 	calloutId: string;
 	calloutText?: ReactNode;
 	calloutVisible: boolean;
@@ -35,7 +34,8 @@ export type FieldSetProps = DesktopSizeVariantProp & {
 	fieldId: string;
 	label: string;
 	required: boolean;
-};
+	withNarrowDesktopLayout?: boolean;
+}
 
 const FieldSet = ({
 	calloutId,
@@ -46,10 +46,12 @@ const FieldSet = ({
 	fieldId,
 	label,
 	required,
-	variant = 'largeDesktop',
+	withNarrowDesktopLayout = false,
 }: FieldSetProps) => {
 	return (
-		<fieldset className={clsx(styles.fieldSet, styles[variant], className)}>
+		<fieldset
+			className={clsx(styles.fieldSet, !withNarrowDesktopLayout && styles.wideDesktop, className)}
+		>
 			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
 				{label}
 			</FieldLabel>
@@ -61,7 +63,7 @@ const FieldSet = ({
 					className={styles.calloutGridArea}
 					id={calloutId}
 					isActive={calloutVisible}
-					variant={variant}
+					withNarrowDesktopLayout={withNarrowDesktopLayout}
 				>
 					{calloutText}
 				</Callout>
