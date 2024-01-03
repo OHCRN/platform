@@ -32,14 +32,24 @@
 						margin: -2px;
 						border-radius: 1.25rem;
 					}
+					.react-select {
+						&__dropdown-indicator {
+							color: theme('colors.grayscale.800');
+						}
+						&__indicator-separator {
+							background: theme('colors.grayscale.800');
+						}
+					}
 				}
 			}
 			&__indicator-separator {
+				background: theme('colors.grayscale.500');
 				margin: 0;
 			}
 			&__dropdown-indicator {
 				padding: 8px 9px 8px 7px;
 				cursor: pointer;
+				color: theme('colors.grayscale.500');
 			}
 			&__menu {
 				box-shadow: none;
@@ -79,10 +89,18 @@
 				}
 			}
 			&__has-error {
-				.react-select__control {
-					border-color: theme('colors.error.500');
-					&--is-focused:before {
+				.react-select {
+					&__control {
 						border-color: theme('colors.error.500');
+						&--is-focused:before {
+							border-color: theme('colors.error.500');
+						}
+					}
+					&__dropdown-indicator {
+						color: theme('colors.error.500');
+					}
+					&__indicator-separator {
+						background: theme('colors.error.500');
 					}
 				}
 			}
