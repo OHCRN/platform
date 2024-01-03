@@ -17,19 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
 import { FieldValues, Path } from 'react-hook-form';
-import { SingleValue } from 'react-select';
 
 // setup types for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
 
 // fieldsets that use the FieldSet component
 
-export type DesktopSizeVariant = 'largeDesktop' | 'smallDesktop';
+export type DesktopSizeVariantProp = { variant?: 'largeDesktop' | 'smallDesktop' };
 
-export type DesktopSizeVariantProp = { variant?: DesktopSizeVariant };
-type FormFieldSetSharedProps<T extends FieldValues> = DesktopSizeVariantProp & {
+export type FormFieldSetSharedProps<T extends FieldValues> = DesktopSizeVariantProp & {
 	className?: string;
 	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
@@ -44,34 +41,6 @@ export interface FormFieldSetWithCalloutProps {
 	onFocus?: () => void;
 }
 
-export type FormTextInputType = 'email' | 'tel' | 'text';
-export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	calloutText?: ReactNode;
-	type?: FormTextInputType;
-};
-
-export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
-export type FormSelectFieldSetProps<
-	T extends FieldValues,
-	V extends string,
-> = FormFieldSetSharedProps<T> &
-	FormFieldSetWithCalloutProps &
-	DesktopSizeVariantProp & {
-		calloutText?: ReactNode;
-		options: FormSelectOption<V>[];
-		placeholder: string;
-	};
-
-// unique fieldsets
-
-export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
-	FormFieldSetSharedProps<T>,
-	'label' // uses title & description instead
-> & {
-	description: ReactNode;
-	title?: string;
-};
-
 // field inputs
 
 export interface FormInputProps<T extends FieldValues> {
@@ -81,27 +50,9 @@ export interface FormInputProps<T extends FieldValues> {
 	required: boolean;
 }
 
-export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> &
-	FormFieldSetWithCalloutProps & {
-		type: FormTextInputType;
-	};
-
-export type FormRadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	value: V;
-};
-
-// select input
-
 export interface FormSelectOption<V extends string> {
 	label: string;
 	value: V;
 }
-export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
-	FormFieldSetWithCalloutProps & {
-		className: string;
-		classNamePrefix: string;
-		onChange: (val: FormSelectOnChangeArg<V>) => void;
-		options: FormSelectOption<V>[];
-		placeholder: string;
-		value: V;
-	};
+
+export type FormTextInputType = 'email' | 'tel' | 'text';

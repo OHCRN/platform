@@ -26,7 +26,7 @@ import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 
 import styles from './FieldSet.module.scss';
 
-type FieldSetProps = DesktopSizeVariantProp & {
+export type FormFieldSetWithCalloutWrapperProps = DesktopSizeVariantProp & {
 	calloutId: string;
 	calloutText?: ReactNode;
 	calloutVisible: boolean;
@@ -47,7 +47,7 @@ const FieldSet = ({
 	label,
 	required,
 	variant = 'largeDesktop',
-}: FieldSetProps) => {
+}: FormFieldSetWithCalloutWrapperProps) => {
 	return (
 		<fieldset className={clsx(styles.fieldSet, styles[variant], className)}>
 			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>

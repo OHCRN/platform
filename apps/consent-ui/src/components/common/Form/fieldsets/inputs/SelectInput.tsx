@@ -20,9 +20,24 @@
 'use client';
 
 import { FieldValues } from 'react-hook-form';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 
-import { FormSelectInputProps, FormSelectOnChangeArg } from 'src/components/common/Form/types';
+import {
+	FormFieldSetWithCalloutProps,
+	FormInputProps,
+	FormSelectOption,
+} from 'src/components/common/Form/types';
+
+type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
+type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
+	FormFieldSetWithCalloutProps & {
+		className: string;
+		classNamePrefix: string;
+		onChange: (val: FormSelectOnChangeArg<V>) => void;
+		options: FormSelectOption<V>[];
+		placeholder: string;
+		value: V;
+	};
 
 const SelectInput = <T extends FieldValues, V extends string>({
 	ariaProps,

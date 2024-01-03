@@ -21,14 +21,22 @@
 
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
-import { useId } from 'react';
+import { ReactNode, useId } from 'react';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
-import { FormCheckboxFieldSetProps } from 'src/components/common/Form/types';
+import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
 
 import styles from './CheckboxFieldSet.module.scss';
+
+export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
+	FormFieldSetSharedProps<T>,
+	'label' // uses title & description instead
+> & {
+	description: ReactNode;
+	title?: string;
+};
 
 const CheckboxFieldSet = <T extends FieldValues>({
 	className,

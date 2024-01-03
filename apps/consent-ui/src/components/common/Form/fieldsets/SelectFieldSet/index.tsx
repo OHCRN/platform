@@ -19,17 +19,30 @@
 
 'use client';
 
-import { useId } from 'react';
+import { ReactNode, useId } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
-import { FormSelectFieldSetProps } from 'src/components/common/Form/types';
+import {
+	DesktopSizeVariantProp,
+	FormFieldSetSharedProps,
+	FormFieldSetWithCalloutProps,
+	FormSelectOption,
+} from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 
 import styles from './SelectFieldSet.module.scss';
+
+type FormSelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> &
+	FormFieldSetWithCalloutProps &
+	DesktopSizeVariantProp & {
+		calloutText?: ReactNode;
+		options: FormSelectOption<V>[];
+		placeholder: string;
+	};
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	calloutText,
