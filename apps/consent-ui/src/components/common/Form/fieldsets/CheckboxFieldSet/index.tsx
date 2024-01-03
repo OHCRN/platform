@@ -30,7 +30,7 @@ import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxI
 
 import styles from './CheckboxFieldSet.module.scss';
 
-export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
+export type CheckBoxFieldSetProps<T extends FieldValues> = Omit<
 	FormFieldSetSharedProps<T>,
 	'label' // uses title & description instead
 > & {
@@ -46,7 +46,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	name,
 	required = false,
 	title,
-}: FormCheckboxFieldSetProps<T>) => {
+}: CheckBoxFieldSetProps<T>) => {
 	const idPrefix = useId();
 	return (
 		<fieldset

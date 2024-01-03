@@ -29,7 +29,7 @@ import {
 	FormTextInputType,
 } from 'src/components/common/Form/types';
 
-type FormTextInputProps<T extends FieldValues> = FormInputProps<T> &
+type TextInputProps<T extends FieldValues> = FormInputProps<T> &
 	FormFieldSetWithCalloutProps & {
 		type: FormTextInputType;
 	};
@@ -43,7 +43,7 @@ const TextInput = <T extends FieldValues>({
 	required = false,
 	type = 'text',
 	ariaProps,
-}: FormTextInputProps<T>) => {
+}: TextInputProps<T>) => {
 	const { register } = useFormContext();
 	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
 	const handleBlur = (e: SyntheticEvent) => {

@@ -36,7 +36,7 @@ import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout'
 
 import styles from './SelectFieldSet.module.scss';
 
-type FormSelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> &
+type SelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> &
 	FormFieldSetWithCalloutProps &
 	DesktopSizeVariantProp & {
 		calloutText?: ReactNode;
@@ -54,7 +54,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	placeholder,
 	required = false,
 	variant = 'largeDesktop',
-}: FormSelectFieldSetProps<T, V>) => {
+}: SelectFieldSetProps<T, V>) => {
 	const { control } = useFormContext();
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
 

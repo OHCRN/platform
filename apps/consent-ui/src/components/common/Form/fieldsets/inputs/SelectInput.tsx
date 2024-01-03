@@ -28,12 +28,12 @@ import {
 	FormSelectOption,
 } from 'src/components/common/Form/types';
 
-type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
-type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
+type SelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
+type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
 	FormFieldSetWithCalloutProps & {
 		className: string;
 		classNamePrefix: string;
-		onChange: (val: FormSelectOnChangeArg<V>) => void;
+		onChange: (val: SelectOnChangeArg<V>) => void;
 		options: FormSelectOption<V>[];
 		placeholder: string;
 		value: V;
@@ -51,7 +51,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	placeholder = '',
 	required,
 	value,
-}: FormSelectInputProps<T, V>) => {
+}: SelectInputProps<T, V>) => {
 	return (
 		<Select
 			aria-required={required}
@@ -63,7 +63,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 			inputId={name}
 			name={name}
 			onBlur={onBlur}
-			onChange={(val: FormSelectOnChangeArg<V>) => {
+			onChange={(val: SelectOnChangeArg<V>) => {
 				// in react-select the value can be a string or object.
 				// in our implementation it should be {label, value},
 				// with the label being translated.

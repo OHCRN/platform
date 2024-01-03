@@ -31,7 +31,7 @@ import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 
 import styles from './TextFieldSet.module.scss';
 
-type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+type TextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
 	calloutText?: ReactNode;
 	type?: FormTextInputType;
 };
@@ -45,7 +45,7 @@ const TextFieldSet = <T extends FieldValues>({
 	required = false,
 	type = 'text',
 	variant = 'largeDesktop',
-}: FormTextFieldSetProps<T>) => {
+}: TextFieldSetProps<T>) => {
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
 	const idPrefix = useId();

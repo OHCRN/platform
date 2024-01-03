@@ -22,7 +22,7 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormInputProps } from '../../types';
+import { FormInputProps } from 'src/components/common/Form/types';
 
 const CheckboxInput = <T extends FieldValues>({
 	className,
