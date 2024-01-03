@@ -32,7 +32,8 @@ import styles from './CheckboxFieldSet.module.scss';
 
 export type CheckBoxFieldSetProps<T extends FieldValues> = Omit<
 	FormFieldSetSharedProps<T>,
-	'label' // uses title & description instead
+	| 'label' // uses title & description instead
+	| 'withNarrowDesktopLayout' // same layout at all sizes
 > & {
 	description: ReactNode;
 	title?: string;

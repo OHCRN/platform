@@ -23,16 +23,14 @@ import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 import { SyntheticEvent } from 'react';
 
-import {
-	FormFieldSetWithCalloutProps,
-	FormInputProps,
-	FormTextInputType,
-} from 'src/components/common/Form/types';
+import { FormInputProps, FormTextInputType } from 'src/components/common/Form/types';
 
-type TextInputProps<T extends FieldValues> = FormInputProps<T> &
-	FormFieldSetWithCalloutProps & {
-		type: FormTextInputType;
-	};
+type TextInputProps<T extends FieldValues> = FormInputProps<T> & {
+	ariaProps?: { 'aria-describedby'?: string };
+	onBlur?: () => void;
+	onFocus?: () => void;
+	type: FormTextInputType;
+};
 
 const TextInput = <T extends FieldValues>({
 	className,

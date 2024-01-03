@@ -25,22 +25,20 @@ import clsx from 'clsx';
 
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
-import {
-	FormFieldSetSharedProps,
-	FormFieldSetWithCalloutProps,
-	FormSelectOption,
-} from 'src/components/common/Form/types';
+import { FormFieldSetSharedProps, FormSelectOption } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 
 import styles from './SelectFieldSet.module.scss';
 
-type SelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> &
-	FormFieldSetWithCalloutProps & {
-		calloutText?: ReactNode;
-		options: FormSelectOption<V>[];
-		placeholder: string;
-	};
+type SelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> & {
+	ariaProps?: { 'aria-describedby'?: string };
+	calloutText?: ReactNode;
+	onBlur?: () => void;
+	onFocus?: () => void;
+	options: FormSelectOption<V>[];
+	placeholder: string;
+};
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	calloutText,

@@ -22,22 +22,20 @@
 import { FieldValues } from 'react-hook-form';
 import Select, { SingleValue } from 'react-select';
 
-import {
-	FormFieldSetWithCalloutProps,
-	FormInputProps,
-	FormSelectOption,
-} from 'src/components/common/Form/types';
+import { FormInputProps, FormSelectOption } from 'src/components/common/Form/types';
 
 type SelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
-type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> &
-	FormFieldSetWithCalloutProps & {
-		className: string;
-		classNamePrefix: string;
-		onChange: (val: SelectOnChangeArg<V>) => void;
-		options: FormSelectOption<V>[];
-		placeholder: string;
-		value: V;
-	};
+type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
+	ariaProps?: { 'aria-describedby'?: string };
+	className: string;
+	classNamePrefix: string;
+	onBlur?: () => void;
+	onChange: (val: SelectOnChangeArg<V>) => void;
+	onFocus?: () => void;
+	options: FormSelectOption<V>[];
+	placeholder: string;
+	value: V;
+};
 
 const SelectInput = <T extends FieldValues, V extends string>({
 	ariaProps,

@@ -34,12 +34,6 @@ export type FormFieldSetSharedProps<T extends FieldValues> = {
 	withNarrowDesktopLayout?: boolean;
 };
 
-export interface FormFieldSetWithCalloutProps {
-	ariaProps?: { 'aria-describedby'?: string };
-	onBlur?: () => void;
-	onFocus?: () => void;
-}
-
 // field inputs
 
 export interface FormInputProps<T extends FieldValues> {
