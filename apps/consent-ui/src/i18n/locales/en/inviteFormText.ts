@@ -24,6 +24,8 @@ const { indicatesRequiredField, selectPlaceholder, submit } = formText;
 const {
 	clinicianInstitutionalEmailAddressCallout,
 	consentGroupCallout,
+	guardianEmailAddressCallout,
+	guardianPhoneNumberCallout,
 	participantEmailAddressCallout,
 	participantFirstNameCallout,
 	participantLastNameCallout,
@@ -40,6 +42,8 @@ const dictionary = {
 	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	enterGuardianInfo: "Please enter the guardian's info below:",
+	guardianEmailAddressCallout,
+	guardianPhoneNumberCallout,
 	indicatesRequiredField,
 	participantEmailAddressCallout,
 	participantFirstNameCallout,

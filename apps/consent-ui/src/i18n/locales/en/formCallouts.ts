@@ -21,6 +21,8 @@ const dictionary = {
 	clinicianInstitutionalEmailAddressCallout:
 		'We require this to confirm your authority to register patients.',
 	consentGroupCallout: 'This will determine if a guardian must be involved with consents.',
+	guardianEmailAddressCallout: 'The guardian will receive an invitation to this account.',
+	guardianPhoneNumberCallout: 'If we contact them, it will be for health updates and consent.',
 	participantEmailAddressCallout: 'The patient will receive an invitation to this account.',
 	participantFirstNameCallout: "Enter participant's first name as it appears on their health card.",
 	participantLastNameCallout: "Enter participant's last name as it appears on their health card.",

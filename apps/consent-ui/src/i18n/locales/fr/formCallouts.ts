@@ -23,6 +23,9 @@ const dictionary = {
 	clinicianInstitutionalEmailAddressCallout:
 		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
 	consentGroupCallout: 'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
+	guardianEmailAddressCallout: 'Le tuteur recevra une invitation à ce compte.',
+	guardianPhoneNumberCallout:
+		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
 	participantEmailAddressCallout: 'Le patient recevra une invitation sur ce compte.',
 	participantFirstNameCallout:
 		"Inscrivez le prénom du participant tel qu'il apparaît sur sa carte Santé.",

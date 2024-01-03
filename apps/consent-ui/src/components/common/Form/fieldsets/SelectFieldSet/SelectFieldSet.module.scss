@@ -13,6 +13,7 @@
 				border-radius: 1.25rem;
 				border: 1px solid theme('colors.grayscale.500');
 				position: relative;
+				padding-left: 0.39rem;
 				&--is-focused {
 					border: 1px solid theme('colors.grayscale.500');
 					box-shadow: none;
@@ -23,6 +24,7 @@
 					&:before {
 						content: '';
 						position: absolute;
+						left: 0;
 						width: 100%;
 						height: 100%;
 						box-sizing: content-box;

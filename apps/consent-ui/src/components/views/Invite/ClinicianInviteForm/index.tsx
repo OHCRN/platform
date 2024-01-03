@@ -210,6 +210,7 @@ const ClinicianInviteFormComponent = ({
 							variant="smallDesktop"
 						/>
 						<TextFieldSet
+							calloutText={textDict.guardianPhoneNumberCallout}
 							error={errors.guardianPhoneNumber?.type && errorsDict.required}
 							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
@@ -218,6 +219,7 @@ const ClinicianInviteFormComponent = ({
 							variant="smallDesktop"
 						/>
 						<TextFieldSet
+							calloutText={textDict.guardianEmailAddressCallout}
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email || ''}
 							name="guardianEmailAddress"

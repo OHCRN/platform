@@ -76,6 +76,8 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		consentContactDescription: translate('inviteFormText', 'consentContactDescription'),
 		consentGroupCallout: translate('inviteFormText', 'consentGroupCallout'),
 		enterGuardianInfo: translate('inviteFormText', 'enterGuardianInfo'),
+		guardianEmailAddressCallout: translate('inviteFormText', 'guardianEmailAddressCallout'),
+		guardianPhoneNumberCallout: translate('inviteFormText', 'guardianPhoneNumberCallout'),
 		indicatesRequiredField: translate('inviteFormText', 'indicatesRequiredField'),
 		participantEmailAddressCallout: translate('inviteFormText', 'participantEmailAddressCallout'),
 		participantFirstNameCallout: translate('inviteFormText', 'participantFirstNameCallout'),
