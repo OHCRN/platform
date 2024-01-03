@@ -14,6 +14,9 @@
 	&.error {
 		border-color: theme('colors.error.500');
 	}
+	&:disabled {
+		background: theme('colors.grayscale.200');
+	}
 }
 
 .wrapper {

@@ -44,6 +44,7 @@ export type FormFieldSetWithCalloutProps<T extends FieldValues> = FormFieldSetSh
 export interface FormInputProps<T extends FieldValues> {
 	ariaProps?: Record<string, string>;
 	className?: string;
+	disabled?: boolean;
 	id: string; // use useId() to generate this
 	name: FormFieldName<T>;
 	onBlur?: () => void;

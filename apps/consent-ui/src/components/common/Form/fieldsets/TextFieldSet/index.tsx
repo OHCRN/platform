@@ -38,6 +38,7 @@ type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithCalloutProps<T> 
 const TextFieldSet = <T extends FieldValues>({
 	calloutText,
 	className,
+	disabled,
 	error,
 	label,
 	name,
@@ -65,6 +66,7 @@ const TextFieldSet = <T extends FieldValues>({
 			<TextInput
 				ariaProps={calloutText ? { 'aria-describedby': calloutId } : {}}
 				className={clsx(styles.textInput, error && styles.error)}
+				disabled={disabled}
 				id={fieldId}
 				name={name}
 				onBlur={hideCallout}

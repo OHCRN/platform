@@ -42,7 +42,7 @@ export type CheckBoxFieldSetProps<T extends FieldValues> = Omit<
 const CheckboxFieldSet = <T extends FieldValues>({
 	className,
 	description,
-	disabled = false,
+	disabled,
 	error,
 	name,
 	required = false,
@@ -66,10 +66,11 @@ const CheckboxFieldSet = <T extends FieldValues>({
 			)}
 			<div className={styles.checkboxWrapper}>
 				<CheckboxInput
-					required={required}
+					className={styles.checkboxInput}
+					disabled={disabled}
 					id={`${idPrefix}-${name}`}
 					name={name}
-					className={styles.checkboxInput}
+					required={required}
 				/>
 				<label htmlFor={`${idPrefix}-${name}`} className={styles.label}>
 					<span className={styles.description}>

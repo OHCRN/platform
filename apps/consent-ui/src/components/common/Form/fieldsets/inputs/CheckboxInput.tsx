@@ -25,6 +25,7 @@ import { FormInputProps } from 'src/components/common/Form/types';
 
 const CheckboxInput = <T extends FieldValues>({
 	ariaProps = {},
+	disabled,
 	className,
 	id,
 	name,
@@ -37,6 +38,7 @@ const CheckboxInput = <T extends FieldValues>({
 			{...register(name)}
 			aria-required={required}
 			className={className}
+			disabled={disabled}
 			id={id}
 			type="checkbox"
 			{...ariaProps}

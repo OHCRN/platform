@@ -34,7 +34,7 @@ type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<
 
 const SelectInput = <T extends FieldValues, V extends string>({
 	ariaProps = {},
-	// disabled TO DO FORM
+	disabled,
 	hasError = false,
 	name,
 	onBlur = () => {},
@@ -58,6 +58,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 					// className & classNamePrefix need to be strings, not hashed classNames.
 					// https://github.com/JedWatson/react-select/issues/4525
 					inputId={name}
+					isDisabled={disabled}
 					name={name}
 					onBlur={onBlur}
 					onChange={(val: SelectOnChangeArg<V>) => {

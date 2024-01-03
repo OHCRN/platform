@@ -42,7 +42,7 @@ type SelectFieldSetProps<
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	calloutText,
 	className,
-	// disabled TODO FORM
+	disabled,
 	error,
 	label,
 	name,
@@ -70,7 +70,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 		>
 			<SelectInput
 				ariaProps={calloutText ? { 'aria-describedby': calloutId } : {}}
-				// disabled={disabled} TODO FORM
+				disabled={disabled}
 				hasError={!!error}
 				id={fieldId}
 				name={name}

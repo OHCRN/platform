@@ -7,6 +7,9 @@
 		border: 1px solid theme('colors.grayscale.500');
 		padding: 0.5rem 1.25rem 0.5rem 3rem;
 		display: block;
+		&:hover {
+			background: theme('colors.grayscale.200 ');
+		}
 	}
 	.checkboxWrapper {
 		position: relative;
@@ -33,7 +36,7 @@
 			}
 		}
 		&:disabled + .label {
-			background: theme('colors.grayscale.200');
+			background: theme('colors.grayscale.300');
 		}
 	}
 	.description {

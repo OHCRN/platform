@@ -31,7 +31,7 @@ type TextInputProps<T extends FieldValues> = FormInputProps<T> & {
 const TextInput = <T extends FieldValues>({
 	ariaProps = {},
 	className,
-	// disabled TO DO FORM
+	disabled,
 	id,
 	name,
 	onBlur = () => {},
@@ -55,6 +55,7 @@ const TextInput = <T extends FieldValues>({
 		<input
 			aria-required={required}
 			className={className}
+			disabled={disabled}
 			id={id}
 			name={registerName}
 			onBlur={handleBlur}

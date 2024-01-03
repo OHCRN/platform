@@ -8,6 +8,11 @@
 			width: 100%;
 		}
 		.react-select {
+			&--is-disabled {
+				.react-select__control {
+					background: theme('colors.grayscale.200');
+				}
+			}
 			&__control {
 				height: 2.5rem;
 				border-radius: 1.25rem;
