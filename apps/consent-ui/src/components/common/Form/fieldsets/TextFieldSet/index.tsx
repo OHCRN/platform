@@ -63,7 +63,7 @@ const TextFieldSet = <T extends FieldValues>({
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<TextInput
-				ariaProps={{ 'aria-describedby': calloutId }}
+				ariaProps={calloutText ? { 'aria-describedby': calloutId } : {}}
 				className={clsx(styles.textInput, error && styles.error)}
 				id={fieldId}
 				name={name}

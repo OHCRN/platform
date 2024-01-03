@@ -69,7 +69,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<SelectInput
-				ariaProps={{ 'aria-describedby': calloutId }}
+				ariaProps={calloutText ? { 'aria-describedby': calloutId } : {}}
 				// disabled={disabled} TODO FORM
 				hasError={!!error}
 				id={fieldId}
