@@ -22,6 +22,9 @@ import clsx from 'clsx';
 
 import styles from './Callout.module.scss';
 
+// show/hide callout using CSS not with conditional rendering, so that it can be read by screenreaders
+// https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/
+
 interface CalloutProps {
 	children: ReactNode;
 	className?: string;
