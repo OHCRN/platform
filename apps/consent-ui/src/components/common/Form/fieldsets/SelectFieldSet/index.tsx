@@ -30,8 +30,11 @@ import { FormSelectFieldSetProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
+import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
 
 import styles from './SelectFieldSet.module.scss';
+
+Object.assign(styles, fieldSetStyles);
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	calloutText,
@@ -42,6 +45,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	options,
 	placeholder,
 	required = false,
+	variant = 'largeDesktop',
 }: FormSelectFieldSetProps<T, V>) => {
 	const { control } = useFormContext();
 	const { showCallout, hideCallout, calloutVisible } = useCallout();
@@ -55,7 +59,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			control={control}
 			name={name}
 			render={({ field: { onChange, value } }) => (
-				<FieldSet className={clsx(styles.selectFieldSet, className)}>
+				<FieldSet className={clsx(styles.selectFieldSet, className)} variant={variant}>
 					<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
 						{label}
 					</FieldLabel>
@@ -79,7 +83,12 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 					</div>
 
 					{calloutText && (
-						<Callout id={calloutId} isActive={calloutVisible} variant="smallDesktop">
+						<Callout
+							className={styles.calloutGridArea}
+							id={calloutId}
+							isActive={calloutVisible}
+							variant={variant}
+						>
 							{calloutText}
 						</Callout>
 					)}

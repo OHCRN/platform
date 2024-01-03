@@ -39,6 +39,43 @@
 				padding: 8px 9px 8px 7px;
 				cursor: pointer;
 			}
+			&__menu {
+				box-shadow: none;
+				border: 1px solid theme('colors.grayscale.500');
+				border-radius: 0.63rem;
+				overflow: auto;
+				&-list {
+					padding: 0;
+				}
+			}
+			&__option {
+				border-top: 1px solid theme('colors.grayscale.500');
+				padding: 0.62rem 1rem;
+				&:first-of-type {
+					border-top-width: 0;
+				}
+				&:active {
+					background: theme('colors.accent1.100');
+				}
+				&--is-focused,
+				&--is-selected {
+					background: theme('colors.accent1.100');
+				}
+				&--is-selected {
+					color: inherit;
+					position: relative;
+					&:after {
+						content: '';
+						display: block;
+						position: absolute;
+						background-image: url('../../../../../public/checkmark.svg');
+						width: 15px;
+						height: 15px;
+						top: calc(50% - 7px);
+						right: 0.75rem;
+					}
+				}
+			}
 		}
 	}
 }

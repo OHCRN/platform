@@ -55,7 +55,8 @@ export type FormSelectFieldSetProps<
 	T extends FieldValues,
 	V extends string,
 > = FormFieldSetSharedProps<T> &
-	FormFieldSetWithCalloutProps & {
+	FormFieldSetWithCalloutProps &
+	DesktopSizeVariantProp & {
 		calloutText?: ReactNode;
 		options: FormSelectOption<V>[];
 		placeholder: string;

@@ -173,6 +173,7 @@ const ClinicianInviteFormComponent = ({
 						options={consentGroupOptions}
 						placeholder={textDict.selectPlaceholder || ''}
 						required
+						variant="smallDesktop"
 					/>
 
 					<TextFieldSet
