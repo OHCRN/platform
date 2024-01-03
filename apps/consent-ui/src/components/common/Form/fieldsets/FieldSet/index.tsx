@@ -20,18 +20,53 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
+import Callout from 'src/components/common/Form/fieldsets/Callout';
 import { DesktopSizeVariantProp } from 'src/components/common/Form/types';
+import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 
 import styles from './FieldSet.module.scss';
 
 type FieldSetProps = DesktopSizeVariantProp & {
+	calloutId: string;
+	calloutText?: ReactNode;
+	calloutVisible: boolean;
 	children: ReactNode;
 	className?: string;
+	fieldId: string;
+	label: string;
+	required: boolean;
 };
 
-const FieldSet = ({ children, className, variant = 'largeDesktop' }: FieldSetProps) => {
+const FieldSet = ({
+	calloutId,
+	calloutText,
+	calloutVisible,
+	children,
+	className,
+	fieldId,
+	label,
+	required,
+	variant = 'largeDesktop',
+}: FieldSetProps) => {
 	return (
-		<fieldset className={clsx(styles.fieldSet, styles[variant], className)}>{children}</fieldset>
+		<fieldset className={clsx(styles.fieldSet, styles[variant], className)}>
+			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
+				{label}
+			</FieldLabel>
+
+			<div className={styles.inputGridArea}>{children}</div>
+
+			{calloutText && (
+				<Callout
+					className={styles.calloutGridArea}
+					id={calloutId}
+					isActive={calloutVisible}
+					variant={variant}
+				>
+					{calloutText}
+				</Callout>
+			)}
+		</fieldset>
 	);
 };
 

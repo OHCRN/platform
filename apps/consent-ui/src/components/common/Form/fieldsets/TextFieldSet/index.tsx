@@ -26,15 +26,10 @@ import clsx from 'clsx';
 import { FormTextFieldSetProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
-import Callout from 'src/components/common/Form/fieldsets/Callout';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
-import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
-import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
 
 import styles from './TextFieldSet.module.scss';
-
-Object.assign(styles, fieldSetStyles);
 
 const TextFieldSet = <T extends FieldValues>({
 	calloutText,
@@ -46,42 +41,34 @@ const TextFieldSet = <T extends FieldValues>({
 	type = 'text',
 	variant = 'largeDesktop',
 }: FormTextFieldSetProps<T>) => {
-	const { showCallout, hideCallout, calloutVisible } = useCallout();
-	const idPrefix = useId();
+	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
+	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
 	const calloutId = `${idPrefix}-callout`;
 
 	return (
-		<FieldSet className={className} variant={variant}>
-			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
-				{label}
-			</FieldLabel>
-
-			<div className={styles.inputGridArea}>
-				<TextInput
-					ariaProps={{ 'aria-describedby': calloutId }}
-					className={clsx(styles.textInput, error && styles.error, styles[variant])}
-					id={fieldId}
-					name={name}
-					onBlur={hideCallout}
-					onFocus={showCallout}
-					required={required}
-					type={type}
-				/>
-				{error && <InputError>{error}</InputError>}
-			</div>
-
-			{calloutText && (
-				<Callout
-					className={styles.calloutGridArea}
-					id={calloutId}
-					isActive={calloutVisible}
-					variant={variant}
-				>
-					{calloutText}
-				</Callout>
-			)}
+		<FieldSet
+			calloutId={calloutId}
+			calloutText={calloutText}
+			calloutVisible={calloutVisible}
+			className={className}
+			fieldId={fieldId}
+			label={label}
+			required={required}
+			variant={variant}
+		>
+			<TextInput
+				ariaProps={{ 'aria-describedby': calloutId }}
+				className={clsx(styles.textInput, error && styles.error, styles[variant])}
+				id={fieldId}
+				name={name}
+				onBlur={hideCallout}
+				onFocus={showCallout}
+				required={required}
+				type={type}
+			/>
+			{error && <InputError>{error}</InputError>}
 		</FieldSet>
 	);
 };

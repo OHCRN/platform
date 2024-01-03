@@ -23,18 +23,13 @@ import { useId } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import Callout from 'src/components/common/Form/fieldsets/Callout';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
 import { FormSelectFieldSetProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
-import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
-import fieldSetStyles from 'src/components/common/Form/fieldsets/FieldSet/FieldSet.module.scss';
 
 import styles from './SelectFieldSet.module.scss';
-
-Object.assign(styles, fieldSetStyles);
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
 	calloutText,
@@ -48,9 +43,9 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	variant = 'largeDesktop',
 }: FormSelectFieldSetProps<T, V>) => {
 	const { control } = useFormContext();
-	const { showCallout, hideCallout, calloutVisible } = useCallout();
-	const idPrefix = useId();
+	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
+	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
 	const calloutId = `${idPrefix}-callout`;
 
@@ -59,39 +54,31 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			control={control}
 			name={name}
 			render={({ field: { onChange, value } }) => (
-				<FieldSet className={clsx(styles.selectFieldSet, className)} variant={variant}>
-					<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
-						{label}
-					</FieldLabel>
-
-					<div className={styles.inputGridArea}>
-						<SelectInput
-							ariaProps={{ 'aria-describedby': calloutId }}
-							className="react-select-container"
-							classNamePrefix="react-select"
-							id={fieldId}
-							name={name}
-							onBlur={hideCallout}
-							onChange={onChange}
-							onFocus={showCallout}
-							options={options}
-							placeholder={placeholder}
-							required={required}
-							value={value}
-						/>
-						{error && <InputError>{error}</InputError>}
-					</div>
-
-					{calloutText && (
-						<Callout
-							className={styles.calloutGridArea}
-							id={calloutId}
-							isActive={calloutVisible}
-							variant={variant}
-						>
-							{calloutText}
-						</Callout>
-					)}
+				<FieldSet
+					calloutId={calloutId}
+					calloutText={calloutText}
+					calloutVisible={calloutVisible}
+					className={clsx(styles.selectFieldSet, className)}
+					fieldId={fieldId}
+					label={label}
+					required={required}
+					variant={variant}
+				>
+					<SelectInput
+						ariaProps={{ 'aria-describedby': calloutId }}
+						className={clsx('react-select-container', error && 'react-select__has-error')}
+						classNamePrefix="react-select"
+						id={fieldId}
+						name={name}
+						onBlur={hideCallout}
+						onChange={onChange}
+						onFocus={showCallout}
+						options={options}
+						placeholder={placeholder}
+						required={required}
+						value={value}
+					/>
+					{error && <InputError>{error}</InputError>}
 				</FieldSet>
 			)}
 			rules={{ required }}

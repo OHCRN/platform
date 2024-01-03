@@ -78,6 +78,14 @@
 					}
 				}
 			}
+			&__has-error {
+				.react-select__control {
+					border-color: theme('colors.error.500');
+					&--is-focused:before {
+						border-color: theme('colors.error.500');
+					}
+				}
+			}
 		}
 	}
 }
