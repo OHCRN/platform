@@ -147,7 +147,7 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						calloutText={textDict.participantLastNameCallout}
@@ -155,14 +155,14 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						calloutText={textDict.participantPreferredNameCallout}
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 
 					<SelectFieldSet
@@ -173,7 +173,7 @@ const ClinicianInviteFormComponent = ({
 						options={consentGroupOptions}
 						placeholder={textDict.selectPlaceholder || ''}
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 
 					<TextFieldSet
@@ -182,7 +182,7 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						calloutText={textDict.participantEmailAddressCallout}
@@ -190,7 +190,7 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
@@ -207,7 +207,7 @@ const ClinicianInviteFormComponent = ({
 							label={labelsDict.guardianName || ''}
 							name="guardianName"
 							required
-							variant="smallDesktop"
+							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							calloutText={textDict.guardianPhoneNumberCallout}
@@ -216,7 +216,7 @@ const ClinicianInviteFormComponent = ({
 							name="guardianPhoneNumber"
 							required
 							type="tel"
-							variant="smallDesktop"
+							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							calloutText={textDict.guardianEmailAddressCallout}
@@ -225,14 +225,14 @@ const ClinicianInviteFormComponent = ({
 							name="guardianEmailAddress"
 							required
 							type="email"
-							variant="smallDesktop"
+							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianRelationship?.type && errorsDict.required}
 							label={labelsDict.guardianRelationship || ''}
 							name="guardianRelationship"
 							required
-							variant="smallDesktop"
+							withNarrowDesktopLayout
 						/>
 						<p>
 							{textDict.uploadFileDescription1}
@@ -262,21 +262,21 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.clinicianTitleOrRole || ''}
 						name="clinicianTitleOrRole"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianFirstName?.type && errorsDict.required}
 						label={labelsDict.clinicianFirstName || ''}
 						name="clinicianFirstName"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianLastName?.type && errorsDict.required}
 						label={labelsDict.clinicianLastName || ''}
 						name="clinicianLastName"
 						required
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						calloutText={textDict.clinicianInstitutionalEmailAddressCallout}
@@ -285,7 +285,7 @@ const ClinicianInviteFormComponent = ({
 						name="clinicianInstitutionalEmailAddress"
 						required
 						type="email"
-						variant="smallDesktop"
+						withNarrowDesktopLayout
 					/>
 				</FormSection>
 

@@ -26,7 +26,6 @@ import clsx from 'clsx';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
 import {
-	DesktopSizeVariantProp,
 	FormFieldSetSharedProps,
 	FormFieldSetWithCalloutProps,
 	FormSelectOption,
@@ -37,8 +36,7 @@ import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout'
 import styles from './SelectFieldSet.module.scss';
 
 type SelectFieldSetProps<T extends FieldValues, V extends string> = FormFieldSetSharedProps<T> &
-	FormFieldSetWithCalloutProps &
-	DesktopSizeVariantProp & {
+	FormFieldSetWithCalloutProps & {
 		calloutText?: ReactNode;
 		options: FormSelectOption<V>[];
 		placeholder: string;
@@ -53,7 +51,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	options,
 	placeholder,
 	required = false,
-	variant = 'largeDesktop',
+	withNarrowDesktopLayout = false,
 }: SelectFieldSetProps<T, V>) => {
 	const { control } = useFormContext();
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
@@ -75,7 +73,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 					fieldId={fieldId}
 					label={label}
 					required={required}
-					variant={variant}
+					withNarrowDesktopLayout={withNarrowDesktopLayout}
 				>
 					<SelectInput
 						ariaProps={{ 'aria-describedby': calloutId }}
