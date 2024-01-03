@@ -42,7 +42,7 @@ const TextFieldSet = <T extends FieldValues>({
 	error,
 	label,
 	name,
-	required = false,
+	required,
 	type = 'text',
 	withNarrowDesktopLayout = false,
 }: TextFieldSetProps<T>) => {

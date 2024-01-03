@@ -45,7 +45,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	disabled,
 	error,
 	name,
-	required = false,
+	required,
 	title,
 }: CheckBoxFieldSetProps<T>) => {
 	const idPrefix = useId();

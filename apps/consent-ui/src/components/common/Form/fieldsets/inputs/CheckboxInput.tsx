@@ -36,7 +36,7 @@ const CheckboxInput = <T extends FieldValues>({
 	return (
 		<input
 			{...register(name)}
-			aria-required={required}
+			aria-required={!!required}
 			className={className}
 			disabled={disabled}
 			id={id}

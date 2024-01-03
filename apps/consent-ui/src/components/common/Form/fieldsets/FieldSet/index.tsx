@@ -33,7 +33,7 @@ export interface FieldSetProps {
 	className?: string;
 	fieldId: string;
 	label: string;
-	required: boolean;
+	required?: boolean;
 	withNarrowDesktopLayout?: boolean;
 }
 

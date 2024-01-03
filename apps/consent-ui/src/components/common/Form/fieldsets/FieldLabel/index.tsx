@@ -28,7 +28,7 @@ interface FieldLabelProps {
 	children: ReactNode;
 	className?: string;
 	fieldId: string;
-	required: boolean;
+	required?: boolean;
 }
 
 const FieldLabel = ({ children, className, fieldId, required }: FieldLabelProps) => {

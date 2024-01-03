@@ -49,7 +49,7 @@ export interface FormInputProps<T extends FieldValues> {
 	name: FormFieldName<T>;
 	onBlur?: () => void;
 	onFocus?: () => void;
-	required: boolean;
+	required?: boolean;
 }
 
 export interface FormSelectOption<V extends string> {

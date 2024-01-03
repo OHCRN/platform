@@ -36,7 +36,7 @@ const TextInput = <T extends FieldValues>({
 	name,
 	onBlur = () => {},
 	onFocus = () => {},
-	required = false,
+	required,
 	type = 'text',
 }: TextInputProps<T>) => {
 	const { register } = useFormContext();
@@ -53,7 +53,7 @@ const TextInput = <T extends FieldValues>({
 
 	return (
 		<input
-			aria-required={required}
+			aria-required={!!required}
 			className={className}
 			disabled={disabled}
 			id={id}
