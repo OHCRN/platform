@@ -19,7 +19,7 @@
 		border-top-color: theme('colors.accent1.200');
 	}
 	display: none;
-	&.active {
+	&.visible {
 		display: block;
 	}
 

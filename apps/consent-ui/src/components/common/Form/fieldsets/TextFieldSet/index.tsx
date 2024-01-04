@@ -36,7 +36,7 @@ type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithCalloutProps<T> 
 };
 
 const TextFieldSet = <T extends FieldValues>({
-	calloutText,
+	calloutContent,
 	className,
 	disabled,
 	error,
@@ -52,11 +52,13 @@ const TextFieldSet = <T extends FieldValues>({
 	const fieldId = `${idPrefix}-${name}`;
 	const calloutId = `${idPrefix}-callout`;
 
+	const calloutProps = calloutContent
+		? { content: calloutContent, id: calloutId, isVisible: calloutVisible }
+		: undefined;
+
 	return (
 		<FieldSet
-			calloutId={calloutId}
-			calloutText={calloutText}
-			calloutVisible={calloutVisible}
+			calloutProps={calloutProps}
 			className={className}
 			fieldId={fieldId}
 			label={label}
@@ -64,7 +66,7 @@ const TextFieldSet = <T extends FieldValues>({
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<TextInput
-				ariaProps={calloutText ? { 'aria-describedby': calloutId } : {}}
+				ariaProps={calloutProps ? { 'aria-describedby': calloutProps.id } : {}}
 				className={clsx(styles.textInput, error && styles.error)}
 				disabled={disabled}
 				id={fieldId}

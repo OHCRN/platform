@@ -26,9 +26,7 @@ import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 import styles from './FieldSet.module.scss';
 
 export interface FieldSetProps {
-	calloutId: string;
-	calloutText?: ReactNode;
-	calloutVisible: boolean;
+	calloutProps?: { content: ReactNode; id: string; isVisible: boolean };
 	children: ReactNode;
 	className?: string;
 	fieldId: string;
@@ -38,9 +36,7 @@ export interface FieldSetProps {
 }
 
 const FieldSet = ({
-	calloutId,
-	calloutText,
-	calloutVisible,
+	calloutProps,
 	children,
 	className,
 	fieldId,
@@ -58,14 +54,14 @@ const FieldSet = ({
 
 			<div className={styles.inputGridArea}>{children}</div>
 
-			{calloutText && (
+			{calloutProps && (
 				<Callout
 					className={styles.calloutGridArea}
-					id={calloutId}
-					isActive={calloutVisible}
+					id={calloutProps.id}
+					isVisible={calloutProps.isVisible}
 					withNarrowDesktopLayout={withNarrowDesktopLayout}
 				>
-					{calloutText}
+					{calloutProps.content}
 				</Callout>
 			)}
 		</fieldset>

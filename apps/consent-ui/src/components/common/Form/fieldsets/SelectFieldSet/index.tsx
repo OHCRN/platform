@@ -40,7 +40,7 @@ type SelectFieldSetProps<
 };
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
-	calloutText,
+	calloutContent,
 	className,
 	disabled,
 	error,
@@ -57,11 +57,13 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	const fieldId = `${idPrefix}-${name}`;
 	const calloutId = `${idPrefix}-callout`;
 
+	const calloutProps = calloutContent
+		? { content: calloutContent, id: calloutId, isVisible: calloutVisible }
+		: undefined;
+
 	return (
 		<FieldSet
-			calloutId={calloutId}
-			calloutText={calloutText}
-			calloutVisible={calloutVisible}
+			calloutProps={calloutProps}
 			className={clsx(styles.selectFieldSet, className)}
 			fieldId={fieldId}
 			label={label}
@@ -69,7 +71,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<SelectInput
-				ariaProps={calloutText ? { 'aria-describedby': calloutId } : {}}
+				ariaProps={calloutProps ? { 'aria-describedby': calloutProps.id } : {}}
 				disabled={disabled}
 				hasError={!!error}
 				id={fieldId}
