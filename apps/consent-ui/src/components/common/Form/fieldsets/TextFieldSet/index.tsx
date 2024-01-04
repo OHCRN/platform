@@ -24,7 +24,6 @@ import { useId } from 'react';
 import clsx from 'clsx';
 
 import { FormFieldSetWithCalloutProps, FormTextInputType } from 'src/components/common/Form/types';
-import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
@@ -45,17 +44,13 @@ const TextFieldSet = <T extends FieldValues>({
 	name,
 	required,
 	type = 'text',
-	withNarrowDesktopLayout = false,
+	withNarrowDesktopLayout,
 }: TextFieldSetProps<T>) => {
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
 	const calloutId = `${idPrefix}-callout`;
-
-	const calloutProps = calloutContent
-		? { content: calloutContent, id: calloutId, isVisible: calloutVisible }
-		: undefined;
 
 	return (
 		<FieldSet
@@ -70,7 +65,7 @@ const TextFieldSet = <T extends FieldValues>({
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<TextInput
-				ariaProps={calloutProps ? { 'aria-describedby': calloutProps.id } : {}}
+				ariaProps={calloutContent ? { 'aria-describedby': calloutId } : {}}
 				className={clsx(styles.textInput, error && styles.error)}
 				disabled={disabled}
 				id={fieldId}
@@ -80,7 +75,6 @@ const TextFieldSet = <T extends FieldValues>({
 				required={required}
 				type={type}
 			/>
-			{error && <InputError>{error}</InputError>}
 		</FieldSet>
 	);
 };

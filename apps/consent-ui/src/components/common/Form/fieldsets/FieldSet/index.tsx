@@ -20,6 +20,7 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
+import InputError from 'src/components/common/Form/fieldsets/InputError';
 import Callout from 'src/components/common/Form/fieldsets/Callout';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 import { InfoButtonProps } from 'src/components/common/InfoButton';
@@ -32,6 +33,7 @@ export interface FieldSetProps {
 	calloutVisible: boolean;
 	children: ReactNode;
 	className?: string;
+	error?: string;
 	fieldId: string;
 	infoButtonProps?: InfoButtonProps;
 	label: string;
@@ -45,11 +47,12 @@ const FieldSet = ({
 	calloutVisible,
 	children,
 	className,
+	error,
 	fieldId,
 	infoButtonProps,
 	label,
 	required,
-	withNarrowDesktopLayout = false,
+	withNarrowDesktopLayout,
 }: FieldSetProps) => {
 	return (
 		<fieldset
@@ -64,7 +67,10 @@ const FieldSet = ({
 				{label}
 			</FieldLabel>
 
-			<div className={styles.inputGridArea}>{children}</div>
+			<div className={styles.inputGridArea}>
+				{children}
+				{error && <InputError>{error}</InputError>}
+			</div>
 
 			{calloutContent && (
 				<Callout

@@ -33,13 +33,7 @@ interface CalloutProps {
 	withNarrowDesktopLayout?: boolean;
 }
 
-const Callout = ({
-	children,
-	className,
-	id,
-	isVisible,
-	withNarrowDesktopLayout = false,
-}: CalloutProps) => {
+const Callout = ({ children, className, id, isVisible, withNarrowDesktopLayout }: CalloutProps) => {
 	return (
 		<div
 			className={clsx(

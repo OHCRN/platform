@@ -26,7 +26,6 @@ import clsx from 'clsx';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
 import { FormFieldSetWithCalloutProps, FormSelectOption } from 'src/components/common/Form/types';
-import InputError from 'src/components/common/Form/fieldsets/InputError';
 import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
 
 import styles from './SelectFieldSet.module.scss';
@@ -49,8 +48,8 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	name,
 	options,
 	placeholder,
-	required = false,
-	withNarrowDesktopLayout = false,
+	required,
+	withNarrowDesktopLayout,
 }: SelectFieldSetProps<T, V>) => {
 	const { calloutVisible, hideCallout, showCallout } = useCallout();
 
@@ -82,7 +81,6 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 				placeholder={placeholder}
 				required={required}
 			/>
-			{error && <InputError>{error}</InputError>}
 		</FieldSet>
 	);
 };
