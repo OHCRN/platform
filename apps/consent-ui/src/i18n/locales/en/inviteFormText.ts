@@ -39,6 +39,7 @@ const dictionary = {
 	clinicianInstitutionalEmailAddressCallout,
 	clinicianInformation: 'Clinician Information',
 	consentGroupCallout,
+	consentGroups: 'Consent Groups',
 	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	enterGuardianInfo: "Please enter the guardian's info below:",

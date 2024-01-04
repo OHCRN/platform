@@ -26,7 +26,6 @@ const dictionary = {
 	adultConsentSubstitutePoint2: 'does not have the capacity to provide consent',
 	adultConsentSubstitutePoint3: 'substitute decision provides consent on behalf of participant',
 	adultConsentSubstitutePoint4: 'documentation available to support the substitute decision maker',
-	consentGroups: 'Consent Groups',
 	guardianConsent: 'Guardian Consent of a Minor',
 	guardianConsentAssent: 'Guardian Consent of a Minor (including Assent)',
 	guardianConsentAssentPoint1: 'most often between 12 and 15 years old',

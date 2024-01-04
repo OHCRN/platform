@@ -40,9 +40,9 @@ import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels
 import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
 import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
-import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
 import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
+import { ValidLanguage } from 'src/i18n';
 
 import { ConsentGroupOption } from './types';
 import styles from './ClinicianInviteForm.module.scss';
@@ -63,13 +63,13 @@ const guardianInfoFields: (keyof InviteGuardianFields)[] = [
 
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
-	consentGroupModalDict,
+	currentLang,
 	errorsDict,
 	labelsDict,
 	textDict,
 }: {
-	consentGroupModalDict: InviteFormConsentGroupModalDictionary;
 	consentGroupOptions: ConsentGroupOption[];
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
@@ -142,11 +142,11 @@ const ClinicianInviteFormComponent = ({
 	const { openModal, closeModal } = useModal();
 
 	const consentGroupModalConfig = {
-		title: consentGroupModalDict.consentGroups,
+		title: textDict.consentGroups,
 		actionButtonText: 'OK',
 		onActionClick: closeModal,
 		onCancelClick: closeModal,
-		body: <ConsentGroupModal modalDict={consentGroupModalDict} />,
+		body: <ConsentGroupModal currentLang={currentLang} />,
 	};
 
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);

@@ -29,7 +29,6 @@ const dictionary = {
 	adultConsentSubstitutePoint3:
 		"la décision au nom d'autrui donne le consentement au nom du participant",
 	adultConsentSubstitutePoint4: 'documentation disponible pour aider le mandataire spécial',
-	consentGroups: 'Groupes de consentement',
 	guardianConsent: "Consentement du tuteur d'un mineur",
 	guardianConsentAssent: "Consentement du tuteur d'un mineur (y compris le consentement)",
 	guardianConsentAssentPoint1: 'le plus souvent entre 12 et 15 ans',
