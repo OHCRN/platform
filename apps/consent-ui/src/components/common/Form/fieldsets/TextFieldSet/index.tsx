@@ -40,6 +40,7 @@ const TextFieldSet = <T extends FieldValues>({
 	className,
 	disabled,
 	error,
+	infoButtonProps,
 	label,
 	name,
 	required,
@@ -58,9 +59,12 @@ const TextFieldSet = <T extends FieldValues>({
 
 	return (
 		<FieldSet
-			calloutProps={calloutProps}
+			calloutContent={calloutContent}
+			calloutId={calloutId}
+			calloutVisible={calloutVisible}
 			className={className}
 			fieldId={fieldId}
+			infoButtonProps={infoButtonProps}
 			label={label}
 			required={required}
 			withNarrowDesktopLayout={withNarrowDesktopLayout}

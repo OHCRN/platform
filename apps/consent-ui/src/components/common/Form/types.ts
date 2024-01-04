@@ -20,6 +20,8 @@
 import { ReactNode } from 'react';
 import { FieldValues, Path } from 'react-hook-form';
 
+import { InfoButtonProps } from 'src/components/common/InfoButton';
+
 // for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
 
@@ -29,6 +31,7 @@ export interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
 	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
+	infoButtonProps?: InfoButtonProps;
 	label: string;
 	name: FormFieldName<T>;
 	required?: boolean;

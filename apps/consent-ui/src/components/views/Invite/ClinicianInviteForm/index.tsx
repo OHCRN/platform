@@ -142,7 +142,7 @@ const ClinicianInviteFormComponent = ({
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
 					<TextFieldSet
-						calloutText={textDict.participantFirstNameCallout}
+						calloutContent={textDict.participantFirstNameCallout}
 						error={errors.participantFirstName?.type && errorsDict.required}
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"
@@ -150,7 +150,7 @@ const ClinicianInviteFormComponent = ({
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutText={textDict.participantLastNameCallout}
+						calloutContent={textDict.participantLastNameCallout}
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName || ''}
 						name="participantLastName"
@@ -158,7 +158,7 @@ const ClinicianInviteFormComponent = ({
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutText={textDict.participantPreferredNameCallout}
+						calloutContent={textDict.participantPreferredNameCallout}
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
@@ -166,8 +166,9 @@ const ClinicianInviteFormComponent = ({
 					/>
 
 					<SelectFieldSet
-						calloutText={textDict.consentGroupCallout}
+						calloutContent={textDict.consentGroupCallout}
 						error={errors.consentGroup?.type && errorsDict.required}
+						infoButtonProps={{ label: 'beep', onClick: () => console.log('boop') }}
 						label={labelsDict.consentGroup || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
@@ -177,7 +178,7 @@ const ClinicianInviteFormComponent = ({
 					/>
 
 					<TextFieldSet
-						calloutText={textDict.participantPhoneNumberCallout}
+						calloutContent={textDict.participantPhoneNumberCallout}
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
@@ -185,7 +186,7 @@ const ClinicianInviteFormComponent = ({
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutText={textDict.participantEmailAddressCallout}
+						calloutContent={textDict.participantEmailAddressCallout}
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
@@ -210,7 +211,7 @@ const ClinicianInviteFormComponent = ({
 							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							calloutText={textDict.guardianPhoneNumberCallout}
+							calloutContent={textDict.guardianPhoneNumberCallout}
 							error={errors.guardianPhoneNumber?.type && errorsDict.required}
 							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
@@ -219,7 +220,7 @@ const ClinicianInviteFormComponent = ({
 							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							calloutText={textDict.guardianEmailAddressCallout}
+							calloutContent={textDict.guardianEmailAddressCallout}
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email || ''}
 							name="guardianEmailAddress"
@@ -279,7 +280,7 @@ const ClinicianInviteFormComponent = ({
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutText={textDict.clinicianInstitutionalEmailAddressCallout}
+						calloutContent={textDict.clinicianInstitutionalEmailAddressCallout}
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"

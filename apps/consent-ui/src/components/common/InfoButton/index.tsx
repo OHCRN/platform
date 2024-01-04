@@ -18,6 +18,7 @@
  */
 
 import Image from 'next/image';
+import { SyntheticEvent } from 'react';
 
 import InfoSvg from 'src/public/info.svg';
 
@@ -29,9 +30,13 @@ export interface InfoButtonProps {
 }
 
 const InfoButton = ({ label, onClick }: InfoButtonProps) => {
+	const handleClick = (e: SyntheticEvent) => {
+		e.preventDefault();
+		onClick();
+	};
 	return (
-		<button aria-label={label} onClick={onClick}>
-			<Image alt="" className={styles.infoButton} src={InfoSvg} />
+		<button aria-label={label} className={styles.infoButton} onClick={handleClick}>
+			<Image alt="" src={InfoSvg} />
 		</button>
 	);
 };
