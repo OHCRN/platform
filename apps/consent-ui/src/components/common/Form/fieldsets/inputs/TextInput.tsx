@@ -53,7 +53,7 @@ const TextInput = <T extends FieldValues>({
 
 	return (
 		<input
-			aria-required={!!required}
+			aria-required={required}
 			className={className}
 			disabled={disabled}
 			id={id}

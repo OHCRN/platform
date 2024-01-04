@@ -51,7 +51,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 			name={name}
 			render={({ field: { onChange, value } }) => (
 				<Select
-					aria-required={!!required}
+					aria-required={required}
 					className={clsx('react-select-container', hasError && 'react-select__has-error')}
 					classNamePrefix="react-select"
 					// react-select doesn't work with hashed CSS classnames from CSS modules.
