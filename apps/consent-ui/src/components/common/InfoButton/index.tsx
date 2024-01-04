@@ -35,7 +35,7 @@ const InfoButton = ({ label, onClick }: InfoButtonProps) => {
 		onClick();
 	};
 	return (
-		<button aria-label={label} className={styles.infoButton} onClick={handleClick}>
+		<button aria-label={label} className={styles.infoButton} onClick={handleClick} type="button">
 			<Image alt="" src={InfoSvg} />
 		</button>
 	);

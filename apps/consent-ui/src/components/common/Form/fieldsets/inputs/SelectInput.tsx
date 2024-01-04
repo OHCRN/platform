@@ -35,7 +35,7 @@ type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<
 const SelectInput = <T extends FieldValues, V extends string>({
 	ariaProps = {},
 	disabled,
-	hasError = false,
+	hasError,
 	name,
 	onBlur = () => {},
 	onFocus = () => {},
@@ -63,7 +63,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 					onBlur={onBlur}
 					onChange={(val: SelectOnChangeArg<V>) => {
 						// in react-select the value can be a string or object.
-						// in our implementation it should be {label, value},
+						// in our implementation it must be {label, value},
 						// with the label being translated.
 						let onChangeParam = '';
 						if (typeof val === 'string') {

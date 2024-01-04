@@ -27,7 +27,7 @@ import { InfoButtonProps } from 'src/components/common/InfoButton';
 
 import styles from './FieldSet.module.scss';
 
-export interface FieldSetProps {
+interface FieldSetProps {
 	calloutContent?: ReactNode;
 	calloutId: string;
 	calloutVisible: boolean;

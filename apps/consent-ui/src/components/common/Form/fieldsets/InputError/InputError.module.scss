@@ -1,6 +1,5 @@
 .inputError {
-	font-size: 0.8125rem;
+	font-size: theme('fontSize.xs');
 	font-weight: 400;
-	line-height: 1.25rem;
 	color: theme('colors.error.600');
 }

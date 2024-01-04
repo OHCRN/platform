@@ -17,7 +17,7 @@ Libraries used:
 - Make a server component and collect the required translations.
   - Organize the translations into objects based on which dictionary they come from, so the objects can use the dictionaries' types.
 - Make a client component that takes the translations as props, and renders the form.
-  - Wrap `<FormProvider>` (context provider from React-Hook-Form) and `<Form />` (our styled form component) components around the form's contents.
+  - Wrap `<FormProvider>` (context provider from react-hook-form) and `<Form />` (our styled form component) components around the form's contents.
   - Add fields using `FieldSet` components.
     - Add one field, then add a submit handler, then test the page. When that's working, add the next field.
 - To submit the form, use the `handleSubmit` method from the `useForm` hook and pass it your own custom submit function. This will trigger Zod schema validation. Don't wrap `handleSubmit` in another function, it won't work.
@@ -30,7 +30,7 @@ Libraries used:
 
 - Conditionally-displayed fields:
   - Use `watch` from React-Hook-Form and a `useEffect` hook to toggle conditional fields.
-  - When toggling the conditional fields, use the `unregister` method from `useForm()`. Don't use `register`, though - the `register` method has been passed down to the input components and will run on render.
+  - When toggling the conditional fields, use the `unregister` method from `useForm()`. Don't use `register`, though - the `register` method is invoked on render in the input components.
     - Unregistering works the same way for registered & controlled components.
   - Example: Guardian fields in `ClinicianInviteForm`.
 
@@ -44,20 +44,15 @@ Libraries used:
 
 #### Inputs
 
-- This folder contains low-level components (native HTML elements, or components imported from libraries) and logic for registering or controlling these components with React-Hook-Form.
-- Styling is in the parent fieldset component.
+- This folder contains low-level components (native HTML elements, or components imported from libraries) and logic for registering or controlling these components with react-hook-form.
+- Styling is handled in the parent fieldset component.
 - Inputs are imported into fieldsets, not directly into a form.
 
 ### Submit button
 
-- Use <Button type="submit"> with no `onClick` prop. This will trigger a submit event on the `form` element.
+- Use <Button type="submit"> with no `onClick` prop. This will trigger a submit event on the `form` element and is needed for the react-hook-form integration.
 
 ### Callouts
 
-- Link callouts to inputs using a unique ID and `aria-describedby`.
-  - Only link the mobile/tablet callout to the input.
-  - `aria-describedby` will read the callout to screenreaders even if it's visually hidden.
-- Use 2 callout components: One for mobile and tablet (and optionally small desktop, 1024px-1280px) above the label, and one for desktop to the right of the input.
-  - This keeps the visual order and DOM order in sync.
-  - Use `upToSmallDesktop` and `largeDesktop` together.
-  - Use `upToTablet` and `desktop` together.
+- Link callouts to inputs using [a unique ID](https://react.dev/reference/react/useId#useid) and `aria-describedby`.
+- Show & hide callouts using CSS so the callout will remain visible to screenreaders. [More info here](https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/)
