@@ -27,7 +27,6 @@ import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianI
 import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
-import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -76,6 +75,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		clinicianInformation: translate('inviteFormText', 'clinicianInformation'),
 		consentContactDescription: translate('inviteFormText', 'consentContactDescription'),
 		consentGroupCallout: translate('inviteFormText', 'consentGroupCallout'),
+		consentGroups: translate('inviteFormText', 'consentGroups'),
 		enterGuardianInfo: translate('inviteFormText', 'enterGuardianInfo'),
 		guardianEmailAddressCallout: translate('inviteFormText', 'guardianEmailAddressCallout'),
 		guardianPhoneNumberCallout: translate('inviteFormText', 'guardianPhoneNumberCallout'),
@@ -99,50 +99,6 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		value: group,
 	}));
 
-	const consentGroupModalDict: InviteFormConsentGroupModalDictionary = {
-		adultConsent: translate('inviteFormConsentGroupModal', 'adultConsent'),
-		adultConsentPoint1: translate('inviteFormConsentGroupModal', 'adultConsentPoint1'),
-		adultConsentPoint2: translate('inviteFormConsentGroupModal', 'adultConsentPoint2'),
-		adultConsentSubstitute: translate('inviteFormConsentGroupModal', 'adultConsentSubstitute'),
-		adultConsentSubstitutePoint1: translate(
-			'inviteFormConsentGroupModal',
-			'adultConsentSubstitutePoint1',
-		),
-		adultConsentSubstitutePoint2: translate(
-			'inviteFormConsentGroupModal',
-			'adultConsentSubstitutePoint2',
-		),
-		adultConsentSubstitutePoint3: translate(
-			'inviteFormConsentGroupModal',
-			'adultConsentSubstitutePoint3',
-		),
-		adultConsentSubstitutePoint4: translate(
-			'inviteFormConsentGroupModal',
-			'adultConsentSubstitutePoint4',
-		),
-		consentGroups: translate('inviteFormConsentGroupModal', 'consentGroups'),
-		guardianConsent: translate('inviteFormConsentGroupModal', 'guardianConsent'),
-		guardianConsentAssent: translate('inviteFormConsentGroupModal', 'guardianConsentAssent'),
-		guardianConsentAssentPoint1: translate(
-			'inviteFormConsentGroupModal',
-			'guardianConsentAssentPoint1',
-		),
-		guardianConsentAssentPoint2: translate(
-			'inviteFormConsentGroupModal',
-			'guardianConsentAssentPoint2',
-		),
-		guardianConsentAssentPoint3: translate(
-			'inviteFormConsentGroupModal',
-			'guardianConsentAssentPoint3',
-		),
-		guardianConsentPoint1: translate('inviteFormConsentGroupModal', 'guardianConsentPoint1'),
-		guardianConsentPoint2: translate('inviteFormConsentGroupModal', 'guardianConsentPoint2'),
-		guardianConsentPoint3: translate('inviteFormConsentGroupModal', 'guardianConsentPoint3'),
-		youngAdultConsent: translate('inviteFormConsentGroupModal', 'youngAdultConsent'),
-		youngAdultConsentPoint1: translate('inviteFormConsentGroupModal', 'youngAdultConsentPoint1'),
-		youngAdultConsentPoint2: translate('inviteFormConsentGroupModal', 'youngAdultConsentPoint2'),
-	};
-
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
@@ -158,7 +114,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		>
 			<ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}
-				consentGroupModalDict={consentGroupModalDict}
+				currentLang={currentLang}
 				errorsDict={errorsDict}
 				labelsDict={labelsDict}
 				textDict={textDict}
