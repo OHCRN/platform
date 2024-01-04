@@ -23,6 +23,7 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteRequest, ConsentGroup, InviteGuardianFields } from 'types/entities';
+import clsx from 'clsx';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -279,7 +280,9 @@ const ClinicianInviteFormComponent = ({
 				</FormSection>
 
 				<FormSection>
-					<h3 className={styles.sectionTitle}>{textDict.clinicianInformation}</h3>
+					<h3 className={clsx(styles.sectionTitle, styles.clinicianTitle)}>
+						{textDict.clinicianInformation}
+					</h3>
 					<TextFieldSet
 						error={errors.clinicianTitleOrRole?.type && errorsDict.required}
 						label={labelsDict.clinicianTitleOrRole || ''}
