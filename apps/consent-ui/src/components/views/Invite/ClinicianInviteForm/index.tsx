@@ -108,6 +108,7 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
+			console.log('form data', data);
 			axiosClient
 				.post(API.INVITES, { data, recaptchaToken })
 				.then(() => {
@@ -316,13 +317,16 @@ const ClinicianInviteFormComponent = ({
 						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
 					)}
 
-					<div style={{ margin: '25px 0' }}>
+					<div className={styles.recaptchaCheckbox}>
 						<RecaptchaCheckbox
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
 						/>
 					</div>
-					<Button type="submit">{textDict.submit}</Button>
+
+					<Button type="submit" className={styles.submitButton}>
+						{textDict.submit}
+					</Button>
 				</FormSection>
 			</Form>
 		</FormProvider>
