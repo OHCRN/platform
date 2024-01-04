@@ -17,13 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-interface InfoButtonProps {
+import Image from 'next/image';
+
+import InfoSvg from 'src/public/info.svg';
+
+import styles from './InfoButton.module.scss';
+
+export interface InfoButtonProps {
 	label: string;
 	onClick: () => void;
 }
 
 const InfoButton = ({ label, onClick }: InfoButtonProps) => {
-	return <button onClick={onClick}>{label}</button>;
+	return (
+		<button aria-label={label} onClick={onClick}>
+			<Image alt="" className={styles.infoButton} src={InfoSvg} />
+		</button>
+	);
 };
 
 export default InfoButton;

@@ -21,7 +21,7 @@ import { ReactNode } from 'react';
 import clsx from 'clsx';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
-import InfoButton from 'src/components/common/InfoButton';
+import InfoButton, { InfoButtonProps } from 'src/components/common/InfoButton';
 
 import styles from './FieldLabel.module.scss';
 
@@ -29,16 +29,14 @@ interface FieldLabelProps {
 	children: ReactNode;
 	className?: string;
 	fieldId: string;
-	infoButtonClick?: () => void;
-	infoButtonLabel?: string;
+	infoButtonProps?: InfoButtonProps;
 	required?: boolean;
 }
 
 const FieldLabel = ({
 	children,
 	className,
-	infoButtonClick,
-	infoButtonLabel,
+	infoButtonProps,
 	fieldId,
 	required,
 }: FieldLabelProps) => {
@@ -46,8 +44,8 @@ const FieldLabel = ({
 		<label htmlFor={fieldId} className={clsx(styles.label, className)}>
 			{children}
 			{required && <RequiredAsterisk />}
-			{infoButtonClick && infoButtonLabel && (
-				<InfoButton label={infoButtonLabel} onClick={infoButtonClick} />
+			{infoButtonProps && (
+				<InfoButton label={infoButtonProps.label} onClick={infoButtonProps.onClick} />
 			)}
 		</label>
 	);

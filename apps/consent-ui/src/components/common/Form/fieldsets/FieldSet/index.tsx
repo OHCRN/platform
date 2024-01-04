@@ -22,24 +22,31 @@ import { ReactNode } from 'react';
 
 import Callout from 'src/components/common/Form/fieldsets/Callout';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
+import { InfoButtonProps } from 'src/components/common/InfoButton';
 
 import styles from './FieldSet.module.scss';
 
 export interface FieldSetProps {
-	calloutProps?: { content: ReactNode; id: string; isVisible: boolean };
+	calloutContent?: ReactNode;
+	calloutId: string;
+	calloutVisible: boolean;
 	children: ReactNode;
 	className?: string;
 	fieldId: string;
+	infoButtonProps?: InfoButtonProps;
 	label: string;
 	required?: boolean;
 	withNarrowDesktopLayout?: boolean;
 }
 
 const FieldSet = ({
-	calloutProps,
+	calloutContent,
+	calloutId,
+	calloutVisible,
 	children,
 	className,
 	fieldId,
+	infoButtonProps,
 	label,
 	required,
 	withNarrowDesktopLayout = false,
@@ -48,20 +55,25 @@ const FieldSet = ({
 		<fieldset
 			className={clsx(styles.fieldSet, !withNarrowDesktopLayout && styles.wideDesktop, className)}
 		>
-			<FieldLabel className={styles.labelGridArea} fieldId={fieldId} required={required}>
+			<FieldLabel
+				className={styles.labelGridArea}
+				fieldId={fieldId}
+				infoButtonProps={infoButtonProps}
+				required={required}
+			>
 				{label}
 			</FieldLabel>
 
 			<div className={styles.inputGridArea}>{children}</div>
 
-			{calloutProps && (
+			{calloutContent && (
 				<Callout
 					className={styles.calloutGridArea}
-					id={calloutProps.id}
-					isVisible={calloutProps.isVisible}
+					id={calloutId}
+					isVisible={calloutVisible}
 					withNarrowDesktopLayout={withNarrowDesktopLayout}
 				>
-					{calloutProps.content}
+					{calloutContent}
 				</Callout>
 			)}
 		</fieldset>
