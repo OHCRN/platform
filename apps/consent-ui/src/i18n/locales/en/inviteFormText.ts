@@ -45,6 +45,7 @@ const dictionary = {
 	guardianEmailAddressCallout,
 	guardianPhoneNumberCallout,
 	indicatesRequiredField,
+	learnMoreConsentGroups: 'Learn more about consent groups',
 	participantEmailAddressCallout,
 	participantFirstNameCallout,
 	participantLastNameCallout,

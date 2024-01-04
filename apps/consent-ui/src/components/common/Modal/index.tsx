@@ -81,35 +81,35 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 	return (
 		<ModalContext.Provider value={value}>
 			{isOpen && (
-				<div className={styles.modal}>
-					<div ref={ref}>
-						<Card className={styles.card} dropShadow="none">
-							{title && <h3>{title}</h3>}
+				<div className={styles.modal} ref={ref}>
+					<Card className={styles.card} dropShadow="none">
+						{title && <h3>{title}</h3>}
+						<div className={styles.body}>
 							{body && isValidElement(body) ? body : body && <p>{body}</p>}
-							{(actionButtonText || cancelButtonText) && (
-								<div className={styles.buttons}>
-									{cancelButtonText && onCancelClick && (
-										<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
-											{cancelButtonText}
-										</Button>
-									)}
-									{cancelButtonText && cancelLink && (
-										<LinkButton href={cancelLink} variant="secondary">
-											{cancelButtonText}
-										</LinkButton>
-									)}
-									{actionButtonText && onActionClick && (
-										<Button onClick={onActionClick} disabled={actionDisabled}>
-											{actionButtonText}
-										</Button>
-									)}
-									{actionButtonText && actionLink && (
-										<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
-									)}
-								</div>
-							)}
-						</Card>
-					</div>
+						</div>
+						{(actionButtonText || cancelButtonText) && (
+							<div className={styles.buttons}>
+								{cancelButtonText && onCancelClick && (
+									<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
+										{cancelButtonText}
+									</Button>
+								)}
+								{cancelButtonText && cancelLink && (
+									<LinkButton href={cancelLink} variant="secondary">
+										{cancelButtonText}
+									</LinkButton>
+								)}
+								{actionButtonText && onActionClick && (
+									<Button onClick={onActionClick} disabled={actionDisabled}>
+										{actionButtonText}
+									</Button>
+								)}
+								{actionButtonText && actionLink && (
+									<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
+								)}
+							</div>
+						)}
+					</Card>
 				</div>
 			)}
 			{children}

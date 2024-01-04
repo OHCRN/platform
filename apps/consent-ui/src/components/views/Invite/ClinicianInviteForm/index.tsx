@@ -40,6 +40,9 @@ import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels
 import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
 import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
+import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
+import { useModal } from 'src/components/common/Modal';
+import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 
 import { ConsentGroupOption } from './types';
 import styles from './ClinicianInviteForm.module.scss';
@@ -60,10 +63,12 @@ const guardianInfoFields: (keyof InviteGuardianFields)[] = [
 
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
+	consentGroupModalDict,
 	errorsDict,
 	labelsDict,
 	textDict,
 }: {
+	consentGroupModalDict: InviteFormConsentGroupModalDictionary;
 	consentGroupOptions: ConsentGroupOption[];
 	errorsDict: FormErrorsDictionary;
 	labelsDict: InviteFormLabelsDictionary;
@@ -133,6 +138,19 @@ const ClinicianInviteFormComponent = ({
 		}
 	}, [unregister, watchConsentGroup]);
 
+	// setup consent group info modal
+	const { openModal, closeModal } = useModal();
+
+	const consentGroupModalConfig = {
+		title: consentGroupModalDict.consentGroups,
+		actionButtonText: 'OK',
+		onActionClick: closeModal,
+		onCancelClick: closeModal,
+		body: <ConsentGroupModal modalDict={consentGroupModalDict} />,
+	};
+
+	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
@@ -168,7 +186,10 @@ const ClinicianInviteFormComponent = ({
 					<SelectFieldSet
 						calloutContent={textDict.consentGroupCallout}
 						error={errors.consentGroup?.type && errorsDict.required}
-						infoButtonProps={{ label: 'beep', onClick: () => console.log('boop') }}
+						infoButtonProps={{
+							label: textDict.learnMoreConsentGroups,
+							onClick: handleConsentGroupInfoButtonClick,
+						}}
 						label={labelsDict.consentGroup || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
