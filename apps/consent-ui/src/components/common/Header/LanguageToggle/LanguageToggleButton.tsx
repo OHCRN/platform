@@ -17,25 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
-import { FormEventHandler, ReactNode } from 'react';
+'use client';
 
-import styles from './Form.module.scss';
+import { usePathname } from 'next/navigation';
 
-const Form = ({
-	children,
-	className,
-	onSubmit,
+import { ValidLanguage } from 'src/i18n';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getLinkNameByPath } from 'src/components/common/Link/utils';
+
+import styles from './LanguageToggleButton.module.scss';
+
+const LanguageToggleButton = ({
+	currentLang,
+	fullToggleLabel,
+	langToSelect,
 }: {
-	children: ReactNode;
-	className?: string;
-	onSubmit: FormEventHandler<HTMLFormElement>;
+	currentLang: ValidLanguage;
+	fullToggleLabel: string;
+	langToSelect: ValidLanguage;
 }) => {
+	const path = usePathname();
+	const linkName = getLinkNameByPath(path, currentLang);
+
 	return (
-		<form onSubmit={onSubmit} className={clsx(styles.form, className)}>
-			{children}
-		</form>
+		<LocalizedLink
+			name={linkName}
+			linkLang={langToSelect}
+			role="button"
+			color="blue"
+			variant="secondary"
+		>
+			<span className={styles['toggle-full']}>{fullToggleLabel}</span>
+			<span className={styles['toggle-abbr']}>{langToSelect}</span>
+		</LocalizedLink>
 	);
 };
 
-export default Form;
+export default LanguageToggleButton;

@@ -17,25 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import clsx from 'clsx';
-import { FormEventHandler, ReactNode } from 'react';
+const dictionary = {
+	clinicianPatientRegistration: 'Clinician Patient Registration',
+	ifParticipant: "If you're a Participant:",
+	inviteYourPatients: 'Invite your patients to participate in the OHCRN Registry.',
+	registerHere: 'Register here',
+	registerYourPatient: 'Register Your Patient',
+} satisfies Record<string, string>;
 
-import styles from './Form.module.scss';
+export type InviteDictionary = Record<keyof typeof dictionary, string>;
 
-const Form = ({
-	children,
-	className,
-	onSubmit,
-}: {
-	children: ReactNode;
-	className?: string;
-	onSubmit: FormEventHandler<HTMLFormElement>;
-}) => {
-	return (
-		<form onSubmit={onSubmit} className={clsx(styles.form, className)}>
-			{children}
-		</form>
-	);
-};
-
-export default Form;
+export default dictionary;

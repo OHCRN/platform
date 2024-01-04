@@ -17,36 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { getUnselectedLang } from 'src/components/common/Link/utils';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 
-import { ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/common/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from 'src/components/common/Link/utils';
+import LanguageToggleButton from './LanguageToggleButton';
 
-function LanguageToggle({
-	currentLang,
-	children,
-}: {
-	currentLang: ValidLanguage;
-	children: ReactNode;
-}) {
+const LanguageToggle = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const translate = getTranslation(currentLang);
 	const langToSelect = getUnselectedLang(currentLang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, currentLang);
 
 	return (
-		<LocalizedLink
-			name={linkName}
-			linkLang={langToSelect}
-			role="button"
-			color="blue"
-			variant="secondary"
-		>
-			{children}
-		</LocalizedLink>
+		<LanguageToggleButton
+			currentLang={currentLang}
+			langToSelect={langToSelect}
+			fullToggleLabel={translate('header', langToSelect)}
+		/>
 	);
-}
+};
 
 export default LanguageToggle;
