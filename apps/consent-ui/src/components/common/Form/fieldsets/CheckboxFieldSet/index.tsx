@@ -48,7 +48,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	required,
 	title,
 }: CheckBoxFieldSetProps<T>) => {
-	const idPrefix = useId();
+	const checkboxId = useId();
 	return (
 		<fieldset
 			className={clsx(
@@ -68,11 +68,11 @@ const CheckboxFieldSet = <T extends FieldValues>({
 				<CheckboxInput
 					className={styles.checkboxInput}
 					disabled={disabled}
-					id={`${idPrefix}-${name}`}
+					id={checkboxId}
 					name={name}
 					required={required}
 				/>
-				<label htmlFor={`${idPrefix}-${name}`} className={styles.label}>
+				<label htmlFor={checkboxId} className={styles.label}>
 					<span className={styles.description}>
 						{description}
 						{required && !title && <RequiredAsterisk />}
