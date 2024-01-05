@@ -44,6 +44,7 @@ import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
+import registeredNotificationDictionary from './registeredNotification';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
@@ -73,6 +74,7 @@ const dictionaries = {
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
+	registeredNotification: registeredNotificationDictionary,
 };
 
 export default dictionaries;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,26 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { RegisteredNotificationDictionary } from 'src/i18n/locales/en/registeredNotification';
 
-import { ReactNode } from 'react';
+const dictionary = {
+	actionButton: "Renvoyer l'e-mail de vérification",
+	linkText: "visitez notre centre d'assistance pour des ressources utiles",
+	text1: 'Nous avons envoyé un message de vérification à ',
+	text2:
+		". Vous devrez vérifier votre adresse e-mail avant de pouvoir mettre à jour vos dossiers de participants. Si vous avez besoin d'aide, s'il vous plaît ",
+	text3: '.',
+	title: 'Merci de votre inscription, {{ name }}! Merci de consulter vos emails.',
+} satisfies RegisteredNotificationDictionary;
 
-import Button from '../Button';
-
-const ActionButton = ({
-	children,
-	className,
-	onClick = () => {},
-}: {
-	children: ReactNode;
-	className?: string;
-	onClick?: () => void;
-}) => {
-	return (
-		<Button variant="primary" color="blue" className={className} onClick={onClick}>
-			{children}
-		</Button>
-	);
-};
-
-export default ActionButton;
+export default dictionary;

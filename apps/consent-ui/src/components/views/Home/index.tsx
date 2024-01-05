@@ -30,21 +30,24 @@ import styles from './Home.module.scss';
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 	return (
-		<div className={styles.heroContainer}>
-			<div className={styles.backgroundImg}>
-				<Image src={BackgroundImage} alt="" priority placeholder="blur" />
-			</div>
-			<div className={styles.hero}>
-				<div className={styles.heroText}>
-					<h1>{translate('landingPage', 'title')}</h1>
-					<p>
-						<b>{translate('landingPage', 'ohcrnDescription')}</b>
-					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
-						<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
-					</LinkButton>
+		<div>
+			test
+			<div className={styles.heroContainer}>
+				<div className={styles.backgroundImg}>
+					<Image src={BackgroundImage} alt="" priority placeholder="blur" />
 				</div>
-				<LandingPageCard currentLang={currentLang} />
+				<div className={styles.hero}>
+					<div className={styles.heroText}>
+						<h1>{translate('landingPage', 'title')}</h1>
+						<p>
+							<b>{translate('landingPage', 'ohcrnDescription')}</b>
+						</p>
+						<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
+							<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
+						</LinkButton>
+					</div>
+					<LandingPageCard currentLang={currentLang} />
+				</div>
 			</div>
 		</div>
 	);

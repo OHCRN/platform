@@ -45,6 +45,7 @@ import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerDictionary from 'src/i18n/locales/fr/register';
+import registeredNotificationDictionary from 'src/i18n/locales/fr/registeredNotification';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
@@ -74,6 +75,7 @@ const dictionaries = {
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
+	registeredNotification: registeredNotificationDictionary,
 } satisfies typeof en;
 
 export default dictionaries;
