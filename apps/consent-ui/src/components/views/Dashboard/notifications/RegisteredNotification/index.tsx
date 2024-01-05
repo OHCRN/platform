@@ -23,17 +23,17 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import { RegisteredNotificationDictionary } from 'src/i18n/locales/en/registeredNotification';
 import Notification from 'src/components/common/Notification';
 
+import ResendEmailVerificationButton from './ResendEmailVerificationButton';
+
 const RegisteredNotification = ({
 	className,
 	currentLang,
 	email,
-	handleActionClick,
 	name,
 }: {
 	className?: string;
 	currentLang: ValidLanguage;
 	email: string;
-	handleActionClick: any;
 	name: string;
 }) => {
 	const translate = getTranslation(currentLang);
@@ -47,11 +47,15 @@ const RegisteredNotification = ({
 		title: translate('registeredNotification', 'title', { name }),
 	};
 
+	const actionButton = (
+		<ResendEmailVerificationButton>{dictionary.actionButton}</ResendEmailVerificationButton>
+	);
+
 	// TODO add resend verification email action
 
 	return (
 		<Notification
-			actionProps={{ text: dictionary.actionButton, onClick: handleActionClick }}
+			actionButton={actionButton}
 			className={className}
 			level="warning"
 			title={dictionary.title}

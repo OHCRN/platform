@@ -21,7 +21,7 @@
 
 import { ReactNode } from 'react';
 
-import Button from '../Button';
+import Button from 'src/components/common/Button';
 
 const ActionButton = ({
 	children,
@@ -33,7 +33,7 @@ const ActionButton = ({
 	onClick?: () => void;
 }) => {
 	return (
-		<Button variant="primary" color="blue" className={className} onClick={onClick}>
+		<Button variant="secondary" color="blue" className={className} onClick={onClick}>
 			{children}
 		</Button>
 	);
