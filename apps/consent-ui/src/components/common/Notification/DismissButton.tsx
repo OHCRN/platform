@@ -21,9 +21,9 @@
 
 import Close from '../Icons/Close';
 
-const DismissButton = ({ className }: { className?: string }) => {
+const DismissButton = ({ className, onClick }: { className?: string; onClick?: () => void }) => {
 	return (
-		<button>
+		<button type="button" onClick={onClick}>
 			<Close className={className} />
 		</button>
 	);

@@ -32,11 +32,12 @@ export type NotificationVariant = 'small' | 'medium';
 
 export interface NotificationProps {
 	actionButton?: JSX.Element;
+	children?: ReactNode;
 	className?: string;
+	dismissable?: boolean;
+	dismissClick?: () => void;
 	level: NotificationLevel;
 	title: ReactNode;
-	children?: ReactNode;
-	dismissable?: boolean;
 	variant?: NotificationVariant;
 }
 
@@ -49,11 +50,12 @@ const notificationIcons: Record<NotificationLevel, JSX.Element> = {
 
 const Notification = ({
 	actionButton,
+	children,
 	className = '',
+	dismissable,
+	dismissClick,
 	level,
 	title,
-	children,
-	dismissable,
 	variant = 'medium',
 }: NotificationProps) => {
 	return (
@@ -65,7 +67,9 @@ const Notification = ({
 					{children && <div className={clsx(styles.description)}>{children}</div>}
 					{actionButton && <div className={clsx(styles.action)}>{actionButton}</div>}
 				</div>
-				{dismissable && <DismissButton className={clsx(styles['dismiss-button'])} />}
+				{dismissable && (
+					<DismissButton className={clsx(styles['dismiss-button'])} onClick={dismissClick} />
+				)}
 			</div>
 		</div>
 	);

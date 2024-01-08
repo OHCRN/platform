@@ -79,10 +79,3 @@
 	inset: 0;
 	z-index: 1;
 }
-
-.notification {
-	@media (min-width: theme('screens.sm')) {
-		max-width: 1200px;
-		margin: 0 auto 2rem !important;
-	}
-}

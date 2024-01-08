@@ -25,17 +25,21 @@ import Notification from 'src/components/common/Notification';
 
 import ResendEmailVerificationButton from './ResendEmailVerificationButton';
 
+interface RegisteredNotificationProps {
+	className?: string;
+	currentLang: ValidLanguage;
+	dismissClick?: () => void;
+	email: string;
+	name: string;
+}
+
 const RegisteredNotification = ({
 	className,
 	currentLang,
+	dismissClick,
 	email,
 	name,
-}: {
-	className?: string;
-	currentLang: ValidLanguage;
-	email: string;
-	name: string;
-}) => {
+}: RegisteredNotificationProps) => {
 	const translate = getTranslation(currentLang);
 
 	const dictionary: RegisteredNotificationDictionary = {
@@ -57,6 +61,7 @@ const RegisteredNotification = ({
 		<Notification
 			actionButton={actionButton}
 			className={className}
+			dismissClick={dismissClick}
 			level="warning"
 			title={dictionary.title}
 		>
