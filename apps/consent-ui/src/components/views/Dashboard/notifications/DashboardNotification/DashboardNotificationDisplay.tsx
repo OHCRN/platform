@@ -19,10 +19,9 @@
 
 'use client';
 
+import ResendVerificationNotification from 'src/components/views/Dashboard/notifications/ResendVerificationNotification';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
-
-import ResendVerificationNotification from '../ResendVerificationNotification';
 
 import styles from './DashboardNotificationDisplay.module.scss';
 
