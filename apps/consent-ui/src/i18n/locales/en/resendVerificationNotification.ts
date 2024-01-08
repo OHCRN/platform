@@ -17,19 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+const dictionary = {
+	actionButton: 'Resend Verification Email',
+	linkText: 'visit our support centre for helpful resources',
+	text1: 'We have sent a verification message to ',
+	text2:
+		'. You will need to verify your email address before being able to update your participant records. If you need any help, please ',
+	text3: '.',
+	title: 'Thank you for registering, {{ name }}! Please check your email.',
+} satisfies Record<string, string>;
 
-import { ReactNode } from 'react';
+export type ResendVerificationNotificationDictionary = Record<keyof typeof dictionary, string>;
 
-import ActionButton from 'src/components/common/Notification/ActionButton';
-
-const ResendEmailVerificationButton = ({ children }: { children: ReactNode }) => {
-	const handleClick = () => {
-		// TODO resend email verification API request
-		// https://github.com/OHCRN/platform/issues/345
-	};
-
-	return <ActionButton onClick={handleClick}>{children}</ActionButton>;
-};
-
-export default ResendEmailVerificationButton;
+export default dictionary;

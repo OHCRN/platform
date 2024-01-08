@@ -21,6 +21,7 @@ import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
+import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
 import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
@@ -45,13 +46,14 @@ import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerDictionary from 'src/i18n/locales/fr/register';
-import registeredNotificationDictionary from 'src/i18n/locales/fr/registeredNotification';
+import resendVerificationNotificationDictionary from 'src/i18n/locales/fr/resendVerificationNotification';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
+	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
@@ -75,7 +77,7 @@ const dictionaries = {
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
-	registeredNotification: registeredNotificationDictionary,
+	resendVerificationNotification: resendVerificationNotificationDictionary,
 } satisfies typeof en;
 
 export default dictionaries;

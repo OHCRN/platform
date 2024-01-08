@@ -21,6 +21,7 @@ import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birthSex';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
+import consentCompleteNotificationDictionary from './consentCompleteNotification';
 import consentGroupDictionary from './consentGroup';
 import consentRecontactDictionary from './consentRecontact';
 import consentReleaseDataDictionary from './consentReleaseData';
@@ -44,13 +45,14 @@ import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
-import registeredNotificationDictionary from './registeredNotification';
+import resendVerificationNotificationDictionary from './resendVerificationNotification';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
+	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
@@ -74,7 +76,7 @@ const dictionaries = {
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
-	registeredNotification: registeredNotificationDictionary,
+	resendVerificationNotification: resendVerificationNotificationDictionary,
 };
 
 export default dictionaries;

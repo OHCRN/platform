@@ -22,8 +22,9 @@
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
 
+import ResendVerificationNotification from '../ResendVerificationNotification';
+
 import styles from './DashboardNotificationDisplay.module.scss';
-import RegisteredNotification from './RegisteredNotification';
 
 const DashboardNotification = ({
 	currentLang,
@@ -45,8 +46,6 @@ const DashboardNotification = ({
 		className: styles.notification,
 		currentLang,
 		dismissClick: dismissNotification,
-		email,
-		name,
 	};
 
 	let notification;
@@ -56,7 +55,9 @@ const DashboardNotification = ({
 			// user has registered, but not verified their email
 			// or started the consent process.
 			// show every session
-			notification = <RegisteredNotification {...notificationProps} />;
+			notification = (
+				<ResendVerificationNotification {...notificationProps} email={email} name={name} />
+			);
 			break;
 		case 'emailVerified':
 			// user has just verified their email

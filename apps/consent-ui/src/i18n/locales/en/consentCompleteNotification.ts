@@ -17,16 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisteredNotificationDictionary } from 'src/i18n/locales/en/registeredNotification';
-
 const dictionary = {
-	actionButton: "Renvoyer l'e-mail de vérification",
-	linkText: "visitez notre centre d'assistance pour des ressources utiles",
-	text1: 'Nous avons envoyé un message de vérification à ',
-	text2:
-		". Vous devrez vérifier votre adresse e-mail avant de pouvoir mettre à jour vos dossiers de participants. Si vous avez besoin d'aide, s'il vous plaît ",
-	text3: '.',
-	title: 'Merci de votre inscription, {{ name }}! Merci de consulter vos emails.',
-} satisfies RegisteredNotificationDictionary;
+	notificationText:
+		'Thank you for completing OHCRN consent forms. Your forms are available for download below.',
+} satisfies Record<string, string>;
+
+export type ConsentCompleteNotificationDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

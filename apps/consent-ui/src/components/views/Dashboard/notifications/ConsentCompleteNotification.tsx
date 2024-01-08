@@ -17,60 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import { RegisteredNotificationDictionary } from 'src/i18n/locales/en/registeredNotification';
 import Notification from 'src/components/common/Notification';
 
-import ResendEmailVerificationButton from './ResendEmailVerificationButton';
-
-interface RegisteredNotificationProps {
-	className?: string;
-	currentLang: ValidLanguage;
-	dismissClick?: () => void;
-	email: string;
-	name: string;
-}
-
-const RegisteredNotification = ({
-	className,
+const ConsentCompletionNotification = ({
 	currentLang,
 	dismissClick,
-	email,
-	name,
-}: RegisteredNotificationProps) => {
+}: {
+	currentLang: ValidLanguage;
+	dismissClick: () => void;
+}) => {
 	const translate = getTranslation(currentLang);
-
-	const dictionary: RegisteredNotificationDictionary = {
-		actionButton: translate('registeredNotification', 'actionButton'),
-		linkText: translate('registeredNotification', 'linkText'),
-		text1: translate('registeredNotification', 'text1'),
-		text2: translate('registeredNotification', 'text2'),
-		text3: translate('registeredNotification', 'text3'),
-		title: translate('registeredNotification', 'title', { name }),
-	};
-
-	const actionButton = (
-		<ResendEmailVerificationButton>{dictionary.actionButton}</ResendEmailVerificationButton>
-	);
-
 	return (
 		<Notification
-			actionButton={actionButton}
-			className={className}
 			dismissClick={dismissClick}
-			level="warning"
-			title={dictionary.title}
-		>
-			{dictionary.text1}
-			<b>{email}</b>
-			{dictionary.text2}
-			{/* TODO add support link https://github.com/OHCRN/platform/issues/342 */}
-			<Link href="#">{dictionary.linkText}</Link>
-			{dictionary.text3}
-		</Notification>
+			level="success"
+			title={translate('consentCompleteNotification', 'notificationText')}
+		/>
 	);
 };
 
-export default RegisteredNotification;
+export default ConsentCompletionNotification;
