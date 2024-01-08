@@ -27,22 +27,27 @@ import DashboardNotificationDisplay from './DashboardNotificationDisplay';
 const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { notificationConfig, setNotificationConfig } = useNotification();
 
-	// TODO get name, email, email verified, consent progress from API
+	// STUB - get name, email, email verified, consent progress from API
 	const consentInProgress = true;
 	const email = 'homersimpson@gmail.com';
 	const emailVerified = false;
 	const name = 'Homer Simpson';
 
-	// TODO get email verified URL param from keycloak redirect URL (TBD)
+	// STUB - get email verified URL param from keycloak redirect URL
 	const emailVerifiedParam = false;
 
+	//  logic for dismissing one notification and showing another
+	// has not been implemented, since it can't be accurately tested.
+	// this file will require revisions as features are completed.
+
+	// STUB - determine which notification to show
 	let nextNotification: Notification | undefined;
 
 	if (
 		notificationConfig?.page === 'dashboard' &&
 		notificationConfig?.notification === 'consentComplete'
 	) {
-		// user has just completed the consent wizard. do nothing.
+		// user has just completed the consent wizard. do nothing here.
 		// notification context is updated on consent wizard submission.
 		// show once
 		nextNotification = undefined;

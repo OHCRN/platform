@@ -37,14 +37,7 @@ const DashboardNotification = ({
 	const { dismissNotification, notificationConfig } = useNotification();
 
 	// check if there's a notification for the dashboard
-	if (
-		!(
-			notificationConfig &&
-			notificationConfig.page &&
-			notificationConfig.notification &&
-			notificationConfig.page === 'dashboard'
-		)
-	) {
+	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
 		return <></>;
 	}
 
