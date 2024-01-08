@@ -29,6 +29,7 @@ import consentResearchParticipationDictionary from './consentResearchParticipati
 import consentReviewSignDictionary from './consentReviewSign';
 import consentWizardDictionary from './consentWizard';
 import dashboardDictionary from './dashboard';
+import emailVerifiedNotificationDictionary from './emailVerifiedNotification';
 import footerDictionary from './footer';
 import formErrorsDictionary from './formErrors';
 import formLabelsDictionary from './formLabels';
@@ -60,6 +61,7 @@ const dictionaries = {
 	consentReviewSign: consentReviewSignDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
+	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,

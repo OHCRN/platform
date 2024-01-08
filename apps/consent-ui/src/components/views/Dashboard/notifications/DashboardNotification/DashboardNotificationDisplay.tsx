@@ -19,9 +19,11 @@
 
 'use client';
 
-import ResendVerificationNotification from 'src/components/views/Dashboard/notifications/ResendVerificationNotification';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
+import ResendVerificationNotification from 'src/components/views/Dashboard/notifications/ResendVerificationNotification';
+import ConsentCompletionNotification from 'src/components/views/Dashboard/notifications/ConsentCompleteNotification';
+import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
 
 import styles from './DashboardNotificationDisplay.module.scss';
 
@@ -42,7 +44,6 @@ const DashboardNotification = ({
 	}
 
 	const notificationProps = {
-		className: styles.notification,
 		currentLang,
 		dismissClick: dismissNotification,
 	};
@@ -62,7 +63,7 @@ const DashboardNotification = ({
 			// user has just verified their email
 			// (redirected to dashboard with URL param)
 			// show once
-			notification = <div>email is verified</div>;
+			notification = <EmailVerifiedNotification {...notificationProps} />;
 			break;
 		case 'consentInProgress':
 			// user has started the consent wizard
@@ -72,7 +73,7 @@ const DashboardNotification = ({
 		case 'consentComplete':
 			// user has just completed the consent wizard
 			// show once
-			notification = <div>consent completed</div>;
+			notification = <ConsentCompletionNotification {...notificationProps} />;
 			break;
 		default:
 			break;

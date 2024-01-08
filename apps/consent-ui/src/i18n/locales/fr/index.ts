@@ -29,6 +29,7 @@ import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentR
 import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
 import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
+import emailVerifiedNotificationDictionary from 'src/i18n/locales/fr/emailVerifiedNotification';
 import en from 'src/i18n/locales/en/index';
 import footerDictionary from 'src/i18n/locales/fr/footer';
 import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
@@ -61,6 +62,7 @@ const dictionaries = {
 	consentReviewSign: consentReviewSignDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
+	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
