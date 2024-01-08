@@ -46,9 +46,9 @@ import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
 
 import { ConsentGroupOption } from './types';
-import styles from './ClinicianInviteForm.module.scss';
+import formStyles from './ClinicianInviteForm.module.scss';
 
-Object.assign(styles, layoutStyles);
+const styles = Object.assign({}, formStyles, layoutStyles);
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
