@@ -17,53 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
 
-import ResendEmailVerificationButton from './ResendVerificationNotificationButton';
-
-interface RegisteredNotificationProps {
-	className?: string;
-	currentLang: ValidLanguage;
-	dismissClick?: () => void;
-	email: string;
-	name: string;
-}
-
-const ResendVerificationNotification = ({
-	className,
+const ConsentInProgressNotification = ({
 	currentLang,
 	dismissClick,
-	email,
-	name,
-}: RegisteredNotificationProps) => {
+}: {
+	currentLang: ValidLanguage;
+	dismissClick: () => void;
+}) => {
 	const translate = getTranslation(currentLang);
-
-	const actionButton = (
-		<ResendEmailVerificationButton>
-			{translate('resendVerificationNotification', 'actionButton')}
-		</ResendEmailVerificationButton>
-	);
-
 	return (
 		<Notification
-			actionButton={actionButton}
-			className={className}
-			dismissable
 			dismissClick={dismissClick}
-			level="warning"
-			title={translate('resendVerificationNotification', 'title', { name })}
-		>
-			{translate('resendVerificationNotification', 'text1')}
-			<b>{email}</b>
-			{translate('resendVerificationNotification', 'text2')}
-			{/* TODO add support link https://github.com/OHCRN/platform/issues/342 */}
-			<Link href="#">{translate('resendVerificationNotification', 'linkText')}</Link>
-			{translate('resendVerificationNotification', 'text3')}
-		</Notification>
+			level="success"
+			title={translate('consentInProgressNotification', 'notificationText')}
+		/>
 	);
 };
 
-export default ResendVerificationNotification;
+export default ConsentInProgressNotification;

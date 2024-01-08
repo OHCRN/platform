@@ -24,6 +24,7 @@ import { ValidLanguage } from 'src/i18n';
 import ResendVerificationNotification from 'src/components/views/Dashboard/notifications/ResendVerificationNotification';
 import ConsentCompletionNotification from 'src/components/views/Dashboard/notifications/ConsentCompleteNotification';
 import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
+import ConsentInProgressNotification from 'src/components/views/Dashboard/notifications/ConsentInProgressNotification';
 
 import styles from './DashboardNotificationDisplay.module.scss';
 
@@ -68,7 +69,7 @@ const DashboardNotification = ({
 		case 'consentInProgress':
 			// user has started the consent wizard
 			// show every session
-			notification = <div>consent is in progress</div>;
+			notification = <ConsentInProgressNotification {...notificationProps} />;
 			break;
 		case 'consentComplete':
 			// user has just completed the consent wizard

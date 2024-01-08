@@ -28,7 +28,7 @@ const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) 
 	const { notificationConfig, setNotificationConfig } = useNotification();
 
 	// STUB - get name, email, email verified, consent progress from API
-	const consentInProgress = true;
+	const consentInProgress = false;
 	const email = 'homersimpson@gmail.com';
 	const emailVerified = false;
 	const name = 'Homer Simpson';
