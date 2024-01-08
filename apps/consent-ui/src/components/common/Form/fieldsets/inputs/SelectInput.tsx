@@ -20,6 +20,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { useId } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import Select, { SingleValue } from 'react-select';
 
@@ -44,6 +45,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	required,
 }: SelectInputProps<T, V>) => {
 	const { control } = useFormContext();
+	const id = useId();
 
 	return (
 		<Controller
@@ -57,7 +59,9 @@ const SelectInput = <T extends FieldValues, V extends string>({
 					// react-select doesn't work with hashed CSS classnames from CSS modules.
 					// className & classNamePrefix need to be strings, not hashed classNames.
 					// https://github.com/JedWatson/react-select/issues/4525
-					inputId={name}
+					id={`select-${id}`}
+					inputId={`input-${id}`}
+					instanceId={id}
 					isDisabled={disabled}
 					name={name}
 					onBlur={onBlur}
