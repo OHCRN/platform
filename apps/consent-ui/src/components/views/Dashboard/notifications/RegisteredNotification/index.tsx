@@ -55,8 +55,6 @@ const RegisteredNotification = ({
 		<ResendEmailVerificationButton>{dictionary.actionButton}</ResendEmailVerificationButton>
 	);
 
-	// TODO add resend verification email action
-
 	return (
 		<Notification
 			actionButton={actionButton}
