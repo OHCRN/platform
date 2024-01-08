@@ -100,7 +100,7 @@ To run the setup locally, ensure you have provided the **required** environment 
 - Install pnpm: `brew install pnpm`
 - Install dependencies: `pnpm install`
 
-> **Note:** This repo is using the LTS version of node (currently v18)
+> **Note:** Node v20.x is the latest LTS version, but there is an incompatibility issue with ts-node https://github.com/TypeStrong/ts-node/issues/1997. This repo enforces using Node v18.18.2 to work with ts-node and ECMAScript Modules (ESM).
 
 ### VS Code Configuration
 
