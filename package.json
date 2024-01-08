@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
+	"engines": {
+		"node": "18.18.2"
+	  },
 	"scripts": {
 		"build": "pnpm -r run build",
 		"consent-ui-dev": "pnpm --filter consent-ui run dev",
