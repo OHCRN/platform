@@ -16,6 +16,7 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import Link from 'next/link';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
@@ -32,8 +33,12 @@ const ConsentInProgressNotification = ({
 		<Notification
 			dismissClick={dismissClick}
 			level="success"
-			title={translate('consentInProgressNotification', 'notificationText')}
-		/>
+			title={translate('consentInProgressNotification', 'title')}
+		>
+			{translate('consentInProgressNotification', 'text1')}
+			<Link href="#">{translate('consentInProgressNotification', 'linkText')}</Link>
+			{translate('consentInProgressNotification', 'text2')}
+		</Notification>
 	);
 };
 

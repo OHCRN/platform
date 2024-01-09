@@ -27,16 +27,13 @@ import DashboardNotificationDisplay from './DashboardNotificationDisplay';
 const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { notificationConfig, setNotificationConfig } = useNotification();
 
-	// STUB - get name, email, email verified, consent progress from API
-	const consentInProgress = false;
-	const email = 'homersimpson@gmail.com';
-	const emailVerified = false;
-	const name = 'Homer Simpson';
+	// STUB - consent progress from API
+	const consentInProgress = true;
 
 	// STUB - get email verified URL param from keycloak redirect URL
 	const emailVerifiedParam = false;
 
-	//  logic for dismissing one notification and showing another
+	// logic for dismissing one notification and showing another
 	// has not been implemented, since it can't be accurately tested.
 	// this file will require revisions as features are completed.
 
@@ -56,11 +53,6 @@ const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) 
 		// (redirected to dashboard with URL param)
 		// show once
 		nextNotification = 'emailVerified';
-	} else if (!emailVerified) {
-		// user has registered, but not verified their email
-		// or started the consent process.
-		// show every session
-		nextNotification = 'emailNotVerified';
 	} else if (consentInProgress) {
 		// user has started the consent wizard
 		// show every session
@@ -71,7 +63,7 @@ const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) 
 		setNotificationConfig({ page: 'dashboard', notification: nextNotification });
 	}
 
-	return <DashboardNotificationDisplay currentLang={currentLang} email={email} name={name} />;
+	return <DashboardNotificationDisplay currentLang={currentLang} />;
 };
 
 export default DashboardNotification;

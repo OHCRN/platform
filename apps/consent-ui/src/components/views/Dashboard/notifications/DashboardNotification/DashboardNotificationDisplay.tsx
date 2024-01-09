@@ -21,22 +21,13 @@
 
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
-import ResendVerificationNotification from 'src/components/views/Dashboard/notifications/ResendVerificationNotification';
 import ConsentCompletionNotification from 'src/components/views/Dashboard/notifications/ConsentCompleteNotification';
 import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
 import ConsentInProgressNotification from 'src/components/views/Dashboard/notifications/ConsentInProgressNotification';
 
 import styles from './DashboardNotificationDisplay.module.scss';
 
-const DashboardNotification = ({
-	currentLang,
-	email,
-	name,
-}: {
-	currentLang: ValidLanguage;
-	email: string;
-	name: string;
-}) => {
+const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { dismissNotification, notificationConfig } = useNotification();
 
 	// check if there's a notification for the dashboard
@@ -52,14 +43,6 @@ const DashboardNotification = ({
 	let notification;
 
 	switch (notificationConfig.notification) {
-		case 'emailNotVerified':
-			// user has registered, but not verified their email
-			// or started the consent process.
-			// show every session
-			notification = (
-				<ResendVerificationNotification {...notificationProps} email={email} name={name} />
-			);
-			break;
 		case 'emailVerified':
 			// user has just verified their email
 			// (redirected to dashboard with URL param)
@@ -87,4 +70,4 @@ const DashboardNotification = ({
 	}
 };
 
-export default DashboardNotification;
+export default DashboardNotificationDisplay;
