@@ -44,19 +44,12 @@ const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLangu
 
 	switch (notificationConfig.notification) {
 		case 'emailVerified':
-			// user has just verified their email
-			// (redirected to dashboard with URL param)
-			// show once
 			notification = <EmailVerifiedNotification {...notificationProps} />;
 			break;
 		case 'consentInProgress':
-			// user has started the consent wizard
-			// show every session
 			notification = <ConsentInProgressNotification {...notificationProps} />;
 			break;
 		case 'consentComplete':
-			// user has just completed the consent wizard
-			// show once
 			notification = <ConsentCompletionNotification {...notificationProps} />;
 			break;
 		default:
