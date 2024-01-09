@@ -48,7 +48,7 @@ const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) 
 		if (nextNotification) {
 			showNotification({ page: 'dashboard', notification: nextNotification });
 		}
-	}, [showNotification, consentInProgress, emailVerifiedParam]);
+	}, [consentInProgress, emailVerifiedParam, showNotification]);
 
 	return <DashboardNotificationDisplay currentLang={currentLang} />;
 };
