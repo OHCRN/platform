@@ -17,35 +17,5 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-
-import { ConsentQuestionId } from './ConsentQuestion.js';
-import { Name, PhoneNumber } from './fields/index.js';
-
-const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
-
-export const ConsentRecontactBase = z.object({
-	[RECONTACT__FUTURE_RESEARCH]: z.boolean(),
-	[RECONTACT__SECONDARY_CONTACT]: z.boolean(),
-	secondaryContactFirstName: Name.optional(),
-	secondaryContactLastName: Name.optional(),
-	secondaryContactPhoneNumber: PhoneNumber.optional(),
-});
-
-export const hasRequiredSecondaryContactInfo = ({
-	requireSecondaryContactInfo,
-	secondaryContactFirstName,
-	secondaryContactLastName,
-	secondaryContactPhoneNumber,
-}: {
-	requireSecondaryContactInfo: boolean;
-	secondaryContactFirstName?: string;
-	secondaryContactLastName?: string;
-	secondaryContactPhoneNumber?: string;
-}) => {
-	const allSecondaryContactInfoDefined =
-		secondaryContactFirstName !== undefined &&
-		secondaryContactLastName !== undefined &&
-		secondaryContactPhoneNumber !== undefined;
-	return requireSecondaryContactInfo ? allSecondaryContactInfoDefined : true;
-};
+export * from './requests/index.js';
+export * from './responses/index.js';

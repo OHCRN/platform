@@ -18,34 +18,15 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentQuestionId } from './ConsentQuestion.js';
-import { Name, PhoneNumber } from './fields/index.js';
+import { ConsentResearchParticipationBase } from '../../../entities/index.js';
 
-const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
-
-export const ConsentRecontactBase = z.object({
-	[RECONTACT__FUTURE_RESEARCH]: z.boolean(),
-	[RECONTACT__SECONDARY_CONTACT]: z.boolean(),
-	secondaryContactFirstName: Name.optional(),
-	secondaryContactLastName: Name.optional(),
-	secondaryContactPhoneNumber: PhoneNumber.optional(),
-});
-
-export const hasRequiredSecondaryContactInfo = ({
-	requireSecondaryContactInfo,
-	secondaryContactFirstName,
-	secondaryContactLastName,
-	secondaryContactPhoneNumber,
-}: {
-	requireSecondaryContactInfo: boolean;
-	secondaryContactFirstName?: string;
-	secondaryContactLastName?: string;
-	secondaryContactPhoneNumber?: string;
-}) => {
-	const allSecondaryContactInfoDefined =
-		secondaryContactFirstName !== undefined &&
-		secondaryContactLastName !== undefined &&
-		secondaryContactPhoneNumber !== undefined;
-	return requireSecondaryContactInfo ? allSecondaryContactInfoDefined : true;
-};
+export const ConsentResearchParticipationResponse = ConsentResearchParticipationBase;
+export type ConsentResearchParticipationResponse = z.infer<
+	typeof ConsentResearchParticipationResponse
+>;
+export const ConsentResearchParticipationResponseSchema: SchemaObject = generateSchema(
+	ConsentResearchParticipationResponse,
+);
