@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,13 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-// TODO: separate name into two fields with + without whitespace, include French chars in both
-export const name = /^[A-Za-z\s]+$/;
-export const nanoId = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
-export const ohipNumber = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
-export const phoneNumber = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
-export const postalCode = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
-
-export const REGEX_FLAG_GLOBAL = 'g';
+const SORT_ORDERS = ['asc', 'desc'] as const;
+export const SortOrder = z.enum(SORT_ORDERS);
+export type SortOrder = z.infer<typeof SortOrder>;
+export const SortOrderSchema: SchemaObject = generateSchema(SortOrder);

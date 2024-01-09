@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,6 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const NANOID_LENGTH = 21;
-export const PHONE_NUMBER_LENGTH = 10;
-export const OHIP_NUMBER_LENGTH = 10;
+import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
+
+// TODO: separate name into two fields with + without whitespace, include French chars in both
+export const name = /^[A-Za-z\s]+$/;
+export const nanoId = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
+export const ohipNumber = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
+export const phoneNumber = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
+export const postalCode = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
+
+export const REGEX_FLAG_GLOBAL = 'g';
