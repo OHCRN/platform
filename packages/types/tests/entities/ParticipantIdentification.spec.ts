@@ -20,7 +20,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { ConsentGroup, ParticipantIdentification } from '../../src/entities/index.js';
-import { LifecycleState } from '../../src/entities/LifecycleState.js';
+import { LifecycleState } from '../../src/entities/fields/index.js';
 
 describe('ParticipantIdentification', () => {
 	it('Must define conditionally required fields on condition', () => {

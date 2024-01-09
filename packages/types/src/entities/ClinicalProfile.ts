@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,14 +19,16 @@
 
 import { z } from 'zod';
 
-import { Ancestry } from './Ancestry.js';
-import { BirthSex } from './BirthSex.js';
-import { Gender } from './Gender.js';
-import { GeneticsClinic } from './GeneticsClinic.js';
-import { HistoryOfCancer } from './HistoryOfCancer.js';
-import { NanoId } from './NanoId.js';
-import { Name } from './Name.js';
-import { MolecularLab } from './MolecularLab.js';
+import {
+	Ancestry,
+	BirthSex,
+	Gender,
+	GeneticsClinic,
+	HistoryOfCancer,
+	MolecularLab,
+	Name,
+	NanoId,
+} from './fields/index.js';
 
 export const ClinicalProfile = z
 	.object({

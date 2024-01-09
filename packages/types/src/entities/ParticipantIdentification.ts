@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,14 +19,17 @@
 
 import { z } from 'zod';
 
-import { ConsentGroup } from './ConsentGroup.js';
-import { Province } from './Province.js';
-import { PhoneNumber } from './PhoneNumber.js';
-import { PostalCode } from './PostalCode.js';
-import { Name } from './Name.js';
-import { OhipNumber } from './OhipNumber.js';
-import { NanoId } from './NanoId.js';
-import { LifecycleState } from './LifecycleState.js';
+import {
+	ConsentGroup,
+	LifecycleState,
+	Name,
+	NanoId,
+	OhipNumber,
+	PhoneNumber,
+	PostalCode,
+	Province,
+} from './fields/index.js';
+
 import { InviteGuardianFields } from './index.js';
 
 export const hasRequiredGuardianInformation = (
