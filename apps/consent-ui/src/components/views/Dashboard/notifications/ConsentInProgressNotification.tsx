@@ -38,6 +38,7 @@ const ConsentInProgressNotification = ({
 		>
 			{translate('consentInProgressNotification', 'text1')}
 			<Link href="#">{translate('consentInProgressNotification', 'linkText')}</Link>
+			{/* TODO add a link for "send us a message" https://github.com/OHCRN/platform/issues/354 */}
 			{translate('consentInProgressNotification', 'text2')}
 		</Notification>
 	);
