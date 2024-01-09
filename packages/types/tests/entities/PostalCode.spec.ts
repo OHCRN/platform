@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { PostalCode } from '../../src/entities/index.js';
+import { PostalCode } from '../../src/entities/fields/index.js';
 
 describe('PostalCode', () => {
 	it('Must be 6 characters long', () => {

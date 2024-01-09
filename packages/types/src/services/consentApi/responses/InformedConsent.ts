@@ -21,7 +21,8 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentQuestionId, InformedConsentBase } from '../../../entities/index.js';
+import { ConsentQuestionId } from '../../../entities/index.js';
+import { InformedConsentBase } from '../../../entities/InformedConsent.js';
 
 export const InformedConsentResponse = InformedConsentBase.extend({
 	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.literal(true).optional(),

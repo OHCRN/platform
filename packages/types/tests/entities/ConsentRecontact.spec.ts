@@ -19,11 +19,11 @@
 
 import { describe, expect, it } from 'vitest';
 
+import { ConsentQuestionId } from '../../src/entities/index.js';
 import {
-	ConsentQuestionId,
 	ConsentRecontactRequest,
 	ConsentRecontactResponse,
-} from '../../src/entities/index.js';
+} from '../../src/services/consentApi/index.js';
 
 describe('ConsentRecontactRequest', () => {
 	it('Parses correctly when secondary contact consent is indicated and required fields are provided', () => {
