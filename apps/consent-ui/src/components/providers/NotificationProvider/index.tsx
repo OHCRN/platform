@@ -39,13 +39,13 @@ export type NotificationConfig =
 type NotificationContextType = {
 	dismissNotification: () => void;
 	notificationConfig?: NotificationConfig;
-	setNotificationConfig: (notificationConfig: NotificationConfig) => void;
+	showNotification: (notificationConfig: NotificationConfig) => void;
 };
 
 const defaultNotificationContext: NotificationContextType = {
 	dismissNotification: () => {},
 	notificationConfig: undefined,
-	setNotificationConfig: () => {},
+	showNotification: () => {},
 };
 
 const NotificationContext = createContext<NotificationContextType>(defaultNotificationContext);
@@ -58,13 +58,18 @@ const NotificationProvider = ({ children }: { children: ReactNode }) => {
 		[setNotificationConfig],
 	);
 
+	const showNotification = useCallback(
+		(config: NotificationConfig) => setNotificationConfig(config),
+		[setNotificationConfig],
+	);
+
 	const value = useMemo(
 		() => ({
 			dismissNotification,
 			notificationConfig,
-			setNotificationConfig,
+			showNotification,
 		}),
-		[dismissNotification, notificationConfig, setNotificationConfig],
+		[dismissNotification, notificationConfig, showNotification],
 	);
 
 	return <NotificationContext.Provider value={value}>{children}</NotificationContext.Provider>;

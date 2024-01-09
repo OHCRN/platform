@@ -19,49 +19,36 @@
 
 'use client';
 
+import { useEffect } from 'react';
+
 import { ValidLanguage } from 'src/i18n';
 import { Notification, useNotification } from 'src/components/providers/NotificationProvider';
 
 import DashboardNotificationDisplay from './DashboardNotificationDisplay';
 
 const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { notificationConfig, setNotificationConfig } = useNotification();
+	const { showNotification } = useNotification();
 
-	// STUB - consent progress from API
-	const consentInProgress = true;
+	// STUB - get consent progress from API
+	const consentInProgress = false;
 
 	// STUB - get email verified URL param from keycloak redirect URL
-	const emailVerifiedParam = false;
+	const emailVerifiedParam = true;
 
-	// logic for dismissing one notification and showing another
-	// has not been implemented, since it can't be accurately tested.
-	// this file will require revisions as features are completed.
+	useEffect(() => {
+		// STUB - determine which notification to show
+		let nextNotification: Notification | undefined;
 
-	// STUB - determine which notification to show
-	let nextNotification: Notification | undefined;
+		if (emailVerifiedParam) {
+			nextNotification = 'emailVerified';
+		} else if (consentInProgress) {
+			nextNotification = 'consentInProgress';
+		}
 
-	if (
-		notificationConfig?.page === 'dashboard' &&
-		notificationConfig?.notification === 'consentComplete'
-	) {
-		// user has just completed the consent wizard. do nothing here.
-		// notification context is updated on consent wizard submission.
-		// show once
-		nextNotification = undefined;
-	} else if (emailVerifiedParam) {
-		// user has just verified their email
-		// (redirected to dashboard with URL param)
-		// show once
-		nextNotification = 'emailVerified';
-	} else if (consentInProgress) {
-		// user has started the consent wizard
-		// show every session
-		nextNotification = 'consentInProgress';
-	}
-
-	if (nextNotification) {
-		setNotificationConfig({ page: 'dashboard', notification: nextNotification });
-	}
+		if (nextNotification) {
+			showNotification({ page: 'dashboard', notification: nextNotification });
+		}
+	}, [showNotification, consentInProgress, emailVerifiedParam]);
 
 	return <DashboardNotificationDisplay currentLang={currentLang} />;
 };
