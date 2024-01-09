@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,19 +19,7 @@
 
 import { z } from 'zod';
 
-const GENDER = [
-	'GENDER_FLUID',
-	'GENDER_QUEER',
-	'MAN',
-	'NON_BINARY',
-	'PREFER_NOT_TO_ANSWER',
-	'PREFER_TO_SELF_IDENTIFY',
-	'QUESTIONING',
-	'TRANSGENDER_MAN_TRANSMAN',
-	'TRANSGENDER_WOMAN_TRANSWOMAN',
-	'TWO_SPIRIT',
-	'WOMAN',
-] as const;
+import { phoneNumber } from '../../common/Regex.js';
 
-export const Gender = z.enum(GENDER);
-export type Gender = z.infer<typeof Gender>;
+export const PhoneNumber = z.string().trim().regex(phoneNumber);
+export type PhoneNumber = z.infer<typeof PhoneNumber>;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,18 +18,20 @@
  */
 
 import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
 
-export const CONSENT_GROUPS = [
-	'ADULT_CONSENT',
-	'ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER',
-	'GUARDIAN_CONSENT_OF_MINOR',
-	'GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT',
-	'YOUNG_ADULT_CONSENT',
+const GENDER = [
+	'GENDER_FLUID',
+	'GENDER_QUEER',
+	'MAN',
+	'NON_BINARY',
+	'PREFER_NOT_TO_ANSWER',
+	'PREFER_TO_SELF_IDENTIFY',
+	'QUESTIONING',
+	'TRANSGENDER_MAN_TRANSMAN',
+	'TRANSGENDER_WOMAN_TRANSWOMAN',
+	'TWO_SPIRIT',
+	'WOMAN',
 ] as const;
 
-export const ConsentGroup = z.enum(CONSENT_GROUPS);
-export type ConsentGroup = z.infer<typeof ConsentGroup>;
-
-export const ConsentGroupSchema: SchemaObject = generateSchema(ConsentGroup);
+export const Gender = z.enum(GENDER);
+export type Gender = z.infer<typeof Gender>;

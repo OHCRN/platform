@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,8 +18,23 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-const BIRTH_SEX = ['FEMALE', 'INTERSEX', 'MALE', 'PREFER_NOT_TO_ANSWER'] as const;
+const LIFECYCLE_STATES = [
+	'REGISTERED',
+	'CONSENTED',
+	'IN_PROCESSING',
+	'PROFILE_COMPLETE',
+	'PUBLISHED',
+	'DELETION_REQUESTED',
+	'PAUSE_REQUESTED',
+	'CHANGE_REQUESTED',
+	'APPROVED_FOR_DELETION',
+	'PAUSED',
+	'DELETED',
+] as const;
 
-export const BirthSex = z.enum(BIRTH_SEX);
-export type BirthSex = z.infer<typeof BirthSex>;
+export const LifecycleState = z.enum(LIFECYCLE_STATES);
+export type LifecycleState = z.infer<typeof LifecycleState>;
+export const LifecycleStateSchema: SchemaObject = generateSchema(LifecycleState);

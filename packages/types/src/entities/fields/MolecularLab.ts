@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,7 +19,17 @@
 
 import { z } from 'zod';
 
-import { phoneNumber } from './Regex.js';
+const MOLECULAR_LABS = [
+	'CHILDRENS_HOSPITAL_OF_EASTERN_ONTARIO_OTTAWA',
+	'HAMILTON_HEALTH_SCIENCES_HAMILTON',
+	'HOSPITAL_FOR_SICK_CHILDREN_TORONTO',
+	'KINGSTON_HEALTH_SCIENCES_CENTRE_KINGSTON',
+	'LONDON_HEALTH_SCIENCES_CENTRE_LONDON',
+	'NORTH_YORK_GENERAL_HOSPITAL_TORONTO',
+	'SINAI_HEALTH_SYSTEM_TORONTO',
+	'TRILLIUM_HEALTH_PARTNERS_MISSISSAUGA',
+	'UNIVERSITY_HEALTH_NETWORK_TORONTO',
+] as const;
 
-export const PhoneNumber = z.string().trim().regex(phoneNumber);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+export const MolecularLab = z.enum(MOLECULAR_LABS);
+export type MolecularLab = z.infer<typeof MolecularLab>;

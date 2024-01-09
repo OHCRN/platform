@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,7 +19,21 @@
 
 import { z } from 'zod';
 
-import { ohipNumber } from './Regex.js';
+const PROVINCES = [
+	'ALBERTA',
+	'BRITISH_COLUMBIA',
+	'MANITOBA',
+	'NEW_BRUNSWICK',
+	'NEWFOUNDLAND_AND_LABRADOR',
+	'NORTHWEST_TERRITORIES',
+	'NOVA_SCOTIA',
+	'NUNAVUT',
+	'ONTARIO',
+	'PRINCE_EDWARD_ISLAND',
+	'QUEBEC',
+	'SASKATCHEWAN',
+	'YUKON',
+] as const;
 
-export const OhipNumber = z.string().regex(ohipNumber);
-export type OhipNumber = z.infer<typeof OhipNumber>;
+export const Province = z.enum(PROVINCES);
+export type Province = z.infer<typeof Province>;
