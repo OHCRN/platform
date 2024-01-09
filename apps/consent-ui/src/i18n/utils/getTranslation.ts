@@ -18,8 +18,9 @@
  */
 import { REGEX_FLAG_GLOBAL } from 'types/entities';
 
-import { GetTranslation } from 'src/i18n/types';
+import { GetTranslation, ValidLanguage } from 'src/i18n/types';
 import dictionaries from 'src/i18n/locales';
+import en from 'src/i18n/locales/en/index';
 
 /**
  * ```
@@ -66,4 +67,28 @@ export const getTranslation: GetTranslation = (language) => {
 		const translation = `${dictionary[namespace][key] || ''}`;
 		return replaceParams(translation, params);
 	};
+};
+
+export const translateNamespace = ({
+	currentLang,
+	namespace,
+	params = {},
+}: {
+	currentLang: ValidLanguage;
+	namespace: keyof typeof en;
+	params?: Record<string, Record<string, string | number>>;
+}) => {
+	const dictionaryTranslated: Record<string, string> = dictionaries[currentLang][namespace];
+
+	const paramsReplaced = Object.keys(params).reduce(
+		(acc, key) => ({
+			...acc,
+			[key]: replaceParams(dictionaryTranslated[key], params[key]),
+		}),
+		{},
+	);
+
+	const dictionaryWithParams = Object.assign({}, dictionaryTranslated, paramsReplaced);
+
+	return dictionaryWithParams;
 };

@@ -23,6 +23,7 @@ const dictionary = {
 	inviteYourPatients: 'Invite your patients to participate in the OHCRN Registry.',
 	registerHere: 'Register here',
 	registerYourPatient: 'Register Your Patient',
+	sampleSentence: 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.',
 } satisfies Record<string, string>;
 
 export type InviteDictionary = Record<keyof typeof dictionary, string>;

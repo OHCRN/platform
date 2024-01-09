@@ -25,6 +25,7 @@ const dictionary = {
 	inviteYourPatients: 'Invitez vos patients à participer au registre OHCRN.',
 	registerHere: 'Inscrivez-vous ici',
 	registerYourPatient: 'Enregistrez votre patient',
+	sampleSentence: 'Traduit cette chaîne un {{dayOfWeek}} de {{ dayOfMonth }}.',
 } satisfies InviteDictionary;
 
 export default dictionary;
