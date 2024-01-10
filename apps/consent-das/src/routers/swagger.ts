@@ -22,7 +22,6 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import { serve, setup } from 'swagger-ui-express';
 import { SortOrderSchema as SortOrder } from 'types/common';
 import {
-	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ConsentCategorySchema as ConsentCategory,
 	ConsentGroupSchema as ConsentGroup,
 	ConsentQuestionSchema as ConsentQuestion,
@@ -30,7 +29,10 @@ import {
 	ConsentQuestionIdSchema as ConsentQuestionId,
 	LifecycleStateSchema as LifecycleState,
 } from 'types/entities';
-import { ParticipantResponseArraySchema as ParticipantResponseArray } from 'types/consentDas';
+import {
+	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
+	ParticipantResponseArraySchema as ParticipantResponseArray,
+} from 'types/consentDas';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 

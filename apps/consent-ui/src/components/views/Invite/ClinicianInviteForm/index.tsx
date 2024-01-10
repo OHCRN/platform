@@ -22,7 +22,8 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ClinicianInviteRequest, ConsentGroup, InviteGuardianFields } from 'types/entities';
+import { ConsentGroup, InviteGuardianFields } from 'types/entities';
+import { ClinicianInviteRequest } from 'types/consentApi';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';

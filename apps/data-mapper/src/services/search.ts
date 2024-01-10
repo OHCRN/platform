@@ -1,5 +1,5 @@
-import { InformedConsentResponse } from 'types/dataMapper';
-import { ClinicianInviteResponse, ConsentCategory, ConsentQuestionId } from 'types/entities';
+import { ClinicianInviteResponse, InformedConsentResponse } from 'types/dataMapper';
+import { ConsentCategory, ConsentQuestionId } from 'types/entities';
 import { Result, failure, isSuccess, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 

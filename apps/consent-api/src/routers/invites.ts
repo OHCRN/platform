@@ -19,7 +19,8 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { ClinicianInviteRequest, NanoId } from 'types/entities';
+import { NanoId } from 'types/entities';
+import { ClinicianInviteRequest } from 'types/consentApi';
 import {
 	ConflictErrorResponse,
 	ErrorName,

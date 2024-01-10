@@ -19,7 +19,8 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { ConsentClinicianInviteRequest, NanoId } from 'types/entities';
+import { ConsentClinicianInviteRequest } from 'types/consentDas';
+import { NanoId } from 'types/entities';
 import {
 	ConflictErrorResponse,
 	ErrorName,
@@ -28,9 +29,9 @@ import {
 	RequestValidationErrorResponse,
 } from 'types/httpResponses';
 
-import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
-import { createClinicianInvite } from '../services/create.js';
 import logger from '../logger.js';
+import { createClinicianInvite } from '../services/create.js';
+import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
 
 const { SERVER_ERROR } = ErrorName;
 

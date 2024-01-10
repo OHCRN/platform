@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios';
-import { InformedConsentResponse } from 'types/consentApi';
-import { ClinicianInviteResponse } from 'types/entities';
+import { InformedConsentResponse, ClinicianInviteResponse } from 'types/consentApi';
 import { Result, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 

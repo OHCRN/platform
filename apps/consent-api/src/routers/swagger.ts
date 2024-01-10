@@ -21,6 +21,8 @@ import { Router } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { serve, setup } from 'swagger-ui-express';
 import {
+	ClinicianInviteRequestSchema as ClinicianInviteRequest,
+	ClinicianInviteResponseSchema as ClinicianInviteResponse,
 	ConsentRecontactRequestSchema as ConsentRecontactRequest,
 	ConsentRecontactResponseSchema as ConsentRecontactResponse,
 	ConsentReleaseDataRequestSchema as ConsentReleaseDataRequest,
@@ -31,10 +33,8 @@ import {
 	InformedConsentResponseSchema as InformedConsentResponse,
 } from 'types/consentApi';
 import {
-	ClinicianInviteRequestSchema as ClinicianInviteRequest,
-	ClinicianInviteResponseSchema as ClinicianInviteResponse,
-	ConsentWizardProgressSchema as ConsentWizardProgress,
 	ConsentReviewSignResponseSchema as ConsentReviewSignResponse,
+	ConsentWizardProgressSchema as ConsentWizardProgress,
 	UserSchema as User,
 } from 'types/entities';
 

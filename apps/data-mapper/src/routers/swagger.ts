@@ -18,14 +18,14 @@
  */
 
 import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import { serve, setup } from 'swagger-ui-express';
 import {
 	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ClinicianInviteResponseSchema as ClinicianInviteResponse,
-	NanoIdSchema as NanoId,
-} from 'types/entities';
-import { InformedConsentResponseSchema as InformedConsentResponse } from 'types/dataMapper';
+	InformedConsentResponseSchema as InformedConsentResponse,
+} from 'types/dataMapper';
+import { NanoIdSchema as NanoId } from 'types/entities';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 /**

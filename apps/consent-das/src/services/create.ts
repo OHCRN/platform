@@ -1,18 +1,18 @@
-import { ConsentClinicianInviteRequest } from 'types/entities';
+import { ConsentClinicianInviteRequest } from 'types/consentDas';
 import { Result, failure, success } from 'types/httpResponses';
 
-import prisma, {
-	Participant,
-	ConsentQuestion,
-	ConsentCategory,
-	ConsentGroup,
-	ParticipantResponse,
-	ClinicianInvite,
-	ConsentQuestionId,
-	LifecycleState,
-} from '../prismaClient.js';
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
+import prisma, {
+	ClinicianInvite,
+	ConsentCategory,
+	ConsentGroup,
+	ConsentQuestion,
+	ConsentQuestionId,
+	LifecycleState,
+	Participant,
+	ParticipantResponse,
+} from '../prismaClient.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
 

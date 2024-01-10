@@ -18,15 +18,13 @@
  */
 
 import { AxiosError } from 'axios';
+import { ConsentCategory, ConsentQuestionArray, ConsentQuestionId } from 'types/entities';
+import { Result, failure, success } from 'types/httpResponses';
 import {
-	ConsentCategory,
+	ParticipantResponseArray,
 	ConsentClinicianInviteRequest,
 	ConsentClinicianInviteResponse,
-	ConsentQuestionArray,
-	ConsentQuestionId,
-} from 'types/entities';
-import { Result, failure, success } from 'types/httpResponses';
-import { ParticipantResponseArray } from 'types/dataMapper';
+} from 'types/dataMapper';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../../config.js';
