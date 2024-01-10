@@ -17,24 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormCalloutsDictionary } from '../en/formCallouts';
-
 const dictionary = {
-	clinicianInstitutionalEmailAddressCallout:
-		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
-	consentGroupCallout: 'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
-	guardianEmailAddressCallout: 'Le tuteur recevra une invitation à ce compte.',
-	guardianPhoneNumberCallout:
-		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
-	participantEmailAddressCallout: 'Le patient recevra une invitation sur ce compte.',
-	participantFirstNameCallout:
-		"Inscrivez le prénom du participant tel qu'il apparaît sur sa carte Santé.",
-	participantLastNameCallout:
-		"Entrez le nom de famille du participant tel qu'il apparaît sur sa carte Santé.",
-	participantPhoneNumberCallout:
-		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
-	participantPreferredNameCallout:
-		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
-} satisfies FormCalloutsDictionary;
+	clinicianInstitutionalEmailAddressTooltip:
+		'We require this to confirm your authority to register patients.',
+	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
+	guardianEmailAddressTooltip: 'The guardian will receive an invitation to this account.',
+	guardianPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
+	participantEmailAddressTooltip: 'The patient will receive an invitation to this account.',
+	participantFirstNameTooltip: "Enter participant's first name as it appears on their health card.",
+	participantLastNameTooltip: "Enter participant's last name as it appears on their health card.",
+	participantPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
+	participantPreferredNameTooltip:
+		'What would the participant like to be called when they are contacted?',
+} satisfies Record<string, string>;
+
+export type FormTooltipsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

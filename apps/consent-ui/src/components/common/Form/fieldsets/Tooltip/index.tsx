@@ -20,12 +20,12 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 
-import styles from './Callout.module.scss';
+import styles from './Tooltip.module.scss';
 
-// show/hide callout using CSS not with conditional rendering, so that it can be read by screenreaders
+// show/hide tooltip using CSS not with conditional rendering, so that it can be read by screenreaders
 // https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/
 
-interface CalloutProps {
+interface TooltipProps {
 	children: ReactNode;
 	className?: string;
 	id?: string;
@@ -33,11 +33,11 @@ interface CalloutProps {
 	withNarrowDesktopLayout?: boolean;
 }
 
-const Callout = ({ children, className, id, isVisible, withNarrowDesktopLayout }: CalloutProps) => {
+const Tooltip = ({ children, className, id, isVisible, withNarrowDesktopLayout }: TooltipProps) => {
 	return (
 		<div
 			className={clsx(
-				styles.callout,
+				styles.tooltip,
 				className,
 				!withNarrowDesktopLayout && styles.wideDesktop,
 				isVisible && styles.visible,
@@ -50,4 +50,4 @@ const Callout = ({ children, className, id, isVisible, withNarrowDesktopLayout }
 	);
 };
 
-export default Callout;
+export default Tooltip;

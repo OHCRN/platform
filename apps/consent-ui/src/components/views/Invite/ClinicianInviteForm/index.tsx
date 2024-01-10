@@ -162,31 +162,30 @@ const ClinicianInviteFormComponent = ({
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
 					<TextFieldSet
-						calloutContent={textDict.participantFirstNameCallout}
 						error={errors.participantFirstName?.type && errorsDict.required}
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
+						tooltipContent={textDict.participantFirstNameTooltip}
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutContent={textDict.participantLastNameCallout}
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
+						tooltipContent={textDict.participantLastNameTooltip}
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutContent={textDict.participantPreferredNameCallout}
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
+						tooltipContent={textDict.participantPreferredNameTooltip}
 						withNarrowDesktopLayout
 					/>
 
 					<SelectFieldSet
-						calloutContent={textDict.consentGroupCallout}
 						error={errors.consentGroup?.type && errorsDict.required}
 						infoButtonProps={{
 							label: textDict.learnMoreConsentGroups,
@@ -197,11 +196,12 @@ const ClinicianInviteFormComponent = ({
 						options={consentGroupOptions}
 						placeholder={textDict.selectPlaceholder || ''}
 						required
+						tooltipContent={textDict.consentGroupTooltip}
 						withNarrowDesktopLayout
 					/>
 
 					<TextFieldSet
-						calloutContent={textDict.participantPhoneNumberCallout}
+						tooltipContent={textDict.participantPhoneNumberTooltip}
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
@@ -209,11 +209,11 @@ const ClinicianInviteFormComponent = ({
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutContent={textDict.participantEmailAddressCallout}
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
 						required
+						tooltipContent={textDict.participantEmailAddressTooltip}
 						withNarrowDesktopLayout
 					/>
 				</FormSection>
@@ -234,20 +234,20 @@ const ClinicianInviteFormComponent = ({
 							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							calloutContent={textDict.guardianPhoneNumberCallout}
 							error={errors.guardianPhoneNumber?.type && errorsDict.required}
 							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
 							required
+							tooltipContent={textDict.guardianPhoneNumberTooltip}
 							type="tel"
 							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							calloutContent={textDict.guardianEmailAddressCallout}
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email || ''}
 							name="guardianEmailAddress"
 							required
+							tooltipContent={textDict.guardianEmailAddressTooltip}
 							type="email"
 							withNarrowDesktopLayout
 						/>
@@ -305,11 +305,11 @@ const ClinicianInviteFormComponent = ({
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						calloutContent={textDict.clinicianInstitutionalEmailAddressCallout}
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
+						tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
 						type="email"
 						withNarrowDesktopLayout
 					/>

@@ -23,19 +23,18 @@ import { FieldValues } from 'react-hook-form';
 import { useId } from 'react';
 import clsx from 'clsx';
 
-import { FormFieldSetWithCalloutProps, FormTextInputType } from 'src/components/common/Form/types';
-import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
+import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
+import { FormFieldSetWithTooltipProps, FormTextInputType } from 'src/components/common/Form/types';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 
 import styles from './TextFieldSet.module.scss';
 
-type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithCalloutProps<T> & {
+type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithTooltipProps<T> & {
 	type?: FormTextInputType;
 };
 
 const TextFieldSet = <T extends FieldValues>({
-	calloutContent,
 	className,
 	disabled,
 	error,
@@ -43,36 +42,37 @@ const TextFieldSet = <T extends FieldValues>({
 	label,
 	name,
 	required,
+	tooltipContent,
 	type = 'text',
 	withNarrowDesktopLayout,
 }: TextFieldSetProps<T>) => {
-	const { calloutVisible, hideCallout, showCallout } = useCallout();
+	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
 
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
-	const calloutId = `${idPrefix}-callout`;
+	const tooltipId = `${idPrefix}-tooltip`;
 
 	return (
 		<FieldSet
-			calloutContent={calloutContent}
-			calloutId={calloutId}
-			calloutVisible={calloutVisible}
 			className={className}
 			error={error}
 			fieldId={fieldId}
 			infoButtonProps={infoButtonProps}
 			label={label}
 			required={required}
+			tooltipContent={tooltipContent}
+			tooltipId={tooltipId}
+			tooltipVisible={tooltipVisible}
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<TextInput
-				ariaProps={calloutContent ? { 'aria-describedby': calloutId } : {}}
+				ariaProps={tooltipContent ? { 'aria-describedby': tooltipId } : {}}
 				className={clsx(styles.textInput, error && styles.error)}
 				disabled={disabled}
 				id={fieldId}
 				name={name}
-				onBlur={hideCallout}
-				onFocus={showCallout}
+				onBlur={hideTooltip}
+				onFocus={showTooltip}
 				required={required}
 				type={type}
 			/>

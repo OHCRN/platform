@@ -20,17 +20,14 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
+import Tooltip from 'src/components/common/Form/fieldsets/Tooltip';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
-import Callout from 'src/components/common/Form/fieldsets/Callout';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 import { InfoButtonProps } from 'src/components/common/InfoButton';
 
 import styles from './FieldSet.module.scss';
 
 interface FieldSetProps {
-	calloutContent?: ReactNode;
-	calloutId: string;
-	calloutVisible: boolean;
 	children: ReactNode;
 	className?: string;
 	error?: string;
@@ -38,13 +35,13 @@ interface FieldSetProps {
 	infoButtonProps?: InfoButtonProps;
 	label: string;
 	required?: boolean;
+	tooltipContent?: ReactNode;
+	tooltipId: string;
+	tooltipVisible: boolean;
 	withNarrowDesktopLayout?: boolean;
 }
 
 const FieldSet = ({
-	calloutContent,
-	calloutId,
-	calloutVisible,
 	children,
 	className,
 	error,
@@ -52,6 +49,9 @@ const FieldSet = ({
 	infoButtonProps,
 	label,
 	required,
+	tooltipContent,
+	tooltipId,
+	tooltipVisible,
 	withNarrowDesktopLayout,
 }: FieldSetProps) => {
 	return (
@@ -72,15 +72,15 @@ const FieldSet = ({
 				{error && <InputError>{error}</InputError>}
 			</div>
 
-			{calloutContent && (
-				<Callout
-					className={styles.calloutGridArea}
-					id={calloutId}
-					isVisible={calloutVisible}
+			{tooltipContent && (
+				<Tooltip
+					className={styles.tooltipGridArea}
+					id={tooltipId}
+					isVisible={tooltipVisible}
 					withNarrowDesktopLayout={withNarrowDesktopLayout}
 				>
-					{calloutContent}
-				</Callout>
+					{tooltipContent}
+				</Tooltip>
 			)}
 		</fieldset>
 	);

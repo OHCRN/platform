@@ -30,10 +30,10 @@ import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
 import en from 'src/i18n/locales/en/index';
 import footerDictionary from 'src/i18n/locales/fr/footer';
-import formCalloutsDictionary from 'src/i18n/locales/fr/formCallouts';
 import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
 import formLabelsDictionary from 'src/i18n/locales/fr/formLabels';
 import formTextDictionary from 'src/i18n/locales/fr/formText';
+import formTooltipsDictionary from 'src/i18n/locales/fr/formTooltips';
 import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
@@ -61,7 +61,7 @@ const dictionaries = {
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	footer: footerDictionary,
-	formCallouts: formCalloutsDictionary,
+	formTooltips: formTooltipsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
 	formText: formTextDictionary,

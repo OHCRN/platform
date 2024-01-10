@@ -17,41 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import formCallouts from './formCallouts';
+import formTooltips from './formTooltips';
 import formText from './formText';
 
 const { indicatesRequiredField, selectPlaceholder, submit } = formText;
 const {
-	clinicianInstitutionalEmailAddressCallout,
-	consentGroupCallout,
-	guardianEmailAddressCallout,
-	guardianPhoneNumberCallout,
-	participantEmailAddressCallout,
-	participantFirstNameCallout,
-	participantLastNameCallout,
-	participantPhoneNumberCallout,
-	participantPreferredNameCallout,
-} = formCallouts;
+	clinicianInstitutionalEmailAddressTooltip,
+	consentGroupTooltip,
+	guardianEmailAddressTooltip,
+	guardianPhoneNumberTooltip,
+	participantEmailAddressTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+} = formTooltips;
 
 const dictionary = {
 	afterRegistering:
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
-	clinicianInstitutionalEmailAddressCallout,
+	clinicianInstitutionalEmailAddressTooltip,
 	clinicianInformation: 'Clinician Information',
-	consentGroupCallout,
 	consentGroups: 'Consent Groups',
+	consentGroupTooltip,
 	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	enterGuardianInfo: "Please enter the guardian's info below:",
-	guardianEmailAddressCallout,
-	guardianPhoneNumberCallout,
+	guardianEmailAddressTooltip,
+	guardianPhoneNumberTooltip,
 	indicatesRequiredField,
 	learnMoreConsentGroups: 'Learn more about consent groups',
-	participantEmailAddressCallout,
-	participantFirstNameCallout,
-	participantLastNameCallout,
-	participantPhoneNumberCallout,
-	participantPreferredNameCallout,
+	participantEmailAddressTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
 	patientInformation: 'Patient Information',
 	selectPlaceholder,
 	uploadFileDescription1:

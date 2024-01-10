@@ -52,7 +52,7 @@ Libraries used:
 
 - Use <Button type="submit"> with no `onClick` prop. This will trigger a submit event on the `form` element and is needed for the react-hook-form integration.
 
-### Callouts
+### Tooltips
 
-- Link callouts to inputs using [a unique ID](https://react.dev/reference/react/useId#useid) and `aria-describedby`.
-- Show & hide callouts using CSS so the callout will remain visible to screenreaders. [More info here](https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/)
+- Link tooltips to inputs using [a unique ID](https://react.dev/reference/react/useId#useid) and `aria-describedby`.
+- Show & hide tooltips using CSS so the tooltip will remain visible to screenreaders. [More info here](https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/)

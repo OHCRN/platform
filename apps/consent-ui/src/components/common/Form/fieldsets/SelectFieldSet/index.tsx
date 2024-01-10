@@ -23,23 +23,22 @@ import { useId } from 'react';
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
+import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
-import { FormFieldSetWithCalloutProps, FormSelectOption } from 'src/components/common/Form/types';
-import useCallout from 'src/components/common/Form/fieldsets/Callout/useCallout';
+import { FormFieldSetWithTooltipProps, FormSelectOption } from 'src/components/common/Form/types';
 
 import styles from './SelectFieldSet.module.scss';
 
 type SelectFieldSetProps<
 	T extends FieldValues,
 	V extends string,
-> = FormFieldSetWithCalloutProps<T> & {
+> = FormFieldSetWithTooltipProps<T> & {
 	options: FormSelectOption<V>[];
 	placeholder: string;
 };
 
 const SelectFieldSet = <T extends FieldValues, V extends string>({
-	calloutContent,
 	className,
 	disabled,
 	error,
@@ -49,35 +48,36 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	options,
 	placeholder,
 	required,
+	tooltipContent,
 	withNarrowDesktopLayout,
 }: SelectFieldSetProps<T, V>) => {
-	const { calloutVisible, hideCallout, showCallout } = useCallout();
+	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
 
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
-	const calloutId = `${idPrefix}-callout`;
+	const tooltipId = `${idPrefix}-tooltip`;
 
 	return (
 		<FieldSet
-			calloutContent={calloutContent}
-			calloutId={calloutId}
-			calloutVisible={calloutVisible}
 			className={clsx(styles.selectFieldSet, className)}
 			error={error}
 			fieldId={fieldId}
 			infoButtonProps={infoButtonProps}
 			label={label}
 			required={required}
+			tooltipContent={tooltipContent}
+			tooltipId={tooltipId}
+			tooltipVisible={tooltipVisible}
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<SelectInput
-				ariaProps={calloutContent ? { 'aria-describedby': calloutId } : {}}
+				ariaProps={tooltipContent ? { 'aria-describedby': tooltipId } : {}}
 				disabled={disabled}
 				hasError={!!error}
 				id={fieldId}
 				name={name}
-				onBlur={hideCallout}
-				onFocus={showCallout}
+				onBlur={hideTooltip}
+				onFocus={showTooltip}
 				options={options}
 				placeholder={placeholder}
 				required={required}

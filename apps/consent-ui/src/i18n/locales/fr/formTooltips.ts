@@ -17,15 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { FormTooltipsDictionary } from '../en/formTooltips';
 
-import { useState } from 'react';
+const dictionary = {
+	clinicianInstitutionalEmailAddressTooltip:
+		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
+	consentGroupTooltip: 'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
+	guardianEmailAddressTooltip: 'Le tuteur recevra une invitation à ce compte.',
+	guardianPhoneNumberTooltip:
+		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
+	participantEmailAddressTooltip: 'Le patient recevra une invitation sur ce compte.',
+	participantFirstNameTooltip:
+		"Inscrivez le prénom du participant tel qu'il apparaît sur sa carte Santé.",
+	participantLastNameTooltip:
+		"Entrez le nom de famille du participant tel qu'il apparaît sur sa carte Santé.",
+	participantPhoneNumberTooltip:
+		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
+	participantPreferredNameTooltip:
+		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
+} satisfies FormTooltipsDictionary;
 
-const useCallout = () => {
-	const [calloutVisible, setCalloutVisible] = useState<boolean>(false);
-	const hideCallout = () => setCalloutVisible(false);
-	const showCallout = () => setCalloutVisible(true);
-
-	return { calloutVisible, hideCallout, showCallout };
-};
-export default useCallout;
+export default dictionary;

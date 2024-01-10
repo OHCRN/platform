@@ -17,20 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	clinicianInstitutionalEmailAddressCallout:
-		'We require this to confirm your authority to register patients.',
-	consentGroupCallout: 'This will determine if a guardian must be involved with consents.',
-	guardianEmailAddressCallout: 'The guardian will receive an invitation to this account.',
-	guardianPhoneNumberCallout: 'If we contact them, it will be for health updates and consent.',
-	participantEmailAddressCallout: 'The patient will receive an invitation to this account.',
-	participantFirstNameCallout: "Enter participant's first name as it appears on their health card.",
-	participantLastNameCallout: "Enter participant's last name as it appears on their health card.",
-	participantPhoneNumberCallout: 'If we contact them, it will be for health updates and consent.',
-	participantPreferredNameCallout:
-		'What would the participant like to be called when they are contacted?',
-} satisfies Record<string, string>;
+'use client';
 
-export type FormCalloutsDictionary = Record<keyof typeof dictionary, string>;
+import { useState } from 'react';
 
-export default dictionary;
+const useTooltip = () => {
+	const [tooltipVisible, settooltipVisible] = useState<boolean>(false);
+	const hideTooltip = () => settooltipVisible(false);
+	const showTooltip = () => settooltipVisible(true);
+
+	return { tooltipVisible, hideTooltip, showTooltip };
+};
+export default useTooltip;

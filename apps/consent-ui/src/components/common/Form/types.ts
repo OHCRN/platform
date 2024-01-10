@@ -38,8 +38,8 @@ export interface FormFieldSetSharedProps<T extends FieldValues> {
 	withNarrowDesktopLayout?: boolean;
 }
 
-export type FormFieldSetWithCalloutProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	calloutContent?: ReactNode;
+export type FormFieldSetWithTooltipProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	tooltipContent?: ReactNode;
 };
 
 // field inputs
