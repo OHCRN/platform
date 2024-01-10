@@ -17,5 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ConsentClinicianInvite.js';
-export * from './ParticipantResponse.js';
+import { generateSchema } from '@anatine/zod-openapi';
+import { SchemaObject } from 'openapi3-ts/oas31';
+import { z } from 'zod';
+
+import {
+	InviteGuardianFields,
+	InviteParticipantFields,
+} from '../../../entities/ClinicianInvite.js';
+
+export const PIClinicianInviteRequest = InviteParticipantFields.merge(InviteGuardianFields);
+
+export type PIClinicianInviteRequest = z.infer<typeof PIClinicianInviteRequest>;
+export const PIClinicianInviteRequestSchema: SchemaObject =
+	generateSchema(PIClinicianInviteRequest);

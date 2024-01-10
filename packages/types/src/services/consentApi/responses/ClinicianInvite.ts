@@ -17,5 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ConsentClinicianInvite.js';
-export * from './ParticipantResponse.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
+
+import { InviteEntity, ClinicianInviteBase } from '../../../entities/index.js';
+
+export const ClinicianInvite = InviteEntity.and(ClinicianInviteBase);
+export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
+
+export const ClinicianInviteResponse = ClinicianInvite;
+export type ClinicianInviteResponse = z.infer<typeof ClinicianInviteResponse>;
+export const ClinicianInviteResponseSchema: SchemaObject = generateSchema(ClinicianInviteResponse);

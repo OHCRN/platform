@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,14 +18,10 @@
  */
 
 import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentGroup } from '../ConsentGroup.js';
-import { Name } from '../Name.js';
-import { PhoneNumber } from '../PhoneNumber.js';
-import { NanoId } from '../NanoId.js';
-import { hasRequiredGuardianInformation } from '../ParticipantIdentification.js';
+import { hasRequiredGuardianInformation } from '../entities/ParticipantIdentification.js';
+
+import { ConsentGroup, Name, NanoId, PhoneNumber } from './fields/index.js';
 
 export const InviteClinicianFields = z.object({
 	clinicianFirstName: Name,
@@ -61,17 +57,9 @@ export const InviteEntity = z.object({
 	inviteAccepted: z.boolean().default(false),
 });
 
-export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
+// base type req/res for the "full" invite types used in consent-api and data-mapper
+export const ClinicianInviteBase = InviteClinicianFields.merge(InviteGuardianFields)
 	.merge(InviteParticipantFields)
 	.refine(hasRequiredGuardianInformation, {
 		message: 'Guardian contact fields are required for that consentGroup',
 	});
-export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;
-export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteRequest);
-
-export const ClinicianInvite = InviteEntity.and(ClinicianInviteRequest);
-export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
-
-export const ClinicianInviteResponse = ClinicianInvite;
-export type ClinicianInviteResponse = z.infer<typeof ClinicianInviteResponse>;
-export const ClinicianInviteResponseSchema: SchemaObject = generateSchema(ClinicianInviteResponse);

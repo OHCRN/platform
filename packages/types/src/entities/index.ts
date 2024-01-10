@@ -18,7 +18,7 @@
  */
 
 export * from './ClinicalProfile.js';
-export * from './ClinicianInvite/index.js';
+export * from './ClinicianInvite.js';
 export * from './ConsentQuestion.js';
 export * from './ConsentRecontact.js';
 export * from './ConsentReleaseData.js';

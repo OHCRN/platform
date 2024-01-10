@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,28 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
+import { z } from 'zod';
 
-import { NanoId } from '../NanoId.js';
-
-import { InviteClinicianFields, InviteEntity } from './ClinicianInvite.js';
+import { InviteClinicianFields } from '../../../entities/ClinicianInvite.js';
+import { NanoId } from '../../../entities/fields/index.js';
 
 export const ConsentClinicianInviteRequest = z.object({ id: NanoId }).merge(InviteClinicianFields);
 export type ConsentClinicianInviteRequest = z.infer<typeof ConsentClinicianInviteRequest>;
 export const ConsentClinicianInviteRequestSchema: SchemaObject = generateSchema(
 	ConsentClinicianInviteRequest,
-);
-
-export const ConsentClinicianInviteResponse = InviteEntity.merge(InviteClinicianFields).extend({
-	inviteAcceptedDate: z.coerce
-		.date()
-		.nullable()
-		.transform((input) => input ?? undefined),
-});
-
-export type ConsentClinicianInviteResponse = z.infer<typeof ConsentClinicianInviteResponse>;
-export const ConsentClinicianInviteResponseSchema: SchemaObject = generateSchema(
-	ConsentClinicianInviteResponse,
 );

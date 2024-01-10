@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,34 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
+import { z } from 'zod';
 
-import { Name } from '../Name.js';
-import { PhoneNumber } from '../PhoneNumber.js';
-
-import { InviteGuardianFields, InviteParticipantFields } from './ClinicianInvite.js';
-import { NanoId } from '../NanoId.js';
+import {
+	InviteGuardianFields,
+	InviteParticipantFields,
+} from '../../../entities/ClinicianInvite.js';
 
 export const PIClinicianInviteRequest = InviteParticipantFields.merge(InviteGuardianFields);
 
 export type PIClinicianInviteRequest = z.infer<typeof PIClinicianInviteRequest>;
 export const PIClinicianInviteRequestSchema: SchemaObject =
 	generateSchema(PIClinicianInviteRequest);
-
-export const PIClinicianInviteResponse = PIClinicianInviteRequest.extend({ id: NanoId }).extend({
-	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
-	guardianName: Name.nullable().transform((input) => input ?? undefined),
-	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
-	guardianEmailAddress: z
-		.string()
-		.email()
-		.nullable()
-		.transform((input) => input ?? undefined),
-	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
-});
-
-export type PIClinicianInviteResponse = z.infer<typeof PIClinicianInviteResponse>;
-export const PIClinicianInviteResponseSchema: SchemaObject =
-	generateSchema(PIClinicianInviteResponse);
