@@ -22,56 +22,31 @@ import { CONSENT_GROUPS } from 'types/entities';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import { translateNamespace, getTranslation, ValidLanguage } from 'src/i18n';
 import inviteBg from 'src/public/invite-bg.jpg';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianInviteForm';
 import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
-import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
-import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
-
-	const myDict = translateNamespace({
-		currentLang,
-		namespace: 'invite',
-		params: {
-			sampleSentence: {
-				dayOfWeek: 'Thursday',
-				dayOfMonth: 'October',
-			},
-		},
-	});
-
-	console.log(myDict);
 
 	const pageDict = translateNamespace({
 		currentLang,
 		namespace: 'invite',
 	});
 
-	const errorsDict: FormErrorsDictionary = {
-		required: translate('formErrors', 'required'),
-	};
+	const errorsDict = translateNamespace({
+		currentLang,
+		namespace: 'formErrors',
+	});
 
-	// TODO replace this object with translate namespace function https://github.com/OHCRN/platform/issues/313
-	const labelsDict: InviteFormLabelsDictionary = translateNamespace({
+	const labelsDict = translateNamespace({
 		currentLang,
 		namespace: 'inviteFormLabels',
 	});
 
-	// TODO replace this object with translate namespace function https://github.com/OHCRN/platform/issues/313
-	const textDict: InviteFormTextDictionary = {
-		afterRegistering: translate('inviteFormText', 'afterRegistering'),
-		clinicianInformation: translate('inviteFormText', 'clinicianInformation'),
-		consentContactDescription: translate('inviteFormText', 'consentContactDescription'),
-		enterGuardianInfo: translate('inviteFormText', 'enterGuardianInfo'),
-		indicatesRequiredField: translate('inviteFormText', 'indicatesRequiredField'),
-		patientInformation: translate('inviteFormText', 'patientInformation'),
-		selectPlaceholder: translate('inviteFormText', 'selectPlaceholder'),
-		uploadFileDescription1: translate('inviteFormText', 'uploadFileDescription1'),
-		uploadFileDescription2: translate('inviteFormText', 'uploadFileDescription2'),
-		uploadFileLink: translate('inviteFormText', 'uploadFileLink'),
-	};
+	const textDict = translateNamespace({
+		currentLang,
+		namespace: 'inviteFormText',
+	});
 
 	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
 		label: translate('consentGroup', group),

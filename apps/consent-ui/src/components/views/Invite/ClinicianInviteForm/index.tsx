@@ -30,13 +30,10 @@ import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxField
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
 import useRecaptcha from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/common/Notification';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { API } from 'src/constants';
 import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
-import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
-import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 
 import { ConsentGroupOption } from './types';
 
@@ -59,9 +56,9 @@ const ClinicianInviteFormComponent = ({
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
-	errorsDict: FormErrorsDictionary;
-	labelsDict: InviteFormLabelsDictionary;
-	textDict: InviteFormTextDictionary;
+	errorsDict: Record<string, string>;
+	labelsDict: Record<string, string>;
+	textDict: Record<string, string>;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ClinicianInviteRequest>({
