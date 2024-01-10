@@ -21,11 +21,10 @@
 
 import clsx from 'clsx';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
-import Select, { SingleValue } from 'react-select';
+import Select from 'react-select';
 
 import { FormInputProps, FormSelectOption } from 'src/components/common/Form/types';
 
-type SelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
 type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	hasError: boolean;
 	options: FormSelectOption<V>[];
@@ -64,10 +63,11 @@ const SelectInput = <T extends FieldValues, V extends string>({
 					isDisabled={disabled}
 					name={name}
 					onBlur={onBlur}
-					onChange={(val: SelectOnChangeArg<V>) => {
+					onChange={(val) => {
 						// in react-select the value can be a string or object.
 						// in our implementation it must be {label, value},
 						// with the label being translated.
+						// empty string case = nothing has been chosen yet.
 						let onChangeParam = '';
 						if (typeof val === 'string') {
 							onChangeParam = val;
