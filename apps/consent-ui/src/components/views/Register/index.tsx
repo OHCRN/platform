@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,20 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-
 import { getTranslation, ValidLanguage } from 'src/i18n';
+import inviteBg from 'src/public/invite-bg.jpg';
 import RegistrationForm from 'src/components/views/Register/RegistrationForm';
+import SideImageLayout from 'src/components/layouts/SideImageLayout';
+import LinkButton from 'src/components/common/Button/LinkButton';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
-	return (
-		<div>
-			<h2>{translate('common', 'register')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
 
+	return (
+		<SideImageLayout
+			currentLang={currentLang}
+			desktopHeaderImage={inviteBg}
+			desktopNavAction={{
+				bottomText: translate('registerPage', 'registerPatients'),
+				topText: translate('registerPage', 'ifClinician'),
+				url: 'invite',
+			}}
+			desktopNavButton={{
+				description: translate('registerPage', 'registerYourself'),
+				// TODO add link to login page
+				// https://github.com/OHCRN/platform/issues/359
+				button: <LinkButton href="">{translate('registerPage', 'login')}</LinkButton>,
+			}}
+			mainSubtitle={translate('registerPage', 'registerYourself')}
+			mainTitle={translate('registerPage', 'enrollInOhcrn')}
+			navTitle={translate('registerPage', 'participantRegistration')}
+		>
 			<RegistrationForm />
-		</div>
+		</SideImageLayout>
 	);
 };
 
