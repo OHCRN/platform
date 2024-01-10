@@ -63,6 +63,7 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			calloutId={calloutId}
 			calloutVisible={calloutVisible}
 			className={clsx(styles.selectFieldSet, className)}
+			error={error}
 			fieldId={fieldId}
 			infoButtonProps={infoButtonProps}
 			label={label}

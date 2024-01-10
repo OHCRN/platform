@@ -58,6 +58,7 @@ const TextFieldSet = <T extends FieldValues>({
 			calloutId={calloutId}
 			calloutVisible={calloutVisible}
 			className={className}
+			error={error}
 			fieldId={fieldId}
 			infoButtonProps={infoButtonProps}
 			label={label}
