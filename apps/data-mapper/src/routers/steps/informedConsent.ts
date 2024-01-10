@@ -23,13 +23,14 @@ import {
 	ErrorResponse,
 	NotFoundErrorResponse,
 	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 import { NanoId } from 'types/entities';
 
 import logger from '../../logger.js';
 import { getInformedConsentResponses } from '../../services/search.js';
 
-const { SERVER_ERROR, REQUEST_VALIDATION_ERROR } = ErrorName;
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const ROUTER_PATH = '/wizard/steps/informed-consent';
 
@@ -95,7 +96,7 @@ router.get('/:participantId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(participantResponses.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, participantResponses.message));
+				return res.status(500).json(ServerErrorResponse(participantResponses.message));
 			}
 		}
 	} catch (error) {
@@ -104,7 +105,7 @@ router.get('/:participantId', async (req, res) => {
 			'Unexpected error handling get Informed Consent request',
 			error,
 		);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 

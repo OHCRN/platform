@@ -49,6 +49,7 @@ module.exports = {
 				*/
 				sm: '480px',
 				md: '1024px',
+				lg: '1280px',
 			},
 			backgroundImage: (theme) => ({
 				gradient: {

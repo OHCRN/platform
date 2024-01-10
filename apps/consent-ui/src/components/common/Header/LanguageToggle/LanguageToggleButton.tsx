@@ -17,30 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorRequestHandler } from 'express';
-import { ServerErrorResponse } from 'types/httpResponses';
-import { Logger } from 'logger';
+'use client';
 
-/**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
- * @returns
- */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
+import { usePathname } from 'next/navigation';
 
-		if (res.headersSent) {
-			return next(err);
-		}
+import { ValidLanguage } from 'src/i18n';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getLinkNameByPath } from 'src/components/common/Link/utils';
 
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
+import styles from './LanguageToggleButton.module.scss';
 
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
+const LanguageToggleButton = ({
+	currentLang,
+	fullToggleLabel,
+	langToSelect,
+}: {
+	currentLang: ValidLanguage;
+	fullToggleLabel: string;
+	langToSelect: ValidLanguage;
+}) => {
+	const path = usePathname();
+	const linkName = getLinkNameByPath(path, currentLang);
 
-		return res.status(500).json(ServerErrorResponse(message));
-	};
+	return (
+		<LocalizedLink
+			name={linkName}
+			linkLang={langToSelect}
+			role="button"
+			color="blue"
+			variant="secondary"
+		>
+			<span className={styles['toggle-full']}>{fullToggleLabel}</span>
+			<span className={styles['toggle-abbr']}>{langToSelect}</span>
+		</LocalizedLink>
+	);
+};
 
-export default errorHandler;
+export default LanguageToggleButton;

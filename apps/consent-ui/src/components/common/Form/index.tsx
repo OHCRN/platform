@@ -32,7 +32,7 @@ const Form = ({
 	onSubmit: FormEventHandler<HTMLFormElement>;
 }) => {
 	return (
-		<form onSubmit={onSubmit} className={clsx(styles.base, className)}>
+		<form onSubmit={onSubmit} className={clsx(styles.form, className)}>
 			{children}
 		</form>
 	);

@@ -1,0 +1,153 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	@media (min-width: theme('screens.md')) {
+		flex-direction: row;
+	}
+}
+
+.mobileTabletHeader {
+	width: 100%;
+	background: theme('backgroundImage.gradient.imageOverlay');
+	padding: 1rem;
+	@media (min-width: theme('screens.sm')) {
+		padding: 1.5rem 2.44rem;
+	}
+	@media (min-width: theme('screens.md')) {
+		display: none;
+	}
+}
+
+.title {
+	color: theme('colors.grayscale.100');
+	font-weight: 600;
+	font-size: theme('fontSize.2xl');
+	@media (min-width: theme('screens.sm')) {
+		font-size: theme('fontSize.3xl');
+	}
+	@media (min-width: theme('screens.md')) {
+		font-size: theme('fontSize.2xl');
+	}
+	@media (min-width: theme('screens.lg')) {
+		font-size: theme('fontSize.3xl');
+	}
+}
+
+.desktopHeader {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	flex-basis: 33%;
+	min-width: 20rem;
+	max-width: 32.8125rem;
+	background: theme('colors.grayscale.800');
+	min-height: 600px;
+	@media (min-width: theme('screens.lg')) {
+		min-height: 700px;
+	}
+	.content,
+	.image {
+		position: absolute;
+		inset: 0;
+	}
+	.content {
+		padding: 2.5rem;
+	}
+}
+
+.logoImg {
+	width: 100%;
+	max-width: 21.875rem;
+	margin-bottom: 2.13rem;
+}
+
+.main {
+	background: theme('colors.grayscale.100');
+	.content {
+		padding: 0 1rem;
+	}
+	@media (min-width: theme('screens.sm')) {
+		flex: 1 0 66.67%;
+		.content {
+			max-width: 51.75rem;
+			padding: 2.44rem 2.5rem 0;
+		}
+	}
+	@media (min-width: theme('screens.md')) {
+		flex: 1 1 66.67%;
+		.content {
+			padding: 0 2rem;
+		}
+	}
+	@media (min-width: theme('screens.lg')) {
+		.content {
+			padding: 0 4rem;
+		}
+	}
+}
+
+.desktopNav {
+	padding: 1.5rem 4rem 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5rem;
+	min-height: 6rem;
+}
+
+.desktopHeader,
+.desktopNav {
+	@media (max-width: theme('screens.md')) {
+		display: none;
+	}
+}
+
+.leftButtons {
+	display: flex;
+	gap: 1.88rem;
+}
+
+.desktopNavAction {
+	display: flex;
+	align-items: center;
+	position: relative;
+	text-align: right;
+	width: auto;
+	gap: 1rem;
+	.text {
+		font-weight: 700;
+		font-size: 0.875rem;
+		line-height: 1.5rem;
+	}
+	.bottomText {
+		display: block;
+		color: theme('colors.secondary.500');
+	}
+	.chevron {
+		width: 0.8125rem;
+	}
+}
+
+.mainTitle {
+	font-size: theme('fontSize.xl');
+	margin-bottom: 0.5rem;
+}
+
+.mainSubtitle {
+	font-size: theme('fontSize.base');
+}
+
+.sectionTitle {
+	color: theme('colors.secondary.500');
+	font-size: theme('fontSize.lg');
+	font-weight: 700;
+	@media (min-width: theme('screens.md')) {
+		font-size: 1rem;
+	}
+}
+
+.smallText {
+	font-size: theme('fontSize.sm');
+	margin-bottom: 1rem;
+}

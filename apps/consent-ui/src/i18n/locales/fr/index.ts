@@ -38,6 +38,7 @@ import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
 import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
+import inviteDictionary from 'src/i18n/locales/fr/invite';
 import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
 import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
@@ -66,6 +67,7 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	invite: inviteDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
 	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,

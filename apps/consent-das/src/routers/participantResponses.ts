@@ -20,17 +20,14 @@
 import { Router } from 'express';
 import { ParticipantResponsesRequest } from 'types/consentDas';
 import {
-	ErrorName,
-	ErrorResponse,
 	NotFoundErrorResponse,
 	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 
 import { getParticipantResponses } from '../services/search.js';
 import { createParticipantResponse } from '../services/create.js';
 import logger from '../logger.js';
-
-const { SERVER_ERROR } = ErrorName;
 
 /**
  * @openapi
@@ -114,7 +111,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(participantResponses.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, participantResponses.message));
+				return res.status(500).json(ServerErrorResponse(participantResponses.message));
 			}
 		}
 	} catch (error) {
@@ -123,7 +120,7 @@ router.get('/:participantId/:consentQuestionId', async (req, res) => {
 			'Unexpected error retrieving participant response',
 			error,
 		);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -170,7 +167,7 @@ router.post('/', async (req, res) => {
 		res.status(201).send({ participant_response });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant response' });
+		res.status(500).json(ServerErrorResponse('Error creating participant response'));
 	}
 });
 

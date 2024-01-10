@@ -17,18 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
 import { CONSENT_GROUPS } from 'types/entities';
 
+import SideImageLayout from 'src/components/layouts/SideImageLayout';
+import { getTranslation, ValidLanguage } from 'src/i18n';
+import inviteBg from 'src/public/invite-bg.jpg';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianInviteForm';
 import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
-import { getTranslation, ValidLanguage } from 'src/i18n';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
+
+	const pageDict = {
+		clinicianPatientRegistration: translate('invite', 'clinicianPatientRegistration'),
+		ifParticipant: translate('invite', 'ifParticipant'),
+		inviteYourPatients: translate('invite', 'inviteYourPatients'),
+		registerHere: translate('invite', 'registerHere'),
+		registerYourPatient: translate('invite', 'registerYourPatient'),
+	};
 
 	const errorsDict: FormErrorsDictionary = {
 		required: translate('formErrors', 'required'),
@@ -75,16 +84,25 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	}));
 
 	return (
-		<div>
-			<h2>{translate('common', 'invite')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
+		<SideImageLayout
+			currentLang={currentLang}
+			desktopHeaderImage={inviteBg}
+			desktopNavAction={{
+				bottomText: pageDict.registerHere,
+				topText: pageDict.ifParticipant,
+				url: 'register',
+			}}
+			mainSubtitle={pageDict.inviteYourPatients}
+			mainTitle={pageDict.registerYourPatient}
+			navTitle={pageDict.clinicianPatientRegistration}
+		>
 			<ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}
 				errorsDict={errorsDict}
 				labelsDict={labelsDict}
 				textDict={textDict}
 			/>
-		</div>
+		</SideImageLayout>
 	);
 };
 

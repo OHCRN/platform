@@ -27,13 +27,14 @@ import {
 	ErrorResponse,
 	NotFoundErrorResponse,
 	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 
 import logger from '../logger.js';
 import { createInvite } from '../services/create.js';
 import { getInvite } from '../services/search.js';
 
-const { SERVER_ERROR, REQUEST_VALIDATION_ERROR } = ErrorName;
+const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
 const router = Router();
 
@@ -96,12 +97,12 @@ router.get('/:inviteId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(500).json(ServerErrorResponse(invite.message));
 			}
 		}
 	} catch (error) {
 		logger.error('GET /invites/:inviteId', `Unexpected error handling get invite request.`, error);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -146,12 +147,12 @@ router.post(
 					return res.status(409).json(ConflictErrorResponse(invite.message));
 				}
 				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+					return res.status(500).json(ServerErrorResponse(invite.message));
 				}
 			}
 		} catch (error) {
 			logger.error('POST /invites', `Unexpected error handling create invite request.`, error);
-			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred'));
+			return res.status(500).json(ServerErrorResponse());
 		}
 	}),
 );

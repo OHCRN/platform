@@ -17,30 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ErrorRequestHandler } from 'express';
-import { ServerErrorResponse } from 'types/httpResponses';
-import { Logger } from 'logger';
+import { InviteDictionary } from '../en/invite';
 
-/**
- * Create default response for unhandled errors to be json instead of html.
- *
- *
- * @returns
- */
-const errorHandler =
-	(params: { logger?: Logger }): ErrorRequestHandler =>
-	(err, req, res, next) => {
-		const { logger } = params;
+const dictionary = {
+	clinicianPatientRegistration: 'Inscription des patients cliniciens',
+	ifParticipant: 'Si vous êtes un participant :',
+	inviteYourPatients: 'Invitez vos patients à participer au registre OHCRN.',
+	registerHere: 'Inscrivez-vous ici',
+	registerYourPatient: 'Enregistrez votre patient',
+} satisfies InviteDictionary;
 
-		if (res.headersSent) {
-			return next(err);
-		}
-
-		logger?.error(`Unhandled error thrown from request`, req.url, err);
-
-		const message = (err.message && `${err.message}`) || 'An error occurred.';
-
-		return res.status(500).json(ServerErrorResponse(message));
-	};
-
-export default errorHandler;
+export default dictionary;

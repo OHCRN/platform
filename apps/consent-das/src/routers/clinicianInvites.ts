@@ -23,19 +23,15 @@ import { ConsentClinicianInviteRequest } from 'types/consentDas';
 import { NanoId } from 'types/entities';
 import {
 	ConflictErrorResponse,
-	ErrorName,
-	ErrorResponse,
 	NotFoundErrorResponse,
 	RequestValidationErrorResponse,
+	ServerErrorResponse,
 } from 'types/httpResponses';
 
 import logger from '../logger.js';
 import { createClinicianInvite } from '../services/create.js';
 import { getClinicianInviteById, getClinicianInvites } from '../services/search.js';
 
-const { SERVER_ERROR } = ErrorName;
-
-// TODO: update JSDoc comments when custom error handling is implemented
 /**
  * @openapi
  * tags:
@@ -68,7 +64,7 @@ router.get('/', async (req, res) => {
 		res.status(200).send({ clinicianInvites });
 	} catch (error) {
 		logger.error(error);
-		res.status(500).send({ error: 'Error retrieving clinician invites' });
+		res.status(500).json(ServerErrorResponse('Error retrieving clinician invites'));
 	}
 });
 
@@ -126,7 +122,7 @@ router.get('/:inviteId', async (req, res) => {
 				return res.status(404).json(NotFoundErrorResponse(invite.message));
 			}
 			case 'SYSTEM_ERROR': {
-				return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+				return res.status(500).json(ServerErrorResponse(invite.message));
 			}
 		}
 	} catch (error) {
@@ -135,7 +131,7 @@ router.get('/:inviteId', async (req, res) => {
 			'Unexpected error handling get invite request',
 			error,
 		);
-		return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -179,7 +175,7 @@ router.post(
 					return res.status(201).json(invite.data);
 				}
 				case 'SYSTEM_ERROR': {
-					return res.status(500).json(ErrorResponse(SERVER_ERROR, invite.message));
+					return res.status(500).json(ServerErrorResponse(invite.message));
 				}
 				case 'INVITE_EXISTS': {
 					return res.status(409).json(ConflictErrorResponse(invite.message));
@@ -187,7 +183,7 @@ router.post(
 			}
 		} catch (error) {
 			logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
-			return res.status(500).send(ErrorResponse(SERVER_ERROR, 'An unexpected error occurred.'));
+			return res.status(500).json(ServerErrorResponse());
 		}
 	}),
 );

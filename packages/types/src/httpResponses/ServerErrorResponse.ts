@@ -17,36 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
-import { ValidLanguage } from 'src/i18n';
-import LocalizedLink from 'src/components/common/Link/LocalizedLink';
-import { getLinkNameByPath, getUnselectedLang } from 'src/components/common/Link/utils';
+const { SERVER_ERROR } = ErrorName;
 
-function LanguageToggle({
-	currentLang,
-	children,
-}: {
-	currentLang: ValidLanguage;
-	children: ReactNode;
-}) {
-	const langToSelect = getUnselectedLang(currentLang);
-	const path = usePathname();
-	const linkName = getLinkNameByPath(path, currentLang);
-
-	return (
-		<LocalizedLink
-			name={linkName}
-			linkLang={langToSelect}
-			role="button"
-			color="blue"
-			variant="secondary"
-		>
-			{children}
-		</LocalizedLink>
-	);
-}
-
-export default LanguageToggle;
+/**
+ * Creates a ServerError Response containing a message detailing the problem.
+ * @param customMessage
+ * @returns
+ */
+export const ServerErrorResponse = (customMessage?: string): ErrorResponse => ({
+	error: SERVER_ERROR,
+	message: customMessage ?? 'An unexpected error occurred.',
+});
