@@ -20,7 +20,6 @@
 'use client';
 
 import clsx from 'clsx';
-import { useId } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import Select, { SingleValue } from 'react-select';
 
@@ -37,6 +36,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	ariaProps = {},
 	disabled,
 	hasError,
+	id,
 	name,
 	onBlur = () => {},
 	onFocus = () => {},
@@ -45,7 +45,6 @@ const SelectInput = <T extends FieldValues, V extends string>({
 	required,
 }: SelectInputProps<T, V>) => {
 	const { control } = useFormContext();
-	const id = useId();
 
 	return (
 		<Controller
@@ -60,8 +59,8 @@ const SelectInput = <T extends FieldValues, V extends string>({
 					// className & classNamePrefix need to be strings, not hashed classNames.
 					// https://github.com/JedWatson/react-select/issues/4525
 					id={`select-${id}`}
-					inputId={`input-${id}`}
-					instanceId={id}
+					inputId={id} // must match label htmlFor
+					instanceId={`instance-${id}`}
 					isDisabled={disabled}
 					name={name}
 					onBlur={onBlur}
@@ -78,6 +77,7 @@ const SelectInput = <T extends FieldValues, V extends string>({
 						return onChange(onChangeParam);
 					}}
 					onFocus={onFocus}
+					openMenuOnFocus
 					options={options}
 					placeholder={placeholder}
 					value={options.find((option) => option.value === value) || ''}

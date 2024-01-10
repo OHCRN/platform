@@ -22,9 +22,9 @@
 import { useState } from 'react';
 
 const useTooltip = () => {
-	const [tooltipVisible, settooltipVisible] = useState<boolean>(false);
-	const hideTooltip = () => settooltipVisible(false);
-	const showTooltip = () => settooltipVisible(true);
+	const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
+	const hideTooltip = () => setTooltipVisible(false);
+	const showTooltip = () => setTooltipVisible(true);
 
 	return { tooltipVisible, hideTooltip, showTooltip };
 };
