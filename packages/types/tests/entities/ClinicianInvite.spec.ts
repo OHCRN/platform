@@ -19,10 +19,10 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
-import { ConsentClinicianInviteResponse } from '../../src/services/consentDas/index.js'
-import { ClinicianInviteBase } from '../../src/entities/index.js'
 import { ConsentGroup } from '../../src/entities/fields/index.js';
+import { ClinicianInviteBase } from '../../src/entities/index.js';
+import { ConsentClinicianInviteResponse } from '../../src/services/consentDas/index.js';
+import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
 
 describe('ClinicianInviteResponse', () => {
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
