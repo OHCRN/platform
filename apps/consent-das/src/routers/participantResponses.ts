@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { ParticipantResponsesRequest } from 'types/entities';
+import { ParticipantResponsesRequest } from 'types/consentDas';
 import {
 	ErrorName,
 	ErrorResponse,

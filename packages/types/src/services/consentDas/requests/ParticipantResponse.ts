@@ -19,8 +19,8 @@
 
 import { z } from 'zod';
 
-import { SortOrder } from 'src/common/index.js';
-import { ParticipantResponseBase } from 'src/entities/index.js';
+import { SortOrder } from '../../../common/index.js';
+import { ParticipantResponseBase } from '../../../entities/index.js';
 
 export const ParticipantResponsesRequest = ParticipantResponseBase.extend({
 	sortOrder: SortOrder.default('desc'),

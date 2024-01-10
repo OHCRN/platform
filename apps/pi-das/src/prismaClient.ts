@@ -18,8 +18,8 @@
  */
 
 import { customAlphabet } from 'nanoid';
-import { NANOID_LENGTH, NanoId } from 'types/entities';
-import { ID_ALPHABET } from 'types/services';
+import { ID_ALPHABET, NANOID_LENGTH } from 'types/common';
+import { NanoId } from 'types/entities';
 
 import { ClinicianInvite, Participant, PrismaClient, Province } from './generated/client/index.js';
 import logger from './logger.js';

@@ -18,8 +18,8 @@
  */
 
 import { customAlphabet } from 'nanoid';
-import { NANOID_LENGTH, NanoId } from 'types/entities';
-import { ID_ALPHABET } from 'types/services';
+import { NanoId } from 'types/entities';
+import { NANOID_LENGTH, ID_ALPHABET } from 'types/common';
 
 import {
 	ClinicianInvite,

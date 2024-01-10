@@ -17,6 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentReviewSignResponse as ConsentReviewSign } from '../../../entities/index.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-export const ConsentReviewSignResponse = ConsentReviewSign;
+import { ConsentQuestionId } from '../../../entities/index.js';
+import { InformedConsentBase } from '../../../entities/InformedConsent.js';
+
+export const InformedConsentResponse = InformedConsentBase.extend({
+	[ConsentQuestionId.enum.INFORMED_CONSENT__READ_AND_UNDERSTAND]: z.literal(true).optional(),
+});
+export type InformedConsentResponse = z.infer<typeof InformedConsentResponse>;
+export const InformedConsentResponseSchema: SchemaObject = generateSchema(InformedConsentResponse);

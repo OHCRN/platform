@@ -19,7 +19,7 @@
 
 import { Router } from 'express';
 import withRequestValidation from 'express-request-validation';
-import { ConsentResearchParticipationRequest } from 'types/entities';
+import { ConsentResearchParticipationRequest } from 'types/consentApi';
 import { ErrorResponse } from 'types/httpResponses';
 
 const router = Router();

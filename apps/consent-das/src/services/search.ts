@@ -1,4 +1,4 @@
-import { ParticipantResponsesRequest } from 'types/entities';
+import { ParticipantResponsesRequest } from 'types/consentDas';
 import { Result, failure, success } from 'types/httpResponses';
 
 import prisma, {

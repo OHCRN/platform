@@ -23,9 +23,9 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import {
 	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ClinicianInviteResponseSchema as ClinicianInviteResponse,
-	InformedConsentResponseSchema as InformedConsentResponse,
 	NanoIdSchema as NanoId,
 } from 'types/entities';
+import { InformedConsentResponseSchema as InformedConsentResponse } from 'types/dataMapper';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 /**
