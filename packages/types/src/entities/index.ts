@@ -29,3 +29,4 @@ export * from './InformedConsent.js';
 export * from './ParticipantIdentification.js';
 export * from './ParticipantResponse.js';
 export * from './User.js';
+export * from './fields/index.js';

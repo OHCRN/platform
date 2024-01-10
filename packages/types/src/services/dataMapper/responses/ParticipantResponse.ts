@@ -18,11 +18,19 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { NanoId } from './fields/index.js';
-import { ConsentQuestionId } from './ConsentQuestion.js';
+import { NanoId } from 'src/entities/fields/index.js';
+import { ParticipantResponseBase } from 'src/entities/index.js';
 
-export const ParticipantResponseBase = z.object({
-	consentQuestionId: ConsentQuestionId,
-	participantId: NanoId,
+export const ParticipantResponse = ParticipantResponseBase.extend({
+	id: NanoId,
+	response: z.boolean(),
 });
+export type ParticipantResponse = z.infer<typeof ParticipantResponse>;
+
+export const ParticipantResponseArray = z.array(ParticipantResponse);
+export type ParticipantResponseArray = z.infer<typeof ParticipantResponseArray>;
+export const ParticipantResponseArraySchema: SchemaObject =
+	generateSchema(ParticipantResponseArray);

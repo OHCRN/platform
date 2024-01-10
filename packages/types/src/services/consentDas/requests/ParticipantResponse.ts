@@ -19,10 +19,10 @@
 
 import { z } from 'zod';
 
-import { NanoId } from './fields/index.js';
-import { ConsentQuestionId } from './ConsentQuestion.js';
+import { SortOrder } from 'src/common/index.js';
+import { ParticipantResponseBase } from 'src/entities/index.js';
 
-export const ParticipantResponseBase = z.object({
-	consentQuestionId: ConsentQuestionId,
-	participantId: NanoId,
+export const ParticipantResponsesRequest = ParticipantResponseBase.extend({
+	sortOrder: SortOrder.default('desc'),
 });
+export type ParticipantResponsesRequest = z.infer<typeof ParticipantResponsesRequest>;

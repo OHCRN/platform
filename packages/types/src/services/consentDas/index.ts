@@ -17,12 +17,5 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-
-import { NanoId } from './fields/index.js';
-import { ConsentQuestionId } from './ConsentQuestion.js';
-
-export const ParticipantResponseBase = z.object({
-	consentQuestionId: ConsentQuestionId,
-	participantId: NanoId,
-});
+export * from './requests/index.js';
+export * from './responses/index.js';
