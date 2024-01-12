@@ -19,13 +19,26 @@
 
 'use client';
 
-import { useNotification } from 'src/components/providers/NotificationProvider';
+import { NotificationConfig, useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
 import ConsentCompletionNotification from 'src/components/views/Dashboard/notifications/ConsentCompleteNotification';
 import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
 import ConsentInProgressNotification from 'src/components/views/Dashboard/notifications/ConsentInProgressNotification';
 
 import styles from './DashboardNotificationDisplay.module.scss';
+
+const getNotificationComponent = (notificationConfig: NotificationConfig) => {
+	switch (notificationConfig?.notification) {
+		case 'emailVerified':
+			return EmailVerifiedNotification;
+		case 'consentInProgress':
+			return ConsentInProgressNotification;
+		case 'consentComplete':
+			return ConsentCompletionNotification;
+		default:
+			return null;
+	}
+};
 
 const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { dismissNotification, notificationConfig } = useNotification();
@@ -40,24 +53,14 @@ const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLangu
 		dismissClick: dismissNotification,
 	};
 
-	let notification;
+	const NotificationComp = getNotificationComponent(notificationConfig);
 
-	switch (notificationConfig.notification) {
-		case 'emailVerified':
-			notification = <EmailVerifiedNotification {...notificationProps} />;
-			break;
-		case 'consentInProgress':
-			notification = <ConsentInProgressNotification {...notificationProps} />;
-			break;
-		case 'consentComplete':
-			notification = <ConsentCompletionNotification {...notificationProps} />;
-			break;
-		default:
-			break;
-	}
-
-	if (notification) {
-		return <div className={styles.notification}>{notification}</div>;
+	if (NotificationComp) {
+		return (
+			<div className={styles.notification}>
+				<NotificationComp {...notificationProps} />
+			</div>
+		);
 	} else {
 		return <></>;
 	}
