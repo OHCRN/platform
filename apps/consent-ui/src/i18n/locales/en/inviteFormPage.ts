@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,33 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+const dictionary = {
+	clinicianPatientRegistration: 'Clinician Patient Registration',
+	ifParticipant: "If you're a Participant:",
+	inviteYourPatients: 'Invite your patients to participate in the OHCRN Registry.',
+	registerHere: 'Register here',
+	registerYourPatient: 'Register Your Patient',
+} satisfies Record<string, string>;
 
-import { FieldValues, useFormContext } from 'react-hook-form';
+export type InviteFormPageDictionary = Record<keyof typeof dictionary, string>;
 
-import { FormInputProps } from 'src/components/common/Form/types';
-
-const CheckboxInput = <T extends FieldValues>({
-	ariaProps = {},
-	disabled,
-	className,
-	id,
-	name,
-	required,
-}: FormInputProps<T>) => {
-	const { register } = useFormContext();
-
-	return (
-		<input
-			{...register(name)}
-			aria-required={required}
-			className={className}
-			disabled={disabled}
-			id={id}
-			type="checkbox"
-			{...ariaProps}
-		/>
-	);
-};
-
-export default CheckboxInput;
+export default dictionary;

@@ -17,55 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { InviteFormPageDictionary } from '../en/inviteFormPage';
 
-import { FieldValues, useFormContext } from 'react-hook-form';
-import { SyntheticEvent } from 'react';
+const dictionary = {
+	clinicianPatientRegistration: 'Inscription des patients cliniciens',
+	ifParticipant: 'Si vous êtes un participant :',
+	inviteYourPatients: 'Invitez vos patients à participer au registre OHCRN.',
+	registerHere: 'Inscrivez-vous ici',
+	registerYourPatient: 'Enregistrez votre patient',
+} satisfies InviteFormPageDictionary;
 
-import { FormInputProps, FormTextInputType } from 'src/components/common/Form/types';
-
-type TextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	type: FormTextInputType;
-};
-
-const TextInput = <T extends FieldValues>({
-	ariaProps = {},
-	className,
-	disabled,
-	id,
-	name,
-	onBlur = () => {},
-	onFocus = () => {},
-	required,
-	type = 'text',
-}: TextInputProps<T>) => {
-	const { register } = useFormContext();
-	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
-
-	const handleBlur = (e: SyntheticEvent) => {
-		onBlur();
-		registerOnBlur(e);
-	};
-
-	const handleFocus = () => {
-		onFocus();
-	};
-
-	return (
-		<input
-			aria-required={required}
-			className={className}
-			disabled={disabled}
-			id={id}
-			name={registerName}
-			onBlur={handleBlur}
-			onChange={onChange}
-			onFocus={handleFocus}
-			ref={ref}
-			type={type}
-			{...ariaProps}
-		/>
-	);
-};
-
-export default TextInput;
+export default dictionary;

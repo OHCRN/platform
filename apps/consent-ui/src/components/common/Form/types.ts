@@ -19,83 +19,45 @@
 
 import { ReactNode } from 'react';
 import { FieldValues, Path } from 'react-hook-form';
-import { SingleValue } from 'react-select';
 
-export type FormFieldTypeCheckboxRadio = 'checkbox' | 'radio';
-export type FormFieldType =
-	| FormFieldTypeCheckboxRadio
-	| 'date'
-	| 'select'
-	| 'text'
-	| 'textWithCheckbox';
-export type FormTextInputType = 'email' | 'tel' | 'text';
-export type FormSelectOnChangeArg<V extends string> = SingleValue<string | FormSelectOption<V>>;
+import { InfoButtonProps } from 'src/components/common/InfoButton';
 
-// setup types for react-hook-forms API
+// for react-hook-forms API
 type FormFieldName<T extends FieldValues> = Path<T>;
 
-// fieldsets that use the FieldSet component
+// fieldsets
 
-interface FormFieldSetSharedProps<T extends FieldValues> {
+export interface FormFieldSetSharedProps<T extends FieldValues> {
 	className?: string;
+	disabled?: boolean;
 	error?: any; // TODO map translations to RHF errors https://github.com/OHCRN/platform/issues/315
+	infoButtonProps?: InfoButtonProps;
 	label: string;
 	name: FormFieldName<T>;
 	required?: boolean;
+	withNarrowDesktopLayout?: boolean;
 }
 
-export type FormFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	children: ReactNode;
-};
-
-export type FormTextFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	type?: FormTextInputType;
-};
-
-export type FormSelectFieldSetProps<
-	T extends FieldValues,
-	V extends string,
-> = FormFieldSetSharedProps<T> & {
-	options: FormSelectOption<V>[];
-	placeholder: string;
-};
-
-// unique fieldsets
-
-export type FormCheckboxFieldSetProps<T extends FieldValues> = Omit<
-	FormFieldSetSharedProps<T>,
-	'label' // uses title & description instead
-> & {
-	description: ReactNode;
-	title?: string;
+export type FormFieldSetWithTooltipProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	tooltipContent?: ReactNode;
 };
 
 // field inputs
 
 export interface FormInputProps<T extends FieldValues> {
+	ariaProps?: Record<string, string>;
 	className?: string;
+	disabled?: boolean;
+	id: string; // use useId() to generate this
 	name: FormFieldName<T>;
-	required: boolean;
+	onBlur?: () => void;
+	onFocus?: () => void;
+	required?: boolean;
 }
 
-export type FormTextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	type: FormTextInputType;
-};
-
-export type FormRadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	value: V;
-};
-
-// select input
-
-export type FormSelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	onChange: (val: FormSelectOnChangeArg<V>) => void;
-	options: FormSelectOption<V>[];
-	placeholder: string;
-	value: V;
-};
-
-export type FormSelectOption<V extends string> = {
+export interface FormSelectOption<V extends string> {
 	label: string;
 	value: V;
-};
+}
+
+export type FormTextInputType = 'email' | 'tel' | 'text';

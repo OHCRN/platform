@@ -35,6 +35,7 @@ const {
 	guardianPhone,
 	guardianRelationship,
 	lastName,
+	phone,
 	preferredName,
 } = formLabelsDictionary;
 
@@ -52,6 +53,7 @@ const dictionary = {
 	guardianPhone,
 	guardianRelationship,
 	lastName,
+	phone,
 	preferredName,
 } satisfies InviteFormLabelsDictionary;
 

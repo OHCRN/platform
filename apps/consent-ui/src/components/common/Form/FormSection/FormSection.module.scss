@@ -1,0 +1,16 @@
+.formSection {
+	width: calc(100% + 2rem);
+	padding: 1rem;
+	margin: 0 -1rem;
+	&.grey {
+		background: theme('colors.grayscale.200');
+	}
+	&.white {
+		background: theme('colors.grayscale.100');
+	}
+	@media (min-width: theme('screens.sm')) {
+		&.grey {
+			border-radius: 0.3125rem;
+		}
+	}
+}

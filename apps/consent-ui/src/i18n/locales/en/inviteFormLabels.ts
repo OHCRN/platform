@@ -33,6 +33,7 @@ const {
 	guardianPhone,
 	guardianRelationship,
 	lastName,
+	phone,
 	preferredName,
 } = formLabels;
 
@@ -50,6 +51,7 @@ const dictionary = {
 	guardianPhone,
 	guardianRelationship,
 	lastName,
+	phone,
 	preferredName,
 } satisfies Record<string, string>;
 

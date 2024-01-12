@@ -36,13 +36,15 @@ import footerDictionary from 'src/i18n/locales/fr/footer';
 import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
 import formLabelsDictionary from 'src/i18n/locales/fr/formLabels';
 import formTextDictionary from 'src/i18n/locales/fr/formText';
+import formTooltipsDictionary from 'src/i18n/locales/fr/formTooltips';
 import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
 import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
-import inviteDictionary from 'src/i18n/locales/fr/invite';
+import inviteFormConsentGroupModalDictionary from 'src/i18n/locales/fr/inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
+import inviteFormPageDictionary from 'src/i18n/locales/fr/inviteFormPage';
 import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
@@ -65,6 +67,7 @@ const dictionaries = {
 	dashboard: dashboardDictionary,
 	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
+	formTooltips: formTooltipsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
 	formText: formTextDictionary,
@@ -73,8 +76,9 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
-	invite: inviteDictionary,
+	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormPage: inviteFormPageDictionary,
 	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,

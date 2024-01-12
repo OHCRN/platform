@@ -85,7 +85,9 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 					<div ref={ref}>
 						<Card className={styles.card} dropShadow="none">
 							{title && <h3>{title}</h3>}
-							{body && isValidElement(body) ? body : body && <p>{body}</p>}
+							<div className={styles.body}>
+								{body && isValidElement(body) ? body : body && <p>{body}</p>}
+							</div>
 							{(actionButtonText || cancelButtonText) && (
 								<div className={styles.buttons}>
 									{cancelButtonText && onCancelClick && (

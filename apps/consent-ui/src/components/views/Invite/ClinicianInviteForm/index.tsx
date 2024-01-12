@@ -23,6 +23,7 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ClinicianInviteRequest, ConsentGroup, InviteGuardianFields } from 'types/entities';
+import clsx from 'clsx';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -37,8 +38,17 @@ import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
+import FormSection from 'src/components/common/Form/FormSection';
+import Button from 'src/components/common/Button';
+import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
+import { useModal } from 'src/components/common/Modal';
+import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
+import { ValidLanguage } from 'src/i18n';
 
 import { ConsentGroupOption } from './types';
+import formStyles from './ClinicianInviteForm.module.scss';
+
+const styles = Object.assign({}, formStyles, layoutStyles);
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -54,11 +64,13 @@ const guardianInfoFields: (keyof InviteGuardianFields)[] = [
 
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
+	currentLang,
 	errorsDict,
 	labelsDict,
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
@@ -97,6 +109,7 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
+			console.log('form data', data);
 			axiosClient
 				.post(API.INVITES, { data, recaptchaToken })
 				.then(() => {
@@ -127,138 +140,197 @@ const ClinicianInviteFormComponent = ({
 		}
 	}, [unregister, watchConsentGroup]);
 
+	// setup consent group info modal
+	const { openModal, closeModal } = useModal();
+
+	const consentGroupModalConfig = {
+		title: textDict.consentGroups,
+		actionButtonText: 'OK',
+		onActionClick: closeModal,
+		onCancelClick: closeModal,
+		body: <ConsentGroupModal currentLang={currentLang} />,
+	};
+
+	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					<h3>{textDict['patientInformation']}</h3>
-					<p>
-						<RequiredAsterisk /> {textDict['indicatesRequiredField']}
+				<FormSection>
+					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
+					<p className={styles.smallText}>
+						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
 					<TextFieldSet
-						error={errors.participantFirstName?.type && errorsDict['required']}
-						label={labelsDict['firstName'] || ''}
+						error={errors.participantFirstName?.type && errorsDict.required}
+						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
+						tooltipContent={textDict.participantFirstNameTooltip}
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						error={errors.participantLastName?.type && errorsDict['required']}
-						label={labelsDict['lastName'] || ''}
+						error={errors.participantLastName?.type && errorsDict.required}
+						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
+						tooltipContent={textDict.participantLastNameTooltip}
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						error={errors.participantPreferredName?.type && errorsDict['required']}
-						label={labelsDict['preferredName'] || ''}
+						error={errors.participantPreferredName?.type && errorsDict.required}
+						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
+						tooltipContent={textDict.participantPreferredNameTooltip}
+						withNarrowDesktopLayout
 					/>
 
 					<SelectFieldSet
-						error={errors.consentGroup?.type && errorsDict['required']}
-						label={labelsDict['consentGroup'] || ''}
+						error={errors.consentGroup?.type && errorsDict.required}
+						infoButtonProps={{
+							label: textDict.learnMoreConsentGroups,
+							onClick: handleConsentGroupInfoButtonClick,
+						}}
+						label={labelsDict.consentGroup || ''}
 						name="consentGroup"
 						options={consentGroupOptions}
-						placeholder={textDict['selectPlaceholder'] || ''}
+						placeholder={textDict.selectPlaceholder || ''}
 						required
+						tooltipContent={textDict.consentGroupTooltip}
+						withNarrowDesktopLayout
 					/>
-				</div>
+
+					<TextFieldSet
+						tooltipContent={textDict.participantPhoneNumberTooltip}
+						error={errors.participantPhoneNumber?.type && errorsDict.required}
+						label={labelsDict.phone || ''}
+						name="participantPhoneNumber"
+						required
+						withNarrowDesktopLayout
+					/>
+					<TextFieldSet
+						error={errors.participantEmailAddress?.type && errorsDict.required}
+						label={labelsDict.email || ''}
+						name="participantEmailAddress"
+						required
+						tooltipContent={textDict.participantEmailAddressTooltip}
+						withNarrowDesktopLayout
+					/>
+				</FormSection>
 
 				{showGuardianFields && (
-					<div style={{ background: 'lightgrey' }}>
+					<FormSection variant="grey">
 						{/*
 						 * guardian fields are marked required in the UI & optional in zod schema.
 						 * they're required if they're visible,
 						 * i.e. if the user has indicated the participant is a minor
 						 */}
-						<p>{textDict['enterGuardianInfo']}</p>
+						<p>{textDict.enterGuardianInfo}</p>
 						<TextFieldSet
-							error={errors.guardianName?.type && errorsDict['required']}
-							label={labelsDict['guardianName'] || ''}
+							error={errors.guardianName?.type && errorsDict.required}
+							label={labelsDict.guardianName || ''}
 							name="guardianName"
 							required
+							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							error={errors.guardianPhoneNumber?.type && errorsDict['required']}
-							label={labelsDict['guardianPhone'] || ''}
+							error={errors.guardianPhoneNumber?.type && errorsDict.required}
+							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
 							required
+							tooltipContent={textDict.guardianPhoneNumberTooltip}
 							type="tel"
+							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							error={errors.guardianEmailAddress?.type && errorsDict['required']}
-							label={labelsDict['email'] || ''}
+							error={errors.guardianEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email || ''}
 							name="guardianEmailAddress"
 							required
+							tooltipContent={textDict.guardianEmailAddressTooltip}
 							type="email"
+							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							error={errors.guardianRelationship?.type && errorsDict['required']}
-							label={labelsDict['guardianRelationship'] || ''}
+							error={errors.guardianRelationship?.type && errorsDict.required}
+							label={labelsDict.guardianRelationship || ''}
 							name="guardianRelationship"
 							required
+							withNarrowDesktopLayout
 						/>
 						<p>
-							{textDict['uploadFileDescription1']}
-							<a href="">{textDict['uploadFileLink']}</a>
+							{textDict.uploadFileDescription1}
+							<a href="">{textDict.uploadFileLink}</a>
 							{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
-							{textDict['uploadFileDescription2']}
+							{textDict.uploadFileDescription2}
 							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 						</p>
-					</div>
+					</FormSection>
 				)}
 
-				<div>
-					<p>{textDict['afterRegistering']}</p>
+				<FormSection>
+					<p className={styles.afterRegistering}>{textDict.afterRegistering}</p>
 					<CheckboxFieldSet
-						description={textDict['consentContactDescription']}
-						error={errors.consentToBeContacted?.type && errorsDict['required']}
+						description={textDict.consentContactDescription}
+						error={errors.consentToBeContacted?.type && errorsDict.required}
 						name="consentToBeContacted"
 						required
-						title={labelsDict['consentContact']}
+						title={labelsDict.consentContact}
 					/>
-				</div>
+				</FormSection>
 
-				<div>
-					<h3>{textDict['clinicianInformation']}</h3>
+				<FormSection>
+					<h3 className={clsx(styles.sectionTitle, styles.clinicianTitle)}>
+						{textDict.clinicianInformation}
+					</h3>
 					<TextFieldSet
-						error={errors.clinicianTitleOrRole?.type && errorsDict['required']}
-						label={labelsDict['clinicianTitleOrRole'] || ''}
+						error={errors.clinicianTitleOrRole?.type && errorsDict.required}
+						label={labelsDict.clinicianTitleOrRole || ''}
 						name="clinicianTitleOrRole"
 						required
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						error={errors.clinicianFirstName?.type && errorsDict['required']}
-						label={labelsDict['clinicianFirstName'] || ''}
+						error={errors.clinicianFirstName?.type && errorsDict.required}
+						label={labelsDict.clinicianFirstName || ''}
 						name="clinicianFirstName"
 						required
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						error={errors.clinicianLastName?.type && errorsDict['required']}
-						label={labelsDict['clinicianLastName'] || ''}
+						error={errors.clinicianLastName?.type && errorsDict.required}
+						label={labelsDict.clinicianLastName || ''}
 						name="clinicianLastName"
 						required
+						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
-						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict['required']}
-						label={labelsDict['clinicianInstitutionalEmailAddress'] || ''}
+						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
+						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
+						tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
 						type="email"
+						withNarrowDesktopLayout
 					/>
-				</div>
+				</FormSection>
 
-				{recaptchaError && (
-					<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
-				)}
+				<FormSection>
+					{recaptchaError && (
+						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+					)}
 
-				<div style={{ margin: '25px 0' }}>
-					<RecaptchaCheckbox
-						onChange={handleRecaptchaChange}
-						recaptchaCheckboxRef={recaptchaCheckboxRef}
-					/>
-				</div>
+					<div className={styles.recaptchaCheckbox}>
+						<RecaptchaCheckbox
+							onChange={handleRecaptchaChange}
+							recaptchaCheckboxRef={recaptchaCheckboxRef}
+						/>
+					</div>
 
-				<button type="submit">Submit</button>
+					<Button type="submit" className={styles.submitButton}>
+						{textDict.submit}
+					</Button>
+				</FormSection>
 			</Form>
 		</FormProvider>
 	);
