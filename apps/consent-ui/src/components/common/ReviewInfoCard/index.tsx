@@ -19,17 +19,24 @@
 
 import clsx from 'clsx';
 
+import type { ValidLanguage } from 'src/i18n';
+
+import LocalizedLink from '../Link/LocalizedLink';
+import type { RouteName } from '../Link/types';
+
 import styles from './ReviewInfoCard.module.scss';
 
 const ReviewInfoCard = ({
-	// layout = 'column',
+	name,
+	linkLang,
 	className,
 	fields,
 	title,
 	subtitle,
 	required = false,
 }: {
-	// layout?: 'column' | 'row';
+	name: RouteName;
+	linkLang: ValidLanguage;
 	className?: string;
 	fields?: {
 		label: string;
@@ -43,20 +50,24 @@ const ReviewInfoCard = ({
 		<div className={clsx(styles.reviewInfoCard, className)}>
 			<div className={clsx(styles.header)}>
 				<h2>{title}</h2>
-				<div className={styles.redirectButton}>Edit</div>
+				<LocalizedLink className={styles.redirectButton} name={name} linkLang={linkLang}>
+					Edit
+				</LocalizedLink>
 			</div>
 			<div className={clsx(styles.subtitle)}>
 				{subtitle}
 				{required && <span className={styles.required}>*</span>}
 			</div>
-			<div className={styles.fields}>
-				{fields?.map((field, i) => (
-					<div key={i} className={styles.field}>
-						<h2 className={styles.fieldLabel}>{field.label}</h2>
-						<div className={styles.fieldValue}>{field.value}</div>
-					</div>
-				))}
-			</div>
+			{fields && (
+				<div className={styles.fields}>
+					{fields.map((field) => (
+						<div key={`${field.label}-${field.value}`} className={styles.field}>
+							<h2 className={styles.fieldLabel}>{field.label}</h2>
+							<div className={styles.fieldValue}>{field.value}</div>
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
