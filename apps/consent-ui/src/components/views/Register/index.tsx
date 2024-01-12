@@ -41,8 +41,8 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				// https://github.com/OHCRN/platform/issues/359
 				button: <LinkButton href="">{translate('registerPage', 'login')}</LinkButton>,
 			}}
-			mainSubtitle={translate('registerPage', 'registerYourself')}
-			mainTitle={translate('registerPage', 'enrollInOhcrn')}
+			mainSubtitle={translate('registerPage', 'enrollInOhcrn')}
+			mainTitle={translate('registerPage', 'registerYourself')}
 			navTitle={translate('registerPage', 'participantRegistration')}
 		>
 			<RegistrationForm />

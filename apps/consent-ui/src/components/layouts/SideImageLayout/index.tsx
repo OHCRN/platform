@@ -83,10 +83,10 @@ const SideImageLayout = ({
 					</div>
 					<div className={styles.rightButtons}>
 						{desktopNavButton && (
-							<>
-								<span>{desktopNavButton.description}</span>
+							<div className={styles.desktopNavButton}>
+								<span className={styles.description}>{desktopNavButton.description}</span>
 								{desktopNavButton.button}
-							</>
+							</div>
 						)}
 						{desktopNavAction && (
 							<LocalizedLink
@@ -106,8 +106,7 @@ const SideImageLayout = ({
 				</nav>
 				<div className={styles.content}>
 					<h2 className={styles.mainTitle}>{mainTitle}</h2>
-					<p className={styles.mainSubtitle}>{mainSubtitle}</p>
-
+					<p className={styles.mainSubtitle}>{mainSubtitle} hello</p>
 					{children}
 				</div>
 			</div>
