@@ -19,10 +19,10 @@
 
 import { z } from 'zod';
 
-import { postalCode } from '../../common/Regex.js';
+import { POSTAL_CODE_REGEX } from '../../common/index.js';
 
 export const PostalCode = z
 	.string()
-	.regex(postalCode)
+	.regex(POSTAL_CODE_REGEX)
 	.transform((data) => data.toUpperCase());
 export type PostalCode = z.infer<typeof PostalCode>;

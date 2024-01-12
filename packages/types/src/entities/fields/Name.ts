@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { name } from '../../common/Regex.js';
+import { NAME_REGEX } from '../../common/index.js';
 
-export const Name = z.string().trim().regex(name);
+export const Name = z.string().trim().regex(NAME_REGEX);
 export type Name = z.infer<typeof Name>;

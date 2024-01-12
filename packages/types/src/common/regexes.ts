@@ -20,10 +20,10 @@
 import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
 
 // TODO: separate name into two fields with + without whitespace, include French chars in both
-export const name = /^[A-Za-z\s]+$/;
-export const nanoId = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
-export const ohipNumber = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
-export const phoneNumber = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
-export const postalCode = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
+export const NAME_REGEX = /^[A-Za-z\s]+$/;
+export const NANOID_REGEX = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
+export const OHIP_NUMBER_REGEX = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
+export const PHONE_NUMBER_REGEX = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
+export const POSTAL_CODE_REGEX = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
 
 export const REGEX_FLAG_GLOBAL = 'g';
