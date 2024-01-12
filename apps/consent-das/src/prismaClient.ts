@@ -18,8 +18,8 @@
  */
 
 import { customAlphabet } from 'nanoid';
-import { NANOID_LENGTH, NanoId } from 'types/entities';
-import { ID_ALPHABET } from 'types/services';
+import { NANOID_LENGTH } from 'types/common';
+import { ID_ALPHABET, NanoId } from 'types/entities';
 
 import {
 	ClinicianInvite,
@@ -27,9 +27,9 @@ import {
 	ConsentGroup,
 	ConsentQuestion,
 	ConsentQuestionId,
+	LifecycleState,
 	Participant,
 	ParticipantResponse,
-	LifecycleState,
 	PrismaClient,
 } from './generated/client/index.js';
 import logger from './logger.js';
@@ -99,8 +99,8 @@ export {
 	ConsentGroup,
 	ConsentQuestion,
 	ConsentQuestionId,
+	LifecycleState,
 	Participant,
 	ParticipantResponse,
-	LifecycleState,
 };
 export default prisma;

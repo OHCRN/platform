@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { PhoneNumber } from '../../src/entities/index.js';
+import { PhoneNumber } from '../../src/entities/fields/index.js';
 
 describe('PhoneNumber', () => {
 	it('Must be 10 digits long', () => {

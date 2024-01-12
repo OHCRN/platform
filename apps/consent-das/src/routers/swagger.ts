@@ -18,19 +18,21 @@
  */
 
 import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import { serve, setup } from 'swagger-ui-express';
+import { SortOrderSchema as SortOrder } from 'types/common';
 import {
 	ConsentCategorySchema as ConsentCategory,
 	ConsentGroupSchema as ConsentGroup,
 	ConsentQuestionSchema as ConsentQuestion,
+	ConsentQuestionArraySchema as ConsentQuestionArray,
 	ConsentQuestionIdSchema as ConsentQuestionId,
 	LifecycleStateSchema as LifecycleState,
-	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
-	ConsentQuestionArraySchema as ConsentQuestionArray,
-	ParticipantResponseArraySchema as ParticipantResponseArray,
-	SortOrderSchema as SortOrder,
 } from 'types/entities';
+import {
+	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
+	ParticipantResponseArraySchema as ParticipantResponseArray,
+} from 'types/consentDas';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 

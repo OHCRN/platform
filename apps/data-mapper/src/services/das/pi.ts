@@ -18,9 +18,9 @@
  */
 
 import { AxiosError } from 'axios';
-import urlJoin from 'url-join';
-import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
+import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/dataMapper';
+import urlJoin from 'url-join';
 
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';

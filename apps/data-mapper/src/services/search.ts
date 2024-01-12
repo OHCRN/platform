@@ -1,11 +1,7 @@
-import urlJoin from 'url-join';
+import { ClinicianInviteResponse, InformedConsentResponse } from 'types/dataMapper';
+import { ConsentCategory, ConsentQuestionId } from 'types/entities';
 import { Result, failure, isSuccess, success } from 'types/httpResponses';
-import {
-	ConsentCategory,
-	ConsentQuestionId,
-	ClinicianInviteResponse,
-	InformedConsentResponse,
-} from 'types/entities';
+import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
 import serviceLogger from '../logger.js';

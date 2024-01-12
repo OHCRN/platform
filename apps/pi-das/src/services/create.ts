@@ -1,9 +1,9 @@
-import { PIClinicianInviteRequest } from 'types/entities';
 import { Result, failure, success } from 'types/httpResponses';
+import { PIClinicianInviteRequest } from 'types/piDas';
 
-import prisma, { Participant, Province, ClinicianInvite } from '../prismaClient.js';
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
+import prisma, { ClinicianInvite, Participant, Province } from '../prismaClient.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
 

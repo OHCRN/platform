@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,17 +19,15 @@
 
 import { describe, expect, it } from 'vitest';
 
-import {
-	ConsentGroup,
-	ClinicianInviteResponse,
-	ConsentClinicianInviteResponse,
-	PIClinicianInviteResponse,
-} from '../../src/entities/index.js';
+import { ConsentGroup } from '../../src/entities/fields/index.js';
+import { ClinicianInviteBase } from '../../src/entities/index.js';
+import { ConsentClinicianInviteResponse } from '../../src/services/consentDas/index.js';
+import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
 
 describe('ClinicianInviteResponse', () => {
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
 		expect(
-			ClinicianInviteResponse.safeParse({
+			ClinicianInviteBase.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -51,7 +49,7 @@ describe('ClinicianInviteResponse', () => {
 	});
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are provided', () => {
 		expect(
-			ClinicianInviteResponse.safeParse({
+			ClinicianInviteBase.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -73,7 +71,7 @@ describe('ClinicianInviteResponse', () => {
 	});
 	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and some guardian contact fields are NOT provided', () => {
 		expect(
-			ClinicianInviteResponse.safeParse({
+			ClinicianInviteBase.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
@@ -93,7 +91,7 @@ describe('ClinicianInviteResponse', () => {
 	});
 	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are NOT provided', () => {
 		expect(
-			ClinicianInviteResponse.safeParse({
+			ClinicianInviteBase.safeParse({
 				id: 'CVCFbeKH2Njl1G41vCQme',
 				inviteSentDate: new Date(),
 				clinicianFirstName: 'Homer',
