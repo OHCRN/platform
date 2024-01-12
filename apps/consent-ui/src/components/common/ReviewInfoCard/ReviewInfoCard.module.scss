@@ -1,0 +1,58 @@
+.reviewInfoCard {
+	background-color: theme('colors.primary.100');
+
+	border: 1px solid;
+	border-color: theme('colors.primary.600');
+	color: theme('colors.grayscale.800');
+
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	padding: 0.5rem;
+
+	h2 {
+		font-size: theme('fontSize.base');
+	}
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.redirectButton {
+	width: 74px;
+	height: 30px;
+	border-radius: 25px;
+	border: 2px solid;
+	gap: 10px;
+
+	background-color: theme('colors.grayscale.800');
+	color: theme('colors.grayscale.100');
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin: 0;
+	font-size: theme('fontSize.sm');
+	font-weight: 700;
+	line-height: 26px;
+}
+
+.required {
+	color: theme('colors.error.500');
+	margin-left: 0.5em;
+}
+
+.subtitle {
+	font-size: theme('fontSize.sm');
+}
+
+.fields {
+	display: flex;
+	flex-direction: column;
+	gap: inherit;
+}
