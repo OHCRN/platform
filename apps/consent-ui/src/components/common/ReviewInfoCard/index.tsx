@@ -19,7 +19,7 @@
 
 import clsx from 'clsx';
 
-import type { ValidLanguage } from 'src/i18n';
+import type { ValidLanguage } from 'src/i18n/types';
 
 import LocalizedLink from '../Link/LocalizedLink';
 import type { RouteName } from '../Link/types';
@@ -32,7 +32,7 @@ const ReviewInfoCard = ({
 	className,
 	fields,
 	title,
-	subtitle,
+	children, // subtitle
 	required = false,
 }: {
 	name: RouteName;
@@ -43,7 +43,7 @@ const ReviewInfoCard = ({
 		value: string;
 	}[];
 	title: string;
-	subtitle: string;
+	children: React.ReactNode;
 	required?: boolean;
 }) => {
 	return (
@@ -55,7 +55,7 @@ const ReviewInfoCard = ({
 				</LocalizedLink>
 			</div>
 			<div className={clsx(styles.subtitle)}>
-				{subtitle}
+				{children}
 				{required && <span className={styles.required}>*</span>}
 			</div>
 			{fields && (
