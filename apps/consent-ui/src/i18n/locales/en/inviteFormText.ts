@@ -17,18 +17,41 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { indicatesRequiredField, selectPlaceholder } = formText;
+const { indicatesRequiredField, selectPlaceholder, submit } = formText;
+const {
+	clinicianInstitutionalEmailAddressTooltip,
+	consentGroupTooltip,
+	guardianEmailAddressTooltip,
+	guardianPhoneNumberTooltip,
+	participantEmailAddressTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+} = formTooltips;
 
 const dictionary = {
 	afterRegistering:
 		'After registering, we will need to collect some important consents and data. Your patient will have access to update their records, but should they require assistance, we may contact them.',
+	clinicianInstitutionalEmailAddressTooltip,
 	clinicianInformation: 'Clinician Information',
+	consentGroups: 'Consent Groups',
+	consentGroupTooltip,
 	consentContactDescription:
 		'I have obtained verbal consent that my patient can be contacted by a member of the OHCRN study team for further information and consents.',
 	enterGuardianInfo: "Please enter the guardian's info below:",
+	guardianEmailAddressTooltip,
+	guardianPhoneNumberTooltip,
 	indicatesRequiredField,
+	learnMoreConsentGroups: 'Learn more about consent groups',
+	participantEmailAddressTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
 	patientInformation: 'Patient Information',
 	selectPlaceholder,
 	uploadFileDescription1:
@@ -36,6 +59,7 @@ const dictionary = {
 	uploadFileDescription2:
 		' and have your participant (who is a minor) read and sign the assent form. Use the upload button below to submit a completed assent form signed by the minor.',
 	uploadFileLink: 'download a copy of the assent form',
+	submit,
 } satisfies Record<string, string>;
 
 export type InviteFormTextDictionary = Record<keyof typeof dictionary, string>;

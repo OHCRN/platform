@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,25 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FieldValues } from 'react-hook-form';
+import Image from 'next/image';
+import { SyntheticEvent } from 'react';
 
-import { FormTextFieldSetProps } from '../types';
+import InfoSvg from 'src/public/info.svg';
 
-import TextInput from './inputs/TextInput';
-import FieldSet from './FieldSet';
+import styles from './InfoButton.module.scss';
 
-const TextFieldSet = <T extends FieldValues>({
-	error,
-	label,
-	name,
-	required = false,
-	type = 'text',
-}: FormTextFieldSetProps<T>) => {
+export interface InfoButtonProps {
+	label: string;
+	onClick: () => void;
+}
+
+const InfoButton = ({ label, onClick }: InfoButtonProps) => {
+	const handleClick = (e: SyntheticEvent) => {
+		e.preventDefault();
+		onClick();
+	};
 	return (
-		<FieldSet error={error} label={label} name={name} required={required}>
-			<TextInput name={name} required={required} type={type} />
-		</FieldSet>
+		<button aria-label={label} className={styles.infoButton} onClick={handleClick} type="button">
+			<Image alt="" src={InfoSvg} />
+		</button>
 	);
 };
 
-export default TextFieldSet;
+export default InfoButton;

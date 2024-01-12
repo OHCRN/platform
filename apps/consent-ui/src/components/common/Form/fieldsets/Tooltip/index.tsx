@@ -17,41 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Controller, FieldValues, useFormContext } from 'react-hook-form';
+import { ReactNode } from 'react';
+import clsx from 'clsx';
 
-import { FormSelectFieldSetProps } from '../types';
+import styles from './Tooltip.module.scss';
 
-import FieldSet from './FieldSet';
-import SelectInput from './inputs/SelectInput';
+// show/hide tooltip using CSS not with conditional rendering, so that it can be read by screenreaders
+// https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/
 
-const SelectFieldSet = <T extends FieldValues, V extends string>({
-	error,
-	label,
-	name,
-	options,
-	placeholder,
-	required = false,
-}: FormSelectFieldSetProps<T, V>) => {
-	const { control } = useFormContext();
+interface TooltipProps {
+	children: ReactNode;
+	className?: string;
+	id?: string;
+	isVisible: boolean;
+	withNarrowDesktopLayout?: boolean;
+}
+
+const Tooltip = ({ children, className, id, isVisible, withNarrowDesktopLayout }: TooltipProps) => {
 	return (
-		<Controller
-			name="consentGroup"
-			control={control}
-			render={({ field: { onChange, value } }) => (
-				<FieldSet error={error} label={label} name={name} required={required}>
-					<SelectInput
-						name={name}
-						onChange={onChange}
-						options={options}
-						placeholder={placeholder}
-						required
-						value={value}
-					/>
-				</FieldSet>
+		<div
+			className={clsx(
+				styles.tooltip,
+				className,
+				!withNarrowDesktopLayout && styles.wideDesktop,
+				isVisible && styles.visible,
 			)}
-			rules={{ required }}
-		/>
+			id={id}
+			role="tooltip"
+		>
+			{children}
+		</div>
 	);
 };
 
-export default SelectFieldSet;
+export default Tooltip;

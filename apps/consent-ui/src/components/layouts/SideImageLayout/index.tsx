@@ -99,7 +99,6 @@ const SideImageLayout = ({
 				<div className={styles.content}>
 					<h2 className={styles.mainTitle}>{mainTitle}</h2>
 					<p className={styles.mainSubtitle}>{mainSubtitle}</p>
-
 					{children}
 				</div>
 			</div>

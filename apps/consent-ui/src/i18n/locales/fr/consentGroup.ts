@@ -20,12 +20,13 @@
 import { ConsentGroupDictionary } from '../en/consentGroup';
 
 const dictionary = {
-	ADULT_CONSENT: 'Adult Consent (>18)',
+	ADULT_CONSENT: 'Consentement adulte (>18)',
 	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
-		'Adult Consent using a Substitute Additional Decision Maker (>18)',
-	GUARDIAN_CONSENT_OF_MINOR: 'Guardian Consent of a Minor',
-	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT: 'Guardian Consent of a Minor (including Assent)',
-	YOUNG_ADULT_CONSENT: 'Young Adult Consent (<18)',
+		"Consentement d'un adulte faisant appel à un décideur suppléant supplémentaire (>18)",
+	GUARDIAN_CONSENT_OF_MINOR: "Consentement du tuteur d'un mineur",
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT:
+		"Consentement du tuteur d'un mineur (y compris le consentement)",
+	YOUNG_ADULT_CONSENT: 'Consentement du jeune adulte (<18)',
 } satisfies ConsentGroupDictionary;
 
 export default dictionary;

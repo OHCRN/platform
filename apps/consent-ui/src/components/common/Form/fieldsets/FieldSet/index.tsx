@@ -17,30 +17,71 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
+import { ReactNode } from 'react';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormFieldSetProps } from '../../types';
+import Tooltip from 'src/components/common/Form/fieldsets/Tooltip';
+import InputError from 'src/components/common/Form/fieldsets/InputError';
+import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
+import { InfoButtonProps } from 'src/components/common/InfoButton';
 
-const FieldSet = <T extends FieldValues>({
+import styles from './FieldSet.module.scss';
+
+interface FieldSetProps {
+	children: ReactNode;
+	className?: string;
+	error?: string;
+	fieldId: string;
+	infoButtonProps?: InfoButtonProps;
+	label: string;
+	required?: boolean;
+	tooltipContent?: ReactNode;
+	tooltipId: string;
+	tooltipVisible: boolean;
+	withNarrowDesktopLayout?: boolean;
+}
+
+const FieldSet = ({
 	children,
 	className,
 	error,
+	fieldId,
+	infoButtonProps,
 	label,
-	name,
-	required = false,
-}: FormFieldSetProps<T>) => {
+	required,
+	tooltipContent,
+	tooltipId,
+	tooltipVisible,
+	withNarrowDesktopLayout,
+}: FieldSetProps) => {
 	return (
-		<fieldset className={clsx('fieldset', className)}>
-			<label htmlFor={name}>
+		<fieldset
+			className={clsx(styles.fieldSet, !withNarrowDesktopLayout && styles.wideDesktop, className)}
+		>
+			<FieldLabel
+				className={styles.labelGridArea}
+				fieldId={fieldId}
+				infoButtonProps={infoButtonProps}
+				required={required}
+			>
 				{label}
-				{required && <RequiredAsterisk />}
-			</label>
+			</FieldLabel>
 
-			{children}
+			<div className={styles.inputGridArea}>
+				{children}
+				{error && <InputError>{error}</InputError>}
+			</div>
 
-			{error && <p style={{ color: 'red' }}>{error}</p>}
+			{tooltipContent && (
+				<Tooltip
+					className={styles.tooltipGridArea}
+					id={tooltipId}
+					isVisible={tooltipVisible}
+					withNarrowDesktopLayout={withNarrowDesktopLayout}
+				>
+					{tooltipContent}
+				</Tooltip>
+			)}
 		</fieldset>
 	);
 };

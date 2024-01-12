@@ -19,39 +19,72 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import clsx from 'clsx';
+import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
-import { FormSelectInputProps, FormSelectOnChangeArg } from '../../types';
+import { FormInputProps, FormSelectOption } from 'src/components/common/Form/types';
+
+type SelectInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
+	hasError: boolean;
+	options: FormSelectOption<V>[];
+	placeholder: string;
+};
 
 const SelectInput = <T extends FieldValues, V extends string>({
+	ariaProps = {},
+	disabled,
+	hasError,
+	id,
 	name,
-	onChange,
+	onBlur = () => {},
+	onFocus = () => {},
 	options,
 	placeholder = '',
 	required,
-	value,
-}: FormSelectInputProps<T, V>) => {
+}: SelectInputProps<T, V>) => {
+	const { control } = useFormContext();
+
 	return (
-		<Select
-			aria-required={required}
-			inputId={name}
+		<Controller
+			control={control}
 			name={name}
-			onChange={(val: FormSelectOnChangeArg<V>) => {
-				// in react-select the value can be a string or object.
-				// in our implementation it should be {label, value},
-				// with the label being translated.
-				let onChangeParam = '';
-				if (typeof val === 'string') {
-					onChangeParam = val;
-				} else if (val?.value !== undefined) {
-					onChangeParam = val.value;
-				}
-				return onChange(onChangeParam);
-			}}
-			options={options}
-			placeholder={placeholder}
-			value={options.find((option) => option.value === value) || ''}
+			render={({ field: { onChange, value } }) => (
+				<Select
+					aria-required={required}
+					className={clsx('react-select-container', hasError && 'react-select__has-error')}
+					classNamePrefix="react-select"
+					// react-select doesn't work with hashed CSS classnames from CSS modules.
+					// className & classNamePrefix need to be strings, not hashed classNames.
+					// https://github.com/JedWatson/react-select/issues/4525
+					id={`select-${id}`}
+					inputId={id} // must match label htmlFor
+					instanceId={`instance-${id}`}
+					isDisabled={disabled}
+					name={name}
+					onBlur={onBlur}
+					onChange={(val) => {
+						// in react-select the value can be a string or object.
+						// in our implementation it must be {label, value},
+						// with the label being translated.
+						// empty string case = nothing has been chosen yet.
+						let onChangeParam = '';
+						if (typeof val === 'string') {
+							onChangeParam = val;
+						} else if (val?.value !== undefined) {
+							onChangeParam = val.value;
+						}
+						return onChange(onChangeParam);
+					}}
+					onFocus={onFocus}
+					openMenuOnFocus
+					options={options}
+					placeholder={placeholder}
+					value={options.find((option) => option.value === value) || ''}
+					{...ariaProps}
+				/>
+			)}
+			rules={{ required }}
 		/>
 	);
 };

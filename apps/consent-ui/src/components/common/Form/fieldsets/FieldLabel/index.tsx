@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,55 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { ReactNode } from 'react';
+import clsx from 'clsx';
 
-import { FieldValues, useFormContext } from 'react-hook-form';
-import { SyntheticEvent } from 'react';
+import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
+import InfoButton, { InfoButtonProps } from 'src/components/common/InfoButton';
 
-import { FormInputProps, FormTextInputType } from 'src/components/common/Form/types';
+import styles from './FieldLabel.module.scss';
 
-type TextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	type: FormTextInputType;
-};
+interface FieldLabelProps {
+	children: ReactNode;
+	className?: string;
+	fieldId: string;
+	infoButtonProps?: InfoButtonProps;
+	required?: boolean;
+}
 
-const TextInput = <T extends FieldValues>({
-	ariaProps = {},
+const FieldLabel = ({
+	children,
 	className,
-	disabled,
-	id,
-	name,
-	onBlur = () => {},
-	onFocus = () => {},
+	infoButtonProps,
+	fieldId,
 	required,
-	type = 'text',
-}: TextInputProps<T>) => {
-	const { register } = useFormContext();
-	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
-
-	const handleBlur = (e: SyntheticEvent) => {
-		onBlur();
-		registerOnBlur(e);
-	};
-
-	const handleFocus = () => {
-		onFocus();
-	};
-
+}: FieldLabelProps) => {
 	return (
-		<input
-			aria-required={required}
-			className={className}
-			disabled={disabled}
-			id={id}
-			name={registerName}
-			onBlur={handleBlur}
-			onChange={onChange}
-			onFocus={handleFocus}
-			ref={ref}
-			type={type}
-			{...ariaProps}
-		/>
+		<label htmlFor={fieldId} className={clsx(styles.label, className)}>
+			{children}
+			{required && <RequiredAsterisk />}
+			{infoButtonProps && (
+				<InfoButton label={infoButtonProps.label} onClick={infoButtonProps.onClick} />
+			)}
+		</label>
 	);
 };
 
-export default TextInput;
+export default FieldLabel;
