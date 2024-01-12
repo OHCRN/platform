@@ -20,7 +20,6 @@
 export * from './SortOrder.js';
 export * from './Status.js';
 export * from './expand.js';
-export * from './idAlphabet.js';
 export * from './keys.js';
 export * from './lengthConstraints.js';
 export * from './recursivePartial.js';
