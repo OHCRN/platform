@@ -51,9 +51,9 @@ const ReviewInfoCard = ({
 			</div>
 			<div className={styles.fields}>
 				{fields?.map((field, i) => (
-					<div key={i}>
-						<h2>{field.label}</h2>
-						<div>{field.value}</div>
+					<div key={i} className={styles.field}>
+						<h2 className={styles.fieldLabel}>{field.label}</h2>
+						<div className={styles.fieldValue}>{field.value}</div>
 					</div>
 				))}
 			</div>

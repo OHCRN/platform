@@ -11,8 +11,16 @@
 	gap: 1.5rem;
 	padding: 0.5rem;
 
+	@media (min-width: theme('screens.sm')) {
+		padding: 0.5rem 0.75rem;
+		gap: 1rem;
+	}
+
 	h2 {
 		font-size: theme('fontSize.base');
+		@media (min-width: theme('screens.sm')) {
+			font-size: theme('fontSize.xl');
+		}
 	}
 }
 
@@ -35,6 +43,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 
 	margin: 0;
 	font-size: theme('fontSize.sm');
@@ -49,10 +58,52 @@
 
 .subtitle {
 	font-size: theme('fontSize.sm');
+	@media (min-width: theme('screens.sm')) {
+		font-size: theme('fontSize.base');
+	}
+	@media (min-width: theme('screens.md')) {
+		font-size: theme('fontSize.lg');
+	}
 }
 
 .fields {
-	display: flex;
-	flex-direction: column;
+	display: grid;
 	gap: inherit;
+	
+	grid-template-columns: 1fr;
+	@media (min-width: theme('screens.sm')) {
+		grid-template-columns: 1fr 1fr;
+		padding: 1.5rem;
+	}
+	@media (min-width: theme('screens.md')) {
+		padding: 0.5rem 0;
+		gap: 2rem;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+
+		@media (min-width: theme('screens.sm')) {
+			flex-direction: row;
+			gap: 1rem;
+		}
+
+		.fieldLabel {
+			flex: 1;
+			font-size: theme('fontSize.base');
+		}
+
+		.fieldValue {
+			flex: 1;
+
+			font-size: theme('fontSize.base');
+			@media (min-width: theme('screens.sm')) {
+				font-size: theme('fontSize.lg');
+			}
+			@media (min-width: theme('screens.md')) {
+				font-size: theme('fontSize.base');
+			}
+		}
+	}
 }
