@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,12 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormTextDictionary } from '../en/formText';
-
 const dictionary = {
-	indicatesRequiredField: 'indique un champ obligatoire',
-	selectPlaceholder: 'Choisissez-en un',
-	submit: 'Soumettre',
-} satisfies FormTextDictionary;
+	clinicianInstitutionalEmailAddressTooltip:
+		'We require this to confirm your authority to register patients.',
+	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
+	guardianEmailAddressTooltip: 'The guardian will receive an invitation to this account.',
+	guardianPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
+	participantEmailAddressTooltip: 'The patient will receive an invitation to this account.',
+	participantFirstNameTooltip: "Enter participant's first name as it appears on their health card.",
+	participantLastNameTooltip: "Enter participant's last name as it appears on their health card.",
+	participantPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
+	participantPreferredNameTooltip:
+		'What would the participant like to be called when they are contacted?',
+} satisfies Record<string, string>;
+
+export type FormTooltipsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

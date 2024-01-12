@@ -1,0 +1,38 @@
+.tooltip {
+	position: relative;
+	font-size: 0.75rem;
+	background: theme('colors.accent1.200');
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	border-color: transparent;
+	border-color: theme('colors.accent1.200');
+	margin-bottom: 0.5rem;
+	&:before {
+		position: absolute;
+		display: block;
+		width: 0;
+		height: 0;
+		content: '';
+		border: 0.5rem solid transparent;
+		bottom: -1rem;
+		left: calc(50% - 0.5rem);
+		border-top-color: theme('colors.accent1.200');
+	}
+	display: none;
+	&.visible {
+		display: block;
+	}
+
+	@media (min-width: theme('screens.md')) {
+		&.wideDesktop {
+			margin-left: 0.75rem;
+			margin-bottom: 0;
+			&:before {
+				left: -1rem;
+				top: 0.75rem;
+				border-top-color: transparent;
+				border-right-color: theme('colors.accent1.200');
+			}
+		}
+	}
+}

@@ -20,6 +20,7 @@
 const dictionary = {
 	indicatesRequiredField: 'indicates required field',
 	selectPlaceholder: 'Select an option...',
+	submit: 'Submit',
 } satisfies Record<string, string>;
 
 export type FormTextDictionary = Record<keyof typeof dictionary, string>;
