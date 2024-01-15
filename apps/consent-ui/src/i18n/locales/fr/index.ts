@@ -45,6 +45,7 @@ import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerDictionary from 'src/i18n/locales/fr/register';
+import registerFormLabelsDictionary from 'src/i18n/locales/fr/registerFormLabels';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
 const dictionaries = {
@@ -75,6 +76,7 @@ const dictionaries = {
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
 	register: registerDictionary,
+	registerFormLabels: registerFormLabelsDictionary,
 	registerPage: registerPageDictionary,
 } satisfies typeof en;
 
