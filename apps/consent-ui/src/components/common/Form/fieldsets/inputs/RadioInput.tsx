@@ -22,13 +22,17 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { FormRadioInputProps } from '../../types';
+import { FormInputProps } from 'src/components/common/Form/types';
+
+type RadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
+	value: V;
+};
 
 const RadioInput = <T extends FieldValues, V extends string>({
 	className,
 	name,
 	value,
-}: FormRadioInputProps<T, V>) => {
+}: RadioInputProps<T, V>) => {
 	const { register } = useFormContext();
 	return (
 		<input

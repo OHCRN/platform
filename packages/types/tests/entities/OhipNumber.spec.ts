@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { OhipNumber } from '../../src/entities/index.js';
+import { OhipNumber } from '../../src/entities/fields/index.js';
 
 describe('OhipNumber', () => {
 	it('Must be 10 digits long', () => {

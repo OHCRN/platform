@@ -1,10 +1,10 @@
-import urlJoin from 'url-join';
 import { AxiosError } from 'axios';
-import { ClinicianInviteResponse, InformedConsentResponse } from 'types/entities';
+import { InformedConsentResponse, ClinicianInviteResponse } from 'types/consentApi';
 import { Result, failure, success } from 'types/httpResponses';
+import urlJoin from 'url-join';
 
-import serviceLogger from '../logger.js';
 import { getAppConfig } from '../config.js';
+import serviceLogger from '../logger.js';
 
 import axiosClient from './axiosClient.js';
 

@@ -21,35 +21,65 @@
 
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
+import { ReactNode, useId } from 'react';
 
-import RequiredAsterisk from '../../RequiredAsterisk';
-import { FormCheckboxFieldSetProps } from '../../types';
-import CheckboxInput from '../inputs/CheckboxInput';
+import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
+import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
+import InputError from 'src/components/common/Form/fieldsets/InputError';
+import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
+
+import styles from './CheckboxFieldSet.module.scss';
+
+export type CheckBoxFieldSetProps<T extends FieldValues> = Omit<
+	FormFieldSetSharedProps<T>,
+	| 'label' // uses title & description instead
+	| 'withNarrowDesktopLayout' // same layout at all sizes
+> & {
+	description: ReactNode;
+	title?: string;
+};
 
 const CheckboxFieldSet = <T extends FieldValues>({
 	className,
 	description,
+	disabled,
 	error,
 	name,
-	required = false,
+	required,
 	title,
-}: FormCheckboxFieldSetProps<T>) => {
+}: CheckBoxFieldSetProps<T>) => {
+	const checkboxId = useId();
 	return (
-		<fieldset className={clsx('checkbox-fieldset', className)}>
+		<fieldset
+			className={clsx(
+				styles.checkboxFieldset,
+				disabled && styles.disabled,
+				error && styles.error,
+				className,
+			)}
+		>
 			{title && (
-				<h4>
+				<h4 className={styles.title}>
 					{title}
 					{required && <RequiredAsterisk />}
 				</h4>
 			)}
-			<label htmlFor={name} className="checkbox-fieldset__label">
-				<CheckboxInput required={required} name={name} />
-				<span className="checkbox-fieldset__description">
-					{description}
-					{required && !title && <RequiredAsterisk />}
-				</span>
-			</label>
-			{error && <span style={{ color: 'red' }}>{error}</span>}
+			<div className={styles.checkboxWrapper}>
+				<CheckboxInput
+					className={styles.checkboxInput}
+					disabled={disabled}
+					id={checkboxId}
+					name={name}
+					required={required}
+				/>
+				<label htmlFor={checkboxId} className={styles.label}>
+					<span className={styles.description}>
+						{description}
+						{required && !title && <RequiredAsterisk />}
+					</span>
+				</label>
+			</div>
+			{error && <InputError>{error}</InputError>}
 		</fieldset>
 	);
 };

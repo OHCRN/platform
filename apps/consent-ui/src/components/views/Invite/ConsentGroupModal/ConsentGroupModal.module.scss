@@ -1,0 +1,26 @@
+.section {
+	margin-bottom: 1rem;
+	width: 100%;
+	&:last-of-type {
+		margin-bottom: 0;
+	}
+	.title {
+		font-size: theme('fontSize.base');
+		line-height: 1.625rem;
+	}
+	.list {
+		list-style-type: disc;
+		padding-left: 1.25rem;
+	}
+	@media (min-width: theme('screens.md')) {
+		display: flex;
+		column-gap: 1rem;
+		margin-bottom: 1.625rem;
+		.title {
+			flex: 0 1 33%;
+		}
+		.list {
+			flex: 0 1 66.67%;
+		}
+	}
+}

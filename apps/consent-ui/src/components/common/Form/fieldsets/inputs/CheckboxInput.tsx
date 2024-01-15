@@ -20,19 +20,28 @@
 'use client';
 
 import { FieldValues, useFormContext } from 'react-hook-form';
-import clsx from 'clsx';
 
-import { FormInputProps } from '../../types';
+import { FormInputProps } from 'src/components/common/Form/types';
 
-const CheckboxInput = <T extends FieldValues>({ className, name, required }: FormInputProps<T>) => {
+const CheckboxInput = <T extends FieldValues>({
+	ariaProps = {},
+	disabled,
+	className,
+	id,
+	name,
+	required,
+}: FormInputProps<T>) => {
 	const { register } = useFormContext();
+
 	return (
 		<input
 			{...register(name)}
 			aria-required={required}
-			className={clsx('checkbox-input', className)}
-			id={name}
+			className={className}
+			disabled={disabled}
+			id={id}
 			type="checkbox"
+			{...ariaProps}
 		/>
 	);
 };

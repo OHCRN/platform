@@ -21,10 +21,10 @@
 
 import Close from '../Icons/Close';
 
-const DismissButton = ({ className }: { className?: string }) => {
+const DismissButton = ({ className, onClick }: { className?: string; onClick: () => void }) => {
 	return (
-		<button>
-			<Close className={className} />
+		<button type="button" onClick={onClick} className={className}>
+			<Close />
 		</button>
 	);
 };

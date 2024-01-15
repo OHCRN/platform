@@ -20,7 +20,7 @@
 import { Router } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { PIClinicianInviteRequestSchema as ClinicianInviteRequest } from 'types/entities';
+import { PIClinicianInviteRequestSchema as ClinicianInviteRequest } from 'types/piDas';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 

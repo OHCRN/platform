@@ -1,0 +1,30 @@
+.textInput {
+	display: block;
+	width: 100%;
+	border: 1px solid theme('colors.grayscale.500');
+	border-radius: 1.25rem;
+	height: 2.5rem;
+	padding: 0.38rem 1rem;
+	transition: border-color 300ms ease-in-out;
+	&:focus {
+		outline: 0;
+		padding: calc(0.38rem - 1px) calc(1rem - 1px);
+		border: 2px solid theme('colors.grayscale.800');
+	}
+	&.error {
+		border-color: theme('colors.error.500');
+	}
+	&:disabled {
+		background: theme('colors.grayscale.200');
+	}
+}
+
+.wrapper {
+	display: block;
+	@media (min-width: theme('screens.sm')) {
+		flex: 1;
+	}
+	@media (min-width: theme('screens.md')) {
+		display: flex;
+	}
+}
