@@ -17,15 +17,39 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formTooltips from './formTooltips';
+import formText from './formText';
+
+const { back, indicatesRequiredField, next, stepXofY } = formText;
+const {
+	dateOfBirthTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+} = formTooltips;
+
 const dictionary = {
-	back: 'Back',
-	indicatesRequiredField: 'indicates required field',
-	next: 'Next',
-	selectPlaceholder: 'Select an option...',
-	stepXofY: 'Step {{ currentStep }} of {{ stepCount }}',
-	submit: 'Submit',
+	afterRegistering:
+		'After registering, we will need to collect some important consents and data. You will have access to update your participant records, but should you require assistance, we may contact you.',
+	back,
+	consentContact:
+		'I agree that a member of the OHCRN study team can contact me for further information and consents.',
+	createAccount: 'createAccount',
+	dateOfBirthTooltip,
+	enterInfo: 'Please enter your information below:',
+	enterParticipantInfo: "Please enter the participant's information below:",
+	indicatesRequiredField,
+	next,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+	questions: 'Questions? Visit the help centre for more information on OHCRN.',
+	registeringForSomeoneElse: 'Are you registering on behalf of someone else?',
+	stepXofY,
 } satisfies Record<string, string>;
 
-export type FormTextDictionary = Record<keyof typeof dictionary, string>;
+export type RegisterFormTextDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

@@ -49,7 +49,7 @@ import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
-import registerFormLabels from './registerFormLabelsDictionary';
+import registerFormLabelsDictionary from './registerFormLabels';
 import registerPageDictionary from './registerPage';
 
 const dictionaries = {
