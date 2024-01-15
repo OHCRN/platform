@@ -71,7 +71,7 @@
 .fields {
 	display: grid;
 	gap: inherit;
-	
+
 	grid-template-columns: 1fr;
 	@media (min-width: theme('screens.sm')) {
 		grid-template-columns: 1fr 1fr;
