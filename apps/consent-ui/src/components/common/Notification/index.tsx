@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { JSX } from 'react';
+import { JSX, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import CheckmarkCircle from '../Icons/CheckmarkCircle';
@@ -26,18 +26,17 @@ import InfoCircle from '../Icons/InfoCircle';
 
 import styles from './Notification.module.scss';
 import DismissButton from './DismissButton';
-import ActionButton from './ActionButton';
 
-export type NotificationLevel = 'error' | 'info' | 'success' | 'warning';
-export type NotificationVariant = 'small' | 'medium';
+type NotificationLevel = 'error' | 'info' | 'success' | 'warning';
+type NotificationVariant = 'small' | 'medium';
 
-export interface NotificationProps {
-	actionText?: string;
+interface NotificationProps {
+	actionButton?: JSX.Element;
+	children?: ReactNode;
 	className?: string;
+	dismissClick?: () => void;
 	level: NotificationLevel;
-	title: string | JSX.Element;
-	description?: string | JSX.Element;
-	dismissable?: boolean;
+	title: ReactNode;
 	variant?: NotificationVariant;
 }
 
@@ -49,28 +48,26 @@ const notificationIcons: Record<NotificationLevel, JSX.Element> = {
 } as const;
 
 const Notification = ({
-	actionText,
+	actionButton,
+	children,
 	className = '',
+	dismissClick,
 	level,
 	title,
-	description,
-	dismissable,
 	variant = 'medium',
 }: NotificationProps) => {
 	return (
-		<div className={clsx(styles.base, styles[level], styles[className], styles[variant])}>
+		<div className={clsx(styles.notification, styles[level], styles[variant], className)}>
 			<div className={clsx(styles.container)}>
 				<div className={clsx(styles.icon)}>{notificationIcons[level]}</div>
 				<div className={clsx(styles.body)}>
 					<div className={clsx(styles.title)}>{title}</div>
-					{description && <div className={clsx(styles.description)}>{description}</div>}
-					{actionText && (
-						<div className={clsx(styles.action)}>
-							<ActionButton>{actionText}</ActionButton>
-						</div>
-					)}
+					{children && <div className={clsx(styles.description)}>{children}</div>}
+					{actionButton && <div className={clsx(styles.action)}>{actionButton}</div>}
 				</div>
-				{dismissable && <DismissButton className={clsx(styles['dismiss-button'])} />}
+				{dismissClick && (
+					<DismissButton className={clsx(styles['dismiss-button'])} onClick={dismissClick} />
+				)}
 			</div>
 		</div>
 	);
