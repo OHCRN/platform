@@ -3,12 +3,15 @@
 	"version": "0.1.0",
 	"description": "",
 	"exports": {
-		".": "./dist/index.js",
 		"./common": "./dist/common/index.js",
 		"./entities": "./dist/entities/index.js",
 		"./httpResponses": "./dist/httpResponses/index.js",
-		"./services": "./dist/services/index.js",
-		"./package.json": "./package.json"
+		"./consentApi": "./dist/services/consentApi/index.js",
+		"./consentDas": "./dist/services/consentDas/index.js",
+		"./dataMapper": "./dist/services/dataMapper/index.js",
+		"./keysDas": "./dist/services/keysDas/index.js",
+		"./phiDas": "./dist/services/phiDas/index.js",
+		"./piDas": "./dist/services/piDas/index.js"
 	},
 	"type": "module",
 	"engines": {

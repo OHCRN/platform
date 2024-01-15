@@ -22,11 +22,11 @@ import { describe, expect, it } from 'vitest';
 import {
 	Ancestry,
 	BirthSex,
-	ClinicalProfile,
 	Gender,
 	GeneticsClinic,
 	HistoryOfCancer,
-} from '../../src/entities/index.js';
+} from '../../src/entities/fields/index.js';
+import { ClinicalProfile } from '../../src/entities/index.js';
 
 describe('ClinicalProfile', () => {
 	it('Parses correctly when gender is NOT PREFER_TO_SELF_IDENTIFY and selfIdentifiedGender is NOT provided', () => {
