@@ -62,25 +62,25 @@ RUN pnpm run generate
 RUN pnpm run build
 
 #######################################################
-# Common Types Package
+# Shared Types Package
 #######################################################
-FROM base AS common
+FROM base AS types
 
 ARG APP_USER
 ARG WORKDIR
-ARG COMMON_DIR=${WORKDIR}/packages/types
+ARG TYPES_DIR=${WORKDIR}/packages/types
 
-WORKDIR ${COMMON_DIR}
+WORKDIR ${TYPES_DIR}
 
 USER ${APP_USER}
 
-COPY --from=prod-deps ${COMMON_DIR}/node_modules/ ./node_modules
-COPY --from=build ${COMMON_DIR}/dist ./dist
+COPY --from=prod-deps ${TYPES_DIR}/node_modules/ ./node_modules
+COPY --from=build ${TYPES_DIR}/dist ./dist
 
 #######################################################
 # Consent UI
 #######################################################
-FROM common AS consent-ui
+FROM types AS consent-ui
 
 ARG APP_USER
 ARG WORKDIR
