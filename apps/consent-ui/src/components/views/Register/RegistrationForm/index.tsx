@@ -28,8 +28,24 @@ import useRecaptcha from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 import Notification from 'src/components/common/Notification';
+import { ValidLanguage } from 'src/i18n';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
+import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 
-const RegistrationForm = () => {
+// const substituteInfoFields = ['yourName', 'yourPhoneNumber', 'yourRelationship'];
+
+const RegistrationForm = ({
+	currentLang,
+	errorsDict,
+	labelsDict,
+	textDict,
+}: {
+	currentLang: ValidLanguage;
+	errorsDict: FormErrorsDictionary;
+	labelsDict: RegisterFormLabelsDictionary;
+	textDict: RegisterFormTextDictionary;
+}) => {
 	const appConfig = useAppConfigContext();
 	const [nameValDemo, setNameValDemo] = useState('');
 	const [successMessageDemo, setSuccessMessageDemo] = useState('');

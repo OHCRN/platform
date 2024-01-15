@@ -50,6 +50,7 @@ import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
 import registerDictionary from './register';
 import registerFormLabelsDictionary from './registerFormLabels';
+import registerFormTextDictionary from './registerFormText';
 import registerPageDictionary from './registerPage';
 
 const dictionaries = {
@@ -86,6 +87,7 @@ const dictionaries = {
 	province: provinceDictionary,
 	register: registerDictionary,
 	registerFormLabels: registerFormLabelsDictionary,
+	registerFormText: registerFormTextDictionary,
 	registerPage: registerPageDictionary,
 };
 

@@ -22,9 +22,55 @@ import inviteBg from 'src/public/invite-bg.jpg';
 import RegistrationForm from 'src/components/views/Register/RegistrationForm';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
+import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
+import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
+
+	const errorsDict: FormErrorsDictionary = {
+		required: translate('formErrors', 'required'),
+	};
+
+	const labelsDict: RegisterFormLabelsDictionary = {
+		confirmPassword: translate('registerFormLabels', 'confirmPassword'),
+		consentContact: translate('registerFormLabels', 'consentContact'),
+		dateOfBirth: translate('registerFormLabels', 'dateOfBirth'),
+		email: translate('registerFormLabels', 'email'),
+		firstName: translate('registerFormLabels', 'firstName'),
+		lastName: translate('registerFormLabels', 'lastName'),
+		no: translate('registerFormLabels', 'no'),
+		password: translate('registerFormLabels', 'password'),
+		phone: translate('registerFormLabels', 'phone'),
+		preferredName: translate('registerFormLabels', 'preferredName'),
+		yes: translate('registerFormLabels', 'yes'),
+		yourName: translate('registerFormLabels', 'yourName'),
+		yourPhone: translate('registerFormLabels', 'yourPhone'),
+		yourRelationship: translate('registerFormLabels', 'yourRelationship'),
+	};
+
+	const textDict: RegisterFormTextDictionary = {
+		afterRegistering: translate('registerFormText', 'afterRegistering'),
+		back: translate('registerFormText', 'back'),
+		consentContact: translate('registerFormText', 'consentContact'),
+		createAccount: translate('registerFormText', 'createAccount'),
+		dateOfBirthTooltip: translate('registerFormText', 'dateOfBirthTooltip'),
+		enterInfo: translate('registerFormText', 'enterInfo'),
+		enterParticipantInfo: translate('registerFormText', 'enterParticipantInfo'),
+		indicatesRequiredField: translate('registerFormText', 'indicatesRequiredField'),
+		next: translate('registerFormText', 'next'),
+		participantFirstNameTooltip: translate('registerFormText', 'participantFirstNameTooltip'),
+		participantLastNameTooltip: translate('registerFormText', 'participantLastNameTooltip'),
+		participantPhoneNumberTooltip: translate('registerFormText', 'participantPhoneNumberTooltip'),
+		participantPreferredNameTooltip: translate(
+			'registerFormText',
+			'participantPreferredNameTooltip',
+		),
+		questions: translate('registerFormText', 'questions'),
+		registeringForSomeoneElse: translate('registerFormText', 'registeringForSomeoneElse'),
+		stepXofY: translate('registerFormText', 'stepXofY'),
+	};
 
 	return (
 		<SideImageLayout
@@ -45,7 +91,12 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			mainTitle={translate('registerPage', 'registerYourself')}
 			navTitle={translate('registerPage', 'participantRegistration')}
 		>
-			<RegistrationForm />
+			<RegistrationForm
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				labelsDict={labelsDict}
+				textDict={textDict}
+			/>
 		</SideImageLayout>
 	);
 };
