@@ -24,7 +24,6 @@ import Card from 'src/components/common/Card';
 import ProgressHeader from 'src/components/common/ProgressHeader';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
-import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
 
 import styles from './ConsentWizard.module.scss';
 
@@ -82,49 +81,7 @@ const ConsentWizard = async ({
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}
-						{currentStep === CONSENT_REVIEW_SIGN && (
-							<>
-								<ReviewInfoCard
-									name="consent-1"
-									linkLang="en"
-									title="Release of Health Data"
-									required={true}
-									fields={[
-										{
-											label: 'Preferred Name',
-											value: 'Lala',
-										},
-										{
-											label: 'Name on OHIP',
-											value: 'Paula Smith',
-										},
-										{
-											label: 'Gender Identity',
-											value: 'Prefer not to disclose',
-										},
-										{
-											label: 'OHIP',
-											value: '1234 567 890 AA',
-										},
-										{
-											label: 'Date of Birth',
-											value: '01/09/1991',
-										},
-										{
-											label: 'Sex Assigned at Birth',
-											value: 'Female',
-										},
-										{
-											label: 'Ancestry',
-											value: 'Hispanic/Latinx',
-										},
-									]}
-								>
-									I agree to the release and update of clinical and genetic data obtained from
-									applicable institutions and provided by the patient, to be stored within OHCRN.
-								</ReviewInfoCard>
-							</>
-						)}
+						{currentStep === CONSENT_REVIEW_SIGN && <></>}
 					</div>
 				</Card>
 			</div>
