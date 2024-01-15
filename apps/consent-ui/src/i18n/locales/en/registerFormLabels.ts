@@ -17,15 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formLabels from '../en/formLabels';
+
+const {
+	confirmPassword,
+	consentContact,
+	dateOfBirth,
+	email,
+	firstName,
+	lastName,
+	no,
+	password,
+	phone,
+	preferredName,
+	yes,
+	yourName,
+	yourPhone,
+	yourRelationship,
+} = formLabels;
+
 const dictionary = {
-	alreadyRegistered: 'Already registered?',
-	enrollInOhcrn:
-		'Enroll in the OHCRN registry and help advance hereditary cancer syndrome research. Only individuals who have had genetic testing for a hereditary cancer syndrome can participate.',
-	ifClinician: "If you're a Clinician:",
-	login: 'Login',
-	participantRegistration: 'Participant Registration',
-	registerPatients: 'Register your patients here',
-	registerYourself: 'Register Yourself as a Participant',
+	confirmPassword,
+	consentContact,
+	dateOfBirth,
+	email,
+	firstName,
+	lastName,
+	no,
+	password,
+	phone,
+	preferredName,
+	yes,
+	yourName,
+	yourPhone,
+	yourRelationship,
 } satisfies Record<string, string>;
 
 export type RegisterFormLabelsDictionary = Record<keyof typeof dictionary, string>;
