@@ -48,7 +48,7 @@ import styles from './RegistrationForm.module.scss';
 
 // TODO hookup backend #368
 const RegisterRequestStub = z.object({
-	confirmPassword: z.string(), // TEMP #368
+	confirmPassword: z.string().min(1), // TEMP #368
 	consentToBeContacted: z.boolean(),
 	dateOfBirth: z.date(), // TEMP #366
 	guardianName: Name,
@@ -59,7 +59,7 @@ const RegisterRequestStub = z.object({
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name,
-	password: z.string(), // TEMP #368
+	password: z.string().min(1), // TEMP #368
 	// registeringOnBehalfOfSomeoneElse: z.boolean(), TODO #366
 	// commenting this out because the form won't work
 	// with unused fields in the Zod resolver
@@ -138,7 +138,7 @@ const RegistrationForm = ({
 					{/* TODO #366 make this section optional/conditional.
 							see guardian fields on invite form for an example. */}
 					<FormSection variant="grey">
-						<p>{textDict.enterInfo}</p>
+						<p className={styles.instructions}>{textDict.enterInfo}</p>
 						<TextFieldSet
 							error={errors.guardianName?.type && errorsDict.required}
 							label={labelsDict.yourName || ''}
@@ -164,7 +164,7 @@ const RegistrationForm = ({
 
 					{/* SECTION - PARTICIPANT INFO */}
 					<FormSection>
-						<p>{textDict.enterParticipantInfo}</p>
+						<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
 						<TextFieldSet
 							error={errors.participantFirstName?.type && errorsDict.required}
 							label={labelsDict.firstName || ''}
@@ -211,12 +211,19 @@ const RegistrationForm = ({
 					<FormSection>
 						<p>{textDict.afterRegistering}</p>
 						{/* TODO add link to help centre https://github.com/OHCRN/platform/issues/367 */}
-						<Link href={OHCRN_HELP_CENTRE_URL}>{textDict.questions}</Link>
+						<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
+							{textDict.questions}
+						</Link>
 					</FormSection>
 
 					{/* GO TO NEXT PAGE */}
 					<div className={styles.buttonWrapper}>
-						<Button aria-label={`${textDict.goToStep} 2`} onClick={handleNextClick}>
+						<Button
+							action="next"
+							aria-label={`${textDict.goToStep} 2`}
+							onClick={handleNextClick}
+							color="green"
+						>
 							{textDict.next}
 						</Button>
 					</div>
@@ -263,7 +270,11 @@ const RegistrationForm = ({
 
 					{/* GO TO PREVIOUS PAGE */}
 					<div className={styles.buttonWrapper}>
-						<Button aria-label={`${textDict.goToStep} 1`} onClick={handleBackClick}>
+						<Button
+							aria-label={`${textDict.goToStep} 1`}
+							onClick={handleBackClick}
+							variant="secondary"
+						>
 							{textDict.back}
 						</Button>
 						<Button type="submit">{textDict.createAccount}</Button>
