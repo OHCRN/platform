@@ -40,10 +40,15 @@ The directory structure is as follows:
 │       ├── prisma
 │       └── src
 ├── docker-scripts/                 ← Docker Init Scripts
+├── docs/                           ← Context-Specific Documentation
 └── packages/
     ├── config/
     │   └── eslint-config-ohcrn     ← Shared ESLint Config
-    ├── error-handler/              ← Reusable Error Handler for APIs
+    ├── express-error-handler/      ← Reusable Error Handler for Express APIs
+    │   └── src
+    ├── express-logger/             ← Logger for Express API Requests
+    │   └── src
+    ├── express-request-validation/ ← Validation Wrapper for Express API Requests
     │   └── src
     ├── logger/                     ← Shared Logger
     │   └── src
@@ -138,37 +143,37 @@ docker-compose up -d
 Once the databases are ready, you will need to apply the Prisma schema migrations:
 
 ```sh
-pnpm run migrate-dev
+pnpm prisma:migrate:dev
 ```
 
 > **Note**: The `prisma migrate dev` command is for **development mode only** [(See docs reference)](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production#create-and-apply-migrations)
 
-> **Also note**: You will need to run `prisma migrate dev` (or `pnpm run migrate-dev`) within a specific DAS to create a migration first if you have made changes to that schema, for example: `cd apps/consent-das && pnpm run migrate-dev`
+> **Also note**: You will need to run `prisma migrate dev` (or `pnpm prisma:migrate:dev`) within a specific DAS to create a migration first if you have made changes to that schema, for example: `cd apps/consent-das && pnpm prisma:migrate:dev`
 
 If successful, the script output should indicate which migrations have been applied, and you should see this message: `Your database is now in sync with your schema.`
 
 Running the migrations will also generate the Prisma Client for each DAS, as noted by the output message: `Generated Prisma Client (version number) to ./src/generated/client`. However, in the event that you only need to generate a new client, simply run:
 
 ```sh
-pnpm run generate
+pnpm prisma:generate
 ```
 
 Before running the local UI, APIs, and DASes, please ensure you have built the shared packages:
 
 ```sh
-pnpm run build
+pnpm build
 ```
 
 If this is your first time running the DASes, you will likely want to see them with data. To do so, run the `seed` command:
 
 ```sh
-pnpm run seed
+pnpm prisma:seed
 ```
 
 Once this is complete, you can start the local UI, APIs, and DASes on their default ports:
 
 ```sh
-pnpm run dev
+pnpm dev
 ```
 
 ### Using the `Makefile`
@@ -189,18 +194,33 @@ Verify everything is running correctly by navigating to [`http://localhost:3000`
 
 ### Dev Commands
 
-| Command                    | Description                                                     |
-| -------------------------- | --------------------------------------------------------------- |
-| `pnpm run dev`             | starts local dev servers for each service                       |
-| `pnpm run build`           | builds production Consent UI, API, DASes, Type defs, and Logger |
-| `pnpm run consent-ui-dev`  | starts local Consent UI only                                    |
-| `pnpm run consent-api-dev` | starts local Consent API only                                   |
-| `pnpm run das-dev`         | starts local DASes only                                         |
-| `pnpm run data-mapper-dev` | starts local Data Mapper only                                   |
-| `pnpm run migrate-dev`     | runs migrations for the DASes                                   |
-| `pnpm run generate`        | generates Prisma Clients for the DASes                          |
-| `pnpm run seed`            | seeds data into the DASes                                       |
-| `pnpm run start`           | runs migrations, then builds, then starts local dev servers     |
+| Command                   | Description                                                  |
+| ------------------------- | ------------------------------------------------------------ |
+| **BUILD**                 |                                                              |
+| `pnpm build`              | Creates optimized production builds of each app and package  |
+| `pnpm build:backend`      | Creates optimized production builds of everything but the UI |
+| `pnpm build:consent-ui`   | Creates an optimized production build of the UI              |
+| `pnpm build:types`        | Creates an optimized production build of the Types package   |
+| **DEV**                   |                                                              |
+| `pnpm dev`                | Starts local dev servers for each service                    |
+| `pnpm dev:consent-api`    | Starts local dev server for Consent API only                 |
+| `pnpm dev:consent-ui`     | Starts local dev server for Consent UI only                  |
+| `pnpm dev:das`            | Starts local dev servers for DASes only                      |
+| `pnpm dev:data-mapper`    | Starts local dev server for Data Mapper only                 |
+| **LINT**                  |                                                              |
+| `pnpm lint`               | Runs ESLint on each app and package                          |
+| **PRISMA**                |                                                              |
+| `pnpm prisma:generate`    | Generates Prisma Clients for each of the DASes               |
+| `pnpm prisma:migrate-dev` | Runs dev migrations on each of the DASes                     |
+| `pnpm prisma:seed`        | Seeds data into each of the DASes                            |
+| **START**                 |                                                              |
+| `pnpm start`              | Runs production builds of each service                       |
+| `pnpm start:build`        | Creates production builds of each service and then runs them |
+| `pnpm start:dev`          | Runs local dev servers for each service                      |
+| `pnpm start:migrate:dev`  | Runs dev migrations, then runs local dev servers             |
+| **TEST**                  |                                                              |
+| `pnpm test`               | Runs all test suites                                         |
+| `pnpm test:coverage`      | Reports test coverage                                        |
 
 ## ReCAPTCHA
 
