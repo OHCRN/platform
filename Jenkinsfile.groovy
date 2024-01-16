@@ -83,7 +83,7 @@ pipeline {
             steps {
                 container('node') {
                     sh 'npx --yes pnpm install'
-                    sh 'npx --yes pnpm generate'
+                    sh 'npx --yes pnpm prisma:generate'
                     sh 'npx --yes pnpm build'
                 }
             }
@@ -92,7 +92,7 @@ pipeline {
         stage('Test') {
             steps {
                 container('node') {
-                    sh 'npx --yes pnpm run test'
+                    sh 'npx --yes pnpm test'
                 }
             }
         }
@@ -102,7 +102,7 @@ pipeline {
             steps {
                 container('docker') {
                     // the network=host is needed to download dependencies using the host network (since we are inside 'docker' container)
-                    sh "docker build --build-arg=COMMIT=${commit} --network=host -f Dockerfile . -t consent-ui:${commit}"
+                    sh "docker build --build-arg=COMMIT=${commit} --network=host -f Dockerfile --target consent-ui  -t consent-ui:${commit} ."
                 }
             }
         }
