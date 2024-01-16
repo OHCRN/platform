@@ -21,6 +21,7 @@ import { ValidLanguage } from 'src/i18n';
 import Container from 'src/components/common/Container';
 import Header from 'src/components/common/Header';
 import Footer from 'src/components/common/Footer';
+import NotificationProvider from 'src/components/providers/NotificationProvider';
 
 import ModalProvider from '../Modal';
 
@@ -35,11 +36,13 @@ const PageLayout = async ({
 }) => {
 	return (
 		<ModalProvider>
-			<Container>
-				<Header currentLang={currentLang} />
-				<main className={styles.main}>{children}</main>
-				<Footer currentLang={currentLang} />
-			</Container>
+			<NotificationProvider>
+				<Container>
+					<Header currentLang={currentLang} />
+					<main className={styles.main}>{children}</main>
+					<Footer currentLang={currentLang} />
+				</Container>
+			</NotificationProvider>
 		</ModalProvider>
 	);
 };

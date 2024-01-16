@@ -27,6 +27,7 @@ import PaddedContainer from 'src/components/common/PaddedContainer';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
 import styles from './Dashboard.module.scss';
+import DashboardNotification from './notifications/DashboardNotification';
 
 const statuses = ['disabled', 'incomplete', 'complete'] as const;
 const consentStatus: (typeof statuses)[number] = statuses[Math.floor(Math.random() * 3)];
@@ -35,6 +36,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 	const translate = getTranslation(currentLang);
 	return (
 		<PaddedContainer>
+			<DashboardNotification currentLang={currentLang} />
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])} layout="row">
 				<div className={styles['consents-img']}>
 					<Image src={ConsentsImage} alt="" />
