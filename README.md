@@ -211,7 +211,7 @@ Verify everything is running correctly by navigating to [`http://localhost:3000`
 | `pnpm lint`               | Runs ESLint on each app and package                          |
 | **PRISMA**                |                                                              |
 | `pnpm prisma:generate`    | Generates Prisma Clients for each of the DASes               |
-| `pnpm prisma:migrate-dev` | Runs dev migrations on each of the DASes                     |
+| `pnpm prisma:migrate:dev` | Runs dev migrations on each of the DASes                     |
 | `pnpm prisma:seed`        | Seeds data into each of the DASes                            |
 | **START**                 |                                                              |
 | `pnpm start`              | Runs production builds of each service                       |
