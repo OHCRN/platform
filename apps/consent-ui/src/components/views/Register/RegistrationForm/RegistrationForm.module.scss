@@ -5,3 +5,18 @@
 .visible {
 	display: block;
 }
+
+.stepTitle {
+	margin-top: 1.5rem;
+	font-size: theme('fontSize.base');
+}
+
+.buttonWrapper {
+	display: flex;
+	gap: 0.7rem;
+	margin-bottom: 2.75rem;
+}
+
+.consentCheckbox {
+	margin-top: 3px;
+}

@@ -33,7 +33,7 @@ const dictionary = {
 	afterRegistering:
 		'After registering, we will need to collect some important consents and data. You will have access to update your participant records, but should you require assistance, we may contact you.',
 	back,
-	consentContact:
+	consentContactDescription:
 		'I agree that a member of the OHCRN study team can contact me for further information and consents.',
 	createAccount: 'Create Account',
 	dateOfBirthTooltip,

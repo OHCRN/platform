@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -37,6 +37,7 @@ import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
+import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 
 import styles from './RegistrationForm.module.scss';
 
@@ -48,17 +49,20 @@ import styles from './RegistrationForm.module.scss';
 // TODO hookup backend #368
 const RegisterRequestStub = z.object({
 	confirmPassword: z.string(), // TEMP #368
+	consentToBeContacted: z.boolean(),
 	dateOfBirth: z.date(), // TEMP #366
+	guardianName: Name,
+	guardianPhoneNumber: PhoneNumber,
+	guardianRelationship: Name,
 	participantEmailAddress: z.string().email(),
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name,
 	password: z.string(), // TEMP #368
-	registrantName: Name,
-	registrantPhoneNumber: PhoneNumber,
-	registrantRelationship: Name,
-	// registeringOnBehalfOfSomeoneElse: z.boolean(), #366
+	// registeringOnBehalfOfSomeoneElse: z.boolean(), TODO #366
+	// commenting this out because the form won't work
+	// with unused fields in the Zod resolver
 	useSubstituteDecisionMaker: z.boolean(),
 });
 type RegisterRequestStub = z.infer<typeof RegisterRequestStub>;
@@ -81,6 +85,7 @@ const RegistrationForm = ({
 	const {
 		formState: { errors },
 		handleSubmit,
+		setFocus,
 	} = methods;
 
 	const onSubmit: SubmitHandler<RegisterRequestStub> = (data, event) => {
@@ -95,10 +100,16 @@ const RegistrationForm = ({
 	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
 	const handleNextClick = () => setCurrentStep(2);
 	const handleBackClick = () => setCurrentStep(1);
-	// go to top of page on step change
 	useEffect(() => {
+		// go to top of page on step change
 		window.scrollTo(0, 0);
-	}, [currentStep]);
+		// set focus to first input in the current step
+		if (currentStep === 1) {
+			setFocus('guardianName'); // TODO #366 change to registeringOnBehalfOfSomeoneElse
+		} else if (currentStep === 2) {
+			setFocus('participantEmailAddress');
+		}
+	}, [currentStep, setFocus]);
 
 	return (
 		<FormProvider {...methods}>
@@ -120,7 +131,7 @@ const RegistrationForm = ({
 						{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
 					</FormSection>
 
-					{/* OPTIONAL SECTION - REGISTRANT INFO */}
+					{/* OPTIONAL SECTION - GUARDIAN INFO */}
 					{/* these fields are conditionally required, i.e. if the user is
 							registering on behalf of someone else */}
 
@@ -129,23 +140,23 @@ const RegistrationForm = ({
 					<FormSection variant="grey">
 						<p>{textDict.enterInfo}</p>
 						<TextFieldSet
-							error={errors.registrantName?.type && errorsDict.required}
+							error={errors.guardianName?.type && errorsDict.required}
 							label={labelsDict.yourName || ''}
-							name="registrantName"
+							name="guardianName"
 							required
 							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							error={errors.registrantPhoneNumber?.type && errorsDict.required}
+							error={errors.guardianPhoneNumber?.type && errorsDict.required}
 							label={labelsDict.yourPhone || ''}
-							name="registrantPhoneNumber"
+							name="guardianPhoneNumber"
 							required
 							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
-							error={errors.registrantRelationship?.type && errorsDict.required}
+							error={errors.guardianRelationship?.type && errorsDict.required}
 							label={labelsDict.yourPhone || ''}
-							name="registrantRelationship"
+							name="guardianRelationship"
 							required
 							withNarrowDesktopLayout
 						/>
@@ -204,9 +215,11 @@ const RegistrationForm = ({
 					</FormSection>
 
 					{/* GO TO NEXT PAGE */}
-					<Button onClick={handleNextClick} aria-label={`${textDict.goToStep} 2`}>
-						{textDict.next}
-					</Button>
+					<div className={styles.buttonWrapper}>
+						<Button aria-label={`${textDict.goToStep} 2`} onClick={handleNextClick}>
+							{textDict.next}
+						</Button>
+					</div>
 				</div>
 				{/* END STEP 1 */}
 
@@ -236,11 +249,25 @@ const RegistrationForm = ({
 							withNarrowDesktopLayout
 						/>
 					</FormSection>
+
+					{/* SECTION - CONSENT TO BE CONTACTED */}
+					<FormSection className={styles.consentCheckbox}>
+						<CheckboxFieldSet
+							description={textDict.consentContactDescription}
+							error={errors.consentToBeContacted?.type && errorsDict.required}
+							name="consentToBeContacted"
+							required
+							title={labelsDict.consentContact}
+						/>
+					</FormSection>
+
 					{/* GO TO PREVIOUS PAGE */}
-					<Button onClick={handleBackClick} aria-label={`${textDict.goToStep} 1`}>
-						{textDict.back}
-					</Button>
-					<Button type="submit">{textDict.createAccount}</Button>
+					<div className={styles.buttonWrapper}>
+						<Button aria-label={`${textDict.goToStep} 1`} onClick={handleBackClick}>
+							{textDict.back}
+						</Button>
+						<Button type="submit">{textDict.createAccount}</Button>
+					</div>
 				</div>
 				{/* END STEP 2 */}
 			</Form>

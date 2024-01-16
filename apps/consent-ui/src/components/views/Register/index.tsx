@@ -53,7 +53,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const textDict: RegisterFormTextDictionary = {
 		afterRegistering: translate('registerFormText', 'afterRegistering'),
 		back: translate('registerFormText', 'back'),
-		consentContact: translate('registerFormText', 'consentContact'),
+		consentContactDescription: translate('registerFormText', 'consentContactDescription'),
 		createAccount: translate('registerFormText', 'createAccount'),
 		dateOfBirthTooltip: translate('registerFormText', 'dateOfBirthTooltip'),
 		enterInfo: translate('registerFormText', 'enterInfo'),
@@ -84,7 +84,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				url: 'invite',
 			}}
 			desktopNavButton={{
-				description: translate('registerPage', 'registerYourself'),
+				description: translate('registerPage', 'alreadyRegistered'),
 				// TODO add link to login page
 				// https://github.com/OHCRN/platform/issues/359
 				button: <LinkButton href="">{translate('registerPage', 'login')}</LinkButton>,

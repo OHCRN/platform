@@ -35,7 +35,7 @@ const dictionary = {
 	afterRegistering:
 		"Après votre inscription, nous devrons collecter certains consentements et données importants. Vous aurez accès à la mise à jour de vos dossiers de participants, mais si vous avez besoin d'aide, nous pouvons vous contacter.",
 	back,
-	consentContact:
+	consentContactDescription:
 		"J'accepte qu'un membre de l'équipe d'étude de l'OHCRN puisse me contacter pour plus d'informations et obtenir des consentements.",
 	createAccount: 'Créer un compte',
 	dateOfBirthTooltip,
