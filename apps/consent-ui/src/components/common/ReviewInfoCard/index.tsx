@@ -30,6 +30,7 @@ const ReviewInfoCard = ({
 	name,
 	linkLang,
 	className,
+	boxColor = 'green',
 	fields,
 	title,
 	children, // subtitle
@@ -38,6 +39,7 @@ const ReviewInfoCard = ({
 	name: RouteName;
 	linkLang: ValidLanguage;
 	className?: string;
+	boxColor?: 'green' | 'grey';
 	fields?: {
 		label: string;
 		value: string;
@@ -47,7 +49,7 @@ const ReviewInfoCard = ({
 	required?: boolean;
 }) => {
 	return (
-		<div className={clsx(styles.reviewInfoCard, className)}>
+		<div className={clsx(styles.reviewInfoCard, styles[boxColor], className)}>
 			<div className={clsx(styles.header)}>
 				<h2>{title}</h2>
 				<LocalizedLink className={styles.redirectButton} name={name} linkLang={linkLang}>
@@ -63,7 +65,7 @@ const ReviewInfoCard = ({
 					{fields.map((field) => (
 						<div key={`${field.label}-${field.value}`} className={styles.field}>
 							<h2 className={styles.fieldLabel}>{field.label}</h2>
-							<div className={styles.fieldValue}>{field.value}</div>
+							<div className={styles.fieldValue}>{field.value || '--'}</div>
 						</div>
 					))}
 				</div>
