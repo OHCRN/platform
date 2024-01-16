@@ -42,11 +42,13 @@ import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxField
 import styles from './RegistrationForm.module.scss';
 
 // followup tickets
-// date & radio https://github.com/OHCRN/platform/issues/366
+// date & radio inputs https://github.com/OHCRN/platform/issues/366
 // backend https://github.com/OHCRN/platform/issues/368
 // help centre link https://github.com/OHCRN/platform/issues/367
 
 // TODO hookup backend #368
+// create a better zod schema with conditional validation,
+// and optional name fields
 const RegisterRequestStub = z.object({
 	confirmPassword: z.string().min(1), // TEMP #368
 	consentToBeContacted: z.boolean(),
@@ -62,7 +64,7 @@ const RegisterRequestStub = z.object({
 	password: z.string().min(1), // TEMP #368
 	// registeringOnBehalfOfSomeoneElse: z.boolean(), TODO #366
 	// commenting this out because the form won't work
-	// with unused fields in the Zod resolver
+	// with unused fields in the Zod schema
 	useSubstituteDecisionMaker: z.boolean(),
 });
 type RegisterRequestStub = z.infer<typeof RegisterRequestStub>;
@@ -100,6 +102,7 @@ const RegistrationForm = ({
 	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
 	const handleNextClick = () => setCurrentStep(2);
 	const handleBackClick = () => setCurrentStep(1);
+
 	useEffect(() => {
 		// go to top of page on step change
 		window.scrollTo(0, 0);
@@ -210,7 +213,7 @@ const RegistrationForm = ({
 					{/* SECTION - CONTACT AFTER REGISTERING NOTICE */}
 					<FormSection>
 						<p>{textDict.afterRegistering}</p>
-						{/* TODO add link to help centre https://github.com/OHCRN/platform/issues/367 */}
+						{/* TODO add link to help centre #367 */}
 						<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
 							{textDict.questions}
 						</Link>
