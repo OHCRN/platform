@@ -24,3 +24,6 @@ export const API = {
 };
 
 export const OHCRN_HOME_LINK = 'https://ohcrn.ca/';
+
+// TODO add link to help centre https://github.com/OHCRN/platform/issues/367
+export const OHCRN_HELP_CENTRE_URL = '';

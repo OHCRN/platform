@@ -58,6 +58,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		dateOfBirthTooltip: translate('registerFormText', 'dateOfBirthTooltip'),
 		enterInfo: translate('registerFormText', 'enterInfo'),
 		enterParticipantInfo: translate('registerFormText', 'enterParticipantInfo'),
+		goToStep: translate('registerFormText', 'goToStep'),
 		indicatesRequiredField: translate('registerFormText', 'indicatesRequiredField'),
 		next: translate('registerFormText', 'next'),
 		participantFirstNameTooltip: translate('registerFormText', 'participantFirstNameTooltip'),
@@ -69,7 +70,8 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		),
 		questions: translate('registerFormText', 'questions'),
 		registeringForSomeoneElse: translate('registerFormText', 'registeringForSomeoneElse'),
-		stepXofY: translate('registerFormText', 'stepXofY'),
+		stepXofY1: translate('registerFormText', 'stepXofY1'),
+		stepXofY2: translate('registerFormText', 'stepXofY2'),
 	};
 
 	return (

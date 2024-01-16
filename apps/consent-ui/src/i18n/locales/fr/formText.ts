@@ -21,10 +21,12 @@ import { FormTextDictionary } from '../en/formText';
 
 const dictionary = {
 	back: 'Retour',
+	goToStep: "Passer à l'étape",
 	indicatesRequiredField: 'indique un champ obligatoire',
 	next: 'Suivant',
 	selectPlaceholder: 'Choisissez-en un',
-	stepXofY: 'Étape {{ currentStep }} sur {{ stepCount }}',
+	stepXofY1: 'Étape',
+	stepXofY2: 'sur',
 	submit: 'Soumettre',
 } satisfies FormTextDictionary;
 
