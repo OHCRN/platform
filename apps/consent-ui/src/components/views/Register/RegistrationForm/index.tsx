@@ -19,21 +19,33 @@
 
 'use client';
 
-import { SyntheticEvent, useState } from 'react';
-import axios from 'axios';
-import urlJoin from 'url-join';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Name, PhoneNumber } from 'types/entities';
 
-import Button from 'src/components/common/Button';
-import useRecaptcha from 'src/hooks/useRecaptcha';
-import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
-import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
-import Notification from 'src/components/common/Notification';
 import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
+import Form from 'src/components/common/Form';
+import FormSection from 'src/components/common/Form/FormSection';
+import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
-// const substituteInfoFields = ['yourName', 'yourPhoneNumber', 'yourRelationship'];
+// TODO replace stubs with consent API types when they're implemented. ticket TBA
+const RegisterRequestStub = z.object({
+	dateOfBirth: z.string(), // TEMP
+	participantFirstName: Name,
+	participantLastName: Name,
+	participantPhoneNumber: PhoneNumber,
+	participantPreferredName: Name,
+	substituteName: Name,
+	substitutePhone: PhoneNumber,
+	substituteRelationship: Name,
+	useSubstituteDecisionMaker: z.boolean(),
+});
+type RegisterRequestStub = z.infer<typeof RegisterRequestStub>;
 
 const RegistrationForm = ({
 	currentLang,
@@ -46,92 +58,103 @@ const RegistrationForm = ({
 	labelsDict: RegisterFormLabelsDictionary;
 	textDict: RegisterFormTextDictionary;
 }) => {
-	const appConfig = useAppConfigContext();
-	const [nameValDemo, setNameValDemo] = useState('');
-	const [successMessageDemo, setSuccessMessageDemo] = useState('');
+	// setup react-hook-forms
+	const methods = useForm<RegisterRequestStub>({
+		resolver: zodResolver(RegisterRequestStub),
+	});
 
 	const {
-		getRecaptchaToken,
-		onRecaptchaChange,
-		recaptchaCheckboxRef,
-		recaptchaError,
-		resetRecaptcha,
-		setRecaptchaError,
-	} = useRecaptcha();
+		formState: { errors },
+		handleSubmit,
+	} = methods;
 
-	const handleNameValDemo = (e: any) => {
-		const nextName = e.target.value;
-		setNameValDemo(nextName);
-	};
-
-	const handleSubmitDemo = (e: SyntheticEvent) => {
-		e.preventDefault();
-		// for demo: assume form is valid & complete
-		const recaptchaToken = getRecaptchaToken();
-		if (recaptchaToken) {
-			// submit form data
-			// using "recaptcha" endpoint as an example only
-			axios
-				.post(urlJoin(appConfig.CONSENT_API_URL, 'recaptcha'), {
-					recaptchaToken,
-					inputData: { name: nameValDemo },
-				})
-				.then(() => {
-					setRecaptchaError('');
-					resetRecaptcha();
-					setSuccessMessageDemo('Form submitted successfully!');
-				})
-				.catch((e) => {
-					console.error(e);
-					setSuccessMessageDemo('');
-					setRecaptchaError('Something went wrong, please try again');
-				});
-		} else {
-			setSuccessMessageDemo('');
-			setRecaptchaError('Please complete captcha');
-		}
-	};
-
-	const handleRecaptchaChangeDemo = () => {
-		// do something when user updates recaptcha:
-		// clear errors, validate form, etc
-
-		// for demo: clear error message if there's a token
-		// after the user has interacted with recaptcha checkbox
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
-
-		onRecaptchaChange();
+	const onSubmit: SubmitHandler<RegisterRequestStub> = (data, event) => {
+		event?.preventDefault();
+		console.log(data);
 	};
 
 	return (
-		<form>
-			{successMessageDemo && (
-				<Notification level="success" variant="small" title={successMessageDemo} />
-			)}
-			<div style={{ margin: '25px 0' }}>
-				<label htmlFor="nameDemo">name:</label>
-				<input
-					id="nameDemo"
-					name="nameDemo"
-					type="text"
-					onChange={handleNameValDemo}
-					value={nameValDemo}
-					required
-					style={{ marginLeft: 10, border: '1px solid grey' }}
-				/>
-			</div>
-			{recaptchaError && (
-				<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
-			)}
-			<div style={{ margin: '25px 0' }}>
-				<RecaptchaCheckbox
-					onChange={handleRecaptchaChangeDemo}
-					recaptchaCheckboxRef={recaptchaCheckboxRef}
-				/>
-			</div>
-			<Button onClick={handleSubmitDemo}>Submit</Button>
-		</form>
+		<FormProvider {...methods}>
+			<Form onSubmit={handleSubmit(onSubmit)}>
+				<FormSection>
+					{/* TODO implement radio button https://github.com/OHCRN/platform/issues/366 */}
+					{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
+				</FormSection>
+				{/* TODO make this section optional/conditional as part of #366 */}
+				<FormSection variant="grey">
+					<p>{textDict.enterInfo}</p>
+					<TextFieldSet
+						error={errors.substituteName?.type && errorsDict.required}
+						label={labelsDict.yourName || ''}
+						name="substituteName"
+						required
+						withNarrowDesktopLayout
+					/>
+					<TextFieldSet
+						error={errors.substitutePhone?.type && errorsDict.required}
+						label={labelsDict.yourPhone || ''}
+						name="substitutePhone"
+						required
+						withNarrowDesktopLayout
+					/>
+					<TextFieldSet
+						error={errors.substituteRelationship?.type && errorsDict.required}
+						label={labelsDict.yourPhone || ''}
+						name="substituteRelationship"
+						required
+						withNarrowDesktopLayout
+					/>
+				</FormSection>
+				<FormSection>
+					<p>{textDict.enterParticipantInfo}</p>
+					<TextFieldSet
+						error={errors.participantFirstName?.type && errorsDict.required}
+						label={labelsDict.firstName || ''}
+						name="participantFirstName"
+						required
+						tooltipContent={textDict.participantFirstNameTooltip}
+						withNarrowDesktopLayout
+					/>
+					<TextFieldSet
+						error={errors.participantLastName?.type && errorsDict.required}
+						label={labelsDict.lastName || ''}
+						name="participantLastName"
+						required
+						tooltipContent={textDict.participantLastNameTooltip}
+						withNarrowDesktopLayout
+					/>
+					<TextFieldSet
+						error={errors.participantPreferredName?.type && errorsDict.required}
+						label={labelsDict.preferredName || ''}
+						name="participantPreferredName"
+						tooltipContent={textDict.participantPreferredNameTooltip}
+						withNarrowDesktopLayout
+					/>
+					<TextFieldSet
+						error={errors.participantPhoneNumber?.type && errorsDict.required}
+						label={labelsDict.phone || ''}
+						name="participantPhoneNumber"
+						required
+						tooltipContent={textDict.participantPhoneNumberTooltip}
+						withNarrowDesktopLayout
+					/>
+					{/* TODO implement date input */}
+					<TextFieldSet
+						error={errors.dateOfBirth?.type && errorsDict.required}
+						label={labelsDict.dateOfBirth || ''}
+						name="dateOfBirth"
+						required
+						tooltipContent={textDict.dateOfBirthTooltip}
+						withNarrowDesktopLayout
+					/>
+					<p>{textDict.afterRegistering}</p>
+					{/* TODO add link to help centre https://github.com/OHCRN/platform/issues/367 */}
+					<LocalizedLink name={'home'} linkLang={currentLang}>
+						{textDict.questions}
+					</LocalizedLink>
+				</FormSection>
+			</Form>
+		</FormProvider>
 	);
 };
 
