@@ -39,8 +39,8 @@
 }
 
 .redirectButton {
-	width: 74px;
-	height: 30px;
+	width: 4.5rem;
+	height: 2rem;
 	border-radius: 25px;
 	border: 2px solid;
 	gap: 10px;
@@ -58,11 +58,6 @@
 	font-size: theme('fontSize.sm');
 	font-weight: 700;
 	line-height: 26px;
-}
-
-.required {
-	color: theme('colors.error.500');
-	margin-left: 0.5em;
 }
 
 .subtitle {

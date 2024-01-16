@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import type { ValidLanguage } from 'src/i18n/types';
 
 import LocalizedLink from '../Link/LocalizedLink';
+import RequiredAsterisk from '../Form/RequiredAsterisk';
 import type { RouteName } from '../Link/types';
 
 import styles from './ReviewInfoCard.module.scss';
@@ -58,13 +59,13 @@ const ReviewInfoCard = ({
 			</div>
 			<div className={clsx(styles.subtitle)}>
 				{children}
-				{required && <span className={styles.required}>*</span>}
+				{required && <RequiredAsterisk />}
 			</div>
 			{fields && (
 				<div className={styles.fields}>
 					{fields.map((field) => (
 						<div key={`${field.label}-${field.value}`} className={styles.field}>
-							<h2 className={styles.fieldLabel}>{field.label}</h2>
+							<h3 className={styles.fieldLabel}>{field.label}</h3>
 							<div className={styles.fieldValue}>{field.value || '--'}</div>
 						</div>
 					))}
