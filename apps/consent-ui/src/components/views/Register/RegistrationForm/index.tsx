@@ -28,6 +28,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 import { ValidLanguage } from 'src/i18n';
+import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
@@ -36,8 +37,11 @@ import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
-import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
+import { API, OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
+import useRecaptcha from 'src/hooks/useRecaptcha';
+import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
+import Notification from 'src/components/common/Notification';
 
 import styles from './RegistrationForm.module.scss';
 
@@ -51,7 +55,7 @@ import styles from './RegistrationForm.module.scss';
 // and optional name fields
 const RegisterRequestStub = z.object({
 	confirmPassword: z.string().min(1), // TEMP #368
-	consentToBeContacted: z.boolean(),
+	consentToBeContacted: z.literal(true),
 	dateOfBirth: z.date(), // TEMP #366
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
@@ -90,10 +94,43 @@ const RegistrationForm = ({
 		setFocus,
 	} = methods;
 
+	// setup recaptcha
+	const {
+		getRecaptchaToken,
+		onRecaptchaChange,
+		recaptchaCheckboxRef,
+		recaptchaError,
+		resetRecaptcha,
+		setRecaptchaError,
+	} = useRecaptcha();
+
+	const handleRecaptchaChange = () => {
+		const token = getRecaptchaToken();
+		token && setRecaptchaError('');
+		onRecaptchaChange();
+	};
+
 	const onSubmit: SubmitHandler<RegisterRequestStub> = (data, event) => {
 		event?.preventDefault();
 		// TODO #366 don't submit form if participant is a minor
-		console.log(data);
+
+		const recaptchaToken = getRecaptchaToken();
+
+		if (recaptchaToken) {
+			console.log('form data', data);
+			axiosClient
+				.post(API.INVITES, { data, recaptchaToken })
+				.then(() => {
+					setRecaptchaError('');
+					resetRecaptcha();
+				})
+				.catch((e) => {
+					console.error(e);
+					setRecaptchaError('Something went wrong, please try again');
+				});
+		} else {
+			setRecaptchaError('Please complete captcha');
+		}
 	};
 
 	// setup 2-step form
@@ -269,6 +306,19 @@ const RegistrationForm = ({
 							required
 							title={labelsDict.consentContact}
 						/>
+					</FormSection>
+
+					<FormSection>
+						{recaptchaError && (
+							<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+						)}
+
+						<div className={styles.recaptchaCheckbox}>
+							<RecaptchaCheckbox
+								onChange={handleRecaptchaChange}
+								recaptchaCheckboxRef={recaptchaCheckboxRef}
+							/>
+						</div>
 					</FormSection>
 
 					{/* GO TO PREVIOUS PAGE */}
