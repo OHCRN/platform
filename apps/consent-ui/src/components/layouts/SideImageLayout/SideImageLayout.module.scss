@@ -97,12 +97,20 @@
 	justify-content: space-between;
 	margin-bottom: 2rem;
 	height: 9.25rem;
+	display: none;
 }
 
 .desktopHeader,
 .desktopNav {
-	@media (max-width: theme('screens.md')) {
-		display: none;
+	@media (min-width: theme('screens.md')) {
+		display: flex;
+	}
+}
+
+.desktopNav {
+	@media (min-width: theme('screens.lg')) {
+		padding-left: 4rem;
+		padding-right: 4rem;
 	}
 }
 

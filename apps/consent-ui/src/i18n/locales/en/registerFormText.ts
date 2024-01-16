@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -35,7 +35,7 @@ const dictionary = {
 	back,
 	consentContact:
 		'I agree that a member of the OHCRN study team can contact me for further information and consents.',
-	createAccount: 'createAccount',
+	createAccount: 'Create Account',
 	dateOfBirthTooltip,
 	enterInfo: 'Please enter your information below:',
 	enterParticipantInfo: "Please enter the participant's information below:",
