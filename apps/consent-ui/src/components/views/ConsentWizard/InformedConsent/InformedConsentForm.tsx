@@ -29,6 +29,7 @@ import { OHCRN_EMAIL } from 'src/constants';
 import { InformedConsentFormDictionary } from 'src/i18n/locales/en/informedConsentForm';
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import Button from 'src/components/common/Button';
 
 const InformedConsentForm = ({
 	errorsDict,
@@ -68,6 +69,7 @@ const InformedConsentForm = ({
 						name="INFORMED_CONSENT__READ_AND_UNDERSTAND"
 						required
 					/>
+					<Button type="submit">submit</Button>
 				</FormSection>
 			</Form>
 			{/* put in prev/next buttons */}
