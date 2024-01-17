@@ -308,6 +308,7 @@ const RegistrationForm = ({
 						/>
 					</FormSection>
 
+					{/* SECTION - RECAPTCHA */}
 					<FormSection>
 						{recaptchaError && (
 							<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
