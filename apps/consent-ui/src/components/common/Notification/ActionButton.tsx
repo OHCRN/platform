@@ -21,11 +21,19 @@
 
 import { ReactNode } from 'react';
 
-import Button from '../Button';
+import Button from 'src/components/common/Button';
 
-const ActionButton = ({ children, className }: { children: ReactNode; className?: string }) => {
+const ActionButton = ({
+	children,
+	className,
+	onClick = () => {},
+}: {
+	children: ReactNode;
+	className?: string;
+	onClick?: () => void;
+}) => {
 	return (
-		<Button variant="primary" color="blue" className={className} onClick={() => {}}>
+		<Button variant="secondary" color="blue" className={className} onClick={onClick}>
 			{children}
 		</Button>
 	);

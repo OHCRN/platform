@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -21,9 +21,12 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
+import {
+	ConsentReleaseDataResponse,
+	ConsentResearchParticipationResponse,
+} from '../services/consentApi/responses/index.js';
+
 import { ConsentQuestionId } from './ConsentQuestion.js';
-import { ConsentReleaseDataResponse } from './ConsentReleaseData.js';
-import { ConsentResearchParticipationResponse } from './ConsentResearchParticipation.js';
 import { ConsentRecontactBase, hasRequiredSecondaryContactInfo } from './ConsentRecontact.js';
 
 const {

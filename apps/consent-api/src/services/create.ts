@@ -18,7 +18,7 @@
  */
 
 import { AxiosError } from 'axios';
-import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/entities';
+import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/consentApi';
 import { Result, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 

@@ -21,13 +21,16 @@ import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
+import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
+import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consentInProgressNotification';
 import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentResearchParticipation';
 import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
 import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
+import emailVerifiedNotificationDictionary from 'src/i18n/locales/fr/emailVerifiedNotification';
 import en from 'src/i18n/locales/en/index';
 import footerDictionary from 'src/i18n/locales/fr/footer';
 import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
@@ -55,13 +58,16 @@ const dictionaries = {
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
+	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
+	consentInProgressNotification: consentInProgressNotificationDictionary,
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
 	consentReviewSign: consentReviewSignDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
+	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
 	formTooltips: formTooltipsDictionary,
 	formErrors: formErrorsDictionary,
