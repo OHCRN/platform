@@ -1,0 +1,17 @@
+.title {
+	margin-bottom: 0.5rem;
+}
+
+.description {
+	font-size: theme('fontSize.base');
+	a {
+		text-decoration: underline;
+		color: theme('colors.secondary.500');
+		&:hover {
+			color: theme('colors.secondary.400');
+		}
+		&:active {
+			color: theme('colors.secondary.200');
+		}
+	}
+}

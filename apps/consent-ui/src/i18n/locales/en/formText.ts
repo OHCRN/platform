@@ -19,6 +19,7 @@
 
 const dictionary = {
 	indicatesRequiredField: 'indicates required field',
+	next: 'Next',
 	selectPlaceholder: 'Select an option...',
 	submit: 'Submit',
 } satisfies Record<string, string>;

@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory, ConsentStatus, ConsentWizardProgress } from 'types/entities';
+import { ConsentCategory, ConsentWizardProgress } from 'types/entities';
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import Card from 'src/components/common/Card';
@@ -26,6 +26,7 @@ import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
 
 import styles from './ConsentWizard.module.scss';
+import InformedConsent from './InformedConsent';
 
 const {
 	INFORMED_CONSENT,
@@ -35,7 +36,9 @@ const {
 	CONSENT_REVIEW_SIGN,
 } = ConsentCategory.enum;
 
-const { COMPLETE, INCOMPLETE } = ConsentStatus.enum;
+// TODO this was from a missing ConsentStatus enum
+const COMPLETE = 'COMPLETE';
+const INCOMPLETE = 'INCOMPLETE';
 
 const ConsentWizard = async ({
 	currentLang,
@@ -77,7 +80,7 @@ const ConsentWizard = async ({
 					<hr className={styles.divider} />
 					<div className={styles.content}>
 						{/* TODO: add consent form for each section */}
-						{currentStep === INFORMED_CONSENT && <></>}
+						{currentStep === INFORMED_CONSENT && <InformedConsent currentLang={currentLang} />}
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}
