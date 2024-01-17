@@ -23,8 +23,7 @@ const dictionary = {
 	indicatesRequiredField: 'indicates required field',
 	next: 'Next',
 	selectPlaceholder: 'Select an option...',
-	stepXofY1: 'Step',
-	stepXofY2: 'of',
+	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
 	submit: 'Submit',
 } satisfies Record<string, string>;
 

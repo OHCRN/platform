@@ -20,7 +20,7 @@
 import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { back, goToStep, indicatesRequiredField, next, stepXofY1, stepXofY2 } = formText;
+const { back, goToStep, indicatesRequiredField, next, stepCurrentOfTotal } = formText;
 const {
 	dateOfBirthTooltip,
 	participantFirstNameTooltip,
@@ -48,8 +48,7 @@ const dictionary = {
 	participantPreferredNameTooltip,
 	questions: 'Questions? Visit the help centre for more information on OHCRN.',
 	registeringForSomeoneElse: 'Are you registering on behalf of someone else?',
-	stepXofY1,
-	stepXofY2,
+	stepCurrentOfTotal,
 } satisfies Record<string, string>;
 
 export type RegisterFormTextDictionary = Record<keyof typeof dictionary, string>;

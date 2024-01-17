@@ -22,7 +22,7 @@ import { RegisterFormTextDictionary } from '../en/registerFormText';
 import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { back, goToStep, indicatesRequiredField, next, stepXofY1, stepXofY2 } = formText;
+const { back, goToStep, indicatesRequiredField, next, stepCurrentOfTotal } = formText;
 const {
 	dateOfBirthTooltip,
 	participantFirstNameTooltip,
@@ -50,8 +50,7 @@ const dictionary = {
 	participantPreferredNameTooltip,
 	questions: "Des questions? Consultez le centre d'aide pour plus d'informations sur l'OHCRN.",
 	registeringForSomeoneElse: "Vous vous inscrivez au nom de quelqu'un d'autre ?",
-	stepXofY1,
-	stepXofY2,
+	stepCurrentOfTotal,
 } satisfies RegisterFormTextDictionary;
 
 export default dictionary;

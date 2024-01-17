@@ -25,8 +25,7 @@ const dictionary = {
 	indicatesRequiredField: 'indique un champ obligatoire',
 	next: 'Suivant',
 	selectPlaceholder: 'Choisissez-en un',
-	stepXofY1: 'Étape',
-	stepXofY2: 'sur',
+	stepCurrentOfTotal: 'Étape {{ current }} sur {{ total }}',
 	submit: 'Soumettre',
 } satisfies FormTextDictionary;
 

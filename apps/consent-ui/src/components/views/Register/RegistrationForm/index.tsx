@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage, replaceParams } from 'src/i18n';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
@@ -156,7 +156,10 @@ const RegistrationForm = ({
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* HEADING */}
 				<h3 className={styles.stepTitle}>
-					{textDict.stepXofY1} {currentStep} {textDict.stepXofY2} {STEP_COUNT}
+					{replaceParams('stepCurrentOfTotal', {
+						current: currentStep,
+						total: STEP_COUNT,
+					})}
 				</h3>
 				<p className={styles.smallText}>
 					<RequiredAsterisk /> {textDict.indicatesRequiredField}

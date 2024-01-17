@@ -70,8 +70,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		),
 		questions: translate('registerFormText', 'questions'),
 		registeringForSomeoneElse: translate('registerFormText', 'registeringForSomeoneElse'),
-		stepXofY1: translate('registerFormText', 'stepXofY1'),
-		stepXofY2: translate('registerFormText', 'stepXofY2'),
+		stepCurrentOfTotal: translate('registerFormText', 'stepCurrentOfTotal'),
 	};
 
 	return (
