@@ -32,6 +32,7 @@ const RadioInput = <T extends FieldValues, V extends string>({
 	className,
 	name,
 	value,
+	disabled,
 }: RadioInputProps<T, V>) => {
 	const { register } = useFormContext();
 	return (
@@ -41,6 +42,7 @@ const RadioInput = <T extends FieldValues, V extends string>({
 			id={`${name}-${value}`}
 			type="radio"
 			value={value}
+			disabled={disabled}
 		/>
 	);
 };

@@ -42,8 +42,8 @@
 		margin-bottom: 1rem;
 	}
 	&.error {
-		.label {
-			border-color: theme('colors.error.500');
+		.title {
+			color: theme('colors.error.500');
 		}
 		.description {
 			color: theme('colors.error.600');
