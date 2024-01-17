@@ -64,36 +64,37 @@ const RadioFieldSet = <T extends FieldValues>({
 					{required && <RequiredAsterisk />}
 				</h4>
 			)}
-			<label className={styles.label}>
-				<span className={styles.description}>
-					{description}
-					{required && !title && <RequiredAsterisk />}
-				</span>
-			</label>
-			<div className={styles.radioWrapper}>
-				<RadioInput
-					className={styles.radioInput}
-					disabled={disabled}
-					id={YesRadioId}
-					name={name}
-					required={required}
-					value={'Yes'}
-				/>
-				<label htmlFor={YesRadioId} className={styles.label}>
-					<span className={styles.description}>Yes</span>
-				</label>
-
-				<RadioInput
-					className={styles.radioInput}
-					disabled={disabled}
-					id={NoRadioId}
-					name={name}
-					required={required}
-					value={'No'}
-				/>
-				<label htmlFor={NoRadioId} className={styles.label}>
-					<span className={styles.description}>No</span>
-				</label>
+			<div className={styles.description}>
+				{description}
+				{required && !title && <RequiredAsterisk />}
+			</div>
+			<div className={styles.radiosWrapper}>
+				<div className={styles.radioWrapper}>
+					<RadioInput
+						className={styles.radioInput}
+						disabled={disabled}
+						id={YesRadioId}
+						name={name}
+						required={required}
+						value={'Yes'}
+					/>
+					<label htmlFor={YesRadioId} className={styles.radioLabel}>
+						<span className={styles.description}>Yes</span>
+					</label>
+				</div>
+				<div className={styles.radioWrapper}>
+					<RadioInput
+						className={styles.radioInput}
+						disabled={disabled}
+						id={NoRadioId}
+						name={name}
+						required={required}
+						value={'No'}
+					/>
+					<label htmlFor={NoRadioId} className={styles.radioLabel}>
+						<span className={styles.description}>No</span>
+					</label>
+				</div>
 			</div>
 			{error && <InputError>{error}</InputError>}
 		</fieldset>
