@@ -136,3 +136,21 @@ export const deleteInvitePiData = async (
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
+
+// TODO: add proper JSDoc comments
+export const createParticipantPiData = async ({
+	name,
+	email,
+}: {
+	name: string;
+	email: string;
+}): Promise<any> => {
+	// TODO: add Type instead of any
+	const { piDasUrl } = getAppConfig();
+	// TODO: add error handling
+	const result = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
+		name,
+		email,
+	});
+	return result.data.participant;
+};

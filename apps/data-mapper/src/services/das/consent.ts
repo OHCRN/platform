@@ -212,3 +212,21 @@ export const getParticipantResponsesByQuestionId = async ({
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
+
+// TODO: add proper JSDoc comments
+export const createParticipantConsentData = async ({
+	participantId,
+	emailVerified,
+}: {
+	participantId: string;
+	emailVerified: boolean;
+}): Promise<any> => {
+	// TODO: add Type instead of any
+	const { consentDasUrl } = getAppConfig();
+	// TODO: add error handling
+	const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), {
+		participantId,
+		emailVerified,
+	});
+	return result.data.participant;
+};
