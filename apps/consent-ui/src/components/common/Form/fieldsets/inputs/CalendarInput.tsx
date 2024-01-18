@@ -22,17 +22,19 @@
 import clsx from 'clsx';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import type { FormInputProps } from 'src/components/common/Form/types';
 
 type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
-	hasError: boolean;
+	popperClassName?: string;
 };
 
 const SelectInput = <T extends FieldValues>({
 	ariaProps = {},
 	disabled,
-	// hasError,
+	className,
+	popperClassName,
 	id,
 	name,
 	onBlur = () => {},
@@ -47,11 +49,11 @@ const SelectInput = <T extends FieldValues>({
 			name={name}
 			render={({ field: { onChange, value } }) => (
 				<DatePicker
-					showIcon
 					selected={value}
 					onChange={(date) => onChange(date)}
 					required={required}
-					className={clsx()}
+					className={clsx(className)}
+					popperClassName={clsx(popperClassName)}
 					id={`calendar-${id}`}
 					name={name}
 					onBlur={onBlur}
