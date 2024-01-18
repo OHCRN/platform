@@ -42,6 +42,9 @@ import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout
 import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
+import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -68,9 +71,9 @@ const ClinicianInviteFormComponent = ({
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
-	errorsDict: Record<string, string>;
-	labelsDict: Record<string, string>;
-	textDict: Record<string, string>;
+	errorsDict: FormErrorsDictionary;
+	labelsDict: InviteFormLabelsDictionary;
+	textDict: InviteFormTextDictionary;
 	currentLang: ValidLanguage;
 }) => {
 	// setup react-hook-forms

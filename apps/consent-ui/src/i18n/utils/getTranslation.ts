@@ -69,26 +69,12 @@ export const getTranslation: GetTranslation = (language) => {
 	};
 };
 
-export const translateNamespace = ({
-	currentLang,
-	namespace,
-	params = {},
-}: {
-	currentLang: ValidLanguage;
-	namespace: keyof typeof en;
-	params?: Record<string, Record<string, string | number>>;
-}) => {
-	const dictionaryTranslated: Record<string, string> = dictionaries[currentLang][namespace];
+type TranslationNamespace = keyof typeof en;
 
-	const paramsReplaced = Object.keys(params).reduce(
-		(acc, key) => ({
-			...acc,
-			[key]: replaceParams(dictionaryTranslated[key], params[key]),
-		}),
-		{},
-	);
-
-	const dictionaryWithParams = Object.assign({}, dictionaryTranslated, paramsReplaced);
-
-	return dictionaryWithParams;
+export const translateAll = <T extends object>(
+	currentLang: ValidLanguage,
+	namespace: TranslationNamespace,
+): T => {
+	const dictionaryTranslated = dictionaries[currentLang][namespace];
+	return dictionaryTranslated as T;
 };
