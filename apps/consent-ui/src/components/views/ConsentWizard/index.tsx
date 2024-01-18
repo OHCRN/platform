@@ -28,7 +28,7 @@ import BackToDashboard from 'src/components/common/BackToDashboard';
 import styles from './ConsentWizard.module.scss';
 import InformedConsent from './InformedConsent';
 
-const {
+export const {
 	INFORMED_CONSENT,
 	CONSENT_RELEASE_DATA,
 	CONSENT_RESEARCH_PARTICIPATION,

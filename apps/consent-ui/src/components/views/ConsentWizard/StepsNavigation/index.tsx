@@ -17,8 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const StepNavigation = () => {
-	return <div>prev next</div>;
+import { ConsentCategory } from 'types/entities';
+
+import { ValidLanguage } from 'src/i18n';
+
+import styles from './StepsNavigation.module.scss';
+
+const stepsInOrder = [
+	ConsentCategory.enum.INFORMED_CONSENT,
+	ConsentCategory.enum.CONSENT_RELEASE_DATA,
+	ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION,
+	ConsentCategory.enum.CONSENT_RECONTACT,
+	ConsentCategory.enum.CONSENT_REVIEW_SIGN,
+];
+
+const StepsNavigation = ({
+	// currentLang,
+	currentStep,
+}: {
+	currentLang: ValidLanguage;
+	currentStep: ConsentCategory;
+}) => {
+	const stepIndex = stepsInOrder.indexOf(currentStep);
+	const prevStep = stepsInOrder[stepIndex - 1];
+	const nextStep = stepsInOrder[stepIndex + 1];
+
+	return (
+		<div className={styles.wrapper}>
+			<div className={styles.prevWrapper}>{prevStep && 'prev'}</div>
+			<div className={styles.nextWrapper}>{nextStep ? 'next' : 'complete'}</div>
+		</div>
+	);
 };
 
-export default StepNavigation;
+export default StepsNavigation;
