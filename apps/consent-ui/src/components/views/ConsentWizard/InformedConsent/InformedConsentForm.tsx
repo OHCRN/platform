@@ -82,7 +82,6 @@ const InformedConsentForm = ({
 						required
 						title={formDict.consentContact}
 					/>
-					<Button type="submit">submit</Button>
 				</FormSection>
 				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 			</Form>
