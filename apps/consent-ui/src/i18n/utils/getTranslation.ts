@@ -75,6 +75,6 @@ export const translateAll = <T extends object>(
 	currentLang: ValidLanguage,
 	namespace: TranslationNamespace,
 ): T => {
-	const dictionaryTranslated = dictionaries[currentLang][namespace];
+	const dictionaryTranslated = dictionaries[currentLang][namespace] || {};
 	return dictionaryTranslated as T;
 };
