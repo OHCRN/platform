@@ -1,8 +1,8 @@
 # Docker Usage
 
 [Docker](https://www.docker.com/) is used for building and deploying services seamlessly across different environments. The project employs Docker through two main components:
-- i) the `Dockerfile` for building service images, and
-- ii) the `docker-compose.yaml` for orchestrating containers.
+- i) the [`Dockerfile`](../Dockerfile) for building service images
+- ii) the [`docker-compose.yaml`](../docker-compose.yaml) for orchestrating containers
 
 ## Local Development with Docker Compose
 
@@ -55,7 +55,7 @@ To address Prisma compatibility issues when running within Docker, adjustments i
 The default behaviour of Prisma is to generate a native client for the system that is running the `prisma generate` command. For example, an Apple Silicon Mac will generate an arm64 client, and an x86 Linux machine will generate an x86 client. This poses a problem when building a docker image locally on your Mac and attempting to run it inside a Linux docker container.
 
 
-We specify both `native` and `linux` binary targets to ensure compatibility across systems when building locally and running in a Linux Docker container. See the [Prisma documentation on binaryTargets](https://www.prisma.io/docs/guides/database-workflows/deployment/docker#binarytargets) for further details.
+We specify both `native` and `linux` binary targets to ensure compatibility across systems when building locally and running in a Linux Docker container. See the [Prisma documentation on binaryTargets](https://www.prisma.io/docs/orm/prisma-schema/overview/generators#binary-targets) for further details.
 
 ```prisma
 generator client {
