@@ -43,6 +43,10 @@
 	max-width: 32.8125rem;
 	background: theme('colors.grayscale.800');
 	min-height: 600px;
+	display: none;
+	@media (min-width: theme('screens.md')) {
+		display: block;
+	}
 	@media (min-width: theme('screens.lg')) {
 		min-height: 700px;
 	}
@@ -65,13 +69,13 @@
 .main {
 	background: theme('colors.grayscale.100');
 	.content {
-		padding: 0 1rem;
+		padding: 1.88rem 1rem;
 	}
 	@media (min-width: theme('screens.sm')) {
 		flex: 1 0 66.67%;
 		.content {
 			max-width: 51.75rem;
-			padding: 2.44rem 2.5rem 0;
+			padding: 2.44rem 2.5rem;
 		}
 	}
 	@media (min-width: theme('screens.md')) {
@@ -88,18 +92,19 @@
 }
 
 .desktopNav {
-	padding: 1.5rem 4rem 0;
+	padding: 1.5rem 2rem 0;
 	width: 100%;
-	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5rem;
-	min-height: 6rem;
-}
-
-.desktopHeader,
-.desktopNav {
-	@media (max-width: theme('screens.md')) {
-		display: none;
+	min-height: 4rem;
+	display: none;
+	@media (min-width: theme('screens.md')) {
+		display: flex;
+	}
+	@media (min-width: theme('screens.xl')) {
+		min-height: 6rem;
+		padding-left: 4rem;
+		padding-right: 4rem;
 	}
 }
 

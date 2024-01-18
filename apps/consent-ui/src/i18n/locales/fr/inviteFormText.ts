@@ -19,18 +19,41 @@
 
 import { InviteFormTextDictionary } from '../en/inviteFormText';
 
+import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { indicatesRequiredField, selectPlaceholder } = formText;
+const { indicatesRequiredField, selectPlaceholder, submit } = formText;
+const {
+	clinicianInstitutionalEmailAddressTooltip,
+	consentGroupTooltip,
+	guardianEmailAddressTooltip,
+	guardianPhoneNumberTooltip,
+	participantEmailAddressTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+} = formTooltips;
 
 const dictionary = {
 	afterRegistering:
 		"Après votre inscription, nous devrons collecter certains consentements et données importants. Votre patient aura accès à la mise à jour de son dossier, mais s'il a besoin d'aide, nous pouvons le contacter.",
+	clinicianInstitutionalEmailAddressTooltip,
 	clinicianInformation: 'Informations sur le clinicien',
+	consentGroups: 'Groupes de consentement',
+	consentGroupTooltip,
 	consentContactDescription:
 		"J'ai obtenu le consentement verbal pour que mon patient puisse être contacté par un membre de l'équipe d'étude de l'OHCRN pour plus d'informations et de consentements.",
 	enterGuardianInfo: 'Veuillez saisir les informations du tuteur ci-dessous :',
+	guardianEmailAddressTooltip,
+	guardianPhoneNumberTooltip,
 	indicatesRequiredField,
+	learnMoreConsentGroups: 'En savoir plus sur les groupes de consentement',
+	participantEmailAddressTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
 	patientInformation: 'Informations sur les patients',
 	selectPlaceholder,
 	uploadFileDescription1:
@@ -38,6 +61,7 @@ const dictionary = {
 	uploadFileDescription2:
 		"et demandez à votre participant (qui est mineur) de lire et de signer le formulaire d'assentiment. Utilisez le bouton de téléchargement ci-dessous pour soumettre un formulaire de consentement complété et signé par le mineur.",
 	uploadFileLink: "télécharger une copie du formulaire d'accord",
+	submit,
 } satisfies InviteFormTextDictionary;
 
 export default dictionary;

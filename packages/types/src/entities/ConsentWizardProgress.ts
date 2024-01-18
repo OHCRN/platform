@@ -21,7 +21,7 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentCategory } from './ConsentCategory.js';
+import { ConsentCategory } from './fields/index.js';
 
 const CONSENT_STATUSES = ['INCOMPLETE', 'COMPLETE'] as const;
 export const ConsentStatus = z.enum(CONSENT_STATUSES);

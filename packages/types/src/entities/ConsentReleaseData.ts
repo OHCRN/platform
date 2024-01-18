@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,19 +18,19 @@
  */
 
 import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
-import { Name } from './Name.js';
-import { Gender } from './Gender.js';
-import { BirthSex } from './BirthSex.js';
-import { Ancestry } from './Ancestry.js';
-import { HistoryOfCancer } from './HistoryOfCancer.js';
-import { PostalCode } from './PostalCode.js';
-import { GeneticsClinic } from './GeneticsClinic.js';
-import { MolecularLab } from './MolecularLab.js';
-import { OhipNumber } from './OhipNumber.js';
+import {
+	Ancestry,
+	BirthSex,
+	Gender,
+	GeneticsClinic,
+	HistoryOfCancer,
+	MolecularLab,
+	Name,
+	OhipNumber,
+	PostalCode,
+} from './fields/index.js';
 
 const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
 
@@ -54,14 +54,3 @@ export const ConsentReleaseDataBase = z.object({
 	selfReportedGeneticsClinic: GeneticsClinic.optional(),
 	selfReportedMolecularLab: MolecularLab.optional(),
 });
-
-export const ConsentReleaseDataRequest = ConsentReleaseDataBase;
-export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
-export const ConsentReleaseDataRequestSchema: SchemaObject =
-	generateSchema(ConsentReleaseDataRequest);
-
-export const ConsentReleaseDataResponse = ConsentReleaseDataBase;
-export type ConsentReleaseDataResponse = z.infer<typeof ConsentReleaseDataResponse>;
-export const ConsentReleaseDataResponseSchema: SchemaObject = generateSchema(
-	ConsentReleaseDataResponse,
-);

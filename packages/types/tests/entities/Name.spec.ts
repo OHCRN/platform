@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { Name } from '../../src/entities/index.js';
+import { Name } from '../../src/entities/fields/index.js';
 
 describe('Name', () => {
 	it('Can only contain letters and whitespace', () => {

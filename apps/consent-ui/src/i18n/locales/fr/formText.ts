@@ -22,6 +22,7 @@ import { FormTextDictionary } from '../en/formText';
 const dictionary = {
 	indicatesRequiredField: 'indique un champ obligatoire',
 	selectPlaceholder: 'Choisissez-en un',
+	submit: 'Soumettre',
 } satisfies FormTextDictionary;
 
 export default dictionary;

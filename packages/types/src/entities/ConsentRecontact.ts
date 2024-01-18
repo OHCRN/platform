@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,12 +18,9 @@
  */
 
 import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
-import { Name } from './Name.js';
-import { PhoneNumber } from './PhoneNumber.js';
+import { Name, PhoneNumber } from './fields/index.js';
 
 const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
 
@@ -52,40 +49,3 @@ export const hasRequiredSecondaryContactInfo = ({
 		secondaryContactPhoneNumber !== undefined;
 	return requireSecondaryContactInfo ? allSecondaryContactInfoDefined : true;
 };
-
-export const ConsentRecontactRequest = ConsentRecontactBase.refine((input) => {
-	const {
-		RECONTACT__SECONDARY_CONTACT,
-		secondaryContactFirstName,
-		secondaryContactLastName,
-		secondaryContactPhoneNumber,
-	} = input;
-
-	return hasRequiredSecondaryContactInfo({
-		requireSecondaryContactInfo: RECONTACT__SECONDARY_CONTACT,
-		secondaryContactFirstName,
-		secondaryContactLastName,
-		secondaryContactPhoneNumber,
-	});
-});
-export type ConsentRecontactRequest = z.infer<typeof ConsentRecontactRequest>;
-export const ConsentRecontactRequestSchema: SchemaObject = generateSchema(ConsentRecontactRequest);
-
-export const ConsentRecontactResponse = ConsentRecontactBase.refine((input) => {
-	const {
-		RECONTACT__SECONDARY_CONTACT,
-		secondaryContactFirstName,
-		secondaryContactLastName,
-		secondaryContactPhoneNumber,
-	} = input;
-
-	return hasRequiredSecondaryContactInfo({
-		requireSecondaryContactInfo: RECONTACT__SECONDARY_CONTACT,
-		secondaryContactFirstName,
-		secondaryContactLastName,
-		secondaryContactPhoneNumber,
-	});
-});
-export type ConsentRecontactResponse = z.infer<typeof ConsentRecontactResponse>;
-export const ConsentRecontactResponseSchema: SchemaObject =
-	generateSchema(ConsentRecontactResponse);

@@ -1,0 +1,7 @@
+.label {
+	font-size: theme('fontSize.base');
+	font-weight: 700;
+	@media (min-width: theme('screens.sm')) {
+		padding-top: calc(0.58rem + 2px);
+	}
+}

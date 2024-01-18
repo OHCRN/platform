@@ -18,7 +18,7 @@
  */
 
 import { Router } from 'express';
-import { APIStatus } from 'types/services';
+import { APIStatus } from 'types/common';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 

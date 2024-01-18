@@ -21,25 +21,30 @@ import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
+import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
+import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consentInProgressNotification';
 import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentResearchParticipation';
 import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
 import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
+import emailVerifiedNotificationDictionary from 'src/i18n/locales/fr/emailVerifiedNotification';
 import en from 'src/i18n/locales/en/index';
 import footerDictionary from 'src/i18n/locales/fr/footer';
 import formErrorsDictionary from 'src/i18n/locales/fr/formErrors';
 import formLabelsDictionary from 'src/i18n/locales/fr/formLabels';
 import formTextDictionary from 'src/i18n/locales/fr/formText';
+import formTooltipsDictionary from 'src/i18n/locales/fr/formTooltips';
 import genderDictionary from 'src/i18n/locales/fr/gender';
 import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
 import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
-import inviteDictionary from 'src/i18n/locales/fr/invite';
+import inviteFormConsentGroupModalDictionary from 'src/i18n/locales/fr/inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
+import inviteFormPageDictionary from 'src/i18n/locales/fr/inviteFormPage';
 import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
@@ -51,14 +56,18 @@ const dictionaries = {
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
+	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
+	consentInProgressNotification: consentInProgressNotificationDictionary,
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
 	consentReviewSign: consentReviewSignDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
+	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
+	formTooltips: formTooltipsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
 	formText: formTextDictionary,
@@ -67,8 +76,9 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
-	invite: inviteDictionary,
+	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormPage: inviteFormPageDictionary,
 	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,

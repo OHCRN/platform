@@ -21,24 +21,29 @@ import ancestryDictionary from './ancestry';
 import birthSexDictionary from './birthSex';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
+import consentCompleteNotificationDictionary from './consentCompleteNotification';
 import consentGroupDictionary from './consentGroup';
+import consentInProgressNotificationDictionary from './consentInProgressNotification';
 import consentRecontactDictionary from './consentRecontact';
 import consentReleaseDataDictionary from './consentReleaseData';
 import consentResearchParticipationDictionary from './consentResearchParticipation';
 import consentReviewSignDictionary from './consentReviewSign';
 import consentWizardDictionary from './consentWizard';
 import dashboardDictionary from './dashboard';
+import emailVerifiedNotificationDictionary from './emailVerifiedNotification';
 import footerDictionary from './footer';
 import formErrorsDictionary from './formErrors';
 import formLabelsDictionary from './formLabels';
 import formTextDictionary from './formText';
+import formTooltipsDictionary from './formTooltips';
 import genderDictionary from './gender';
 import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
 import historyOfCancerDictionary from './historyOfCancer';
 import informedConsentDictionary from './informedConsent';
-import inviteDictionary from './invite';
+import inviteFormConsentGroupModalDictionary from './inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from './inviteFormLabels';
+import inviteFormPageDictionary from './inviteFormPage';
 import inviteFormTextDictionary from './inviteFormText';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
@@ -50,14 +55,18 @@ const dictionaries = {
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
+	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
+	consentInProgressNotification: consentInProgressNotificationDictionary,
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
 	consentReviewSign: consentReviewSignDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
+	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
+	formTooltips: formTooltipsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
 	formText: formTextDictionary,
@@ -66,8 +75,9 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
-	invite: inviteDictionary,
+	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
+	inviteFormPage: inviteFormPageDictionary,
 	inviteFormText: inviteFormTextDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
