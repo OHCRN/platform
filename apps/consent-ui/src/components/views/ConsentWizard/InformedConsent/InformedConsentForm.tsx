@@ -20,21 +20,26 @@
 'use client';
 
 import Link from 'next/link';
-import { InformedConsentRequest } from 'types/entities';
-import { Form, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { InformedConsentRequest } from 'types/consentApi';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 import { OHCRN_EMAIL } from 'src/constants';
 import { InformedConsentFormDictionary } from 'src/i18n/locales/en/informedConsentForm';
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import Button from 'src/components/common/Button';
+import { ValidLanguage } from 'src/i18n';
+
+import StepsNavigation from '../StepsNavigation';
 
 const InformedConsentForm = ({
+	currentLang,
 	errorsDict,
 	formDict,
 }: {
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	formDict: InformedConsentFormDictionary;
 }) => {
@@ -69,9 +74,9 @@ const InformedConsentForm = ({
 						name="INFORMED_CONSENT__READ_AND_UNDERSTAND"
 						required
 					/>
-					<Button type="submit">submit</Button>
 				</FormSection>
 			</Form>
+			<StepsNavigation currentLang={currentLang} currentStep="INFORMED_CONSENT" />
 			{/* put in prev/next buttons */}
 		</FormProvider>
 	);

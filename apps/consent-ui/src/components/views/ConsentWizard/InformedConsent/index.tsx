@@ -28,7 +28,7 @@ import { OHCRN_EMAIL } from 'src/constants';
 import InformedConsentForm from './InformedConsentForm';
 import styles from './InformedConsent.module.scss';
 
-const InformedConsentView = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
 	const formDict: InformedConsentFormDictionary = {
@@ -57,9 +57,9 @@ const InformedConsentView = ({ currentLang }: { currentLang: ValidLanguage }) =>
 				<Link href="#">{pageDict.linkText}</Link> {pageDict.description2}{' '}
 				<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
 			</p>
-			<InformedConsentForm errorsDict={errorsDict} formDict={formDict} />
+			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
 		</div>
 	);
 };
 
-export default InformedConsentView;
+export default InformedConsent;
