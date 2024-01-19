@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:15-alpine
+    container_name: postgres
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -10,5 +11,100 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
+  consent-api:
+    container_name: consent-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: consent-api
+    ports:
+      - 8080:8080
+    env_file:
+      - ./apps/consent-api/.env
+    depends_on:
+      - data-mapper
+    profiles:
+      - backend
+  data-mapper:
+    container_name: data-mapper
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: data-mapper
+    ports:
+      - 8081:8081
+    env_file:
+      - ./apps/data-mapper/.env
+    depends_on:
+      - pi-das
+      - phi-das
+      - keys-das
+      - consent-das
+    profiles:
+      - backend
+  pi-das:
+    container_name: pi-das
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: pi-das
+    ports:
+      - 8082:8082
+    environment:
+      - PORT=8082
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/pi_db
+    depends_on:
+      - postgres
+    profiles:
+      - backend
+      - das
+  phi-das:
+    container_name: phi-das
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: phi-das
+    ports:
+      - 8083:8083
+    environment:
+      - PORT=8083
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/phi_db
+    depends_on:
+      - postgres
+    profiles:
+      - backend
+      - das
+  keys-das:
+    container_name: keys-das
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: phi-das
+    ports:
+      - 8084:8084
+    environment:
+      - PORT=8084
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/keys_db
+    depends_on:
+      - postgres
+    profiles:
+      - backend
+      - das
+  consent-das:
+    container_name: consent-das
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: consent-das
+    ports:
+      - 8085:8085
+    environment:
+      - PORT=8085
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/consent_db
+    depends_on:
+      - postgres
+    profiles:
+      - backend
+      - das
 volumes:
   postgres:

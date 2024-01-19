@@ -5,7 +5,7 @@ ARG APP_USER=ohcrn
 #######################################################
 # Configure Base Image
 #######################################################
-FROM node:lts-alpine AS base
+FROM node:18.18.2-alpine AS base
 
 ARG APP_USER
 ARG WORKDIR
@@ -58,29 +58,13 @@ ENV NEXT_TELEMETRY_DISABLED=1
 USER ${APP_USER}
 
 RUN pnpm install --frozen-lockfile
-RUN pnpm run generate
-RUN pnpm run build
-
-#######################################################
-# Common Types Package
-#######################################################
-FROM base AS common
-
-ARG APP_USER
-ARG WORKDIR
-ARG COMMON_DIR=${WORKDIR}/packages/types
-
-WORKDIR ${COMMON_DIR}
-
-USER ${APP_USER}
-
-COPY --from=prod-deps ${COMMON_DIR}/node_modules/ ./node_modules
-COPY --from=build ${COMMON_DIR}/dist ./dist
+RUN pnpm prisma:generate
+RUN pnpm build
 
 #######################################################
 # Consent UI
 #######################################################
-FROM common AS consent-ui
+FROM base AS consent-ui
 
 ARG APP_USER
 ARG WORKDIR
@@ -100,3 +84,139 @@ ENV NEXT_TELEMETRY_DISABLED=1
 EXPOSE 3000
 
 CMD ["node", "apps/consent-ui/server.js"]
+
+#######################################################
+# Consent API
+#######################################################
+FROM base AS consent-api
+
+ARG APP_USER
+ARG WORKDIR
+ARG CONSENT_API_DIR=${WORKDIR}/apps/consent-api
+
+WORKDIR ${CONSENT_API_DIR}
+
+USER ${APP_USER}
+
+COPY --from=prod-deps ${CONSENT_API_DIR}/node_modules/ ./node_modules
+COPY --from=build ${CONSENT_API_DIR}/dist ./dist
+# Required for ts-node
+COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
+
+EXPOSE 8080
+
+CMD ["pnpm", "start"]
+
+#######################################################
+# Data Mapper
+#######################################################
+FROM base AS data-mapper
+
+ARG APP_USER
+ARG WORKDIR
+ARG DATA_MAPPER_DIR=${WORKDIR}/apps/data-mapper
+
+WORKDIR ${DATA_MAPPER_DIR}
+
+USER ${APP_USER}
+
+COPY --from=prod-deps ${DATA_MAPPER_DIR}/node_modules/ ./node_modules
+COPY --from=build ${DATA_MAPPER_DIR}/dist ./dist
+# Required for ts-node
+COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
+
+EXPOSE 8081
+
+CMD ["pnpm", "start"]
+
+#######################################################
+# PI DAS
+#######################################################
+FROM base AS pi-das
+
+ARG APP_USER
+ARG WORKDIR
+ARG PI_DAS_DIR=${WORKDIR}/apps/pi-das
+
+WORKDIR ${PI_DAS_DIR}
+
+USER ${APP_USER}
+
+COPY --from=prod-deps ${PI_DAS_DIR}/node_modules/ ./node_modules
+COPY --from=build ${PI_DAS_DIR}/dist ./dist
+COPY --from=build ${PI_DAS_DIR}/prisma ./prisma
+# Required for ts-node
+COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
+
+EXPOSE 8082
+
+CMD ["pnpm", "start:migrate:prod"]
+
+#######################################################
+# PHI DAS
+#######################################################
+FROM base AS phi-das
+
+ARG APP_USER
+ARG WORKDIR
+ARG PHI_DAS_DIR=${WORKDIR}/apps/phi-das
+
+WORKDIR ${PHI_DAS_DIR}
+
+USER ${APP_USER}
+
+COPY --from=prod-deps ${PHI_DAS_DIR}/node_modules/ ./node_modules
+COPY --from=build ${PHI_DAS_DIR}/dist ./dist
+COPY --from=build ${PHI_DAS_DIR}/prisma ./prisma
+# Required for ts-node
+COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
+
+EXPOSE 8083
+
+CMD ["pnpm", "start:migrate:prod"]
+
+#######################################################
+# Keys DAS
+#######################################################
+FROM base AS keys-das
+
+ARG APP_USER
+ARG WORKDIR
+ARG KEYS_DAS_DIR=${WORKDIR}/apps/keys-das
+
+WORKDIR ${KEYS_DAS_DIR}
+
+USER ${APP_USER}
+
+COPY --from=prod-deps ${KEYS_DAS_DIR}/node_modules/ ./node_modules
+COPY --from=build ${KEYS_DAS_DIR}/dist ./dist
+COPY --from=build ${KEYS_DAS_DIR}/prisma ./prisma
+# Required for ts-node
+COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
+
+EXPOSE 8084
+
+CMD ["pnpm", "start:migrate:prod"]
+
+#######################################################
+# Consent DAS
+#######################################################
+FROM base AS consent-das
+
+ARG APP_USER
+ARG WORKDIR
+ARG CONSENT_DAS_DIR=${WORKDIR}/apps/consent-das
+
+WORKDIR ${CONSENT_DAS_DIR}
+
+USER ${APP_USER}
+
+COPY --from=prod-deps ${CONSENT_DAS_DIR}/node_modules/ ./node_modules
+COPY --from=build ${CONSENT_DAS_DIR}/dist ./dist
+COPY --from=build ${CONSENT_DAS_DIR}/prisma ./prisma
+# Required for ts-node
+COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
+
+EXPOSE 8085
+
+CMD ["pnpm", "start:migrate:prod"]
