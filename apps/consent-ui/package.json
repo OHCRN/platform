@@ -4,12 +4,11 @@
 	"private": true,
 	"exports": null,
 	"scripts": {
-		"dev": "next dev",
 		"build": "NEXT_IS_BUILDING=true next build",
-		"start": "next start",
+		"dev": "next dev",
 		"lint": "eslint .",
-		"test": "vitest run",
-		"test-runtime-vars": "NEXT_IS_BUILDING=true next build && FEATURE_FLAG=true next start"
+		"start": "next start",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.2",
