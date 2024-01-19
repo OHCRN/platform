@@ -31,9 +31,9 @@ const Right = ({ translate }: { translate: TranslationFunction }) => {
 				<Image
 					alt={translate('footer', 'onGovtLogoAlt')}
 					className={styles['on-gov']}
-					height="83"
+					height="81"
 					src="/assets/images/on_govt.svg"
-					width="114"
+					width="175"
 				/>
 			</Link>
 		</div>
