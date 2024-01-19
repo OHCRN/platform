@@ -82,7 +82,7 @@ const ClinicianInviteFormComponent = ({
 	});
 
 	const {
-		formState: { errors },
+		formState: { errors, isValid },
 		handleSubmit,
 		unregister,
 		watch,
@@ -328,7 +328,11 @@ const ClinicianInviteFormComponent = ({
 						/>
 					</div>
 
-					<Button type="submit" className={styles.submitButton}>
+					<Button
+						className={styles.submitButton}
+						color={isValid ? 'green' : 'default'}
+						type="submit"
+					>
 						{textDict.submit}
 					</Button>
 				</FormSection>
