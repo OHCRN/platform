@@ -35,6 +35,7 @@ const ReviewInfoCard = ({
 	fields,
 	title,
 	children, // subtitle
+	editText,
 	required = false,
 }: {
 	name: RouteName;
@@ -47,6 +48,7 @@ const ReviewInfoCard = ({
 	}[];
 	title: string;
 	children: React.ReactNode;
+	editText: string;
 	required?: boolean;
 }) => {
 	return (
@@ -54,7 +56,7 @@ const ReviewInfoCard = ({
 			<div className={clsx(styles.header)}>
 				<h2>{title}</h2>
 				<LocalizedLink className={styles.redirectButton} name={name} linkLang={linkLang}>
-					Edit
+					{editText}
 				</LocalizedLink>
 			</div>
 			<div className={clsx(styles.subtitle)}>

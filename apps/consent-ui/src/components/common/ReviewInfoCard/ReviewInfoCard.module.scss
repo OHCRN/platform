@@ -58,6 +58,13 @@
 	font-size: theme('fontSize.sm');
 	font-weight: 700;
 	line-height: 26px;
+
+	&:hover {
+		background-color: theme('colors.grayscale.700');
+		border-color: theme('colors.grayscale.700') !important;
+		color: theme('colors.grayscale.100') !important;
+		transition: all 0.2s ease-in-out;
+	}
 }
 
 .subtitle {
