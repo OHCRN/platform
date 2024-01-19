@@ -17,13 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
-import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
-import ChevronSvg from 'src/public/chevron-large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
@@ -36,7 +34,7 @@ interface SideImageLayoutProps {
 	children: ReactNode;
 	className?: string;
 	currentLang: ValidLanguage;
-	desktopHeaderImage: StaticImageData;
+	desktopHeaderImage: string;
 	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
 	mainSubtitle: ReactNode;
 	mainTitle: string;
@@ -58,13 +56,21 @@ const SideImageLayout = ({
 	return (
 		<div className={clsx(styles.container, className)}>
 			<header className={styles.desktopHeader}>
-				<Image className={styles.image} src={desktopHeaderImage} alt="" />
+				<Image
+					alt=""
+					className={styles.image}
+					height={2500}
+					src={desktopHeaderImage}
+					width={1050}
+				/>
 				<div className={clsx(styles.content)}>
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
-							src={OICRLogoEN}
 							alt={translate('footer', 'oicrLogoAlt')}
 							className={styles.logoImg}
+							height={84}
+							src="/assets/images/oicr-logo-gray-en.svg"
+							width={350}
 						/>
 					</Link>
 					<h1 className={styles.title}>{navTitle}</h1>
@@ -91,7 +97,13 @@ const SideImageLayout = ({
 									<span>{desktopNavAction.topText}</span>
 									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
 								</div>
-								<Image src={ChevronSvg} alt="" className={styles.chevron} />
+								<Image
+									alt=""
+									className={styles.chevron}
+									height={44}
+									src="/assets/images/chevron-large.svg"
+									width={15}
+								/>
 							</LocalizedLink>
 						)}
 					</div>
