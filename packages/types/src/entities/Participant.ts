@@ -17,18 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicalProfile.js';
-export * from './ClinicianInvite.js';
-export * from './ConsentQuestion.js';
-export * from './ConsentRecontact.js';
-export * from './ConsentReleaseData.js';
-export * from './ConsentResearchParticipation.js';
-export * from './ConsentReviewSign.js';
-export * from './ConsentWizardProgress.js';
-export * from './Guardian.js';
-export * from './InformedConsent.js';
-export * from './Participant.js';
-export * from './ParticipantIdentity.js';
-export * from './ParticipantResponse.js';
-export * from './User.js';
-export * from './fields/index.js';
+import { z } from 'zod';
+
+import { Name, PhoneNumber } from './fields/index.js';
+
+export const ParticipantNameFields = z.object({
+	participantFirstName: Name,
+	participantLastName: Name,
+});
+
+export type ParticipantNameFields = z.infer<typeof ParticipantNameFields>;
+
+export const ParticipantContactFields = z.object({
+	participantEmailAddress: z.string().email().optional(),
+	participantPhoneNumber: PhoneNumber.optional(),
+});
+export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
