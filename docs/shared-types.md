@@ -6,11 +6,44 @@ This document describes how we use [Zod](https://zod.dev/) schemas to validate a
 
 ### Location
 
-All schemas are located in the `types` package under the [`types/src/entities`](../packages/types/src/entities/) directory. Common schemas (i.e. multiple complex schemas using the same base schema) are kept in directories by the base schema name (e.g. [`ClinicianInvite`](../packages/types/src/entities/ClinicianInvite/)).
+All shared types and schemas are located in the `types` package. Schema types are organized as follows:
+
+| Category       | Directory                   | Description                       | Exported as    |
+| ------------- | ---------------------- | --------------------------------- | -------- |
+| Common | [`types/src/common`](../packages/types/src/common/) |utility functions, constants, and generic types not specific to any section of the data model | `'types/common'` |
+| Base schemas | [`types/src/entities`](../packages/types/src/entities/) | | `'types/entities'` |
+| Field types | [`types/src/entities/fields`](../packages/types/src/entities/fields/) | types for fields in the data model, such as enums | `'types/entities'` |
+| Request schemas | [`types/src/services/<service-name>/requests`](../packages/types/src/services/<service-name>/requests/) | Schemas extended from applicable base type, used for requests to the specified service | `'types/<service-name>` |
+| Response schemas | [`types/src/services/<service-name>/responses`](../packages/types/src/services/<service-name>/responses/) | Schemas extended from applicable base type, used for responses from the specified service | `'types/<service-name>` |
+| HTTP response schemas | [`types/src/httpResponses`](../packages/types/src/httpResponses/) | Generic HTTP success and error responses for all services |
+
+The intended pattern with this directory structure is to align the base types schemas directly with the data model. Base types can be extended, merged or refined as they are needed within each service (app). Response and request types are defined separately for each service, to help keep definitions clear and easier to trace.
+
+The [`package.json` file](../packages/types/package.json) has a separate export for each service, as well as for `entities` and `common`. New services can be added following the same pattern.
+
+> **Note**: Consent-UI imports its service types from `types/consentApi` to take advantage of request/response validations.
 
 ### Create schemas
 
 See the [Zod docs](https://zod.dev/?id=basic-usage) for creating schemas to validate data fields and the different data types supported by Zod.
+
+When creating a new schema, add the base type in the [`types/src/entities` folder](../packages/types/src/entities/) first, with consideration given to which fields would be used by **every** downstream service.
+
+A separate type would then be defined in each of the request and response folders (`types/src/services/<service-name>/<schema-type>`) for the service(s) that would use the new type. For example:
+
+```ts
+// entities/ClinicianInvite.ts
+type ClinicianInvite = { ...baseFields };
+
+// services/dataMapper/responses/ClinicianInvite.ts
+type ClinicianInviteResponse = ClinicianInvite
+```
+
+ In the example above, the base schema does not need to be extended in `dataMapper/responses` file, but the `response` type still has its own definition based on the type from `entities` (note this example type is for illustration only).
+
+ See the section on [merging smaller schemas](#merging-schemas) for a more complex example.
+
+> **Note**: There may some scenarios where only the request OR the response type is needed in a service.
 
 ### Preprocessing
 
