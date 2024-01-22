@@ -27,6 +27,7 @@ import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianI
 import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
+import TestFormComponent from 'src/components/common/Form/fieldsets/RadioFieldSet/TestForm';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -112,8 +113,14 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			mainTitle={pageDict.registerYourPatient}
 			navTitle={pageDict.clinicianPatientRegistration}
 		>
-			<ClinicianInviteFormComponent
+			{/* <ClinicianInviteFormComponent
 				consentGroupOptions={consentGroupOptions}
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				labelsDict={labelsDict}
+				textDict={textDict}
+			/> */}
+			<TestFormComponent
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				labelsDict={labelsDict}
