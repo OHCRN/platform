@@ -17,11 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentClinicianInvite.js';
-export * from './InformedConsent.js';
-export * from './PIClinicianInvite.js';
-export * from './ParticipantResponse.js';
-export * from './PICreateParticipant.js';
-export * from './ConsentCreateParticipant.js';
-export * from './CreateParticipant.js';
+import { generateSchema } from '@anatine/zod-openapi';
+import { z } from 'zod';
+
+import { GuardianResponseFields } from 'src/entities/Guardian.js';
+
+import { ConsentToBeContacted, ParticipantIdentityBase } from '../../../entities/Participant.js';
+import { Name, NanoId } from '../../../entities/fields/index.js';
+
+export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentToBeContacted)
+	.merge(
+		z.object({
+			id: NanoId,
+			isGuardian: z.boolean(),
+			emailVerified: z.boolean(),
+		}),
+	)
+	.extend(GuardianResponseFields)
+	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
+
+export type CreateParticipantResponse = z.infer<typeof CreateParticipantResponse>;
+export const CreateParticipantResponseSchema = generateSchema(CreateParticipantResponse);

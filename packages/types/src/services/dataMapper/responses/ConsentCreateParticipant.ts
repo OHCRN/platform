@@ -17,11 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentClinicianInvite.js';
-export * from './InformedConsent.js';
-export * from './PIClinicianInvite.js';
-export * from './ParticipantResponse.js';
-export * from './PICreateParticipant.js';
-export * from './ConsentCreateParticipant.js';
-export * from './CreateParticipant.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+
+import { ConsentParticipantBase, LifecycleState, NanoId } from '../../../entities/index.js';
+
+export const ConsentCreateParticipantResponse = ConsentParticipantBase.merge(
+	z.object({
+		id: NanoId,
+	}),
+).extend({
+	previousLifecycleState: LifecycleState.nullable().transform((input) => input ?? undefined),
+});
+
+export type ConsentCreateParticipantResponse = z.infer<typeof ConsentCreateParticipantResponse>;
+export const ConsentCreateParticipantResponseSchema = generateSchema(
+	ConsentCreateParticipantResponse,
+);

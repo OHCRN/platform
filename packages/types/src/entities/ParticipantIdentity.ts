@@ -17,11 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentClinicianInvite.js';
-export * from './InformedConsent.js';
-export * from './PIClinicianInvite.js';
-export * from './ParticipantResponse.js';
-export * from './PICreateParticipant.js';
-export * from './ConsentCreateParticipant.js';
-export * from './CreateParticipant.js';
+import { z } from 'zod'
+import { ConsentGroup, LifecycleState, Name, NanoId, OhipNumber, PostalCode, Province } from './fields/index.js';
+import { ParticipantIdentityBase } from './index.js';
+import { hasRequiredGuardianInformation, hasRequiredParticipantContactInfo } from '../common/index.js';
+
+export const ParticipantIdentity = ParticipantIdentityBase.merge(
+	z.object({
+		id: NanoId,
+		inviteId: NanoId.optional(),
+		currentLifecycleState: LifecycleState,
+		previousLifecycleState: LifecycleState.optional(),
+		ohipNumber: OhipNumber,
+		mailingAddressStreet: z.string().optional(),
+		mailingAddressCity: z.string().optional(),
+		mailingAddressProvince: Province.optional(),
+		mailingAddressPostalCode: PostalCode.optional(),
+		residentialPostalCode: PostalCode,
+		consentGroup: ConsentGroup,
+		participantOhipMiddleName: Name.optional(),
+	}),
+)
+	.refine(hasRequiredGuardianInformation)
+	.refine(hasRequiredParticipantContactInfo);
+
+export type ParticipantIdentity = z.infer<typeof ParticipantIdentity>;

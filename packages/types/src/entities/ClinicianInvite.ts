@@ -19,10 +19,18 @@
 
 import { z } from 'zod';
 
-import { hasRequiredGuardianInformation } from './ParticipantIdentity.js';
+import {
+	hasRequiredGuardianInformation,
+	hasRequiredParticipantContactInfo,
+} from '../common/index.js';
+
 import { ConsentGroup, Name, NanoId } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
-import { ParticipantNameFields, ParticipantContactFields } from './Participant.js';
+import {
+	ConsentToBeContacted,
+	ParticipantContactFields,
+	ParticipantNameFields,
+} from './Participant.js';
 
 export const InviteClinicianFields = z
 	.object({
@@ -31,9 +39,9 @@ export const InviteClinicianFields = z
 		clinicianLastName: Name,
 		clinicianTitleOrRole: z.string().trim().min(1),
 	})
+	.merge(ConsentToBeContacted)
 	.merge(
 		z.object({
-			consentToBeContacted: z.literal(true),
 			consentGroup: ConsentGroup,
 		}),
 	);
@@ -60,4 +68,5 @@ export const ClinicianInviteBase = InviteClinicianFields.merge(InviteGuardianFie
 	.merge(InviteParticipantFields)
 	.refine(hasRequiredGuardianInformation, {
 		message: 'Guardian contact fields are required for that consentGroup',
-	});
+	})
+	.refine(hasRequiredParticipantContactInfo);

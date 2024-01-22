@@ -29,3 +29,15 @@ export const GuardianBaseFields = z.object({
 });
 
 export type GuardianBaseFields = z.infer<typeof GuardianBaseFields>;
+
+// export as plain object to work with zod .extend()
+export const GuardianResponseFields = {
+	guardianName: Name.nullable().transform((input) => input ?? undefined),
+	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
+	guardianEmailAddress: z
+		.string()
+		.email()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
+};

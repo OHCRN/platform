@@ -17,11 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ClinicianInvite.js';
-export * from './ConsentClinicianInvite.js';
-export * from './InformedConsent.js';
-export * from './PIClinicianInvite.js';
-export * from './ParticipantResponse.js';
-export * from './PICreateParticipant.js';
-export * from './ConsentCreateParticipant.js';
-export * from './CreateParticipant.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+
+import { ParticipantIdentityBase } from '../../../entities/index.js';
+import { ConsentGroup } from '../../../entities/fields/index.js';
+import { hasRequiredGuardianInformation } from '../../../common/index.js';
+
+const PICreateParticipantRequest = ParticipantIdentityBase.merge(
+	z.object({ consentGroup: ConsentGroup }),
+).refine(hasRequiredGuardianInformation);
+
+export type PICreateParticipantRequest = z.infer<typeof PICreateParticipantRequest>;
+export const PICreateParticipantRequestSchema = generateSchema(PICreateParticipantRequest);

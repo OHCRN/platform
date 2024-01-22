@@ -19,7 +19,16 @@
 
 import { z } from 'zod';
 
-import { Name, PhoneNumber } from './fields/index.js';
+import {
+	ConsentGroup,
+	LifecycleState,
+	Name,
+	NanoId,
+	PhoneNumber,
+	PostalCode,
+	Province,
+} from './fields/index.js';
+import { GuardianBaseFields } from './Guardian.js';
 
 export const ParticipantNameFields = z.object({
 	participantFirstName: Name,
@@ -28,8 +37,53 @@ export const ParticipantNameFields = z.object({
 
 export type ParticipantNameFields = z.infer<typeof ParticipantNameFields>;
 
+export const ParticipantBaseOhipNameFields = z.object({
+	participantOhipFirstName: Name,
+	participantOhipLastName: Name,
+});
+export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNameFields>;
+
+// participant contact info is optional to allow for excluding based on presence of guardian
 export const ParticipantContactFields = z.object({
 	participantEmailAddress: z.string().email().optional(),
 	participantPhoneNumber: PhoneNumber.optional(),
 });
 export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
+
+export const ConsentToBeContacted = z.object({ consentToBeContacted: z.literal(true) });
+export type ConsentToBeContacted = z.infer<typeof ConsentToBeContacted>;
+
+export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(ParticipantContactFields)
+	.merge(GuardianBaseFields)
+	.merge(
+		z.object({
+			dateOfBirth: z.coerce.date(),
+			participantPreferredName: Name.optional(),
+		}),
+	);
+
+export type ParticipantIdentityBase = z.infer<typeof ParticipantIdentityBase>;
+
+export const PIParticipantBase = ParticipantIdentityBase.merge(
+	z.object({
+		mailingAddressStreet: z.string().optional(),
+		mailingAddressCity: z.string().optional(),
+		mailingAddressProvince: Province.optional(),
+		mailingAddressPostalCode: PostalCode.optional(),
+		residentialPostalCode: PostalCode,
+		inviteId: NanoId.optional(),
+		participantOhipMiddleName: Name.optional(),
+	}),
+);
+export type PIParticipantBase = z.infer<typeof PIParticipantBase>;
+
+export const ConsentParticipantBase = z
+	.object({
+		currentLifecycleState: LifecycleState,
+		previousLifecycleState: LifecycleState.optional(),
+		consentGroup: ConsentGroup,
+		emailVerified: z.boolean(),
+		isGuardian: z.boolean(),
+	})
+	.merge(ConsentToBeContacted);
+export type ConsentParticipantBase = z.infer<typeof ConsentParticipantBase>;
