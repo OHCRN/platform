@@ -19,9 +19,9 @@
 
 'use client';
 
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import clsx from 'clsx';
-import { ReactNode, useId } from 'react';
+import { ReactNode, useEffect, useId } from 'react';
 
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
@@ -49,6 +49,26 @@ const CheckboxFieldSet = <T extends FieldValues>({
 	title,
 }: CheckBoxFieldSetProps<T>) => {
 	const checkboxId = useId();
+
+	// validate onChange
+	// putting this in an onChange event
+	// triggers validation before the form state is updated.
+
+	const {
+		formState: { touchedFields },
+		watch,
+		trigger,
+	} = useFormContext();
+
+	const touchedField = touchedFields[name];
+	const watchField = watch(name);
+	useEffect(() => {
+		if (touchedField) {
+			// check if field is touched to prevent validation on initial render.
+			trigger(name);
+		}
+	}, [name, touchedField, trigger, watchField]);
+
 	return (
 		<fieldset
 			className={clsx(

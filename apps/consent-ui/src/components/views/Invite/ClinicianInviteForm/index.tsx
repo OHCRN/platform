@@ -84,9 +84,8 @@ const ClinicianInviteFormComponent = ({
 	});
 
 	const {
-		formState: { errors, isValid, touchedFields },
+		formState: { errors, isValid },
 		handleSubmit,
-		trigger,
 		watch,
 	} = methods;
 
@@ -134,18 +133,6 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
 	}, [getRecaptchaToken, isValid]);
-
-	// validate consentToBeContacted onChange
-	// putting this in an onChange event in the checkbox input
-	// triggers validation before the form state is updated.
-	const touchedConsentToBeContacted = touchedFields.consentToBeContacted;
-	const watchConsentToBeContacted = watch('consentToBeContacted');
-	useEffect(() => {
-		if (touchedConsentToBeContacted) {
-			// check if field is touched to prevent validation on initial render.
-			trigger('consentToBeContacted');
-		}
-	}, [touchedConsentToBeContacted, trigger, watchConsentToBeContacted]);
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
 	// guardian fields register on mount, in their input component.
