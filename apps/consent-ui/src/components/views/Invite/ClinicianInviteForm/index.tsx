@@ -128,7 +128,7 @@ const ClinicianInviteFormComponent = ({
 		}
 	};
 
-	// toggle submit button's enabled status when isValid & recaptcha change
+	// toggle submit button's enabled status when isValid changes
 	useEffect(() => {
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
