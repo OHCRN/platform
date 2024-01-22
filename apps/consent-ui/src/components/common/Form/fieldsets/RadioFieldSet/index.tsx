@@ -69,7 +69,7 @@ const RadioFieldSet = <T extends FieldValues>({
 				{required && !title && <RequiredAsterisk />}
 			</div>
 			<div className={styles.radiosWrapper}>
-				<div className={styles.radioWrapper}>
+				<label htmlFor={YesRadioId} className={styles.radioWrapper}>
 					<RadioInput
 						className={styles.radioInput}
 						disabled={disabled}
@@ -78,11 +78,9 @@ const RadioFieldSet = <T extends FieldValues>({
 						required={required}
 						value={'Yes'}
 					/>
-					<label htmlFor={YesRadioId} className={styles.radioLabel}>
-						<span className={styles.description}>Yes</span>
-					</label>
-				</div>
-				<div className={styles.radioWrapper}>
+					<span className={styles.radioLabel}>Yes</span>
+				</label>
+				<label htmlFor={NoRadioId} className={styles.radioWrapper}>
 					<RadioInput
 						className={styles.radioInput}
 						disabled={disabled}
@@ -91,10 +89,8 @@ const RadioFieldSet = <T extends FieldValues>({
 						required={required}
 						value={'No'}
 					/>
-					<label htmlFor={NoRadioId} className={styles.radioLabel}>
-						<span className={styles.description}>No</span>
-					</label>
-				</div>
+					<span className={styles.radioLabel}>No</span>
+				</label>
 			</div>
 			{error && <InputError>{error}</InputError>}
 		</fieldset>

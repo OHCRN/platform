@@ -26,6 +26,7 @@ import { FormInputProps } from 'src/components/common/Form/types';
 
 type RadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	value: V;
+	id: string;
 };
 
 const RadioInput = <T extends FieldValues, V extends string>({
@@ -33,13 +34,14 @@ const RadioInput = <T extends FieldValues, V extends string>({
 	name,
 	value,
 	disabled,
+	id,
 }: RadioInputProps<T, V>) => {
 	const { register } = useFormContext();
 	return (
 		<input
 			{...register(name)}
 			className={clsx('radio-input', className)}
-			id={`${name}-${value}`}
+			id={id}
 			type="radio"
 			value={value}
 			disabled={disabled}
