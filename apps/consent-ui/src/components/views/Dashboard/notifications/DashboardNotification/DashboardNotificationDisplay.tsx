@@ -27,14 +27,20 @@ import ConsentInProgressNotification from 'src/components/views/Dashboard/notifi
 
 import styles from './DashboardNotificationDisplay.module.scss';
 
-const getNotificationComponent = (notificationConfig: NotificationConfig) => {
+const getNotificationComponent = ({
+	notificationConfig,
+	notificationProps,
+}: {
+	notificationConfig: NotificationConfig;
+	notificationProps: { currentLang: ValidLanguage; dismissClick: () => void };
+}) => {
 	switch (notificationConfig?.notification) {
 		case 'emailVerified':
-			return EmailVerifiedNotification;
+			return <EmailVerifiedNotification {...notificationProps} />;
 		case 'consentInProgress':
-			return ConsentInProgressNotification;
+			return <ConsentInProgressNotification currentLang={notificationProps.currentLang} />;
 		case 'consentComplete':
-			return ConsentCompletionNotification;
+			return <ConsentCompletionNotification {...notificationProps} />;
 		default:
 			return null;
 	}
@@ -53,14 +59,10 @@ const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLangu
 		dismissClick: dismissNotification,
 	};
 
-	const NotificationComp = getNotificationComponent(notificationConfig);
+	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
 
-	if (NotificationComp) {
-		return (
-			<div className={styles.notification}>
-				<NotificationComp {...notificationProps} />
-			</div>
-		);
+	if (notificationComponent) {
+		return <div className={styles.notification}>{notificationComponent}</div>;
 	} else {
 		return <></>;
 	}
