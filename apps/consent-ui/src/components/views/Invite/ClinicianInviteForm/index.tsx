@@ -30,7 +30,7 @@ import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
-import useRecaptcha from 'src/hooks/useRecaptcha';
+import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/common/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { axiosClient } from 'src/services/api/axiosClient';
@@ -76,8 +76,16 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
 }) => {
+	// setup submit button enabled status
+	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
+	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
+		// enable submit button if the form & recaptcha are both valid
+		setEnableSubmit(isValid && !!recaptchaToken);
+	};
+
 	// setup react-hook-forms
 	const methods = useForm<ClinicianInviteRequest>({
+		mode: 'onBlur',
 		resolver: zodResolver(ClinicianInviteRequest),
 	});
 
@@ -99,8 +107,9 @@ const ClinicianInviteFormComponent = ({
 	} = useRecaptcha();
 
 	const handleRecaptchaChange = () => {
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
+		const recaptchaToken = getRecaptchaToken();
+		recaptchaToken && setRecaptchaError('');
+		handleEnableSubmit(isValid, recaptchaToken);
 		onRecaptchaChange();
 	};
 
@@ -125,6 +134,12 @@ const ClinicianInviteFormComponent = ({
 			setRecaptchaError('Please complete captcha');
 		}
 	};
+
+	// toggle submit button's enabled status when isValid changes
+	useEffect(() => {
+		const recaptchaToken = getRecaptchaToken();
+		handleEnableSubmit(isValid, recaptchaToken);
+	}, [getRecaptchaToken, isValid]);
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
 	const watchConsentGroup = watch('consentGroup');
@@ -330,7 +345,7 @@ const ClinicianInviteFormComponent = ({
 
 					<Button
 						className={styles.submitButton}
-						color={isValid ? 'green' : 'default'}
+						color={enableSubmit ? 'green' : 'default'}
 						type="submit"
 					>
 						{textDict.submit}
