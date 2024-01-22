@@ -72,7 +72,10 @@ const SelectInput = <T extends FieldValues, V extends string>({
 							// in react-select the value can be a string or object.
 							// in our implementation it must be {label, value},
 							// with the label being translated.
-							// empty string case = nothing has been chosen yet.
+							// empty string case doesn't happen in our implementation,
+							// because the user can't unselect this field after
+							// making a selection.
+							// the default unselected value is `undefined`
 							let onChangeParam = '';
 							if (typeof val === 'string') {
 								onChangeParam = val;
