@@ -36,6 +36,8 @@ export type RadioFieldSetProps<T extends FieldValues> = Omit<
 > & {
 	description: ReactNode;
 	title?: string;
+	yesLabel: string;
+	noLabel: string;
 };
 
 const RadioFieldSet = <T extends FieldValues>({
@@ -46,9 +48,12 @@ const RadioFieldSet = <T extends FieldValues>({
 	name,
 	required,
 	title,
+	yesLabel,
+	noLabel,
 }: RadioFieldSetProps<T>) => {
-	const YesRadioId = useId();
-	const NoRadioId = useId();
+	const id = useId();
+	const radio1Id = id + '-radio-1';
+	const radio2Id = id + '-radio-2';
 	return (
 		<fieldset
 			className={clsx(
@@ -59,37 +64,39 @@ const RadioFieldSet = <T extends FieldValues>({
 			)}
 		>
 			{title && (
-				<h4 className={styles.title}>
-					{title}
-					{required && <RequiredAsterisk />}
-				</h4>
+				<legend className={styles.title}>
+					<h4>
+						{title}
+						{required && <RequiredAsterisk />}
+					</h4>
+				</legend>
 			)}
-			<div className={styles.description}>
+			<legend className={styles.description}>
 				{description}
 				{required && !title && <RequiredAsterisk />}
-			</div>
+			</legend>
 			<div className={styles.radiosWrapper}>
-				<label htmlFor={YesRadioId} className={styles.radioWrapper}>
+				<label htmlFor={radio1Id} className={styles.radioWrapper}>
 					<RadioInput
 						className={styles.radioInput}
 						disabled={disabled}
-						id={YesRadioId}
+						id={radio1Id}
 						name={name}
 						required={required}
 						value={'Yes'}
 					/>
-					<span className={styles.radioLabel}>Yes</span>
+					<span className={styles.radioLabel}>{yesLabel}</span>
 				</label>
-				<label htmlFor={NoRadioId} className={styles.radioWrapper}>
+				<label htmlFor={radio2Id} className={styles.radioWrapper}>
 					<RadioInput
 						className={styles.radioInput}
 						disabled={disabled}
-						id={NoRadioId}
+						id={radio2Id}
 						name={name}
 						required={required}
 						value={'No'}
 					/>
-					<span className={styles.radioLabel}>No</span>
+					<span className={styles.radioLabel}>{noLabel}</span>
 				</label>
 			</div>
 			{error && <InputError>{error}</InputError>}

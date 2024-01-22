@@ -104,8 +104,19 @@
 		.description {
 			color: theme('colors.error.600');
 		}
-		.radioInput {
-			border-color: theme('colors.error.500');
+		.radioWrapper {
+			.radioInput {
+				& + span {
+					color: theme('colors.error.500');
+					&:before {
+						background: theme('colors.error.100');
+						border-color: theme('colors.error.500');
+					}
+					&:after {
+						background: theme('colors.error.500');
+					}
+				}
+			}
 		}
 	}
 }
