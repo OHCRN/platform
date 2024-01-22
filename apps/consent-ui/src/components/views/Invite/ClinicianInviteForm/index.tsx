@@ -19,7 +19,7 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ConsentGroup } from 'types/entities';
@@ -84,8 +84,9 @@ const ClinicianInviteFormComponent = ({
 	});
 
 	const {
-		formState: { errors, isValid },
+		formState: { errors, isValid, touchedFields },
 		handleSubmit,
+		trigger,
 		watch,
 	} = methods;
 
@@ -133,6 +134,21 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
 	}, [getRecaptchaToken, isValid]);
+
+	// validate consentToBeContacted onChange
+	// putting this in an onChange event in the checkbox input
+	// triggers validation before the form state is updated.
+	const touchedConsentToBeContacted = touchedFields.consentToBeContacted;
+	const watchConsentToBeContacted = watch('consentToBeContacted');
+	const triggerConsentToBeContacted = useCallback(() => {
+		if (touchedConsentToBeContacted) {
+			// check if field is touched to prevent validation on initial render.
+			trigger('consentToBeContacted');
+		}
+	}, [touchedConsentToBeContacted, trigger]);
+	useEffect(() => {
+		triggerConsentToBeContacted();
+	}, [triggerConsentToBeContacted, watchConsentToBeContacted]);
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
 	// guardian fields register on mount, in their input component.
