@@ -22,7 +22,7 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ConsentGroup, InviteGuardianFields } from 'types/entities';
+import { ConsentGroup } from 'types/entities';
 import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
 
@@ -56,13 +56,6 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
 
-const guardianInfoFields: (keyof InviteGuardianFields)[] = [
-	'guardianName',
-	'guardianPhoneNumber',
-	'guardianEmailAddress',
-	'guardianRelationship',
-];
-
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
 	currentLang,
@@ -87,10 +80,12 @@ const ClinicianInviteFormComponent = ({
 	const methods = useForm<ClinicianInviteRequest>({
 		mode: 'onBlur',
 		resolver: zodResolver(ClinicianInviteRequest),
+		shouldUnregister: true,
 	});
 
 	const {
 		formState: { errors, isValid },
+		getValues,
 		handleSubmit,
 		unregister,
 		watch,
@@ -142,19 +137,14 @@ const ClinicianInviteFormComponent = ({
 	}, [getRecaptchaToken, isValid]);
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
+	// guardian fields register on mount, in their input component.
+	// they unregister on unmount, with `shouldUnregister: true`
 	const watchConsentGroup = watch('consentGroup');
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
-		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
-			// guardian fields are registered on render, in their input components
-			setShowGuardianFields(true);
-		} else {
-			setShowGuardianFields(false);
-			guardianInfoFields.forEach((field) => {
-				unregister(field);
-			});
-		}
-	}, [unregister, watchConsentGroup]);
+		const enableGuardianFields = consentGroupsRequiringGuardian.includes(watchConsentGroup);
+		setShowGuardianFields(enableGuardianFields);
+	}, [watchConsentGroup]);
 
 	// setup consent group info modal
 	const { openModal, closeModal } = useModal();
