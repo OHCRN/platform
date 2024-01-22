@@ -19,7 +19,7 @@
 
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ConsentGroup } from 'types/entities';
@@ -140,15 +140,12 @@ const ClinicianInviteFormComponent = ({
 	// triggers validation before the form state is updated.
 	const touchedConsentToBeContacted = touchedFields.consentToBeContacted;
 	const watchConsentToBeContacted = watch('consentToBeContacted');
-	const triggerConsentToBeContacted = useCallback(() => {
+	useEffect(() => {
 		if (touchedConsentToBeContacted) {
 			// check if field is touched to prevent validation on initial render.
 			trigger('consentToBeContacted');
 		}
-	}, [touchedConsentToBeContacted, trigger]);
-	useEffect(() => {
-		triggerConsentToBeContacted();
-	}, [triggerConsentToBeContacted, watchConsentToBeContacted]);
+	}, [touchedConsentToBeContacted, trigger, watchConsentToBeContacted]);
 
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
 	// guardian fields register on mount, in their input component.
