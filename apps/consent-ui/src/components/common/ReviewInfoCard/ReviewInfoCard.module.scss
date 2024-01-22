@@ -38,35 +38,6 @@
 	gap: 1rem;
 }
 
-.redirectButton {
-	width: 4.5rem;
-	height: 2rem;
-	border-radius: 25px;
-	border: 2px solid;
-	gap: 10px;
-
-	background-color: theme('colors.grayscale.800');
-	color: theme('colors.grayscale.100');
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	text-align: center;
-	text-decoration: none;
-
-	margin: 0;
-	font-size: theme('fontSize.sm');
-	font-weight: 700;
-	line-height: 26px;
-
-	&:hover {
-		background-color: theme('colors.grayscale.700');
-		border-color: theme('colors.grayscale.700') !important;
-		color: theme('colors.grayscale.100') !important;
-		transition: all 0.2s ease-in-out;
-	}
-}
-
 .subtitle {
 	font-size: theme('fontSize.sm');
 	@media (min-width: theme('screens.sm')) {
