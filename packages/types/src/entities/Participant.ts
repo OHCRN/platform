@@ -43,10 +43,11 @@ export const ParticipantBaseOhipNameFields = z.object({
 });
 export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNameFields>;
 
-// participant contact info is optional to allow for excluding based on presence of guardian
+// TODO : participant contact info will need to be optional if excluding these fields based on presence of guardian
+// TBD in https://github.com/OHCRN/platform/issues/388
 export const ParticipantContactFields = z.object({
-	participantEmailAddress: z.string().email().optional(),
-	participantPhoneNumber: PhoneNumber.optional(),
+	participantEmailAddress: z.string().email(),
+	participantPhoneNumber: PhoneNumber,
 });
 export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
 
@@ -70,6 +71,7 @@ export const PIParticipantBase = ParticipantIdentityBase.merge(
 		mailingAddressCity: z.string().optional(),
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: PostalCode.optional(),
+		// TODO: if residentialPostalCode is required, it must be included in registration form, see https://github.com/OHCRN/platform/issues/388
 		residentialPostalCode: PostalCode,
 		inviteId: NanoId.optional(),
 		participantOhipMiddleName: Name.optional(),
@@ -80,10 +82,17 @@ export type PIParticipantBase = z.infer<typeof PIParticipantBase>;
 export const ConsentParticipantBase = z
 	.object({
 		currentLifecycleState: LifecycleState,
-		previousLifecycleState: LifecycleState.optional(),
 		consentGroup: ConsentGroup,
 		emailVerified: z.boolean(),
 		isGuardian: z.boolean(),
 	})
 	.merge(ConsentToBeContacted);
 export type ConsentParticipantBase = z.infer<typeof ConsentParticipantBase>;
+
+export const ConsentParticipant = ConsentParticipantBase.merge(
+	z.object({
+		id: NanoId,
+		previousLifecycleState: LifecycleState.optional(),
+	}),
+);
+export type ConsentParticipant = z.infer<typeof ConsentParticipant>;

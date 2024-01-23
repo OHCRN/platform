@@ -42,6 +42,8 @@ const requiresParticipantContactInfo = (consentGroup: ConsentGroup) => {
 
 const isUndefined = (arg: any): arg is undefined => arg === undefined;
 
+// TODO: decide if participant contact fields will be excluded in a guardian is present
+// TBD in https://github.com/OHCRN/platform/issues/388
 export const hasRequiredParticipantContactInfo = (
 	props: {
 		consentGroup: ConsentGroup;

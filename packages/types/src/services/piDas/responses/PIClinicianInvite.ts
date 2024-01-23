@@ -21,7 +21,7 @@ import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 import { z } from 'zod';
 
-import { GuardianResponseFields } from '../../../entities/Guardian.js';
+import { GuardianNullableResponseFields } from '../../../entities/Guardian.js';
 import {
 	InviteGuardianFields,
 	InviteParticipantFields,
@@ -31,7 +31,7 @@ import { Name, NanoId } from '../../../entities/fields/index.js';
 export const PIClinicianInvite = InviteParticipantFields.merge(InviteGuardianFields);
 
 export const PIClinicianInviteResponse = PIClinicianInvite.extend({ id: NanoId })
-	.extend(GuardianResponseFields)
+	.extend(GuardianNullableResponseFields)
 	.extend({
 		participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
 	});

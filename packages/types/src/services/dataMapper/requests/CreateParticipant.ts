@@ -20,23 +20,13 @@
 import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import {
-	hasRequiredGuardianInformation,
-	hasRequiredParticipantContactInfo,
-} from '../../../common/index.js';
-import {
-	ConsentGroup,
-	ConsentToBeContacted,
-	ParticipantIdentityBase,
-} from '../../../entities/index.js';
+import { hasRequiredGuardianInformation } from '../../../common/index.js';
+import { ConsentParticipantBase, ParticipantIdentityBase } from '../../../entities/index.js';
 
-// consentGroup not a part of PI data, but pass in to do the required fields refinement
-export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentToBeContacted)
-	.merge(z.object({ isGuardian: z.boolean(), consentGroup: ConsentGroup }))
-	.refine(hasRequiredGuardianInformation, {
-		message: 'Guardian contact fields are required for that consentGroup',
-	})
-	.refine(hasRequiredParticipantContactInfo);
-
+export const CreateParticipantRequest = ParticipantIdentityBase.merge(
+	ConsentParticipantBase,
+).refine(hasRequiredGuardianInformation, {
+	message: 'Guardian contact fields are required for that consentGroup',
+});
 export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
 export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);

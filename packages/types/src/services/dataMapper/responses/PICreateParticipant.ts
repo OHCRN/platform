@@ -20,15 +20,18 @@
 import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 
-import { ParticipantIdentityBase, GuardianResponseFields } from '../../../entities/index.js';
+import {
+	ParticipantIdentityBase,
+	GuardianNullableResponseFields,
+} from '../../../entities/index.js';
 import { Name, NanoId } from '../../../entities/fields/index.js';
 
-const PICreateParticipantResponse = ParticipantIdentityBase.merge(
+export const PICreateParticipantResponse = ParticipantIdentityBase.merge(
 	z.object({
 		id: NanoId,
 	}),
 )
-	.extend(GuardianResponseFields)
+	.extend(GuardianNullableResponseFields)
 	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
 
 export type PICreateParticipantResponse = z.infer<typeof PICreateParticipantResponse>;

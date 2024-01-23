@@ -20,7 +20,7 @@
 import { z } from 'zod'
 import { ConsentGroup, LifecycleState, Name, NanoId, OhipNumber, PostalCode, Province } from './fields/index.js';
 import { ParticipantIdentityBase } from './index.js';
-import { hasRequiredGuardianInformation, hasRequiredParticipantContactInfo } from '../common/index.js';
+import { hasRequiredGuardianInformation } from '../common/index.js';
 
 export const ParticipantIdentity = ParticipantIdentityBase.merge(
 	z.object({
@@ -39,6 +39,5 @@ export const ParticipantIdentity = ParticipantIdentityBase.merge(
 	}),
 )
 	.refine(hasRequiredGuardianInformation)
-	.refine(hasRequiredParticipantContactInfo);
 
 export type ParticipantIdentity = z.infer<typeof ParticipantIdentity>;
