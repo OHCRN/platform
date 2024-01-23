@@ -31,7 +31,7 @@ import { FormFieldSetWithTooltipProps } from 'src/components/common/Form/types';
 import styles from './CalendarFieldSet.module.scss';
 
 type CalendarFieldSetProps<T extends FieldValues> = FormFieldSetWithTooltipProps<T> & {
-	placeholder: string;
+	placeholder?: string;
 };
 
 const CalendarFieldSet = <T extends FieldValues>({
