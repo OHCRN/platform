@@ -19,14 +19,19 @@
 
 import { AxiosError } from 'axios';
 import { Result, failure, success } from 'types/httpResponses';
-import { PIClinicianInviteRequest, PIClinicianInviteResponse } from 'types/dataMapper';
+import {
+	PIClinicianInviteRequest,
+	PIClinicianInviteResponse,
+	PICreateParticipantRequest,
+	PICreateParticipantResponse,
+} from 'types/dataMapper';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { CreateInviteFailureStatus } from '../create.js';
-import { GetInviteFailureStatus } from '../search.js';
+import { CreateInviteFailureStatus, CreateParticipantFailureStatus } from '../create.js';
+import { GetInviteFailureStatus, SystemError } from '../search.js';
 
 const logger = serviceLogger.forModule('PIClient');
 
@@ -108,7 +113,7 @@ export const createInvitePiData = async (
 	}
 };
 
-type DeleteInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+type DeleteInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
 /**
  * Makes request to PI DAS to delete a Clinician Invite
  * @param inviteId ID of invite to be deleted
@@ -119,7 +124,7 @@ export const deleteInvitePiData = async (
 ): Promise<Result<null, DeleteInviteFailureStatus>> => {
 	const { piDasUrl } = getAppConfig();
 	try {
-		await axiosClient.delete(urlJoin(piDasUrl, `clinician-invites/${inviteId}`));
+		await axiosClient.delete(urlJoin(piDasUrl, 'clinician-invites', inviteId));
 		return success(null);
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
@@ -137,20 +142,99 @@ export const deleteInvitePiData = async (
 	}
 };
 
-// TODO: add proper JSDoc comments
-export const createParticipantPiData = async ({
-	name,
-	email,
-}: {
-	name: string;
-	email: string;
-}): Promise<any> => {
-	// TODO: add Type instead of any
+/**
+ * Makes request to PI DAS to create a Participant
+ * Deletes Participant if response parsing fails
+ * @param PICreateParticipantRequest PI create participant data
+ * @returns {PICreateParticipantResponse} Participant object from PI DAS
+ */
+export const createParticipantPiData = async (
+	req: PICreateParticipantRequest,
+): Promise<Result<PICreateParticipantResponse, CreateParticipantFailureStatus>> => {
 	const { piDasUrl } = getAppConfig();
-	// TODO: add error handling
-	const result = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
-		name,
-		email,
-	});
-	return result.data.participant;
+	const {
+		participantOhipFirstName,
+		participantOhipLastName,
+		dateOfBirth,
+		participantPhoneNumber,
+		participantPreferredName,
+		participantEmailAddress,
+		guardianEmailAddress,
+		guardianPhoneNumber,
+		guardianRelationship,
+	} = req;
+	try {
+		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
+			participantOhipFirstName,
+			participantOhipLastName,
+			dateOfBirth,
+			participantPhoneNumber,
+			participantPreferredName,
+			participantEmailAddress,
+			guardianEmailAddress,
+			guardianPhoneNumber,
+			guardianRelationship,
+		});
+
+		const participant = PICreateParticipantResponse.safeParse(data.participant);
+		if (!participant.success) {
+			logger.error(
+				'Received invalid data from create participant response',
+				participant.error.issues,
+			);
+			const participantId = data.participant.id;
+			if (participantId) {
+				// delete participant from PI DB if response parsing fails
+				logger.info('Deleting invalid participant');
+				const deletePiParticipant = await deleteParticipantPiData(participantId);
+				if (deletePiParticipant.status !== 'SUCCESS') {
+					logger.error('Error deleting existing PI participant:', deletePiParticipant.message);
+					return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+				}
+			}
+			return failure('SYSTEM_ERROR', participant.error.message);
+		}
+		return success(participant.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('AxiosError handling create participant request', data);
+
+			if (status === 409) {
+				return failure('PARTICIPANT_EXISTS', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error handling create participant request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+type DeleteParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST';
+/**
+ * Makes request to PI DAS to delete a Participant
+ * @param participantId ID of participant to be deleted
+ */
+export const deleteParticipantPiData = async (
+	participantId: string,
+): Promise<Result<null, DeleteParticipantFailureStatus>> => {
+	const { piDasUrl } = getAppConfig();
+	try {
+		await axiosClient.delete(urlJoin(piDasUrl, 'participants', participantId));
+		return success(null);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('AxiosError handling delete participant request', data);
+
+			if (status === 404) {
+				return failure('PARTICIPANT_DOES_NOT_EXIST', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error handling delete participant request', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
 };

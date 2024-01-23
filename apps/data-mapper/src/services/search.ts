@@ -18,8 +18,8 @@ const logger = serviceLogger.forModule('SearchService');
 
 const { INFORMED_CONSENT } = ConsentCategory.enum;
 
-type SystemError = 'SYSTEM_ERROR';
-type InvalidRequest = 'INVALID_REQUEST';
+export type SystemError = 'SYSTEM_ERROR';
+export type InvalidRequest = 'INVALID_REQUEST';
 
 // PI-DAS
 // TODO: add Type instead of any

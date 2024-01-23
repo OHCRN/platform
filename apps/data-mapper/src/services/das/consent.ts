@@ -18,19 +18,21 @@
  */
 
 import { AxiosError } from 'axios';
-import { ConsentCategory, ConsentQuestionArray, ConsentQuestionId } from 'types/entities';
-import { Result, failure, success } from 'types/httpResponses';
 import {
-	ParticipantResponseArray,
 	ConsentClinicianInviteRequest,
 	ConsentClinicianInviteResponse,
+	ConsentCreateParticipantRequest,
+	ConsentCreateParticipantResponse,
+	ParticipantResponseArray,
 } from 'types/dataMapper';
+import { ConsentCategory, ConsentQuestionArray, ConsentQuestionId } from 'types/entities';
+import { Result, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { CreateInviteFailureStatus } from '../create.js';
+import { CreateInviteFailureStatus, CreateParticipantFailureStatus } from '../create.js';
 import { GetInviteFailureStatus, GetResponsesFailureStatus } from '../search.js';
 
 const logger = serviceLogger.forModule('ConsentClient');
@@ -213,20 +215,32 @@ export const getParticipantResponsesByQuestionId = async ({
 	}
 };
 
-// TODO: add proper JSDoc comments
-export const createParticipantConsentData = async ({
-	participantId,
-	emailVerified,
-}: {
-	participantId: string;
-	emailVerified: boolean;
-}): Promise<any> => {
-	// TODO: add Type instead of any
+/**
+ * Makes request to Consent DAS to create a Participant
+ * @param ConsentCreateParticipantRequest Consent create participant data
+ * @returns {ConsentCreateParticipantResponse} Participant object from Consent DAS
+ */
+export const createParticipantConsentData = async (
+	req: ConsentCreateParticipantRequest,
+): Promise<Result<ConsentCreateParticipantResponse, CreateParticipantFailureStatus>> => {
 	const { consentDasUrl } = getAppConfig();
-	// TODO: add error handling
-	const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), {
-		participantId,
-		emailVerified,
-	});
-	return result.data.participant;
+	try {
+		const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), req);
+		return success(result.data.participant);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+
+			if (status === 400) {
+				logger.error('Invalid request while creating participant', data);
+				return failure('INVALID_REQUEST', data.message);
+			}
+
+			logger.error('AxiosError creating participant', data);
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error creating participant', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
 };
