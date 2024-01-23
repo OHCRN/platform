@@ -19,32 +19,38 @@
 
 'use client';
 
-import { useNotification } from 'src/components/providers/NotificationProvider';
+import { useEffect } from 'react';
+
 import { ValidLanguage } from 'src/i18n';
-import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
+import { Notification, useNotification } from 'src/components/providers/NotificationProvider';
 
-import styles from './DashboardNotificationDisplay.module.scss';
+import HomepageNotificationDisplay from './HomepageNotificationDisplay';
 
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { dismissNotification, notificationConfig } = useNotification();
+const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { showNotification } = useNotification();
 
-	// check if there's a notification for this page in context
-	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
-		return <></>;
-	}
+	// STUB - get consent progress from API
+	const consentInProgress = true;
 
-	const notificationProps = {
-		currentLang,
-		dismissClick: dismissNotification,
-	};
+	// STUB - get email verified URL param from keycloak redirect URL
+	const emailVerifiedParam = false;
 
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
+	useEffect(() => {
+		// STUB - determine which notification to show
+		let nextNotification: Notification | undefined;
 
-	if (notificationComponent) {
-		return <div className={styles.notification}>{notificationComponent}</div>;
-	} else {
-		return <></>;
-	}
+		if (emailVerifiedParam) {
+			nextNotification = 'emailVerified';
+		} else if (consentInProgress) {
+			nextNotification = 'consentInProgress';
+		}
+
+		if (nextNotification) {
+			showNotification({ page: 'dashboard', notification: nextNotification });
+		}
+	}, [consentInProgress, emailVerifiedParam, showNotification]);
+
+	return <HomepageNotificationDisplay currentLang={currentLang} />;
 };
 
-export default DashboardNotificationDisplay;
+export default DashboardNotification;

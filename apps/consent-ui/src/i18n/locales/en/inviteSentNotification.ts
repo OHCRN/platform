@@ -17,34 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+const dictionary = {
+	boldText:
+		'Please ask them to finish their account creation by clicking the button in that email.',
+	description1:
+		'We have sent a message to the email address that you registered your patient with.',
+	description2: 'If they did not receive the email, please ask them to ',
+	linkText: 'contact us',
+	title: 'Thank you for inviting your patient to join the OHCRN Registry!',
+} satisfies Record<string, string>;
 
-import { useNotification } from 'src/components/providers/NotificationProvider';
-import { ValidLanguage } from 'src/i18n';
-import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
+export type InviteSentNotificationDictionary = Record<keyof typeof dictionary, string>;
 
-import styles from './DashboardNotificationDisplay.module.scss';
-
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { dismissNotification, notificationConfig } = useNotification();
-
-	// check if there's a notification for this page in context
-	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
-		return <></>;
-	}
-
-	const notificationProps = {
-		currentLang,
-		dismissClick: dismissNotification,
-	};
-
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
-
-	if (notificationComponent) {
-		return <div className={styles.notification}>{notificationComponent}</div>;
-	} else {
-		return <></>;
-	}
-};
-
-export default DashboardNotificationDisplay;
+export default dictionary;

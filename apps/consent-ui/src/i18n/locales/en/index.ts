@@ -45,6 +45,7 @@ import inviteFormConsentGroupModalDictionary from './inviteFormConsentGroupModal
 import inviteFormLabelsDictionary from './inviteFormLabels';
 import inviteFormPageDictionary from './inviteFormPage';
 import inviteFormTextDictionary from './inviteFormText';
+import inviteSentNotificationDictionary from './inviteSentNotification';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
@@ -79,6 +80,7 @@ const dictionaries = {
 	inviteFormLabels: inviteFormLabelsDictionary,
 	inviteFormPage: inviteFormPageDictionary,
 	inviteFormText: inviteFormTextDictionary,
+	inviteSentNotification: inviteSentNotificationDictionary,
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,

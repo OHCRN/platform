@@ -17,34 +17,32 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import Link from 'next/link';
 
-import { useNotification } from 'src/components/providers/NotificationProvider';
-import { ValidLanguage } from 'src/i18n';
-import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import Notification from 'src/components/common/Notification';
 
-import styles from './DashboardNotificationDisplay.module.scss';
-
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { dismissNotification, notificationConfig } = useNotification();
-
-	// check if there's a notification for this page in context
-	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
-		return <></>;
-	}
-
-	const notificationProps = {
-		currentLang,
-		dismissClick: dismissNotification,
-	};
-
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
-
-	if (notificationComponent) {
-		return <div className={styles.notification}>{notificationComponent}</div>;
-	} else {
-		return <></>;
-	}
+const InviteSentNotification = ({
+	currentLang,
+	dismissClick,
+}: {
+	currentLang: ValidLanguage;
+	dismissClick: () => void;
+}) => {
+	const translate = getTranslation(currentLang);
+	return (
+		<Notification
+			dismissClick={dismissClick}
+			level="success"
+			title={translate('inviteSentNotification', 'title')}
+		>
+			{translate('inviteSentNotification', 'description1')}{' '}
+			<b>{translate('inviteSentNotification', 'boldText')}</b>
+			{translate('inviteSentNotification', 'description2')}
+			{/* TODO add contact us link https://github.com/OHCRN/platform/issues/393 */}
+			<Link href="#">{translate('inviteSentNotification', 'linkText')}</Link>.
+		</Notification>
+	);
 };
 
-export default DashboardNotificationDisplay;
+export default InviteSentNotification;
