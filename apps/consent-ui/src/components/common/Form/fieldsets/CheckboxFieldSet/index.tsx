@@ -50,16 +50,15 @@ const CheckboxFieldSet = <T extends FieldValues>({
 }: CheckBoxFieldSetProps<T>) => {
 	const checkboxId = useId();
 
-	// validate onChange
-	// putting this in an onChange event
-	// triggers validation before the form state is updated.
-
+	// validate checkbox onChange
+	// - our forms validate onBlur. this is additional validation
+	// - this validation uses a useEffect hook rather than the onChange event,
+	//   to ensure the form state has been updated before validation occurs
 	const {
 		formState: { touchedFields },
 		watch,
 		trigger,
 	} = useFormContext();
-
 	const touchedField = touchedFields[name];
 	const watchField = watch(name);
 	useEffect(() => {
