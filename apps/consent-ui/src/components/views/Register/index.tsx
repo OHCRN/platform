@@ -18,13 +18,15 @@
  */
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import inviteBg from 'src/public/invite-bg.jpg';
 import RegistrationForm from 'src/components/views/Register/RegistrationForm';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+
+// TEMP change to using a string after merging public folder PR
+import registerBg from '../../../../public/assets/images/register-bg.jpg';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -76,7 +78,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
-			desktopHeaderImage={inviteBg}
+			desktopHeaderImage={registerBg}
 			desktopNavAction={{
 				bottomText: translate('registerPage', 'registerPatients'),
 				topText: translate('registerPage', 'ifClinician'),
