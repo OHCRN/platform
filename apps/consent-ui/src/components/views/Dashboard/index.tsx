@@ -38,7 +38,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 			<DashboardNotification currentLang={currentLang} />
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])} layout="row">
 				<div className={styles['consents-img']}>
-					<Image src="/assets/images/consents.jpeg" alt="" />
+					<Image width={2883} height={1922} src="/assets/images/consents.jpeg" alt="" />
 				</div>
 				<div className={styles.content}>
 					<h2>{translate('dashboard', 'reviewOhcrnConsents')}</h2>
