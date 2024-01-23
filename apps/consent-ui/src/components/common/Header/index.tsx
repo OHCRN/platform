@@ -34,12 +34,12 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<div>
 				<Link href={`/${currentLang}`}>
 					<Image
-						src="/assets/images/ohcrn_large.svg"
-						priority
 						alt={translate('header', 'logoAltText')}
 						className={styles.logo}
-						width="250"
-						height="61"
+						height={61}
+						priority
+						src="/assets/images/ohcrn_large.svg"
+						width={250}
 					/>
 				</Link>
 			</div>
