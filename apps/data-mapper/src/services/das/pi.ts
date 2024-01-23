@@ -186,7 +186,7 @@ export const createParticipantPiData = async (
 			if (participantId) {
 				// delete participant from PI DB if response parsing fails
 				logger.info('Deleting invalid participant');
-				const deletePiParticipant = await deleteParticipantPiData(participantId);
+				const deletePiParticipant = await deletePIParticipant(participantId);
 				if (deletePiParticipant.status !== 'SUCCESS') {
 					logger.error('Error deleting existing PI participant:', deletePiParticipant.message);
 					return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
@@ -216,7 +216,7 @@ type DeleteParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST'
  * Makes request to PI DAS to delete a Participant
  * @param participantId ID of participant to be deleted
  */
-export const deleteParticipantPiData = async (
+export const deletePIParticipant = async (
 	participantId: string,
 ): Promise<Result<null, DeleteParticipantFailureStatus>> => {
 	const { piDasUrl } = getAppConfig();

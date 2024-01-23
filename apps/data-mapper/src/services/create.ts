@@ -13,7 +13,7 @@ import {
 	createInvitePiData,
 	createParticipantPiData,
 	deleteInvitePiData,
-	deleteParticipantPiData,
+	deletePIParticipant,
 } from './das/pi.js';
 import { InvalidRequest, SystemError } from './search.js';
 
@@ -95,7 +95,7 @@ export const createParticipant = async ({
 
 		if (participantConsentData.status !== 'SUCCESS') {
 			// Unable to create participant in Consent DAS, rollback participant already created in PI-DAS
-			const deletePiParticipant = await deleteParticipantPiData(participantId);
+			const deletePiParticipant = await deletePIParticipant(participantId);
 			if (deletePiParticipant.status !== 'SUCCESS') {
 				logger.error('Error deleting existing PI participant:', deletePiParticipant.message);
 				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
