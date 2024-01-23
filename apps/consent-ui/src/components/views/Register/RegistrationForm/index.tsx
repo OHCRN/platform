@@ -24,7 +24,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Name, PhoneNumber } from 'types/entities';
 import { useEffect, useState } from 'react';
-import clsx from 'clsx';
 import Link from 'next/link';
 
 import { ValidLanguage, replaceParams } from 'src/i18n';
@@ -86,6 +85,7 @@ const RegistrationForm = ({
 	// setup react-hook-forms
 	const methods = useForm<RegisterRequestStub>({
 		resolver: zodResolver(RegisterRequestStub),
+		shouldUnregister: true,
 	});
 
 	const {
@@ -134,7 +134,10 @@ const RegistrationForm = ({
 	};
 
 	// setup 2-step form
-	// hide inactive step with CSS only, to maintain form state
+	// - show/hide step 1 with CSS only, so the fields are always in form state.
+	// - step 1 must be valid to proceed to step 2.
+	// - show/hide guardian section & step 2 with conditional rendering.
+	//   - these fields will unregister on unmount (removed from form state & validation)
 	const STEP_COUNT = 2;
 	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
 	const handleNextClick = () => setCurrentStep(2);
@@ -156,7 +159,7 @@ const RegistrationForm = ({
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* HEADING */}
 				<h3 className={styles.stepTitle}>
-					{replaceParams('stepCurrentOfTotal', {
+					{replaceParams(textDict.stepCurrentOfTotal, {
 						current: currentStep,
 						total: STEP_COUNT,
 					})}
@@ -178,7 +181,7 @@ const RegistrationForm = ({
 					{/* these fields are conditionally required, i.e. if the user is
 							registering on behalf of someone else */}
 
-					{/* TODO #366 make this section optional/conditional.
+					{/* TODO #366 update this section - add conditional rendering.
 							see guardian fields on invite form for an example. */}
 					<FormSection variant="grey">
 						<p className={styles.instructions}>{textDict.enterInfo}</p>
@@ -274,69 +277,71 @@ const RegistrationForm = ({
 				{/* END STEP 1 */}
 
 				{/* BEGIN STEP 2 */}
-				<div className={clsx(currentStep === 2 ? styles.visible : styles.hidden)}>
-					{/* SECTION - EMAIL & PASSWORD */}
-					<FormSection>
-						<TextFieldSet
-							error={errors.participantEmailAddress?.type && errorsDict.required}
-							label={labelsDict.email || ''}
-							name="participantEmailAddress"
-							required
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.password?.type && errorsDict.required}
-							label={labelsDict.password || ''}
-							name="password"
-							required
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.confirmPassword?.type && errorsDict.required}
-							label={labelsDict.confirmPassword || ''}
-							name="confirmPassword"
-							required
-							withNarrowDesktopLayout
-						/>
-					</FormSection>
-
-					{/* SECTION - CONSENT TO BE CONTACTED */}
-					<FormSection className={styles.consentCheckbox}>
-						<CheckboxFieldSet
-							description={textDict.consentContactDescription}
-							error={errors.consentToBeContacted?.type && errorsDict.required}
-							name="consentToBeContacted"
-							required
-							title={labelsDict.consentContact}
-						/>
-					</FormSection>
-
-					{/* SECTION - RECAPTCHA */}
-					<FormSection>
-						{recaptchaError && (
-							<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
-						)}
-
-						<div className={styles.recaptchaCheckbox}>
-							<RecaptchaCheckbox
-								onChange={handleRecaptchaChange}
-								recaptchaCheckboxRef={recaptchaCheckboxRef}
+				{currentStep === 2 && (
+					<div>
+						{/* SECTION - EMAIL & PASSWORD */}
+						<FormSection>
+							<TextFieldSet
+								error={errors.participantEmailAddress?.type && errorsDict.required}
+								label={labelsDict.email || ''}
+								name="participantEmailAddress"
+								required
+								withNarrowDesktopLayout
 							/>
-						</div>
-					</FormSection>
+							<TextFieldSet
+								error={errors.password?.type && errorsDict.required}
+								label={labelsDict.password || ''}
+								name="password"
+								required
+								withNarrowDesktopLayout
+							/>
+							<TextFieldSet
+								error={errors.confirmPassword?.type && errorsDict.required}
+								label={labelsDict.confirmPassword || ''}
+								name="confirmPassword"
+								required
+								withNarrowDesktopLayout
+							/>
+						</FormSection>
 
-					{/* GO TO PREVIOUS PAGE */}
-					<div className={styles.buttonWrapper}>
-						<Button
-							aria-label={`${textDict.goToStep} 1`}
-							onClick={handleBackClick}
-							variant="secondary"
-						>
-							{textDict.back}
-						</Button>
-						<Button type="submit">{textDict.createAccount}</Button>
+						{/* SECTION - CONSENT TO BE CONTACTED */}
+						<FormSection className={styles.consentCheckbox}>
+							<CheckboxFieldSet
+								description={textDict.consentContactDescription}
+								error={errors.consentToBeContacted?.type && errorsDict.required}
+								name="consentToBeContacted"
+								required
+								title={labelsDict.consentContact}
+							/>
+						</FormSection>
+
+						{/* SECTION - RECAPTCHA */}
+						<FormSection>
+							{recaptchaError && (
+								<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+							)}
+
+							<div className={styles.recaptchaCheckbox}>
+								<RecaptchaCheckbox
+									onChange={handleRecaptchaChange}
+									recaptchaCheckboxRef={recaptchaCheckboxRef}
+								/>
+							</div>
+						</FormSection>
+
+						{/* GO TO PREVIOUS PAGE */}
+						<div className={styles.buttonWrapper}>
+							<Button
+								aria-label={`${textDict.goToStep} 1`}
+								onClick={handleBackClick}
+								variant="secondary"
+							>
+								{textDict.back}
+							</Button>
+							<Button type="submit">{textDict.createAccount}</Button>
+						</div>
 					</div>
-				</div>
+				)}
 				{/* END STEP 2 */}
 			</Form>
 		</FormProvider>
