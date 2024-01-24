@@ -1,7 +1,62 @@
+.OHIPFieldset {
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: auto;
+	grid-row-gap: 0.25rem;
+
+	@media (min-width: 600px) {
+		display: grid;
+		grid-template-columns: minmax(15%, 12rem) auto;
+		grid-column-gap: 1rem;
+	}
+	@media (min-width: theme('screens.md')) {
+		&.wideDesktop {
+			grid-template-columns: minmax(20%, 9rem) auto minmax(20%, 13rem);
+			grid-column-gap: 0.5rem;
+		}
+	}
+
+	&.error {
+		.OHIPTextWrapper {
+			color: theme('colors.error.500');
+		}
+
+		.OHIPTextInput {
+			border-color: theme('colors.error.500');
+		}
+
+		.OHIPCheckboxWrapper {
+			color: theme('colors.error.500');
+		}
+
+		.OHIPCheckboxInput {
+			border-color: theme('colors.error.500');
+			accent-color: theme('colors.error.500');
+		}
+	}
+}
+
+.OHIPHeader {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .OHIPWrapper {
 	display: flex;
 	flex-direction: column;
 	font-size: theme('fontSize.sm');
+	margin-bottom: 0.5rem;
+}
+
+.OHIPTextWrapper {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.25rem;
+
+	@media (min-width: theme('screens.sm')) {
+		flex-direction: column-reverse;
+	}
 }
 
 .OHIPTextInput {
@@ -23,13 +78,23 @@
 	&:disabled {
 		background: theme('colors.grayscale.200');
 	}
-
-	margin-bottom: 1rem;
 }
 
 .label {
 	font-weight: 700;
 	font-size: theme('fontSize.sm');
+}
+
+.OHIPCheckboxInput {
+	appearance: none;
+	width: 1rem;
+	height: 1rem;
+	border-radius: 0.25rem;
+	border: 1px solid theme('colors.grayscale.500');
+
+	&:checked {
+		appearance: auto;
+	}
 }
 
 .OHIPCheckboxWrapper {

@@ -72,29 +72,34 @@ const OHIPFieldSet = <T extends FieldValues>({
 				className,
 			)}
 		>
-			{title && (
-				<h4 className={styles.title}>
-					{title}
-					{required && <RequiredAsterisk />}
-				</h4>
-			)}
-			{subtitle && (
-				<h4 className={styles.subtitle}>
-					{subtitle}
-					{required && !title && <RequiredAsterisk />}
-				</h4>
-			)}
-			<div className={styles.OHIPWrapper}>
-				<TextInput
-					className={styles.OHIPTextInput}
-					disabled={disabled || checkboxValue} // TODO: change to different disabled
-					id={OHIPTextInputId}
-					name={name}
-					required={required}
-					type={'text'}
-				/>
+			<div className={styles.OHIPHeader}>
+				{title && (
+					<h4 className={styles.title}>
+						{title}
+						{required && <RequiredAsterisk />}
+					</h4>
+				)}
+				{subtitle && (
+					<h4 className={styles.subtitle}>
+						{subtitle}
+						{required && !title && <RequiredAsterisk />}
+					</h4>
+				)}
+			</div>
 
-				{label && <span className={styles.label}>{label}</span>}
+			<div className={styles.OHIPWrapper}>
+				<div className={styles.OHIPTextWrapper}>
+					<TextInput
+						className={styles.OHIPTextInput}
+						disabled={disabled || checkboxValue}
+						id={OHIPTextInputId}
+						name={name}
+						required={required}
+						type={'text'}
+					/>
+
+					{label && <span className={styles.label}>{label}</span>}
+				</div>
 
 				<label htmlFor={OHIPCheckboxId} className={styles.OHIPCheckboxWrapper}>
 					<CheckboxInput
@@ -106,8 +111,8 @@ const OHIPFieldSet = <T extends FieldValues>({
 					/>
 					<span className={styles.OHIPCheckboxLabel}>{checkboxLabel}</span>
 				</label>
+				{error && <InputError>{error}</InputError>}
 			</div>
-			{error && <InputError>{error}</InputError>}
 		</fieldset>
 	);
 };
