@@ -24,7 +24,6 @@ import Card from 'src/components/common/Card';
 import ProgressHeader from 'src/components/common/ProgressHeader';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
-import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
 
 import styles from './ConsentWizard.module.scss';
 
@@ -82,19 +81,7 @@ const ConsentWizard = async ({
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}
-						{currentStep === CONSENT_REVIEW_SIGN && (
-							<>
-								<ReviewInfoCard
-									name={`consent-1`}
-									linkLang={currentLang}
-									title={'slfjsd'}
-									editText={'sdlkfjf'}
-									required={true}
-								>
-									{'subtite'}
-								</ReviewInfoCard>
-							</>
-						)}
+						{currentStep === CONSENT_REVIEW_SIGN && <></>}
 					</div>
 				</Card>
 			</div>
