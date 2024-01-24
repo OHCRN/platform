@@ -99,10 +99,6 @@ const CheckboxFieldSet = <T extends FieldValues>({
 						// which will allow a click event on this label/checkbox,
 						// which will be followed automatically by a blur event (for validation)
 						e.preventDefault();
-						console.log('label mousedown');
-					}}
-					onClick={() => {
-						console.log('label click');
 					}}
 				>
 					<span className={styles.description}>

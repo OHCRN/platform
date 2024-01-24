@@ -45,10 +45,8 @@ const CheckboxInput = <T extends FieldValues>({
 				// which will allow a click event on this label/checkbox,
 				// which will be followed automatically by a blur event (for validation)
 				e.preventDefault();
-				console.log('checkbox mousedown');
 			}}
 			onClick={() => {
-				console.log('checkbox click');
 				// force focus change & onBlur validation in safari
 				setFocus(name);
 			}}
