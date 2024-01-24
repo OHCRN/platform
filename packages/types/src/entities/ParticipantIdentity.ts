@@ -17,10 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod'
-import { ConsentGroup, LifecycleState, Name, NanoId, OhipNumber, PostalCode, Province } from './fields/index.js';
-import { ParticipantIdentityBase } from './index.js';
+import { z } from 'zod';
+
 import { hasRequiredGuardianInformation } from '../common/index.js';
+
+import {
+	ConsentGroup,
+	LifecycleState,
+	Name,
+	NanoId,
+	OhipNumber,
+	PostalCode,
+	Province,
+} from './fields/index.js';
+
+import { ParticipantIdentityBase } from './index.js';
 
 export const ParticipantIdentity = ParticipantIdentityBase.merge(
 	z.object({
@@ -37,7 +48,6 @@ export const ParticipantIdentity = ParticipantIdentityBase.merge(
 		consentGroup: ConsentGroup,
 		participantOhipMiddleName: Name.optional(),
 	}),
-)
-	.refine(hasRequiredGuardianInformation)
+).refine(hasRequiredGuardianInformation);
 
 export type ParticipantIdentity = z.infer<typeof ParticipantIdentity>;

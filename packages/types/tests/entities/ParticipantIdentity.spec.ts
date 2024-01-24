@@ -47,6 +47,7 @@ describe('ParticipantIdentity', () => {
 			guardianPhoneNumber: '6471234567',
 			guardianEmailAddress: 'marge@example.com',
 			guardianRelationship: 'Wife',
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db'
 		});
 		expect(result.success).true;
 	});
@@ -67,10 +68,8 @@ describe('ParticipantIdentity', () => {
 			guardianPhoneNumber: '1234567890',
 			guardianEmailAddress: 'marge.simpson@example.com',
 			guardianRelationship: 'Wife',
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db'
 		});
-		if (!result.success) {
-			console.log(result.error);
-		}
 		expect(result.success).true;
 	});
 	it('Should fail to validate if all guardian fields are NOT present for a guardian-specific ConsentGroup', () => {
