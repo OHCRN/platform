@@ -22,8 +22,8 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { Suspense } from 'react';
 
-import overtureLogo from 'src/../public/assets/images/overture.svg';
-import githubLogo from 'src/../public/assets/images/github.svg';
+import OvertureLogo from 'src/../public/assets/images/overture.svg';
+import GithubLogo from 'src/../public/assets/images/github.svg';
 import packageJson from 'src/../package.json';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
@@ -39,15 +39,10 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					<b>{translate('footer', 'poweredBy')}: </b>
 				</span>
 				<Link href="#" className={clsx(styles.icon, styles.overture)}>
-					<Image
-						alt={translate('footer', 'overtureAlt')}
-						height={22}
-						src={overtureLogo}
-						width={111}
-					/>
+					<Image alt={translate('footer', 'overtureAlt')} src={OvertureLogo} />
 				</Link>
 				<Link href="#" className={styles.icon}>
-					<Image alt={translate('footer', 'githubAlt')} height={20} src={githubLogo} width={20} />
+					<Image alt={translate('footer', 'githubAlt')} src={GithubLogo} />
 				</Link>
 			</div>
 			<div className={styles.copyright}>

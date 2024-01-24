@@ -18,18 +18,27 @@
  */
 
 import Link from 'next/link';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
-import ohcrnLargeLogo from 'src/../public/assets/images/ohcrn_large.svg';
+import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
 import HeaderWrapper from './HeaderWrapper';
 
+const icons: {
+	[k in ValidLanguage]: StaticImageData;
+} = {
+	en: OhcrnImage,
+	fr: OhcrnImage, // TODO: get FR icon
+};
+
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
+	const icon = icons[currentLang || defaultLanguage];
 	return (
 		<HeaderWrapper currentLang={currentLang}>
 			<div>
@@ -37,10 +46,8 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					<Image
 						alt={translate('header', 'logoAltText')}
 						className={styles.logo}
-						height={61}
 						priority
-						src={ohcrnLargeLogo}
-						width={250}
+						src={icon}
 					/>
 				</Link>
 			</div>

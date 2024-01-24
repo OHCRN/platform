@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import onGovtLogo from 'src/../public/assets/images/on_govt.svg';
+import ONGovtLogo from 'src/../public/assets/images/on_govt.svg';
 import { TranslationFunction } from 'src/i18n';
 
 import styles from './Footer.module.scss';
@@ -32,9 +32,7 @@ const Right = ({ translate }: { translate: TranslationFunction }) => {
 				<Image
 					alt={translate('footer', 'onGovtLogoAlt')}
 					className={styles['on-gov']}
-					height={81}
-					src={onGovtLogo}
-					width="175"
+					src={ONGovtLogo}
 				/>
 			</Link>
 		</div>

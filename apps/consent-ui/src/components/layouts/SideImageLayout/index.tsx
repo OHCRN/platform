@@ -17,13 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
-import oicrLogoGrayEN from 'src/../public/assets/images/oicr-logo-gray-en.svg';
-import chevronLarge from 'src/../public/assets/images/chevron-large.svg';
+import OICRLogoEN from 'src/../public/assets/images/oicr-logo-gray-en.svg';
+import ChevronSvg from 'src/../public/assets/images/chevron-large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
@@ -36,7 +36,7 @@ interface SideImageLayoutProps {
 	children: ReactNode;
 	className?: string;
 	currentLang: ValidLanguage;
-	desktopHeaderImage: string;
+	desktopHeaderImage: StaticImageData;
 	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
 	mainSubtitle: ReactNode;
 	mainTitle: string;
@@ -71,7 +71,7 @@ const SideImageLayout = ({
 							alt={translate('footer', 'oicrLogoAlt')}
 							className={styles.logoImg}
 							height={84}
-							src={oicrLogoGrayEN}
+							src={OICRLogoEN}
 							width={350}
 						/>
 					</Link>
@@ -99,13 +99,7 @@ const SideImageLayout = ({
 									<span>{desktopNavAction.topText}</span>
 									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
 								</div>
-								<Image
-									alt=""
-									className={styles.chevron}
-									height={44}
-									src={chevronLarge}
-									width={15}
-								/>
+								<Image alt="" className={styles.chevron} height={44} src={ChevronSvg} width={15} />
 							</LocalizedLink>
 						)}
 					</div>

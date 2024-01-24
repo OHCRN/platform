@@ -19,6 +19,7 @@
 
 import { CONSENT_GROUPS } from 'types/entities';
 
+import InviteBackground from 'src/../public/assets/images/invite-bg.jpg';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -101,7 +102,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
-			desktopHeaderImage="/assets/images/invite-bg.jpg"
+			desktopHeaderImage={InviteBackground}
 			desktopNavAction={{
 				bottomText: pageDict.registerHere,
 				topText: pageDict.ifParticipant,

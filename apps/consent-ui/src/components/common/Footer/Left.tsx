@@ -20,9 +20,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import oicrLogo from 'src/../public/assets/images/oicr.svg';
-import instagramLogo from 'src/../public/assets/images/instagram.svg';
-import twitterLogo from 'src/../public/assets/images/twitter.svg';
+import OICRLogo from 'src/../public/assets/images/oicr.svg';
+import InstagramLogo from 'src/../public/assets/images/instagram.svg';
+import TwitterLogo from 'src/../public/assets/images/twitter.svg';
 import { TranslationFunction } from 'src/i18n';
 
 import styles from './Footer.module.scss';
@@ -31,31 +31,21 @@ const Left = ({ translate }: { translate: TranslationFunction }) => {
 	return (
 		<div className={styles.left}>
 			<Link href="#" className={styles.icon}>
-				<Image
-					alt={translate('footer', 'oicrLogoAlt')}
-					className={styles.oicr}
-					height={83}
-					src={oicrLogo}
-					width={114}
-				/>
+				<Image alt={translate('footer', 'oicrLogoAlt')} className={styles.oicr} src={OICRLogo} />
 			</Link>
 			<div className={styles.mediaIcons}>
 				<Link href="#" className={styles.icon}>
 					<Image
 						alt={translate('footer', 'instagramLogoAlt')}
 						className={styles.instagram}
-						height={41}
-						src={instagramLogo}
-						width={40}
+						src={InstagramLogo}
 					/>
 				</Link>
 				<Link href="#" className={styles.icon}>
 					<Image
 						alt={translate('footer', 'twitterLogoAlt')}
 						className={styles.twitter}
-						height={41}
-						src={twitterLogo}
-						width={40}
+						src={TwitterLogo}
 					/>
 				</Link>
 			</div>
