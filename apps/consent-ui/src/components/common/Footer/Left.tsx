@@ -20,6 +20,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+import oicrLogo from 'src/../public/assets/images/oicr.svg';
+import instagramLogo from 'src/../public/assets/images/instagram.svg';
+import twitterLogo from 'src/../public/assets/images/twitter.svg';
 import { TranslationFunction } from 'src/i18n';
 
 import styles from './Footer.module.scss';
@@ -32,7 +35,7 @@ const Left = ({ translate }: { translate: TranslationFunction }) => {
 					alt={translate('footer', 'oicrLogoAlt')}
 					className={styles.oicr}
 					height={83}
-					src="/assets/images/oicr.svg"
+					src={oicrLogo}
 					width={114}
 				/>
 			</Link>
@@ -42,7 +45,7 @@ const Left = ({ translate }: { translate: TranslationFunction }) => {
 						alt={translate('footer', 'instagramLogoAlt')}
 						className={styles.instagram}
 						height={41}
-						src="/assets/images/instagram.svg"
+						src={instagramLogo}
 						width={40}
 					/>
 				</Link>
@@ -51,7 +54,7 @@ const Left = ({ translate }: { translate: TranslationFunction }) => {
 						alt={translate('footer', 'twitterLogoAlt')}
 						className={styles.twitter}
 						height={41}
-						src="/assets/images/twitter.svg"
+						src={twitterLogo}
 						width={40}
 					/>
 				</Link>

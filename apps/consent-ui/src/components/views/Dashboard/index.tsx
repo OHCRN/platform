@@ -20,6 +20,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
+import consentsImg from 'src/../public/assets/images/consents.jpeg';
 import Card from 'src/components/common/Card';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import PaddedContainer from 'src/components/common/PaddedContainer';
@@ -38,7 +39,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 			<DashboardNotification currentLang={currentLang} />
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])} layout="row">
 				<div className={styles['consents-img']}>
-					<Image width={2883} height={1922} src="/assets/images/consents.jpeg" alt="" />
+					<Image width={2883} height={1922} src={consentsImg} alt="" />
 				</div>
 				<div className={styles.content}>
 					<h2>{translate('dashboard', 'reviewOhcrnConsents')}</h2>

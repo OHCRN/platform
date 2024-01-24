@@ -22,6 +22,8 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
+import oicrLogoGrayEN from 'src/../public/assets/images/oicr-logo-gray-en.svg';
+import chevronLarge from 'src/../public/assets/images/chevron-large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
@@ -69,7 +71,7 @@ const SideImageLayout = ({
 							alt={translate('footer', 'oicrLogoAlt')}
 							className={styles.logoImg}
 							height={84}
-							src="/assets/images/oicr-logo-gray-en.svg"
+							src={oicrLogoGrayEN}
 							width={350}
 						/>
 					</Link>
@@ -101,7 +103,7 @@ const SideImageLayout = ({
 									alt=""
 									className={styles.chevron}
 									height={44}
-									src="/assets/images/chevron-large.svg"
+									src={chevronLarge}
 									width={15}
 								/>
 							</LocalizedLink>

@@ -20,6 +20,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+import ohcrnLargeLogo from 'src/../public/assets/images/ohcrn_large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 
@@ -38,7 +39,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 						className={styles.logo}
 						height={61}
 						priority
-						src="/assets/images/ohcrn_large.svg"
+						src={ohcrnLargeLogo}
 						width={250}
 					/>
 				</Link>
