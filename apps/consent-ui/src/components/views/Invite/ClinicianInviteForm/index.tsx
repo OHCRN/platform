@@ -157,10 +157,6 @@ const ClinicianInviteFormComponent = ({
 
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 
-	const checkboxState = watch('consentToBeContacted');
-
-	console.log('checkboxState', checkboxState);
-
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
