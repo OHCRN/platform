@@ -45,6 +45,7 @@ import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout
 import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
+import OHIPFieldSet from 'src/components/common/Form/fieldsets/OHIPFieldSet';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -304,6 +305,18 @@ const ClinicianInviteFormComponent = ({
 						name="clinicianLastName"
 						required
 						withNarrowDesktopLayout
+					/>
+					<OHIPFieldSet
+						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
+						label={'10-digit number on front of card'}
+						name="clinicianInstitutionalEmailAddress"
+						required
+						// tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
+						// type="email"
+						withNarrowDesktopLayout
+						title={'OHIP #'}
+						subtitle={'(Green Health Card)'}
+						checkboxLabel={'I do not have an Ontario health card.'}
 					/>
 					<TextFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
