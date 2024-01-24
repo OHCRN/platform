@@ -23,8 +23,8 @@ import clsx from 'clsx';
 import { Suspense } from 'react';
 
 import packageJson from 'src/../package.json';
-import GithubLogo from 'src/public/github.svg';
-import OvertureLogo from 'src/public/overture.svg';
+import OvertureLogo from 'src/../public/assets/images/overture.svg';
+import GithubLogo from 'src/../public/assets/images/github.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import APIVersion from './APIVersion';
