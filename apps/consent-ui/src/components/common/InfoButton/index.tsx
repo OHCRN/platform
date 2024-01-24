@@ -20,7 +20,7 @@
 import Image from 'next/image';
 import { SyntheticEvent } from 'react';
 
-import InfoIcon from 'src/../public/assets/images/info.svg';
+import InfoSvg from 'src/../public/assets/images/info.svg';
 
 import styles from './InfoButton.module.scss';
 
@@ -36,7 +36,7 @@ const InfoButton = ({ label, onClick }: InfoButtonProps) => {
 	};
 	return (
 		<button aria-label={label} className={styles.infoButton} onClick={handleClick} type="button">
-			<Image alt="" src={InfoIcon} />
+			<Image alt="" src={InfoSvg} />
 		</button>
 	);
 };

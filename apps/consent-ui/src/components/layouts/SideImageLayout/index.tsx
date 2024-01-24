@@ -58,21 +58,13 @@ const SideImageLayout = ({
 	return (
 		<div className={clsx(styles.container, className)}>
 			<header className={styles.desktopHeader}>
-				<Image
-					alt=""
-					className={styles.image}
-					height={2500}
-					src={desktopHeaderImage}
-					width={1050}
-				/>
+				<Image className={styles.image} src={desktopHeaderImage} alt="" />
 				<div className={clsx(styles.content)}>
 					<Link href={`/${currentLang}`} className={styles.logoLink}>
 						<Image
+							src={OICRLogoEN}
 							alt={translate('footer', 'oicrLogoAlt')}
 							className={styles.logoImg}
-							height={84}
-							src={OICRLogoEN}
-							width={350}
 						/>
 					</Link>
 					<h1 className={styles.title}>{navTitle}</h1>
@@ -99,7 +91,7 @@ const SideImageLayout = ({
 									<span>{desktopNavAction.topText}</span>
 									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
 								</div>
-								<Image alt="" className={styles.chevron} height={44} src={ChevronSvg} width={15} />
+								<Image src={ChevronSvg} alt="" className={styles.chevron} />
 							</LocalizedLink>
 						)}
 					</div>

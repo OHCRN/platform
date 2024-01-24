@@ -20,10 +20,10 @@
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 
-import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
+import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
@@ -44,10 +44,10 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<div>
 				<Link href={`/${currentLang}`}>
 					<Image
+						src={icon}
+						priority
 						alt={translate('header', 'logoAltText')}
 						className={styles.logo}
-						priority
-						src={icon}
 					/>
 				</Link>
 			</div>
