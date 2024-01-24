@@ -293,6 +293,7 @@ const RegistrationForm = ({
 								label={labelsDict.password || ''}
 								name="password"
 								required
+								type="password"
 								withNarrowDesktopLayout
 							/>
 							<TextFieldSet
@@ -300,6 +301,7 @@ const RegistrationForm = ({
 								label={labelsDict.confirmPassword || ''}
 								name="confirmPassword"
 								required
+								type="password"
 								withNarrowDesktopLayout
 							/>
 						</FormSection>

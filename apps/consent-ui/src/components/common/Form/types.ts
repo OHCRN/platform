@@ -60,4 +60,4 @@ export interface FormSelectOption<V extends string> {
 	value: V;
 }
 
-export type FormTextInputType = 'email' | 'tel' | 'text';
+export type FormTextInputType = 'email' | 'password' | 'tel' | 'text';
