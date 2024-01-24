@@ -43,8 +43,9 @@ const TextInput = <T extends FieldValues>({
 	const { onBlur: registerOnBlur, onChange, ref, name: registerName } = register(name);
 
 	const handleBlur = (e: SyntheticEvent) => {
-		onBlur();
-		registerOnBlur(e);
+		onBlur(); // tooltips
+		registerOnBlur(e); // form validation
+		console.log('text blur', name);
 	};
 
 	const handleFocus = () => {

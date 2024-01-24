@@ -31,7 +31,7 @@ const CheckboxInput = <T extends FieldValues>({
 	name,
 	required,
 }: FormInputProps<T>) => {
-	const { register } = useFormContext();
+	const { register, setFocus } = useFormContext();
 
 	return (
 		<input
@@ -40,6 +40,18 @@ const CheckboxInput = <T extends FieldValues>({
 			className={className}
 			disabled={disabled}
 			id={id}
+			onMouseDown={(e) => {
+				// prevent blur event being called after mousedown,
+				// which will allow a click event on this label/checkbox,
+				// which will be followed automatically by a blur event (for validation)
+				e.preventDefault();
+				console.log('checkbox mousedown');
+			}}
+			onClick={() => {
+				console.log('checkbox click');
+				// force focus change & onBlur validation in safari
+				setFocus(name);
+			}}
 			type="checkbox"
 			{...ariaProps}
 		/>
