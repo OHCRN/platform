@@ -19,9 +19,9 @@
 
 import Image from 'next/image';
 
+import BackgroundImage from 'src/../public/assets/images/landing-page.jpg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/common/Button/LinkButton';
-import BackgroundImage from 'src/public/landing-page.jpg';
 import { OHCRN_HOME_LINK } from 'src/constants';
 
 import LandingPageCard from './LandingPageCard';
@@ -32,7 +32,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 	return (
 		<div className={styles.heroContainer}>
 			<div className={styles.backgroundImg}>
-				<Image src={BackgroundImage} alt="" priority placeholder="blur" />
+				<Image src={BackgroundImage} alt="" fill priority sizes="100vw" placeholder="blur" />
 			</div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
