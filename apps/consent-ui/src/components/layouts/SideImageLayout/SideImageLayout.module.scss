@@ -23,6 +23,7 @@
 	color: theme('colors.grayscale.100');
 	font-weight: 600;
 	font-size: theme('fontSize.2xl');
+	line-height: 1.15;
 	@media (min-width: theme('screens.sm')) {
 		font-size: theme('fontSize.3xl');
 	}

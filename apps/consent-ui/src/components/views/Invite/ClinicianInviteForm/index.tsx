@@ -159,10 +159,12 @@ const ClinicianInviteFormComponent = ({
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* HEADING */}
-				<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
-				<p className={styles.smallText}>
-					<RequiredAsterisk /> {textDict.indicatesRequiredField}
-				</p>
+				<FormSection>
+					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
+					<p className={styles.smallText}>
+						<RequiredAsterisk /> {textDict.indicatesRequiredField}
+					</p>
+				</FormSection>
 
 				{/* SECTION - PARTICIPANT INFO */}
 				<FormSection>
