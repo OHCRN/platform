@@ -46,6 +46,7 @@ export const createParticipant = async ({
 	consentGroup,
 	emailVerified,
 	currentLifecycleState,
+	keycloakId,
 }: CreateParticipantRequest): Promise<
 	Result<CreateParticipantResponse, CreateParticipantFailureStatus>
 > => {
@@ -76,6 +77,7 @@ export const createParticipant = async ({
 			guardianRelationship,
 			guardianName,
 			consentGroup,
+			keycloakId,
 		});
 
 		if (participantPiData.status !== 'SUCCESS') {

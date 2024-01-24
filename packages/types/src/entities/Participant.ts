@@ -60,6 +60,7 @@ export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(Parti
 		z.object({
 			dateOfBirth: z.coerce.date(),
 			participantPreferredName: Name.optional(),
+			keycloakId: z.string().uuid(),
 		}),
 	);
 

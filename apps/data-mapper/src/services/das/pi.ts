@@ -162,6 +162,7 @@ export const createParticipantPiData = async (
 		guardianEmailAddress,
 		guardianPhoneNumber,
 		guardianRelationship,
+		keycloakId,
 	} = req;
 	try {
 		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
@@ -174,6 +175,7 @@ export const createParticipantPiData = async (
 			guardianEmailAddress,
 			guardianPhoneNumber,
 			guardianRelationship,
+			keycloakId,
 		});
 
 		const participant = PICreateParticipantResponse.safeParse(data.participant);
