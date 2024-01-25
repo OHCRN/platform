@@ -98,7 +98,11 @@ const OHIPFieldSet = <T extends FieldValues>({
 						type={'text'}
 					/>
 
-					{label && <span className={styles.label}>{label}</span>}
+					{label && (
+						<label className={styles.label} htmlFor={OHIPTextInputId}>
+							{label}
+						</label>
+					)}
 				</div>
 
 				<label htmlFor={OHIPCheckboxId} className={styles.OHIPCheckboxWrapper}>
