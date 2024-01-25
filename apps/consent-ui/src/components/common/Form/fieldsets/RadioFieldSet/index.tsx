@@ -26,7 +26,7 @@ import { ReactNode, useId } from 'react';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
-import RadioInput from 'src/components/common/Form/fieldsets/inputs/RadioStringInput';
+import RadioBooleanInput from 'src/components/common/Form/fieldsets/inputs/RadioBooleanInput';
 
 import styles from './RadioFieldSet.module.scss';
 
@@ -36,8 +36,8 @@ export type RadioFieldSetProps<T extends FieldValues> = Omit<
 > & {
 	description: ReactNode;
 	title?: string;
-	yesLabel: string;
-	noLabel: string;
+	yesText: string;
+	noText: string;
 };
 
 const RadioFieldSet = <T extends FieldValues>({
@@ -48,12 +48,11 @@ const RadioFieldSet = <T extends FieldValues>({
 	name,
 	required,
 	title,
-	yesLabel,
-	noLabel,
+	yesText,
+	noText,
 }: RadioFieldSetProps<T>) => {
 	const id = useId();
-	const radio1Id = id + '-radio-1';
-	const radio2Id = id + '-radio-2';
+
 	return (
 		<fieldset
 			className={clsx(
@@ -75,30 +74,18 @@ const RadioFieldSet = <T extends FieldValues>({
 				{description}
 				{required && !title && <RequiredAsterisk />}
 			</legend>
-			<div className={styles.radiosWrapper}>
-				<label htmlFor={radio1Id} className={styles.radioWrapper}>
-					<RadioInput
-						className={styles.radioInput}
-						disabled={disabled}
-						id={radio1Id}
-						name={name}
-						required={required}
-						value={'Yes'}
-					/>
-					<span className={styles.radioLabel}>{yesLabel}</span>
-				</label>
-				<label htmlFor={radio2Id} className={styles.radioWrapper}>
-					<RadioInput
-						className={styles.radioInput}
-						disabled={disabled}
-						id={radio2Id}
-						name={name}
-						required={required}
-						value={'No'}
-					/>
-					<span className={styles.radioLabel}>{noLabel}</span>
-				</label>
-			</div>
+
+			<RadioBooleanInput
+				groupClassName={styles.radiosWrapper}
+				wrapperClassName={styles.radioWrapper}
+				radioClassName={styles.radioInput}
+				disabled={disabled}
+				id={id}
+				name={name}
+				required={required}
+				yesText={yesText}
+				noText={noText}
+			/>
 			{error && <InputError>{error}</InputError>}
 		</fieldset>
 	);
