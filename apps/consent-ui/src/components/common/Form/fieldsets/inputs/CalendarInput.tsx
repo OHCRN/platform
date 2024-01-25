@@ -21,16 +21,19 @@
 
 import clsx from 'clsx';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { enCA, frCA } from 'date-fns/locale';
 
 import type { FormInputProps } from 'src/components/common/Form/types';
+import type { ValidLanguage } from 'src/i18n';
 
 type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
 	popperClassName?: string;
+	currentLang: ValidLanguage;
 };
 
-const SelectInput = <T extends FieldValues>({
+const CalendarInput = <T extends FieldValues>({
 	ariaProps = {},
 	disabled,
 	className,
@@ -40,7 +43,11 @@ const SelectInput = <T extends FieldValues>({
 	onBlur = () => {},
 	onFocus = () => {},
 	required,
+	currentLang,
 }: CalendarInputProps<T>) => {
+	registerLocale('en', enCA);
+	registerLocale('fr', frCA);
+
 	const { control } = useFormContext();
 
 	return (
@@ -56,6 +63,7 @@ const SelectInput = <T extends FieldValues>({
 					popperClassName={clsx(popperClassName)}
 					id={`calendar-${id}`}
 					name={name}
+					locale={currentLang}
 					onBlur={onBlur}
 					onFocus={onFocus}
 					disabled={disabled}
@@ -67,4 +75,4 @@ const SelectInput = <T extends FieldValues>({
 	);
 };
 
-export default SelectInput;
+export default CalendarInput;

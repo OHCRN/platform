@@ -26,12 +26,14 @@ import clsx from 'clsx';
 import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import CalendarInput from 'src/components/common/Form/fieldsets/inputs/CalendarInput';
-import { FormFieldSetWithTooltipProps } from 'src/components/common/Form/types';
+import type { FormFieldSetWithTooltipProps } from 'src/components/common/Form/types';
+import type { ValidLanguage } from 'src/i18n';
 
 import styles from './CalendarFieldSet.module.scss';
 
 type CalendarFieldSetProps<T extends FieldValues> = FormFieldSetWithTooltipProps<T> & {
 	placeholder?: string;
+	currentLang: ValidLanguage;
 };
 
 const CalendarFieldSet = <T extends FieldValues>({
@@ -44,6 +46,7 @@ const CalendarFieldSet = <T extends FieldValues>({
 	required,
 	tooltipContent,
 	withNarrowDesktopLayout,
+	currentLang,
 }: CalendarFieldSetProps<T>) => {
 	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
 
@@ -74,6 +77,7 @@ const CalendarFieldSet = <T extends FieldValues>({
 				onBlur={hideTooltip}
 				onFocus={showTooltip}
 				required={required}
+				currentLang={currentLang}
 			/>
 		</FieldSet>
 	);

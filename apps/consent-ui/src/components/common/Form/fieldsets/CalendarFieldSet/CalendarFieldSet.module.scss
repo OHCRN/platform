@@ -9,14 +9,13 @@
 }
 
 .CalendarPopper {
-	// background-color: red;
 	:global {
 		.react-datepicker__month-container {
 			padding: 0.3rem 1rem;
 		}
 
 		.react-datepicker__header {
-			background-color: white;
+			background-color: theme('colors.grayscale.100');
 			border-bottom: 0px;
 			font-weight: 700;
 			padding: 0;
@@ -36,8 +35,6 @@
 			color: theme('colors.grayscale.800');
 			border-radius: 50%;
 		}
-
-		
 	}
 }
 
