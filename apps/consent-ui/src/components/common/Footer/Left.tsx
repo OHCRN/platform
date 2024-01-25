@@ -21,9 +21,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { TranslationFunction } from 'src/i18n';
-import OICRLogo from 'src/public/oicr.svg';
-import InstagramLogo from 'src/public/instagram.svg';
-import TwitterLogo from 'src/public/twitter.svg';
+import OICRLogo from 'src/../public/assets/images/oicr.svg';
+import InstagramLogo from 'src/../public/assets/images/instagram.svg';
+import TwitterLogo from 'src/../public/assets/images/twitter.svg';
 
 import styles from './Footer.module.scss';
 
