@@ -22,20 +22,10 @@ import Link from 'next/link';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
 
-const ConsentInProgressNotification = ({
-	currentLang,
-	dismissClick,
-}: {
-	currentLang: ValidLanguage;
-	dismissClick: () => void;
-}) => {
+const ConsentInProgressNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 	return (
-		<Notification
-			dismissClick={dismissClick}
-			level="success"
-			title={translate('consentInProgressNotification', 'title')}
-		>
+		<Notification level="warning" title={translate('consentInProgressNotification', 'title')}>
 			{translate('consentInProgressNotification', 'text1')}
 			<Link href="#">{translate('consentInProgressNotification', 'linkText')}</Link>
 			{/* TODO add a link for "send us a message" https://github.com/OHCRN/platform/issues/354 */}

@@ -20,7 +20,7 @@
 import Image from 'next/image';
 import { SyntheticEvent } from 'react';
 
-import InfoSvg from 'src/public/info.svg';
+import InfoSvg from 'src/../public/assets/images/info.svg';
 
 import styles from './InfoButton.module.scss';
 
