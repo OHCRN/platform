@@ -19,60 +19,27 @@
 
 'use client';
 
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Name, PhoneNumber } from 'types/entities';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 
 import { ValidLanguage, replaceParams } from 'src/i18n';
-import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
-import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
-import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
-import Button from 'src/components/common/Button';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
-import { API, OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
-import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
-import useRecaptcha from 'src/hooks/useRecaptcha';
-import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
-import Notification from 'src/components/common/Notification';
 
 import styles from './RegistrationForm.module.scss';
+import RegistrationFormStep1 from './RegistrationFormStep1';
+import { RegisterFormStep1 } from './types';
+import RegistrationFormStep2 from './RegistrationFormStep2';
 
 // followup tickets
 // date & radio inputs https://github.com/OHCRN/platform/issues/366
 // backend https://github.com/OHCRN/platform/issues/368
 // help centre link https://github.com/OHCRN/platform/issues/367
 
-// TODO hookup backend #368
-// create a better zod schema with conditional validation,
-// and optional name fields
-const RegisterRequestStub = z.object({
-	confirmPassword: z.string().min(1), // TEMP #368
-	consentToBeContacted: z.literal(true),
-	dateOfBirth: z.date(), // TEMP #366
-	guardianName: Name,
-	guardianPhoneNumber: PhoneNumber,
-	guardianRelationship: Name,
-	participantEmailAddress: z.string().email(),
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name,
-	password: z.string().min(1), // TEMP #368
-	// registeringOnBehalfOfSomeoneElse: z.boolean(), TODO #366
-	// commenting this out because the form won't work
-	// with unused fields in the Zod schema
-	useSubstituteDecisionMaker: z.boolean(),
-});
-type RegisterRequestStub = z.infer<typeof RegisterRequestStub>;
-
 const RegistrationForm = ({
+	currentLang,
 	errorsDict,
 	labelsDict,
 	textDict,
@@ -82,56 +49,7 @@ const RegistrationForm = ({
 	labelsDict: RegisterFormLabelsDictionary;
 	textDict: RegisterFormTextDictionary;
 }) => {
-	// setup react-hook-forms
-	const methods = useForm<RegisterRequestStub>({
-		resolver: zodResolver(RegisterRequestStub),
-		shouldUnregister: true,
-	});
-
-	const {
-		formState: { errors },
-		handleSubmit,
-		setFocus,
-	} = methods;
-
-	// setup recaptcha
-	const {
-		getRecaptchaToken,
-		onRecaptchaChange,
-		recaptchaCheckboxRef,
-		recaptchaError,
-		resetRecaptcha,
-		setRecaptchaError,
-	} = useRecaptcha();
-
-	const handleRecaptchaChange = () => {
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
-		onRecaptchaChange();
-	};
-
-	const onSubmit: SubmitHandler<RegisterRequestStub> = (data, event) => {
-		event?.preventDefault();
-		// TODO #366 don't submit form if participant is a minor
-
-		const recaptchaToken = getRecaptchaToken();
-
-		if (recaptchaToken) {
-			console.log('form data', data);
-			axiosClient
-				.post(API.INVITES, { data, recaptchaToken })
-				.then(() => {
-					setRecaptchaError('');
-					resetRecaptcha();
-				})
-				.catch((e) => {
-					console.error(e);
-					setRecaptchaError('Something went wrong, please try again');
-				});
-		} else {
-			setRecaptchaError('Please complete captcha');
-		}
-	};
+	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
 	// setup 2-step form
 	// - show/hide step 1 with CSS only, so the fields are always in form state.
@@ -140,24 +58,18 @@ const RegistrationForm = ({
 	//   - these fields will unregister on unmount (removed from form state & validation)
 	const STEP_COUNT = 2;
 	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
-	const handleNextClick = () => setCurrentStep(2);
-	const handleBackClick = () => setCurrentStep(1);
-
-	useEffect(() => {
-		// go to top of page on step change
-		window.scrollTo(0, 0);
-		// set focus to first input in the current step
-		if (currentStep === 1) {
-			setFocus('guardianName'); // TODO #366 change to registeringOnBehalfOfSomeoneElse
-		} else if (currentStep === 2) {
-			setFocus('participantEmailAddress');
-		}
-	}, [currentStep, setFocus]);
-
+	const handleNextClick = (data: RegisterFormStep1) => {
+		setStep1Data(data);
+		setCurrentStep(2);
+		window.scroll(0, 0);
+	};
+	const handleBackClick = () => {
+		setCurrentStep(1);
+		window.scroll(0, 0);
+	};
 	return (
-		<FormProvider {...methods}>
-			<Form onSubmit={handleSubmit(onSubmit)}>
-				{/* HEADING */}
+		<>
+			<FormSection>
 				<h3 className={styles.stepTitle}>
 					{replaceParams(textDict.stepCurrentOfTotal, {
 						current: currentStep,
@@ -167,186 +79,28 @@ const RegistrationForm = ({
 				<p className={styles.smallText}>
 					<RequiredAsterisk /> {textDict.indicatesRequiredField}
 				</p>
+			</FormSection>
 
-				{/* BEGIN STEP 1 */}
-				<div className={currentStep === 1 ? styles.visible : styles.hidden}>
-					{/* SECTION - REGISTERING ON BEHALF OF SOMEONE ELSE */}
-					<FormSection>
-						{/* TODO implement radio button #366
-								this field is called registeringOnBehalfOfSomeoneElse in the data model */}
-						{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
-					</FormSection>
+			<RegistrationFormStep1
+				className={currentStep === 1 ? styles.visible : styles.hidden}
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				handleNextClick={handleNextClick}
+				labelsDict={labelsDict}
+				textDict={textDict}
+			/>
 
-					{/* OPTIONAL SECTION - GUARDIAN INFO */}
-					{/* these fields are conditionally required, i.e. if the user is
-							registering on behalf of someone else */}
-
-					{/* TODO #366 update this section - add conditional rendering.
-							see guardian fields on invite form for an example. */}
-					<FormSection variant="grey">
-						<p className={styles.instructions}>{textDict.enterInfo}</p>
-						<TextFieldSet
-							error={errors.guardianName?.type && errorsDict.required}
-							label={labelsDict.yourName || ''}
-							name="guardianName"
-							required
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.guardianPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.yourPhone || ''}
-							name="guardianPhoneNumber"
-							required
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.guardianRelationship?.type && errorsDict.required}
-							label={labelsDict.yourPhone || ''}
-							name="guardianRelationship"
-							required
-							withNarrowDesktopLayout
-						/>
-					</FormSection>
-
-					{/* SECTION - PARTICIPANT INFO */}
-					<FormSection>
-						<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
-						<TextFieldSet
-							error={errors.participantFirstName?.type && errorsDict.required}
-							label={labelsDict.firstName || ''}
-							name="participantFirstName"
-							required
-							tooltipContent={textDict.participantFirstNameTooltip}
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.participantLastName?.type && errorsDict.required}
-							label={labelsDict.lastName || ''}
-							name="participantLastName"
-							required
-							tooltipContent={textDict.participantLastNameTooltip}
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.participantPreferredName?.type && errorsDict.required}
-							label={labelsDict.preferredName || ''}
-							name="participantPreferredName"
-							tooltipContent={textDict.participantPreferredNameTooltip}
-							withNarrowDesktopLayout
-						/>
-						<TextFieldSet
-							error={errors.participantPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.phone || ''}
-							name="participantPhoneNumber"
-							required
-							tooltipContent={textDict.participantPhoneNumberTooltip}
-							withNarrowDesktopLayout
-						/>
-						{/* TODO #366 implement date input */}
-						<TextFieldSet
-							error={errors.dateOfBirth?.type && errorsDict.required}
-							label={labelsDict.dateOfBirth || ''}
-							name="dateOfBirth"
-							required
-							tooltipContent={textDict.dateOfBirthTooltip}
-							withNarrowDesktopLayout
-						/>
-					</FormSection>
-
-					{/* SECTION - CONTACT AFTER REGISTERING NOTICE */}
-					<FormSection>
-						<p>{textDict.afterRegistering}</p>
-						{/* TODO add link to help centre #367 */}
-						<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
-							{textDict.questions}
-						</Link>
-					</FormSection>
-
-					{/* GO TO NEXT PAGE */}
-					<div className={styles.buttonWrapper}>
-						<Button
-							action="next"
-							aria-label={`${textDict.goToStep} 2`}
-							onClick={handleNextClick}
-							color="green"
-						>
-							{textDict.next}
-						</Button>
-					</div>
-				</div>
-				{/* END STEP 1 */}
-
-				{/* BEGIN STEP 2 */}
-				{currentStep === 2 && (
-					<div>
-						{/* SECTION - EMAIL & PASSWORD */}
-						<FormSection>
-							<TextFieldSet
-								error={errors.participantEmailAddress?.type && errorsDict.required}
-								label={labelsDict.email || ''}
-								name="participantEmailAddress"
-								required
-								withNarrowDesktopLayout
-							/>
-							<TextFieldSet
-								error={errors.password?.type && errorsDict.required}
-								label={labelsDict.password || ''}
-								name="password"
-								required
-								type="password"
-								withNarrowDesktopLayout
-							/>
-							<TextFieldSet
-								error={errors.confirmPassword?.type && errorsDict.required}
-								label={labelsDict.confirmPassword || ''}
-								name="confirmPassword"
-								required
-								type="password"
-								withNarrowDesktopLayout
-							/>
-						</FormSection>
-
-						{/* SECTION - CONSENT TO BE CONTACTED */}
-						<FormSection className={styles.consentCheckbox}>
-							<CheckboxFieldSet
-								description={textDict.consentContactDescription}
-								error={errors.consentToBeContacted?.type && errorsDict.required}
-								name="consentToBeContacted"
-								required
-								title={labelsDict.consentContact}
-							/>
-						</FormSection>
-
-						{/* SECTION - RECAPTCHA */}
-						<FormSection>
-							{recaptchaError && (
-								<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
-							)}
-
-							<div className={styles.recaptchaCheckbox}>
-								<RecaptchaCheckbox
-									onChange={handleRecaptchaChange}
-									recaptchaCheckboxRef={recaptchaCheckboxRef}
-								/>
-							</div>
-						</FormSection>
-
-						{/* GO TO PREVIOUS PAGE */}
-						<div className={styles.buttonWrapper}>
-							<Button
-								aria-label={`${textDict.goToStep} 1`}
-								onClick={handleBackClick}
-								variant="secondary"
-							>
-								{textDict.back}
-							</Button>
-							<Button type="submit">{textDict.createAccount}</Button>
-						</div>
-					</div>
-				)}
-				{/* END STEP 2 */}
-			</Form>
-		</FormProvider>
+			{currentStep === 2 && (
+				<RegistrationFormStep2
+					currentLang={currentLang}
+					errorsDict={errorsDict}
+					handleBackClick={handleBackClick}
+					labelsDict={labelsDict}
+					step1Data={step1Data}
+					textDict={textDict}
+				/>
+			)}
+		</>
 	);
 };
 
