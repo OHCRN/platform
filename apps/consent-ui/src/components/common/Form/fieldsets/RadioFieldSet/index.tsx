@@ -26,7 +26,7 @@ import { ReactNode, useId } from 'react';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
-import RadioInput from 'src/components/common/Form/fieldsets/inputs/RadioInput';
+import RadioInput from 'src/components/common/Form/fieldsets/inputs/RadioStringInput';
 
 import styles from './RadioFieldSet.module.scss';
 
