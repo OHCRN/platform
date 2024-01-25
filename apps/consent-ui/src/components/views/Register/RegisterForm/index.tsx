@@ -27,18 +27,19 @@ import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLa
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import FormSection from 'src/components/common/Form/FormSection';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
+import { scrollToTop } from 'src/components/utils';
 
-import styles from './RegistrationForm.module.scss';
-import RegistrationFormStep1 from './RegistrationFormStep1';
+import styles from './RegisterForm.module.scss';
+import FormStep1 from './FormStep1';
 import { RegisterFormStep1 } from './types';
-import RegistrationFormStep2 from './RegistrationFormStep2';
+import FormStep2 from './FormStep2';
 
 // followup tickets
 // date & radio inputs https://github.com/OHCRN/platform/issues/366
 // backend https://github.com/OHCRN/platform/issues/368
 // help centre link https://github.com/OHCRN/platform/issues/367
 
-const RegistrationForm = ({
+const RegisterForm = ({
 	currentLang,
 	errorsDict,
 	labelsDict,
@@ -60,12 +61,12 @@ const RegistrationForm = ({
 	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
 	const handleNextClick = (data: RegisterFormStep1) => {
 		setStep1Data(data);
+		scrollToTop();
 		setCurrentStep(2);
-		window.scroll(0, 0);
 	};
 	const handleBackClick = () => {
+		scrollToTop();
 		setCurrentStep(1);
-		window.scroll(0, 0);
 	};
 	return (
 		<>
@@ -81,7 +82,7 @@ const RegistrationForm = ({
 				</p>
 			</FormSection>
 
-			<RegistrationFormStep1
+			<FormStep1
 				className={currentStep === 1 ? styles.visible : styles.hidden}
 				currentLang={currentLang}
 				errorsDict={errorsDict}
@@ -91,7 +92,7 @@ const RegistrationForm = ({
 			/>
 
 			{currentStep === 2 && (
-				<RegistrationFormStep2
+				<FormStep2
 					currentLang={currentLang}
 					errorsDict={errorsDict}
 					handleBackClick={handleBackClick}
@@ -104,4 +105,4 @@ const RegistrationForm = ({
 	);
 };
 
-export default RegistrationForm;
+export default RegisterForm;

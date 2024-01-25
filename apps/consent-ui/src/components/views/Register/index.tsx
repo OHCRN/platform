@@ -18,15 +18,13 @@
  */
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import RegistrationForm from 'src/components/views/Register/RegistrationForm';
+import RegisterForm from 'src/components/views/Register/RegisterForm';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-
-// TEMP change to using a string after merging public folder PR
-import registerBg from '../../../../public/assets/images/register-bg.jpg';
+import registerBg from 'src/../public/assets/images/register-bg.jpg';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
@@ -94,7 +92,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			mainTitle={translate('registerPage', 'registerYourself')}
 			navTitle={translate('registerPage', 'participantRegistration')}
 		>
-			<RegistrationForm
+			<RegisterForm
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				labelsDict={labelsDict}

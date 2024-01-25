@@ -34,10 +34,10 @@ import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
 
-import styles from './RegistrationForm.module.scss';
+import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
 
-const RegistrationFormStep1 = ({
+const FormStep1 = ({
 	className,
 	errorsDict,
 	handleNextClick,
@@ -180,4 +180,4 @@ const RegistrationFormStep1 = ({
 	);
 };
 
-export default RegistrationFormStep1;
+export default FormStep1;

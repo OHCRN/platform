@@ -38,10 +38,10 @@ import useRecaptcha from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 
-import styles from './RegistrationForm.module.scss';
+import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1, RegisterFormStep2 } from './types';
 
-const RegistrationFormStep2 = ({
+const FormStep2 = ({
 	errorsDict,
 	handleBackClick,
 	labelsDict,
@@ -182,4 +182,4 @@ const RegistrationFormStep2 = ({
 	);
 };
 
-export default RegistrationFormStep2;
+export default FormStep2;
