@@ -165,7 +165,7 @@ const FormStep2 = ({
 					</div>
 				</FormSection>
 
-				{/* GO TO PREVIOUS PAGE */}
+				{/* GO BACK/SUBMIT */}
 				<div className={styles.buttonWrapper}>
 					<Button
 						aria-label={`${textDict.goToStep} 1`}
