@@ -20,7 +20,6 @@
 'use client';
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 
 import { ValidLanguage } from 'src/i18n';
@@ -57,12 +56,12 @@ const FormStep2 = ({
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
-		resolver: zodResolver(RegisterFormStep2),
+		mode: 'onBlur',
 		shouldUnregister: true,
 	});
 
 	const {
-		formState: { errors },
+		formState: { errors, isValid },
 		handleSubmit,
 		setFocus,
 	} = methods;

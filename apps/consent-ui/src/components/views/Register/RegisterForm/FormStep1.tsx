@@ -53,12 +53,13 @@ const FormStep1 = ({
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
+		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
 		shouldUnregister: true,
 	});
 
 	const {
-		formState: { errors },
+		formState: { errors, isValid },
 		handleSubmit,
 		setFocus,
 	} = methods;
@@ -180,7 +181,7 @@ const FormStep1 = ({
 					<Button
 						action="next"
 						aria-label={`${textDict.goToStep} 2`}
-						color="green"
+						color={isValid ? 'green' : 'default'}
 						onMouseDown={handleMouseDown}
 						type="submit"
 					>

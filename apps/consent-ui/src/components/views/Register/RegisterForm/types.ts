@@ -39,13 +39,27 @@ export const RegisterFormStep1 = z.object({
 });
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
-export const RegisterFormStep2 = z.object({
+export const RegisterFormStep2Fields = z.object({
 	confirmPassword: z.string().min(1), // TEMP #368
 	consentToBeContacted: z.literal(true),
 	participantEmailAddress: z.string().email(),
 	password: z.string().min(1), // TEMP #368
 });
+
+export const RegisterFormStep2 = RegisterFormStep2Fields.refine(
+	(data) => data.password === data.confirmPassword,
+	{
+		path: ['confirmPassword'],
+		message: 'passwordMismatch',
+	},
+);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
-export const RegisterRequestStub = RegisterFormStep1.merge(RegisterFormStep2);
-export type RegisterRequestStub = z.infer<typeof RegisterRequestStub>;
+export const RegisterRequest = RegisterFormStep1.merge(RegisterFormStep2Fields).refine(
+	(data) => data.password === data.confirmPassword,
+	{
+		path: ['confirmPassword'],
+		message: 'passwordMismatch',
+	},
+);
+export type RegisterRequest = z.infer<typeof RegisterRequest>;
