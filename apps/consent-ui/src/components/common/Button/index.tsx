@@ -27,6 +27,7 @@ import styles from './Button.module.scss';
 interface ButtonProps extends BaseProps {
 	ariaProps?: Record<string, string>;
 	onClick?: (e: React.SyntheticEvent<HTMLElement>) => any;
+	onMouseDown?: (e: React.SyntheticEvent<HTMLElement>) => any;
 	disabled?: boolean;
 	type?: 'button' | 'submit';
 }
@@ -44,6 +45,7 @@ const Button = ({
 	LeftIcon,
 	RightIcon,
 	type = 'button',
+	onMouseDown,
 }: ButtonProps) => {
 	return (
 		<button
@@ -60,6 +62,7 @@ const Button = ({
 			disabled={disabled}
 			onClick={onClick}
 			type={type}
+			onMouseDown={onMouseDown}
 		>
 			{action === 'prev' ? (
 				<div>

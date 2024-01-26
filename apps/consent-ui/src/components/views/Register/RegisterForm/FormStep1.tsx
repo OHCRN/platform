@@ -22,7 +22,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { SyntheticEvent, useEffect } from 'react';
 
 import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -71,8 +71,14 @@ const FormStep1 = ({
 
 	useEffect(() => {
 		// set focus to first field on load
+		// TODO #366 change to registerOnBehalfOfSomeoneElse
 		setFocus('guardianName');
 	}, [setFocus]);
+
+	const handleMouseDown = (e: SyntheticEvent) => {
+		// prevent blur events from interrupting click events
+		e.preventDefault();
+	};
 
 	return (
 		<FormProvider {...methods}>
@@ -80,7 +86,7 @@ const FormStep1 = ({
 				{/* SECTION - REGISTERING ON BEHALF OF SOMEONE ELSE */}
 				<FormSection>
 					{/* TODO implement radio button #366
-								this field is called r egisteringOnBehalfOfSomeoneElse in the data model */}
+								this field is called registeringOnBehalfOfSomeoneElse in the data model */}
 					{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
 				</FormSection>
 
@@ -94,21 +100,21 @@ const FormStep1 = ({
 					<p className={styles.instructions}>{textDict.enterInfo}</p>
 					<TextFieldSet
 						error={errors.guardianName?.type && errorsDict.required}
-						label={labelsDict.yourName || ''}
+						label={labelsDict.yourName}
 						name="guardianName"
 						required
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianPhoneNumber?.type && errorsDict.required}
-						label={labelsDict.yourPhone || ''}
+						label={labelsDict.yourPhone}
 						name="guardianPhoneNumber"
 						required
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianRelationship?.type && errorsDict.required}
-						label={labelsDict.yourRelationship || ''}
+						label={labelsDict.yourRelationship}
 						name="guardianRelationship"
 						required
 						withNarrowDesktopLayout
@@ -120,7 +126,7 @@ const FormStep1 = ({
 					<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
 					<TextFieldSet
 						error={errors.participantFirstName?.type && errorsDict.required}
-						label={labelsDict.firstName || ''}
+						label={labelsDict.firstName}
 						name="participantFirstName"
 						required
 						tooltipContent={textDict.participantFirstNameTooltip}
@@ -128,7 +134,7 @@ const FormStep1 = ({
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict.required}
-						label={labelsDict.lastName || ''}
+						label={labelsDict.lastName}
 						name="participantLastName"
 						required
 						tooltipContent={textDict.participantLastNameTooltip}
@@ -136,14 +142,14 @@ const FormStep1 = ({
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict.required}
-						label={labelsDict.preferredName || ''}
+						label={labelsDict.preferredName}
 						name="participantPreferredName"
 						tooltipContent={textDict.participantPreferredNameTooltip}
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
-						label={labelsDict.phone || ''}
+						label={labelsDict.phone}
 						name="participantPhoneNumber"
 						required
 						tooltipContent={textDict.participantPhoneNumberTooltip}
@@ -152,7 +158,7 @@ const FormStep1 = ({
 					{/* TODO #366 implement date input */}
 					<TextFieldSet
 						error={errors.dateOfBirth?.type && errorsDict.required}
-						label={labelsDict.dateOfBirth || ''}
+						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
 						tooltipContent={textDict.dateOfBirthTooltip}
@@ -171,7 +177,13 @@ const FormStep1 = ({
 
 				{/* GO TO NEXT PAGE */}
 				<div className={styles.buttonWrapper}>
-					<Button action="next" aria-label={`${textDict.goToStep} 2`} color="green" type="submit">
+					<Button
+						action="next"
+						aria-label={`${textDict.goToStep} 2`}
+						color="green"
+						onMouseDown={handleMouseDown}
+						type="submit"
+					>
 						{textDict.next}
 					</Button>
 				</div>

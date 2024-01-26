@@ -68,6 +68,7 @@ const RegisterForm = ({
 		scrollToTop();
 		setCurrentStep(1);
 	};
+
 	return (
 		<>
 			<FormSection>
