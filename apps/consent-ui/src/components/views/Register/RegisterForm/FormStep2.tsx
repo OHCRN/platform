@@ -41,7 +41,7 @@ import Notification from 'src/components/common/Notification';
 import styles from './RegisterForm.module.scss';
 import {
 	// RegisterFormStep1,
-	RegisterFormStep2Fields,
+	RegisterFormStep2,
 } from './types';
 import ConfirmPassword from './ConfirmPassword';
 
@@ -60,9 +60,9 @@ const FormStep2 = ({
 	textDict: RegisterFormTextDictionary;
 }) => {
 	// setup react-hook-forms
-	const methods = useForm<RegisterFormStep2Fields>({
+	const methods = useForm<RegisterFormStep2>({
 		mode: 'onBlur',
-		resolver: zodResolver(RegisterFormStep2Fields),
+		resolver: zodResolver(RegisterFormStep2),
 		shouldUnregister: true,
 	});
 
@@ -90,7 +90,7 @@ const FormStep2 = ({
 		onRecaptchaChange();
 	};
 
-	const onSubmit: SubmitHandler<RegisterFormStep2Fields> = (step2Data, event) => {
+	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
 		// TODO #366 don't submit form if participant is a minor
 
