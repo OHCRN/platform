@@ -31,8 +31,8 @@ import { scrollToTop } from 'src/components/utils';
 
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
-import { RegisterFormStep1 } from './types';
 import FormStep2 from './FormStep2';
+import { RegisterFormStep1 } from './types';
 
 // followup tickets
 // date & radio inputs https://github.com/OHCRN/platform/issues/366

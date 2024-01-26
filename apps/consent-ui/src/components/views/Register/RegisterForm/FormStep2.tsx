@@ -83,16 +83,16 @@ const FormStep2 = ({
 		onRecaptchaChange();
 	};
 
-	const onSubmit: SubmitHandler<RegisterFormStep2> = (data, event) => {
+	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
 		// TODO #366 don't submit form if participant is a minor
 
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
-			console.log('form data', data);
+			const data = Object.assign({}, step1Data, step2Data);
 			axiosClient
-				.post(API.INVITES, { data: Object.assign(data, step1Data), recaptchaToken })
+				.post(API.INVITES, { data, recaptchaToken })
 				.then(() => {
 					setRecaptchaError('');
 					resetRecaptcha();
@@ -118,14 +118,14 @@ const FormStep2 = ({
 				<FormSection>
 					<TextFieldSet
 						error={errors.participantEmailAddress?.type && errorsDict.required}
-						label={labelsDict.email || ''}
+						label={labelsDict.email}
 						name="participantEmailAddress"
 						required
 						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
-						label={labelsDict.password || ''}
+						label={labelsDict.password}
 						name="password"
 						required
 						type="password"
@@ -133,7 +133,7 @@ const FormStep2 = ({
 					/>
 					<TextFieldSet
 						error={errors.confirmPassword?.type && errorsDict.required}
-						label={labelsDict.confirmPassword || ''}
+						label={labelsDict.confirmPassword}
 						name="confirmPassword"
 						required
 						type="password"
