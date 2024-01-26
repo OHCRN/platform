@@ -24,25 +24,29 @@ import clsx from 'clsx';
 
 import { FormInputProps } from 'src/components/common/Form/types';
 
-type RadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
+type RadioStringInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
 	value: V;
+	id: string;
 };
 
-const RadioInput = <T extends FieldValues, V extends string>({
+const RadioStringInput = <T extends FieldValues, V extends string>({
 	className,
 	name,
 	value,
-}: RadioInputProps<T, V>) => {
+	disabled,
+	id,
+}: RadioStringInputProps<T, V>) => {
 	const { register } = useFormContext();
 	return (
 		<input
 			{...register(name)}
 			className={clsx('radio-input', className)}
-			id={`${name}-${value}`}
+			id={id}
 			type="radio"
 			value={value}
+			disabled={disabled}
 		/>
 	);
 };
 
-export default RadioInput;
+export default RadioStringInput;
