@@ -21,6 +21,7 @@
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { ValidLanguage } from 'src/i18n';
 import { axiosClient } from 'src/services/api/axiosClient';
@@ -38,25 +39,30 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 
 import styles from './RegisterForm.module.scss';
-import { RegisterFormStep1, RegisterFormStep2 } from './types';
+import {
+	// RegisterFormStep1,
+	RegisterFormStep2Fields,
+} from './types';
+import ConfirmPassword from './ConfirmPassword';
 
 const FormStep2 = ({
 	errorsDict,
 	handleBackClick,
 	labelsDict,
-	step1Data,
+	// step1Data,
 	textDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
 	labelsDict: RegisterFormLabelsDictionary;
-	step1Data?: RegisterFormStep1;
+	// step1Data?: RegisterFormStep1;
 	textDict: RegisterFormTextDictionary;
 }) => {
 	// setup react-hook-forms
-	const methods = useForm<RegisterFormStep2>({
+	const methods = useForm<RegisterFormStep2Fields>({
 		mode: 'onBlur',
+		resolver: zodResolver(RegisterFormStep2Fields),
 		shouldUnregister: true,
 	});
 
@@ -65,6 +71,8 @@ const FormStep2 = ({
 		handleSubmit,
 		setFocus,
 	} = methods;
+
+	console.log('isValid', isValid);
 
 	// setup recaptcha
 	const {
@@ -82,14 +90,14 @@ const FormStep2 = ({
 		onRecaptchaChange();
 	};
 
-	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
+	const onSubmit: SubmitHandler<RegisterFormStep2Fields> = (step2Data, event) => {
 		event?.preventDefault();
 		// TODO #366 don't submit form if participant is a minor
 
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
-			const data = Object.assign({}, step1Data, step2Data);
+			const data = Object.assign({}, step2Data);
 			axiosClient
 				.post(API.INVITES, { data, recaptchaToken })
 				.then(() => {
@@ -130,14 +138,18 @@ const FormStep2 = ({
 						type="password"
 						withNarrowDesktopLayout
 					/>
-					<TextFieldSet
+					<ConfirmPassword
+						labelText={labelsDict.confirmPassword}
+						error={errors.confirmPassword?.type}
+					/>
+					{/* <TextFieldSet
 						error={errors.confirmPassword?.type && errorsDict.required}
 						label={labelsDict.confirmPassword}
 						name="confirmPassword"
 						required
 						type="password"
 						withNarrowDesktopLayout
-					/>
+					/> */}
 				</FormSection>
 
 				{/* SECTION - CONSENT TO BE CONTACTED */}

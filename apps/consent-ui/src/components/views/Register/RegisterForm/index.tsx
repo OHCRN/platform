@@ -32,7 +32,7 @@ import { scrollToTop } from 'src/components/utils';
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
-import { RegisterFormStep1 } from './types';
+// import { RegisterFormStep1 } from './types';
 
 // followup tickets
 // date & radio inputs https://github.com/OHCRN/platform/issues/366
@@ -50,7 +50,7 @@ const RegisterForm = ({
 	labelsDict: RegisterFormLabelsDictionary;
 	textDict: RegisterFormTextDictionary;
 }) => {
-	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
+	// const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
 	// setup 2-step form
 	// - show/hide step 1 with CSS only, so the fields are always in form state.
@@ -58,9 +58,9 @@ const RegisterForm = ({
 	// - show/hide guardian section & step 2 with conditional rendering.
 	//   - these fields will unregister on unmount (removed from form state & validation)
 	const STEP_COUNT = 2;
-	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
-	const handleNextClick = (data: RegisterFormStep1) => {
-		setStep1Data(data);
+	const [currentStep, setCurrentStep] = useState<1 | 2>(2);
+	const handleNextClick = () => {
+		// setStep1Data(data);
 		scrollToTop();
 		setCurrentStep(2);
 	};
@@ -83,14 +83,16 @@ const RegisterForm = ({
 				</p>
 			</FormSection>
 
-			<FormStep1
-				className={currentStep === 1 ? styles.visible : styles.hidden}
-				currentLang={currentLang}
-				errorsDict={errorsDict}
-				handleNextClick={handleNextClick}
-				labelsDict={labelsDict}
-				textDict={textDict}
-			/>
+			{currentStep === 1 && (
+				<FormStep1
+					className={currentStep === 1 ? styles.visible : styles.hidden}
+					currentLang={currentLang}
+					errorsDict={errorsDict}
+					handleNextClick={handleNextClick}
+					labelsDict={labelsDict}
+					textDict={textDict}
+				/>
+			)}
 
 			{currentStep === 2 && (
 				<FormStep2
@@ -98,7 +100,7 @@ const RegisterForm = ({
 					errorsDict={errorsDict}
 					handleBackClick={handleBackClick}
 					labelsDict={labelsDict}
-					step1Data={step1Data}
+					// step1Data={step1Data}
 					textDict={textDict}
 				/>
 			)}

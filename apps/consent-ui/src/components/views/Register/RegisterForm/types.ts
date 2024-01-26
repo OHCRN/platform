@@ -45,6 +45,7 @@ export const RegisterFormStep2Fields = z.object({
 	participantEmailAddress: z.string().email(),
 	password: z.string().min(1), // TEMP #368
 });
+export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
 
 export const RegisterFormStep2 = RegisterFormStep2Fields.refine(
 	(data) => data.password === data.confirmPassword,
