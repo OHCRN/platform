@@ -174,7 +174,9 @@ const FormStep2 = ({
 					>
 						{textDict.back}
 					</Button>
-					<Button type="submit">{textDict.createAccount}</Button>
+					<Button type="submit" color={isValid ? 'green' : 'default'}>
+						{textDict.createAccount}
+					</Button>
 				</div>
 			</Form>
 		</FormProvider>
