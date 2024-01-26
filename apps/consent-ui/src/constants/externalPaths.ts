@@ -20,6 +20,7 @@
 // API
 export const API = {
 	INVITES: '/invites',
+	REGISTER: '/register',
 	STATUS: '/status',
 };
 

@@ -84,14 +84,13 @@ const FormStep2 = ({
 
 	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
-		// TODO #366 don't submit form if participant is a minor
 
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
 			const data = Object.assign({}, step1Data, step2Data);
 			axiosClient
-				.post(API.INVITES, { data, recaptchaToken })
+				.post(API.REGISTER, { data, recaptchaToken })
 				.then(() => {
 					setRecaptchaError('');
 					resetRecaptcha();
@@ -106,7 +105,7 @@ const FormStep2 = ({
 	};
 
 	useEffect(() => {
-		// set focus to first field on load
+		// set focus to first field on mount
 		setFocus('participantEmailAddress');
 	}, [setFocus]);
 

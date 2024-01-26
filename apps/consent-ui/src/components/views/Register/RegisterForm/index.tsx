@@ -25,7 +25,6 @@ import { ValidLanguage, replaceParams } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
-import FormSection from 'src/components/common/Form/FormSection';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { scrollToTop } from 'src/components/utils';
 
@@ -71,17 +70,15 @@ const RegisterForm = ({
 
 	return (
 		<>
-			<FormSection>
-				<h3 className={styles.stepTitle}>
-					{replaceParams(textDict.stepCurrentOfTotal, {
-						current: currentStep,
-						total: STEP_COUNT,
-					})}
-				</h3>
-				<p className={styles.smallText}>
-					<RequiredAsterisk /> {textDict.indicatesRequiredField}
-				</p>
-			</FormSection>
+			<h3 className={styles.stepTitle}>
+				{replaceParams(textDict.stepCurrentOfTotal, {
+					current: currentStep,
+					total: STEP_COUNT,
+				})}
+			</h3>
+			<p className={styles.smallText}>
+				<RequiredAsterisk /> {textDict.indicatesRequiredField}
+			</p>
 
 			<FormStep1
 				className={currentStep === 1 ? styles.visible : styles.hidden}
