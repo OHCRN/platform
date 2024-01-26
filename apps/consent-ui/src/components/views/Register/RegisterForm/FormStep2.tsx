@@ -20,7 +20,8 @@
 'use client';
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { ValidLanguage } from 'src/i18n';
 import { axiosClient } from 'src/services/api/axiosClient';
@@ -33,7 +34,7 @@ import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import { API } from 'src/constants/externalPaths';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
-import useRecaptcha from 'src/hooks/useRecaptcha';
+import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 
@@ -54,9 +55,17 @@ const FormStep2 = ({
 	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormTextDictionary;
 }) => {
+	// setup submit button enabled status
+	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
+	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
+		// enable submit button if the form & recaptcha are both valid
+		setEnableSubmit(isValid && !!recaptchaToken);
+	};
+
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
 		mode: 'onBlur',
+		resolver: zodResolver(RegisterFormStep2),
 		shouldUnregister: true,
 	});
 
@@ -77,8 +86,9 @@ const FormStep2 = ({
 	} = useRecaptcha();
 
 	const handleRecaptchaChange = () => {
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
+		const recaptchaToken = getRecaptchaToken();
+		recaptchaToken && setRecaptchaError('');
+		handleEnableSubmit(isValid, recaptchaToken);
 		onRecaptchaChange();
 	};
 
@@ -103,6 +113,12 @@ const FormStep2 = ({
 			setRecaptchaError('Please complete captcha');
 		}
 	};
+
+	// toggle submit button's enabled status when isValid changes
+	useEffect(() => {
+		const recaptchaToken = getRecaptchaToken();
+		handleEnableSubmit(isValid, recaptchaToken);
+	}, [getRecaptchaToken, isValid]);
 
 	useEffect(() => {
 		// set focus to first field on mount
@@ -173,7 +189,7 @@ const FormStep2 = ({
 					>
 						{textDict.back}
 					</Button>
-					<Button type="submit" color={isValid ? 'green' : 'default'}>
+					<Button type="submit" color={enableSubmit ? 'green' : 'default'}>
 						{textDict.createAccount}
 					</Button>
 				</div>
