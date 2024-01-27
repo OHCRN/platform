@@ -17,42 +17,34 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import formLabels from '../en/formLabels';
+import { RegisterFormStep1LabelsDictionary } from '../en/registerFormStep1Labels';
+
+import formLabelsDictionary from './formLabels';
 
 const {
-	confirmPassword,
-	consentContact,
 	dateOfBirth,
-	email,
 	firstName,
 	lastName,
 	no,
-	password,
 	phone,
 	preferredName,
 	yes,
 	yourName,
 	yourPhone,
 	yourRelationship,
-} = formLabels;
+} = formLabelsDictionary;
 
 const dictionary = {
-	confirmPassword,
-	consentContact,
 	dateOfBirth,
-	email,
 	firstName,
 	lastName,
 	no,
-	password,
 	phone,
 	preferredName,
 	yes,
 	yourName,
 	yourPhone,
 	yourRelationship,
-} satisfies Record<string, string>;
-
-export type RegisterFormLabelsDictionary = Record<keyof typeof dictionary, string>;
+} satisfies RegisterFormStep1LabelsDictionary;
 
 export default dictionary;

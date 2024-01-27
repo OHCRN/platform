@@ -17,37 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { back, goToStep, indicatesRequiredField, next, stepCurrentOfTotal } = formText;
-const {
-	dateOfBirthTooltip,
-	participantFirstNameTooltip,
-	participantLastNameTooltip,
-	participantPhoneNumberTooltip,
-	participantPreferredNameTooltip,
-} = formTooltips;
+const { goToStep, indicatesRequiredField, stepCurrentOfTotal } = formText;
 
 const dictionary = {
-	afterRegistering:
-		'After registering, we will need to collect some important consents and data. You will have access to update your participant records, but should you require assistance, we may contact you.',
-	back,
-	consentContactDescription:
-		'I agree that a member of the OHCRN study team can contact me for further information and consents.',
-	createAccount: 'Create Account',
-	dateOfBirthTooltip,
-	enterInfo: 'Please enter your information below:',
-	enterParticipantInfo: "Please enter the participant's information below:",
 	goToStep,
 	indicatesRequiredField,
-	next,
-	participantFirstNameTooltip,
-	participantLastNameTooltip,
-	participantPhoneNumberTooltip,
-	participantPreferredNameTooltip,
-	questions: 'Questions? Visit the help centre for more information on OHCRN.',
-	registeringForSomeoneElse: 'Are you registering on behalf of someone else?',
 	stepCurrentOfTotal,
 } satisfies Record<string, string>;
 

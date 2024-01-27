@@ -17,16 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterFormTextDictionary } from '../en/registerFormText';
+import { RegisterFormStep2LabelsDictionary } from '../en/registerFormStep2Labels';
 
-import formText from './formText';
+import formLabelsDictionary from './formLabels';
 
-const { goToStep, indicatesRequiredField, stepCurrentOfTotal } = formText;
+const { confirmPassword, consentContact, email, password } = formLabelsDictionary;
 
 const dictionary = {
-	goToStep,
-	indicatesRequiredField,
-	stepCurrentOfTotal,
-} satisfies RegisterFormTextDictionary;
+	confirmPassword,
+	consentContact,
+	email,
+	password,
+} satisfies RegisterFormStep2LabelsDictionary;
 
 export default dictionary;

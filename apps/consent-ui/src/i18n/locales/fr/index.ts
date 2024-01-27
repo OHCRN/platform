@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
+import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
@@ -49,8 +51,8 @@ import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
-import registerDictionary from 'src/i18n/locales/fr/register';
-import registerFormLabelsDictionary from 'src/i18n/locales/fr/registerFormLabels';
+import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
+import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
@@ -86,8 +88,10 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
-	register: registerDictionary,
-	registerFormLabels: registerFormLabelsDictionary,
+	registerFormStep1Labels: registerFormStep1LabelsDictionary,
+	registerFormStep1Text: registerFormStep1TextDictionary,
+	registerFormStep2Labels: registerFormStep2LabelsDictionary,
+	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
 	registerPage: registerPageDictionary,
 } satisfies typeof en;

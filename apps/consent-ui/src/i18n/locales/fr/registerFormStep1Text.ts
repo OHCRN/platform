@@ -17,16 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterFormTextDictionary } from '../en/registerFormText';
+import { RegisterFormStep1TextDictionary } from '../en/registerFormStep1Text';
 
+import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { goToStep, indicatesRequiredField, stepCurrentOfTotal } = formText;
+const { next } = formText;
+const {
+	dateOfBirthTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+} = formTooltips;
 
 const dictionary = {
-	goToStep,
-	indicatesRequiredField,
-	stepCurrentOfTotal,
-} satisfies RegisterFormTextDictionary;
+	afterRegistering:
+		"Après votre inscription, nous devrons collecter certains consentements et données importants. Vous aurez accès à la mise à jour de vos dossiers de participants, mais si vous avez besoin d'aide, nous pouvons vous contacter.",
+	dateOfBirthTooltip,
+	enterInfo: "S'il vous plaît entrer vos informations ci-dessous:",
+	enterParticipantInfo: 'Veuillez saisir les informations du participant ci-dessous :',
+	next,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+	questions: "Des questions? Consultez le centre d'aide pour plus d'informations sur l'OHCRN.",
+	registeringForSomeoneElse: "Vous vous inscrivez au nom de quelqu'un d'autre ?",
+} satisfies RegisterFormStep1TextDictionary;
 
 export default dictionary;

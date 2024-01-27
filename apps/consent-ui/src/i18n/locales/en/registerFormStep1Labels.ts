@@ -17,16 +17,34 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterFormTextDictionary } from '../en/registerFormText';
+import formLabels from '../en/formLabels';
 
-import formText from './formText';
-
-const { goToStep, indicatesRequiredField, stepCurrentOfTotal } = formText;
+const {
+	dateOfBirth,
+	firstName,
+	lastName,
+	no,
+	phone,
+	preferredName,
+	yes,
+	yourName,
+	yourPhone,
+	yourRelationship,
+} = formLabels;
 
 const dictionary = {
-	goToStep,
-	indicatesRequiredField,
-	stepCurrentOfTotal,
-} satisfies RegisterFormTextDictionary;
+	dateOfBirth,
+	firstName,
+	lastName,
+	no,
+	phone,
+	preferredName,
+	yes,
+	yourName,
+	yourPhone,
+	yourRelationship,
+} satisfies Record<string, string>;
+
+export type RegisterFormStep1LabelsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

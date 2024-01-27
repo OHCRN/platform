@@ -23,10 +23,13 @@ import { useState } from 'react';
 
 import { ValidLanguage, replaceParams } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { scrollToTop } from 'src/components/utils';
+import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
+import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
+import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
+import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
@@ -41,12 +44,18 @@ import { RegisterFormStep1 } from './types';
 const RegisterForm = ({
 	currentLang,
 	errorsDict,
-	labelsDict,
+	step1LabelsDict,
+	step1TextDict,
+	step2LabelsDict,
+	step2TextDict,
 	textDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
-	labelsDict: RegisterFormLabelsDictionary;
+	step1LabelsDict: RegisterFormStep1LabelsDictionary;
+	step1TextDict: RegisterFormStep1TextDictionary;
+	step2LabelsDict: RegisterFormStep2LabelsDictionary;
+	step2TextDict: RegisterFormStep2TextDictionary;
 	textDict: RegisterFormTextDictionary;
 }) => {
 	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
@@ -85,8 +94,8 @@ const RegisterForm = ({
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
-				labelsDict={labelsDict}
-				textDict={textDict}
+				labelsDict={step1LabelsDict}
+				textDict={step1TextDict}
 			/>
 
 			{currentStep === 2 && (
@@ -94,9 +103,9 @@ const RegisterForm = ({
 					currentLang={currentLang}
 					errorsDict={errorsDict}
 					handleBackClick={handleBackClick}
-					labelsDict={labelsDict}
+					labelsDict={step2LabelsDict}
 					step1Data={step1Data}
-					textDict={textDict}
+					textDict={step2TextDict}
 				/>
 			)}
 		</>

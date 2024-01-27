@@ -26,13 +26,13 @@ import { SyntheticEvent, useEffect } from 'react';
 
 import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
-import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
+import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
+import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
@@ -48,8 +48,8 @@ const FormStep1 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
-	labelsDict: RegisterFormLabelsDictionary;
-	textDict: RegisterFormTextDictionary;
+	labelsDict: RegisterFormStep1LabelsDictionary;
+	textDict: RegisterFormStep1TextDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
