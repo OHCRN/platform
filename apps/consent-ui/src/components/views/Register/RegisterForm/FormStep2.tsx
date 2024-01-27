@@ -23,11 +23,11 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { ValidLanguage } from 'src/i18n';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
-import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
+import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
@@ -51,9 +51,9 @@ const FormStep2 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
-	labelsDict: RegisterFormLabelsDictionary;
+	labelsDict: RegisterFormStep2LabelsDictionary;
 	step1Data?: RegisterFormStep1;
-	textDict: RegisterFormTextDictionary;
+	textDict: RegisterFormStep2TextDictionary;
 }) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
@@ -114,8 +114,8 @@ const FormStep2 = ({
 		}
 	};
 
-	// toggle submit button's enabled status when isValid changes
 	useEffect(() => {
+		// toggle submit button's enabled status when isValid changes
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
 	}, [getRecaptchaToken, isValid]);
