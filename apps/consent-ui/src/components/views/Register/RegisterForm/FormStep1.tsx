@@ -168,13 +168,13 @@ const FormStep1 = ({
 				</FormSection>
 
 				{/* SECTION - CONTACT AFTER REGISTERING NOTICE */}
-				<FormSection>
+				<div className={styles.afterRegistering}>
 					<p>{textDict.afterRegistering}</p>
 					{/* TODO add link to help centre #367 */}
 					<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
 						{textDict.questions}
 					</Link>
-				</FormSection>
+				</div>
 
 				{/* GO TO NEXT PAGE */}
 				<div className={styles.buttonWrapper}>
