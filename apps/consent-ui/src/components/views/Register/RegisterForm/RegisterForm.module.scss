@@ -32,14 +32,13 @@
 	display: flex;
 	gap: 0.7rem;
 	margin: 1.75rem 0 1.25rem;
+	@media (min-width: theme('screens.md')) {
+		margin-bottom: 2.75rem;
+	}
 }
 
 .consentCheckbox {
 	margin-top: 3px;
-}
-
-.recaptchaCheckbox {
-	// margin-top: 2rem;
 }
 
 .afterRegistering {
