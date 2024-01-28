@@ -158,20 +158,14 @@ export const createParticipantPiData = async (
 
 		const participant = PICreateParticipantResponse.safeParse(data.participant);
 		if (!participant.success) {
+			const participantIdInfo = data.participant.id
+				? `for participantId: ${data.participant.id}`
+				: '';
 			logger.error(
 				'Received invalid data from create participant response',
+				participantIdInfo,
 				participant.error.issues,
 			);
-			const participantId = data.participant.id;
-			if (participantId) {
-				// delete participant from PI DB if response parsing fails
-				logger.info('Deleting invalid participant');
-				const deletePiParticipant = await deletePIParticipant(participantId);
-				if (deletePiParticipant.status !== 'SUCCESS') {
-					logger.error('Error deleting existing PI participant:', deletePiParticipant.message);
-					return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
-				}
-			}
 			return failure('SYSTEM_ERROR', participant.error.message);
 		}
 		return success(participant.data);
