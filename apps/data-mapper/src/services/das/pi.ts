@@ -18,7 +18,7 @@
  */
 
 import { AxiosError } from 'axios';
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, failure, success, SystemError } from 'types/httpResponses';
 import {
 	PIClinicianInviteRequest,
 	PIClinicianInviteResponse,
@@ -30,8 +30,8 @@ import urlJoin from 'url-join';
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { CreateInviteFailureStatus, CreateParticipantFailureStatus } from '../create.js';
-import { GetInviteFailureStatus, SystemError } from '../search.js';
+import { CreateInviteFailureStatus } from '../create.js';
+import { GetInviteFailureStatus } from '../search.js';
 
 const logger = serviceLogger.forModule('PIClient');
 
@@ -142,6 +142,7 @@ export const deleteInvitePiData = async (
 	}
 };
 
+type CreatePIParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
 /**
  * Makes request to PI DAS to create a Participant
  * Deletes Participant if response parsing fails
@@ -150,33 +151,10 @@ export const deleteInvitePiData = async (
  */
 export const createParticipantPiData = async (
 	req: PICreateParticipantRequest,
-): Promise<Result<PICreateParticipantResponse, CreateParticipantFailureStatus>> => {
+): Promise<Result<PICreateParticipantResponse, CreatePIParticipantFailureStatus>> => {
 	const { piDasUrl } = getAppConfig();
-	const {
-		participantOhipFirstName,
-		participantOhipLastName,
-		dateOfBirth,
-		participantPhoneNumber,
-		participantPreferredName,
-		participantEmailAddress,
-		guardianEmailAddress,
-		guardianPhoneNumber,
-		guardianRelationship,
-		keycloakId,
-	} = req;
 	try {
-		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
-			participantOhipFirstName,
-			participantOhipLastName,
-			dateOfBirth,
-			participantPhoneNumber,
-			participantPreferredName,
-			participantEmailAddress,
-			guardianEmailAddress,
-			guardianPhoneNumber,
-			guardianRelationship,
-			keycloakId,
-		});
+		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'participants'), req);
 
 		const participant = PICreateParticipantResponse.safeParse(data.participant);
 		if (!participant.success) {

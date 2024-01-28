@@ -26,13 +26,13 @@ import {
 	ParticipantResponseArray,
 } from 'types/dataMapper';
 import { ConsentCategory, ConsentQuestionArray, ConsentQuestionId } from 'types/entities';
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, SystemError, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../../config.js';
 import serviceLogger from '../../logger.js';
 import axiosClient from '../axiosClient.js';
-import { CreateInviteFailureStatus, CreateParticipantFailureStatus } from '../create.js';
+import { CreateInviteFailureStatus } from '../create.js';
 import { GetInviteFailureStatus, GetResponsesFailureStatus } from '../search.js';
 
 const logger = serviceLogger.forModule('ConsentClient');
@@ -215,6 +215,7 @@ export const getParticipantResponsesByQuestionId = async ({
 	}
 };
 
+type CreateConsentParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
 /**
  * Makes request to Consent DAS to create a Participant
  * @param ConsentCreateParticipantRequest Consent create participant data
@@ -222,7 +223,7 @@ export const getParticipantResponsesByQuestionId = async ({
  */
 export const createParticipantConsentData = async (
 	req: ConsentCreateParticipantRequest,
-): Promise<Result<ConsentCreateParticipantResponse, CreateParticipantFailureStatus>> => {
+): Promise<Result<ConsentCreateParticipantResponse, CreateConsentParticipantFailureStatus>> => {
 	const { consentDasUrl } = getAppConfig();
 	try {
 		const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), req);
@@ -230,12 +231,9 @@ export const createParticipantConsentData = async (
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
-
-			if (status === 400) {
-				logger.error('Invalid request while creating participant', data);
-				return failure('INVALID_REQUEST', data.message);
+			if (status === 409) {
+				return failure('PARTICIPANT_EXISTS', data.message);
 			}
-
 			logger.error('AxiosError creating participant', data);
 
 			return failure('SYSTEM_ERROR', data.message);

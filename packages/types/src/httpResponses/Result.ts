@@ -85,3 +85,10 @@ export const alternate = <FailureStatus extends string, T>(
 	message,
 	data,
 });
+
+/* ******************* *
+   Common FailureStatus types
+ * ******************* */
+
+export type SystemError = 'SYSTEM_ERROR';
+export type InvalidRequest = 'INVALID_REQUEST';

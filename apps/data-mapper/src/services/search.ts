@@ -1,6 +1,13 @@
 import { ClinicianInviteResponse, InformedConsentResponse } from 'types/dataMapper';
 import { ConsentCategory, ConsentQuestionId } from 'types/entities';
-import { Result, failure, isSuccess, success } from 'types/httpResponses';
+import {
+	Result,
+	failure,
+	isSuccess,
+	success,
+	SystemError,
+	InvalidRequest,
+} from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
@@ -17,9 +24,6 @@ import { getInvitePiData } from './das/pi.js';
 const logger = serviceLogger.forModule('SearchService');
 
 const { INFORMED_CONSENT } = ConsentCategory.enum;
-
-export type SystemError = 'SYSTEM_ERROR';
-export type InvalidRequest = 'INVALID_REQUEST';
 
 // PI-DAS
 // TODO: add Type instead of any

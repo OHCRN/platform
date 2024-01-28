@@ -4,7 +4,7 @@ import {
 	CreateParticipantRequest,
 	CreateParticipantResponse,
 } from 'types/dataMapper';
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, failure, success, SystemError } from 'types/httpResponses';
 
 import serviceLogger from '../logger.js';
 
@@ -15,12 +15,10 @@ import {
 	deleteInvitePiData,
 	deletePIParticipant,
 } from './das/pi.js';
-import { InvalidRequest, SystemError } from './search.js';
 
 const logger = serviceLogger.forModule('CreateService');
 
-export type CreateParticipantFailureStatus = SystemError | InvalidRequest | 'PARTICIPANT_EXISTS';
-
+type CreateParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
 /**
  * Creates a participant first in the PI DAS,
  * then uses the created participantId to create a corresponding entry in the Consent DAS.
@@ -28,7 +26,7 @@ export type CreateParticipantFailureStatus = SystemError | InvalidRequest | 'PAR
  * participant creation in Consent DAS.
  * @async
  * @param {CreateParticipantRequest}
- * @returns {ClinicianInviteResponse} Created Participant data
+ * @returns {CreateParticipantResponse} Created Participant data
  */
 export const createParticipant = async ({
 	participantOhipFirstName,
@@ -99,7 +97,11 @@ export const createParticipant = async ({
 			// Unable to create participant in Consent DAS, rollback participant already created in PI-DAS
 			const deletePiParticipant = await deletePIParticipant(participantId);
 			if (deletePiParticipant.status !== 'SUCCESS') {
-				logger.error('Error deleting existing PI participant:', deletePiParticipant.message);
+				logger.error(
+					'Error deleting existing PI participant:',
+					participantId,
+					deletePiParticipant.message,
+				);
 				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 			}
 			return participantConsentData;
