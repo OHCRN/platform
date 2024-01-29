@@ -19,22 +19,15 @@
 
 'use client';
 
-import { text } from 'node:stream/consumers';
-
-import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ConsentResearchParticipationRequest } from 'types/consentApi';
-import clsx from 'clsx';
+// import clsx from 'clsx';
 
-import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { axiosClient } from 'src/services/api/axiosClient';
-import { API } from 'src/constants';
 import Form from 'src/components/common/Form';
 import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
 import FormSection from 'src/components/common/Form/FormSection';
-import Button from 'src/components/common/Button';
 import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
 import { ValidLanguage } from 'src/i18n';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
@@ -42,7 +35,7 @@ import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 const styles = Object.assign({}, layoutStyles);
 
 const ConsentStep3Component = ({
-	currentLang,
+	// currentLang,
 	errorsDict,
 	textDict,
 }: {
@@ -50,12 +43,12 @@ const ConsentStep3Component = ({
 	errorsDict: FormErrorsDictionary;
 	textDict: ConsentResearchParticipationDictionary;
 }) => {
-	// setup submit button enabled status
-	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
-	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
-		// enable submit button if the form & recaptcha are both valid
-		setEnableSubmit(isValid && !!recaptchaToken);
-	};
+	// // setup submit button enabled status
+	// const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
+	// const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
+	// 	// enable submit button if the form & recaptcha are both valid
+	// 	setEnableSubmit(isValid && !!recaptchaToken);
+	// };
 
 	// setup react-hook-forms
 	const methods = useForm<ConsentResearchParticipationRequest>({
@@ -65,9 +58,8 @@ const ConsentStep3Component = ({
 	});
 
 	const {
-		formState: { errors, isValid },
+		formState: { errors },
 		handleSubmit,
-		watch,
 	} = methods;
 
 	const onSubmit: SubmitHandler<ConsentResearchParticipationRequest> = (data, event) => {
@@ -80,10 +72,8 @@ const ConsentStep3Component = ({
 				{/* HEADING */}
 				<FormSection>
 					<h3 className={styles.sectionTitle}>{textDict.heading}</h3>
-					<h4 className={styles.sectionDescription}>{textDict.subheading}</h4>
-					<p className={styles.smallText}>
-						<RequiredAsterisk /> {textDict.subheading}
-					</p>
+					<h3 className={styles.sectionDescription}>{textDict.subheading}</h3>
+					<p className={styles.smallText}> {textDict.label}</p>
 				</FormSection>
 
 				{/* SECTION - PARTICIPANT INFO */}
@@ -116,15 +106,23 @@ const ConsentStep3Component = ({
 				</FormSection>
 
 				{/* SECTION - PREVIOUS / NEXT */}
-				<FormSection>
+				{/* <FormSection>
 					<Button
 						className={styles.submitButton}
 						color={enableSubmit ? 'green' : 'default'}
 						type="submit"
 					>
-						{'SUBMIT'}
+						{'NEXT'}
 					</Button>
-				</FormSection>
+
+					<Button
+						className={styles.submitButton}
+						color={enableSubmit ? 'green' : 'default'}
+						type="submit"
+					>
+						{'PREVIOUS'}
+					</Button>
+				</FormSection> */}
 			</Form>
 		</FormProvider>
 	);
