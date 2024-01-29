@@ -18,6 +18,7 @@
  */
 
 import ancestryDictionary from './ancestry';
+import assetUrlsDictionary from './assetUrls';
 import birthSexDictionary from './birthSex';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
@@ -54,6 +55,7 @@ import registerDictionary from './register';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
+	assetUrls: assetUrlsDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,

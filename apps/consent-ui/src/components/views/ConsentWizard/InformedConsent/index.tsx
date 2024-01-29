@@ -45,6 +45,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		description2: translate('informedConsentPage', 'description2'),
 		description3: translate('informedConsentPage', 'description3'),
 		linkText: translate('informedConsentPage', 'linkText'),
+		studyConsentPdf: translate('informedConsentPage', 'studyConsentPdf'),
 		title: translate('informedConsentPage', 'title'),
 	};
 
@@ -53,10 +54,13 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<h2 className={styles.title}>{pageDict.title}</h2>
 			<p className={styles.description}>
 				{pageDict.description1}
-				{/* TODO add download link for informed consent PDF https://github.com/OHCRN/platform/issues/379 */}
-				<Link href="#">{pageDict.linkText}</Link> {pageDict.description2}{' '}
-				<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
+				<Link href={pageDict.studyConsentPdf} target="__blank">
+					{pageDict.linkText}
+				</Link>{' '}
+				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
 			</p>
+			{/* pdf download button */}
+			{/* pdf viewer */}
 			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
 		</div>
 	);

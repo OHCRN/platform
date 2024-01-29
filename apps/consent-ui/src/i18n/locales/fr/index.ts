@@ -18,6 +18,7 @@
  */
 
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
+import assetUrlsDictionary from 'src/i18n/locales/fr/assetUrls';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
@@ -55,6 +56,7 @@ import registerDictionary from 'src/i18n/locales/fr/register';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
+	assetUrls: assetUrlsDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,

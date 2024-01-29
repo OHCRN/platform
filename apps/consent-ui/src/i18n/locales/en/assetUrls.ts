@@ -17,22 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import assetUrlsDictionary from './assetUrls';
-
-const { studyConsentPdf } = assetUrlsDictionary;
-
 const dictionary = {
-	description1:
-		'Please carefully review the OHCRN Study Information and Informed Consent. You can also ',
-	description2:
-		' for review. If you have any questions or concerns please contact the OHCRN study team at ',
-	description3:
-		"If you are completing this form on behalf of someone else, 'you' or 'me' refers to your child or the person you are completing the form on behalf of; 'we' means the doctors and other study staff.",
-	linkText: 'download the study information and informed consent PDF',
-	studyConsentPdf,
-	title: 'OHCRN Study Information and Informed Consent',
+	studyConsentPdf: '/assets/pdfs/study-consent/PLACEHOLDER_study-consent.pdf',
 } satisfies Record<string, string>;
 
-export type InformedConsentPageDictionary = Record<keyof typeof dictionary, string>;
+export type AssetUrlsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

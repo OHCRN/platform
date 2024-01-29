@@ -19,6 +19,10 @@
 
 import { InformedConsentPageDictionary } from '../en/informedConsentPage';
 
+import assetUrls from './assetUrls';
+
+const { studyConsentPdf } = assetUrls;
+
 const dictionary = {
 	description1:
 		"Veuillez lire attentivement les informations sur l'étude OHCRN et le consentement éclairé. Vous pouvez aussi ",
@@ -27,6 +31,7 @@ const dictionary = {
 	description3:
 		"Si vous remplissez ce formulaire au nom de quelqu'un d'autre, « vous » ou « moi » fait référence à votre enfant ou à la personne pour laquelle vous remplissez le formulaire au nom de quelqu'un d'autre ; « nous » désigne les médecins et autres membres du personnel de l'étude.",
 	linkText: "télécharger les informations sur l'étude et le consentement éclairé PDF",
+	studyConsentPdf,
 	title: "Informations sur l'étude OHCRN et consentement éclairé",
 } satisfies InformedConsentPageDictionary;
 
