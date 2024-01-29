@@ -10,7 +10,7 @@ Libraries used:
 - React-Hook-Form provides hooks, not components, to help developers create forms.
 - Most components can be **registered** using the `register` method from the `useForm` hook. These are _uncontrolled_ components: They manage their own state in the DOM, and React-Hook-Form reads and validates their state using `refs`.
 - Components imported from libraries must be **controlled** by wrapping a `<Controller />` component around them. They're _controlled_ components, but the controlling context is a wrapper around the specific input, which is then managed by React-Hook-Form similar to the registered/uncontrolled inputs.
-- Fields are validated using Zod schemas, initially `onSubmit`, and then `onChange`.
+- Fields are validated `onBlur` using Zod schemas. Checkbox & radio fields have additional `onChange` validation in their FieldSet components.
 
 ## Tips on creating a new form
 
@@ -30,9 +30,12 @@ Libraries used:
 
 - Conditionally-displayed fields:
   - Use `watch` from React-Hook-Form and a `useEffect` hook to toggle conditional fields.
-  - When toggling the conditional fields, use the `unregister` method from `useForm()`. Don't use `register`, though - the `register` method is invoked on render in the input components.
+  - Showing/hiding conditional fields:
+    - If you want to keep the fields in state: Show/hide with CSS
+    - If you want to remove the fields from state when they're hidden: Use conditional rendering and add `shouldUnregister: true` to the form's configuration.
+    - If you want to keep some fields in state and remove others, manually unregister the fields you want to remove with the `unregister` method.
     - Unregistering works the same way for registered & controlled components.
-  - Example: Guardian fields in `ClinicianInviteForm`.
+  - Example: Guardian fields in `ClinicianInviteForm` and `RegisterForm`
 
 ## Parts of a form
 
