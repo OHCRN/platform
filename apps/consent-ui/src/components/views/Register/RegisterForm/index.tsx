@@ -91,7 +91,6 @@ const RegisterForm = ({
 
 			<FormStep1
 				className={currentStep === 1 ? styles.visible : styles.hidden}
-				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
 				labelsDict={step1LabelsDict}

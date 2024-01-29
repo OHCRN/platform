@@ -24,7 +24,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { SyntheticEvent, useEffect } from 'react';
 
-import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
