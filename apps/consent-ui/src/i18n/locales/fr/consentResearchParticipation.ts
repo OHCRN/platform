@@ -19,26 +19,25 @@
 
 import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
 
-// MAKE FRENCH TRANSLATIONS HERE
 const dictionary = {
-	heading: 'Consent for Research Participation',
+	heading: 'Consentement pour la participation à la recherche',
 	subheading:
-		'This part of the consent form is about optional studies that you can choose to take part in.  By taking part in these optional studies, we hope the results will help other people with hereditary cancer in the future. \n\nParticipating in these optional studies is your choice.  You can still take part in the main OHCRN registry even if you say “no” to the optional studies.  Additional information about the optional studies can be found in the ',
-	subheadingLink: 'study information and informed consent document.',
+		"Cette partie du formulaire de consentement concerne les études facultatives auxquelles vous pouvez choisir de participer. En participant à ces études facultatives, nous espérons que les résultats aideront d'autres personnes atteintes d'un cancer héréditaire à l'avenir. \n\nParticiper à ces études facultatives est votre choix. Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » aux études facultatives. Des informations supplémentaires sur les études facultatives peuvent être trouvées dans les informations sur l'étude et le document de consentement éclairé. ",
+	subheadingLink: "l'étude et le document de consentement éclairé.",
 	label:
-		'Please select you answer below to show if you would or would not like to take part in each optional study. You can change your consent at any time:',
+		'Veuillez sélectionner votre réponse ci-dessous pour indiquer si vous souhaitez ou non participer à chaque étude facultative. Vous pouvez modifier votre consentement à tout moment:',
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE:
-		'Optional consent to allow collection of previously collected samples for future unknown research',
+		"Consentement facultatif pour permettre la collecte d'échantillons précédemment collectés pour de futures recherches inconnues",
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH_DESC:
-		'I agree that my previously collected samples may be included in the decentralized biobank and used for unknown future research studies.',
+		"J'accepte que mes échantillons précédemment collectés puissent être inclus dans la biobanque décentralisée et utilisés pour des études de recherche futures inconnues.",
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_TITLE:
-		'Optional release of contact information to existing approved cancer registries.',
+		'Publication facultative des coordonnées des registres du cancer approuvés existants.',
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC:
-		'I agree that my study doctor, or someone on the study team, may provide my contact information and genetic test results to an existing cancer registry, if applicable. ',
+		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse fournir mes coordonnées et les résultats de mes tests génétiques à un registre du cancer existant, le cas échéant. ",
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK:
-		'Click here to view current list of approved cancer registries.', // wanted to keep the type as string for when we do translations
-	yesText: 'Yes',
-	noText: 'No',
+		'Cliquez ici pour consulter la liste actuelle des registres du cancer approuvés.',
+	yesText: 'Oui',
+	noText: 'Non',
 } satisfies ConsentResearchParticipationDictionary;
 
 export default dictionary;
