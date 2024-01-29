@@ -45,7 +45,6 @@ const FormStep1 = ({
 	textDict,
 }: {
 	className?: string;
-	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
 	labelsDict: RegisterFormStep1LabelsDictionary;
