@@ -22,7 +22,7 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ConsentGroup, InviteGuardianFields } from 'types/entities';
+import { ConsentGroup } from 'types/entities';
 import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
 
@@ -30,7 +30,7 @@ import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
-import useRecaptcha from 'src/hooks/useRecaptcha';
+import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/common/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { axiosClient } from 'src/services/api/axiosClient';
@@ -56,13 +56,6 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
 
-const guardianInfoFields: (keyof InviteGuardianFields)[] = [
-	'guardianName',
-	'guardianPhoneNumber',
-	'guardianEmailAddress',
-	'guardianRelationship',
-];
-
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
 	currentLang,
@@ -76,15 +69,23 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
 }) => {
+	// setup submit button enabled status
+	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
+	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
+		// enable submit button if the form & recaptcha are both valid
+		setEnableSubmit(isValid && !!recaptchaToken);
+	};
+
 	// setup react-hook-forms
 	const methods = useForm<ClinicianInviteRequest>({
+		mode: 'onBlur',
 		resolver: zodResolver(ClinicianInviteRequest),
+		shouldUnregister: true,
 	});
 
 	const {
-		formState: { errors },
+		formState: { errors, isValid },
 		handleSubmit,
-		unregister,
 		watch,
 	} = methods;
 
@@ -99,8 +100,9 @@ const ClinicianInviteFormComponent = ({
 	} = useRecaptcha();
 
 	const handleRecaptchaChange = () => {
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
+		const recaptchaToken = getRecaptchaToken();
+		recaptchaToken && setRecaptchaError('');
+		handleEnableSubmit(isValid, recaptchaToken);
 		onRecaptchaChange();
 	};
 
@@ -126,24 +128,24 @@ const ClinicianInviteFormComponent = ({
 		}
 	};
 
+	// toggle submit button's enabled status when isValid changes
+	useEffect(() => {
+		const recaptchaToken = getRecaptchaToken();
+		handleEnableSubmit(isValid, recaptchaToken);
+	}, [getRecaptchaToken, isValid]);
+
 	// watch consentGroup value & show/hide guardian info fields if participant is a minor.
+	// guardian fields register on mount, in their input component.
+	// they unregister on unmount, with `shouldUnregister: true`
 	const watchConsentGroup = watch('consentGroup');
 	const [showGuardianFields, setShowGuardianFields] = useState<boolean>(false);
 	useEffect(() => {
-		if (consentGroupsRequiringGuardian.includes(watchConsentGroup)) {
-			// guardian fields are registered on render, in their input components
-			setShowGuardianFields(true);
-		} else {
-			setShowGuardianFields(false);
-			guardianInfoFields.forEach((field) => {
-				unregister(field);
-			});
-		}
-	}, [unregister, watchConsentGroup]);
+		const enableGuardianFields = consentGroupsRequiringGuardian.includes(watchConsentGroup);
+		setShowGuardianFields(enableGuardianFields);
+	}, [watchConsentGroup]);
 
 	// setup consent group info modal
 	const { openModal, closeModal } = useModal();
-
 	const consentGroupModalConfig = {
 		title: textDict.consentGroups,
 		actionButtonText: 'OK',
@@ -151,17 +153,21 @@ const ClinicianInviteFormComponent = ({
 		onCancelClick: closeModal,
 		body: <ConsentGroupModal currentLang={currentLang} />,
 	};
-
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
+				{/* HEADING */}
 				<FormSection>
 					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
 					<p className={styles.smallText}>
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
+				</FormSection>
+
+				{/* SECTION - PARTICIPANT INFO */}
+				<FormSection>
 					<TextFieldSet
 						error={errors.participantFirstName?.type && errorsDict.required}
 						label={labelsDict.firstName || ''}
@@ -219,6 +225,9 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FormSection>
 
+				{/* SECTION - GUARDIAN INFO */}
+				{/* show/hide this field with conditional rendering.
+						fields will be removed from form state when hidden. */}
 				{showGuardianFields && (
 					<FormSection variant="grey">
 						{/*
@@ -280,6 +289,7 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FormSection>
 
+				{/* SECTION - CLINICIAN INFO */}
 				<FormSection>
 					<h3 className={clsx(styles.sectionTitle, styles.clinicianTitle)}>
 						{textDict.clinicianInformation}
@@ -316,6 +326,7 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FormSection>
 
+				{/* SECTION - RECAPTCHA & SUBMIT */}
 				<FormSection>
 					{recaptchaError && (
 						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
@@ -328,7 +339,11 @@ const ClinicianInviteFormComponent = ({
 						/>
 					</div>
 
-					<Button type="submit" className={styles.submitButton}>
+					<Button
+						className={styles.submitButton}
+						color={enableSubmit ? 'green' : 'default'}
+						type="submit"
+					>
 						{textDict.submit}
 					</Button>
 				</FormSection>

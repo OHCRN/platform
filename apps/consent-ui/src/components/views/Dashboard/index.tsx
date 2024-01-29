@@ -22,7 +22,7 @@ import Image from 'next/image';
 
 import Card from 'src/components/common/Card';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import ConsentsImage from 'src/public/consents.jpeg';
+import ConsentsImage from 'src/../public/assets/images/consents.jpeg';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
@@ -39,7 +39,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 			<DashboardNotification currentLang={currentLang} />
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])} layout="row">
 				<div className={styles['consents-img']}>
-					<Image src={ConsentsImage} alt="" />
+					<Image src={ConsentsImage} alt="" priority />
 				</div>
 				<div className={styles.content}>
 					<h2>{translate('dashboard', 'reviewOhcrnConsents')}</h2>

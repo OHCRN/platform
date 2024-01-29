@@ -10,9 +10,9 @@
 	"scripts": {
 		"build": "tsc",
 		"dev": "nodemon",
+		"lint": "eslint .",
 		"start": "ts-node src/server.ts",
-		"test": "vitest run",
-		"lint": "eslint ."
+		"test": "vitest run"
 	},
 	"keywords": [],
 	"author": "",
