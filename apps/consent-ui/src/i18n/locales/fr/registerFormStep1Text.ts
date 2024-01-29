@@ -22,7 +22,7 @@ import { RegisterFormStep1TextDictionary } from '../en/registerFormStep1Text';
 import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { next } = formText;
+const { goToStep, next } = formText;
 const {
 	dateOfBirthTooltip,
 	participantFirstNameTooltip,
@@ -37,6 +37,7 @@ const dictionary = {
 	dateOfBirthTooltip,
 	enterInfo: "S'il vous plaît entrer vos informations ci-dessous:",
 	enterParticipantInfo: 'Veuillez saisir les informations du participant ci-dessous :',
+	goToStep,
 	next,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,

@@ -20,7 +20,7 @@
 import formTooltips from './formTooltips';
 import formText from './formText';
 
-const { next } = formText;
+const { goToStep, next } = formText;
 const {
 	dateOfBirthTooltip,
 	participantFirstNameTooltip,
@@ -35,6 +35,7 @@ const dictionary = {
 	dateOfBirthTooltip,
 	enterInfo: 'Please enter your information below:',
 	enterParticipantInfo: "Please enter the participant's information below:",
+	goToStep,
 	next,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,

@@ -19,10 +19,9 @@
 
 import formText from './formText';
 
-const { goToStep, indicatesRequiredField, stepCurrentOfTotal } = formText;
+const { indicatesRequiredField, stepCurrentOfTotal } = formText;
 
 const dictionary = {
-	goToStep,
 	indicatesRequiredField,
 	stepCurrentOfTotal,
 } satisfies Record<string, string>;
