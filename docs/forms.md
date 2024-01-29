@@ -11,6 +11,7 @@ Libraries used:
 - Most components can be **registered** using the `register` method from the `useForm` hook. These are _uncontrolled_ components: They manage their own state in the DOM, and React-Hook-Form reads and validates their state using `refs`.
 - Components imported from libraries must be **controlled** by wrapping a `<Controller />` component around them. They're _controlled_ components, but the controlling context is a wrapper around the specific input, which is then managed by React-Hook-Form similar to the registered/uncontrolled inputs.
 - Fields are validated `onBlur` using Zod schemas. Checkbox & radio fields have additional `onChange` validation in their FieldSet components.
+  - `refine()` in Zod schemas only works in onSubmit events and `formState.isValid`. For refined onChange/onBlur validation, additional code is needed.
 
 ## Tips on creating a new form
 
@@ -59,3 +60,7 @@ Libraries used:
 
 - Link tooltips to inputs using [a unique ID](https://react.dev/reference/react/useId#useid) and `aria-describedby`.
 - Show & hide tooltips using CSS so the tooltip will remain visible to screenreaders. [More info here](https://www.tpgi.com/short-note-on-aria-labelledby-and-aria-describedby/)
+
+## Validation
+
+-
