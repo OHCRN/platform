@@ -22,17 +22,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ConsentResearchParticipationRequest } from 'types/consentApi';
-// import clsx from 'clsx';
+import clsx from 'clsx';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
 import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
 import FormSection from 'src/components/common/Form/FormSection';
-import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
 import { ValidLanguage } from 'src/i18n';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
-const styles = Object.assign({}, layoutStyles);
+import styles from './ConsentStep3Component.module.scss';
 
 const ConsentStep3Component = ({
 	// currentLang,
@@ -43,13 +42,6 @@ const ConsentStep3Component = ({
 	errorsDict: FormErrorsDictionary;
 	textDict: ConsentResearchParticipationDictionary;
 }) => {
-	// // setup submit button enabled status
-	// const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
-	// const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
-	// 	// enable submit button if the form & recaptcha are both valid
-	// 	setEnableSubmit(isValid && !!recaptchaToken);
-	// };
-
 	// setup react-hook-forms
 	const methods = useForm<ConsentResearchParticipationRequest>({
 		mode: 'onBlur',
@@ -66,17 +58,24 @@ const ConsentStep3Component = ({
 		event?.preventDefault();
 	};
 
+	console.log(textDict.subheading);
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* HEADING */}
 				<FormSection>
-					<h3 className={styles.sectionTitle}>{textDict.heading}</h3>
-					<h3 className={styles.sectionDescription}>{textDict.subheading}</h3>
-					<p className={styles.smallText}> {textDict.label}</p>
+					<h3 className={clsx(styles.heading)}>{textDict.heading}</h3>
+					<h4 className={clsx(styles.subheading)}>
+						{textDict.subheading}
+						<a href="#" className={clsx(styles.link)}>
+							{textDict.subheadingLink}
+						</a>
+					</h4>
+					<p className={clsx(styles.label)}>{textDict.label}</p>
 				</FormSection>
 
-				{/* SECTION - PARTICIPANT INFO */}
+				{/* SECTION - PARTICIPANT CONSENTS */}
 				<FormSection>
 					<RadioFieldSet
 						error={errors.RESEARCH_PARTICIPATION__FUTURE_RESEARCH?.type && errorsDict.required}
@@ -94,7 +93,9 @@ const ConsentStep3Component = ({
 						description={
 							<>
 								{textDict.RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC}
-								<a>{textDict.RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK}</a>
+								<a href="#" className={clsx(styles.link)}>
+									{textDict.RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK}
+								</a>
 							</>
 						}
 						yesText={textDict.yesText}

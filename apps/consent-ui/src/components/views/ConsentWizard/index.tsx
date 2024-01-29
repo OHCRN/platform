@@ -75,6 +75,7 @@ const ConsentWizard = async ({
 	const researchParticipationTextDict: ConsentResearchParticipationDictionary = {
 		heading: translate('consentResearchParticipation', 'heading'),
 		subheading: translate('consentResearchParticipation', 'subheading'),
+		subheadingLink: translate('consentResearchParticipation', 'subheadingLink'),
 		label: translate('consentResearchParticipation', 'label'),
 		RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE: translate(
 			'consentResearchParticipation',
