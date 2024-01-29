@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,7 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+const dictionary = {
+	heading: 'Consent for Research Participation',
+	subheading:
+		'This part of the consent form is about optional studies that you can choose to take part in.  By taking part in these optional studies, we hope the results will help other people with hereditary cancer in the future. Participating in these optional studies is your choice.  You can still take part in the main OHCRN registry even if you say “no” to the optional studies.  Additional information about the optional studies can be found in the study information and informed consent document.',
+	label:
+		'Please select you answer below to show if you would or would not like to take part in each optional study:',
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE:
+		'Optional consent to allow collection of previously collected samples for future unknown research',
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH_DESC:
+		'I agree that my previously collected samples may be included in the decentralized biobank and used for unknown future research studies.',
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_TITLE:
+		'Optional release of contact information to existing approved cancer registries.',
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC:
+		'I agree that my study doctor, or someone on the study team, may provide my contact information and genetic test results to an existing cancer registry, if applicable.',
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK:
+		'Click here to view current list of approved cancer registries.', // wanted to keep the type as string for when we do translations
+	yesText: 'Yes',
+	noText: 'No',
+} satisfies Record<string, string>;
 
 export type ConsentResearchParticipationDictionary = Record<keyof typeof dictionary, string>;
 
