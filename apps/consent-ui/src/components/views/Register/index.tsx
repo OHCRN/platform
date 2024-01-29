@@ -57,7 +57,6 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	};
 
 	const textDict: RegisterFormTextDictionary = {
-		goToStep: translate('registerFormText', 'goToStep'),
 		indicatesRequiredField: translate('registerFormText', 'indicatesRequiredField'),
 		stepCurrentOfTotal: translate('registerFormText', 'stepCurrentOfTotal'),
 	};
@@ -67,6 +66,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		dateOfBirthTooltip: translate('registerFormStep1Text', 'dateOfBirthTooltip'),
 		enterInfo: translate('registerFormStep1Text', 'enterInfo'),
 		enterParticipantInfo: translate('registerFormStep1Text', 'enterParticipantInfo'),
+		goToStep: translate('registerFormStep1Text', 'goToStep'),
 		next: translate('registerFormStep1Text', 'next'),
 		participantFirstNameTooltip: translate('registerFormStep1Text', 'participantFirstNameTooltip'),
 		participantLastNameTooltip: translate('registerFormStep1Text', 'participantLastNameTooltip'),
