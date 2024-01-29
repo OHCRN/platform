@@ -58,8 +58,6 @@ const ConsentStep3Component = ({
 		event?.preventDefault();
 	};
 
-	console.log(textDict.subheading);
-
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
@@ -108,21 +106,7 @@ const ConsentStep3Component = ({
 
 				{/* SECTION - PREVIOUS / NEXT */}
 				{/* <FormSection>
-					<Button
-						className={styles.submitButton}
-						color={enableSubmit ? 'green' : 'default'}
-						type="submit"
-					>
-						{'NEXT'}
-					</Button>
-
-					<Button
-						className={styles.submitButton}
-						color={enableSubmit ? 'green' : 'default'}
-						type="submit"
-					>
-						{'PREVIOUS'}
-					</Button>
+					waiting on component
 				</FormSection> */}
 			</Form>
 		</FormProvider>
