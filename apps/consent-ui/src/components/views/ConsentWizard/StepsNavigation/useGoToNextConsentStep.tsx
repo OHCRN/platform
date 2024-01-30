@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,15 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormTextDictionary } from '../en/formText';
+import { useRouter } from 'next/navigation';
 
-const dictionary = {
-	complete: 'Complèter',
-	indicatesRequiredField: 'indique un champ obligatoire',
-	next: 'Suivant',
-	previous: 'Précédent',
-	selectPlaceholder: 'Choisissez-en un',
-	submit: 'Soumettre',
-} satisfies FormTextDictionary;
+import { ValidLanguage } from 'src/i18n';
+import { getRoute } from 'src/components/common/Link/utils';
 
-export default dictionary;
+import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
+
+export const getNextPrevConsentSteps = (currentStep: ConsentStepRoute) => {
+	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
+	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1];
+	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1];
+	return { nextRoute, prevRoute };
+};
+
+const useGoToNextConsentStep = (currentLang: ValidLanguage, currentStep: ConsentStepRoute) => {
+	const router = useRouter();
+	const { nextRoute } = getNextPrevConsentSteps(currentStep);
+
+	// no nextRoute? currently on last step -> go to dashboard
+	return () => router.push(getRoute(currentLang, nextRoute || 'dashboard'));
+};
+
+export default useGoToNextConsentStep;

@@ -17,12 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import styles from './StepsNavigation.module.scss';
 import PreviousButton from './PreviousButton';
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
+import { ConsentStepRoute } from './types';
 import NextCompleteButton from './NextCompleteButton';
+import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
+
+// place this component inside the form provider
 
 const StepsNavigation = ({
 	currentLang,
@@ -31,22 +34,22 @@ const StepsNavigation = ({
 	currentLang: ValidLanguage;
 	currentStep: ConsentStepRoute;
 }) => {
-	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
-	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1];
-	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1];
+	const { nextRoute, prevRoute } = getNextPrevConsentSteps(currentStep);
+
+	const translate = getTranslation(currentLang);
 
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.prevWrapper}>
 				{prevRoute && (
 					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
-						Previous
+						{translate('formText', 'previous')}
 					</PreviousButton>
 				)}
 			</div>
 			<div className={styles.nextWrapper}>
-				<NextCompleteButton currentLang={currentLang} nextRoute={nextRoute}>
-					{nextRoute ? 'Next' : 'Complete'}
+				<NextCompleteButton>
+					{translate('formText', nextRoute ? 'next' : 'complete')}
 				</NextCompleteButton>
 			</div>
 		</div>

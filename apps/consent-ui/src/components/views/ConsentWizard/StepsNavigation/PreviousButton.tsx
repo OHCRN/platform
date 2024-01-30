@@ -61,7 +61,7 @@ const PreviousButton = ({
 			openModal(formEditedModalConfig);
 		} else {
 			// form hasn't been edited - go to previous step
-			router.push(getRoute(prevRoute, currentLang));
+			router.push(getRoute(currentLang, prevRoute));
 		}
 	};
 

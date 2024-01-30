@@ -33,6 +33,10 @@ import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
 
 import StepsNavigation from '../StepsNavigation';
+import { ConsentStepRoute } from '../StepsNavigation/types';
+import useGoToNextConsentStep from '../StepsNavigation/useGoToNextConsentStep';
+
+const currentConsentStep: ConsentStepRoute = 'consent-1';
 
 const InformedConsentForm = ({
 	currentLang,
@@ -52,10 +56,17 @@ const InformedConsentForm = ({
 		handleSubmit,
 	} = methods;
 
+	// setup go to next page
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+
 	const onSubmit: SubmitHandler<InformedConsentRequest> = (data, event) => {
 		event?.preventDefault();
 
 		console.log({ data });
+
+		// TODO go to next page after successful POST request
+
+		goToNextConsentStep();
 	};
 
 	return (
@@ -76,8 +87,7 @@ const InformedConsentForm = ({
 					/>
 				</FormSection>
 			</Form>
-			<StepsNavigation currentLang={currentLang} currentStep="consent-2" />
-			{/* put in prev/next buttons */}
+			<StepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 		</FormProvider>
 	);
 };
