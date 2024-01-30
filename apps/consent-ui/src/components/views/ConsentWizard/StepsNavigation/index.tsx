@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import clsx from 'clsx';
+
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import styles from './StepsNavigation.module.scss';
@@ -25,7 +27,8 @@ import { ConsentStepRoute } from './types';
 import NextCompleteButton from './NextCompleteButton';
 import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
 
-// place this component inside the form provider
+// place this component inside a Form component with an onSubmit handler.
+// the next/complete button triggers the submit event.
 
 const StepsNavigation = ({
 	currentLang,
@@ -39,15 +42,15 @@ const StepsNavigation = ({
 	const translate = getTranslation(currentLang);
 
 	return (
-		<div className={styles.wrapper}>
-			<div className={styles.prevWrapper}>
+		<div className={styles.navWrapper}>
+			<div className={styles.buttonWrapper}>
 				{prevRoute && (
 					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
 						{translate('formText', 'previous')}
 					</PreviousButton>
 				)}
 			</div>
-			<div className={styles.nextWrapper}>
+			<div className={clsx(styles.buttonWrapper, styles.next)}>
 				<NextCompleteButton>
 					{translate('formText', nextRoute ? 'next' : 'complete')}
 				</NextCompleteButton>

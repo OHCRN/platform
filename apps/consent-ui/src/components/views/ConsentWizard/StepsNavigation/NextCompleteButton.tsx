@@ -24,13 +24,23 @@ import { useFormContext } from 'react-hook-form';
 
 import Button from 'src/components/common/Button';
 
+import styles from './StepsNavigation.module.scss';
+
+// this button triggers react-hook-form's submit handler
+
 const NextCompleteButton = ({ children }: { children: ReactNode }) => {
 	const {
 		formState: { isValid },
 	} = useFormContext();
 
 	return (
-		<Button color={isValid ? 'green' : 'default'} type="submit">
+		<Button
+			action="next"
+			className={styles.button}
+			color={isValid ? 'green' : 'default'}
+			onMouseDown={(e) => e.preventDefault()}
+			type="submit"
+		>
 			{children}
 		</Button>
 	);

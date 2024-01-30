@@ -30,6 +30,7 @@ import { useModal } from 'src/components/common/Modal';
 
 import { ConsentStepRoute } from './types';
 import FormEditedModal from './FormEditedModal';
+import styles from './StepsNavigation.module.scss';
 
 const PreviousButton = ({
 	children,
@@ -65,7 +66,17 @@ const PreviousButton = ({
 		}
 	};
 
-	return <Button onClick={handleClick}>{children}</Button>;
+	return (
+		<Button
+			action="prev"
+			className={styles.button}
+			onClick={handleClick}
+			onMouseDown={(e) => e.preventDefault()}
+			variant="secondary"
+		>
+			{children}
+		</Button>
+	);
 };
 
 export default PreviousButton;
