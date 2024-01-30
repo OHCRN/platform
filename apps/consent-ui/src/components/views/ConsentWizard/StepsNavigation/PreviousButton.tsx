@@ -25,7 +25,7 @@ import { useRouter } from 'next/navigation';
 
 import Button from 'src/components/common/Button';
 import { ValidLanguage } from 'src/i18n';
-import { getRoute } from 'src/components/common/Link/utils';
+import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/common/Modal';
 
 import { ConsentStepRoute } from './types';
@@ -62,7 +62,7 @@ const PreviousButton = ({
 			openModal(formEditedModalConfig);
 		} else {
 			// form hasn't been edited - go to previous step
-			router.push(getRoute(currentLang, prevRoute));
+			router.push(getLocalizedRoute(currentLang, prevRoute));
 		}
 	};
 

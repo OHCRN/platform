@@ -78,14 +78,14 @@ export const addParamsToUrl = (href: string, params: RouteParams) => {
 };
 
 /**
- * Get localized route for links & router.push
+ * Get localized route for router.push
  * @param {ValidLanguage} lang - the current language
  * @param {string} route - the route for the page, from routesByLocale
  *
  * @example
  * // returns '/en/consent/step-1'
- * getRoute('consent-1', 'en')
+ * getLocalizedRoute('en', 'consent-1')
  */
-export const getRoute = (lang: ValidLanguage, route: keyof typeof routesByLocale.en) => {
+export const getLocalizedRoute = (lang: ValidLanguage, route: keyof typeof routesByLocale.en) => {
 	return `/${lang}/${routesByLocale[lang][route]}`;
 };
