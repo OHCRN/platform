@@ -1,0 +1,14 @@
+@mixin text-link {
+	a,
+	.link {
+		text-decoration: underline;
+		transition: all 300ms ease-in-out;
+		color: theme('colors.secondary.500');
+		&:hover {
+			color: theme('colors.secondary.400');
+		}
+		&:active {
+			color: theme('colors.secondary.200');
+		}
+	}
+}

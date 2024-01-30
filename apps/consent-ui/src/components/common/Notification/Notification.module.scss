@@ -1,3 +1,5 @@
+@use '../../../theme/mixins';
+
 .notification {
 	border: 2px solid;
 	box-shadow: theme('dropShadow.sm');
@@ -51,13 +53,7 @@
 
 .description {
 	margin-top: 20px;
-	a {
-		color: theme('colors.secondary.500');
-		text-decoration: underline;
-		&:hover {
-			color: theme('colors.secondary.400');
-		}
-	}
+	@include mixins.text-link;
 }
 
 .action {
