@@ -22,8 +22,8 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
-import OICRLogoEN from 'src/public/oicr-logo-gray-en.svg';
-import ChevronSvg from 'src/public/chevron-large.svg';
+import OICRLogoEN from 'src/../public/assets/images/oicr-logo-gray-en.svg';
+import ChevronSvg from 'src/../public/assets/images/chevron-large.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';

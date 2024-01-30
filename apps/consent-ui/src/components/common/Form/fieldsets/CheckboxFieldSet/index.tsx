@@ -91,7 +91,16 @@ const CheckboxFieldSet = <T extends FieldValues>({
 					name={name}
 					required={required}
 				/>
-				<label htmlFor={checkboxId} className={styles.label}>
+				<label
+					htmlFor={checkboxId}
+					className={styles.label}
+					onMouseDown={(e) => {
+						// prevent blur event being called after mousedown,
+						// which will allow a click event on this label/checkbox,
+						// which will be followed automatically by a blur event (for validation)
+						e.preventDefault();
+					}}
+				>
 					<span className={styles.description}>
 						{description}
 						{required && !title && <RequiredAsterisk />}

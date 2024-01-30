@@ -143,7 +143,6 @@ const ClinicianInviteFormComponent = ({
 
 	// setup consent group info modal
 	const { openModal, closeModal } = useModal();
-
 	const consentGroupModalConfig = {
 		title: textDict.consentGroups,
 		actionButtonText: 'OK',
@@ -151,17 +150,21 @@ const ClinicianInviteFormComponent = ({
 		onCancelClick: closeModal,
 		body: <ConsentGroupModal currentLang={currentLang} />,
 	};
-
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
+				{/* HEADING */}
 				<FormSection>
 					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
 					<p className={styles.smallText}>
 						<RequiredAsterisk /> {textDict.indicatesRequiredField}
 					</p>
+				</FormSection>
+
+				{/* SECTION - PARTICIPANT INFO */}
+				<FormSection>
 					<TextFieldSet
 						error={errors.participantFirstName?.type && errorsDict.required}
 						label={labelsDict.firstName || ''}
@@ -219,6 +222,9 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FormSection>
 
+				{/* SECTION - GUARDIAN INFO */}
+				{/* show/hide this field with conditional rendering.
+						fields will be removed from form state when hidden. */}
 				{showGuardianFields && (
 					<FormSection variant="grey">
 						{/*
@@ -280,6 +286,7 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FormSection>
 
+				{/* SECTION - CLINICIAN INFO */}
 				<FormSection>
 					<h3 className={clsx(styles.sectionTitle, styles.clinicianTitle)}>
 						{textDict.clinicianInformation}
@@ -316,6 +323,7 @@ const ClinicianInviteFormComponent = ({
 					/>
 				</FormSection>
 
+				{/* SECTION - RECAPTCHA & SUBMIT */}
 				<FormSection>
 					{recaptchaError && (
 						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />

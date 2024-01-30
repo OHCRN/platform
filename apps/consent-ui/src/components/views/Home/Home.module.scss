@@ -9,6 +9,8 @@
 }
 
 .backgroundImg {
+	position: absolute;
+	inset: 0;
 	img {
 		opacity: 0.12;
 		position: absolute;
