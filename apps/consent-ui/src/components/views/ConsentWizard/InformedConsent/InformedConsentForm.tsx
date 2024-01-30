@@ -79,7 +79,6 @@ const InformedConsentForm = ({
 						}
 						error={errors.INFORMED_CONSENT__READ_AND_UNDERSTAND?.type && errorsDict.required}
 						name="INFORMED_CONSENT__READ_AND_UNDERSTAND"
-						title={formDict.consentContact}
 						required
 						title={formDict.consentContact}
 					/>
