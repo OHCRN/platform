@@ -13,7 +13,9 @@
 		&:hover {
 			background: theme('colors.grayscale.200');
 		}
-		@include mixins.text-link;
+		a {
+			@include mixins.text-link;
+		}
 	}
 	.checkboxWrapper {
 		position: relative;

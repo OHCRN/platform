@@ -53,7 +53,9 @@
 
 .description {
 	margin-top: 20px;
-	@include mixins.text-link;
+	a {
+		@include mixins.text-link;
+	}
 }
 
 .action {

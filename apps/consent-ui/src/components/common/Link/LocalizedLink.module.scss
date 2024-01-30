@@ -1,7 +1,6 @@
 @use '../../../theme/mixins';
 
-@include mixins.text-link;
-
 .link {
+	@include mixins.text-link;
 	font-weight: 700;
 }

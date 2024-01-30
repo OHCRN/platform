@@ -7,5 +7,7 @@
 .description {
 	font-size: theme('fontSize.base');
 	margin-bottom: 2rem;
-	@include mixins.text-link;
+	a {
+		@include mixins.text-link;
+	}
 }
