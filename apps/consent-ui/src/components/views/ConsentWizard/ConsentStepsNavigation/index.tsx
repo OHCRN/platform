@@ -21,7 +21,7 @@ import clsx from 'clsx';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
-import styles from './StepsNavigation.module.scss';
+import styles from './ConsentStepsNavigation.module.scss';
 import PreviousButton from './PreviousButton';
 import { ConsentStepRoute } from './types';
 import NextCompleteButton from './NextCompleteButton';
@@ -30,7 +30,7 @@ import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
 // place this component inside a Form component with an onSubmit handler.
 // the next/complete button triggers the submit event.
 
-const StepsNavigation = ({
+const ConsentStepsNavigation = ({
 	currentLang,
 	currentStep,
 }: {
@@ -59,4 +59,4 @@ const StepsNavigation = ({
 	);
 };
 
-export default StepsNavigation;
+export default ConsentStepsNavigation;

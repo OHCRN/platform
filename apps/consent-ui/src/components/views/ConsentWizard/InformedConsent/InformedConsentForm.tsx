@@ -32,9 +32,9 @@ import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
 
-import StepsNavigation from '../StepsNavigation';
-import { ConsentStepRoute } from '../StepsNavigation/types';
-import useGoToNextConsentStep from '../StepsNavigation/useGoToNextConsentStep';
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
+import { ConsentStepRoute } from '../ConsentStepsNavigation/types';
+import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
 const currentConsentStep: ConsentStepRoute = 'consent-1';
 
@@ -62,7 +62,7 @@ const InformedConsentForm = ({
 	const onSubmit: SubmitHandler<InformedConsentRequest> = (data, event) => {
 		event?.preventDefault();
 
-		console.log({ data });
+		console.log('formData', data);
 
 		// go to next page after successful API request
 		goToNextConsentStep();
@@ -85,7 +85,7 @@ const InformedConsentForm = ({
 						required
 					/>
 				</FormSection>
-				<StepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 			</Form>
 		</FormProvider>
 	);
