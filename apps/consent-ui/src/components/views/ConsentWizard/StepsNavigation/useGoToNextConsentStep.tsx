@@ -20,7 +20,7 @@
 import { useRouter } from 'next/navigation';
 
 import { ValidLanguage } from 'src/i18n';
-import { getRoute } from 'src/components/common/Link/utils';
+import { getLocalizedRoute } from 'src/components/common/Link/utils';
 
 import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
 
@@ -36,7 +36,7 @@ const useGoToNextConsentStep = (currentLang: ValidLanguage, currentStep: Consent
 	const { nextRoute } = getNextPrevConsentSteps(currentStep);
 
 	// no nextRoute? currently on last step -> go to dashboard
-	return () => router.push(getRoute(currentLang, nextRoute || 'dashboard'));
+	return () => router.push(getLocalizedRoute(currentLang, nextRoute || 'dashboard'));
 };
 
 export default useGoToNextConsentStep;
