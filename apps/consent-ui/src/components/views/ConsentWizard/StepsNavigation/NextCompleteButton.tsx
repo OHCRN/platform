@@ -21,46 +21,19 @@
 
 import { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 
 import Button from 'src/components/common/Button';
-import { ValidLanguage } from 'src/i18n';
-import { getRoute } from 'src/components/common/Link/utils';
 
-import { ConsentStepRoute } from './types';
-
-const NextCompleteButton = ({
-	children,
-	currentLang,
-	nextRoute,
-}: {
-	children: ReactNode;
-	currentLang: ValidLanguage;
-	nextRoute?: ConsentStepRoute;
-}) => {
+const NextCompleteButton = ({ children }: { children: ReactNode }) => {
 	const {
-		formState: { isDirty },
+		formState: { isValid },
 	} = useFormContext();
 
-	const router = useRouter();
-
-	const goNext = () => router.push(getRoute(nextRoute || 'dashboard', currentLang));
-
-	const handleClick = () => {
-		if (isDirty) {
-			// show modal
-			console.log('form is dirty');
-		} else {
-			// go back
-			console.log('form is clean');
-			goNext();
-		}
-	};
-
-	// TODO change this to a submit button
-	// and put this functionality in the submit function in the form
-
-	return <Button onClick={handleClick}>{children}</Button>;
+	return (
+		<Button color={isValid ? 'green' : 'default'} type="submit">
+			{children}
+		</Button>
+	);
 };
 
 export default NextCompleteButton;
