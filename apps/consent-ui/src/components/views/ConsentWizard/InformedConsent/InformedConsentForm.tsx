@@ -64,8 +64,7 @@ const InformedConsentForm = ({
 
 		console.log({ data });
 
-		// TODO go to next page after successful POST request
-
+		// go to next page after successful API request
 		goToNextConsentStep();
 	};
 
@@ -86,8 +85,8 @@ const InformedConsentForm = ({
 						required
 					/>
 				</FormSection>
+				<StepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 			</Form>
-			<StepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 		</FormProvider>
 	);
 };
