@@ -17,35 +17,47 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+'use client';
+
+import { ReactNode } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+
+import Button from 'src/components/common/Button';
 import { ValidLanguage } from 'src/i18n';
+import { getRoute } from 'src/components/common/Link/utils';
 
-import styles from './StepsNavigation.module.scss';
-import PreviousButton from './PreviousButton';
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
+import { ConsentStepRoute } from './types';
 
-const StepsNavigation = ({
+const PreviousButton = ({
+	children,
 	currentLang,
-	currentStep,
+	prevRoute,
 }: {
+	children: ReactNode;
 	currentLang: ValidLanguage;
-	currentStep: ConsentStepRoute;
+	prevRoute: ConsentStepRoute;
 }) => {
-	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
-	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1] || undefined;
-	// const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1] || undefined;
+	const {
+		formState: { isDirty },
+	} = useFormContext();
 
-	return (
-		<div className={styles.wrapper}>
-			<div className={styles.prevWrapper}>
-				{prevRoute && (
-					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
-						Previous
-					</PreviousButton>
-				)}
-			</div>
-			<div className={styles.nextWrapper}>next/complete</div>
-		</div>
-	);
+	const router = useRouter();
+
+	const goPrev = () => router.push(getRoute(prevRoute, currentLang));
+
+	const handleClick = () => {
+		if (isDirty) {
+			// show modal
+			console.log('form is dirty');
+		} else {
+			// go back
+			console.log('form is clean');
+			goPrev();
+		}
+	};
+
+	return <Button onClick={handleClick}>{children}</Button>;
 };
 
-export default StepsNavigation;
+export default PreviousButton;
