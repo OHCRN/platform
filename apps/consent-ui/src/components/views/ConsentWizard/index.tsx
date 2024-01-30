@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory, ConsentWizardProgress } from 'types/entities';
+import { ConsentCategory, ConsentStatus, ConsentWizardProgress } from 'types/entities';
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import Card from 'src/components/common/Card';
@@ -28,7 +28,7 @@ import BackToDashboard from 'src/components/common/BackToDashboard';
 import styles from './ConsentWizard.module.scss';
 import InformedConsent from './InformedConsent';
 
-export const {
+const {
 	INFORMED_CONSENT,
 	CONSENT_RELEASE_DATA,
 	CONSENT_RESEARCH_PARTICIPATION,
@@ -36,9 +36,7 @@ export const {
 	CONSENT_REVIEW_SIGN,
 } = ConsentCategory.enum;
 
-// TODO this was from a missing ConsentStatus enum
-const COMPLETE = 'COMPLETE';
-const INCOMPLETE = 'INCOMPLETE';
+const { COMPLETE, INCOMPLETE } = ConsentStatus.enum;
 
 const ConsentWizard = async ({
 	currentLang,
