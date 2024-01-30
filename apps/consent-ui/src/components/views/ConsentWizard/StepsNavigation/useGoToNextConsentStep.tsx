@@ -17,43 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
+import { useRouter } from 'next/navigation';
 
-import styles from './StepsNavigation.module.scss';
-import PreviousButton from './PreviousButton';
-import { ConsentStepRoute } from './types';
-import NextCompleteButton from './NextCompleteButton';
-import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
+import { ValidLanguage } from 'src/i18n';
+import { getRoute } from 'src/components/common/Link/utils';
 
-// place this component inside the form provider
+import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
 
-const StepsNavigation = ({
-	currentLang,
-	currentStep,
-}: {
-	currentLang: ValidLanguage;
-	currentStep: ConsentStepRoute;
-}) => {
-	const { nextRoute, prevRoute } = getNextPrevConsentSteps(currentStep);
-
-	const translate = getTranslation(currentLang);
-
-	return (
-		<div className={styles.wrapper}>
-			<div className={styles.prevWrapper}>
-				{prevRoute && (
-					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
-						{translate('formText', 'previous')}
-					</PreviousButton>
-				)}
-			</div>
-			<div className={styles.nextWrapper}>
-				<NextCompleteButton>
-					{translate('formText', nextRoute ? 'next' : 'complete')}
-				</NextCompleteButton>
-			</div>
-		</div>
-	);
+export const getNextPrevConsentSteps = (currentStep: ConsentStepRoute) => {
+	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
+	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1];
+	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1];
+	return { nextRoute, prevRoute };
 };
 
-export default StepsNavigation;
+const useGoToNextConsentStep = (currentLang: ValidLanguage, currentStep: ConsentStepRoute) => {
+	const router = useRouter();
+	const { nextRoute } = getNextPrevConsentSteps(currentStep);
+
+	// no nextRoute? currently on last step -> go to dashboard
+	return () => router.push(getRoute(currentLang, nextRoute || 'dashboard'));
+};
+
+export default useGoToNextConsentStep;
