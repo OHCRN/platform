@@ -19,38 +19,33 @@
 
 'use client';
 
-import { useEffect } from 'react';
-
+import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
-import { Notification, useNotification } from 'src/components/providers/NotificationProvider';
+import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
 
-import HomepageNotificationDisplay from './HomepageNotificationDisplay';
+import styles from './HomepageNotification.module.scss';
 
-const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { showNotification } = useNotification();
+const HomepageNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { dismissNotification, notificationConfig } = useNotification();
 
-	// STUB - get consent progress from API
-	const consentInProgress = true;
+	// check if there's a notification for this page in context
+	if (!(notificationConfig && notificationConfig.page === 'home')) {
+		return <></>;
+	}
 
-	// STUB - get email verified URL param from keycloak redirect URL
-	const emailVerifiedParam = false;
+	const notificationComponent = getNotificationComponent({
+		notificationConfig,
+		notificationProps: {
+			currentLang,
+			dismissClick: dismissNotification,
+		},
+	});
 
-	useEffect(() => {
-		// STUB - determine which notification to show
-		let nextNotification: Notification | undefined;
-
-		if (emailVerifiedParam) {
-			nextNotification = 'emailVerified';
-		} else if (consentInProgress) {
-			nextNotification = 'consentInProgress';
-		}
-
-		if (nextNotification) {
-			showNotification({ page: 'dashboard', notification: nextNotification });
-		}
-	}, [consentInProgress, emailVerifiedParam, showNotification]);
-
-	return <HomepageNotificationDisplay currentLang={currentLang} />;
+	if (notificationComponent) {
+		return <div className={styles.notification}>{notificationComponent}</div>;
+	} else {
+		return <></>;
+	}
 };
 
-export default DashboardNotification;
+export default HomepageNotification;

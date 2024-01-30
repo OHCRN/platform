@@ -25,6 +25,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ConsentGroup } from 'types/entities';
 import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -45,6 +46,8 @@ import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout
 import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
+import { useNotification } from 'src/components/providers/NotificationProvider';
+import { getLocalizedRoute } from 'src/components/common/Link/utils';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -69,6 +72,9 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
 }) => {
+	const { showNotification } = useNotification();
+	const router = useRouter();
+
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
 	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
@@ -95,7 +101,6 @@ const ClinicianInviteFormComponent = ({
 		onRecaptchaChange,
 		recaptchaCheckboxRef,
 		recaptchaError,
-		resetRecaptcha,
 		setRecaptchaError,
 	} = useRecaptcha();
 
@@ -113,16 +118,10 @@ const ClinicianInviteFormComponent = ({
 
 		if (recaptchaToken) {
 			console.log('form data', data);
-			axiosClient
-				.post(API.INVITES, { data, recaptchaToken })
-				.then(() => {
-					setRecaptchaError('');
-					resetRecaptcha();
-				})
-				.catch((e) => {
-					console.error(e);
-					setRecaptchaError('Something went wrong, please try again');
-				});
+
+			// on success, go to homepage & show success message
+			showNotification({ page: 'home', notification: 'inviteSent' });
+			router.push(getLocalizedRoute(currentLang, 'home'));
 		} else {
 			setRecaptchaError('Please complete captcha');
 		}
@@ -334,6 +333,7 @@ const ClinicianInviteFormComponent = ({
 					<Button
 						className={styles.submitButton}
 						color={enableSubmit ? 'green' : 'default'}
+						onMouseDown={(e) => e.preventDefault()}
 						type="submit"
 					>
 						{textDict.submit}
