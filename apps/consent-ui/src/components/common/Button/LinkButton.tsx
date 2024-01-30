@@ -27,6 +27,7 @@ import styles from './Button.module.scss';
 
 interface LinkButtonProps extends ButtonProps {
 	href: string;
+	target?: string;
 }
 
 const LinkButton = ({
@@ -39,6 +40,7 @@ const LinkButton = ({
 	className = '',
 	LeftIcon,
 	RightIcon,
+	target,
 }: LinkButtonProps) => {
 	return (
 		<Link
@@ -53,6 +55,7 @@ const LinkButton = ({
 				className,
 			)}
 			role="button"
+			target={target}
 		>
 			{action === 'prev' ? (
 				<div>

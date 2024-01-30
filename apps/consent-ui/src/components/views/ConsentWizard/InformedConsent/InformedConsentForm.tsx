@@ -66,17 +66,17 @@ const InformedConsentForm = ({
 						description={
 							<>
 								{formDict.readUnderstand1}
-								<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>
-								{formDict.readUnderstand2}
+								<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link> {formDict.readUnderstand2}
 							</>
 						}
 						error={errors.INFORMED_CONSENT__READ_AND_UNDERSTAND?.type && errorsDict.required}
 						name="INFORMED_CONSENT__READ_AND_UNDERSTAND"
+						title={formDict.consentContact}
 						required
 					/>
 				</FormSection>
 			</Form>
-			<StepsNavigation currentLang={currentLang} currentStep="INFORMED_CONSENT" />
+			<StepsNavigation currentLang={currentLang} currentStep="consent-2" />
 			{/* put in prev/next buttons */}
 		</FormProvider>
 	);

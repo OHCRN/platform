@@ -11,6 +11,16 @@
 		&:hover {
 			background: theme('colors.grayscale.200');
 		}
+		a {
+			text-decoration: underline;
+			color: theme('colors.secondary.500');
+			&:hover {
+				color: theme('colors.secondary.400');
+			}
+			&:active {
+				color: theme('colors.secondary.200');
+			}
+		}
 	}
 	.checkboxWrapper {
 		position: relative;

@@ -17,35 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentCategory } from 'types/entities';
-
 import { ValidLanguage } from 'src/i18n';
 
 import styles from './StepsNavigation.module.scss';
-
-const stepsInOrder = [
-	ConsentCategory.enum.INFORMED_CONSENT,
-	ConsentCategory.enum.CONSENT_RELEASE_DATA,
-	ConsentCategory.enum.CONSENT_RESEARCH_PARTICIPATION,
-	ConsentCategory.enum.CONSENT_RECONTACT,
-	ConsentCategory.enum.CONSENT_REVIEW_SIGN,
-];
+import PreviousButton from './PreviousButton';
+import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
 
 const StepsNavigation = ({
-	// currentLang,
+	currentLang,
 	currentStep,
 }: {
 	currentLang: ValidLanguage;
-	currentStep: ConsentCategory;
+	currentStep: ConsentStepRoute;
 }) => {
-	const stepIndex = stepsInOrder.indexOf(currentStep);
-	const prevStep = stepsInOrder[stepIndex - 1];
-	const nextStep = stepsInOrder[stepIndex + 1];
+	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
+	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1] || undefined;
+	// const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1] || undefined;
 
 	return (
 		<div className={styles.wrapper}>
-			<div className={styles.prevWrapper}>{prevStep && 'prev'}</div>
-			<div className={styles.nextWrapper}>{nextStep ? 'next' : 'complete'}</div>
+			<div className={styles.prevWrapper}>
+				{prevRoute && (
+					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
+						Previous
+					</PreviousButton>
+				)}
+			</div>
+			<div className={styles.nextWrapper}>next/complete</div>
 		</div>
 	);
 };

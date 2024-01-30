@@ -24,6 +24,7 @@ import { InformedConsentFormDictionary } from 'src/i18n/locales/en/informedConse
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { InformedConsentPageDictionary } from 'src/i18n/locales/en/informedConsentPage';
 import { OHCRN_EMAIL } from 'src/constants';
+import LinkButton from 'src/components/common/Button/LinkButton';
 
 import InformedConsentForm from './InformedConsentForm';
 import styles from './InformedConsent.module.scss';
@@ -32,6 +33,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 
 	const formDict: InformedConsentFormDictionary = {
+		consentContact: translate('informedConsentForm', 'consentContact'),
 		readUnderstand1: translate('informedConsentForm', 'readUnderstand1'),
 		readUnderstand2: translate('informedConsentForm', 'readUnderstand2'),
 	};
@@ -44,6 +46,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		description1: translate('informedConsentPage', 'description1'),
 		description2: translate('informedConsentPage', 'description2'),
 		description3: translate('informedConsentPage', 'description3'),
+		downloadConsentPdf: translate('informedConsentPage', 'downloadConsentPdf'),
 		linkText: translate('informedConsentPage', 'linkText'),
 		studyConsentPdf: translate('informedConsentPage', 'studyConsentPdf'),
 		title: translate('informedConsentPage', 'title'),
@@ -59,8 +62,10 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>{' '}
 				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
 			</p>
-			{/* pdf download button */}
-			{/* pdf viewer */}
+			<LinkButton color="blue" href={pageDict.studyConsentPdf} target="_blank" variant="secondary">
+				{pageDict.downloadConsentPdf}
+			</LinkButton>
+			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}
 			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
 		</div>
 	);

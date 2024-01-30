@@ -17,7 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formLabels from './formLabels';
+
+const { consentContact } = formLabels;
+
 const dictionary = {
+	consentContact,
 	readUnderstand1:
 		'I have read and understand the OHCRN Study Information and Informed Consent. I will contact ',
 	readUnderstand2:

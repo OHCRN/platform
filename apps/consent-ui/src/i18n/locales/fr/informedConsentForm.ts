@@ -19,7 +19,12 @@
 
 import { InformedConsentFormDictionary } from '../en/informedConsentForm';
 
+import formLabels from './formLabels';
+
+const { consentContact } = formLabels;
+
 const dictionary = {
+	consentContact,
 	readUnderstand1:
 		"J'ai lu et compris les informations sur l'étude OHCRN et le consentement éclairé. je contacterai ",
 	readUnderstand2:

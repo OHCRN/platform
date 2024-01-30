@@ -17,23 +17,47 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import assetUrlsDictionary from './assetUrls';
+'use client';
 
-const { studyConsentPdf } = assetUrlsDictionary;
+import { ReactNode } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
-const dictionary = {
-	description1:
-		'Please carefully review the OHCRN Study Information and Informed Consent. You can also ',
-	description2:
-		' for review. If you have any questions or concerns please contact the OHCRN study team at ',
-	description3:
-		"If you are completing this form on behalf of someone else, 'you' or 'me' refers to your child or the person you are completing the form on behalf of; 'we' means the doctors and other study staff.",
-	downloadConsentPdf: 'Download Consent PDF',
-	linkText: 'download the study information and informed consent PDF',
-	studyConsentPdf,
-	title: 'OHCRN Study Information and Informed Consent',
-} satisfies Record<string, string>;
+import Button from 'src/components/common/Button';
+import { ValidLanguage } from 'src/i18n';
+import { getRoute } from 'src/components/common/Link/utils';
 
-export type InformedConsentPageDictionary = Record<keyof typeof dictionary, string>;
+import { ConsentStepRoute } from './types';
 
-export default dictionary;
+const PreviousButton = ({
+	children,
+	currentLang,
+	prevRoute,
+}: {
+	children: ReactNode;
+	currentLang: ValidLanguage;
+	prevRoute: ConsentStepRoute;
+}) => {
+	const {
+		formState: { isDirty },
+	} = useFormContext();
+
+	const router = useRouter();
+
+	const goPrev = () => router.push(getRoute(prevRoute, currentLang));
+
+	const handleClick = () => {
+		if (isDirty) {
+			// show modal
+			console.log('form is dirty');
+		} else {
+			// go back
+			console.log('form is clean');
+			goPrev();
+		}
+	};
+
+	return <Button onClick={handleClick}>{children}</Button>;
+};
+
+export default PreviousButton;
