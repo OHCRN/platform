@@ -26,8 +26,10 @@ import { useRouter } from 'next/navigation';
 import Button from 'src/components/common/Button';
 import { ValidLanguage } from 'src/i18n';
 import { getRoute } from 'src/components/common/Link/utils';
+import { useModal } from 'src/components/common/Modal';
 
 import { ConsentStepRoute } from './types';
+import FormEditedModal from './FormEditedModal';
 
 const PreviousButton = ({
 	children,
@@ -44,16 +46,22 @@ const PreviousButton = ({
 
 	const router = useRouter();
 
-	const goPrev = () => router.push(getRoute(prevRoute, currentLang));
+	const { openModal, closeModal } = useModal();
+	const formEditedModalConfig = {
+		title: 'Modal text TBD',
+		actionButtonText: 'OK',
+		onActionClick: closeModal,
+		onCancelClick: closeModal,
+		body: <FormEditedModal />,
+	};
 
 	const handleClick = () => {
 		if (isDirty) {
-			// show modal
-			console.log('form is dirty');
+			// form has been edited - warn & prevent user from leaving page
+			openModal(formEditedModalConfig);
 		} else {
-			// go back
-			console.log('form is clean');
-			goPrev();
+			// form hasn't been edited - go to previous step
+			router.push(getRoute(prevRoute, currentLang));
 		}
 	};
 

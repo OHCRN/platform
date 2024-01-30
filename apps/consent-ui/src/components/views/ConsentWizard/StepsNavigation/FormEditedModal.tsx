@@ -17,40 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
-
-import styles from './StepsNavigation.module.scss';
-import PreviousButton from './PreviousButton';
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
-import NextCompleteButton from './NextCompleteButton';
-
-const StepsNavigation = ({
-	currentLang,
-	currentStep,
-}: {
-	currentLang: ValidLanguage;
-	currentStep: ConsentStepRoute;
-}) => {
-	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
-	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1];
-	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1];
-
-	return (
-		<div className={styles.wrapper}>
-			<div className={styles.prevWrapper}>
-				{prevRoute && (
-					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
-						Previous
-					</PreviousButton>
-				)}
-			</div>
-			<div className={styles.nextWrapper}>
-				<NextCompleteButton currentLang={currentLang} nextRoute={nextRoute}>
-					{nextRoute ? 'Next' : 'Complete'}
-				</NextCompleteButton>
-			</div>
-		</div>
-	);
+const FormEditedModal = () => {
+	return <div>modal text TBD</div>;
 };
 
-export default StepsNavigation;
+export default FormEditedModal;
