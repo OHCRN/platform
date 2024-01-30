@@ -34,8 +34,6 @@ import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet'
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/common/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { axiosClient } from 'src/services/api/axiosClient';
-import { API } from 'src/constants';
 import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
