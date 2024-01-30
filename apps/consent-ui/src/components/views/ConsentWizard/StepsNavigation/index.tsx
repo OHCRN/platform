@@ -22,6 +22,7 @@ import { ValidLanguage } from 'src/i18n';
 import styles from './StepsNavigation.module.scss';
 import PreviousButton from './PreviousButton';
 import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
+import NextCompleteButton from './NextCompleteButton';
 
 const StepsNavigation = ({
 	currentLang,
@@ -32,7 +33,7 @@ const StepsNavigation = ({
 }) => {
 	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
 	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1] || undefined;
-	// const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1] || undefined;
+	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1] || undefined;
 
 	return (
 		<div className={styles.wrapper}>
@@ -43,7 +44,11 @@ const StepsNavigation = ({
 					</PreviousButton>
 				)}
 			</div>
-			<div className={styles.nextWrapper}>next/complete</div>
+			<div className={styles.nextWrapper}>
+				<NextCompleteButton currentLang={currentLang} nextRoute={nextRoute}>
+					{nextRoute ? 'Next' : 'Complete'}
+				</NextCompleteButton>
+			</div>
 		</div>
 	);
 };
