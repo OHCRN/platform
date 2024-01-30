@@ -67,6 +67,7 @@
 	height: 2.5rem;
 	padding: 0.38rem 1rem;
 	transition: border-color 300ms ease-in-out;
+	font-size: theme('fontSize.base');
 	&:focus {
 		outline: 0;
 		padding: calc(0.38rem - 1px) calc(1rem - 1px);

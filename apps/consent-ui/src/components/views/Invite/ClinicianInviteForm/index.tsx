@@ -328,7 +328,7 @@ const ClinicianInviteFormComponent = ({
 						subtitle={'(Green Health Card)'}
 						checkboxLabel={'I do not have an Ontario health card.'}
 					/>
-					<TextFieldSet
+					{/* <TextFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
@@ -336,7 +336,7 @@ const ClinicianInviteFormComponent = ({
 						tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
 						type="email"
 						withNarrowDesktopLayout
-					/>
+					/> */}
 				</FormSection>
 
 				{/* SECTION - RECAPTCHA & SUBMIT */}
