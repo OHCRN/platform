@@ -17,35 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
+import { z } from 'zod';
 
-import styles from './StepsNavigation.module.scss';
-import PreviousButton from './PreviousButton';
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
-
-const StepsNavigation = ({
-	currentLang,
-	currentStep,
-}: {
-	currentLang: ValidLanguage;
-	currentStep: ConsentStepRoute;
-}) => {
-	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
-	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1] || undefined;
-	// const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1] || undefined;
-
-	return (
-		<div className={styles.wrapper}>
-			<div className={styles.prevWrapper}>
-				{prevRoute && (
-					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
-						Previous
-					</PreviousButton>
-				)}
-			</div>
-			<div className={styles.nextWrapper}>next/complete</div>
-		</div>
-	);
-};
-
-export default StepsNavigation;
+// from routesByLocale.json
+export const CONSENT_STEP_ROUTES = [
+	'consent-1',
+	'consent-2',
+	'consent-3',
+	'consent-4',
+	'consent-5',
+] as const;
+export const ConsentStepRoute = z.enum(CONSENT_STEP_ROUTES);
+export type ConsentStepRoute = z.infer<typeof ConsentStepRoute>;
