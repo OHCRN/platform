@@ -24,7 +24,7 @@ import { useFormContext } from 'react-hook-form';
 
 import Button from 'src/components/common/Button';
 
-import styles from './StepsNavigation.module.scss';
+import styles from './ConsentStepsNavigation.module.scss';
 
 // this button triggers react-hook-form's submit handler
 

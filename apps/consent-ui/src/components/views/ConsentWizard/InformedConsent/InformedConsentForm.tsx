@@ -56,7 +56,6 @@ const InformedConsentForm = ({
 		handleSubmit,
 	} = methods;
 
-	// setup go to next page
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
 
 	const onSubmit: SubmitHandler<InformedConsentRequest> = (data, event) => {
@@ -81,8 +80,8 @@ const InformedConsentForm = ({
 						}
 						error={errors.INFORMED_CONSENT__READ_AND_UNDERSTAND?.type && errorsDict.required}
 						name="INFORMED_CONSENT__READ_AND_UNDERSTAND"
-						title={formDict.consentContact}
 						required
+						title={formDict.consentContact}
 					/>
 				</FormSection>
 				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />

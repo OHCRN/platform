@@ -30,7 +30,7 @@ import { useModal } from 'src/components/common/Modal';
 
 import { ConsentStepRoute } from './types';
 import FormEditedModal from './FormEditedModal';
-import styles from './StepsNavigation.module.scss';
+import styles from './ConsentStepsNavigation.module.scss';
 
 const PreviousButton = ({
 	children,
