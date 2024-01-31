@@ -53,7 +53,7 @@ const ConsentRecontactForm = ({
 		resolver: zodResolver(ConsentRecontactRequest),
 	});
 	const {
-		formState: { errors, isValid },
+		formState: { errors },
 		handleSubmit,
 		watch,
 	} = methods;
@@ -69,7 +69,6 @@ const ConsentRecontactForm = ({
 		goToNextConsentStep();
 	};
 
-	console.log({ isValid });
 	const showSecondaryContact = watch('RECONTACT__SECONDARY_CONTACT');
 
 	return (
