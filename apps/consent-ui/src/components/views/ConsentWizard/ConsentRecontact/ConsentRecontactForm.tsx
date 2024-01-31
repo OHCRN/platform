@@ -98,7 +98,9 @@ const ConsentRecontactForm = ({
 
 				{showSecondaryContact && (
 					<FormSection>
-						<p>{formDict.secondaryContactFormDescription}</p>
+						<p className={styles.secondaryContactFormDescription}>
+							{formDict.secondaryContactFormDescription}
+						</p>
 						<TextFieldSet
 							className={styles.textInput}
 							error={errors.secondaryContactFirstName?.type && errorsDict.required}

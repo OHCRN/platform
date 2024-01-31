@@ -22,7 +22,7 @@ import { ConsentRecontactPageDictionary } from 'src/i18n/locales/en/consentRecon
 const dictionary = {
 	title: 'Consentement facultatif à être recontacté',
 	subheading:
-		"Cette partie du formulaire de consentement concerne le consentement futur facultatif à être recontacté. Vous pouvez choisir d'être recontacté au sujet de futures études de recherche, essais cliniques, enquêtes et pour discuter de la collecte d'échantillons biologiques supplémentaires. \n\n Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » à un futur contact. Des informations supplémentaires sur le consentement à être recontacté peuvent être trouvées dans les informations sur l'étude et le document de consentement éclairé.",
+		"Cette partie du formulaire de consentement concerne le consentement futur facultatif à être recontacté. Vous pouvez choisir d'être recontacté au sujet de futures études de recherche, essais cliniques, enquêtes et pour discuter de la collecte d'échantillons biologiques supplémentaires. \n\n Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » à un futur contact. Des informations supplémentaires sur le consentement à être recontacté peuvent être trouvées dans les ",
 	subheadingLink: "informations sur l'étude et le document de consentement éclairé.",
 	smallText:
 		'Veuillez sélectionner votre réponse ci-dessous pour indiquer si vous souhaitez ou non participer à chaque étude facultative. Vous pouvez modifier votre consentement à tout moment:',

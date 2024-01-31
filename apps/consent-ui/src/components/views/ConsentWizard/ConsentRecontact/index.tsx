@@ -70,6 +70,7 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 					{pageDict.subheadingLink}
 				</Link>
 			</p>
+			<p className={styles.smallText}>{pageDict.smallText}</p>
 			<ConsentRecontactForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
 		</div>
 	);
