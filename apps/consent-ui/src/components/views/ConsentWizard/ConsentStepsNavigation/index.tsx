@@ -20,10 +20,10 @@
 import clsx from 'clsx';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
 import styles from './ConsentStepsNavigation.module.scss';
 import PreviousButton from './PreviousButton';
-import { ConsentStepRoute } from './types';
 import NextCompleteButton from './NextCompleteButton';
 import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
 

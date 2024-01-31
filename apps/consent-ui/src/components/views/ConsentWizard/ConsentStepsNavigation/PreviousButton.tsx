@@ -27,8 +27,8 @@ import Button from 'src/components/common/Button';
 import { ValidLanguage } from 'src/i18n';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/common/Modal';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
-import { ConsentStepRoute } from './types';
 import FormEditedModal from './FormEditedModal';
 import styles from './ConsentStepsNavigation.module.scss';
 
