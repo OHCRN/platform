@@ -19,98 +19,90 @@
 
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import Link from 'next/link';
 import { ConsentResearchParticipationRequest } from 'types/consentApi';
-import clsx from 'clsx';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { ConsentResearchParticipationFormDictionary } from 'src/i18n/locales/en/consentResearchParticipationForm';
 import Form from 'src/components/common/Form';
-import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
-import FormSection from 'src/components/common/Form/FormSection';
-import { ValidLanguage } from 'src/i18n';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
+import FormSection from 'src/components/common/Form/FormSection';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { ValidLanguage } from 'src/i18n';
 
-import styles from './ConsentStep3Component.module.scss';
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
+import { ConsentStepRoute } from '../ConsentStepsNavigation/types';
+import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
-const ConsentStep3Component = ({
-	// currentLang,
+import styles from './ConsentResearchParticipationForm.module.scss';
+
+const currentConsentStep: ConsentStepRoute = 'consent-3';
+
+const ConsentResearchParticipationForm = ({
+	currentLang,
 	errorsDict,
-	textDict,
+	formDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
-	textDict: ConsentResearchParticipationDictionary;
+	formDict: ConsentResearchParticipationFormDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentResearchParticipationRequest>({
-		mode: 'onBlur',
 		resolver: zodResolver(ConsentResearchParticipationRequest),
-		shouldUnregister: true,
 	});
-
 	const {
 		formState: { errors },
 		handleSubmit,
 	} = methods;
 
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+
 	const onSubmit: SubmitHandler<ConsentResearchParticipationRequest> = (data, event) => {
 		event?.preventDefault();
+
+		console.log('formData', data);
+
+		// go to next page after successful API request
+		goToNextConsentStep();
 	};
 
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				{/* HEADING */}
-				<FormSection>
-					<h3 className={clsx(styles.heading)}>{textDict.heading}</h3>
-					<h4 className={clsx(styles.subheading)}>
-						{textDict.subheading}
-						<a href="#" className={clsx(styles.link)}>
-							{textDict.subheadingLink}
-						</a>
-					</h4>
-					<p className={clsx(styles.label)}>{textDict.label}</p>
-				</FormSection>
-
-				{/* SECTION - PARTICIPANT CONSENTS */}
 				<FormSection>
 					<RadioFieldSet
 						error={errors.RESEARCH_PARTICIPATION__FUTURE_RESEARCH?.type && errorsDict.required}
-						title={textDict.RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE}
-						description={textDict.RESEARCH_PARTICIPATION__FUTURE_RESEARCH_DESC}
-						yesText={textDict.yesText}
-						noText={textDict.noText}
+						title={formDict.researchParticipationFutureResearchTitle}
+						description={formDict.researchParticipationFutureResearchTitleDesc}
+						yesText={formDict.yesText}
+						noText={formDict.noText}
 						name={'RESEARCH_PARTICIPATION__FUTURE_RESEARCH'}
 						required
 						withNarrowDesktopLayout
 					/>
 					<RadioFieldSet
 						error={errors.RESEARCH_PARTICIPATION__CONTACT_INFORMATION?.type && errorsDict.required}
-						title={textDict.RESEARCH_PARTICIPATION__CONTACT_INFORMATION_TITLE}
+						title={formDict.researchParticipationContactInformationTitle}
 						description={
-							<>
-								{textDict.RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC}
-								<a href="#" className={clsx(styles.link)}>
-									{textDict.RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK}
-								</a>
-							</>
+							<p className={styles.description}>
+								{formDict.researchParticipationContactInformationDesc}
+								<Link href="#">{formDict.researchParticipationContactInformationDescLink}</Link>
+							</p>
 						}
-						yesText={textDict.yesText}
-						noText={textDict.noText}
+						yesText={formDict.yesText}
+						noText={formDict.noText}
 						name={'RESEARCH_PARTICIPATION__CONTACT_INFORMATION'}
 						required
 						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
-				{/* SECTION - PREVIOUS / NEXT */}
-				{/* <FormSection>
-					waiting on component
-				</FormSection> */}
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 			</Form>
 		</FormProvider>
 	);
 };
 
-export default ConsentStep3Component;
+export default ConsentResearchParticipationForm;

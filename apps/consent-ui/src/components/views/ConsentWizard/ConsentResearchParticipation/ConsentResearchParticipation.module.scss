@@ -1,8 +1,9 @@
+@use '../../../../theme/mixins';
+
 .heading {
 	font-size: theme('fontSize.base');
 	font-weight: theme('fontWeight.header');
 
-	margin-top: -1rem;
 	margin-bottom: 1rem;
 
 	@media (min-width: theme('screens.sm')) {
@@ -16,17 +17,12 @@
 
 	white-space: pre-line;
 	margin-bottom: 2rem;
-}
 
-.label {
-	font-size: theme('fontSize.sm');
-	@media (min-width: theme('screens.sm')) {
-		margin-bottom: -1.5rem;
+	a {
+		@include mixins.text-link;
 	}
 }
 
-.link {
-	color: theme('colors.other.500');
-	text-decoration: underline;
-	cursor: pointer;
+.smallText {
+	font-size: theme('fontSize.sm');
 }

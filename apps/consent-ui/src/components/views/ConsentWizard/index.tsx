@@ -24,9 +24,7 @@ import Card from 'src/components/common/Card';
 import ProgressHeader from 'src/components/common/ProgressHeader';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
-import ConsentStep3Component from 'src/components/views/ConsentWizard/consent-3';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
+import ConsentResearchParticipation from 'src/components/views/ConsentWizard/ConsentResearchParticipation';
 
 import styles from './ConsentWizard.module.scss';
 import InformedConsent from './InformedConsent';
@@ -68,39 +66,6 @@ const ConsentWizard = async ({
 		};
 	});
 
-	const errorsDict: FormErrorsDictionary = {
-		required: translate('formErrors', 'required'),
-	};
-
-	const researchParticipationTextDict: ConsentResearchParticipationDictionary = {
-		heading: translate('consentResearchParticipation', 'heading'),
-		subheading: translate('consentResearchParticipation', 'subheading'),
-		subheadingLink: translate('consentResearchParticipation', 'subheadingLink'),
-		label: translate('consentResearchParticipation', 'label'),
-		RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE: translate(
-			'consentResearchParticipation',
-			'RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE',
-		),
-		RESEARCH_PARTICIPATION__FUTURE_RESEARCH_DESC: translate(
-			'consentResearchParticipation',
-			'RESEARCH_PARTICIPATION__FUTURE_RESEARCH_DESC',
-		),
-		RESEARCH_PARTICIPATION__CONTACT_INFORMATION_TITLE: translate(
-			'consentResearchParticipation',
-			'RESEARCH_PARTICIPATION__CONTACT_INFORMATION_TITLE',
-		),
-		RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC: translate(
-			'consentResearchParticipation',
-			'RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC',
-		),
-		RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK: translate(
-			'consentResearchParticipation',
-			'RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK',
-		),
-		yesText: translate('consentResearchParticipation', 'yesText'),
-		noText: translate('consentResearchParticipation', 'noText'),
-	};
-
 	return (
 		<PaddedContainer>
 			<BackToDashboard currentLang={currentLang} />
@@ -117,13 +82,7 @@ const ConsentWizard = async ({
 						{currentStep === INFORMED_CONSENT && <InformedConsent currentLang={currentLang} />}
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && (
-							<>
-								<ConsentStep3Component
-									currentLang={currentLang}
-									textDict={researchParticipationTextDict}
-									errorsDict={errorsDict}
-								/>
-							</>
+							<ConsentResearchParticipation currentLang={currentLang} />
 						)}
 						{currentStep === CONSENT_RECONTACT && <></>}
 						{currentStep === CONSENT_REVIEW_SIGN && <></>}

@@ -1,0 +1,7 @@
+@use '../../../../theme/mixins';
+
+.description {
+	a {
+		@include mixins.text-link;
+	}
+}

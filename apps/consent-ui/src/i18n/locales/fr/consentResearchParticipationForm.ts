@@ -17,27 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
+import { ConsentResearchParticipationFormDictionary } from 'src/i18n/locales/en/consentResearchParticipationForm';
 
 const dictionary = {
-	heading: 'Consentement pour la participation à la recherche',
-	subheading:
-		"Cette partie du formulaire de consentement concerne les études facultatives auxquelles vous pouvez choisir de participer. En participant à ces études facultatives, nous espérons que les résultats aideront d'autres personnes atteintes d'un cancer héréditaire à l'avenir. \n\nParticiper à ces études facultatives est votre choix. Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » aux études facultatives. Des informations supplémentaires sur les études facultatives peuvent être trouvées dans les informations sur l'étude et le document de consentement éclairé. ",
-	subheadingLink: "l'étude et le document de consentement éclairé.",
-	label:
-		'Veuillez sélectionner votre réponse ci-dessous pour indiquer si vous souhaitez ou non participer à chaque étude facultative. Vous pouvez modifier votre consentement à tout moment:',
-	RESEARCH_PARTICIPATION__FUTURE_RESEARCH_TITLE:
+	researchParticipationFutureResearchTitle:
 		"Consentement facultatif pour permettre la collecte d'échantillons précédemment collectés pour de futures recherches inconnues",
-	RESEARCH_PARTICIPATION__FUTURE_RESEARCH_DESC:
+	researchParticipationFutureResearchTitleDesc:
 		"J'accepte que mes échantillons précédemment collectés puissent être inclus dans la biobanque décentralisée et utilisés pour des études de recherche futures inconnues.",
-	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_TITLE:
+	researchParticipationContactInformationTitle:
 		'Publication facultative des coordonnées des registres du cancer approuvés existants.',
-	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC:
+	researchParticipationContactInformationDesc:
 		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse fournir mes coordonnées et les résultats de mes tests génétiques à un registre du cancer existant, le cas échéant. ",
-	RESEARCH_PARTICIPATION__CONTACT_INFORMATION_DESC_LINK:
+	researchParticipationContactInformationDescLink:
 		'Cliquez ici pour consulter la liste actuelle des registres du cancer approuvés.',
 	yesText: 'Oui',
 	noText: 'Non',
-} satisfies ConsentResearchParticipationDictionary;
+} satisfies ConsentResearchParticipationFormDictionary;
 
 export default dictionary;
