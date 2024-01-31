@@ -17,71 +17,67 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage } from 'src/i18n';
-// import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
+import { getTranslation, ValidLanguage } from 'src/i18n';
+import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
 
 import ConsentReviewSignForm from './ConsentReviewSignForm';
 
 const ConsentReviewSign = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	console.log(currentLang);
-	// const translate = getTranslation(currentLang);
+	const translate = getTranslation(currentLang);
 
-	// const formDict: ConsentReviewSignFormDictionary = {
-	// 	agree: translate('consentReviewSignForm', 'agree'),
-	// ancestry: translate('consentReviewSignForm', 'ancestry'),
-	// biobankDescription: translate('consentReviewSignForm', 'biobankDescription'),
-	// biobankTitle: translate('consentReviewSignForm', 'biobankTitle'),
-	// cancerDiagnosis: translate('consentReviewSignForm', 'cancerDiagnosis'),
-	// clinician: translate('consentReviewSignForm', 'clinician'),
-	// dateOfBirth: translate('consentReviewSignForm', 'dateOfBirth'),
-	// deidentifiedParticipationDescription: translate(
-	// 	'consentReviewSignForm',
-	// 	'deidentifiedParticipationDescription',
-	// ),
-	// deidentifiedParticipationLink: translate(
-	// 	'consentReviewSignForm',
-	// 	'deidentifiedParticipationLink',
-	// ),
-	// deidentifiedParticipationTitle: translate(
-	// 	'consentReviewSignForm',
-	// 	'deidentifiedParticipationTitle',
-	// ),
-	// doNotAgree: translate('consentReviewSignForm', 'doNotAgree'),
-	// edit: translate('consentReviewSignForm', 'edit'),
-	// familyHistoryOfCancer: translate('consentReviewSignForm', 'familyHistoryOfCancer'),
-	// genderIdentity: translate('consentReviewSignForm', 'genderIdentity'),
-	// geneticsClinic: translate('consentReviewSignForm', 'geneticsClinic'),
-	// molecularLab: translate('consentReviewSignForm', 'molecularLab'),
-	// nameOnOhip: translate('consentReviewSignForm', 'nameOnOhip'),
-	// ohipNumber: translate('consentReviewSignForm', 'ohipNumber'),
-	// personalHistoryOfCancer: translate('consentReviewSignForm', 'personalHistoryOfCancer'),
-	// phone: translate('consentReviewSignForm', 'phone'),
-	// preferredName: translate('consentReviewSignForm', 'preferredName'),
-	// recontactDescription: translate('consentReviewSignForm', 'recontactDescription'),
-	// recontactTitle: translate('consentReviewSignForm', 'recontactTitle'),
-	// releaseContactDescription: translate('consentReviewSignForm', 'releaseContactDescription'),
-	// releaseContactLink: translate('consentReviewSignForm', 'releaseContactLink'),
-	// releaseContactTitle: translate('consentReviewSignForm', 'releaseContactTitle'),
-	// releaseHealthDataDescription: translate(
-	// 	'consentReviewSignForm',
-	// 	'releaseHealthDataDescription',
-	// ),
-	// releaseHealthDataTitle: translate('consentReviewSignForm', 'releaseHealthDataTitle'),
-	// secondaryContact: translate('consentReviewSignForm', 'secondaryContact'),
-	// secondaryContactDescription: translate('consentReviewSignForm', 'secondaryContactDescription'),
-	// secondaryContactTitle: translate('consentReviewSignForm', 'secondaryContactTitle'),
-	// sexAssignedAtBirth: translate('consentReviewSignForm', 'sexAssignedAtBirth'),
-	// };
+	const formDict: ConsentReviewSignFormDictionary = {
+		agree: translate('consentReviewSignForm', 'agree'),
+		ancestry: translate('consentReviewSignForm', 'ancestry'),
+		biobankDescription: translate('consentReviewSignForm', 'biobankDescription'),
+		biobankTitle: translate('consentReviewSignForm', 'biobankTitle'),
+		cancerDiagnosis: translate('consentReviewSignForm', 'cancerDiagnosis'),
+		clinician: translate('consentReviewSignForm', 'clinician'),
+		dateOfBirth: translate('consentReviewSignForm', 'dateOfBirth'),
+		deidentifiedParticipationDescription: translate(
+			'consentReviewSignForm',
+			'deidentifiedParticipationDescription',
+		),
+		deidentifiedParticipationLink: translate(
+			'consentReviewSignForm',
+			'deidentifiedParticipationLink',
+		),
+		deidentifiedParticipationTitle: translate(
+			'consentReviewSignForm',
+			'deidentifiedParticipationTitle',
+		),
+		doNotAgree: translate('consentReviewSignForm', 'doNotAgree'),
+		edit: translate('consentReviewSignForm', 'edit'),
+		familyHistoryOfCancer: translate('consentReviewSignForm', 'familyHistoryOfCancer'),
+		genderIdentity: translate('consentReviewSignForm', 'genderIdentity'),
+		geneticsClinic: translate('consentReviewSignForm', 'geneticsClinic'),
+		molecularLab: translate('consentReviewSignForm', 'molecularLab'),
+		nameOnOhip: translate('consentReviewSignForm', 'nameOnOhip'),
+		ohipNumber: translate('consentReviewSignForm', 'ohipNumber'),
+		personalHistoryOfCancer: translate('consentReviewSignForm', 'personalHistoryOfCancer'),
+		phone: translate('consentReviewSignForm', 'phone'),
+		preferredName: translate('consentReviewSignForm', 'preferredName'),
+		recontactDescription: translate('consentReviewSignForm', 'recontactDescription'),
+		recontactTitle: translate('consentReviewSignForm', 'recontactTitle'),
+		releaseContactDescription: translate('consentReviewSignForm', 'releaseContactDescription'),
+		releaseContactLink: translate('consentReviewSignForm', 'releaseContactLink'),
+		releaseContactTitle: translate('consentReviewSignForm', 'releaseContactTitle'),
+		releaseHealthDataDescription: translate(
+			'consentReviewSignForm',
+			'releaseHealthDataDescription',
+		),
+		releaseHealthDataTitle: translate('consentReviewSignForm', 'releaseHealthDataTitle'),
+		secondaryContact: translate('consentReviewSignForm', 'secondaryContact'),
+		secondaryContactDescription: translate('consentReviewSignForm', 'secondaryContactDescription'),
+		secondaryContactTitle: translate('consentReviewSignForm', 'secondaryContactTitle'),
+		sexAssignedAtBirth: translate('consentReviewSignForm', 'sexAssignedAtBirth'),
+	};
 
 	return (
 		<div>
-			{/* <h2>{translate('consentReviewSignPage', 'title')}</h2>
-			<p>{translate('consentReviewSignPage', 'description')}</p> */}
+			<h2>{translate('consentReviewSignPage', 'title')}</h2>
+			<p>{translate('consentReviewSignPage', 'description')}</p>
 
-			<ConsentReviewSignForm
-			// currentLang={currentLang}
-			// formDict={formDict}
-			/>
+			<ConsentReviewSignForm currentLang={currentLang} formDict={formDict} />
 		</div>
 	);
 };

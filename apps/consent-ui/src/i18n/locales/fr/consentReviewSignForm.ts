@@ -19,67 +19,67 @@
 
 import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
 
-// import common from './common';
-// import formLabels from './formLabels';
+import common from './common';
+import formLabels from './formLabels';
 
-// const { edit } = common;
-// const {
-// 	ancestry,
-// 	cancerDiagnosis,
-// 	clinician,
-// 	dateOfBirth,
-// 	familyHistoryOfCancer,
-// 	genderIdentity,
-// 	geneticsClinic,
-// 	molecularLab,
-// 	nameOnOhip,
-// 	ohipNumber,
-// 	personalHistoryOfCancer,
-// 	phone,
-// 	preferredName,
-// 	secondaryContact,
-// 	sexAssignedAtBirth,
-// } = formLabels;
+const { edit } = common;
+const {
+	ancestry,
+	cancerDiagnosis,
+	clinician,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	genderIdentity,
+	geneticsClinic,
+	molecularLab,
+	nameOnOhip,
+	ohipNumber,
+	personalHistoryOfCancer,
+	phone,
+	preferredName,
+	secondaryContact,
+	sexAssignedAtBirth,
+} = formLabels;
 
 const dictionary = {
 	agree: 'I agree',
-	// ancestry,
-	// biobankTitle: 'Optional Decentralized Biobank',
-	// biobankDescription:
-	// 	'that my previously collected samples (tissue/blood/DNA samples) may be used for unknown future research studies.',
-	// cancerDiagnosis,
-	// clinician,
-	// dateOfBirth,
-	// deidentifiedParticipationTitle: 'De-Identified Research Participation',
-	// deidentifiedParticipationDescription:
-	// 	'I agree to participate in de-identified research (including ethics approved research projects and research facilitated by longitudinal linkage to administrative health databases).',
-	// deidentifiedParticipationLink: 'Learn more about privacy and de-identified information.',
-	// doNotAgree: 'I do not agree',
-	// edit,
-	// familyHistoryOfCancer,
-	// genderIdentity,
-	// geneticsClinic,
-	// molecularLab,
-	// nameOnOhip,
-	// ohipNumber,
-	// personalHistoryOfCancer,
-	// phone,
-	// preferredName,
-	// recontactTitle: 'Optional Re-Contact',
-	// recontactDescription:
-	// 	'that my study doctor, or someone on the study team, may contact me or my doctor via email or phone call about unknown future research studies, clinical trials and surveys.',
-	// releaseContactTitle: 'Optional Release of Contact Information',
-	// releaseContactDescription:
-	// 	'that OHCRN, may provide my contact information and genetic test results to an existing cancer registry, if applicable.',
-	// releaseContactLink: 'Click here to view current list of approved cancer registries.',
-	// releaseHealthDataTitle: 'Release of Health Data',
-	// releaseHealthDataDescription:
-	// 	'to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.',
-	// secondaryContact,
-	// secondaryContactTitle: 'Optional Secondary Contact',
-	// secondaryContactDescription:
-	// 	'that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to your health information if attempts to contact you have not been successful.',
-	// sexAssignedAtBirth,
+	ancestry,
+	biobankTitle: 'Optional Decentralized Biobank',
+	biobankDescription:
+		'that my previously collected samples (tissue/blood/DNA samples) may be used for unknown future research studies.',
+	cancerDiagnosis,
+	clinician,
+	dateOfBirth,
+	deidentifiedParticipationTitle: 'De-Identified Research Participation',
+	deidentifiedParticipationDescription:
+		'I agree to participate in de-identified research (including ethics approved research projects and research facilitated by longitudinal linkage to administrative health databases).',
+	deidentifiedParticipationLink: 'Learn more about privacy and de-identified information.',
+	doNotAgree: 'I do not agree',
+	edit,
+	familyHistoryOfCancer,
+	genderIdentity,
+	geneticsClinic,
+	molecularLab,
+	nameOnOhip,
+	ohipNumber,
+	personalHistoryOfCancer,
+	phone,
+	preferredName,
+	recontactTitle: 'Optional Re-Contact',
+	recontactDescription:
+		'that my study doctor, or someone on the study team, may contact me or my doctor via email or phone call about unknown future research studies, clinical trials and surveys.',
+	releaseContactTitle: 'Optional Release of Contact Information',
+	releaseContactDescription:
+		'that OHCRN, may provide my contact information and genetic test results to an existing cancer registry, if applicable.',
+	releaseContactLink: 'Click here to view current list of approved cancer registries.',
+	releaseHealthDataTitle: 'Release of Health Data',
+	releaseHealthDataDescription:
+		'to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.',
+	secondaryContact,
+	secondaryContactTitle: 'Optional Secondary Contact',
+	secondaryContactDescription:
+		'that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to your health information if attempts to contact you have not been successful.',
+	sexAssignedAtBirth,
 } satisfies ConsentReviewSignFormDictionary;
 
 export default dictionary;

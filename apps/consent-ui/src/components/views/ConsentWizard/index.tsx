@@ -82,7 +82,7 @@ const ConsentWizard = async ({
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}
-						{currentStep === CONSENT_REVIEW_SIGN && <ConsentReviewSign />}
+						{currentStep === CONSENT_REVIEW_SIGN && <ConsentReviewSign currentLang={currentLang} />}
 					</div>
 				</Card>
 			</div>
