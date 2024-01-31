@@ -23,14 +23,15 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import { InformedConsentFormDictionary } from 'src/i18n/locales/en/informedConsentForm';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { InformedConsentPageDictionary } from 'src/i18n/locales/en/informedConsentPage';
-import { OHCRN_EMAIL } from 'src/constants';
 import LinkButton from 'src/components/common/Button/LinkButton';
+import { getAppConfig } from 'src/config/appConfig';
 
 import InformedConsentForm from './InformedConsentForm';
 import styles from './InformedConsent.module.scss';
 
 const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
+	const config = getAppConfig(process.env);
 
 	const formDict: InformedConsentFormDictionary = {
 		consentContact: translate('informedConsentForm', 'consentContact'),
@@ -62,7 +63,8 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				<Link href={studyConsentPdfUrl} target="__blank">
 					{pageDict.linkText}
 				</Link>{' '}
-				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
+				{pageDict.description2}{' '}
+				<Link href={`mailto:${config.OHCRN_EMAIL}`}>{config.OHCRN_EMAIL}</Link>.
 			</p>
 			<LinkButton color="blue" href={studyConsentPdfUrl} target="_blank" variant="secondary">
 				{pageDict.downloadConsentPdf}

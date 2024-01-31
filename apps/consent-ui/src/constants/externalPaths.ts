@@ -22,6 +22,3 @@ export const API = {
 	INVITES: '/invites',
 	STATUS: '/status',
 };
-
-export const OHCRN_HOME_LINK = 'https://ohcrn.ca/';
-export const OHCRN_EMAIL = 'OHCRN@oicr.on.ca';

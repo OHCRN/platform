@@ -21,14 +21,15 @@ import Image from 'next/image';
 
 import BackgroundImage from 'src/../public/assets/images/landing-page.jpg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { getAppConfig } from 'src/config/appConfig';
 import LinkButton from 'src/components/common/Button/LinkButton';
-import { OHCRN_HOME_LINK } from 'src/constants';
 
 import LandingPageCard from './LandingPageCard';
 import styles from './Home.module.scss';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
+	const config = getAppConfig(process.env);
 	return (
 		<div className={styles.heroContainer}>
 			<div className={styles.backgroundImg}>
@@ -40,7 +41,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					<p>
 						<b>{translate('landingPage', 'ohcrnDescription')}</b>
 					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
+					<LinkButton href={config.OHCRN_HOME_LINK} variant="primary" size="large" action="next">
 						<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
 					</LinkButton>
 				</div>
