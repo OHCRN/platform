@@ -34,6 +34,8 @@ const dictionary = {
 	lastName,
 	phone,
 	phoneDescription: 'If we contact them, it will be for health updates only.',
+	yesText: 'Yes',
+	noText: 'No',
 } satisfies Record<string, string>;
 
 export type ConsentRecontactFormDictionary = Record<keyof typeof dictionary, string>;

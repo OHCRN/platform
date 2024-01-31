@@ -36,6 +36,8 @@ const dictionary = {
 	lastName,
 	phone,
 	phoneDescription: 'Si nous les contactons, ce sera uniquement pour des mises à jour sanitaires.',
+	yesText: 'Oui',
+	noText: 'Non',
 } satisfies ConsentRecontactFormDictionary;
 
 export default dictionary;
