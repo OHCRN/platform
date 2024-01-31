@@ -32,9 +32,20 @@ export const ConsentReviewSignRequest = z.object({ stub: z.string().min(1) });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
 const stubData = {
-	preferredName: 'Homer Simpson',
-	genderIdentity: 'Man',
+	ancestry: 'White',
+	cancerDiagnosis: 'Pancreas',
+	clinician: 'Dr. Nick',
 	dateOfBirth: '09/25/1975',
+	familyHistoryOfCancer: '',
+	genderIdentity: 'Man',
+	geneticsClinic: 'University Labs',
+	molecularLab: 'College Labs',
+	nameOnOhip: 'Homer Simpson',
+	ohipNumber: '53657653434',
+	personalHistoryOfCancer: '',
+	postalCode: 'H0H0H0',
+	preferredName: 'Homer',
+	sexAssignedAtBirth: 'Male',
 };
 
 const ConsentReviewSignForm = ({
@@ -69,8 +80,19 @@ const ConsentReviewSignForm = ({
 			label: formDict.preferredName,
 			value: stubData.preferredName,
 		},
+		{ label: formDict.nameOnOhip, value: stubData.nameOnOhip },
 		{ label: formDict.genderIdentity, value: stubData.genderIdentity },
+		{ label: formDict.ohipNumber, value: stubData.ohipNumber },
 		{ label: formDict.dateOfBirth, value: stubData.dateOfBirth },
+		{ label: formDict.sexAssignedAtBirth, value: stubData.sexAssignedAtBirth },
+		{ label: formDict.ancestry, value: stubData.ancestry },
+		{ label: formDict.personalHistoryOfCancer, value: stubData.personalHistoryOfCancer },
+		{ label: formDict.cancerDiagnosis, value: stubData.cancerDiagnosis },
+		{ label: formDict.familyHistoryOfCancer, value: stubData.familyHistoryOfCancer },
+		{ label: formDict.postalCode, value: stubData.postalCode },
+		{ label: formDict.clinician, value: stubData.clinician },
+		{ label: formDict.molecularLab, value: stubData.molecularLab },
+		{ label: formDict.geneticsClinic, value: stubData.geneticsClinic },
 	];
 
 	return (

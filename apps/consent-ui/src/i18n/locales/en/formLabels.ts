@@ -42,6 +42,7 @@ const dictionary = {
 	nameOnOhip: 'Name on OHIP Card',
 	ohipNumber: 'OHIP #',
 	personalHistoryOfCancer: 'Personal History of Cancer',
+	postalCode: 'Postal Code',
 	phone: 'Phone Number',
 	preferredName: 'Preferred Name',
 	secondaryContact: 'Secondary Contact',

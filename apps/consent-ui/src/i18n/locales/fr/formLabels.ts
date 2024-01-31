@@ -45,6 +45,7 @@ const dictionary = {
 	ohipNumber: 'Numéro OHIP',
 	personalHistoryOfCancer: 'Antécédents personnels de cancer',
 	phone: 'Numéro de téléphone',
+	postalCode: 'Code postale',
 	preferredName: 'Nom préféré',
 	secondaryContact: 'Contact secondaire',
 	sexAssignedAtBirth: 'Sexe attribué à la naissance',
