@@ -1,4 +1,4 @@
-.CalendarFieldSet {
+.calendarFieldSet {
 	width: 100%;
 
 	:global {
@@ -8,7 +8,7 @@
 	}
 }
 
-.CalendarPopper {
+.calendarPopper {
 	:global {
 		.react-datepicker__month-container {
 			padding: 0.3rem 1rem;
@@ -38,7 +38,7 @@
 	}
 }
 
-.CalendarInput {
+.calendarInput {
 	display: block;
 	width: 100%;
 	border: 1px solid theme('colors.grayscale.500');

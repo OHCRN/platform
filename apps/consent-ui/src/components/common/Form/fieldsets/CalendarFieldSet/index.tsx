@@ -56,7 +56,7 @@ const CalendarFieldSet = <T extends FieldValues>({
 
 	return (
 		<FieldSet
-			className={clsx(styles.CalendarFieldSet, className)}
+			className={clsx(styles.calendarFieldSet, className)}
 			error={error}
 			fieldId={fieldId}
 			infoButtonProps={infoButtonProps}
@@ -70,8 +70,8 @@ const CalendarFieldSet = <T extends FieldValues>({
 			<CalendarInput
 				ariaProps={tooltipContent ? { 'aria-describedby': tooltipId } : {}}
 				disabled={disabled}
-				className={clsx(styles.CalendarInput, error && styles.hasError)}
-				popperClassName={clsx(styles.CalendarPopper)}
+				className={clsx(styles.calendarInput, error && styles.hasError)}
+				popperClassName={clsx(styles.calendarPopper)}
 				id={fieldId}
 				name={name}
 				onBlur={hideTooltip}
