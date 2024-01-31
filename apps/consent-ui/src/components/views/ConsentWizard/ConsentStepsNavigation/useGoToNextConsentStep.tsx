@@ -21,8 +21,7 @@ import { useRouter } from 'next/navigation';
 
 import { ValidLanguage } from 'src/i18n';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
-
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from './types';
+import { CONSENT_STEP_ROUTES, ConsentStepRoute } from 'src/components/common/Link/types';
 
 export const getNextPrevConsentSteps = (currentStep: ConsentStepRoute) => {
 	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
