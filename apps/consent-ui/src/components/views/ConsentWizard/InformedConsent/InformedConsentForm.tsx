@@ -58,10 +58,8 @@ const InformedConsentForm = ({
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
 
-	const onSubmit: SubmitHandler<InformedConsentRequest> = (data, event) => {
+	const onSubmit: SubmitHandler<InformedConsentRequest> = (_data, event) => {
 		event?.preventDefault();
-
-		console.log('formData', data);
 
 		// go to next page after successful API request
 		goToNextConsentStep();

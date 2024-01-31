@@ -26,7 +26,9 @@ import Button from 'src/components/common/Button';
 
 import styles from './ConsentStepsNavigation.module.scss';
 
-// this button triggers react-hook-form's submit handler
+/**
+ * This button triggers react-hook-form's submit handler.
+ */
 
 const NextCompleteButton = ({ children }: { children: ReactNode }) => {
 	const {

@@ -27,8 +27,10 @@ import { ConsentStepRoute } from './types';
 import NextCompleteButton from './NextCompleteButton';
 import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
 
-// place this component inside a Form component with an onSubmit handler.
-// the next/complete button triggers the submit event.
+/**
+ * Place this component inside a Form component with an onSubmit handler.
+ * The next/complete button triggers the submit event.
+ */
 
 const ConsentStepsNavigation = ({
 	currentLang,
