@@ -20,7 +20,7 @@
 import { AssetUrlsDictionary } from 'src/i18n/locales/en/assetUrls';
 
 const dictionary = {
-	studyConsentPdf: '/assets/pdfs/study-consent/PLACEHOLDER_consentement-a-letude.pdf',
+	studyConsentPdf: 'PLACEHOLDER_consentement-a-letude.pdf',
 } satisfies AssetUrlsDictionary;
 
 export default dictionary;

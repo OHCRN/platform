@@ -52,17 +52,19 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		title: translate('informedConsentPage', 'title'),
 	};
 
+	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
+
 	return (
 		<div>
 			<h2 className={styles.title}>{pageDict.title}</h2>
 			<p className={styles.description}>
 				{pageDict.description1}
-				<Link href={pageDict.studyConsentPdf} target="__blank">
+				<Link href={studyConsentPdfUrl} target="__blank">
 					{pageDict.linkText}
 				</Link>{' '}
 				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
 			</p>
-			<LinkButton color="blue" href={pageDict.studyConsentPdf} target="_blank" variant="secondary">
+			<LinkButton color="blue" href={studyConsentPdfUrl} target="_blank" variant="secondary">
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
 			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}
