@@ -60,13 +60,19 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<h2 className={styles.title}>{pageDict.title}</h2>
 			<p className={styles.description}>
 				{pageDict.description1}
-				<Link href={studyConsentPdfUrl} target="__blank">
+				<Link href={studyConsentPdfUrl} prefetch={false} target="__blank">
 					{pageDict.linkText}
 				</Link>{' '}
 				{pageDict.description2}{' '}
 				<Link href={`mailto:${config.OHCRN_EMAIL}`}>{config.OHCRN_EMAIL}</Link>.
 			</p>
-			<LinkButton color="blue" href={studyConsentPdfUrl} target="_blank" variant="secondary">
+			<LinkButton
+				color="blue"
+				href={studyConsentPdfUrl}
+				prefetch={false}
+				target="_blank"
+				variant="secondary"
+			>
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
 			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}

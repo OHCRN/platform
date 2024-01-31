@@ -27,6 +27,7 @@ import styles from './Button.module.scss';
 
 interface LinkButtonProps extends ButtonProps {
 	href: string;
+	prefetch?: boolean;
 	target?: string;
 }
 
@@ -39,6 +40,7 @@ const LinkButton = ({
 	children,
 	className = '',
 	LeftIcon,
+	prefetch,
 	RightIcon,
 	target,
 }: LinkButtonProps) => {
@@ -54,6 +56,7 @@ const LinkButton = ({
 				(action === 'next' || RightIcon) && styles['right-icon'],
 				className,
 			)}
+			prefetch={prefetch}
 			role="button"
 			target={target}
 		>
