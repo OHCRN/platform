@@ -119,6 +119,7 @@ const ConsentRecontactForm = ({
 							className={styles.textInput}
 							error={errors.secondaryContactPhoneNumber?.type && errorsDict.required}
 							label={formDict.phone}
+							description={formDict.phoneDescription}
 							name="secondaryContactPhoneNumber"
 							required
 							withNarrowDesktopLayout

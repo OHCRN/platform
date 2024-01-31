@@ -34,6 +34,7 @@ import styles from './TextFieldSet.module.scss';
 
 type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
 	type?: FormTextInputType;
+	description?: string;
 };
 
 const TextFieldSet = <T extends FieldValues>({
