@@ -25,6 +25,18 @@ import {
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
+const mockCompleteGuardianFields = {
+	guardianName: 'Gina Guardian',
+	guardianEmailAddress: 'gina_g@example.com',
+	guardianPhoneNumber: '0123456789',
+	guardianRelationship: 'Mother',
+};
+
+const mockCompleteParticipantContactFields = {
+	participantEmailAddress: 'patti@example.com',
+	participantPhoneNumber: '1112223334',
+};
+
 describe('Conditional fields utility functions', () => {
 	const {
 		GUARDIAN_CONSENT_OF_MINOR, // guardian group
@@ -35,14 +47,8 @@ describe('Conditional fields utility functions', () => {
 	} = ConsentGroup.enum;
 	describe('hasRequiredGuardianInformation', () => {
 		it('returns TRUE for a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR) and all required guardian fields are provided', () => {
-			const guardianFields = {
-				guardianName: 'Gina Guardian',
-				guardianEmailAddress: 'gina_g@example.com',
-				guardianPhoneNumber: '0123456789',
-				guardianRelationship: 'Mother',
-			};
 			const testSchemaObj = {
-				...guardianFields,
+				...mockCompleteGuardianFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
 			const result = hasRequiredGuardianInformation(testSchemaObj);
@@ -50,14 +56,8 @@ describe('Conditional fields utility functions', () => {
 		});
 
 		it('returns TRUE for a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) and all required guardian fields are provided', () => {
-			const guardianFields = {
-				guardianName: 'Gina Guardian',
-				guardianEmailAddress: 'gina_g@example.com',
-				guardianPhoneNumber: '0123456789',
-				guardianRelationship: 'Mother',
-			};
 			const testSchemaObj = {
-				...guardianFields,
+				...mockCompleteGuardianFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 			};
 			const result = hasRequiredGuardianInformation(testSchemaObj);
@@ -65,14 +65,8 @@ describe('Conditional fields utility functions', () => {
 		});
 
 		it('returns TRUE for a guardian consentGroup (ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER) and all required guardian fields are provided', () => {
-			const guardianFields = {
-				guardianName: 'Gina Guardian',
-				guardianEmailAddress: 'gina_g@example.com',
-				guardianPhoneNumber: '0123456789',
-				guardianRelationship: 'Mother',
-			};
 			const testSchemaObj = {
-				...guardianFields,
+				...mockCompleteGuardianFields,
 				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 			};
 			const result = hasRequiredGuardianInformation(testSchemaObj);
@@ -124,12 +118,8 @@ describe('Conditional fields utility functions', () => {
 
 	describe('hasRequiredParticipantContactInfo', () => {
 		it('returns TRUE for a non-guardian consentGroup (ADULT_CONSENT) and participant contact fields are provided', () => {
-			const participantContactFields = {
-				participantEmailAddress: 'patti@example.com',
-				participantPhoneNumber: '1112223334',
-			};
 			const testSchemaObj = {
-				...participantContactFields,
+				...mockCompleteParticipantContactFields,
 				consentGroup: ADULT_CONSENT,
 			};
 			const result = hasRequiredParticipantContactInfo(testSchemaObj);
@@ -137,12 +127,8 @@ describe('Conditional fields utility functions', () => {
 		});
 
 		it('returns TRUE for a non-guardian (YOUNG_ADULT_CONSENT) and participant contact fields are provided', () => {
-			const participantContactFields = {
-				participantEmailAddress: 'patti@example.com',
-				participantPhoneNumber: '1112223334',
-			};
 			const testSchemaObj = {
-				...participantContactFields,
+				...mockCompleteParticipantContactFields,
 				consentGroup: YOUNG_ADULT_CONSENT,
 			};
 			const result = hasRequiredParticipantContactInfo(testSchemaObj);
@@ -178,12 +164,8 @@ describe('Conditional fields utility functions', () => {
 		});
 
 		it('returns TRUE for a guardian consentGroup and participant contact fields are provided', () => {
-			const participantContactFields = {
-				participantEmailAddress: 'patti@example.com',
-				participantPhoneNumber: '1112223334',
-			};
 			const testSchemaObj = {
-				...participantContactFields,
+				...mockCompleteParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
 			const result = hasRequiredParticipantContactInfo(testSchemaObj);
