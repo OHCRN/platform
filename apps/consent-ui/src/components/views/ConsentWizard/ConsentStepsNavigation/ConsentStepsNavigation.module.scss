@@ -15,6 +15,13 @@
 .button {
 	width: 8.75rem;
 	height: 2.5rem;
+	@media (min-width: theme('screens.sm')) {
+		padding-left: 2.3rem;
+		padding-right: 2.3rem;
+		svg {
+			margin: 0 0.5rem;
+		}
+	}
 }
 
 @media (min-width: theme('screens.sm')) {

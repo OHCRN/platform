@@ -26,17 +26,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
-import { OHCRN_EMAIL } from 'src/constants';
 import { InformedConsentFormDictionary } from 'src/i18n/locales/en/informedConsentForm';
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
-import { ConsentStepRoute } from '../ConsentStepsNavigation/types';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
-const currentConsentStep: ConsentStepRoute = 'consent-1';
+const currentConsentStep: ConsentStepRoute = 'consent-2';
 
 const InformedConsentForm = ({
 	currentLang,
@@ -47,6 +47,7 @@ const InformedConsentForm = ({
 	errorsDict: FormErrorsDictionary;
 	formDict: InformedConsentFormDictionary;
 }) => {
+	const config = useAppConfigContext();
 	// setup react-hook-forms
 	const methods = useForm<InformedConsentRequest>({
 		resolver: zodResolver(InformedConsentRequest),
@@ -73,7 +74,8 @@ const InformedConsentForm = ({
 						description={
 							<>
 								{formDict.readUnderstand1}
-								<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link> {formDict.readUnderstand2}
+								<Link href={`mailto:${config.OHCRN_EMAIL}`}>{config.OHCRN_EMAIL}</Link>{' '}
+								{formDict.readUnderstand2}
 							</>
 						}
 						error={errors.INFORMED_CONSENT__READ_AND_UNDERSTAND?.type && errorsDict.required}
