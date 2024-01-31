@@ -41,7 +41,7 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		),
 		secondaryContactFormDescription: translate(
 			'consentRecontactForm',
-			'recontactSecondaryContactTitle',
+			'secondaryContactFormDescription',
 		),
 		firstName: translate('consentRecontactForm', 'firstName'),
 		lastName: translate('consentRecontactForm', 'lastName'),

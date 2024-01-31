@@ -25,6 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Form from 'src/components/common/Form';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
+import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import { ConsentRecontactFormDictionary } from 'src/i18n/locales/en/consentRecontactForm';
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -33,6 +34,8 @@ import { ValidLanguage } from 'src/i18n';
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
 import { ConsentStepRoute } from '../ConsentStepsNavigation/types';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
+
+import styles from './ConsentRecontactForm.module.scss';
 
 const currentConsentStep: ConsentStepRoute = 'consent-4';
 
@@ -50,8 +53,9 @@ const ConsentRecontactForm = ({
 		resolver: zodResolver(ConsentRecontactRequest),
 	});
 	const {
-		formState: { errors },
+		formState: { errors, isValid },
 		handleSubmit,
+		watch,
 	} = methods;
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
@@ -65,22 +69,13 @@ const ConsentRecontactForm = ({
 		goToNextConsentStep();
 	};
 
+	console.log({ isValid });
+	const showSecondaryContact = watch('RECONTACT__SECONDARY_CONTACT');
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<FormSection>
-					{/* <CheckboxFieldSet
-						description={
-							<>
-								{formDict.readUnderstand1}
-								<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link> {formDict.readUnderstand2}
-							</>
-						}
-						error={errors.INFORMED_CONSENT__READ_AND_UNDERSTAND?.type && errorsDict.required}
-						name="INFORMED_CONSENT__READ_AND_UNDERSTAND"
-						required
-						title={formDict.consentContact}
-					/> */}
 					<RadioFieldSet
 						error={errors.RECONTACT__FUTURE_RESEARCH?.type && errorsDict.required}
 						name="RECONTACT__FUTURE_RESEARCH"
@@ -91,15 +86,45 @@ const ConsentRecontactForm = ({
 						noText={formDict.noText}
 					/>
 					<RadioFieldSet
-						error={errors.RECONTACT__FUTURE_RESEARCH?.type && errorsDict.required}
-						name="RECONTACT__FUTURE_RESEARCH"
+						error={errors.RECONTACT__SECONDARY_CONTACT?.type && errorsDict.required}
+						name="RECONTACT__SECONDARY_CONTACT"
 						required
-						title={formDict.recontactFutureResearchTitle}
-						description={formDict.recontactFutureResearchDesc}
+						title={formDict.recontactSecondaryContactTitle}
+						description={formDict.recontactSecondaryContactDesc}
 						yesText={formDict.yesText}
 						noText={formDict.noText}
 					/>
 				</FormSection>
+
+				{showSecondaryContact && (
+					<FormSection>
+						<p>{formDict.secondaryContactFormDescription}</p>
+						<TextFieldSet
+							className={styles.textInput}
+							error={errors.secondaryContactFirstName?.type && errorsDict.required}
+							label={formDict.firstName}
+							name="secondaryContactFirstName"
+							required
+							withNarrowDesktopLayout
+						/>
+						<TextFieldSet
+							className={styles.textInput}
+							error={errors.secondaryContactLastName?.type && errorsDict.required}
+							label={formDict.lastName}
+							name="secondaryContactLastName"
+							required
+							withNarrowDesktopLayout
+						/>
+						<TextFieldSet
+							className={styles.textInput}
+							error={errors.secondaryContactPhoneNumber?.type && errorsDict.required}
+							label={formDict.phone}
+							name="secondaryContactPhoneNumber"
+							required
+							withNarrowDesktopLayout
+						/>
+					</FormSection>
+				)}
 				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 			</Form>
 		</FormProvider>
