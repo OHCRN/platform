@@ -27,7 +27,8 @@ import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consent
 import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentResearchParticipation';
-import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
+import consentReviewSignFormDictionary from 'src/i18n/locales/fr/consentReviewSignForm';
+import consentReviewSignPageDictionary from 'src/i18n/locales/fr/consentReviewSignPage';
 import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
 import emailVerifiedNotificationDictionary from 'src/i18n/locales/fr/emailVerifiedNotification';
@@ -62,7 +63,8 @@ const dictionaries = {
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentReviewSign: consentReviewSignDictionary,
+	consentReviewSignForm: consentReviewSignFormDictionary,
+	consentReviewSignPage: consentReviewSignPageDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	emailVerifiedNotification: emailVerifiedNotificationDictionary,

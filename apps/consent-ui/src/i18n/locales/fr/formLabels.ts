@@ -20,21 +20,34 @@
 import { FormLabelsDictionary } from '../en/formLabels';
 
 const dictionary = {
+	ancestry: 'Ascendance',
+	cancerDiagnosis: 'Diagnostic du cancer',
+	clinician: 'Clinicien',
 	clinicianFirstName: 'Prénom du clinicien',
 	clinicianInstitutionalEmailAddress: 'Adresse e-mail institutionnelle du clinicien',
 	clinicianLastName: 'Surnom du clinicien',
 	clinicianTitleOrRole: 'Titre ou rôle du clinicien',
 	consentContact: 'Consentement à être contacté',
 	consentGroup: 'Groupe de consentement',
+	dateOfBirth: 'Date de naissance',
+	email: 'Adresse e-mail',
+	familyHistoryOfCancer: 'Antécédents familiaux de cancer',
 	firstName: 'Prénom',
+	genderIdentity: 'Identité de genre',
+	geneticsClinic: 'Clinique de génétique',
 	guardianEmail: 'Addresse e-mail du gardien',
 	guardianName: 'Nom du gardien',
 	guardianPhone: 'Numéro de téléphone du gardien',
 	guardianRelationship: 'Relation du gardien avec le participant',
 	lastName: 'Nom de famille',
-	preferredName: 'Nom préféré',
-	email: 'Adresse e-mail',
+	molecularLab: 'Laboratoire moléculaire',
+	nameOnOhip: 'Nom sur la carte OHIP',
+	ohipNumber: 'Numéro OHIP',
+	personalHistoryOfCancer: 'Antécédents personnels de cancer',
 	phone: 'Numéro de téléphone',
+	preferredName: 'Nom préféré',
+	secondaryContact: 'Contact secondaire',
+	sexAssignedAtBirth: 'Sexe attribué à la naissance',
 } satisfies FormLabelsDictionary;
 
 export default dictionary;

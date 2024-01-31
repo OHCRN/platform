@@ -18,21 +18,34 @@
  */
 
 const dictionary = {
+	ancestry: 'Ancestry',
+	cancerDiagnosis: 'Cancer Diagnosis',
+	clinician: 'Clinician',
 	clinicianFirstName: 'Clinician First Name',
 	clinicianInstitutionalEmailAddress: 'Clinician Institutional Email Address',
 	clinicianLastName: 'Clinician Last Name',
 	clinicianTitleOrRole: 'Clinician Title/Role',
 	consentContact: 'Consent to be Contacted',
 	consentGroup: 'Consent Group',
+	dateOfBirth: 'Date of Birth',
+	email: 'Email Address',
+	familyHistoryOfCancer: 'Family History of Cancer',
 	firstName: 'First Name',
+	genderIdentity: 'Gender Identity',
+	geneticsClinic: 'Genetics Clinic',
 	guardianEmail: "Guardian's Email Address",
 	guardianName: "Guardian's Name",
 	guardianPhone: "Guardian's Phone Number",
 	guardianRelationship: "Guardian's Relationship to Participant",
 	lastName: 'Last Name',
-	preferredName: 'Preferred Name',
-	email: 'Email Address',
+	molecularLab: 'Molecular Lab',
+	nameOnOhip: 'Name on OHIP Card',
+	ohipNumber: 'OHIP #',
+	personalHistoryOfCancer: 'Personal History of Cancer',
 	phone: 'Phone Number',
+	preferredName: 'Preferred Name',
+	secondaryContact: 'Secondary Contact',
+	sexAssignedAtBirth: 'Sex Assigned at Birth',
 } satisfies Record<string, string>;
 
 export type FormLabelsDictionary = Record<keyof typeof dictionary, string>;

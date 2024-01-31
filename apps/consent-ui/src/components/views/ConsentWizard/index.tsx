@@ -26,6 +26,7 @@ import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
 
 import styles from './ConsentWizard.module.scss';
+import ConsentReviewSign from './ConsentReviewSign';
 
 const {
 	INFORMED_CONSENT,
@@ -81,7 +82,7 @@ const ConsentWizard = async ({
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}
-						{currentStep === CONSENT_REVIEW_SIGN && <></>}
+						{currentStep === CONSENT_REVIEW_SIGN && <ConsentReviewSign />}
 					</div>
 				</Card>
 			</div>
