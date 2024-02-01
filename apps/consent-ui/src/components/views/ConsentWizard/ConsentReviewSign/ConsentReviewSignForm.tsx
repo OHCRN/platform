@@ -27,14 +27,16 @@ import Form from 'src/components/common/Form';
 import { ValidLanguage } from 'src/i18n';
 import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
 import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
+import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
 export const ConsentReviewSignRequest = z.object({ stub: z.string().min(1) });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
 const stubData = {
-	ancestry: 'White',
+	ancestry: 'American',
 	cancerDiagnosis: 'Pancreas',
 	clinician: 'Dr. Nick',
+	CONSENT_RECONTACT: true,
 	dateOfBirth: '09/25/1975',
 	familyHistoryOfCancer: '',
 	genderIdentity: 'Man',
@@ -45,6 +47,14 @@ const stubData = {
 	personalHistoryOfCancer: '',
 	postalCode: 'H0H0H0',
 	preferredName: 'Homer',
+	RECONTACT__FUTURE_RESEARCH: true,
+	RECONTACT__SECONDARY_CONTACT: true,
+	RELEASE_DATA__CLINICAL_AND_GENETIC: true,
+	RELEASE_DATA__DE_IDENTIFIED: true,
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: true,
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
+	secondaryContactName: 'Marge Simpson',
+	secondaryContactPhone: '1234567890',
 	sexAssignedAtBirth: 'Male',
 };
 
@@ -75,7 +85,7 @@ const ConsentReviewSignForm = ({
 		linkLang: currentLang,
 	};
 
-	const releaseHealthData = [
+	const releaseHealthFields = [
 		{
 			label: formDict.preferredName,
 			value: stubData.preferredName,
@@ -95,26 +105,124 @@ const ConsentReviewSignForm = ({
 		{ label: formDict.geneticsClinic, value: stubData.geneticsClinic },
 	];
 
+	const secondaryContactFields = [
+		{
+			label: formDict.secondaryContact,
+			value: stubData.secondaryContactName,
+		},
+		{ label: formDict.phone, value: stubData.secondaryContactPhone },
+	];
+
 	return (
 		<>
+			{/* STEP 2 */}
 			<ReviewInfoCard
-				boxColor="green"
-				fields={releaseHealthData}
-				name="consent-1"
+				boxColor={stubData.RELEASE_DATA__CLINICAL_AND_GENETIC ? 'green' : 'grey'}
+				fields={releaseHealthFields}
+				name="consent-2"
 				required
 				title={formDict.releaseHealthDataTitle}
 				{...cardProps}
 			>
 				<>
-					<b>{formDict.agree}</b> {formDict.releaseHealthDataDescription}
+					<b>
+						{stubData.RELEASE_DATA__CLINICAL_AND_GENETIC ? formDict.agree : formDict.doNotAgree}
+					</b>{' '}
+					{formDict.releaseHealthDataDescription}
+				</>
+			</ReviewInfoCard>
+
+			<ReviewInfoCard
+				boxColor={stubData.RELEASE_DATA__DE_IDENTIFIED ? 'green' : 'grey'}
+				name="consent-2"
+				required
+				title={formDict.deidentifiedParticipationTitle}
+				{...cardProps}
+			>
+				<>
+					<b>{stubData.RELEASE_DATA__DE_IDENTIFIED ? formDict.agree : formDict.doNotAgree}</b>{' '}
+					{formDict.deidentifiedParticipationDescription}{' '}
+					<LocalizedLink linkLang={currentLang} name="privacy">
+						{formDict.deidentifiedParticipationLink}
+					</LocalizedLink>
+				</>
+			</ReviewInfoCard>
+
+			{/* STEP 3 */}
+			<ReviewInfoCard
+				boxColor={stubData.RESEARCH_PARTICIPATION__FUTURE_RESEARCH ? 'green' : 'grey'}
+				name="consent-3"
+				title={formDict.biobankTitle}
+				{...cardProps}
+			>
+				<>
+					<b>
+						{stubData.RESEARCH_PARTICIPATION__FUTURE_RESEARCH
+							? formDict.agree
+							: formDict.doNotAgree}
+					</b>{' '}
+					{formDict.biobankDescription}
+				</>
+			</ReviewInfoCard>
+
+			<ReviewInfoCard
+				boxColor={stubData.RESEARCH_PARTICIPATION__CONTACT_INFORMATION ? 'green' : 'grey'}
+				name="consent-3"
+				title={formDict.releaseContactTitle}
+				{...cardProps}
+			>
+				<>
+					<b>
+						{stubData.RESEARCH_PARTICIPATION__FUTURE_RESEARCH
+							? formDict.agree
+							: formDict.doNotAgree}
+					</b>{' '}
+					{formDict.releaseContactDescription}{' '}
+					<LocalizedLink linkLang={currentLang} name="cancer-registries">
+						{formDict.releaseContactLink}
+					</LocalizedLink>
+				</>
+			</ReviewInfoCard>
+
+			{/* STEP 4 */}
+			<ReviewInfoCard
+				boxColor={stubData.RECONTACT__FUTURE_RESEARCH ? 'green' : 'grey'}
+				name="consent-4"
+				title={formDict.recontactTitle}
+				{...cardProps}
+			>
+				<>
+					<b>{stubData.RECONTACT__FUTURE_RESEARCH ? formDict.agree : formDict.doNotAgree}</b>{' '}
+					{formDict.recontactDescription}
+				</>
+			</ReviewInfoCard>
+
+			<ReviewInfoCard
+				boxColor={stubData.RECONTACT__SECONDARY_CONTACT ? 'green' : 'grey'}
+				fields={secondaryContactFields}
+				name="consent-4"
+				title={formDict.secondaryContactTitle}
+				{...cardProps}
+			>
+				<>
+					<b>{stubData.RECONTACT__SECONDARY_CONTACT ? formDict.agree : formDict.doNotAgree}</b>{' '}
+					{formDict.secondaryContactDescription}
 				</>
 			</ReviewInfoCard>
 
 			{/* E-SIGNATURE */}
 			<FormProvider {...methods}>
 				<Form onSubmit={handleSubmit(onSubmit)}>
+					<ReviewInfoCard
+						boxColor={'grey'}
+						fields={secondaryContactFields}
+						name="consent-5"
+						title={formDict.secondaryContactTitle}
+						{...cardProps}
+					>
+						<input {...register('stub')} />
+					</ReviewInfoCard>
 					{/* TODO add e-signature, remove this input */}
-					<input {...register('stub')} />
 				</Form>
 			</FormProvider>
 		</>

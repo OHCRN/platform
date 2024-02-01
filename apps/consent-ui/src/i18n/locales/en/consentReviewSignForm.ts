@@ -55,6 +55,7 @@ const dictionary = {
 	deidentifiedParticipationLink: 'Learn more about privacy and de-identified information.',
 	doNotAgree: 'I do not agree',
 	edit,
+	eSignature: 'eSignature',
 	familyHistoryOfCancer,
 	genderIdentity,
 	geneticsClinic,

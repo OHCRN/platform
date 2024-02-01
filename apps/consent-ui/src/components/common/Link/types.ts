@@ -16,6 +16,8 @@ const VALID_ROUTE_NAMES = [
 	'consent-3',
 	'consent-4',
 	'consent-5',
+	'privacy',
+	'cancer-registries',
 ] as const;
 
 export const RouteNameEnum = z.enum(VALID_ROUTE_NAMES);
