@@ -21,8 +21,8 @@ export type AppConfig = {
 	CONSENT_API_URL: string;
 	CONSENT_UI_URL: string;
 	FEATURE_FLAG: boolean;
-	OHCRN_EMAIL: string;
-	OHCRN_HOME_LINK: string;
+	OHCRN_EMAIL?: string;
+	OHCRN_HOME_LINK?: string;
 	RECAPTCHA_SITE_KEY?: string;
 };
 

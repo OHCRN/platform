@@ -31,7 +31,7 @@ import styles from './InformedConsent.module.scss';
 
 const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
-	const config = getAppConfig(process.env);
+	const { OHCRN_EMAIL } = getAppConfig(process.env);
 
 	const formDict: InformedConsentFormDictionary = {
 		consentContact: translate('informedConsentForm', 'consentContact'),
@@ -63,8 +63,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				<Link href={studyConsentPdfUrl} prefetch={false} target="__blank">
 					{pageDict.linkText}
 				</Link>{' '}
-				{pageDict.description2}{' '}
-				<Link href={`mailto:${config.OHCRN_EMAIL}`}>{config.OHCRN_EMAIL}</Link>.
+				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
 			</p>
 			<LinkButton
 				color="blue"

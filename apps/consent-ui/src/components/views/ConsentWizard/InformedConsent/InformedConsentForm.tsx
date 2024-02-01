@@ -47,7 +47,7 @@ const InformedConsentForm = ({
 	errorsDict: FormErrorsDictionary;
 	formDict: InformedConsentFormDictionary;
 }) => {
-	const config = useAppConfigContext();
+	const { OHCRN_EMAIL } = useAppConfigContext();
 	// setup react-hook-forms
 	const methods = useForm<InformedConsentRequest>({
 		resolver: zodResolver(InformedConsentRequest),
@@ -74,8 +74,7 @@ const InformedConsentForm = ({
 						description={
 							<>
 								{formDict.readUnderstand1}
-								<Link href={`mailto:${config.OHCRN_EMAIL}`}>{config.OHCRN_EMAIL}</Link>{' '}
-								{formDict.readUnderstand2}
+								<Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link> {formDict.readUnderstand2}
 							</>
 						}
 						error={errors.INFORMED_CONSENT__READ_AND_UNDERSTAND?.type && errorsDict.required}

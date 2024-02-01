@@ -29,7 +29,7 @@ import styles from './Home.module.scss';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
-	const config = getAppConfig(process.env);
+	const { OHCRN_HOME_LINK } = getAppConfig(process.env);
 	return (
 		<div className={styles.heroContainer}>
 			<div className={styles.backgroundImg}>
@@ -41,7 +41,7 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 					<p>
 						<b>{translate('landingPage', 'ohcrnDescription')}</b>
 					</p>
-					<LinkButton href={config.OHCRN_HOME_LINK} variant="primary" size="large" action="next">
+					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
 						<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
 					</LinkButton>
 				</div>
