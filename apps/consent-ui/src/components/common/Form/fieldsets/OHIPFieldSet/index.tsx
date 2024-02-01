@@ -31,15 +31,15 @@ import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxI
 
 import TextInput from '../inputs/TextInput';
 
-import styles from './OHIPFieldSet.module.scss';
+import styles from './OhipFieldSet.module.scss';
 
-export type OHIPFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+export type OhipFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
 	title: string;
 	subtitle: ReactNode;
 	checkboxLabel: ReactNode;
 };
 
-const OHIPFieldSet = <T extends FieldValues>({
+const OhipFieldSet = <T extends FieldValues>({
 	className,
 	disabled,
 	error,
@@ -49,30 +49,30 @@ const OHIPFieldSet = <T extends FieldValues>({
 	title,
 	subtitle,
 	checkboxLabel,
-}: OHIPFieldSetProps<T>) => {
-	const OHIPFieldId = useId();
-	const OHIPTextInputId = `${OHIPFieldId}-text`;
-	const OHIPCheckboxId = `${OHIPFieldId}-checkbox`;
+}: OhipFieldSetProps<T>) => {
+	const ohipFieldId = useId();
+	const ohipTextInputId = `${ohipFieldId}-text`;
+	const ohipCheckboxId = `${ohipFieldId}-checkbox`;
 
-	const { watch, setValue } = useFormContext();
-	const checkboxValue: boolean = watch(OHIPCheckboxId);
+	const { watch, resetField } = useFormContext();
+	const checkboxValue: boolean = watch(ohipCheckboxId);
 
 	useEffect(() => {
 		if (checkboxValue) {
-			setValue(name, '' as any);
+			resetField(name, { keepError: true });
 		}
-	}, [checkboxValue, name, setValue]);
+	}, [checkboxValue, name, resetField]);
 
 	return (
 		<fieldset
 			className={clsx(
-				styles.OHIPFieldset,
+				styles.ohipFieldset,
 				disabled && styles.disabled,
 				error && styles.error,
 				className,
 			)}
 		>
-			<div className={styles.OHIPHeader}>
+			<div className={styles.ohipHeader}>
 				{title && (
 					<h4 className={styles.title}>
 						{title}
@@ -87,33 +87,32 @@ const OHIPFieldSet = <T extends FieldValues>({
 				)}
 			</div>
 
-			<div className={styles.OHIPWrapper}>
-				<div className={styles.OHIPTextWrapper}>
+			<div className={styles.ohipWrapper}>
+				<div className={styles.ohipTextWrapper}>
 					<TextInput
-						className={styles.OHIPTextInput}
+						className={styles.ohipTextInput}
 						disabled={disabled || checkboxValue}
-						id={OHIPTextInputId}
+						id={ohipTextInputId}
 						name={name}
-						required={required}
+						required={checkboxValue ? false : required}
 						type={'text'}
 					/>
 
 					{label && (
-						<label className={styles.label} htmlFor={OHIPTextInputId}>
+						<label className={styles.label} htmlFor={ohipTextInputId}>
 							{label}
 						</label>
 					)}
 				</div>
 
-				<label htmlFor={OHIPCheckboxId} className={styles.OHIPCheckboxWrapper}>
+				<label htmlFor={ohipCheckboxId} className={styles.ohipCheckboxWrapper}>
 					<CheckboxInput
-						className={styles.OHIPCheckboxInput}
+						className={styles.ohipCheckboxInput}
 						disabled={disabled}
-						id={OHIPCheckboxId}
-						name={OHIPCheckboxId}
-						required={required}
+						id={ohipCheckboxId}
+						name={ohipCheckboxId}
 					/>
-					<span className={styles.OHIPCheckboxLabel}>{checkboxLabel}</span>
+					<span className={styles.ohipCheckboxLabel}>{checkboxLabel}</span>
 				</label>
 				{error && <InputError>{error}</InputError>}
 			</div>
@@ -121,4 +120,4 @@ const OHIPFieldSet = <T extends FieldValues>({
 	);
 };
 
-export default OHIPFieldSet;
+export default OhipFieldSet;

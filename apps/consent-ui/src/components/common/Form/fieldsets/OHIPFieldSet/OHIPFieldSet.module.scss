@@ -1,4 +1,4 @@
-.OHIPFieldset {
+.ohipFieldset {
 	display: grid;
 	grid-template-columns: 100%;
 	grid-template-rows: auto;
@@ -17,39 +17,39 @@
 	}
 
 	&.error {
-		.OHIPTextWrapper {
+		.ohipTextWrapper {
 			color: theme('colors.error.500');
 		}
 
-		.OHIPTextInput {
+		.ohipTextInput {
 			border-color: theme('colors.error.500');
 		}
 
-		.OHIPCheckboxWrapper {
+		.ohipCheckboxWrapper {
 			color: theme('colors.error.500');
 		}
 
-		.OHIPCheckboxInput {
+		.ohipCheckboxInput {
 			border-color: theme('colors.error.500');
 			accent-color: theme('colors.error.500');
 		}
 	}
 }
 
-.OHIPHeader {
+.ohipHeader {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-.OHIPWrapper {
+.ohipWrapper {
 	display: flex;
 	flex-direction: column;
 	font-size: theme('fontSize.sm');
 	margin-bottom: 0.5rem;
 }
 
-.OHIPTextWrapper {
+.ohipTextWrapper {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.25rem;
@@ -59,7 +59,7 @@
 	}
 }
 
-.OHIPTextInput {
+.ohipTextInput {
 	display: block;
 	width: 100%;
 	border: 1px solid theme('colors.grayscale.500');
@@ -86,7 +86,7 @@
 	font-size: theme('fontSize.sm');
 }
 
-.OHIPCheckboxInput {
+.ohipCheckboxInput {
 	appearance: none;
 	width: 1rem;
 	height: 1rem;
@@ -98,7 +98,7 @@
 	}
 }
 
-.OHIPCheckboxWrapper {
+.ohipCheckboxWrapper {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
