@@ -36,11 +36,6 @@ import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
 import { RegisterFormStep1 } from './types';
 
-// followup tickets
-// date & radio inputs https://github.com/OHCRN/platform/issues/366
-// backend https://github.com/OHCRN/platform/issues/368
-// help centre link https://github.com/OHCRN/platform/issues/367
-
 const RegisterForm = ({
 	currentLang,
 	errorsDict,

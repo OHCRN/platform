@@ -99,7 +99,7 @@ const SideImageLayout = ({
 									<span>{desktopNavAction.topText}</span>
 									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
 								</div>
-								<Image src={ChevronSvg} alt="" className={styles.chevron} />
+								<Image src={ChevronSvg} alt="" className={styles.chevron} priority />
 							</LocalizedLink>
 						)}
 					</div>
