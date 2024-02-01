@@ -52,7 +52,6 @@ export const createParticipant = async ({
 	 * Steps:
 	 * 1) Creates participant in PI DAS
 	 * 2) If error creating PI participant, returns the resulting `failure()` with an error status and message.
-	 * If response data fails parse(), the created participant will be deleted.
 	 * 3) If success, creates participant in Consent DAS with the same ID
 	 * 4) If error creating Consent participant, deletes the previously created PI participant,
 	 *    and returns the resulting `failure()` with an error status and message
@@ -62,7 +61,6 @@ export const createParticipant = async ({
 	 */
 	try {
 		// create participant in pi-das
-		// TODO: add consentToBeContacted
 		const participantPiData = await createParticipantPiData({
 			participantOhipFirstName,
 			participantOhipLastName,

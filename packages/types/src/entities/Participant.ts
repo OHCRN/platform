@@ -72,7 +72,6 @@ export const PIParticipantBase = ParticipantIdentityBase.merge(
 		mailingAddressCity: z.string().optional(),
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: PostalCode.optional(),
-		// TODO: if residentialPostalCode is required, it must be included in registration form, see https://github.com/OHCRN/platform/issues/388
 		residentialPostalCode: PostalCode,
 		inviteId: NanoId.optional(),
 		participantOhipMiddleName: Name.optional(),
