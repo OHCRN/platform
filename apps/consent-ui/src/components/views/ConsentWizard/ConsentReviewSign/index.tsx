@@ -47,7 +47,6 @@ const ConsentReviewSign = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		),
 		doNotAgree: translate('consentReviewSignForm', 'doNotAgree'),
 		edit: translate('consentReviewSignForm', 'edit'),
-		eSignature: translate('consentReviewSignForm', 'eSignature'),
 		familyHistoryOfCancer: translate('consentReviewSignForm', 'familyHistoryOfCancer'),
 		genderIdentity: translate('consentReviewSignForm', 'genderIdentity'),
 		geneticsClinic: translate('consentReviewSignForm', 'geneticsClinic'),

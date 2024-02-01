@@ -56,7 +56,6 @@ const dictionary = {
 		"de participer à des recherches anonymisées (y compris des projets de recherche approuvés par l'éthique et des recherches facilitées par des liens longitudinaux avec des bases de données administratives sur la santé).",
 	deidentifiedParticipationLink: 'Learn more about privacy and de-identified information.',
 	doNotAgree: "Je n'accepte pas",
-	eSignature: 'eSignature',
 	edit,
 	familyHistoryOfCancer,
 	genderIdentity,
