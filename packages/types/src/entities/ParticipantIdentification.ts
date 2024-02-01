@@ -33,7 +33,7 @@ import {
 
 import { ParticipantIdentityBase } from './index.js';
 
-export const ParticipantIdentity = ParticipantIdentityBase.merge(
+export const ParticipantIdentification = ParticipantIdentityBase.merge(
 	z.object({
 		id: NanoId,
 		inviteId: NanoId.optional(),
@@ -50,4 +50,4 @@ export const ParticipantIdentity = ParticipantIdentityBase.merge(
 	}),
 ).refine(hasRequiredGuardianInformation);
 
-export type ParticipantIdentity = z.infer<typeof ParticipantIdentity>;
+export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;

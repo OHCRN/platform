@@ -19,12 +19,12 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ParticipantIdentity } from '../../src/entities/index.js';
+import { ParticipantIdentification } from '../../src/entities/index.js';
 import { ConsentGroup, LifecycleState, Province } from '../../src/entities/fields/index.js';
 
-describe('ParticipantIdentity', () => {
+describe('ParticipantIdentification', () => {
 	it('should validate if all optional field are present for a guardian-specific ConsentGroup', () => {
-		const result = ParticipantIdentity.safeParse({
+		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteId: 'CVCFbeKH2Njl1G41vCQre',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
@@ -52,7 +52,7 @@ describe('ParticipantIdentity', () => {
 		expect(result.success).true;
 	});
 	it('Should validate if ALL guardian fields are present for a guardian-specific ConsentGroup', () => {
-		const result = ParticipantIdentity.safeParse({
+		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
 			ohipNumber: '1234567890',
@@ -73,7 +73,7 @@ describe('ParticipantIdentity', () => {
 		expect(result.success).true;
 	});
 	it('Should fail to validate if all guardian fields are NOT present for a guardian-specific ConsentGroup', () => {
-		const result = ParticipantIdentity.safeParse({
+		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			ohipNumber: '1234567890',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
@@ -89,7 +89,7 @@ describe('ParticipantIdentity', () => {
 		expect(result.success).false;
 	});
 	it('Should fail to validate if ONE guardian field is NOT present for a guardian-specific ConsentGroup', () => {
-		const result = ParticipantIdentity.safeParse({
+		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			ohipNumber: '1234567890',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
@@ -108,7 +108,7 @@ describe('ParticipantIdentity', () => {
 		expect(result.success).false;
 	});
 	it('Should fail to validate if SOME guardian fields are NOT present for a guardian-specific ConsentGroup', () => {
-		const result = ParticipantIdentity.safeParse({
+		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			ohipNumber: '1234567890',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,

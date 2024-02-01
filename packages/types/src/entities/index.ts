@@ -28,7 +28,7 @@ export * from './ConsentWizardProgress.js';
 export * from './Guardian.js';
 export * from './InformedConsent.js';
 export * from './Participant.js';
-export * from './ParticipantIdentity.js';
+export * from './ParticipantIdentification.js';
 export * from './ParticipantResponse.js';
 export * from './User.js';
 export * from './fields/index.js';
