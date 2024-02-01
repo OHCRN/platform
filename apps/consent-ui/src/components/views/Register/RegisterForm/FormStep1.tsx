@@ -70,7 +70,7 @@ const FormStep1 = ({
 
 	useEffect(() => {
 		// set focus to first field on mount
-		// TODO #366 change to registerOnBehalfOfSomeoneElse
+		// TODO #366 change to isGuardian
 		setFocus('guardianName');
 	}, [setFocus]);
 
@@ -82,16 +82,16 @@ const FormStep1 = ({
 	return (
 		<FormProvider {...methods}>
 			<Form className={className} onSubmit={handleSubmit(onSubmit)}>
-				{/* SECTION - REGISTERING ON BEHALF OF SOMEONE ELSE */}
+				{/* SECTION - CHECK IF USER IS A GUARDIAN */}
 				<FormSection>
 					{/* TODO implement radio button #366
-								this field is called registeringOnBehalfOfSomeoneElse in the data model */}
+								this field is called isGuardian in the data model */}
 					{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
 				</FormSection>
 
 				{/* OPTIONAL SECTION - GUARDIAN INFO */}
 				{/* these fields are conditionally required, i.e. if the user is
-							registering on behalf of someone else */}
+						registering as a guardian */}
 
 				{/* TODO #366 update this section - add conditional rendering.
 							see guardian fields on invite form for an example. */}
