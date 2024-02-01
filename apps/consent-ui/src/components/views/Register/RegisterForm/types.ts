@@ -46,6 +46,7 @@ export const RegisterFormStep2Fields = z.object({
 	password: z.string().min(1), // TEMP #368
 });
 
+// TODO this validation doesn't work onBlur https://github.com/OHCRN/platform/issues/398
 export const RegisterFormStep2 = RegisterFormStep2Fields.refine(
 	(data) => data.password === data.confirmPassword,
 	{

@@ -63,4 +63,8 @@ Libraries used:
 
 ## Validation
 
--
+- We're using a Zod resolver with react-hook-form.
+- Errors are checked onBlur & onSubmit, but `formState.isValid` updates onChange in the background.
+- Additional validation through RHF gets ignored.
+- Zod `.refine()` validations don't update `formState.errors` onBlur or onChange, only onSubmit. There's a ticket to improve onBlur validation https://github.com/OHCRN/platform/issues/398
+- We currently only show errors for "this field is required".
