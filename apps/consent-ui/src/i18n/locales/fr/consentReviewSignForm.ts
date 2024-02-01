@@ -43,19 +43,19 @@ const {
 } = formLabels;
 
 const dictionary = {
-	agree: 'I agree',
+	agree: "J'accepte",
 	ancestry,
-	biobankTitle: 'Optional Decentralized Biobank',
+	biobankTitle: 'Biobank décentralisée en option',
 	biobankDescription:
-		'that my previously collected samples (tissue/blood/DNA samples) may be used for unknown future research studies.',
+		'que mes échantillons précédemment collectés (échantillons de tissus/sang/ADN) peuvent être utilisés pour des études de recherche futures inconnues.',
 	cancerDiagnosis,
 	clinician,
 	dateOfBirth,
-	deidentifiedParticipationTitle: 'De-Identified Research Participation',
+	deidentifiedParticipationTitle: 'Participation à la recherche anonymisée',
 	deidentifiedParticipationDescription:
-		'I agree to participate in de-identified research (including ethics approved research projects and research facilitated by longitudinal linkage to administrative health databases).',
+		"de participer à des recherches anonymisées (y compris des projets de recherche approuvés par l'éthique et des recherches facilitées par des liens longitudinaux avec des bases de données administratives sur la santé).",
 	deidentifiedParticipationLink: 'Learn more about privacy and de-identified information.',
-	doNotAgree: 'I do not agree',
+	doNotAgree: "Je n'accepte pas",
 	eSignature: 'eSignature',
 	edit,
 	familyHistoryOfCancer,
@@ -68,20 +68,21 @@ const dictionary = {
 	phone,
 	postalCode,
 	preferredName,
-	recontactTitle: 'Optional Re-Contact',
+	recontactTitle: 'Recontact facultatif',
 	recontactDescription:
-		'that my study doctor, or someone on the study team, may contact me or my doctor via email or phone call about unknown future research studies, clinical trials and surveys.',
-	releaseContactTitle: 'Optional Release of Contact Information',
+		"que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse me contacter, moi ou mon médecin, par e-mail ou par téléphone au sujet d'études de recherche, d'essais cliniques et d'enquêtes futurs inconnus.",
+	releaseContactTitle: 'Divulgation facultative des coordonnées',
 	releaseContactDescription:
-		'that OHCRN, may provide my contact information and genetic test results to an existing cancer registry, if applicable.',
-	releaseContactLink: 'Click here to view current list of approved cancer registries.',
-	releaseHealthDataTitle: 'Release of Health Data',
+		"que l'OHCRN puisse fournir mes coordonnées et les résultats de mes tests génétiques à un registre du cancer existant, le cas échéant.",
+	releaseContactLink:
+		'Cliquez ici pour consulter la liste actuelle des registres du cancer approuvés.',
+	releaseHealthDataTitle: 'Publication des données de santé',
 	releaseHealthDataDescription:
-		'to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.',
+		"la publication et la mise à jour des données cliniques et génétiques obtenues auprès des institutions concernées et fournies par le patient, qui seront stockées au sein de l'OHCRN.",
 	secondaryContact,
-	secondaryContactTitle: 'Optional Secondary Contact',
+	secondaryContactTitle: 'Contact secondaire en option',
 	secondaryContactDescription:
-		'that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to your health information if attempts to contact you have not been successful.',
+		"que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse contacter mon plus proche parent ou mon contact secondaire pour obtenir des mises à jour de vos informations de santé si les tentatives pour vous contacter n'ont pas abouti.",
 	sexAssignedAtBirth,
 } satisfies ConsentReviewSignFormDictionary;
 

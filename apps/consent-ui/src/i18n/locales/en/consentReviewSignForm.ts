@@ -51,7 +51,7 @@ const dictionary = {
 	dateOfBirth,
 	deidentifiedParticipationTitle: 'De-Identified Research Participation',
 	deidentifiedParticipationDescription:
-		'I agree to participate in de-identified research (including ethics approved research projects and research facilitated by longitudinal linkage to administrative health databases).',
+		'to participate in de-identified research (including ethics approved research projects and research facilitated by longitudinal linkage to administrative health databases).',
 	deidentifiedParticipationLink: 'Learn more about privacy and de-identified information.',
 	doNotAgree: 'I do not agree',
 	edit,

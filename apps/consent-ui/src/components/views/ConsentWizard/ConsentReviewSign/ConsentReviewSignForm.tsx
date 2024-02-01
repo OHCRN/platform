@@ -29,7 +29,7 @@ import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentRevi
 import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
-export const ConsentReviewSignRequest = z.object({ stub: z.string().min(1) });
+export const ConsentReviewSignRequest = z.object({ stub: z.string().optional() });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
 const stubData = {
@@ -77,7 +77,7 @@ const ConsentReviewSignForm = ({
 		event?.preventDefault();
 		console.log('form data', data);
 
-		// go to next page
+		// TODO go to next page
 	};
 
 	const cardProps = {
@@ -213,16 +213,13 @@ const ConsentReviewSignForm = ({
 			{/* E-SIGNATURE */}
 			<FormProvider {...methods}>
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<ReviewInfoCard
-						boxColor={'grey'}
-						fields={secondaryContactFields}
-						name="consent-5"
-						title={formDict.secondaryContactTitle}
-						{...cardProps}
-					>
-						<input {...register('stub')} />
-					</ReviewInfoCard>
-					{/* TODO add e-signature, remove this input */}
+					{/* TODO e-signature https://github.com/OHCRN/platform/issues/155 */}
+					{/* this form is added so that consent step navigation will work during development. */}
+					{/* remove the input below during esignature development. */}
+					<label htmlFor="stub" style={{ display: 'inline-block', margin: '1rem 0' }}>
+						mock form for dev{' '}
+						<input {...register('stub')} id="stub" style={{ border: '1px solid grey' }} />
+					</label>
 				</Form>
 			</FormProvider>
 		</>
