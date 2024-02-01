@@ -31,12 +31,12 @@ import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
 import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
-import { ConsentStepRoute } from 'src/components/common/Link/types';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
-const currentConsentStep: ConsentStepRoute = 'consent-2';
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
 
 const InformedConsentForm = ({
 	currentLang,
