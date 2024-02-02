@@ -20,11 +20,11 @@
 'use client';
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { ValidLanguage } from 'src/i18n';
-import { axiosClient } from 'src/services/api/axiosClient';
+// import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
@@ -32,11 +32,11 @@ import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
-import { API } from 'src/constants/externalPaths';
-import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
-import useRecaptcha from 'src/hooks/useRecaptcha';
-import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
-import Notification from 'src/components/common/Notification';
+// import { API } from 'src/constants/externalPaths';
+// import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
+// import useRecaptcha from 'src/hooks/useRecaptcha';
+// import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
+// import Notification from 'src/components/common/Notification';
 
 import styles from './RegisterForm.module.scss';
 import {
@@ -69,67 +69,67 @@ const FormStep2 = ({
 	const {
 		formState: { errors, isValid },
 		handleSubmit,
-		setFocus,
+		// setFocus,
 	} = methods;
 
 	console.log('isValid', isValid);
 
 	// setup recaptcha
-	const {
-		getRecaptchaToken,
-		onRecaptchaChange,
-		recaptchaCheckboxRef,
-		recaptchaError,
-		resetRecaptcha,
-		setRecaptchaError,
-	} = useRecaptcha();
+	// const {
+	// 	getRecaptchaToken,
+	// 	onRecaptchaChange,
+	// 	recaptchaCheckboxRef,
+	// 	recaptchaError,
+	// 	resetRecaptcha,
+	// 	setRecaptchaError,
+	// } = useRecaptcha();
 
-	const handleRecaptchaChange = () => {
-		const token = getRecaptchaToken();
-		token && setRecaptchaError('');
-		onRecaptchaChange();
-	};
+	// const handleRecaptchaChange = () => {
+	// 	const token = getRecaptchaToken();
+	// 	token && setRecaptchaError('');
+	// 	onRecaptchaChange();
+	// };
 
 	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
 		// TODO #366 don't submit form if participant is a minor
 
-		const recaptchaToken = getRecaptchaToken();
+		// const recaptchaToken = getRecaptchaToken();
 
-		if (recaptchaToken) {
-			const data = Object.assign({}, step2Data);
-			axiosClient
-				.post(API.INVITES, { data, recaptchaToken })
-				.then(() => {
-					setRecaptchaError('');
-					resetRecaptcha();
-				})
-				.catch((e) => {
-					console.error(e);
-					setRecaptchaError('Something went wrong, please try again');
-				});
-		} else {
-			setRecaptchaError('Please complete captcha');
-		}
+		// if (recaptchaToken) {
+		// 	const data = Object.assign({}, step2Data);
+		// 	axiosClient
+		// 		.post(API.INVITES, { data, recaptchaToken })
+		// 		.then(() => {
+		// 			setRecaptchaError('');
+		// 			resetRecaptcha();
+		// 		})
+		// 		.catch((e) => {
+		// 			console.error(e);
+		// 			setRecaptchaError('Something went wrong, please try again');
+		// 		});
+		// } else {
+		// 	setRecaptchaError('Please complete captcha');
+		// }
 	};
 
-	useEffect(() => {
-		// set focus to first field on load
-		setFocus('participantEmailAddress');
-	}, [setFocus]);
+	// useEffect(() => {
+	// 	// set focus to first field on load
+	// 	setFocus('participantEmailAddress');
+	// }, [setFocus]);
 
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* SECTION - EMAIL & PASSWORD */}
 				<FormSection>
-					<TextFieldSet
+					{/* <TextFieldSet
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email}
 						name="participantEmailAddress"
 						required
 						withNarrowDesktopLayout
-					/>
+					/> */}
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
 						label={labelsDict.password}
@@ -153,7 +153,7 @@ const FormStep2 = ({
 				</FormSection>
 
 				{/* SECTION - CONSENT TO BE CONTACTED */}
-				<FormSection className={styles.consentCheckbox}>
+				{/* <FormSection className={styles.consentCheckbox}>
 					<CheckboxFieldSet
 						description={textDict.consentContactDescription}
 						error={errors.consentToBeContacted?.type && errorsDict.required}
@@ -161,10 +161,10 @@ const FormStep2 = ({
 						required
 						title={labelsDict.consentContact}
 					/>
-				</FormSection>
+				</FormSection> */}
 
 				{/* SECTION - RECAPTCHA */}
-				<FormSection>
+				{/* <FormSection>
 					{recaptchaError && (
 						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
 					)}
@@ -175,7 +175,7 @@ const FormStep2 = ({
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
 						/>
 					</div>
-				</FormSection>
+				</FormSection> */}
 
 				{/* GO BACK/SUBMIT */}
 				<div className={styles.buttonWrapper}>
