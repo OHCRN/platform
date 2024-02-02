@@ -23,7 +23,6 @@ import { useId } from 'react';
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
 import { FormFieldSetWithTooltipProps, FormSelectOption } from 'src/components/common/Form/types';
@@ -51,8 +50,6 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	tooltipContent,
 	withNarrowDesktopLayout,
 }: SelectFieldSetProps<T, V>) => {
-	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
-
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
 	const tooltipId = `${idPrefix}-tooltip`;
@@ -67,7 +64,6 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			required={required}
 			tooltipContent={tooltipContent}
 			tooltipId={tooltipId}
-			tooltipVisible={tooltipVisible}
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<SelectInput
@@ -76,8 +72,6 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 				hasError={!!error}
 				id={fieldId}
 				name={name}
-				onBlur={hideTooltip}
-				onFocus={showTooltip}
 				options={options}
 				placeholder={placeholder}
 				required={required}

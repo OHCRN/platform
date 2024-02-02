@@ -23,7 +23,6 @@ import { useId } from 'react';
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import CalendarInput from 'src/components/common/Form/fieldsets/inputs/CalendarInput';
 import type { FormFieldSetWithTooltipProps } from 'src/components/common/Form/types';
@@ -48,8 +47,6 @@ const CalendarFieldSet = <T extends FieldValues>({
 	withNarrowDesktopLayout,
 	currentLang,
 }: CalendarFieldSetProps<T>) => {
-	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
-
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
 	const tooltipId = `${idPrefix}-tooltip`;
@@ -64,7 +61,6 @@ const CalendarFieldSet = <T extends FieldValues>({
 			required={required}
 			tooltipContent={tooltipContent}
 			tooltipId={tooltipId}
-			tooltipVisible={tooltipVisible}
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<CalendarInput
@@ -74,8 +70,6 @@ const CalendarFieldSet = <T extends FieldValues>({
 				popperClassName={clsx(styles.calendarPopper)}
 				id={fieldId}
 				name={name}
-				onBlur={hideTooltip}
-				onFocus={showTooltip}
 				required={required}
 				currentLang={currentLang}
 			/>
