@@ -38,12 +38,13 @@ import Button from 'src/components/common/Button';
 // import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 // import Notification from 'src/components/common/Notification';
 
+import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
+
 import styles from './RegisterForm.module.scss';
 import {
 	// RegisterFormStep1,
 	RegisterFormStep2,
 } from './types';
-import ConfirmPassword from './ConfirmPassword';
 
 const FormStep2 = ({
 	errorsDict,
@@ -118,18 +119,20 @@ const FormStep2 = ({
 	// 	setFocus('participantEmailAddress');
 	// }, [setFocus]);
 
+	const watchPassword = 
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* SECTION - EMAIL & PASSWORD */}
 				<FormSection>
-					{/* <TextFieldSet
+					<TextFieldSet
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email}
 						name="participantEmailAddress"
 						required
 						withNarrowDesktopLayout
-					/> */}
+					/>
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
 						label={labelsDict.password}
@@ -138,22 +141,18 @@ const FormStep2 = ({
 						type="password"
 						withNarrowDesktopLayout
 					/>
-					<ConfirmPassword
-						labelText={labelsDict.confirmPassword}
-						error={errors.confirmPassword?.type}
-					/>
-					{/* <TextFieldSet
+					<TextFieldSet
 						error={errors.confirmPassword?.type && errorsDict.required}
 						label={labelsDict.confirmPassword}
 						name="confirmPassword"
 						required
 						type="password"
 						withNarrowDesktopLayout
-					/> */}
+					/>
 				</FormSection>
 
 				{/* SECTION - CONSENT TO BE CONTACTED */}
-				{/* <FormSection className={styles.consentCheckbox}>
+				<FormSection className={styles.consentCheckbox}>
 					<CheckboxFieldSet
 						description={textDict.consentContactDescription}
 						error={errors.consentToBeContacted?.type && errorsDict.required}
@@ -161,7 +160,7 @@ const FormStep2 = ({
 						required
 						title={labelsDict.consentContact}
 					/>
-				</FormSection> */}
+				</FormSection>
 
 				{/* SECTION - RECAPTCHA */}
 				{/* <FormSection>
