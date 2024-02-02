@@ -40,27 +40,24 @@ export const RegisterFormStep1 = z.object({
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 export const RegisterFormStep2Fields = z.object({
-	confirmPassword: z.string().min(1), // TEMP #368
 	consentToBeContacted: z.literal(true),
 	participantEmailAddress: z.string().email(),
-	password: z.string().min(1), // TEMP #368
 });
+export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
 
-// TODO this validation doesn't work onBlur https://github.com/OHCRN/platform/issues/398
-export const RegisterFormStep2 = RegisterFormStep2Fields.refine(
-	(data) => data.password === data.confirmPassword,
-	{
-		path: ['confirmPassword'],
+export const PasswordFields = z
+	.object({
+		confirmPassword: z.string().min(1), // TEMP #368
+		password: z.string().min(1), // TEMP #368
+	})
+	.refine((data) => data.password === data.confirmPassword, {
 		message: 'passwordMismatch',
-	},
-);
+		path: ['confirmPassword'],
+	});
+export type PasswordFields = z.infer<typeof PasswordFields>;
+
+export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
-export const RegisterRequest = RegisterFormStep1.merge(RegisterFormStep2Fields).refine(
-	(data) => data.password === data.confirmPassword,
-	{
-		path: ['confirmPassword'],
-		message: 'passwordMismatch',
-	},
-);
+export const RegisterRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
 export type RegisterRequest = z.infer<typeof RegisterRequest>;
