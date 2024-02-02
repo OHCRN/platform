@@ -22,3 +22,6 @@ export * from './ConsentClinicianInvite.js';
 export * from './InformedConsent.js';
 export * from './PIClinicianInvite.js';
 export * from './ParticipantResponse.js';
+export * from './PICreateParticipant.js';
+export * from './ConsentCreateParticipant.js';
+export * from './CreateParticipant.js';

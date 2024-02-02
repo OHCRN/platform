@@ -18,8 +18,14 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
 
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import { ConsentParticipantBase, NanoId } from '../../../entities/index.js';
 
-export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+export const ConsentCreateParticipantRequest = ConsentParticipantBase.merge(
+	z.object({ id: NanoId }),
+);
+export type ConsentCreateParticipantRequest = z.infer<typeof ConsentCreateParticipantRequest>;
+export const ConsentCreateParticipantRequestSchema = generateSchema(
+	ConsentCreateParticipantRequest,
+);

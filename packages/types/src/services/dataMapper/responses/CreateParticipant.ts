@@ -17,9 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import { GuardianNullableResponseFields } from '../../../entities/Guardian.js';
+import { ConsentToBeContacted, ParticipantIdentityBase } from '../../../entities/Participant.js';
+import { Name, NanoId } from '../../../entities/fields/index.js';
 
-export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentToBeContacted)
+	.merge(
+		z.object({
+			id: NanoId,
+			isGuardian: z.boolean(),
+			emailVerified: z.boolean(),
+		}),
+	)
+	.extend(GuardianNullableResponseFields)
+	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
+
+export type CreateParticipantResponse = z.infer<typeof CreateParticipantResponse>;
+export const CreateParticipantResponseSchema = generateSchema(CreateParticipantResponse);

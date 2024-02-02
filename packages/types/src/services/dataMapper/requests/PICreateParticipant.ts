@@ -18,8 +18,17 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
 
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import { ParticipantIdentityBase } from '../../../entities/index.js';
+import { ConsentGroup } from '../../../entities/fields/index.js';
+import { hasRequiredGuardianInformation } from '../../../common/index.js';
 
-export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+// TODO: consentToBeContacted will need to be added to the consent DAS Participant table, currently it is tracked only in the ClinicianInvite table
+// TBD in https://github.com/OHCRN/platform/issues/388
+export const PICreateParticipantRequest = ParticipantIdentityBase.merge(
+	z.object({ consentGroup: ConsentGroup }), // consentGroup added to allow required fields check, not required for pi-das
+).refine(hasRequiredGuardianInformation);
+
+export type PICreateParticipantRequest = z.infer<typeof PICreateParticipantRequest>;
+export const PICreateParticipantRequestSchema = generateSchema(PICreateParticipantRequest);
