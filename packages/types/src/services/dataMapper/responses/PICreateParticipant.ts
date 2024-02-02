@@ -18,8 +18,21 @@
  */
 
 import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
 
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import {
+	ParticipantIdentityBase,
+	GuardianNullableResponseFields,
+} from '../../../entities/index.js';
+import { Name, NanoId } from '../../../entities/fields/index.js';
 
-export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+export const PICreateParticipantResponse = ParticipantIdentityBase.merge(
+	z.object({
+		id: NanoId,
+	}),
+)
+	.extend(GuardianNullableResponseFields)
+	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
+
+export type PICreateParticipantResponse = z.infer<typeof PICreateParticipantResponse>;
+export const PICreateParticipantResponseSchema = generateSchema(PICreateParticipantResponse);

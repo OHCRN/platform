@@ -19,71 +19,35 @@
 
 import { z } from 'zod';
 
+import { hasRequiredGuardianInformation } from '../common/index.js';
+
 import {
 	ConsentGroup,
 	LifecycleState,
 	Name,
 	NanoId,
 	OhipNumber,
-	PhoneNumber,
 	PostalCode,
 	Province,
 } from './fields/index.js';
 
-import { InviteGuardianFields } from './index.js';
+import { ParticipantIdentityBase } from './index.js';
 
-export const hasRequiredGuardianInformation = (
-	props: {
-		consentGroup: ConsentGroup;
-	} & InviteGuardianFields,
-) => {
-	// guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
-	// ConsentGroup.GUARDIAN_CONSENT_OF_MINOR or ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT was selected
-
-	const {
-		consentGroup,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-	} = props;
-
-	const requiresGuardianInformation =
-		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR ||
-		consentGroup === ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT;
-	return requiresGuardianInformation
-		? guardianName !== undefined &&
-				guardianPhoneNumber !== undefined &&
-				guardianEmailAddress !== undefined &&
-				guardianRelationship !== undefined
-		: true;
-};
-
-export const ParticipantIdentification = z
-	.object({
+export const ParticipantIdentification = ParticipantIdentityBase.merge(
+	z.object({
 		id: NanoId,
 		inviteId: NanoId.optional(),
 		currentLifecycleState: LifecycleState,
 		previousLifecycleState: LifecycleState.optional(),
 		ohipNumber: OhipNumber,
-		participantPreferredName: Name.optional(),
-		participantOhipFirstName: Name,
-		participantOhipLastName: Name,
-		participantOhipMiddleName: Name.optional(),
-		dateOfBirth: z.date(),
-		phoneNumber: PhoneNumber,
 		mailingAddressStreet: z.string().optional(),
 		mailingAddressCity: z.string().optional(),
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: PostalCode.optional(),
 		residentialPostalCode: PostalCode,
-		emailAddress: z.string().email(),
 		consentGroup: ConsentGroup,
-		guardianName: Name.optional(),
-		guardianPhoneNumber: PhoneNumber.optional(),
-		guardianEmailAddress: z.string().email().optional(),
-		guardianRelationship: Name.optional(),
-	})
-	.refine(hasRequiredGuardianInformation);
+		participantOhipMiddleName: Name.optional(),
+	}),
+).refine(hasRequiredGuardianInformation);
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;

@@ -1,12 +1,10 @@
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, failure, success, SystemError } from 'types/httpResponses';
 
 import prisma, { Participant, ClinicianInvite } from '../prismaClient.js';
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
-
-type SystemError = 'SYSTEM_ERROR';
 
 export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling
