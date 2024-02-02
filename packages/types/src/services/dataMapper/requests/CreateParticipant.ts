@@ -17,9 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import { hasRequiredGuardianInformation } from '../../../common/index.js';
+import { ConsentParticipantBase, ParticipantIdentityBase } from '../../../entities/index.js';
 
-export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+export const CreateParticipantRequest = ParticipantIdentityBase.merge(
+	ConsentParticipantBase,
+).refine(hasRequiredGuardianInformation, {
+	message: 'Guardian contact fields are required for that consentGroup',
+});
+export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
+export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);

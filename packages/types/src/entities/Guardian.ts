@@ -19,7 +19,25 @@
 
 import { z } from 'zod';
 
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import { Name, PhoneNumber } from './fields/index.js';
 
-export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+export const GuardianBaseFields = z.object({
+	guardianEmailAddress: z.string().email().optional(),
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianRelationship: Name.optional(),
+});
+
+export type GuardianBaseFields = z.infer<typeof GuardianBaseFields>;
+
+// export as plain object to work with zod .extend()
+export const GuardianNullableResponseFields = {
+	guardianName: Name.nullable().transform((input) => input ?? undefined),
+	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
+	guardianEmailAddress: z
+		.string()
+		.email()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
+};
