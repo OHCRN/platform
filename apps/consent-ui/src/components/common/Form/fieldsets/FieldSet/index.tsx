@@ -20,7 +20,6 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
-import Tooltip from 'src/components/common/Form/fieldsets/Tooltip';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import FieldLabel from 'src/components/common/Form/fieldsets/FieldLabel';
 import { InfoButtonProps } from 'src/components/common/InfoButton';
@@ -36,8 +35,7 @@ interface FieldSetProps {
 	label: string;
 	required?: boolean;
 	tooltipContent?: ReactNode;
-	tooltipId: string;
-	tooltipVisible: boolean;
+	tooltipId?: string;
 	withNarrowDesktopLayout?: boolean;
 }
 
@@ -51,7 +49,6 @@ const FieldSet = ({
 	required,
 	tooltipContent,
 	tooltipId,
-	tooltipVisible,
 	withNarrowDesktopLayout,
 }: FieldSetProps) => {
 	return (
@@ -67,21 +64,16 @@ const FieldSet = ({
 				{label}
 			</FieldLabel>
 
+			{tooltipContent && (
+				<div className={styles.tooltip} id={tooltipId}>
+					{tooltipContent}
+				</div>
+			)}
+
 			<div className={styles.inputGridArea}>
 				{children}
 				{error && <InputError>{error}</InputError>}
 			</div>
-
-			{tooltipContent && (
-				<Tooltip
-					className={styles.tooltipGridArea}
-					id={tooltipId}
-					isVisible={tooltipVisible}
-					withNarrowDesktopLayout={withNarrowDesktopLayout}
-				>
-					{tooltipContent}
-				</Tooltip>
-			)}
 		</fieldset>
 	);
 };

@@ -23,7 +23,6 @@ import { FieldValues } from 'react-hook-form';
 import { useId } from 'react';
 import clsx from 'clsx';
 
-import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
 import { FormFieldSetWithTooltipProps, FormTextInputType } from 'src/components/common/Form/types';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
@@ -46,8 +45,6 @@ const TextFieldSet = <T extends FieldValues>({
 	type = 'text',
 	withNarrowDesktopLayout,
 }: TextFieldSetProps<T>) => {
-	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
-
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
 	const tooltipId = `${idPrefix}-tooltip`;
@@ -62,7 +59,6 @@ const TextFieldSet = <T extends FieldValues>({
 			required={required}
 			tooltipContent={tooltipContent}
 			tooltipId={tooltipId}
-			tooltipVisible={tooltipVisible}
 			withNarrowDesktopLayout={withNarrowDesktopLayout}
 		>
 			<TextInput
@@ -71,8 +67,6 @@ const TextFieldSet = <T extends FieldValues>({
 				disabled={disabled}
 				id={fieldId}
 				name={name}
-				onBlur={hideTooltip}
-				onFocus={showTooltip}
 				required={required}
 				type={type}
 			/>
