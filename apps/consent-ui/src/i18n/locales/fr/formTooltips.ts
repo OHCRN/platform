@@ -27,14 +27,12 @@ const dictionary = {
 	guardianPhoneNumberTooltip:
 		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
 	participantEmailAddressTooltip: 'Le patient recevra une invitation sur ce compte.',
-	participantFirstNameTooltip:
-		"Inscrivez le prénom du participant tel qu'il apparaît sur sa carte Santé.",
-	participantLastNameTooltip:
-		"Entrez le nom de famille du participant tel qu'il apparaît sur sa carte Santé.",
+	participantFirstNameTooltip: 'Tel qu’il apparaît sur leur carte Santé.',
+	participantLastNameTooltip: 'Tel qu’il apparaît sur leur carte Santé.',
 	participantPhoneNumberTooltip:
-		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
+		'Si nous contactons le participant, ce sera pour des mises à jour de santé et son consentement.',
 	participantPreferredNameTooltip:
-		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
+		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
 } satisfies FormTooltipsDictionary;
 
 export default dictionary;
