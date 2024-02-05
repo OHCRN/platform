@@ -20,9 +20,6 @@
 import Link from 'next/link';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import { InformedConsentFormDictionary } from 'src/i18n/locales/en/informedConsentForm';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { InformedConsentPageDictionary } from 'src/i18n/locales/en/informedConsentPage';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { getAppConfig } from 'src/config/appConfig';
 
@@ -30,28 +27,12 @@ import InformedConsentForm from './InformedConsentForm';
 import styles from './InformedConsent.module.scss';
 
 const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
+	const formDict = translateNamespace('informedConsentForm');
+	const errorsDict = translateNamespace('formErrors');
+	const pageDict = translateNamespace('informedConsentPage');
+
 	const { OHCRN_EMAIL } = getAppConfig(process.env);
-
-	const formDict: InformedConsentFormDictionary = {
-		consentContact: translate('informedConsentForm', 'consentContact'),
-		readUnderstand1: translate('informedConsentForm', 'readUnderstand1'),
-		readUnderstand2: translate('informedConsentForm', 'readUnderstand2'),
-	};
-
-	const errorsDict: FormErrorsDictionary = {
-		required: translate('formErrors', 'required'),
-	};
-
-	const pageDict: InformedConsentPageDictionary = {
-		description1: translate('informedConsentPage', 'description1'),
-		description2: translate('informedConsentPage', 'description2'),
-		description3: translate('informedConsentPage', 'description3'),
-		downloadConsentPdf: translate('informedConsentPage', 'downloadConsentPdf'),
-		linkText: translate('informedConsentPage', 'linkText'),
-		studyConsentPdf: translate('informedConsentPage', 'studyConsentPdf'),
-		title: translate('informedConsentPage', 'title'),
-	};
 
 	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
 

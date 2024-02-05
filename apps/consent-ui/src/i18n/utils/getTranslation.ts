@@ -16,10 +16,10 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import dictionaries from 'src/i18n/locales';
-import en from 'src/i18n/locales/en/index';
-import { GetTranslation, TranslateKey, TranslateNamespace, ValidLanguage } from 'src/i18n/types';
 import { REGEX_FLAG_GLOBAL } from 'types/common';
+
+import dictionaries from 'src/i18n/locales';
+import { GetTranslation, TranslateKey, TranslateNamespace } from 'src/i18n/types';
 
 /**
  * ```
