@@ -77,13 +77,3 @@ export const getTranslation: GetTranslation = (language) => {
 
 	return { translate, translateNamespace };
 };
-
-type TranslationNamespace = keyof typeof en;
-
-export const translateAll = <T extends object>(
-	currentLang: ValidLanguage,
-	namespace: TranslationNamespace,
-): T => {
-	const dictionaryTranslated = dictionaries[currentLang][namespace] || {};
-	return dictionaryTranslated as T;
-};

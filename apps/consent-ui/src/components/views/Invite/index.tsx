@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,28 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { CONSENT_GROUPS } from 'types/entities';
-
 import InviteBackground from 'src/../public/assets/images/invite-bg.jpg';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
-import { translateAll, getTranslation, ValidLanguage } from 'src/i18n';
 import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianInviteForm';
 import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
-import { InviteFormPageDictionary } from 'src/i18n/locales/en/inviteFormPage';
-import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
-import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { getTranslation, ValidLanguage } from 'src/i18n';
+import { CONSENT_GROUPS } from 'types/entities';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
-	// change to `const { translate, translateAll }`
+	const { translate, translateNamespace } = getTranslation(currentLang);
 
-	// return value of translateAll should conform to a dictionary type
-	// so that these dictionaries can be passed down as props with specific types
-	const pageDict = translateAll<InviteFormPageDictionary>(currentLang, 'inviteFormPage');
-	const errorsDict = translateAll<FormErrorsDictionary>(currentLang, 'formErrors');
-	const labelsDict = translateAll<InviteFormLabelsDictionary>(currentLang, 'inviteFormLabels');
-	const textDict = translateAll<InviteFormTextDictionary>(currentLang, 'inviteFormText');
+	const pageDict = translateNamespace('inviteFormPage');
+	const errorsDict = translateNamespace('formErrors');
+	const labelsDict = translateNamespace('inviteFormLabels');
+	const textDict = translateNamespace('inviteFormText');
 
 	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
 		label: translate('consentGroup', group),
