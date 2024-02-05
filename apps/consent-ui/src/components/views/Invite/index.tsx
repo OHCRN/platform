@@ -28,11 +28,11 @@ import { getTranslation, ValidLanguage } from 'src/i18n';
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
 
-	const pageDict = translateNamespace('inviteFormPage');
+	const consentDict = translateNamespace('consentGroup');
 	const errorsDict = translateNamespace('formErrors');
 	const labelsDict = translateNamespace('inviteFormLabels');
+	const pageDict = translateNamespace('inviteFormPage');
 	const textDict = translateNamespace('inviteFormText');
-	const consentDict = translateNamespace('consentGroup');
 
 	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
 		label: consentDict[group],
