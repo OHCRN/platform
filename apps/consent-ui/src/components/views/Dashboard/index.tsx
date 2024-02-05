@@ -33,7 +33,9 @@ const statuses = ['disabled', 'incomplete', 'complete'] as const;
 const consentStatus: (typeof statuses)[number] = statuses[Math.floor(Math.random() * 3)];
 
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
+	const textDict = translateNamespace('dashboard');
+
 	return (
 		<PaddedContainer>
 			<DashboardNotification currentLang={currentLang} />
@@ -42,8 +44,8 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 					<Image src={ConsentsImage} alt="" priority />
 				</div>
 				<div className={styles.content}>
-					<h2>{translate('dashboard', 'reviewOhcrnConsents')}</h2>
-					<p>{translate('dashboard', 'reviewConsentsDescription')}</p>
+					<h2>{textDict.reviewOhcrnConsents}</h2>
+					<p>{textDict.reviewConsentsDescription}</p>
 					<div className={styles['button-container']}>
 						{consentStatus == 'complete' ? (
 							<LocalizedLink
@@ -53,7 +55,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 								variant="secondary"
 								color="blue"
 							>
-								{translate('dashboard', 'downloadConsentForms')}
+								{textDict.downloadConsentForms}
 							</LocalizedLink>
 						) : (
 							<LocalizedLink
@@ -65,7 +67,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 								size="large"
 								action="next"
 							>
-								{translate('dashboard', 'completeConsentForms')}
+								{textDict.completeConsentForms}
 							</LocalizedLink>
 						)}
 					</div>

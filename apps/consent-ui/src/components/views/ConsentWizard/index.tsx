@@ -44,7 +44,8 @@ const ConsentWizard = async ({
 	currentLang: ValidLanguage;
 	currentStep: ConsentCategory;
 }) => {
-	const { translate } = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
+	const textDict = translateNamespace('consentWizard');
 
 	// TODO: return consent wizard progress from consent-api
 	const progress: ConsentWizardProgress = {
@@ -58,7 +59,7 @@ const ConsentWizard = async ({
 	const progressHeaderSteps = Object.keys(progress).map((key) => {
 		const step = ConsentCategory.parse(key);
 		return {
-			name: translate('consentWizard', step),
+			name: textDict[step],
 			isComplete: progress[step] === COMPLETE,
 			inProgress: step === currentStep,
 		};
@@ -69,8 +70,8 @@ const ConsentWizard = async ({
 			<BackToDashboard currentLang={currentLang} />
 			<div className={styles.wizard}>
 				<div className={styles.header}>
-					<h1>{translate('consentWizard', 'heading')}</h1>
-					<p>{translate('consentWizard', 'subheading')}</p>
+					<h1>{textDict.heading}</h1>
+					<p>{textDict.subheading}</p>
 				</div>
 				<Card dropShadow="sm" className={styles['consent-form']}>
 					<ProgressHeader currentLang={currentLang} steps={progressHeaderSteps} />

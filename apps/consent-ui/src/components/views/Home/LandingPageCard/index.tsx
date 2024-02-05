@@ -16,6 +16,7 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 import clsx from 'clsx';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
@@ -30,28 +31,26 @@ import linkStyles from 'src/components/common/Link/LocalizedLink.module.scss';
 import styles from './LandingPageCard.module.scss';
 
 const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
+	const textDict = translateNamespace('landingPage');
+
 	return (
 		<Card dropShadow="none" className={styles['landing-page-card']}>
-			<h2>{translate('landingPage', 'joinOhcrn')}</h2>
+			<h2>{textDict.joinOhcrn}</h2>
 			<p>
-				<b>{translate('landingPage', 'joinOhcrnDescription')}</b>
+				<b>{textDict.joinOhcrnDescription}</b>
 			</p>
 
 			{/* mobile view */}
 			<CardLink name={'register'} currentLang={currentLang} className={styles.mobile}>
 				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
-				<strong className={linkStyles.link}>
-					{translate('landingPage', 'participantsRegisterToday')}
-				</strong>
+				<strong className={linkStyles.link}>{textDict.participantsRegisterToday}</strong>
 				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
 
 			<CardLink name={'invite'} currentLang={currentLang} className={styles.mobile}>
 				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
-				<strong className={linkStyles.link}>
-					{translate('landingPage', 'cliniciansRegisterToday')}
-				</strong>
+				<strong className={linkStyles.link}>{textDict.cliniciansRegisterToday}</strong>
 				<RightArrow className={clsx(styles.arrow, styles.icon)} />
 			</CardLink>
 
@@ -59,10 +58,8 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 			<CardLink name={'register'} currentLang={currentLang} className={styles.tablet}>
 				<PatientIcon className={clsx(styles.patientIcon, styles.icon)} />
 				<span>
-					{translate('landingPage', 'longParticipantsRegisterToday')}{' '}
-					<strong className={linkStyles.link}>
-						{translate('landingPage', 'registerYourselfToday')}
-					</strong>
+					{textDict.longParticipantsRegisterToday}{' '}
+					<strong className={linkStyles.link}>{textDict.registerYourselfToday}</strong>
 				</span>
 				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>
@@ -70,10 +67,8 @@ const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) 
 			<CardLink name={'invite'} currentLang={currentLang} className={styles.tablet}>
 				<DoctorIcon className={clsx(styles.doctorIcon, styles.icon)} />
 				<span>
-					{translate('landingPage', 'longCliniciansRegisterToday')}{' '}
-					<strong className={linkStyles.link}>
-						{translate('landingPage', 'registerPatientToday')}
-					</strong>
+					{textDict.longCliniciansRegisterToday}{' '}
+					<strong className={linkStyles.link}>{textDict.registerPatientToday}</strong>
 				</span>
 				<Chevron className={clsx(styles.chevron, styles.icon)} />
 			</CardLink>

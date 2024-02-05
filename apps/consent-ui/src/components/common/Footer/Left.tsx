@@ -20,33 +20,27 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { TranslateKey } from 'src/i18n';
+import { TranslateNamespace } from 'src/i18n';
 import OICRLogo from 'src/../public/assets/images/oicr.svg';
 import InstagramLogo from 'src/../public/assets/images/instagram.svg';
 import TwitterLogo from 'src/../public/assets/images/twitter.svg';
 
 import styles from './Footer.module.scss';
 
-const Left = ({ translate }: { translate: TranslateKey }) => {
+const Left = ({ translateNamespace }: { translateNamespace: TranslateNamespace }) => {
+	const textDict = translateNamespace('footer');
+
 	return (
 		<div className={styles.left}>
 			<Link href="#" className={styles.icon}>
-				<Image src={OICRLogo} alt={translate('footer', 'oicrLogoAlt')} className={styles.oicr} />
+				<Image src={OICRLogo} alt={textDict.oicrLogoAlt} className={styles.oicr} />
 			</Link>
 			<div className={styles.mediaIcons}>
 				<Link href="#" className={styles.icon}>
-					<Image
-						src={InstagramLogo}
-						alt={translate('footer', 'instagramLogoAlt')}
-						className={styles.instagram}
-					/>
+					<Image src={InstagramLogo} alt={textDict.instagramLogoAlt} className={styles.instagram} />
 				</Link>
 				<Link href="#" className={styles.icon}>
-					<Image
-						src={TwitterLogo}
-						alt={translate('footer', 'twitterLogoAlt')}
-						className={styles.twitter}
-					/>
+					<Image src={TwitterLogo} alt={textDict.twitterLogoAlt} className={styles.twitter} />
 				</Link>
 			</div>
 		</div>

@@ -17,12 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { CONSENT_GROUPS } from 'types/entities';
+
 import InviteBackground from 'src/../public/assets/images/invite-bg.jpg';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import ClinicianInviteFormComponent from 'src/components/views/Invite/ClinicianInviteForm';
 import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteForm/types';
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import { CONSENT_GROUPS } from 'types/entities';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate, translateNamespace } = getTranslation(currentLang);
