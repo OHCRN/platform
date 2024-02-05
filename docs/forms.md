@@ -63,8 +63,8 @@ Libraries used:
 
 ## Validation
 
-- We're using a Zod resolver with react-hook-form.
+- We're using a [Zod](https://zod.dev/) [resolver](https://react-hook-form.com/docs/useform#resolver) with [react-hook-form](https://react-hook-form.com/).
 - Errors are checked onBlur & onSubmit, but `formState.isValid` updates onChange in the background.
-- Additional validation through RHF gets ignored.
-- Zod `.refine()` validations don't update `formState.errors` onBlur or onChange, only onSubmit. There's a ticket to improve onBlur validation https://github.com/OHCRN/platform/issues/398
-- We currently only show errors for "this field is required".
+- Additional validation through RHF gets ignored: [_A resolver can not be used with the built-in validators (e.g.: required, min, etc.)_](https://react-hook-form.com/docs/useform#resolver)
+- Zod `.refine()` validations don't update `formState.errors` onBlur or onChange, only onSubmit. `formState.isValid` is updated as expected. There's a ticket to improve onBlur validation: <https://github.com/OHCRN/platform/issues/398>
+- We currently only show errors for "this field is required". There's a ticket for improving this: <https://github.com/OHCRN/platform/issues/315>
