@@ -47,8 +47,8 @@ const ProgressHeader = async ({
 			{/* Tablet and Desktop screens */}
 			<div className={styles.header}>
 				{steps.map((step, index) => (
-					<Fragment key={index}>
-						<div className={styles.step} key={step.name}>
+					<Fragment key={step.name}>
+						<div className={styles.step}>
 							{step.inProgress ? (
 								<InProgress className={styles['in-progress']} />
 							) : step.isComplete ? (
