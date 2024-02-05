@@ -20,8 +20,8 @@
 import { FormTextDictionary } from '../en/formText';
 
 const dictionary = {
-  back: 'Retour',
-  complete: 'Complèter',
+	back: 'Retour',
+	complete: 'Complèter',
 	goToStep: "Passer à l'étape",
 	indicatesRequiredField: 'indique un champ obligatoire',
 	next: 'Suivant',

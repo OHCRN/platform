@@ -18,12 +18,12 @@
  */
 
 const dictionary = {
-  back: 'Back',
+	back: 'Back',
 	complete: 'Complete',
-  goToStep: 'Go to step',
+	goToStep: 'Go to step',
 	indicatesRequiredField: 'indicates required field',
 	next: 'Next',
-  previous: 'Previous',
+	previous: 'Previous',
 	selectPlaceholder: 'Select an option...',
 	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
 	submit: 'Submit',
