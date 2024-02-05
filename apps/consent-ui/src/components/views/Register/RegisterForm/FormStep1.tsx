@@ -22,7 +22,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { SyntheticEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -32,6 +32,7 @@ import Button from 'src/components/common/Button';
 import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
 import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
@@ -74,11 +75,6 @@ const FormStep1 = ({
 		setFocus('guardianName');
 	}, [setFocus]);
 
-	const handleMouseDown = (e: SyntheticEvent) => {
-		// prevent blur events from interrupting click events
-		e.preventDefault();
-	};
-
 	return (
 		<FormProvider {...methods}>
 			<Form className={className} onSubmit={handleSubmit(onSubmit)}>
@@ -102,21 +98,18 @@ const FormStep1 = ({
 						label={labelsDict.yourName}
 						name="guardianName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.yourPhone}
 						name="guardianPhoneNumber"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianRelationship?.type && errorsDict.required}
 						label={labelsDict.yourRelationship}
 						name="guardianRelationship"
 						required
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
@@ -128,31 +121,27 @@ const FormStep1 = ({
 						label={labelsDict.firstName}
 						name="participantFirstName"
 						required
-						tooltipContent={textDict.participantFirstNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantFirstNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName}
 						name="participantLastName"
 						required
-						tooltipContent={textDict.participantLastNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantLastNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName}
 						name="participantPreferredName"
-						tooltipContent={textDict.participantPreferredNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPreferredNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone}
 						name="participantPhoneNumber"
 						required
-						tooltipContent={textDict.participantPhoneNumberTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPhoneNumberTooltip}
 					/>
 					{/* TODO #366 implement date input */}
 					<TextFieldSet
@@ -160,8 +149,7 @@ const FormStep1 = ({
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
-						tooltipContent={textDict.dateOfBirthTooltip}
-						withNarrowDesktopLayout
+						description={textDict.dateOfBirthTooltip}
 					/>
 				</FormSection>
 
@@ -180,7 +168,7 @@ const FormStep1 = ({
 						action="next"
 						aria-label={`${textDict.goToStep} 2`}
 						color={isValid ? 'green' : 'default'}
-						onMouseDown={handleMouseDown}
+						onMouseDown={handleMouseDownBlur}
 						type="submit"
 					>
 						{textDict.next}

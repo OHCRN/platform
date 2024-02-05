@@ -61,8 +61,8 @@ const Button = ({
 			)}
 			disabled={disabled}
 			onClick={onClick}
-			type={type}
 			onMouseDown={onMouseDown}
+			type={type}
 		>
 			{action === 'prev' ? (
 				<div>

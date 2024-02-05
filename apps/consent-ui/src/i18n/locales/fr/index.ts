@@ -20,6 +20,7 @@
 import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
 import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
+import assetUrlsDictionary from 'src/i18n/locales/fr/assetUrls';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
@@ -44,6 +45,8 @@ import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
 import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
+import informedConsentFormDictionary from 'src/i18n/locales/fr/informedConsentForm';
+import informedConsentPageDictionary from 'src/i18n/locales/fr/informedConsentPage';
 import inviteFormConsentGroupModalDictionary from 'src/i18n/locales/fr/inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
 import inviteFormPageDictionary from 'src/i18n/locales/fr/inviteFormPage';
@@ -58,6 +61,7 @@ import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
+	assetUrls: assetUrlsDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
@@ -81,6 +85,8 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	informedConsentForm: informedConsentFormDictionary,
+	informedConsentPage: informedConsentPageDictionary,
 	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
 	inviteFormPage: inviteFormPageDictionary,

@@ -135,7 +135,6 @@ const FormStep2 = ({
 						label={labelsDict.email}
 						name="participantEmailAddress"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
@@ -143,7 +142,6 @@ const FormStep2 = ({
 						name="password"
 						required
 						type="password"
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.confirmPassword?.type && errorsDict.required}
@@ -151,7 +149,6 @@ const FormStep2 = ({
 						name="confirmPassword"
 						required
 						type="password"
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
