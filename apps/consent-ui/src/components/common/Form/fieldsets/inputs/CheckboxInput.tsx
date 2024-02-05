@@ -22,7 +22,7 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 
 import { FormInputProps } from 'src/components/common/Form/types';
-import { handleMouseDown } from 'src/components/utils';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 const CheckboxInput = <T extends FieldValues>({
 	ariaProps = {},
@@ -41,7 +41,7 @@ const CheckboxInput = <T extends FieldValues>({
 			className={className}
 			disabled={disabled}
 			id={id}
-			onMouseDown={handleMouseDown}
+			onMouseDown={handleMouseDownBlur}
 			onClick={() => {
 				// force focus change & onBlur validation in safari
 				setFocus(name);

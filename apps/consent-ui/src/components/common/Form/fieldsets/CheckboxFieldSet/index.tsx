@@ -27,7 +27,7 @@ import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
-import { handleMouseDown } from 'src/components/utils';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import styles from './CheckboxFieldSet.module.scss';
 
@@ -92,7 +92,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 					name={name}
 					required={required}
 				/>
-				<label htmlFor={checkboxId} className={styles.label} onMouseDown={handleMouseDown}>
+				<label htmlFor={checkboxId} className={styles.label} onMouseDown={handleMouseDownBlur}>
 					<span className={styles.description}>
 						{description}
 						{required && !title && <RequiredAsterisk />}

@@ -22,7 +22,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { SyntheticEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -32,6 +32,7 @@ import Button from 'src/components/common/Button';
 import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
 import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
@@ -73,11 +74,6 @@ const FormStep1 = ({
 		// TODO #366 change to isGuardian
 		setFocus('guardianName');
 	}, [setFocus]);
-
-	const handleMouseDown = (e: SyntheticEvent) => {
-		// prevent blur events from interrupting click events
-		e.preventDefault();
-	};
 
 	return (
 		<FormProvider {...methods}>
@@ -180,7 +176,7 @@ const FormStep1 = ({
 						action="next"
 						aria-label={`${textDict.goToStep} 2`}
 						color={isValid ? 'green' : 'default'}
-						onMouseDown={handleMouseDown}
+						onMouseDown={handleMouseDownBlur}
 						type="submit"
 					>
 						{textDict.next}
