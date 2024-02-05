@@ -21,7 +21,7 @@ import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 import { z } from 'zod';
 
-import { NANOID_REGEX } from '../../common/index.js';
+import { NANOID_REGEX } from '../../common/regexes.js';
 
 export const ID_ALPHABET =
 	'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' as const;

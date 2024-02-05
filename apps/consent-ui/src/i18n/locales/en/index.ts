@@ -48,7 +48,12 @@ import inviteFormTextDictionary from './inviteFormText';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
-import registerDictionary from './register';
+import registerFormStep1LabelsDictionary from './registerFormStep1Labels';
+import registerFormStep1TextDictionary from './registerFormStep1Text';
+import registerFormStep2LabelsDictionary from './registerFormStep2Labels';
+import registerFormStep2TextDictionary from './registerFormStep2Text';
+import registerFormTextDictionary from './registerFormText';
+import registerPageDictionary from './registerPage';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
@@ -82,7 +87,12 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
-	register: registerDictionary,
+	registerFormStep1Labels: registerFormStep1LabelsDictionary,
+	registerFormStep1Text: registerFormStep1TextDictionary,
+	registerFormStep2Labels: registerFormStep2LabelsDictionary,
+	registerFormStep2Text: registerFormStep2TextDictionary,
+	registerFormText: registerFormTextDictionary,
+	registerPage: registerPageDictionary,
 };
 
 export default dictionaries;

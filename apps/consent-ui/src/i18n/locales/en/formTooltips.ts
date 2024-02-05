@@ -21,6 +21,7 @@ const dictionary = {
 	clinicianInstitutionalEmailAddressTooltip:
 		'We require this to confirm your authority to register patients.',
 	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
+	dateOfBirthTooltip: "We require this to request participant's clinical information.",
 	guardianEmailAddressTooltip: 'The guardian will receive an invitation to this account.',
 	guardianPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
 	participantEmailAddressTooltip: 'The patient will receive an invitation to this account.',

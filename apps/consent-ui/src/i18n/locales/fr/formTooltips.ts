@@ -23,6 +23,8 @@ const dictionary = {
 	clinicianInstitutionalEmailAddressTooltip:
 		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
 	consentGroupTooltip: 'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
+	dateOfBirthTooltip:
+		'Nous en avons besoin pour demander les informations cliniques du participant.',
 	guardianEmailAddressTooltip: 'Le tuteur recevra une invitation à ce compte.',
 	guardianPhoneNumberTooltip:
 		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
