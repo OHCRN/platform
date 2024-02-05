@@ -26,6 +26,7 @@ import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
 
 import styles from './ConsentWizard.module.scss';
+import InformedConsent from './InformedConsent';
 
 const {
 	INFORMED_CONSENT,
@@ -77,7 +78,7 @@ const ConsentWizard = async ({
 					<hr className={styles.divider} />
 					<div className={styles.content}>
 						{/* TODO: add consent form for each section */}
-						{currentStep === INFORMED_CONSENT && <></>}
+						{currentStep === INFORMED_CONSENT && <InformedConsent currentLang={currentLang} />}
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}

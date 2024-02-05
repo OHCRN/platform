@@ -27,6 +27,7 @@ import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
 import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
 import InputError from 'src/components/common/Form/fieldsets/InputError';
 import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import styles from './CheckboxFieldSet.module.scss';
 
@@ -91,16 +92,7 @@ const CheckboxFieldSet = <T extends FieldValues>({
 					name={name}
 					required={required}
 				/>
-				<label
-					htmlFor={checkboxId}
-					className={styles.label}
-					onMouseDown={(e) => {
-						// prevent blur event being called after mousedown,
-						// which will allow a click event on this label/checkbox,
-						// which will be followed automatically by a blur event (for validation)
-						e.preventDefault();
-					}}
-				>
+				<label htmlFor={checkboxId} className={styles.label} onMouseDown={handleMouseDownBlur}>
 					<span className={styles.description}>
 						{description}
 						{required && !title && <RequiredAsterisk />}

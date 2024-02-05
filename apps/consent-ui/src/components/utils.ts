@@ -17,4 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { SyntheticEvent } from 'react';
+
 export const scrollToTop = () => window.scroll(0, 0);
+
+/**
+ * Add this onMouseDown handler to elements that use onClick events,
+ * on pages with onBlur events (e.g. form validation). Defers blur events
+ * until after click events, so the blur events don't block click events.
+ * @example <Button onMouseDown={handleMouseDownBlur} />
+ */
+export const handleMouseDownBlur = (e: SyntheticEvent) => {
+	// prevent default blur event until after click event
+	e.preventDefault();
+};
