@@ -18,6 +18,7 @@
  */
 
 import clsx from 'clsx';
+import { Fragment } from 'react';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import Success from 'src/components/common/Icons/Success';
@@ -46,7 +47,7 @@ const ProgressHeader = async ({
 			{/* Tablet and Desktop screens */}
 			<div className={styles.header}>
 				{steps.map((step, index) => (
-					<>
+					<Fragment key={index}>
 						<div className={styles.step} key={step.name}>
 							{step.inProgress ? (
 								<InProgress className={styles['in-progress']} />
@@ -63,7 +64,7 @@ const ProgressHeader = async ({
 						{index != steps.length - 1 && (
 							<hr className={clsx(styles.divider, step.isComplete && styles['completed-step'])} />
 						)}
-					</>
+					</Fragment>
 				))}
 			</div>
 			{/* Mobile screens */}
