@@ -18,6 +18,7 @@
  */
 
 import ancestryDictionary from './ancestry';
+import assetUrlsDictionary from './assetUrls';
 import birthSexDictionary from './birthSex';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
@@ -41,6 +42,8 @@ import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
 import historyOfCancerDictionary from './historyOfCancer';
 import informedConsentDictionary from './informedConsent';
+import informedConsentFormDictionary from './informedConsentForm';
+import informedConsentPageDictionary from './informedConsentPage';
 import inviteFormConsentGroupModalDictionary from './inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from './inviteFormLabels';
 import inviteFormPageDictionary from './inviteFormPage';
@@ -57,6 +60,7 @@ import registerPageDictionary from './registerPage';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
+	assetUrls: assetUrlsDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
@@ -80,6 +84,8 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	informedConsentForm: informedConsentFormDictionary,
+	informedConsentPage: informedConsentPageDictionary,
 	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
 	inviteFormPage: inviteFormPageDictionary,

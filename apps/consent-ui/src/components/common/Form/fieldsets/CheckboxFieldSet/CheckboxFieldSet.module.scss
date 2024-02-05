@@ -1,3 +1,5 @@
+@use '../../../../../theme/mixins';
+
 .checkboxFieldset {
 	.title {
 		margin-bottom: 0.25rem;
@@ -10,6 +12,9 @@
 		cursor: pointer;
 		&:hover {
 			background: theme('colors.grayscale.200');
+		}
+		a {
+			@include mixins.text-link;
 		}
 	}
 	.checkboxWrapper {
