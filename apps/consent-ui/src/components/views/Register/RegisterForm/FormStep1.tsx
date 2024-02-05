@@ -98,21 +98,18 @@ const FormStep1 = ({
 						label={labelsDict.yourName}
 						name="guardianName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.yourPhone}
 						name="guardianPhoneNumber"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianRelationship?.type && errorsDict.required}
 						label={labelsDict.yourRelationship}
 						name="guardianRelationship"
 						required
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
@@ -124,31 +121,27 @@ const FormStep1 = ({
 						label={labelsDict.firstName}
 						name="participantFirstName"
 						required
-						tooltipContent={textDict.participantFirstNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantFirstNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName}
 						name="participantLastName"
 						required
-						tooltipContent={textDict.participantLastNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantLastNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName}
 						name="participantPreferredName"
-						tooltipContent={textDict.participantPreferredNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPreferredNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone}
 						name="participantPhoneNumber"
 						required
-						tooltipContent={textDict.participantPhoneNumberTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPhoneNumberTooltip}
 					/>
 					{/* TODO #366 implement date input */}
 					<TextFieldSet
@@ -156,8 +149,7 @@ const FormStep1 = ({
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
-						tooltipContent={textDict.dateOfBirthTooltip}
-						withNarrowDesktopLayout
+						description={textDict.dateOfBirthTooltip}
 					/>
 				</FormSection>
 
