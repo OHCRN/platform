@@ -30,7 +30,7 @@ import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	// change to `const { translate, translateAll }`
 
 	// return value of translateAll should conform to a dictionary type

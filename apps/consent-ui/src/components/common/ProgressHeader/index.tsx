@@ -40,7 +40,7 @@ const ProgressHeader = async ({
 	steps: Step[];
 }) => {
 	const currentStep = steps.findIndex((step) => step.inProgress) + 1;
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	return (
 		<>
 			{/* Tablet and Desktop screens */}

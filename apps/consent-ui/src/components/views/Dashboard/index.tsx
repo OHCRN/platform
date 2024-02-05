@@ -33,7 +33,7 @@ const statuses = ['disabled', 'incomplete', 'complete'] as const;
 const consentStatus: (typeof statuses)[number] = statuses[Math.floor(Math.random() * 3)];
 
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	return (
 		<PaddedContainer>
 			<DashboardNotification currentLang={currentLang} />

@@ -30,7 +30,7 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 
 	const errorsDict: FormErrorsDictionary = {
 		required: translate('formErrors', 'required'),

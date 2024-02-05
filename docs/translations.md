@@ -55,7 +55,7 @@ const frenchCommonDictionary = { ... } satisfies CommonDictionary;
 
 Define a `translate()` function:
 ```typescript
-const translate = getTranslation('en');
+const { translate } = getTranslation('en');
 ```
 which can then be used to access a translated string with a `namespace` + `key`
 
@@ -74,7 +74,7 @@ const translatedString = translate('footer', 'about');
 #### Using with parameters for string interpolation:
 
 ```typescript
-const translate = getTranslation('fr');
+const { translate } = getTranslation('fr');
 const translatedString = translate('footer', 'copyright', { year: '2023' });
 // => '© 2023 Ontario Hereditary Cancer Research Network. Tous droits réservés.'
 ```

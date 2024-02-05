@@ -36,7 +36,7 @@ const ModalSection = ({ items, title }: { items: string[]; title: string }) => {
 };
 
 const ConsentGroupModal = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	const modalDict: InviteFormConsentGroupModalDictionary = {
 		adultConsent: translate('inviteFormConsentGroupModal', 'adultConsent'),
 		adultConsentPoint1: translate('inviteFormConsentGroupModal', 'adultConsentPoint1'),

@@ -27,7 +27,7 @@ const EmailVerifiedNotification = ({
 	currentLang: ValidLanguage;
 	dismissClick: () => void;
 }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	return (
 		<Notification
 			dismissClick={dismissClick}
