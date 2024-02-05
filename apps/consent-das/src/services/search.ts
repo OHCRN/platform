@@ -1,5 +1,5 @@
 import { ParticipantResponsesRequest } from 'types/consentDas';
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, failure, success, SystemError } from 'types/httpResponses';
 
 import prisma, {
 	Participant,
@@ -13,8 +13,6 @@ import { PrismaClientKnownRequestError } from '../generated/client/runtime/libra
 import serviceLogger from '../logger.js';
 
 const logger = serviceLogger.forModule('PrismaClient');
-
-type SystemError = 'SYSTEM_ERROR';
 
 type GetParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST';
 /**
