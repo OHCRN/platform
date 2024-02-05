@@ -23,7 +23,7 @@ import Image, { StaticImageData } from 'next/image';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
-import OhcrnImage from 'src/public/ohcrn_large.svg';
+import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';

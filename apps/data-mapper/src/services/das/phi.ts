@@ -16,3 +16,26 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import urlJoin from 'url-join';
+
+import { getAppConfig } from '../../config.js';
+import axiosClient from '../axiosClient.js';
+
+// TODO: add proper JSDoc comments
+export const saveParticipantOhipNumber = async ({
+	ohipPrivateKey,
+	ohipNumber,
+}: {
+	ohipPrivateKey: string;
+	ohipNumber: string;
+}): Promise<any> => {
+	// TODO: add Type instead of any
+	const { phiDasUrl } = getAppConfig();
+	// TODO: add error handling
+	const result = await axiosClient.post(urlJoin(phiDasUrl, 'ohip'), {
+		ohipPrivateKey,
+		ohipNumber,
+	});
+	return result.data.ohipData.ohipNumber;
+};

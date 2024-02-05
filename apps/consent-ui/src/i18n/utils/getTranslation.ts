@@ -44,7 +44,7 @@ import en from 'src/i18n/locales/en/index';
  * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
  * // returns 'Translated this string on a Thursday in October.'
  */
-const replaceParams = (
+export const replaceParams = (
 	original: string,
 	replacements?: Record<string, string | number>,
 ): string => {

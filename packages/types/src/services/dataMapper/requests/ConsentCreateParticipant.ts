@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,32 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
 
-import { FieldValues, useFormContext } from 'react-hook-form';
-import clsx from 'clsx';
+import { ConsentParticipantBase, NanoId } from '../../../entities/index.js';
 
-import { FormInputProps } from 'src/components/common/Form/types';
-
-type RadioInputProps<T extends FieldValues, V extends string> = FormInputProps<T> & {
-	value: V;
-};
-
-const RadioInput = <T extends FieldValues, V extends string>({
-	className,
-	name,
-	value,
-}: RadioInputProps<T, V>) => {
-	const { register } = useFormContext();
-	return (
-		<input
-			{...register(name)}
-			className={clsx('radio-input', className)}
-			id={`${name}-${value}`}
-			type="radio"
-			value={value}
-		/>
-	);
-};
-
-export default RadioInput;
+export const ConsentCreateParticipantRequest = ConsentParticipantBase.merge(
+	z.object({ id: NanoId }),
+);
+export type ConsentCreateParticipantRequest = z.infer<typeof ConsentCreateParticipantRequest>;
+export const ConsentCreateParticipantRequestSchema = generateSchema(
+	ConsentCreateParticipantRequest,
+);

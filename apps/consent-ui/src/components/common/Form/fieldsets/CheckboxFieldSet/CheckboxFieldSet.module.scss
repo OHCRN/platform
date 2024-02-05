@@ -27,7 +27,7 @@
 		background: theme('colors.grayscale.100');
 		&:checked {
 			border: 0 none;
-			background-image: url('../../../../../public/checkbox-selected.svg');
+			background-image: url('../../../../../../public/assets/images/checkbox-selected.svg');
 			& + .label {
 				background: theme('colors.primary.100');
 				border-color: theme('colors.primary.600');

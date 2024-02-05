@@ -30,10 +30,10 @@ const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) 
 	const { showNotification } = useNotification();
 
 	// STUB - get consent progress from API
-	const consentInProgress = false;
+	const consentInProgress = true;
 
 	// STUB - get email verified URL param from keycloak redirect URL
-	const emailVerifiedParam = true;
+	const emailVerifiedParam = false;
 
 	useEffect(() => {
 		// STUB - determine which notification to show

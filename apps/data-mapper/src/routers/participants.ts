@@ -18,6 +18,9 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { CreateParticipantRequest } from 'types/dataMapper';
+import { ConflictErrorResponse, ServerErrorResponse } from 'types/httpResponses';
 
 import logger from '../logger.js';
 import { getParticipant } from '../services/search.js';
@@ -46,19 +49,59 @@ router.get('/:participantId', async (req, res) => {
 	}
 });
 
-// TODO: add proper JSDoc comments
-// create participant
-router.post('/', async (req, res) => {
-	logger.info('POST /participant');
-	const { name, email, ohipNumber, emailVerified } = req.body;
-	// TODO: add validation
-	try {
-		const participant = await createParticipant({ name, email, ohipNumber, emailVerified });
-		res.status(201).send({ participant });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error creating Participant' });
-	}
-});
+/**
+ * @openapi
+ * /participants:
+ *   post:
+ *     tags:
+ *       - Participants
+ *     name: Create Participant
+ *     description: Submit relevant Participant data to PI DAS and Consent DAS
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateParticipantRequest'
+ *     responses:
+ *       201:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CreateParticipantResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.post(
+	'/',
+	withRequestValidation(CreateParticipantRequest, async (req, res) => {
+		try {
+			const participant = await createParticipant(req.body);
+			switch (participant.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(participant.data);
+				}
+				case 'PARTICIPANT_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(participant.message));
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ServerErrorResponse(participant.message));
+				}
+			}
+		} catch (error) {
+			logger.error(
+				'POST /participants',
+				`Unexpected error handling create participant request.`,
+				error,
+			);
+			return res.status(500).json(ServerErrorResponse());
+		}
+	}),
+);
 
 export default router;
