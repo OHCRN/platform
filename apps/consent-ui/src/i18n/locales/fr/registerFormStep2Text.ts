@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,16 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	back: 'Back',
-	goToStep: 'Go to step',
-	indicatesRequiredField: 'indicates required field',
-	next: 'Next',
-	selectPlaceholder: 'Select an option...',
-	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
-	submit: 'Submit',
-} satisfies Record<string, string>;
+import { RegisterFormStep2TextDictionary } from '../en/registerFormStep2Text';
 
-export type FormTextDictionary = Record<keyof typeof dictionary, string>;
+import formText from './formText';
+
+const { back, goToStep, indicatesRequiredField, stepCurrentOfTotal } = formText;
+
+const dictionary = {
+	afterRegistering:
+		"Après votre inscription, nous devrons collecter certains consentements et données importants. Vous aurez accès à la mise à jour de vos dossiers de participants, mais si vous avez besoin d'aide, nous pouvons vous contacter.",
+	back,
+	consentContactDescription:
+		"J'accepte qu'un membre de l'équipe d'étude de l'OHCRN puisse me contacter pour plus d'informations et obtenir des consentements.",
+	createAccount: 'Créer un compte',
+	goToStep,
+	indicatesRequiredField,
+	stepCurrentOfTotal,
+} satisfies RegisterFormStep2TextDictionary;
 
 export default dictionary;

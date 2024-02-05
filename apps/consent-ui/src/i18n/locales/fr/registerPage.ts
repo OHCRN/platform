@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,16 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	back: 'Back',
-	goToStep: 'Go to step',
-	indicatesRequiredField: 'indicates required field',
-	next: 'Next',
-	selectPlaceholder: 'Select an option...',
-	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
-	submit: 'Submit',
-} satisfies Record<string, string>;
+import { RegisterPageDictionary } from 'src/i18n/locales/en/registerPage';
 
-export type FormTextDictionary = Record<keyof typeof dictionary, string>;
+const dictionary = {
+	alreadyRegistered: 'Déjà enregistré?',
+	enrollInOhcrn:
+		"Inscrivez-vous au registre de l'OHCRN et contribuez à faire progresser la recherche sur le syndrome du cancer héréditaire. Seules les personnes ayant subi des tests génétiques pour un syndrome de cancer héréditaire peuvent participer.",
+	ifClinician: 'Si vous êtes clinicien :',
+	login: 'Se connecter',
+	participantRegistration: 'Inscription des participants',
+	registerPatients: 'Enregistrez vos patients ici',
+	registerYourself: 'Inscrivez-vous en tant que participant',
+} satisfies RegisterPageDictionary;
 
 export default dictionary;

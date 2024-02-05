@@ -1,0 +1,46 @@
+.hidden {
+	display: none;
+}
+
+.visible {
+	display: block;
+}
+
+.stepTitle {
+	margin-top: 1.5rem;
+	font-size: theme('fontSize.base');
+}
+
+.instructions {
+	margin-bottom: 0.75rem;
+}
+
+.questionsLink {
+	display: block;
+	margin-top: 1.75rem;
+	text-decoration: underline;
+	color: theme('colors.secondary.500');
+	&:hover {
+		color: theme('colors.secondary.400');
+	}
+	&:active {
+		color: theme('colors.secondary.200');
+	}
+}
+
+.buttonWrapper {
+	display: flex;
+	gap: 0.7rem;
+	margin: 1.75rem 0 1.25rem;
+	@media (min-width: theme('screens.md')) {
+		margin-bottom: 2.75rem;
+	}
+}
+
+.consentCheckbox {
+	margin-top: 3px;
+}
+
+.afterRegistering {
+	line-height: 1.625;
+}
