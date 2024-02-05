@@ -20,7 +20,6 @@
 export type AppConfig = {
 	CONSENT_API_URL: string;
 	CONSENT_UI_URL: string;
-	FEATURE_FLAG: boolean;
 	OHCRN_EMAIL?: string;
 	OHCRN_HOME_LINK?: string;
 	RECAPTCHA_SITE_KEY?: string;
@@ -29,7 +28,6 @@ export type AppConfig = {
 export const defaultAppConfig: AppConfig = {
 	CONSENT_API_URL: 'http://localhost:8080',
 	CONSENT_UI_URL: 'http://localhost:3000',
-	FEATURE_FLAG: false,
 	OHCRN_EMAIL: '',
 	OHCRN_HOME_LINK: '',
 	RECAPTCHA_SITE_KEY: undefined,
@@ -48,12 +46,6 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
 	CONSENT_UI_URL:
 		serverEnv.CONSENT_UI_URL || process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
-	FEATURE_FLAG:
-		serverEnv.FEATURE_FLAG === 'false'
-			? false
-			: serverEnv.FEATURE_FLAG === 'true' ||
-			  process.env.FEATURE_FLAG === 'true' ||
-			  defaultAppConfig.FEATURE_FLAG,
 	OHCRN_EMAIL: serverEnv.OHCRN_EMAIL || process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
 	OHCRN_HOME_LINK:
 		serverEnv.OHCRN_HOME_LINK || process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,
