@@ -23,13 +23,16 @@ import { FieldValues } from 'react-hook-form';
 import { useId } from 'react';
 import clsx from 'clsx';
 
-import { FormFieldSetWithTooltipProps, FormTextInputType } from 'src/components/common/Form/types';
+import {
+	FormFieldSetWithDescriptionProps,
+	FormTextInputType,
+} from 'src/components/common/Form/types';
 import TextInput from 'src/components/common/Form/fieldsets/inputs/TextInput';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 
 import styles from './TextFieldSet.module.scss';
 
-type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithTooltipProps<T> & {
+type TextFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
 	type?: FormTextInputType;
 };
 
@@ -41,13 +44,12 @@ const TextFieldSet = <T extends FieldValues>({
 	label = '',
 	name,
 	required,
-	tooltipContent,
+	description,
 	type = 'text',
-	withNarrowDesktopLayout,
 }: TextFieldSetProps<T>) => {
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
-	const tooltipId = `${idPrefix}-tooltip`;
+	const descriptionId = `${idPrefix}-description`;
 
 	return (
 		<FieldSet
@@ -57,12 +59,11 @@ const TextFieldSet = <T extends FieldValues>({
 			infoButtonProps={infoButtonProps}
 			label={label}
 			required={required}
-			tooltipContent={tooltipContent}
-			tooltipId={tooltipId}
-			withNarrowDesktopLayout={withNarrowDesktopLayout}
+			description={description}
+			descriptionId={descriptionId}
 		>
 			<TextInput
-				ariaProps={tooltipContent ? { 'aria-describedby': tooltipId } : {}}
+				ariaProps={description ? { 'aria-describedby': descriptionId } : {}}
 				className={clsx(styles.textInput, error && styles.error)}
 				disabled={disabled}
 				id={fieldId}

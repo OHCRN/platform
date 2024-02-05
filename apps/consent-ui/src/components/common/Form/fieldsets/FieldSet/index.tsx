@@ -34,9 +34,8 @@ interface FieldSetProps {
 	infoButtonProps?: InfoButtonProps;
 	label: string;
 	required?: boolean;
-	tooltipContent?: ReactNode;
-	tooltipId?: string;
-	withNarrowDesktopLayout?: boolean;
+	description?: ReactNode;
+	descriptionId?: string;
 }
 
 const FieldSet = ({
@@ -47,14 +46,11 @@ const FieldSet = ({
 	infoButtonProps,
 	label,
 	required,
-	tooltipContent,
-	tooltipId,
-	withNarrowDesktopLayout,
+	description,
+	descriptionId,
 }: FieldSetProps) => {
 	return (
-		<fieldset
-			className={clsx(styles.fieldSet, !withNarrowDesktopLayout && styles.wideDesktop, className)}
-		>
+		<fieldset className={clsx(styles.fieldSet, className)}>
 			<FieldLabel
 				className={styles.labelGridArea}
 				fieldId={fieldId}
@@ -64,9 +60,9 @@ const FieldSet = ({
 				{label}
 			</FieldLabel>
 
-			{tooltipContent && (
-				<div className={styles.tooltip} id={tooltipId}>
-					{tooltipContent}
+			{description && (
+				<div className={styles.description} id={descriptionId}>
+					{description}
 				</div>
 			)}
 

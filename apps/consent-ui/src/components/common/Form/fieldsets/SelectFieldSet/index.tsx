@@ -25,14 +25,17 @@ import clsx from 'clsx';
 
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import SelectInput from 'src/components/common/Form/fieldsets/inputs/SelectInput';
-import { FormFieldSetWithTooltipProps, FormSelectOption } from 'src/components/common/Form/types';
+import {
+	FormFieldSetWithDescriptionProps,
+	FormSelectOption,
+} from 'src/components/common/Form/types';
 
 import styles from './SelectFieldSet.module.scss';
 
 type SelectFieldSetProps<
 	T extends FieldValues,
 	V extends string,
-> = FormFieldSetWithTooltipProps<T> & {
+> = FormFieldSetWithDescriptionProps<T> & {
 	options: FormSelectOption<V>[];
 	placeholder: string;
 };
@@ -47,12 +50,11 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 	options,
 	placeholder,
 	required,
-	tooltipContent,
-	withNarrowDesktopLayout,
+	description,
 }: SelectFieldSetProps<T, V>) => {
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
-	const tooltipId = `${idPrefix}-tooltip`;
+	const descriptionId = `${idPrefix}-description`;
 
 	return (
 		<FieldSet
@@ -62,12 +64,11 @@ const SelectFieldSet = <T extends FieldValues, V extends string>({
 			infoButtonProps={infoButtonProps}
 			label={label}
 			required={required}
-			tooltipContent={tooltipContent}
-			tooltipId={tooltipId}
-			withNarrowDesktopLayout={withNarrowDesktopLayout}
+			description={description}
+			descriptionId={descriptionId}
 		>
 			<SelectInput
-				ariaProps={tooltipContent ? { 'aria-describedby': tooltipId } : {}}
+				ariaProps={description ? { 'aria-describedby': descriptionId } : {}}
 				disabled={disabled}
 				hasError={!!error}
 				id={fieldId}
