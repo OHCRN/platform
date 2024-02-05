@@ -23,15 +23,14 @@ import { useId } from 'react';
 import { FieldValues } from 'react-hook-form';
 import clsx from 'clsx';
 
-import useTooltip from 'src/components/common/Form/fieldsets/Tooltip/useTooltip';
 import FieldSet from 'src/components/common/Form/fieldsets/FieldSet';
 import CalendarInput from 'src/components/common/Form/fieldsets/inputs/CalendarInput';
-import type { FormFieldSetWithTooltipProps } from 'src/components/common/Form/types';
+import type { FormFieldSetWithDescriptionProps } from 'src/components/common/Form/types';
 import type { ValidLanguage } from 'src/i18n';
 
 import styles from './CalendarFieldSet.module.scss';
 
-type CalendarFieldSetProps<T extends FieldValues> = FormFieldSetWithTooltipProps<T> & {
+type CalendarFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
 	placeholder?: string;
 	currentLang: ValidLanguage;
 };
@@ -44,15 +43,12 @@ const CalendarFieldSet = <T extends FieldValues>({
 	label,
 	name,
 	required,
-	tooltipContent,
-	withNarrowDesktopLayout,
+	description,
 	currentLang,
 }: CalendarFieldSetProps<T>) => {
-	const { tooltipVisible, hideTooltip, showTooltip } = useTooltip();
-
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
-	const tooltipId = `${idPrefix}-tooltip`;
+	const descriptionId = `${idPrefix}-description`;
 
 	return (
 		<FieldSet
@@ -62,20 +58,16 @@ const CalendarFieldSet = <T extends FieldValues>({
 			infoButtonProps={infoButtonProps}
 			label={label}
 			required={required}
-			tooltipContent={tooltipContent}
-			tooltipId={tooltipId}
-			tooltipVisible={tooltipVisible}
-			withNarrowDesktopLayout={withNarrowDesktopLayout}
+			description={description}
+			descriptionId={descriptionId}
 		>
 			<CalendarInput
-				ariaProps={tooltipContent ? { 'aria-describedby': tooltipId } : {}}
+				ariaProps={description ? { 'aria-describedby': descriptionId } : {}}
 				disabled={disabled}
 				className={clsx(styles.calendarInput, error && styles.hasError)}
 				popperClassName={clsx(styles.calendarPopper)}
 				id={fieldId}
 				name={name}
-				onBlur={hideTooltip}
-				onFocus={showTooltip}
 				required={required}
 				currentLang={currentLang}
 			/>
