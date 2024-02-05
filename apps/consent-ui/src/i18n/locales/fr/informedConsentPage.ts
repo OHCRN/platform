@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,18 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormTextDictionary } from '../en/formText';
+import { InformedConsentPageDictionary } from '../en/informedConsentPage';
+
+import assetUrls from './assetUrls';
+
+const { studyConsentPdf } = assetUrls;
 
 const dictionary = {
-	back: 'Retour',
-	complete: 'Complèter',
-	goToStep: "Passer à l'étape",
-	indicatesRequiredField: 'indique un champ obligatoire',
-	next: 'Suivant',
-	previous: 'Précédent',
-	selectPlaceholder: 'Choisissez-en un',
-	stepCurrentOfTotal: 'Étape {{ current }} sur {{ total }}',
-	submit: 'Soumettre',
-} satisfies FormTextDictionary;
+	description1:
+		"Veuillez lire attentivement les informations sur l'étude OHCRN et le consentement éclairé. Vous pouvez aussi ",
+	description2:
+		" pour évaluation. Si vous avez des questions ou des préoccupations, veuillez contacter l'équipe d'étude de l'OHCRN au ",
+	description3:
+		"Si vous remplissez ce formulaire au nom de quelqu'un d'autre, « vous » ou « moi » fait référence à votre enfant ou à la personne pour laquelle vous remplissez le formulaire au nom de quelqu'un d'autre ; « nous » désigne les médecins et autres membres du personnel de l'étude.",
+	downloadConsentPdf: 'Télécharger le consentement PDF',
+	linkText: "télécharger les informations sur l'étude et le consentement éclairé PDF",
+	studyConsentPdf,
+	title: "Informations sur l'étude OHCRN et consentement éclairé",
+} satisfies InformedConsentPageDictionary;
 
 export default dictionary;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,38 +17,48 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Image from 'next/image';
+import clsx from 'clsx';
 
-import BackgroundImage from 'src/../public/assets/images/landing-page.jpg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import { getAppConfig } from 'src/config/appConfig';
-import LinkButton from 'src/components/common/Button/LinkButton';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
-import LandingPageCard from './LandingPageCard';
-import styles from './Home.module.scss';
+import styles from './ConsentStepsNavigation.module.scss';
+import PreviousButton from './PreviousButton';
+import NextCompleteButton from './NextCompleteButton';
+import { getNextPrevConsentSteps } from './useGoToNextConsentStep';
 
-const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+/**
+ * Place this component inside a Form component with an onSubmit handler.
+ * The next/complete button triggers the submit event.
+ */
+
+const ConsentStepsNavigation = ({
+	currentLang,
+	currentStep,
+}: {
+	currentLang: ValidLanguage;
+	currentStep: ConsentStepRoute;
+}) => {
+	const { nextRoute, prevRoute } = getNextPrevConsentSteps(currentStep);
+
 	const translate = getTranslation(currentLang);
-	const { OHCRN_HOME_LINK } = getAppConfig(process.env);
+
 	return (
-		<div className={styles.heroContainer}>
-			<div className={styles.backgroundImg}>
-				<Image src={BackgroundImage} alt="" fill priority sizes="100vw" placeholder="blur" />
+		<div className={styles.navWrapper}>
+			<div className={styles.buttonWrapper}>
+				{prevRoute && (
+					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
+						{translate('formText', 'previous')}
+					</PreviousButton>
+				)}
 			</div>
-			<div className={styles.hero}>
-				<div className={styles.heroText}>
-					<h1>{translate('landingPage', 'title')}</h1>
-					<p>
-						<b>{translate('landingPage', 'ohcrnDescription')}</b>
-					</p>
-					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
-						<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
-					</LinkButton>
-				</div>
-				<LandingPageCard currentLang={currentLang} />
+			<div className={clsx(styles.buttonWrapper, styles.next)}>
+				<NextCompleteButton>
+					{translate('formText', nextRoute ? 'next' : 'complete')}
+				</NextCompleteButton>
 			</div>
 		</div>
 	);
 };
 
-export default HomeComponent;
+export default ConsentStepsNavigation;
