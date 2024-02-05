@@ -39,7 +39,7 @@ const TextFieldSet = <T extends FieldValues>({
 	disabled,
 	error,
 	infoButtonProps,
-	label,
+	label = '',
 	name,
 	required,
 	tooltipContent,

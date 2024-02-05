@@ -17,26 +17,34 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { FormTooltipsDictionary } from '../en/formTooltips';
+import { RegisterFormStep1TextDictionary } from '../en/registerFormStep1Text';
+
+import formTooltips from './formTooltips';
+import formText from './formText';
+
+const { goToStep, next } = formText;
+const {
+	dateOfBirthTooltip,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+} = formTooltips;
 
 const dictionary = {
-	clinicianInstitutionalEmailAddressTooltip:
-		'Nous en avons besoin pour confirmer votre autorité à enregistrer des patients.',
-	consentGroupTooltip: 'Cela déterminera si un tuteur doit être impliqué dans les consentements.',
-	dateOfBirthTooltip:
-		'Nous en avons besoin pour demander les informations cliniques du participant.',
-	guardianEmailAddressTooltip: 'Le tuteur recevra une invitation à ce compte.',
-	guardianPhoneNumberTooltip:
-		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
-	participantEmailAddressTooltip: 'Le patient recevra une invitation sur ce compte.',
-	participantFirstNameTooltip:
-		"Inscrivez le prénom du participant tel qu'il apparaît sur sa carte Santé.",
-	participantLastNameTooltip:
-		"Entrez le nom de famille du participant tel qu'il apparaît sur sa carte Santé.",
-	participantPhoneNumberTooltip:
-		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
-	participantPreferredNameTooltip:
-		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
-} satisfies FormTooltipsDictionary;
+	afterRegistering:
+		"Après votre inscription, nous devrons collecter certains consentements et données importants. Vous aurez accès à la mise à jour de vos dossiers de participants, mais si vous avez besoin d'aide, nous pouvons vous contacter.",
+	dateOfBirthTooltip,
+	enterInfo: "S'il vous plaît entrer vos informations ci-dessous:",
+	enterParticipantInfo: 'Veuillez saisir les informations du participant ci-dessous :',
+	goToStep,
+	next,
+	participantFirstNameTooltip,
+	participantLastNameTooltip,
+	participantPhoneNumberTooltip,
+	participantPreferredNameTooltip,
+	questions: "Des questions? Consultez le centre d'aide pour plus d'informations sur l'OHCRN.",
+	registeringForSomeoneElse: "Vous vous inscrivez au nom de quelqu'un d'autre ?",
+} satisfies RegisterFormStep1TextDictionary;
 
 export default dictionary;

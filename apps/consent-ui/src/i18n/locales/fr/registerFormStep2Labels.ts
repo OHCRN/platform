@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,16 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	back: 'Back',
-	goToStep: 'Go to step',
-	indicatesRequiredField: 'indicates required field',
-	next: 'Next',
-	selectPlaceholder: 'Select an option...',
-	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
-	submit: 'Submit',
-} satisfies Record<string, string>;
+import { RegisterFormStep2LabelsDictionary } from '../en/registerFormStep2Labels';
 
-export type FormTextDictionary = Record<keyof typeof dictionary, string>;
+import formLabelsDictionary from './formLabels';
+
+const { confirmPassword, consentContact, email, password } = formLabelsDictionary;
+
+const dictionary = {
+	confirmPassword,
+	consentContact,
+	email,
+	password,
+} satisfies RegisterFormStep2LabelsDictionary;
 
 export default dictionary;

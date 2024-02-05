@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,15 +18,16 @@
  */
 
 const dictionary = {
-	back: 'Back',
-	goToStep: 'Go to step',
-	indicatesRequiredField: 'indicates required field',
-	next: 'Next',
-	selectPlaceholder: 'Select an option...',
-	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
-	submit: 'Submit',
+	alreadyRegistered: 'Already registered?',
+	enrollInOhcrn:
+		'Enroll in the OHCRN registry and help advance hereditary cancer syndrome research. Only individuals who have had genetic testing for a hereditary cancer syndrome can participate.',
+	ifClinician: "If you're a Clinician:",
+	login: 'Login',
+	participantRegistration: 'Participant Registration',
+	registerPatients: 'Register your patients here',
+	registerYourself: 'Register Yourself as a Participant',
 } satisfies Record<string, string>;
 
-export type FormTextDictionary = Record<keyof typeof dictionary, string>;
+export type RegisterPageDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;
