@@ -25,6 +25,7 @@ import { ButtonProps as BaseProps } from './types';
 import styles from './Button.module.scss';
 
 interface ButtonProps extends BaseProps {
+	ariaProps?: Record<string, string>;
 	onClick?: (e: React.SyntheticEvent<HTMLElement>) => any;
 	onMouseDown?: (e: React.SyntheticEvent<HTMLElement>) => any;
 	disabled?: boolean;
@@ -32,6 +33,7 @@ interface ButtonProps extends BaseProps {
 }
 
 const Button = ({
+	ariaProps,
 	children,
 	onClick,
 	variant = 'primary',
@@ -47,6 +49,7 @@ const Button = ({
 }: ButtonProps) => {
 	return (
 		<button
+			{...ariaProps}
 			className={clsx(
 				styles.base,
 				styles[variant],
@@ -60,6 +63,7 @@ const Button = ({
 			onClick={onClick}
 			onMouseDown={onMouseDown}
 			type={type}
+			onMouseDown={onMouseDown}
 		>
 			{action === 'prev' ? (
 				<div>

@@ -19,4 +19,7 @@
 
 export * from './ClinicianInvite.js';
 export * from './ConsentClinicianInvite.js';
+export * from './ConsentCreateParticipant.js';
+export * from './CreateParticipant.js';
 export * from './PIClinicianInvite.js';
+export * from './PICreateParticipant.js';

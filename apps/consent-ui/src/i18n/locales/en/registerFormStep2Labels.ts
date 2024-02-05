@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,8 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterDictionary } from 'src/i18n/locales/en/register';
+import formLabels from '../en/formLabels';
 
-const dictionary = {} satisfies RegisterDictionary;
+const { confirmPassword, consentContact, email, password } = formLabels;
+
+const dictionary = {
+	confirmPassword,
+	consentContact,
+	email,
+	password,
+} satisfies Record<string, string>;
+
+export type RegisterFormStep2LabelsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

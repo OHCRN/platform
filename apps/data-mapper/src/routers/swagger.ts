@@ -23,6 +23,8 @@ import { serve, setup } from 'swagger-ui-express';
 import {
 	ClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ClinicianInviteResponseSchema as ClinicianInviteResponse,
+	CreateParticipantRequestSchema as CreateParticipantRequest,
+	CreateParticipantResponseSchema as CreateParticipantResponse,
 	InformedConsentResponseSchema as InformedConsentResponse,
 } from 'types/dataMapper';
 import { NanoIdSchema as NanoId } from 'types/entities';
@@ -71,6 +73,8 @@ const options = swaggerJsdoc({
 			schemas: {
 				ClinicianInviteResponse,
 				ClinicianInviteRequest,
+				CreateParticipantRequest,
+				CreateParticipantResponse,
 				InformedConsentResponse,
 				NanoId,
 			},

@@ -18,11 +18,14 @@
  */
 
 const dictionary = {
+  back: 'Back',
 	complete: 'Complete',
+  goToStep: 'Go to step',
 	indicatesRequiredField: 'indicates required field',
 	next: 'Next',
-	previous: 'Previous',
+  previous: 'Previous',
 	selectPlaceholder: 'Select an option...',
+	stepCurrentOfTotal: 'Step {{ current }} of {{ total }}',
 	submit: 'Submit',
 } satisfies Record<string, string>;
 
