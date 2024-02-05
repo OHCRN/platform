@@ -17,4 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { SyntheticEvent } from 'react';
+
 export const scrollToTop = () => window.scroll(0, 0);
+
+// prevent blur event being called after mousedown,
+// which will allow a click event on the target element,
+// which will be followed automatically by a blur event
+// (i.e. for validation)
+export const handleMouseDown = (e: SyntheticEvent) => {
+	e.preventDefault();
+};

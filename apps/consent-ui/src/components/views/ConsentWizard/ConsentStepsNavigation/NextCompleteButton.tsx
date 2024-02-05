@@ -23,6 +23,7 @@ import { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import Button from 'src/components/common/Button';
+import { handleMouseDown } from 'src/components/utils';
 
 import styles from './ConsentStepsNavigation.module.scss';
 
@@ -40,7 +41,7 @@ const NextCompleteButton = ({ children }: { children: ReactNode }) => {
 			action="next"
 			className={styles.button}
 			color={isValid ? 'green' : 'default'}
-			onMouseDown={(e) => e.preventDefault()}
+			onMouseDown={handleMouseDown}
 			type="submit"
 		>
 			{children}

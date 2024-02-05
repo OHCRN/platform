@@ -28,6 +28,7 @@ import { ValidLanguage } from 'src/i18n';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/common/Modal';
 import { ConsentStepRoute } from 'src/components/common/Link/types';
+import { handleMouseDown } from 'src/components/utils';
 
 import FormEditedModal from './FormEditedModal';
 import styles from './ConsentStepsNavigation.module.scss';
@@ -71,7 +72,7 @@ const PreviousButton = ({
 			action="prev"
 			className={styles.button}
 			onClick={handleClick}
-			onMouseDown={(e) => e.preventDefault()}
+			onMouseDown={handleMouseDown}
 			variant="secondary"
 		>
 			{children}
