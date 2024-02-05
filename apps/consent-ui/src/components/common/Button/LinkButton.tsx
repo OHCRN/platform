@@ -26,13 +26,13 @@ import { ButtonProps } from './types';
 import styles from './Button.module.scss';
 
 interface LinkButtonProps extends ButtonProps {
-	href: string;
+	href?: string;
 	prefetch?: boolean;
 	target?: string;
 }
 
 const LinkButton = ({
-	href,
+	href = '#',
 	variant = 'primary',
 	color = 'default',
 	size = 'base',
