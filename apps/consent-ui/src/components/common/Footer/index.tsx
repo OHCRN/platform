@@ -26,10 +26,10 @@ import Right from './Right';
 import Left from './Left';
 
 const Footer = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
+	const { translate, translateNamespace } = getTranslation(currentLang);
 	return (
 		<footer className={styles.footer}>
-			<Left translate={translate} />
+			<Left translateNamespace={translateNamespace} />
 			<Links translate={translate} />
 			<Right translate={translate} />
 			<Versions currentLang={currentLang} />
