@@ -26,15 +26,16 @@ import { ConsentGroupOption } from 'src/components/views/Invite/ClinicianInviteF
 import { getTranslation, ValidLanguage } from 'src/i18n';
 
 const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate, translateNamespace } = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
 
 	const pageDict = translateNamespace('inviteFormPage');
 	const errorsDict = translateNamespace('formErrors');
 	const labelsDict = translateNamespace('inviteFormLabels');
 	const textDict = translateNamespace('inviteFormText');
+	const consentDict = translateNamespace('consentGroup');
 
 	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
-		label: translate('consentGroup', group),
+		label: consentDict[group],
 		value: group,
 	}));
 
