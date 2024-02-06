@@ -64,10 +64,10 @@ const ClinicianInviteFormComponent = ({
 	textDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
-	currentLang: ValidLanguage;
 }) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);

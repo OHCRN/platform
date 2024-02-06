@@ -25,32 +25,31 @@ import { Suspense } from 'react';
 import packageJson from 'src/../package.json';
 import OvertureLogo from 'src/../public/assets/images/overture.svg';
 import GithubLogo from 'src/../public/assets/images/github.svg';
-import { ValidLanguage, getTranslation, replaceParams } from 'src/i18n';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translateNamespace } = getTranslation(currentLang);
-	const textDict = translateNamespace('footer');
+	const { translate } = getTranslation(currentLang);
 
 	return (
 		<div className={styles.versions}>
 			<div className={styles.credit}>
 				<span>
-					<b>{textDict.poweredBy}: </b>
+					<b>{translate('footer', 'poweredBy')}: </b>
 				</span>
 				<Link href="#" className={clsx(styles.icon, styles.overture)}>
-					<Image src={OvertureLogo} alt={textDict.overtureAlt} />
+					<Image src={OvertureLogo} alt={translate('footer', 'overtureAlt')} />
 				</Link>
 				<Link href="#" className={styles.icon}>
-					<Image src={GithubLogo} alt={textDict.githubAlt} />
+					<Image src={GithubLogo} alt={translate('footer', 'githubAlt')} />
 				</Link>
 			</div>
 			<div className={styles.copyright}>
-				<span>{replaceParams(textDict.copyright, { year: new Date().getFullYear() })} </span>
+				<span>{translate('footer', 'copyright', { year: new Date().getFullYear() })} </span>
 				<span>
-					{replaceParams(textDict.copyright, { registryVersion: packageJson.version })} -{' '}
+					{translate('footer', 'ohcrnRegistry', { registryVersion: packageJson.version })} -{' '}
 				</span>
 				<Suspense fallback={<span />}>
 					<APIVersion currentLang={currentLang} />

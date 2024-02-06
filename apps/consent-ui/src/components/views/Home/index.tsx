@@ -28,8 +28,7 @@ import LandingPageCard from './LandingPageCard';
 import styles from './Home.module.scss';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translateNamespace } = getTranslation(currentLang);
-	const textDict = translateNamespace('landingPage');
+	const { translate } = getTranslation(currentLang);
 
 	const { OHCRN_HOME_LINK } = getAppConfig(process.env);
 
@@ -40,12 +39,12 @@ const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) =>
 			</div>
 			<div className={styles.hero}>
 				<div className={styles.heroText}>
-					<h1>{textDict.title}</h1>
+					<h1>{translate('landingPage', 'title')}</h1>
 					<p>
-						<b>{textDict.ohcrnDescription}</b>
+						<b>{translate('landingPage', 'ohcrnDescription')}</b>
 					</p>
 					<LinkButton href={OHCRN_HOME_LINK} variant="primary" size="large" action="next">
-						<b>{textDict.moreAboutOhcrn}</b>
+						<b>{translate('landingPage', 'moreAboutOhcrn')}</b>
 					</LinkButton>
 				</div>
 				<LandingPageCard currentLang={currentLang} />

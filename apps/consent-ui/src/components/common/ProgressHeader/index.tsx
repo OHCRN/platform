@@ -20,7 +20,7 @@
 import clsx from 'clsx';
 import { Fragment } from 'react';
 
-import { ValidLanguage, getTranslation, replaceParams } from 'src/i18n';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 import Success from 'src/components/common/Icons/Success';
 import InProgress from 'src/components/common/Icons/InProgress';
 import Incomplete from 'src/components/common/Icons/Incomplete';
@@ -42,8 +42,7 @@ const ProgressHeader = async ({
 }) => {
 	const currentStep = steps.findIndex((step) => step.inProgress) + 1;
 
-	const { translateNamespace } = getTranslation(currentLang);
-	const textDict = translateNamespace('consentWizard');
+	const { translate } = getTranslation(currentLang);
 
 	return (
 		<>
@@ -61,7 +60,7 @@ const ProgressHeader = async ({
 							)}
 							<span className={styles['desktop-step-name']}>{step.name}</span>
 							<span className={styles['tablet-step-name']}>
-								{replaceParams(textDict.tabletProgressHeader, { step: index + 1 })}
+								{translate('consentWizard', 'tabletProgressHeader', { step: index + 1 })}
 							</span>
 						</div>
 						{index != steps.length - 1 && (
@@ -74,7 +73,7 @@ const ProgressHeader = async ({
 			<div className={styles['mobile-header']}>
 				<InProgress className={styles['in-progress']} />
 				<span className={styles['mobile-step-name']}>
-					{replaceParams(textDict.mobileProgressHeader, {
+					{translate('consentWizard', 'mobileProgressHeader', {
 						currentStep,
 						stepCount: steps.length,
 					})}
