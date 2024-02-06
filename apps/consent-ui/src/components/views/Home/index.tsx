@@ -29,7 +29,6 @@ import styles from './Home.module.scss';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
-
 	const { OHCRN_HOME_LINK } = getAppConfig(process.env);
 
 	return (

@@ -28,6 +28,7 @@ const ConsentCompletionNotification = ({
 	dismissClick: () => void;
 }) => {
 	const { translate } = getTranslation(currentLang);
+
 	return (
 		<Notification
 			dismissClick={dismissClick}
