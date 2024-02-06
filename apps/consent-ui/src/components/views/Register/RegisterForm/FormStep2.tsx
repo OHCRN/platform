@@ -70,12 +70,12 @@ const FormStep2 = ({
 	});
 
 	const {
+		clearErrors,
 		formState: { errors, isValid, touchedFields },
 		handleSubmit,
-		setFocus,
 		setError,
+		setFocus,
 		watch,
-		clearErrors,
 	} = methods;
 
 	// setup recaptcha
@@ -146,8 +146,6 @@ const FormStep2 = ({
 			}
 		}
 	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
-
-	console.log(touchedFields);
 
 	return (
 		<FormProvider {...methods}>
