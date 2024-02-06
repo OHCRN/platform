@@ -30,14 +30,14 @@ import { ConsentRecontactFormDictionary } from 'src/i18n/locales/en/consentRecon
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
-import { ConsentStepRoute } from '../ConsentStepsNavigation/types';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
 import styles from './ConsentRecontactForm.module.scss';
 
-const currentConsentStep: ConsentStepRoute = 'consent-4';
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-4'];
 
 const ConsentRecontactForm = ({
 	currentLang,
@@ -106,7 +106,6 @@ const ConsentRecontactForm = ({
 							label={formDict.firstName}
 							name="secondaryContactFirstName"
 							required
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							className={styles.textInput}
@@ -114,7 +113,6 @@ const ConsentRecontactForm = ({
 							label={formDict.lastName}
 							name="secondaryContactLastName"
 							required
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							className={styles.textInput}
@@ -123,7 +121,6 @@ const ConsentRecontactForm = ({
 							description={formDict.phoneDescription}
 							name="secondaryContactPhoneNumber"
 							required
-							withNarrowDesktopLayout
 						/>
 					</FormSection>
 				)}
