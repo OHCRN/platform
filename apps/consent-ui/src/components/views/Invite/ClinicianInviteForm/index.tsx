@@ -174,23 +174,20 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
-						tooltipContent={textDict.participantFirstNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantFirstNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
-						tooltipContent={textDict.participantLastNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantLastNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
-						tooltipContent={textDict.participantPreferredNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPreferredNameTooltip}
 					/>
 
 					<SelectFieldSet
@@ -204,25 +201,22 @@ const ClinicianInviteFormComponent = ({
 						options={consentGroupOptions}
 						placeholder={textDict.selectPlaceholder || ''}
 						required
-						tooltipContent={textDict.consentGroupTooltip}
-						withNarrowDesktopLayout
+						description={textDict.consentGroupTooltip}
 					/>
 
 					<TextFieldSet
-						tooltipContent={textDict.participantPhoneNumberTooltip}
+						description={textDict.participantPhoneNumberTooltip}
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
 						required
-						tooltipContent={textDict.participantEmailAddressTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantEmailAddressTooltip}
 					/>
 				</FormSection>
 
@@ -242,32 +236,28 @@ const ClinicianInviteFormComponent = ({
 							label={labelsDict.guardianName || ''}
 							name="guardianName"
 							required
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianPhoneNumber?.type && errorsDict.required}
 							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
 							required
-							tooltipContent={textDict.guardianPhoneNumberTooltip}
+							description={textDict.guardianPhoneNumberTooltip}
 							type="tel"
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email || ''}
 							name="guardianEmailAddress"
 							required
-							tooltipContent={textDict.guardianEmailAddressTooltip}
+							description={textDict.guardianEmailAddressTooltip}
 							type="email"
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianRelationship?.type && errorsDict.required}
 							label={labelsDict.guardianRelationship || ''}
 							name="guardianRelationship"
 							required
-							withNarrowDesktopLayout
 						/>
 						<p>
 							{textDict.uploadFileDescription1}
@@ -300,21 +290,18 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.clinicianTitleOrRole || ''}
 						name="clinicianTitleOrRole"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianFirstName?.type && errorsDict.required}
 						label={labelsDict.clinicianFirstName || ''}
 						name="clinicianFirstName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianLastName?.type && errorsDict.required}
 						label={labelsDict.clinicianLastName || ''}
 						name="clinicianLastName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<OhipFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
@@ -333,7 +320,7 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
-						tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
+						description={textDict.clinicianInstitutionalEmailAddressTooltip}
 						type="email"
 						withNarrowDesktopLayout
 					/> */}

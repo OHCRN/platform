@@ -21,14 +21,15 @@ const dictionary = {
 	clinicianInstitutionalEmailAddressTooltip:
 		'We require this to confirm your authority to register patients.',
 	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
+	dateOfBirthTooltip: "We require this to request participant's clinical information.",
 	guardianEmailAddressTooltip: 'The guardian will receive an invitation to this account.',
 	guardianPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
 	participantEmailAddressTooltip: 'The patient will receive an invitation to this account.',
-	participantFirstNameTooltip: "Enter participant's first name as it appears on their health card.",
-	participantLastNameTooltip: "Enter participant's last name as it appears on their health card.",
-	participantPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
-	participantPreferredNameTooltip:
-		'What would the participant like to be called when they are contacted?',
+	participantFirstNameTooltip: 'As it appears on their health card.',
+	participantLastNameTooltip: 'As it appears on their health card.',
+	participantPhoneNumberTooltip:
+		'If we contact the participant, it will be for health updates and consent.',
+	participantPreferredNameTooltip: 'What would the participant like to be called when contacted.',
 } satisfies Record<string, string>;
 
 export type FormTooltipsDictionary = Record<keyof typeof dictionary, string>;

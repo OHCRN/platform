@@ -43,7 +43,7 @@ import { GetTranslation } from 'src/i18n/types';
  * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
  * // returns 'Translated this string on a Thursday in October.'
  */
-const replaceParams = (
+export const replaceParams = (
 	original: string,
 	replacements?: Record<string, string | number>,
 ): string => {
