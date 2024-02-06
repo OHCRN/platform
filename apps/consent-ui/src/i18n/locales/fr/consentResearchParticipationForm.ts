@@ -25,7 +25,7 @@ const dictionary = {
 	researchParticipationFutureResearchTitleDesc:
 		"J'accepte que mes échantillons précédemment collectés puissent être inclus dans la biobanque décentralisée et utilisés pour des études de recherche futures inconnues.",
 	researchParticipationContactInformationTitle:
-		'Publication facultative des coordonnées des registres du cancer approuvés existants.',
+		'Publication facultative des coordonnées des registres du cancer approuvés existants',
 	researchParticipationContactInformationDesc:
 		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse fournir mes coordonnées et les résultats de mes tests génétiques à un registre du cancer existant, le cas échéant. ",
 	researchParticipationContactInformationDescLink:

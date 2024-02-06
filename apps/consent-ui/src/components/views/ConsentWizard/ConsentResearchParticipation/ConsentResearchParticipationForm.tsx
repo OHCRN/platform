@@ -62,8 +62,6 @@ const ConsentResearchParticipationForm = ({
 	const onSubmit: SubmitHandler<ConsentResearchParticipationRequest> = (data, event) => {
 		event?.preventDefault();
 
-		console.log('formData', data);
-
 		// go to next page after successful API request
 		goToNextConsentStep();
 	};
@@ -80,7 +78,6 @@ const ConsentResearchParticipationForm = ({
 						noText={formDict.noText}
 						name={'RESEARCH_PARTICIPATION__FUTURE_RESEARCH'}
 						required
-						withNarrowDesktopLayout
 					/>
 					<RadioFieldSet
 						error={errors.RESEARCH_PARTICIPATION__CONTACT_INFORMATION?.type && errorsDict.required}
@@ -95,7 +92,6 @@ const ConsentResearchParticipationForm = ({
 						noText={formDict.noText}
 						name={'RESEARCH_PARTICIPATION__CONTACT_INFORMATION'}
 						required
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 

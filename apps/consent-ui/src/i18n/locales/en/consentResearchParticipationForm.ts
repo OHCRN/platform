@@ -23,7 +23,7 @@ const dictionary = {
 	researchParticipationFutureResearchTitleDesc:
 		'I agree that my previously collected samples may be included in the decentralized biobank and used for unknown future research studies.',
 	researchParticipationContactInformationTitle:
-		'Optional release of contact information to existing approved cancer registries.',
+		'Optional release of contact information to existing approved cancer registries',
 	researchParticipationContactInformationDesc:
 		'I agree that my study doctor, or someone on the study team, may provide my contact information and genetic test results to an existing cancer registry, if applicable. ',
 	researchParticipationContactInformationDescLink:
