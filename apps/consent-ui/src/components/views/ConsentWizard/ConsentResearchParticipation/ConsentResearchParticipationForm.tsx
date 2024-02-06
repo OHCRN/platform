@@ -30,14 +30,14 @@ import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
-import { ConsentStepRoute } from '../ConsentStepsNavigation/types';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
 import styles from './ConsentResearchParticipationForm.module.scss';
 
-const currentConsentStep: ConsentStepRoute = 'consent-3';
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-3'];
 
 const ConsentResearchParticipationForm = ({
 	currentLang,
