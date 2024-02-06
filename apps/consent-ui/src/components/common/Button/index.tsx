@@ -63,7 +63,6 @@ const Button = ({
 			onClick={onClick}
 			onMouseDown={onMouseDown}
 			type={type}
-			onMouseDown={onMouseDown}
 		>
 			{action === 'prev' ? (
 				<div>

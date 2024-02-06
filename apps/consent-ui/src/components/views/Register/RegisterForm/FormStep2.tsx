@@ -97,7 +97,6 @@ const FormStep2 = ({
 
 	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
-		// TODO #366 don't submit form if participant is a minor
 
 		const recaptchaToken = getRecaptchaToken();
 
@@ -118,14 +117,14 @@ const FormStep2 = ({
 		}
 	};
 
-	// toggle submit button's enabled status when isValid changes
 	useEffect(() => {
+		// toggle submit button's enabled status when isValid changes
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
 	}, [getRecaptchaToken, isValid]);
 
-	// set focus to first field on load
 	useEffect(() => {
+		// set focus to first field on mount
 		setFocus('participantEmailAddress');
 	}, [setFocus]);
 
