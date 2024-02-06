@@ -20,11 +20,11 @@
 'use client';
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-// import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { ValidLanguage } from 'src/i18n';
-// import { axiosClient } from 'src/services/api/axiosClient';
+import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
@@ -32,34 +32,36 @@ import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
-// import { API } from 'src/constants/externalPaths';
-// import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
-// import useRecaptcha from 'src/hooks/useRecaptcha';
-// import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
-// import Notification from 'src/components/common/Notification';
-
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
+import { API } from 'src/constants/externalPaths';
+import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
+import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
+import Notification from 'src/components/common/Notification';
 
 import styles from './RegisterForm.module.scss';
-import {
-	// RegisterFormStep1,
-	RegisterFormStep2,
-} from './types';
+import { RegisterFormStep1, RegisterFormStep2 } from './types';
 
 const FormStep2 = ({
 	errorsDict,
 	handleBackClick,
 	labelsDict,
-	// step1Data,
+	step1Data,
 	textDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
 	labelsDict: RegisterFormLabelsDictionary;
-	// step1Data?: RegisterFormStep1;
+	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormTextDictionary;
 }) => {
+	// setup submit button enabled status
+	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
+	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
+		// enable submit button if the form & recaptcha are both valid
+		setEnableSubmit(isValid && !!recaptchaToken);
+	};
+
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
 		mode: 'onBlur',
@@ -68,58 +70,83 @@ const FormStep2 = ({
 	});
 
 	const {
-		formState: { errors, isValid },
+		formState: { errors, isValid, touchedFields },
 		handleSubmit,
-		// setFocus,
+		setFocus,
+		setError,
+		watch,
+		clearErrors,
 	} = methods;
 
-	console.log('isValid', isValid);
-
 	// setup recaptcha
-	// const {
-	// 	getRecaptchaToken,
-	// 	onRecaptchaChange,
-	// 	recaptchaCheckboxRef,
-	// 	recaptchaError,
-	// 	resetRecaptcha,
-	// 	setRecaptchaError,
-	// } = useRecaptcha();
+	const {
+		getRecaptchaToken,
+		onRecaptchaChange,
+		recaptchaCheckboxRef,
+		recaptchaError,
+		resetRecaptcha,
+		setRecaptchaError,
+	} = useRecaptcha();
 
-	// const handleRecaptchaChange = () => {
-	// 	const token = getRecaptchaToken();
-	// 	token && setRecaptchaError('');
-	// 	onRecaptchaChange();
-	// };
+	const handleRecaptchaChange = () => {
+		const recaptchaToken = getRecaptchaToken();
+		recaptchaToken && setRecaptchaError('');
+		handleEnableSubmit(isValid, recaptchaToken);
+		onRecaptchaChange();
+	};
 
 	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
 		// TODO #366 don't submit form if participant is a minor
 
-		// const recaptchaToken = getRecaptchaToken();
+		const recaptchaToken = getRecaptchaToken();
 
-		// if (recaptchaToken) {
-		// 	const data = Object.assign({}, step2Data);
-		// 	axiosClient
-		// 		.post(API.INVITES, { data, recaptchaToken })
-		// 		.then(() => {
-		// 			setRecaptchaError('');
-		// 			resetRecaptcha();
-		// 		})
-		// 		.catch((e) => {
-		// 			console.error(e);
-		// 			setRecaptchaError('Something went wrong, please try again');
-		// 		});
-		// } else {
-		// 	setRecaptchaError('Please complete captcha');
-		// }
+		if (recaptchaToken) {
+			const data = Object.assign({}, step1Data, step2Data);
+			axiosClient
+				.post(API.INVITES, { data, recaptchaToken })
+				.then(() => {
+					setRecaptchaError('');
+					resetRecaptcha();
+				})
+				.catch((e) => {
+					console.error(e);
+					setRecaptchaError('Something went wrong, please try again');
+				});
+		} else {
+			setRecaptchaError('Please complete captcha');
+		}
 	};
 
-	// useEffect(() => {
-	// 	// set focus to first field on load
-	// 	setFocus('participantEmailAddress');
-	// }, [setFocus]);
+	// toggle submit button's enabled status when isValid changes
+	useEffect(() => {
+		const recaptchaToken = getRecaptchaToken();
+		handleEnableSubmit(isValid, recaptchaToken);
+	}, [getRecaptchaToken, isValid]);
 
-	const watchPassword = 
+	// set focus to first field on load
+	useEffect(() => {
+		setFocus('participantEmailAddress');
+	}, [setFocus]);
+
+	// set an error on confirmPassword if the 2 password fields are different.
+	const watchPassword = watch('password');
+	const watchConfirmPassword = watch('confirmPassword');
+	useEffect(() => {
+		// check if password & confirmPassword have inputs
+		// and confirmPassword has had a blur event
+		if (watchPassword && watchConfirmPassword && touchedFields.confirmPassword) {
+			if (watchPassword === watchConfirmPassword) {
+				// clear error if inputs match
+				clearErrors('confirmPassword');
+			} else {
+				// set error if inputs don't match
+				setError('confirmPassword', { type: 'custom', message: 'passwordMismatch' });
+			}
+		}
+	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
+
+	console.log(touchedFields);
 
 	return (
 		<FormProvider {...methods}>
@@ -163,7 +190,7 @@ const FormStep2 = ({
 				</FormSection>
 
 				{/* SECTION - RECAPTCHA */}
-				{/* <FormSection>
+				<FormSection>
 					{recaptchaError && (
 						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
 					)}
@@ -174,7 +201,7 @@ const FormStep2 = ({
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
 						/>
 					</div>
-				</FormSection> */}
+				</FormSection>
 
 				{/* GO BACK/SUBMIT */}
 				<div className={styles.buttonWrapper}>
@@ -185,7 +212,7 @@ const FormStep2 = ({
 					>
 						{textDict.back}
 					</Button>
-					<Button type="submit" color={isValid ? 'green' : 'default'}>
+					<Button type="submit" color={enableSubmit ? 'green' : 'default'}>
 						{textDict.createAccount}
 					</Button>
 				</div>
