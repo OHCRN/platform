@@ -21,15 +21,14 @@ All translation-related code is located in the [`/apps/consent-ui/src/i18n/` fol
 
 ### Type Structure
 
-The English dictionaries will be the source of truth for the expected type structure of all  dictionaries. This means that any new namespace or namespace key added in [`/locales/en/`](../apps/consent-ui/src/i18n/locales/en/) should trigger TS errors in [`/locales/fr/`](../apps/consent-ui/src/i18n/locales/fr/). The opposite is also true: attempting to add a namespace or key in the French dictionaries that is not already in the English dictionaries will cause TS to error. This is achieved with TS `satisfies` operator to preserve type structure:
-
+The English dictionaries will be the source of truth for the expected type structure of all dictionaries. This means that any new namespace or namespace key added in [`/locales/en/`](../apps/consent-ui/src/i18n/locales/en/) should trigger TS errors in [`/locales/fr/`](../apps/consent-ui/src/i18n/locales/fr/). The opposite is also true: attempting to add a namespace or key in the French dictionaries that is not already in the English dictionaries will cause TS to error. This is achieved with TS `satisfies` operator to preserve type structure:
 
 ```typescript
 // # in a locale dictionary set:
 import en from 'src/i18n/locales/en/index'; // import english dictionary
 import commonDictionary from 'src/i18n/locales/fr/common';
 
-const frenchDictionaries = { 
+const frenchDictionaries = {
 	common: commonDictionary, // imported dictionary matches same dictionary in `en` locale
 	 ...
 } satisfies typeof en;
@@ -46,7 +45,7 @@ const frenchCommonDictionary = { ... } satisfies CommonDictionary;
 
 ### The `getTranslation()` function
 
-`getTranslation` is not required to be async but should still be used server side only, as the entire dictionary for a locale is loaded on function call. Keeping this function on the server should also protect against any discrepancy in the current language between server and client. 
+`getTranslation` is not required to be async but should still be used server side only, as the entire dictionary for a locale is loaded on function call. Keeping this function on the server should also protect against any discrepancy in the current language between server and client.
 
 > **Important:**
 > Do not call this function inside any client component (a file headed by `'use client'`), as this will import the entire dictionary onto the client!
@@ -54,9 +53,11 @@ const frenchCommonDictionary = { ... } satisfies CommonDictionary;
 #### Basic usage:
 
 Define a `translate()` function:
+
 ```typescript
 const { translate } = getTranslation('en');
 ```
+
 which can then be used to access a translated string with a `namespace` + `key`
 
 ```typescript
@@ -79,17 +80,41 @@ const translatedString = translate('footer', 'copyright', { year: '2023' });
 // => '© 2023 Ontario Hereditary Cancer Research Network. Tous droits réservés.'
 ```
 
+#### Translating a Namespace
+
+Translate an entire namespace at once when you want to pass down many translations from a server component to a client component, e.g. for forms.
+
+First, create a separate namespace for the client component, e.g. `/en/myForm.ts`. Then call `translateNamespace('myForm')`. Pass down the translated namespace to the form as a prop, with the namespace's type. From there you can access translations by their key (`formDict.translationKey`).
+
+Parent server component:
+
+```typescript
+const { translateNamespace } = getTranslation(currentLang);
+const formDict = translateNamespace('myForm');
+
+return <MyForm formDict={formDict} />;
+```
+
+Client component that contains a form:
+
+```typescript
+'use client';
+
+const MyForm = ({ formDict }: { formDict: MyFormDictionary }) => (
+	<Form onSubmit={handleSubmit}>{formDict.description}</Form>
+);
+```
+
 ### How to Add a Dictionary Namespace
 
 Create a new file for your namespace in the `en` locale folder
-"my-namespace.ts" 
+"my-namespace.ts"
 
 For the sake of simplicity the object can be named `dictionary`, and append with a basic `{ ... } satisfies Record<string, string>` type. Be sure the exported named type matches the `<Namespace>Dictionary` convention, where `Namespace` matches your filename:
 
 ```typescript
 // "/locales/en/my-namespace.ts"
-const dictionary = {
-} satisfies Record<string, string>;
+const dictionary = {} satisfies Record<string, string>;
 
 export type MyNamespaceDictionary = Record<keyof typeof dictionary, string>;
 
@@ -116,7 +141,7 @@ At this point TS should now be showing errors in the [`/locales/fr/index.ts file
 
 New translations can be added as a simple `{ key: value }` pairs in the appropriate dictionary.
 
-If the translation is referencing an enum value from the shared `Types` package, the key name can be defined using the enum, like so: 
+If the translation is referencing an enum value from the shared `Types` package, the key name can be defined using the enum, like so:
 
 ```typescript
 import { Province } from 'types/entities';
@@ -126,7 +151,7 @@ const dictionary = {
 	[Province.enum.ONTARIO]: 'Ontario'
 }
 ```
- 
+
 #### With interpolated parameters:
 
 Translation strings that require interpolated values should be defined with a `{{ }}` format string syntax:
@@ -142,7 +167,7 @@ const dictionary = {
 ```
 
 > **Note:**
->For readability the `{{ key }}` should have spaces around the key name, however the `replaceParams` util function will be able to parse `{{key}}`.
+> For readability the `{{ key }}` should have spaces around the key name, however the `replaceParams` util function will be able to parse `{{key}}`.
 
 ## Outstanding TODOs
 

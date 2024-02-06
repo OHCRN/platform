@@ -57,7 +57,17 @@ export const replaceParams = (
 export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
 
-	const translate: TranslateKey = (namespace, key, params) => {
+	/**
+	 * Translate one key from a namespace.
+	 * @param namespace
+	 * @param key
+	 * @param params
+	 * @returns string
+	 * @example
+	 * <span>{translate('common', 'copyright', { year: 2024 })}</span>
+	 * // returns 'Copyright 2024'
+	 */
+	const translate: TranslateKey = (namespace, key, params): string => {
 		// TODO: consider throwing error if translation not a string/undefined
 		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
 		// warning log and `|| ''` is currently provided as a stopgap
@@ -68,6 +78,14 @@ export const getTranslation: GetTranslation = (language) => {
 		return replaceParams(translation, params);
 	};
 
+	/**
+	 * Translate an entire namespace, e.g. to collect all translations
+	 *  for a client component, such as a form.
+	 * @param namespace
+	 * @example
+	 * const formDict = translateNamespace('myFormDictionary');
+	 * <MyForm formDict={formDict} />
+	 */
 	const translateNamespace: TranslateNamespace = (namespace) => {
 		if (!(dictionary && namespace)) {
 			console.warn(`Missing translation in ${language} dictionary!`);
