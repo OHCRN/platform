@@ -17,8 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
-import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import assetUrlsDictionary from 'src/i18n/locales/fr/assetUrls';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
@@ -30,7 +28,7 @@ import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consent
 import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
 import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
 import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentResearchParticipation';
-import consentReviewSignFormDictionary from 'src/i18n/locales/fr/consentReviewSignForm';
+import consentReviewCardsDictionary from 'src/i18n/locales/fr/consentReviewCards';
 import consentReviewSignPageDictionary from 'src/i18n/locales/fr/consentReviewSignPage';
 import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
@@ -56,7 +54,9 @@ import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
+import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
 import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
+import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
@@ -72,7 +72,7 @@ const dictionaries = {
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
 	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentReviewSignForm: consentReviewSignFormDictionary,
+	consentReviewCards: consentReviewCardsDictionary,
 	consentReviewSignPage: consentReviewSignPageDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,

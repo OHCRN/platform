@@ -18,67 +18,26 @@
  */
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
 
 import ConsentReviewSignForm from './ConsentReviewSignForm';
+import ConsentReviewCards from './ConsentReviewCards';
+import styles from './ConsentReviewSign.module.scss';
 
-const ConsentReviewSign = ({ currentLang }: { currentLang: ValidLanguage }) => {
+interface ConsentReviewSignProps {
+	currentLang: ValidLanguage;
+}
+
+const ConsentReviewSign = ({ currentLang }: ConsentReviewSignProps) => {
 	const translate = getTranslation(currentLang);
-
-	const formDict: ConsentReviewSignFormDictionary = {
-		agree: translate('consentReviewSignForm', 'agree'),
-		ancestry: translate('consentReviewSignForm', 'ancestry'),
-		biobankDescription: translate('consentReviewSignForm', 'biobankDescription'),
-		biobankTitle: translate('consentReviewSignForm', 'biobankTitle'),
-		cancerDiagnosis: translate('consentReviewSignForm', 'cancerDiagnosis'),
-		clinician: translate('consentReviewSignForm', 'clinician'),
-		dateOfBirth: translate('consentReviewSignForm', 'dateOfBirth'),
-		deidentifiedParticipationDescription: translate(
-			'consentReviewSignForm',
-			'deidentifiedParticipationDescription',
-		),
-		deidentifiedParticipationLink: translate(
-			'consentReviewSignForm',
-			'deidentifiedParticipationLink',
-		),
-		deidentifiedParticipationTitle: translate(
-			'consentReviewSignForm',
-			'deidentifiedParticipationTitle',
-		),
-		doNotAgree: translate('consentReviewSignForm', 'doNotAgree'),
-		edit: translate('consentReviewSignForm', 'edit'),
-		familyHistoryOfCancer: translate('consentReviewSignForm', 'familyHistoryOfCancer'),
-		genderIdentity: translate('consentReviewSignForm', 'genderIdentity'),
-		geneticsClinic: translate('consentReviewSignForm', 'geneticsClinic'),
-		molecularLab: translate('consentReviewSignForm', 'molecularLab'),
-		nameOnOhip: translate('consentReviewSignForm', 'nameOnOhip'),
-		ohipNumber: translate('consentReviewSignForm', 'ohipNumber'),
-		personalHistoryOfCancer: translate('consentReviewSignForm', 'personalHistoryOfCancer'),
-		phone: translate('consentReviewSignForm', 'phone'),
-		postalCode: translate('consentReviewSignForm', 'postalCode'),
-		preferredName: translate('consentReviewSignForm', 'preferredName'),
-		recontactDescription: translate('consentReviewSignForm', 'recontactDescription'),
-		recontactTitle: translate('consentReviewSignForm', 'recontactTitle'),
-		releaseContactDescription: translate('consentReviewSignForm', 'releaseContactDescription'),
-		releaseContactLink: translate('consentReviewSignForm', 'releaseContactLink'),
-		releaseContactTitle: translate('consentReviewSignForm', 'releaseContactTitle'),
-		releaseHealthDataDescription: translate(
-			'consentReviewSignForm',
-			'releaseHealthDataDescription',
-		),
-		releaseHealthDataTitle: translate('consentReviewSignForm', 'releaseHealthDataTitle'),
-		secondaryContact: translate('consentReviewSignForm', 'secondaryContact'),
-		secondaryContactDescription: translate('consentReviewSignForm', 'secondaryContactDescription'),
-		secondaryContactTitle: translate('consentReviewSignForm', 'secondaryContactTitle'),
-		sexAssignedAtBirth: translate('consentReviewSignForm', 'sexAssignedAtBirth'),
-	};
 
 	return (
 		<div>
 			<h2>{translate('consentReviewSignPage', 'title')}</h2>
-			<p>{translate('consentReviewSignPage', 'description')}</p>
+			<p className={styles.description}>{translate('consentReviewSignPage', 'description')}</p>
 
-			<ConsentReviewSignForm currentLang={currentLang} formDict={formDict} />
+			<ConsentReviewCards currentLang={currentLang} />
+
+			<ConsentReviewSignForm currentLang={currentLang} />
 		</div>
 	);
 };

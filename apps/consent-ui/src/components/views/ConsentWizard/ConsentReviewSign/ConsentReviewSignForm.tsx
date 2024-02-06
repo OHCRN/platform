@@ -24,48 +24,25 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import Form from 'src/components/common/Form';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 import { ValidLanguage } from 'src/i18n';
-import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
-import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
-import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { useNotification } from 'src/components/providers/NotificationProvider';
 
-export const ConsentReviewSignRequest = z.object({ stub: z.string().optional() });
+import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
+
+export const ConsentReviewSignRequest = z.object({ stub: z.string().min(1) });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
-const stubData = {
-	ancestry: 'American',
-	cancerDiagnosis: 'Pancreas',
-	clinician: 'Dr. Nick',
-	CONSENT_RECONTACT: true,
-	dateOfBirth: '09/25/1975',
-	familyHistoryOfCancer: '',
-	genderIdentity: 'Man',
-	geneticsClinic: 'University Labs',
-	molecularLab: 'College Labs',
-	nameOnOhip: 'Homer Simpson',
-	ohipNumber: '53657653434',
-	personalHistoryOfCancer: '',
-	postalCode: 'H0H0H0',
-	preferredName: 'Homer',
-	RECONTACT__FUTURE_RESEARCH: true,
-	RECONTACT__SECONDARY_CONTACT: true,
-	RELEASE_DATA__CLINICAL_AND_GENETIC: true,
-	RELEASE_DATA__DE_IDENTIFIED: true,
-	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: true,
-	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
-	secondaryContactName: 'Marge Simpson',
-	secondaryContactPhone: '1234567890',
-	sexAssignedAtBirth: 'Male',
-};
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-5'];
 
-const ConsentReviewSignForm = ({
-	currentLang,
-	formDict,
-}: {
+interface ConsentReviewSignFormProps {
 	currentLang: ValidLanguage;
-	formDict: ConsentReviewSignFormDictionary;
-}) => {
-	// setup react-hook-form
+}
+
+const ConsentReviewSignForm = ({ currentLang }: ConsentReviewSignFormProps) => {
+	const { showNotification } = useNotification();
+
 	const methods = useForm<ConsentReviewSignRequest>({
 		mode: 'onBlur',
 		resolver: zodResolver(ConsentReviewSignRequest),
@@ -73,156 +50,27 @@ const ConsentReviewSignForm = ({
 
 	const { handleSubmit, register } = methods;
 
-	const onSubmit: SubmitHandler<ConsentReviewSignRequest> = (data, event) => {
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+
+	const onSubmit: SubmitHandler<ConsentReviewSignRequest> = (_data, event) => {
 		event?.preventDefault();
-		console.log('form data', data);
 
-		// TODO go to next page
+		// go to dashboard after successful API request
+		showNotification({ page: 'dashboard', notification: 'consentComplete' });
+		goToNextConsentStep();
 	};
-
-	const cardProps = {
-		editText: formDict.edit,
-		linkLang: currentLang,
-	};
-
-	const releaseHealthFields = [
-		{
-			label: formDict.preferredName,
-			value: stubData.preferredName,
-		},
-		{ label: formDict.nameOnOhip, value: stubData.nameOnOhip },
-		{ label: formDict.genderIdentity, value: stubData.genderIdentity },
-		{ label: formDict.ohipNumber, value: stubData.ohipNumber },
-		{ label: formDict.dateOfBirth, value: stubData.dateOfBirth },
-		{ label: formDict.sexAssignedAtBirth, value: stubData.sexAssignedAtBirth },
-		{ label: formDict.ancestry, value: stubData.ancestry },
-		{ label: formDict.personalHistoryOfCancer, value: stubData.personalHistoryOfCancer },
-		{ label: formDict.cancerDiagnosis, value: stubData.cancerDiagnosis },
-		{ label: formDict.familyHistoryOfCancer, value: stubData.familyHistoryOfCancer },
-		{ label: formDict.postalCode, value: stubData.postalCode },
-		{ label: formDict.clinician, value: stubData.clinician },
-		{ label: formDict.molecularLab, value: stubData.molecularLab },
-		{ label: formDict.geneticsClinic, value: stubData.geneticsClinic },
-	];
-
-	const secondaryContactFields = [
-		{
-			label: formDict.secondaryContact,
-			value: stubData.secondaryContactName,
-		},
-		{ label: formDict.phone, value: stubData.secondaryContactPhone },
-	];
 
 	return (
-		<>
-			{/* STEP 2 */}
-			<ReviewInfoCard
-				boxColor={stubData.RELEASE_DATA__CLINICAL_AND_GENETIC ? 'green' : 'grey'}
-				fields={releaseHealthFields}
-				name="consent-2"
-				required
-				title={formDict.releaseHealthDataTitle}
-				{...cardProps}
-			>
-				<>
-					<b>
-						{stubData.RELEASE_DATA__CLINICAL_AND_GENETIC ? formDict.agree : formDict.doNotAgree}
-					</b>{' '}
-					{formDict.releaseHealthDataDescription}
-				</>
-			</ReviewInfoCard>
+		<FormProvider {...methods}>
+			<Form onSubmit={handleSubmit(onSubmit)}>
+				{/* TODO e-signature https://github.com/OHCRN/platform/issues/155 */}
+				<label htmlFor="stub" style={{ display: 'inline-block', margin: '1rem 0' }}>
+					mock form <input {...register('stub')} id="stub" style={{ border: '1px solid grey' }} />
+				</label>
 
-			<ReviewInfoCard
-				boxColor={stubData.RELEASE_DATA__DE_IDENTIFIED ? 'green' : 'grey'}
-				name="consent-2"
-				required
-				title={formDict.deidentifiedParticipationTitle}
-				{...cardProps}
-			>
-				<>
-					<b>{stubData.RELEASE_DATA__DE_IDENTIFIED ? formDict.agree : formDict.doNotAgree}</b>{' '}
-					{formDict.deidentifiedParticipationDescription}{' '}
-					<LocalizedLink linkLang={currentLang} name="privacy">
-						{formDict.deidentifiedParticipationLink}
-					</LocalizedLink>
-				</>
-			</ReviewInfoCard>
-
-			{/* STEP 3 */}
-			<ReviewInfoCard
-				boxColor={stubData.RESEARCH_PARTICIPATION__FUTURE_RESEARCH ? 'green' : 'grey'}
-				name="consent-3"
-				title={formDict.biobankTitle}
-				{...cardProps}
-			>
-				<>
-					<b>
-						{stubData.RESEARCH_PARTICIPATION__FUTURE_RESEARCH
-							? formDict.agree
-							: formDict.doNotAgree}
-					</b>{' '}
-					{formDict.biobankDescription}
-				</>
-			</ReviewInfoCard>
-
-			<ReviewInfoCard
-				boxColor={stubData.RESEARCH_PARTICIPATION__CONTACT_INFORMATION ? 'green' : 'grey'}
-				name="consent-3"
-				title={formDict.releaseContactTitle}
-				{...cardProps}
-			>
-				<>
-					<b>
-						{stubData.RESEARCH_PARTICIPATION__FUTURE_RESEARCH
-							? formDict.agree
-							: formDict.doNotAgree}
-					</b>{' '}
-					{formDict.releaseContactDescription}{' '}
-					<LocalizedLink linkLang={currentLang} name="cancer-registries">
-						{formDict.releaseContactLink}
-					</LocalizedLink>
-				</>
-			</ReviewInfoCard>
-
-			{/* STEP 4 */}
-			<ReviewInfoCard
-				boxColor={stubData.RECONTACT__FUTURE_RESEARCH ? 'green' : 'grey'}
-				name="consent-4"
-				title={formDict.recontactTitle}
-				{...cardProps}
-			>
-				<>
-					<b>{stubData.RECONTACT__FUTURE_RESEARCH ? formDict.agree : formDict.doNotAgree}</b>{' '}
-					{formDict.recontactDescription}
-				</>
-			</ReviewInfoCard>
-
-			<ReviewInfoCard
-				boxColor={stubData.RECONTACT__SECONDARY_CONTACT ? 'green' : 'grey'}
-				fields={secondaryContactFields}
-				name="consent-4"
-				title={formDict.secondaryContactTitle}
-				{...cardProps}
-			>
-				<>
-					<b>{stubData.RECONTACT__SECONDARY_CONTACT ? formDict.agree : formDict.doNotAgree}</b>{' '}
-					{formDict.secondaryContactDescription}
-				</>
-			</ReviewInfoCard>
-
-			{/* E-SIGNATURE */}
-			<FormProvider {...methods}>
-				<Form onSubmit={handleSubmit(onSubmit)}>
-					{/* TODO e-signature https://github.com/OHCRN/platform/issues/155 */}
-					{/* this form is added so that consent step navigation will work during development. */}
-					{/* remove the input below during esignature development. */}
-					<label htmlFor="stub" style={{ display: 'inline-block', margin: '1rem 0' }}>
-						mock form for dev{' '}
-						<input {...register('stub')} id="stub" style={{ border: '1px solid grey' }} />
-					</label>
-				</Form>
-			</FormProvider>
-		</>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</Form>
+		</FormProvider>
 	);
 };
 

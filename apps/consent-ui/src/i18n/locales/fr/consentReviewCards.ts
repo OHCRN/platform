@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentReviewSignFormDictionary } from 'src/i18n/locales/en/consentReviewSignForm';
+import { ConsentReviewCardsDictionary } from 'src/i18n/locales/en/consentReviewCards';
 
 import common from './common';
 import formLabels from './formLabels';
@@ -83,6 +83,6 @@ const dictionary = {
 	secondaryContactDescription:
 		"que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse contacter mon plus proche parent ou mon contact secondaire pour obtenir des mises à jour de vos informations de santé si les tentatives pour vous contacter n'ont pas abouti.",
 	sexAssignedAtBirth,
-} satisfies ConsentReviewSignFormDictionary;
+} satisfies ConsentReviewCardsDictionary;
 
 export default dictionary;
