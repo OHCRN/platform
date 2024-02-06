@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { POSTAL_CODE_REGEX } from '../../common/index.js';
+import { POSTAL_CODE_REGEX } from '../../common/regexes.js';
 
 export const PostalCode = z
 	.string()

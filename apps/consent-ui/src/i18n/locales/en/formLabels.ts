@@ -25,6 +25,7 @@ const dictionary = {
 	clinicianInstitutionalEmailAddress: 'Clinician Institutional Email Address',
 	clinicianLastName: 'Clinician Last Name',
 	clinicianTitleOrRole: 'Clinician Title/Role',
+	confirmPassword: 'Confirm Password',
 	consentContact: 'Consent to be Contacted',
 	consentGroup: 'Consent Group',
 	dateOfBirth: 'Date of Birth',
@@ -40,13 +41,19 @@ const dictionary = {
 	lastName: 'Last Name',
 	molecularLab: 'Molecular Lab',
 	nameOnOhip: 'Name on OHIP Card',
+	no: 'No',
 	ohipNumber: 'OHIP #',
+	password: 'Password',
 	personalHistoryOfCancer: 'Personal History of Cancer',
-	postalCode: 'Postal Code',
 	phone: 'Phone Number',
+	postalCode: 'Postal Code',
 	preferredName: 'Preferred Name',
 	secondaryContact: 'Secondary Contact',
 	sexAssignedAtBirth: 'Sex Assigned at Birth',
+	yes: 'Yes',
+	yourName: 'Your Name',
+	yourPhone: 'Your Phone Number',
+	yourRelationship: 'Your Relationship to Participant',
 } satisfies Record<string, string>;
 
 export type FormLabelsDictionary = Record<keyof typeof dictionary, string>;

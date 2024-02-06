@@ -27,6 +27,7 @@ const dictionary = {
 	clinicianInstitutionalEmailAddress: 'Adresse e-mail institutionnelle du clinicien',
 	clinicianLastName: 'Surnom du clinicien',
 	clinicianTitleOrRole: 'Titre ou rôle du clinicien',
+	confirmPassword: 'Confirmez le mot de passe',
 	consentContact: 'Consentement à être contacté',
 	consentGroup: 'Groupe de consentement',
 	dateOfBirth: 'Date de naissance',
@@ -42,13 +43,19 @@ const dictionary = {
 	lastName: 'Nom de famille',
 	molecularLab: 'Laboratoire moléculaire',
 	nameOnOhip: 'Nom sur la carte OHIP',
+	no: 'Non',
 	ohipNumber: 'Numéro OHIP',
+	password: 'Mot de passe',
 	personalHistoryOfCancer: 'Antécédents personnels de cancer',
 	phone: 'Numéro de téléphone',
 	postalCode: 'Code postale',
 	preferredName: 'Nom préféré',
 	secondaryContact: 'Contact secondaire',
 	sexAssignedAtBirth: 'Sexe attribué à la naissance',
+	yes: 'Oui',
+	yourName: 'Votre nom',
+	yourPhone: 'Votre numéro de téléphone',
+	yourRelationship: 'Votre relation avec le participant',
 } satisfies FormLabelsDictionary;
 
 export default dictionary;

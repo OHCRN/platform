@@ -35,11 +35,10 @@ export interface FormFieldSetSharedProps<T extends FieldValues> {
 	label: string;
 	name: FormFieldName<T>;
 	required?: boolean;
-	withNarrowDesktopLayout?: boolean;
 }
 
-export type FormFieldSetWithTooltipProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	tooltipContent?: ReactNode;
+export type FormFieldSetWithDescriptionProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
+	description?: ReactNode;
 };
 
 // field inputs
@@ -60,4 +59,5 @@ export interface FormSelectOption<V extends string> {
 	value: V;
 }
 
-export type FormTextInputType = 'email' | 'tel' | 'text';
+// values for HTML type attribute
+export type FormTextInputType = 'email' | 'password' | 'tel' | 'text';

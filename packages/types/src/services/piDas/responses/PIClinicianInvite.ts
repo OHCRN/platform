@@ -21,25 +21,20 @@ import { generateSchema } from '@anatine/zod-openapi';
 import { SchemaObject } from 'openapi3-ts/oas31';
 import { z } from 'zod';
 
+import { GuardianNullableResponseFields } from '../../../entities/Guardian.js';
 import {
 	InviteGuardianFields,
 	InviteParticipantFields,
 } from '../../../entities/ClinicianInvite.js';
-import { Name, NanoId, PhoneNumber } from '../../../entities/fields/index.js';
+import { Name, NanoId } from '../../../entities/fields/index.js';
 
 export const PIClinicianInvite = InviteParticipantFields.merge(InviteGuardianFields);
 
-export const PIClinicianInviteResponse = PIClinicianInvite.extend({ id: NanoId }).extend({
-	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
-	guardianName: Name.nullable().transform((input) => input ?? undefined),
-	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
-	guardianEmailAddress: z
-		.string()
-		.email()
-		.nullable()
-		.transform((input) => input ?? undefined),
-	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
-});
+export const PIClinicianInviteResponse = PIClinicianInvite.extend({ id: NanoId })
+	.extend(GuardianNullableResponseFields)
+	.extend({
+		participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
+	});
 
 export type PIClinicianInviteResponse = z.infer<typeof PIClinicianInviteResponse>;
 export const PIClinicianInviteResponseSchema: SchemaObject =

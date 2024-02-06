@@ -25,11 +25,7 @@ import { ValidLanguage } from 'src/i18n';
 
 import { ButtonProps } from '../Button/types';
 
-const VALID_ROUTE_NAMES = [
-	'home',
-	'invite',
-	'register',
-	'dashboard',
+export const CONSENT_STEP_ROUTES = [
 	'consent-1',
 	'consent-2',
 	'consent-3',
@@ -39,7 +35,15 @@ const VALID_ROUTE_NAMES = [
 	'cancer-registries',
 ] as const;
 
-export const RouteNameEnum = z.enum(VALID_ROUTE_NAMES);
+export const ConsentStepRouteEnum = z.enum(CONSENT_STEP_ROUTES);
+export type ConsentStepRoute = z.infer<typeof ConsentStepRouteEnum>;
+
+const GENERAL_ROUTES = ['home', 'invite', 'register', 'dashboard'] as const;
+
+export const GeneralRouteNameEnum = z.enum(GENERAL_ROUTES);
+export type GeneralRouteName = z.infer<typeof GeneralRouteNameEnum>;
+
+export const RouteNameEnum = GeneralRouteNameEnum.or(ConsentStepRouteEnum);
 export type RouteName = z.infer<typeof RouteNameEnum>;
 
 export type RouteParams = { [k: string]: string };

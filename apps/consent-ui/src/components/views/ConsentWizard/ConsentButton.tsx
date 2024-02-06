@@ -44,7 +44,6 @@ const ConsentButton = () => {
 	return (
 		<Button variant={isComplete ? 'secondary' : 'primary'} color="green" onClick={() => {}}>
 			{isComplete ? 'Download Consent PDF' : 'Complete Consent Forms'}
-			{appConfig.FEATURE_FLAG && ' 🔥'}
 		</Button>
 	);
 };
