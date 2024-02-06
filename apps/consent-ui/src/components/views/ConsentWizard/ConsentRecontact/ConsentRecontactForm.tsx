@@ -63,8 +63,6 @@ const ConsentRecontactForm = ({
 	const onSubmit: SubmitHandler<ConsentRecontactRequest> = (data, event) => {
 		event?.preventDefault();
 
-		console.log('formData', data);
-
 		// go to next page after successful API request
 		goToNextConsentStep();
 	};
