@@ -63,9 +63,8 @@ const ConsentReviewSignForm = ({ currentLang }: ConsentReviewSignFormProps) => {
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				{/* TODO e-signature https://github.com/OHCRN/platform/issues/155 */}
-				{/* this page has to use a react-hook-form form for the 'complete' button to work,
-					because the step navigation component uses form context & triggers a submit event. */}
+				{/* TODO e-signature https://github.com/OHCRN/platform/issues/155 
+					 this page has to use a react-hook-form form for the step navigation to work */}
 				<label htmlFor="stub" style={{ display: 'inline-block', margin: '1rem 0' }}>
 					mock form <input {...register('stub')} id="stub" style={{ border: '1px solid grey' }} />
 				</label>
