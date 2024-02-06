@@ -24,18 +24,15 @@ import { ReactNode, useEffect, useId } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import { useFormContext } from 'react-hook-form';
 
-import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
-import { FormFieldSetSharedProps } from 'src/components/common/Form/types';
-import InputError from 'src/components/common/Form/fieldsets/InputError';
+import { FormFieldSetWithDescriptionProps } from 'src/components/common/Form/types';
 import CheckboxInput from 'src/components/common/Form/fieldsets/inputs/CheckboxInput';
 
 import TextInput from '../inputs/TextInput';
+import FieldSet from '../FieldSet';
 
 import styles from './OhipFieldSet.module.scss';
 
-export type OhipFieldSetProps<T extends FieldValues> = FormFieldSetSharedProps<T> & {
-	title: string;
-	subtitle: ReactNode;
+export type OhipFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
 	checkboxLabel: ReactNode;
 };
 
@@ -46,8 +43,7 @@ const OhipFieldSet = <T extends FieldValues>({
 	name,
 	required,
 	label,
-	title,
-	subtitle,
+	description,
 	checkboxLabel,
 }: OhipFieldSetProps<T>) => {
 	const ohipFieldId = useId();
@@ -64,59 +60,36 @@ const OhipFieldSet = <T extends FieldValues>({
 	}, [checkboxValue, name, resetField]);
 
 	return (
-		<fieldset
-			className={clsx(
-				styles.ohipFieldset,
-				disabled && styles.disabled,
-				error && styles.error,
-				className,
-			)}
+		<FieldSet
+			className={className}
+			fieldId={ohipFieldId}
+			label={label}
+			error={error}
+			description={description}
+			descriptionId={ohipTextInputId}
+			required={required}
 		>
-			<div className={styles.ohipHeader}>
-				{title && (
-					<h4 className={styles.title}>
-						{title}
-						{required && <RequiredAsterisk />}
-					</h4>
-				)}
-				{subtitle && (
-					<h4 className={styles.subtitle}>
-						{subtitle}
-						{required && !title && <RequiredAsterisk />}
-					</h4>
-				)}
-			</div>
+			<TextInput
+				className={clsx(styles.ohipTextInput, error && styles.error)}
+				disabled={disabled || checkboxValue}
+				id={ohipTextInputId}
+				name={name}
+				type={'text'}
+			/>
 
-			<div className={styles.ohipWrapper}>
-				<div className={styles.ohipTextWrapper}>
-					<TextInput
-						className={styles.ohipTextInput}
-						disabled={disabled || checkboxValue}
-						id={ohipTextInputId}
-						name={name}
-						required={checkboxValue ? false : required}
-						type={'text'}
-					/>
-
-					{label && (
-						<label className={styles.label} htmlFor={ohipTextInputId}>
-							{label}
-						</label>
-					)}
-				</div>
-
-				<label htmlFor={ohipCheckboxId} className={styles.ohipCheckboxWrapper}>
-					<CheckboxInput
-						className={styles.ohipCheckboxInput}
-						disabled={disabled}
-						id={ohipCheckboxId}
-						name={ohipCheckboxId}
-					/>
-					<span className={styles.ohipCheckboxLabel}>{checkboxLabel}</span>
-				</label>
-				{error && <InputError>{error}</InputError>}
-			</div>
-		</fieldset>
+			<label
+				htmlFor={ohipCheckboxId}
+				className={clsx(styles.ohipCheckboxWrapper, error && styles.error)}
+			>
+				<CheckboxInput
+					className={clsx(styles.ohipCheckboxInput, error && styles.error)}
+					disabled={disabled}
+					id={ohipCheckboxId}
+					name={ohipCheckboxId}
+				/>
+				<span className={styles.ohipCheckboxLabel}>{checkboxLabel}</span>
+			</label>
+		</FieldSet>
 	);
 };
 

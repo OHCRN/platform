@@ -305,14 +305,14 @@ const ClinicianInviteFormComponent = ({
 					/>
 					<OhipFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
-						label={'10-digit number on front of card'}
 						name="clinicianInstitutionalEmailAddress"
 						required
 						// tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
 						// type="email"
-						withNarrowDesktopLayout
-						title={'OHIP #'}
-						subtitle={'(Green Health Card)'}
+						label={'OHIP #'}
+						description={
+							'Enter the first 10 digits of your green health card. We require this in order to access your lab reports.'
+						}
 						checkboxLabel={'I do not have an Ontario health card.'}
 					/>
 					{/* <TextFieldSet
