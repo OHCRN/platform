@@ -18,6 +18,7 @@
  */
 
 import ancestryDictionary from './ancestry';
+import assetUrlsDictionary from './assetUrls';
 import birthSexDictionary from './birthSex';
 import commonDictionary from './common';
 import consentCategoryDictionary from './consentCategory';
@@ -41,6 +42,8 @@ import geneticsClinicDictionary from './geneticsClinic';
 import headerDictionary from './header';
 import historyOfCancerDictionary from './historyOfCancer';
 import informedConsentDictionary from './informedConsent';
+import informedConsentFormDictionary from './informedConsentForm';
+import informedConsentPageDictionary from './informedConsentPage';
 import inviteFormConsentGroupModalDictionary from './inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from './inviteFormLabels';
 import inviteFormPageDictionary from './inviteFormPage';
@@ -48,13 +51,16 @@ import inviteFormTextDictionary from './inviteFormText';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
-import registerDictionary from './register';
-import registerFormLabelsDictionary from './registerFormLabels';
+import registerFormStep1LabelsDictionary from './registerFormStep1Labels';
+import registerFormStep1TextDictionary from './registerFormStep1Text';
+import registerFormStep2LabelsDictionary from './registerFormStep2Labels';
+import registerFormStep2TextDictionary from './registerFormStep2Text';
 import registerFormTextDictionary from './registerFormText';
 import registerPageDictionary from './registerPage';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
+	assetUrls: assetUrlsDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
@@ -78,6 +84,8 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	informedConsentForm: informedConsentFormDictionary,
+	informedConsentPage: informedConsentPageDictionary,
 	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
 	inviteFormPage: inviteFormPageDictionary,
@@ -85,8 +93,10 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
-	register: registerDictionary,
-	registerFormLabels: registerFormLabelsDictionary,
+	registerFormStep1Labels: registerFormStep1LabelsDictionary,
+	registerFormStep1Text: registerFormStep1TextDictionary,
+	registerFormStep2Labels: registerFormStep2LabelsDictionary,
+	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
 	registerPage: registerPageDictionary,
 };

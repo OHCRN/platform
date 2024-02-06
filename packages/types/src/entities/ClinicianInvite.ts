@@ -19,35 +19,38 @@
 
 import { z } from 'zod';
 
-import { hasRequiredGuardianInformation } from '../entities/ParticipantIdentification.js';
+import { hasRequiredGuardianInformation } from '../common/index.js';
 
-import { ConsentGroup, Name, NanoId, PhoneNumber } from './fields/index.js';
+import { ConsentGroup, Name, NanoId } from './fields/index.js';
+import { GuardianBaseFields } from './Guardian.js';
+import {
+	ConsentToBeContacted,
+	ParticipantContactFields,
+	ParticipantNameFields,
+} from './Participant.js';
 
-export const InviteClinicianFields = z.object({
-	clinicianFirstName: Name,
-	clinicianInstitutionalEmailAddress: z.string().email(),
-	clinicianLastName: Name,
-	clinicianTitleOrRole: z.string().trim().min(1),
-	consentGroup: ConsentGroup,
-	consentToBeContacted: z.literal(true),
-});
+export const InviteClinicianFields = z
+	.object({
+		clinicianFirstName: Name,
+		clinicianInstitutionalEmailAddress: z.string().email(),
+		clinicianLastName: Name,
+		clinicianTitleOrRole: z.string().trim().min(1),
+	})
+	.merge(ConsentToBeContacted)
+	.merge(
+		z.object({
+			consentGroup: ConsentGroup,
+		}),
+	);
+
 export type InviteClinicianFields = z.infer<typeof InviteClinicianFields>;
 
-export const InviteGuardianFields = z.object({
-	guardianEmailAddress: z.string().email().optional(),
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianRelationship: Name.optional(),
-});
+export const InviteGuardianFields = GuardianBaseFields;
 export type InviteGuardianFields = z.infer<typeof InviteGuardianFields>;
 
-export const InviteParticipantFields = z.object({
-	participantEmailAddress: z.string().email(),
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name.optional(),
-});
+export const InviteParticipantFields = ParticipantNameFields.merge(
+	z.object({ participantPreferredName: Name.optional() }),
+).merge(ParticipantContactFields);
 export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;
 
 export const InviteEntity = z.object({

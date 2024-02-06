@@ -33,7 +33,7 @@ export const RegisterFormStep1 = z.object({
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name,
-	// registeringOnBehalfOfSomeoneElse: z.boolean(), TODO #366
+	// isGuardian: z.boolean(), TODO #366
 	// commenting this out because the form won't work
 	// with unused fields in the Zod schema
 });

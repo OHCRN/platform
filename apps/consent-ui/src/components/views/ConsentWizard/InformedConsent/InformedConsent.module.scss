@@ -1,0 +1,13 @@
+@use '../../../../theme/mixins';
+
+.title {
+	margin-bottom: 0.5rem;
+}
+
+.description {
+	font-size: theme('fontSize.base');
+	margin-bottom: 2rem;
+	a {
+		@include mixins.text-link;
+	}
+}

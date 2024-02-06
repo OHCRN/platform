@@ -22,17 +22,17 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { SyntheticEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
-import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
+import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
+import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
@@ -45,11 +45,10 @@ const FormStep1 = ({
 	textDict,
 }: {
 	className?: string;
-	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
-	labelsDict: RegisterFormLabelsDictionary;
-	textDict: RegisterFormTextDictionary;
+	labelsDict: RegisterFormStep1LabelsDictionary;
+	textDict: RegisterFormStep1TextDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
@@ -66,34 +65,29 @@ const FormStep1 = ({
 
 	const onSubmit: SubmitHandler<RegisterFormStep1> = (data, event) => {
 		event?.preventDefault();
-		// TODO #366 don't submit form if participant is a minor
+		// TODO #366 don't go to next page if user is a minor
 		handleNextClick(data);
 	};
 
 	useEffect(() => {
-		// set focus to first field on load
-		// TODO #366 change to registerOnBehalfOfSomeoneElse
+		// set focus to first field on mount
+		// TODO #366 change to isGuardian
 		setFocus('guardianName');
 	}, [setFocus]);
-
-	const handleMouseDown = (e: SyntheticEvent) => {
-		// prevent blur events from interrupting click events
-		e.preventDefault();
-	};
 
 	return (
 		<FormProvider {...methods}>
 			<Form className={className} onSubmit={handleSubmit(onSubmit)}>
-				{/* SECTION - REGISTERING ON BEHALF OF SOMEONE ELSE */}
+				{/* SECTION - CHECK IF USER IS A GUARDIAN */}
 				<FormSection>
 					{/* TODO implement radio button #366
-								this field is called registeringOnBehalfOfSomeoneElse in the data model */}
+								this field is called isGuardian in the data model */}
 					{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
 				</FormSection>
 
 				{/* OPTIONAL SECTION - GUARDIAN INFO */}
 				{/* these fields are conditionally required, i.e. if the user is
-							registering on behalf of someone else */}
+						registering as a guardian */}
 
 				{/* TODO #366 update this section - add conditional rendering.
 							see guardian fields on invite form for an example. */}
@@ -104,21 +98,18 @@ const FormStep1 = ({
 						label={labelsDict.yourName}
 						name="guardianName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.yourPhone}
 						name="guardianPhoneNumber"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.guardianRelationship?.type && errorsDict.required}
 						label={labelsDict.yourRelationship}
 						name="guardianRelationship"
 						required
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
@@ -130,31 +121,27 @@ const FormStep1 = ({
 						label={labelsDict.firstName}
 						name="participantFirstName"
 						required
-						tooltipContent={textDict.participantFirstNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantFirstNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName}
 						name="participantLastName"
 						required
-						tooltipContent={textDict.participantLastNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantLastNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName}
 						name="participantPreferredName"
-						tooltipContent={textDict.participantPreferredNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPreferredNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone}
 						name="participantPhoneNumber"
 						required
-						tooltipContent={textDict.participantPhoneNumberTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPhoneNumberTooltip}
 					/>
 					{/* TODO #366 implement date input */}
 					<TextFieldSet
@@ -162,19 +149,18 @@ const FormStep1 = ({
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
-						tooltipContent={textDict.dateOfBirthTooltip}
-						withNarrowDesktopLayout
+						description={textDict.dateOfBirthTooltip}
 					/>
 				</FormSection>
 
 				{/* SECTION - CONTACT AFTER REGISTERING NOTICE */}
-				<FormSection>
+				<div className={styles.afterRegistering}>
 					<p>{textDict.afterRegistering}</p>
 					{/* TODO add link to help centre #367 */}
 					<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
 						{textDict.questions}
 					</Link>
-				</FormSection>
+				</div>
 
 				{/* GO TO NEXT PAGE */}
 				<div className={styles.buttonWrapper}>
@@ -182,7 +168,7 @@ const FormStep1 = ({
 						action="next"
 						aria-label={`${textDict.goToStep} 2`}
 						color={isValid ? 'green' : 'default'}
-						onMouseDown={handleMouseDown}
+						onMouseDown={handleMouseDownBlur}
 						type="submit"
 					>
 						{textDict.next}

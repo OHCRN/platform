@@ -17,7 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
+import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
+import assetUrlsDictionary from 'src/i18n/locales/fr/assetUrls';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
 import commonDictionary from 'src/i18n/locales/fr/common';
 import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
@@ -42,6 +45,8 @@ import geneticsClinicDictionary from 'src/i18n/locales/fr/geneticsClinic';
 import headerDictionary from 'src/i18n/locales/fr/header';
 import historyOfCancerDictionary from 'src/i18n/locales/fr/historyOfCancer';
 import informedConsentDictionary from 'src/i18n/locales/fr/informedConsent';
+import informedConsentFormDictionary from 'src/i18n/locales/fr/informedConsentForm';
+import informedConsentPageDictionary from 'src/i18n/locales/fr/informedConsentPage';
 import inviteFormConsentGroupModalDictionary from 'src/i18n/locales/fr/inviteFormConsentGroupModal';
 import inviteFormLabelsDictionary from 'src/i18n/locales/fr/inviteFormLabels';
 import inviteFormPageDictionary from 'src/i18n/locales/fr/inviteFormPage';
@@ -49,13 +54,14 @@ import inviteFormTextDictionary from 'src/i18n/locales/fr/inviteFormText';
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
-import registerDictionary from 'src/i18n/locales/fr/register';
-import registerFormLabelsDictionary from 'src/i18n/locales/fr/registerFormLabels';
+import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
+import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
 const dictionaries = {
 	ancestry: ancestryDictionary,
+	assetUrls: assetUrlsDictionary,
 	birthSex: birthSexDictionary,
 	common: commonDictionary,
 	consentCategory: consentCategoryDictionary,
@@ -79,6 +85,8 @@ const dictionaries = {
 	header: headerDictionary,
 	historyOfCancer: historyOfCancerDictionary,
 	informedConsent: informedConsentDictionary,
+	informedConsentForm: informedConsentFormDictionary,
+	informedConsentPage: informedConsentPageDictionary,
 	inviteFormConsentGroupModal: inviteFormConsentGroupModalDictionary,
 	inviteFormLabels: inviteFormLabelsDictionary,
 	inviteFormPage: inviteFormPageDictionary,
@@ -86,8 +94,10 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
-	register: registerDictionary,
-	registerFormLabels: registerFormLabelsDictionary,
+	registerFormStep1Labels: registerFormStep1LabelsDictionary,
+	registerFormStep1Text: registerFormStep1TextDictionary,
+	registerFormStep2Labels: registerFormStep2LabelsDictionary,
+	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
 	registerPage: registerPageDictionary,
 } satisfies typeof en;

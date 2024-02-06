@@ -61,6 +61,7 @@ const Button = ({
 			)}
 			disabled={disabled}
 			onClick={onClick}
+			onMouseDown={onMouseDown}
 			type={type}
 			onMouseDown={onMouseDown}
 		>

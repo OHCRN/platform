@@ -1,112 +1,123 @@
-import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/dataMapper';
-import { Result, failure, success } from 'types/httpResponses';
-import urlJoin from 'url-join';
+import {
+	ClinicianInviteRequest,
+	ClinicianInviteResponse,
+	CreateParticipantRequest,
+	CreateParticipantResponse,
+} from 'types/dataMapper';
+import { Result, failure, success, SystemError } from 'types/httpResponses';
 
-import { getAppConfig } from '../config.js';
 import serviceLogger from '../logger.js';
 
-import axiosClient from './axiosClient.js';
-import { createInviteConsentData } from './das/consent.js';
-import { createInvitePiData, deleteInvitePiData } from './das/pi.js';
+import { createInviteConsentData, createParticipantConsentData } from './das/consent.js';
+import {
+	createInvitePiData,
+	createParticipantPiData,
+	deleteInvitePiData,
+	deletePIParticipant,
+} from './das/pi.js';
 
 const logger = serviceLogger.forModule('CreateService');
 
-// PI-DAS
-const createParticipantPiData = async ({
-	name,
-	email,
-}: {
-	name: string;
-	email: string;
-}): Promise<any> => {
-	// TODO: add Type instead of any
-	const { piDasUrl } = getAppConfig();
-	// TODO: add error handling
-	const result = await axiosClient.post(urlJoin(piDasUrl, 'participants'), {
-		name,
-		email,
-	});
-	return result.data.participant;
-};
-
-// KEYS-DAS
-// TODO: add Type instead of any
-const createParticipantOhipKey = async (participantId: string): Promise<any> => {
-	const { keysDasUrl } = getAppConfig();
-	// TODO: add error handling
-	const result = await axiosClient.post(urlJoin(keysDasUrl, 'ohip-keys'), {
-		participantId,
-	});
-	return result.data.ohipKey;
-};
-
-// PHI-DAS
-const saveParticipantOhipNumber = async ({
-	ohipPrivateKey,
-	ohipNumber,
-}: {
-	ohipPrivateKey: string;
-	ohipNumber: string;
-}): Promise<any> => {
-	// TODO: add Type instead of any
-	const { phiDasUrl } = getAppConfig();
-	// TODO: add error handling
-	const result = await axiosClient.post(urlJoin(phiDasUrl, 'ohip'), {
-		ohipPrivateKey,
-		ohipNumber,
-	});
-	return result.data.ohipData.ohipNumber;
-};
-
-// CONSENT-DAS
-const createParticipantConsentData = async ({
-	participantId,
-	emailVerified,
-}: {
-	participantId: string;
-	emailVerified: boolean;
-}): Promise<any> => {
-	// TODO: add Type instead of any
-	const { consentDasUrl } = getAppConfig();
-	// TODO: add error handling
-	const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), {
-		participantId,
-		emailVerified,
-	});
-	return result.data.participant;
-};
-
-// separates data along concerns to store in respective DASes
+type CreateParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
+/**
+ * Creates a participant first in the PI DAS,
+ * then uses the created participantId to create a corresponding entry in the Consent DAS.
+ * Will delete PI DAS participant if an error occurs during PI response parsing or
+ * participant creation in Consent DAS.
+ * @async
+ * @param {CreateParticipantRequest}
+ * @returns {CreateParticipantResponse} Created Participant data
+ */
 export const createParticipant = async ({
-	name,
-	email,
-	ohipNumber,
+	participantOhipFirstName,
+	participantOhipLastName,
+	dateOfBirth,
+	participantPhoneNumber,
+	participantPreferredName,
+	participantEmailAddress,
+	isGuardian,
+	guardianEmailAddress,
+	guardianPhoneNumber,
+	guardianRelationship,
+	guardianName,
+	consentToBeContacted,
+	consentGroup,
 	emailVerified,
-}: {
-	name: string;
-	email: string;
-	ohipNumber: string;
-	emailVerified: boolean;
-}): Promise<any> => {
-	// TODO: add Type instead of any
-	const participantPiData = await createParticipantPiData({ name, email });
-	const participantId = participantPiData.id;
-	const participantOhipKey = await createParticipantOhipKey(participantId);
-	const ohipPrivateKey = participantOhipKey.ohipPrivateKey;
-	const participantOhipNumber = await saveParticipantOhipNumber({
-		ohipPrivateKey,
-		ohipNumber,
-	});
-	const participantConsentData = await createParticipantConsentData({
-		participantId,
-		emailVerified,
-	});
+	currentLifecycleState,
+	keycloakId,
+}: CreateParticipantRequest): Promise<
+	Result<CreateParticipantResponse, CreateParticipantFailureStatus>
+> => {
+	/**
+	 * Steps:
+	 * 1) Creates participant in PI DAS
+	 * 2) If error creating PI participant, returns the resulting `failure()` with an error status and message.
+	 * 3) If success, creates participant in Consent DAS with the same ID
+	 * 4) If error creating Consent participant, deletes the previously created PI participant,
+	 *    and returns the resulting `failure()` with an error status and message
+	 * 5) If success, parses the combination of PI and Consent participants to validate response object
+	 * 6) If error parsing, returns `failure()` with a SYSTEM_ERROR and Zod error message
+	 * 7) If success, returns created participant
+	 */
+	try {
+		// create participant in pi-das
+		const participantPiData = await createParticipantPiData({
+			participantOhipFirstName,
+			participantOhipLastName,
+			dateOfBirth,
+			participantPhoneNumber,
+			participantPreferredName,
+			participantEmailAddress,
+			guardianEmailAddress,
+			guardianPhoneNumber,
+			guardianRelationship,
+			guardianName,
+			consentGroup,
+			keycloakId,
+		});
 
-	return {
-		...participantPiData,
-		ohipNumber: participantOhipNumber,
-		emailVerified: participantConsentData.emailVerified,
-	};
+		if (participantPiData.status !== 'SUCCESS') {
+			return participantPiData;
+		}
+
+		const participantId = participantPiData.data.id;
+		// create participant in consent-das with pi id
+		const participantConsentData = await createParticipantConsentData({
+			id: participantId,
+			consentToBeContacted,
+			consentGroup,
+			isGuardian,
+			currentLifecycleState,
+			emailVerified,
+		});
+
+		if (participantConsentData.status !== 'SUCCESS') {
+			// Unable to create participant in Consent DAS, rollback participant already created in PI-DAS
+			const deletePiParticipant = await deletePIParticipant(participantId);
+			if (deletePiParticipant.status !== 'SUCCESS') {
+				logger.error(
+					'Error deleting existing PI participant:',
+					participantId,
+					deletePiParticipant.message,
+				);
+				return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+			}
+			return participantConsentData;
+		}
+		// parse complete result from both dases
+		const result = CreateParticipantResponse.safeParse({
+			...participantPiData,
+			...participantConsentData,
+		});
+		if (!result.success) {
+			logger.error('Received invalid data in create participant response', result.error.issues);
+			return failure('SYSTEM_ERROR', result.error.message);
+		}
+		return success(result.data);
+	} catch (error) {
+		logger.error('Unexpected error handling create participant response', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
 };
 
 export type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';

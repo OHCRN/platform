@@ -23,11 +23,11 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { ValidLanguage } from 'src/i18n';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { RegisterFormLabelsDictionary } from 'src/i18n/locales/en/registerFormLabels';
-import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
+import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
@@ -51,9 +51,9 @@ const FormStep2 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
-	labelsDict: RegisterFormLabelsDictionary;
+	labelsDict: RegisterFormStep2LabelsDictionary;
 	step1Data?: RegisterFormStep1;
-	textDict: RegisterFormTextDictionary;
+	textDict: RegisterFormStep2TextDictionary;
 }) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
@@ -104,7 +104,7 @@ const FormStep2 = ({
 		if (recaptchaToken) {
 			const data = Object.assign({}, step1Data, step2Data);
 			axiosClient
-				.post(API.INVITES, { data, recaptchaToken })
+				.post(API.REGISTER, { data, recaptchaToken })
 				.then(() => {
 					setRecaptchaError('');
 					resetRecaptcha();
@@ -130,6 +130,8 @@ const FormStep2 = ({
 	}, [setFocus]);
 
 	// set an error on confirmPassword if the 2 password fields are different.
+	// fires on first confirmPassword onBlur validation,
+	// then onChange for both fields, if they both have input.
 	const watchPassword = watch('password');
 	const watchConfirmPassword = watch('confirmPassword');
 	useEffect(() => {
@@ -158,7 +160,6 @@ const FormStep2 = ({
 						label={labelsDict.email}
 						name="participantEmailAddress"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
@@ -166,7 +167,6 @@ const FormStep2 = ({
 						name="password"
 						required
 						type="password"
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.confirmPassword?.type && errorsDict.required}
@@ -174,7 +174,6 @@ const FormStep2 = ({
 						name="confirmPassword"
 						required
 						type="password"
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
