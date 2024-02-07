@@ -24,20 +24,24 @@ import { z } from 'zod';
 // create a better zod schema with conditional validation,
 // and optional name fields
 
+// REGISTER STEP 1
+
 export const RegisterFormStep1 = z.object({
 	dateOfBirth: z.string().min(1), // TEMP #366
-	guardianName: Name,
-	guardianPhoneNumber: PhoneNumber,
-	guardianRelationship: Name,
+	guardianName: Name.optional(),
+	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianRelationship: Name.optional(),
 	isGuardian: z.boolean(),
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name,
+	participantPreferredName: Name.optional(),
 });
-// TODO #366 add refine statement for guardian fields
+// TODO #366 add refine - guardian fields conditionally required
 // TODO #366 add refine - make sure participant is an adult
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
+
+// REGISTER STEP 2
 
 export const RegisterFormStep2Fields = z.object({
 	consentToBeContacted: z.literal(true),
@@ -58,6 +62,9 @@ export type PasswordFields = z.infer<typeof PasswordFields>;
 
 export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
+
+// REGISTER POST REQUEST
+// combine both steps
 
 export const RegisterRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
 export type RegisterRequest = z.infer<typeof RegisterRequest>;
