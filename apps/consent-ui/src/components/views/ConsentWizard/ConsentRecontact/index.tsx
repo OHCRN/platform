@@ -59,14 +59,18 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 		title: translate('consentRecontactPage', 'title'),
 		subheading: translate('consentRecontactPage', 'subheading'),
 		subheadingLink: translate('consentRecontactPage', 'subheadingLink'),
+		studyConsentPdf: translate('informedConsentPage', 'studyConsentPdf'),
 		smallText: translate('consentRecontactPage', 'smallText'),
 	};
+
+	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
+
 	return (
 		<div>
 			<h2 className={styles.title}>{pageDict.title}</h2>
 			<p className={styles.description}>
 				{pageDict.subheading}
-				<Link href={'#'} target="__blank">
+				<Link href={studyConsentPdfUrl} prefetch={false} target="__blank">
 					{pageDict.subheadingLink}
 				</Link>
 			</p>

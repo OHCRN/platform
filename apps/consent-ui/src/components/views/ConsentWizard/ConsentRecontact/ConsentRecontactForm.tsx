@@ -50,7 +50,9 @@ const ConsentRecontactForm = ({
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentRecontactRequest>({
+		mode: 'onBlur',
 		resolver: zodResolver(ConsentRecontactRequest),
+		shouldUnregister: true,
 	});
 	const {
 		formState: { errors },
@@ -117,6 +119,7 @@ const ConsentRecontactForm = ({
 							error={errors.secondaryContactPhoneNumber?.type && errorsDict.required}
 							label={formDict.phone}
 							description={formDict.phoneDescription}
+							type={'tel'}
 							name="secondaryContactPhoneNumber"
 							required
 						/>
