@@ -36,15 +36,16 @@
 }
 
 .desktopHeader {
-	width: 100%;
+	width: calc(100vw * 0.33);
+	height: 100%;
 	overflow: hidden;
-	position: relative;
-	flex-basis: 33%;
+	z-index: 2;
+	position: fixed;
 	min-width: 20rem;
-	max-width: 32.8125rem;
-	background: theme('colors.grayscale.800');
+	max-width: 31.577rem;
 	min-height: 600px;
 	display: none;
+	background-color: theme('colors.grayscale.800');
 	@media (min-width: theme('screens.md')) {
 		display: block;
 	}
@@ -54,10 +55,28 @@
 	.content,
 	.image {
 		position: absolute;
+
 		inset: 0;
 	}
 	.content {
 		padding: 2.5rem;
+	}
+}
+
+.desktopHeaderSpace {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	flex-basis: 33%;
+	min-width: 20rem;
+	max-width: 31.577rem;
+	min-height: 600px;
+	display: none;
+	@media (min-width: theme('screens.md')) {
+		display: block;
+	}
+	@media (min-width: theme('screens.lg')) {
+		min-height: 700px;
 	}
 }
 
