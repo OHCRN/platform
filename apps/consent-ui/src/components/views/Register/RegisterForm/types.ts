@@ -35,8 +35,8 @@ export const RegisterFormStep1 = z.object({
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name,
 });
-// TODO #366 add refine statement
-// TODO #366 add error if user is a minor
+// TODO #366 add refine statement for guardian fields
+// TODO #366 add refine - make sure participant is an adult
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 export const RegisterFormStep2Fields = z.object({
