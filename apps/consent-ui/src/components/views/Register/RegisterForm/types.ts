@@ -29,14 +29,14 @@ export const RegisterFormStep1 = z.object({
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
 	guardianRelationship: Name,
+	isGuardian: z.boolean(),
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name,
-	// isGuardian: z.boolean(), TODO #366
-	// commenting this out because the form won't work
-	// with unused fields in the Zod schema
 });
+// TODO #366 add refine statement
+// TODO #366 add error if user is a minor
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 export const RegisterFormStep2Fields = z.object({

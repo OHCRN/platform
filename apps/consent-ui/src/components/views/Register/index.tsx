@@ -67,6 +67,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		enterInfo: translate('registerFormStep1Text', 'enterInfo'),
 		enterParticipantInfo: translate('registerFormStep1Text', 'enterParticipantInfo'),
 		goToStep: translate('registerFormStep1Text', 'goToStep'),
+		isGuardianDescription: translate('registerFormStep1Text', 'isGuardianDescription'),
 		next: translate('registerFormStep1Text', 'next'),
 		participantFirstNameTooltip: translate('registerFormStep1Text', 'participantFirstNameTooltip'),
 		participantLastNameTooltip: translate('registerFormStep1Text', 'participantLastNameTooltip'),
