@@ -17,6 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import formLabels from '../en/formLabels';
+
+const { yes, no } = formLabels;
+
 const dictionary = {
 	researchParticipationFutureResearchTitle:
 		'Optional consent to allow collection of previously collected samples for future unknown research',
@@ -28,8 +32,8 @@ const dictionary = {
 		'I agree that my study doctor, or someone on the study team, may provide my contact information and genetic test results to an existing cancer registry, if applicable. ',
 	researchParticipationContactInformationDescLink:
 		'Click here to view current list of approved cancer registries.',
-	yesText: 'Yes',
-	noText: 'No',
+	yes,
+	no,
 } satisfies Record<string, string>;
 
 export type ConsentResearchParticipationFormDictionary = Record<keyof typeof dictionary, string>;

@@ -19,6 +19,10 @@
 
 import { ConsentResearchParticipationFormDictionary } from 'src/i18n/locales/en/consentResearchParticipationForm';
 
+import formLabels from '../en/formLabels';
+
+const { yes, no } = formLabels;
+
 const dictionary = {
 	researchParticipationFutureResearchTitle:
 		"Consentement facultatif pour permettre la collecte d'échantillons précédemment collectés pour de futures recherches inconnues",
@@ -30,8 +34,8 @@ const dictionary = {
 		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse fournir mes coordonnées et les résultats de mes tests génétiques à un registre du cancer existant, le cas échéant. ",
 	researchParticipationContactInformationDescLink:
 		'Cliquez ici pour consulter la liste actuelle des registres du cancer approuvés.',
-	yesText: 'Oui',
-	noText: 'Non',
+	yes,
+	no,
 } satisfies ConsentResearchParticipationFormDictionary;
 
 export default dictionary;

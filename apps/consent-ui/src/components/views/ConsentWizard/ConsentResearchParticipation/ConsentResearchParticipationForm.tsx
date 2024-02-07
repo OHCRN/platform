@@ -74,8 +74,8 @@ const ConsentResearchParticipationForm = ({
 						error={errors.RESEARCH_PARTICIPATION__FUTURE_RESEARCH?.type && errorsDict.required}
 						title={formDict.researchParticipationFutureResearchTitle}
 						description={formDict.researchParticipationFutureResearchTitleDesc}
-						yesText={formDict.yesText}
-						noText={formDict.noText}
+						yesText={formDict.yes}
+						noText={formDict.no}
 						name={'RESEARCH_PARTICIPATION__FUTURE_RESEARCH'}
 						required
 					/>
@@ -88,8 +88,8 @@ const ConsentResearchParticipationForm = ({
 								<Link href="#">{formDict.researchParticipationContactInformationDescLink}</Link>
 							</p>
 						}
-						yesText={formDict.yesText}
-						noText={formDict.noText}
+						yesText={formDict.yes}
+						noText={formDict.no}
 						name={'RESEARCH_PARTICIPATION__CONTACT_INFORMATION'}
 						required
 					/>

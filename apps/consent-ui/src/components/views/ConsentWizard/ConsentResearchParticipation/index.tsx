@@ -53,8 +53,8 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 			'consentResearchParticipationForm',
 			'researchParticipationContactInformationDescLink',
 		),
-		yesText: translate('consentResearchParticipationForm', 'yesText'),
-		noText: translate('consentResearchParticipationForm', 'noText'),
+		yes: translate('consentResearchParticipationForm', 'yes'),
+		no: translate('consentResearchParticipationForm', 'no'),
 	};
 
 	const errorsDict: FormErrorsDictionary = {
@@ -65,15 +65,20 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 		heading: translate('consentResearchParticipationPage', 'heading'),
 		subheading: translate('consentResearchParticipationPage', 'subheading'),
 		subheadingLink: translate('consentResearchParticipationPage', 'subheadingLink'),
+		studyConsentPdf: translate('consentResearchParticipationPage', 'studyConsentPdf'),
 		smallText: translate('consentResearchParticipationPage', 'smallText'),
 	};
+
+	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
 
 	return (
 		<div>
 			<h3 className={clsx(styles.heading)}>{pageDict.heading}</h3>
 			<h4 className={clsx(styles.subheading)}>
 				{pageDict.subheading}
-				<Link href="#">{pageDict.subheadingLink}</Link>
+				<Link href={studyConsentPdfUrl} prefetch={false} target="__blank">
+					{pageDict.subheadingLink}
+				</Link>
 			</h4>
 			<p className={clsx(styles.smallText)}>{pageDict.smallText}</p>
 
