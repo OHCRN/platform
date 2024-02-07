@@ -17,34 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { InviteSentNotificationDictionary } from '../en/inviteSentNotification';
 
-import { useNotification } from 'src/components/providers/NotificationProvider';
-import { ValidLanguage } from 'src/i18n';
-import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
+const dictionary = {
+	boldText:
+		'Veuillez leur demander de terminer la création de leur compte en cliquant sur le bouton contenu dans cet e-mail.',
+	description1:
+		"Nous avons envoyé un message à l'adresse e-mail avec laquelle vous avez enregistré votre patient.",
+	description2: "S'ils n'ont pas reçu l'e-mail, veuillez leur demander de ",
+	linkText: 'nous contacter',
+	title: "Merci d'avoir invité votre patient à rejoindre le registre de l'OHCRN !",
+} satisfies InviteSentNotificationDictionary;
 
-import styles from './DashboardNotificationDisplay.module.scss';
-
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { dismissNotification, notificationConfig } = useNotification();
-
-	// check if there's a notification for this page in context
-	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
-		return <></>;
-	}
-
-	const notificationProps = {
-		currentLang,
-		dismissClick: dismissNotification,
-	};
-
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
-
-	if (notificationComponent) {
-		return <div className={styles.notification}>{notificationComponent}</div>;
-	} else {
-		return <></>;
-	}
-};
-
-export default DashboardNotificationDisplay;
+export default dictionary;
