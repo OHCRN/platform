@@ -27,7 +27,7 @@ import { z } from 'zod';
 // REGISTER STEP 1
 
 export const RegisterFormStep1 = z.object({
-	dateOfBirth: z.string().min(1), // TEMP #366
+	dateOfBirth: z.coerce.date(),
 	guardianName: Name.optional(),
 	guardianPhoneNumber: PhoneNumber.optional(),
 	guardianRelationship: Name.optional(),
@@ -37,7 +37,6 @@ export const RegisterFormStep1 = z.object({
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name.optional(),
 });
-// TODO #366 add refine - guardian fields conditionally required
 // TODO #366 add refine - make sure participant is an adult
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 

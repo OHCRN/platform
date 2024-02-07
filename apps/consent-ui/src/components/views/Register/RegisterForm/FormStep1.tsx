@@ -34,18 +34,22 @@ import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerF
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { handleMouseDownBlur } from 'src/components/utils';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
+import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
+import { ValidLanguage } from 'src/i18n';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
 
 const FormStep1 = ({
 	className,
+	currentLang,
 	errorsDict,
 	handleNextClick,
 	labelsDict,
 	textDict,
 }: {
 	className?: string;
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
 	labelsDict: RegisterFormStep1LabelsDictionary;
@@ -77,6 +81,8 @@ const FormStep1 = ({
 	}, [setFocus]);
 
 	const watchIsGuardian = watch('isGuardian');
+	const watchdob = watch('dateOfBirth');
+	console.log(typeof watchdob, watchdob);
 
 	return (
 		<FormProvider {...methods}>
@@ -151,13 +157,13 @@ const FormStep1 = ({
 						required
 						description={textDict.participantPhoneNumberTooltip}
 					/>
-					{/* TODO #366 implement date input */}
-					<TextFieldSet
+					<CalendarFieldSet
+						currentLang={currentLang}
+						description={textDict.dateOfBirthTooltip}
 						error={errors.dateOfBirth?.type && errorsDict.required}
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
-						description={textDict.dateOfBirthTooltip}
 					/>
 				</FormSection>
 
