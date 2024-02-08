@@ -44,8 +44,9 @@ import {
 	GeneticsClinicOption,
 	MolecularLabOption,
 } from './types';
+import styles from './ConsentReleaseDataForm.module.scss';
 
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-2'];
 
 const ConsentReleaseDataForm = ({
 	currentLang,
@@ -92,6 +93,7 @@ const ConsentReleaseDataForm = ({
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<FormSection>
 					<CheckboxFieldSet
+						className={styles.checkbox}
 						description={
 							'I agree to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.'
 						}
@@ -101,6 +103,7 @@ const ConsentReleaseDataForm = ({
 						title={''}
 					/>
 					<CheckboxFieldSet
+						className={styles.checkbox}
 						description={
 							'I agree to the use my registry data in de-identified research (including display of aggregate data on OHCRN website and research facilitated by longitudinal linkage to administrative health databases.) Learn more about privacy and de-identified information.'
 						}
@@ -111,7 +114,9 @@ const ConsentReleaseDataForm = ({
 					/>
 				</FormSection>
 
-				<p>To make this possible, we will need the following information from you:</p>
+				<p className={styles.smallText}>
+					To make this possible, we will need the following information from you:
+				</p>
 
 				<FormSection>
 					<TextFieldSet
@@ -211,7 +216,7 @@ const ConsentReleaseDataForm = ({
 					/>
 				</FormSection>
 
-				<p>
+				<p className={styles.smallText}>
 					OHCRN is open to participants who have had genetic testing. Please tell us about where
 					your testing was completed:
 				</p>
@@ -232,7 +237,6 @@ const ConsentReleaseDataForm = ({
 						name="16"
 						placeholder={'- Select an option -'}
 						options={geneticsClinicOptions}
-						required
 					/>
 					<SelectFieldSet
 						label={'Molecular Lab'}
@@ -242,7 +246,6 @@ const ConsentReleaseDataForm = ({
 						name="17"
 						placeholder={'- Select an option -'}
 						options={molecularLabOptions}
-						required
 					/>
 				</FormSection>
 

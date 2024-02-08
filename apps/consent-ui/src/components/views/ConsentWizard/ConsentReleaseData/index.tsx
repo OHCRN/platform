@@ -75,7 +75,7 @@ const ConsentReleaseData = ({ currentLang }: { currentLang: ValidLanguage }) => 
 	return (
 		<div>
 			<h2 className={styles.title}>{'Consent to Participate in OHCRN'}</h2>
-			<p>
+			<p className={styles.description}>
 				{
 					'We are inviting you to take part in an Ontario registry (Ontario Hereditary Cancer Research Network – OHCRN) because you have undergone germline genetic testing for a known or suspected hereditary cancer predisposition syndrome. \n\nTo register in OHCRN, you must consent to the release and update of clinical and genetic data from applicable institutions to be stored in OHCRN, and participate in de-identified research.'
 				}
