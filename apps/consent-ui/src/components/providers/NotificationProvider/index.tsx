@@ -23,7 +23,7 @@ import { ReactNode, createContext, useCallback, useContext, useMemo, useState } 
 
 import { RouteName } from 'src/components/common/Link/types';
 
-export type Notification = 'consentComplete' | 'consentInProgress' | 'emailVerified';
+export type Notification = 'consentComplete' | 'consentInProgress' | 'emailVerified' | 'inviteSent';
 
 export type NotificationConfig =
 	| {
