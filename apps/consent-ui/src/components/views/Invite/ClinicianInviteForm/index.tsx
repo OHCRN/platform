@@ -319,6 +319,7 @@ const ClinicianInviteFormComponent = ({
 						<RecaptchaCheckbox
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
+							currentLang={currentLang}
 						/>
 					</div>
 
