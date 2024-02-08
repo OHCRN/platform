@@ -27,6 +27,7 @@ import BackToDashboard from 'src/components/common/BackToDashboard';
 
 import styles from './ConsentWizard.module.scss';
 import InformedConsent from './InformedConsent';
+import ConsentReleaseData from './ConsentReleaseData';
 
 const {
 	INFORMED_CONSENT,
@@ -79,7 +80,9 @@ const ConsentWizard = async ({
 					<div className={styles.content}>
 						{/* TODO: add consent form for each section */}
 						{currentStep === INFORMED_CONSENT && <InformedConsent currentLang={currentLang} />}
-						{currentStep === CONSENT_RELEASE_DATA && <></>}
+						{currentStep === CONSENT_RELEASE_DATA && (
+							<ConsentReleaseData currentLang={currentLang} />
+						)}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
 						{currentStep === CONSENT_RECONTACT && <></>}
 						{currentStep === CONSENT_REVIEW_SIGN && <></>}
