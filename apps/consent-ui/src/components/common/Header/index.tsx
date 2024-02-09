@@ -24,10 +24,13 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
+import { auth } from 'src/app/auth';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
 import HeaderWrapper from './HeaderWrapper';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 
 const icons: {
 	[k in ValidLanguage]: StaticImageData;
@@ -39,6 +42,7 @@ const icons: {
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const translate = getTranslation(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
+	const session = await auth();
 	return (
 		<HeaderWrapper currentLang={currentLang}>
 			<div>
@@ -52,6 +56,11 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>
 			</div>
 			<div className={styles.right}>
+				{session?.user && (
+					<div className={styles.headerItem}>
+						<LogoutButton currentLang={currentLang} />
+					</div>
+				)}
 				<div className={styles.headerItem}>
 					<LanguageToggle currentLang={currentLang} />
 				</div>
@@ -62,7 +71,11 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 				{/* TODO: implement user menu, ticket TBD */}
 				<div className={styles['user-menu']}>
-					<div>Hello</div>
+					{session?.user ? (
+						<div>Hello, {session.user.name}</div>
+					) : (
+						<LoginButton currentLang={currentLang} />
+					)}
 				</div>
 			</div>
 		</HeaderWrapper>

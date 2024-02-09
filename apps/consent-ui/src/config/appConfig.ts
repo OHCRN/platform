@@ -22,6 +22,8 @@ export type AppConfig = {
 	CONSENT_UI_URL: string;
 	FEATURE_FLAG: boolean;
 	RECAPTCHA_SITE_KEY?: string;
+	KEYCLOAK_ISSUER: string;
+	KEYCLOAK_CLIENT_ID: string;
 };
 
 export const defaultAppConfig: AppConfig = {
@@ -29,6 +31,8 @@ export const defaultAppConfig: AppConfig = {
 	CONSENT_UI_URL: 'http://localhost:3000',
 	FEATURE_FLAG: false,
 	RECAPTCHA_SITE_KEY: undefined,
+	KEYCLOAK_ISSUER: '', // should set this up to error on server start, if not provided
+	KEYCLOAK_CLIENT_ID: '', // should set this up to error on server start, if not provided
 };
 
 /**
@@ -48,12 +52,20 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 		serverEnv.FEATURE_FLAG === 'false'
 			? false
 			: serverEnv.FEATURE_FLAG === 'true' ||
-			  process.env.FEATURE_FLAG === 'true' ||
-			  defaultAppConfig.FEATURE_FLAG,
+				process.env.FEATURE_FLAG === 'true' ||
+				defaultAppConfig.FEATURE_FLAG,
 	RECAPTCHA_SITE_KEY:
 		serverEnv.RECAPTCHA_SITE_KEY ||
 		process.env.RECAPTCHA_SITE_KEY ||
 		defaultAppConfig.RECAPTCHA_SITE_KEY,
+	KEYCLOAK_ISSUER:
+		serverEnv.AUTH_KEYCLOAK_ISSUER ||
+		process.env.AUTH_KEYCLOAK_ISSUER ||
+		defaultAppConfig.KEYCLOAK_ISSUER,
+	KEYCLOAK_CLIENT_ID:
+		serverEnv.AUTH_KEYCLOAK_ID ||
+		process.env.AUTH_KEYCLOAK_ID ||
+		defaultAppConfig.KEYCLOAK_CLIENT_ID,
 });
 
 export { getAppConfig };

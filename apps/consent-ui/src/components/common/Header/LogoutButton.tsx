@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -16,14 +16,21 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+'use client';
 
-export const PROXY_API_PATH = '/api';
-export const PROXY_PROTECTED_API_PATH = '/api/protected';
+import { signOut } from 'next-auth/react';
+import urlJoin from 'url-join';
 
-// API
-export const API = {
-	INVITES: '/invites',
-	STATUS: '/status',
+import { ValidLanguage } from 'src/i18n';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+
+import Button from '../Button';
+
+const LogoutButton = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { CONSENT_UI_URL } = useAppConfigContext();
+	const logoutRedirect = urlJoin(CONSENT_UI_URL, currentLang);
+
+	return <Button onClick={() => signOut({ callbackUrl: logoutRedirect })}>Logout</Button>;
 };
 
-export const OHCRN_HOME_LINK = 'https://ohcrn.ca/';
+export default LogoutButton;

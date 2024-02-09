@@ -52,4 +52,26 @@ router.get('/', async (req, res) => {
 	return res.json(response);
 });
 
+// FOR TESTING ONLY!
+// TODO: remove in ticket #370
+/**
+ * @openapi
+ * /status/test:
+ *   post:
+ *     tags:
+ *       - Status
+ *     name: Check API Status
+ *     description: Test POST response
+ *     responses:
+ *       200:
+ *         description: OK
+ *       500:
+ *         description: Server error
+ */
+router.post('/test', async (req, res) => {
+	const response = { status: 'this is a test response' };
+
+	return res.status(200).json(response);
+});
+
 export default router;

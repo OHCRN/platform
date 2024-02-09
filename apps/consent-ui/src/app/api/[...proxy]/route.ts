@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,13 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const PROXY_API_PATH = '/api';
-export const PROXY_PROTECTED_API_PATH = '/api/protected';
+import { getAppConfig } from 'src/config';
+import { PROXY_API_PATH } from 'src/constants';
 
-// API
-export const API = {
-	INVITES: '/invites',
-	STATUS: '/status',
-};
+async function handler(req: Request, res: Response) {
+	console.log('In public route handler');
+	const { CONSENT_API_URL } = getAppConfig(process.env);
+	console.log('req url: ', req.url);
+	let target = '';
+	target = CONSENT_API_URL;
+	return res;
+	// } else {
+	// 	return res.status(404).end();
+	// }
+	// req.url = path;
 
-export const OHCRN_HOME_LINK = 'https://ohcrn.ca/';
+	// Don't forward cookies to the API:
+	// req.headers.cookie = '';
+	// console.info(`proxy without authentication - proxying to target:${target} path:${path}`);
+}
+
+export { handler as GET, handler as POST };
