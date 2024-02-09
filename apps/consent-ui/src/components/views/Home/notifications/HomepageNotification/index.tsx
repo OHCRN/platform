@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,24 +17,35 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import dictionaries from '../locales/index.js';
+'use client';
 
-import { ValidLanguage } from './languages';
+import { useNotification } from 'src/components/providers/NotificationProvider';
+import { ValidLanguage } from 'src/i18n';
+import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
 
-export type Dictionaries = typeof dictionaries;
-export type Namespace = keyof Dictionaries[ValidLanguage];
+import styles from './HomepageNotification.module.scss';
 
-export type TranslateKey = <SelectedNamespace extends Namespace>(
-	namespace: SelectedNamespace,
-	label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
-	params?: { [key: string]: string | number },
-) => string;
+const HomepageNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { dismissNotification, notificationConfig } = useNotification();
 
-export type TranslateNamespace = <SelectedNamespace extends Namespace>(
-	namespace: SelectedNamespace,
-) => Dictionaries[ValidLanguage][SelectedNamespace];
+	// check if there's a notification for this page in context
+	if (!(notificationConfig && notificationConfig.page === 'home')) {
+		return <></>;
+	}
 
-export type GetTranslation = (language: ValidLanguage) => {
-	translate: TranslateKey;
-	translateNamespace: TranslateNamespace;
+	const notificationComponent = getNotificationComponent({
+		notificationConfig,
+		notificationProps: {
+			currentLang,
+			dismissClick: dismissNotification,
+		},
+	});
+
+	if (notificationComponent) {
+		return <div className={styles.notification}>{notificationComponent}</div>;
+	} else {
+		return <></>;
+	}
 };
+
+export default HomepageNotification;
