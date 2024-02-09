@@ -23,22 +23,23 @@ import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
 import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
 
-import styles from './DashboardNotificationDisplay.module.scss';
+import styles from './HomepageNotification.module.scss';
 
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const HomepageNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { dismissNotification, notificationConfig } = useNotification();
 
 	// check if there's a notification for this page in context
-	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
+	if (!(notificationConfig && notificationConfig.page === 'home')) {
 		return <></>;
 	}
 
-	const notificationProps = {
-		currentLang,
-		dismissClick: dismissNotification,
-	};
-
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
+	const notificationComponent = getNotificationComponent({
+		notificationConfig,
+		notificationProps: {
+			currentLang,
+			dismissClick: dismissNotification,
+		},
+	});
 
 	if (notificationComponent) {
 		return <div className={styles.notification}>{notificationComponent}</div>;
@@ -47,4 +48,4 @@ const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLangu
 	}
 };
 
-export default DashboardNotificationDisplay;
+export default HomepageNotification;
