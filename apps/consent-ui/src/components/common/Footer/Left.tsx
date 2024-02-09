@@ -20,14 +20,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { TranslationFunction } from 'src/i18n';
+import { TranslateKey } from 'src/i18n';
 import OICRLogo from 'src/../public/assets/images/oicr.svg';
 import InstagramLogo from 'src/../public/assets/images/instagram.svg';
 import TwitterLogo from 'src/../public/assets/images/twitter.svg';
 
 import styles from './Footer.module.scss';
 
-const Left = ({ translate }: { translate: TranslationFunction }) => {
+const Left = ({ translate }: { translate: TranslateKey }) => {
 	return (
 		<div className={styles.left}>
 			<Link href="#" className={styles.icon}>
