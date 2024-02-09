@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,15 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const PROXY_API_PATH = '/api';
-export const PROXY_PROTECTED_API_PATH = '/api/protected';
+import NextAuth from 'next-auth';
 
-// API
-export const API = {
-	INVITES: '/invites',
-	REGISTER: '/register',
-	STATUS: '/status',
-};
+import { authConfig } from './authConfig';
 
-// TODO add link to help centre https://github.com/OHCRN/platform/issues/367
-export const OHCRN_HELP_CENTRE_URL = '';
+export const {
+	handlers: { GET, POST },
+	auth,
+	signIn,
+	signOut,
+} = NextAuth(authConfig);

@@ -19,13 +19,16 @@
 
 import { AxiosError, AxiosResponse } from 'axios';
 import { APIStatus } from 'types/common';
+import urlJoin from 'url-join';
 
-import { API } from 'src/constants';
+import { API, PROXY_API_PATH, PROXY_PROTECTED_API_PATH } from 'src/constants';
 import { axiosClient } from 'src/services/api';
 
 const getAPIStatus = async () => {
 	return await axiosClient
-		.get(API.STATUS)
+		.post(urlJoin(PROXY_PROTECTED_API_PATH, API.STATUS, 'test'))
+		// .get(urlJoin(PROXY_API_PATH, API.STATUS))
+		// .get(API.STATUS)
 		.then((res: AxiosResponse<APIStatus>) => {
 			return res.data;
 		})

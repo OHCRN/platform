@@ -23,6 +23,8 @@ export type AppConfig = {
 	OHCRN_EMAIL?: string;
 	OHCRN_HOME_LINK?: string;
 	RECAPTCHA_SITE_KEY?: string;
+	KEYCLOAK_ISSUER: string;
+	KEYCLOAK_CLIENT_ID: string;
 };
 
 export const defaultAppConfig: AppConfig = {
@@ -31,6 +33,8 @@ export const defaultAppConfig: AppConfig = {
 	OHCRN_EMAIL: '',
 	OHCRN_HOME_LINK: '',
 	RECAPTCHA_SITE_KEY: undefined,
+	KEYCLOAK_ISSUER: '', // should set this up to error on server start, if not provided
+	KEYCLOAK_CLIENT_ID: '', // should set this up to error on server start, if not provided
 };
 
 /**
@@ -49,10 +53,24 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 	OHCRN_EMAIL: serverEnv.OHCRN_EMAIL || process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
 	OHCRN_HOME_LINK:
 		serverEnv.OHCRN_HOME_LINK || process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,
+	FEATURE_FLAG:
+		serverEnv.FEATURE_FLAG === 'false'
+			? false
+			: serverEnv.FEATURE_FLAG === 'true' ||
+			  process.env.FEATURE_FLAG === 'true' ||
+			  defaultAppConfig.FEATURE_FLAG,
 	RECAPTCHA_SITE_KEY:
 		serverEnv.RECAPTCHA_SITE_KEY ||
 		process.env.RECAPTCHA_SITE_KEY ||
 		defaultAppConfig.RECAPTCHA_SITE_KEY,
+	KEYCLOAK_ISSUER:
+		serverEnv.AUTH_KEYCLOAK_ISSUER ||
+		process.env.AUTH_KEYCLOAK_ISSUER ||
+		defaultAppConfig.KEYCLOAK_ISSUER,
+	KEYCLOAK_CLIENT_ID:
+		serverEnv.AUTH_KEYCLOAK_ID ||
+		process.env.AUTH_KEYCLOAK_ID ||
+		defaultAppConfig.KEYCLOAK_CLIENT_ID,
 });
 
 export { getAppConfig };

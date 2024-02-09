@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -16,16 +16,29 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+'use client';
 
-export const PROXY_API_PATH = '/api';
-export const PROXY_PROTECTED_API_PATH = '/api/protected';
+import { signIn } from 'next-auth/react';
+import urlJoin from 'url-join';
 
-// API
-export const API = {
-	INVITES: '/invites',
-	REGISTER: '/register',
-	STATUS: '/status',
+import { ValidLanguage } from 'src/i18n';
+import routesByLocale from 'src/i18n/routes/routesByLocale.json';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+
+import Button from '../Button';
+
+const LoginButton = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { CONSENT_UI_URL } = useAppConfigContext();
+	const loginRedirect = urlJoin(CONSENT_UI_URL, currentLang, routesByLocale[currentLang].dashboard);
+	return (
+		<Button
+			onClick={() =>
+				signIn('keycloak', { callbackUrl: loginRedirect }, { ui_locales: currentLang })
+			}
+		>
+			Login
+		</Button>
+	);
 };
 
-// TODO add link to help centre https://github.com/OHCRN/platform/issues/367
-export const OHCRN_HELP_CENTRE_URL = '';
+export default LoginButton;
