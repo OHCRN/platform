@@ -24,9 +24,9 @@ import ReCAPTCHA from 'react-google-recaptcha';
 export type RecaptchaToken = string | null | undefined;
 export type RecaptchaCheckboxRef = RefObject<ReCAPTCHA>;
 
-// recaptcha token lasts 2 minutes.
-// reset after 90 seconds to avoid expiry issues.
-const resetDelay = 1.5 * 60 * 1000;
+// recaptcha token lasts 60 seconds.
+// reset after 45 seconds to avoid expiry issues.
+const resetDelay = 45 * 1000;
 
 const useRecaptcha = () => {
 	const recaptchaCheckboxRef: RecaptchaCheckboxRef = createRef<ReCAPTCHA>();
