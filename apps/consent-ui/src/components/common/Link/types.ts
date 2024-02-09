@@ -36,14 +36,7 @@ export const CONSENT_STEP_ROUTES = [
 export const ConsentStepRouteEnum = z.enum(CONSENT_STEP_ROUTES);
 export type ConsentStepRoute = z.infer<typeof ConsentStepRouteEnum>;
 
-const GENERAL_ROUTES = [
-	'cancer-registries',
-	'dashboard',
-	'home',
-	'invite',
-	'privacy',
-	'register',
-] as const;
+const GENERAL_ROUTES = ['dashboard', 'home', 'invite', 'register'] as const;
 
 export const GeneralRouteNameEnum = z.enum(GENERAL_ROUTES);
 export type GeneralRouteName = z.infer<typeof GeneralRouteNameEnum>;

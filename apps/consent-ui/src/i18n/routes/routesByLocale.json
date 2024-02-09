@@ -8,9 +8,7 @@
 		"consent-2": "/consent/step-2",
 		"consent-3": "/consent/step-3",
 		"consent-4": "/consent/step-4",
-		"consent-5": "/consent/step-5",
-		"privacy": "/",
-		"cancer-registries": "/"
+		"consent-5": "/consent/step-5"
 	},
 	"fr": {
 		"home": "/",
@@ -21,8 +19,6 @@
 		"consent-2": "/consentement/etape-2",
 		"consent-3": "/consentement/etape-3",
 		"consent-4": "/consentement/etape-4",
-		"consent-5": "/consentement/etape-5",
-		"privacy": "/",
-		"cancer-registries": "/"
+		"consent-5": "/consentement/etape-5"
 	}
 }

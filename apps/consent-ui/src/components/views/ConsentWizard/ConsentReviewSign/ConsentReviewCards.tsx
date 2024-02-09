@@ -17,9 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Link from 'next/link';
+
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
-import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 
 const stubData = {
 	ancestry: 'American',
@@ -116,9 +117,7 @@ const ConsentReviewCards = ({ currentLang }: ConsentReviewCardsProps) => {
 				<>
 					<b>{stubData.RELEASE_DATA__DE_IDENTIFIED ? textDict.agree : textDict.doNotAgree}</b>{' '}
 					{textDict.deidentifiedParticipationDescription}{' '}
-					<LocalizedLink linkLang={currentLang} name="privacy">
-						{textDict.deidentifiedParticipationLink}
-					</LocalizedLink>
+					<Link href="#">{textDict.deidentifiedParticipationLink}</Link>
 				</>
 			</ReviewInfoCard>
 
@@ -150,10 +149,7 @@ const ConsentReviewCards = ({ currentLang }: ConsentReviewCardsProps) => {
 							? textDict.agree
 							: textDict.doNotAgree}
 					</b>{' '}
-					{textDict.releaseContactDescription}{' '}
-					<LocalizedLink linkLang={currentLang} name="cancer-registries">
-						{textDict.releaseContactLink}
-					</LocalizedLink>
+					{textDict.releaseContactDescription} <Link href="#">{textDict.releaseContactLink}</Link>
 				</>
 			</ReviewInfoCard>
 
