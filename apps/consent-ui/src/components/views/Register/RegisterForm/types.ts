@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Name, PhoneNumber } from 'types/entities';
+import { GuardianBaseFields, Name, PhoneNumber } from 'types/entities';
 import { z } from 'zod';
 
 // TODO hookup backend #368
@@ -26,17 +26,22 @@ import { z } from 'zod';
 
 // REGISTER STEP 1
 
-export const RegisterFormStep1 = z.object({
+export const RegisterFormStep1Fields = z.object({
 	dateOfBirth: z.coerce.date(),
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianRelationship: Name.optional(),
 	isGuardian: z.boolean(),
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name.optional(),
 });
+
+const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true });
+export type RegisterGuardianFields = z.infer<typeof RegisterGuardianFields>;
+
+export const RegisterFormStep1 = RegisterFormStep1Fields.merge(RegisterGuardianFields);
+// 	.refine(
+// 	registerHasRequiredGuardianInfo,
+// );
 // TODO #366 add refine - make sure participant is an adult
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 

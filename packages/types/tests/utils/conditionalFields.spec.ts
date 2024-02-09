@@ -22,14 +22,19 @@ import { describe, expect, it } from 'vitest';
 import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
+	registerHasRequiredGuardianInfo,
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
-const mockCompleteGuardianFields = {
+const mockRegisterGuardianFields = {
 	guardianName: 'Gina Guardian',
-	guardianEmailAddress: 'gina_g@example.com',
 	guardianPhoneNumber: '0123456789',
 	guardianRelationship: 'Mother',
+};
+
+const mockCompleteGuardianFields = {
+	...mockRegisterGuardianFields,
+	guardianEmailAddress: 'gina_g@example.com',
 };
 
 const mockCompleteParticipantContactFields = {
@@ -87,9 +92,36 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
+		it('returns FALSE for a guardian consentGroup and one required guardian field is a empty string', () => {
+			const guardianFields = {
+				...mockCompleteGuardianFields,
+				guardianEmailAddress: '',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
+			};
+			const result = hasRequiredGuardianInformation(testSchemaObj);
+			expect(result).false;
+		});
+
 		it('returns FALSE for a guardian consentGroup and several required guardian fields are NOT provided', () => {
 			const guardianFields = {
 				guardianName: 'Gina Guardian',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+			};
+			const result = hasRequiredGuardianInformation(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns FALSE for a guardian consentGroup and several required guardian fields are empty strings', () => {
+			const guardianFields = {
+				...mockCompleteGuardianFields,
+				guardianPhoneNumber: '',
+				guardianRelationship: '',
 			};
 			const testSchemaObj = {
 				...guardianFields,
@@ -107,11 +139,148 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
+		it('returns FALSE for a guardian consentGroup and ALL guardian fields are empty strings', () => {
+			const guardianFields = {
+				guardianEmailAddress: '',
+				guardianName: '',
+				guardianPhoneNumber: '',
+				guardianRelationship: '',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+			};
+			const result = hasRequiredGuardianInformation(testSchemaObj);
+			expect(result).false;
+		});
+
 		it('returns TRUE for a non-guardian consentGroup and no guardian fields are provided', () => {
 			const testSchemaObj = {
 				consentGroup: ADULT_CONSENT,
 			};
 			const result = hasRequiredGuardianInformation(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns TRUE for a non-guardian consentGroup and ALL guardian fields are empty strings', () => {
+			const guardianFields = {
+				guardianEmailAddress: '',
+				guardianName: '',
+				guardianPhoneNumber: '',
+				guardianRelationship: '',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				consentGroup: ADULT_CONSENT,
+			};
+			const result = hasRequiredGuardianInformation(testSchemaObj);
+			expect(result).true;
+		});
+	});
+
+	describe('registerHasRequiredGuardianInfo', () => {
+		it('returns TRUE for user is a guardian and all required guardian fields are provided', () => {
+			const testSchemaObj = {
+				...mockRegisterGuardianFields,
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE for user is a guardian and one required guardian field is NOT provided', () => {
+			const guardianFields = {
+				guardianPhoneNumber: '0123456789',
+				guardianRelationship: 'Mother',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns FALSE for user is a guardian and one required guardian field is an empty string', () => {
+			const guardianFields = {
+				...mockRegisterGuardianFields,
+				guardianName: '',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns FALSE for user is a guardian and several required guardian fields are NOT provided', () => {
+			const guardianFields = {
+				guardianRelationship: 'Mother',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns FALSE for user is a guardian and several required guardian fields are empty strings', () => {
+			const guardianFields = {
+				guardianName: '',
+				guardianPhoneNumber: '',
+				guardianRelationship: 'Mother',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns FALSE for user is a guardian and NO required guardian fields are provided', () => {
+			const testSchemaObj = {
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns FALSE for user is a guardian and all guardian fields are empty strings', () => {
+			const guardianFields = {
+				guardianName: '',
+				guardianPhoneNumber: '',
+				guardianRelationship: '',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				isGuardian: true,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns TRUE for user is NOT a guardian and no guardian fields are provided', () => {
+			const testSchemaObj = {
+				isGuardian: false,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns TRUE for user is NOT a guardian and all guardian fields are empty strings', () => {
+			const guardianFields = {
+				guardianName: '',
+				guardianPhoneNumber: '',
+				guardianRelationship: '',
+			};
+			const testSchemaObj = {
+				...guardianFields,
+				isGuardian: false,
+			};
+			const result = registerHasRequiredGuardianInfo(testSchemaObj);
 			expect(result).true;
 		});
 	});
