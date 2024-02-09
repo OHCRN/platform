@@ -23,7 +23,7 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import LanguageToggleButton from './LanguageToggleButton';
 
 const LanguageToggle = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	const langToSelect = getUnselectedLang(currentLang);
 
 	return (

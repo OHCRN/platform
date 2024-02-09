@@ -29,8 +29,9 @@ import styles from './Home.module.scss';
 import HomepageNotification from './notifications/HomepageNotification';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	const { OHCRN_HOME_LINK } = getAppConfig(process.env);
+
 	return (
 		<div className={styles.pageWrapper}>
 			<HomepageNotification currentLang={currentLang} />
