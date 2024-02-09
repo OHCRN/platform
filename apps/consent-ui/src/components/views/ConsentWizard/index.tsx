@@ -45,7 +45,7 @@ const ConsentWizard = async ({
 	currentLang: ValidLanguage;
 	currentStep: ConsentCategory;
 }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 
 	// TODO: return consent wizard progress from consent-api
 	const progress: ConsentWizardProgress = {
