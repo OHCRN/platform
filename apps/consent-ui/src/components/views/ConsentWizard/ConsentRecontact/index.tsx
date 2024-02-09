@@ -20,48 +20,15 @@
 import Link from 'next/link';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 
 import styles from './ConsentRecontact.module.scss';
 import ConsentRecontactForm from './ConsentRecontactForm';
 
 const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
-
-	const formDict = {
-		recontactFutureResearchTitle: translate('consentRecontactForm', 'recontactFutureResearchTitle'),
-		recontactFutureResearchDesc: translate('consentRecontactForm', 'recontactFutureResearchDesc'),
-		recontactSecondaryContactTitle: translate(
-			'consentRecontactForm',
-			'recontactSecondaryContactTitle',
-		),
-		recontactSecondaryContactDesc: translate(
-			'consentRecontactForm',
-			'recontactSecondaryContactDesc',
-		),
-		secondaryContactFormDescription: translate(
-			'consentRecontactForm',
-			'secondaryContactFormDescription',
-		),
-		firstName: translate('consentRecontactForm', 'firstName'),
-		lastName: translate('consentRecontactForm', 'lastName'),
-		phone: translate('consentRecontactForm', 'phone'),
-		phoneDescription: translate('consentRecontactForm', 'phoneDescription'),
-		yesText: translate('consentRecontactForm', 'yesText'),
-		noText: translate('consentRecontactForm', 'noText'),
-	};
-
-	const errorsDict: FormErrorsDictionary = {
-		required: translate('formErrors', 'required'),
-	};
-
-	const pageDict = {
-		title: translate('consentRecontactPage', 'title'),
-		subheading: translate('consentRecontactPage', 'subheading'),
-		subheadingLink: translate('consentRecontactPage', 'subheadingLink'),
-		studyConsentPdf: translate('informedConsentPage', 'studyConsentPdf'),
-		smallText: translate('consentRecontactPage', 'smallText'),
-	};
+	const { translateNamespace } = getTranslation(currentLang);
+	const formDict = translateNamespace('consentRecontactForm');
+	const errorsDict = translateNamespace('formErrors');
+	const pageDict = translateNamespace('consentRecontactPage');
 
 	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
 
