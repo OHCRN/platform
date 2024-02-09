@@ -44,7 +44,6 @@ import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout
 import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
-import OhipFieldSet from 'src/components/common/Form/fieldsets/OhipFieldSet';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 
@@ -300,27 +299,14 @@ const ClinicianInviteFormComponent = ({
 						name="clinicianLastName"
 						required
 					/>
-					<OhipFieldSet
-						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
-						name="clinicianInstitutionalEmailAddress"
-						required
-						// tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
-						// type="email"
-						label={'OHIP #'}
-						description={
-							'Enter the first 10 digits of your green health card. We require this in order to access your lab reports.'
-						}
-						checkboxLabel={'I do not have an Ontario health card.'}
-					/>
-					{/* <TextFieldSet
+					<TextFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
 						description={textDict.clinicianInstitutionalEmailAddressTooltip}
 						type="email"
-						withNarrowDesktopLayout
-					/> */}
+					/>
 				</FormSection>
 
 				{/* SECTION - RECAPTCHA & SUBMIT */}
