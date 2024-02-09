@@ -54,6 +54,10 @@ export const replaceParams = (
 };
 
 // TODO: is there a way to enforce this function for server side use only?
+/**
+ * @param language ValidLanguage
+ * @exports {translate, translateNamespace}
+ */
 export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
 

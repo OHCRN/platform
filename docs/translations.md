@@ -84,6 +84,8 @@ const translatedString = translate('footer', 'copyright', { year: '2023' });
 
 Translate an entire namespace at once when you want to pass down many translations from a server component to a client component, e.g. for forms.
 
+We're keeping all translations on the server side and can't access these functions on the client side. This is a convenience function to collect all translations in the parent (server component) and pass them to the child (client component).
+
 First, create a separate namespace for the client component, e.g. `/en/myForm.ts`. Then call `translateNamespace('myForm')`. Pass down the translated namespace to the form as a prop, with the namespace's type. From there you can access translations by their key (`formDict.translationKey`).
 
 Parent server component:
