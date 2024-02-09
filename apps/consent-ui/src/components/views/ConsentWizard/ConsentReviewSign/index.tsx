@@ -28,12 +28,13 @@ interface ConsentReviewSignProps {
 }
 
 const ConsentReviewSign = ({ currentLang }: ConsentReviewSignProps) => {
-	const translate = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
+	const pageDict = translateNamespace('consentReviewSignPage');
 
 	return (
 		<div>
-			<h2>{translate('consentReviewSignPage', 'title')}</h2>
-			<p className={styles.description}>{translate('consentReviewSignPage', 'description')}</p>
+			<h2>{pageDict.title}</h2>
+			<p className={styles.description}>{pageDict.description}</p>
 
 			<ConsentReviewCards currentLang={currentLang} />
 

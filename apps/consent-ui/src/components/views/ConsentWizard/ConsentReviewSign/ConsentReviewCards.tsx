@@ -20,7 +20,6 @@
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import ReviewInfoCard from 'src/components/common/ReviewInfoCard';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
-import { ConsentReviewCardsDictionary } from 'src/i18n/locales/en/consentReviewCards';
 
 const stubData = {
 	ancestry: 'American',
@@ -53,49 +52,8 @@ interface ConsentReviewCardsProps {
 }
 
 const ConsentReviewCards = ({ currentLang }: ConsentReviewCardsProps) => {
-	const translate = getTranslation(currentLang);
-
-	const textDict: ConsentReviewCardsDictionary = {
-		agree: translate('consentReviewCards', 'agree'),
-		ancestry: translate('consentReviewCards', 'ancestry'),
-		biobankDescription: translate('consentReviewCards', 'biobankDescription'),
-		biobankTitle: translate('consentReviewCards', 'biobankTitle'),
-		cancerDiagnosis: translate('consentReviewCards', 'cancerDiagnosis'),
-		clinician: translate('consentReviewCards', 'clinician'),
-		dateOfBirth: translate('consentReviewCards', 'dateOfBirth'),
-		deidentifiedParticipationDescription: translate(
-			'consentReviewCards',
-			'deidentifiedParticipationDescription',
-		),
-		deidentifiedParticipationLink: translate('consentReviewCards', 'deidentifiedParticipationLink'),
-		deidentifiedParticipationTitle: translate(
-			'consentReviewCards',
-			'deidentifiedParticipationTitle',
-		),
-		doNotAgree: translate('consentReviewCards', 'doNotAgree'),
-		edit: translate('consentReviewCards', 'edit'),
-		familyHistoryOfCancer: translate('consentReviewCards', 'familyHistoryOfCancer'),
-		genderIdentity: translate('consentReviewCards', 'genderIdentity'),
-		geneticsClinic: translate('consentReviewCards', 'geneticsClinic'),
-		molecularLab: translate('consentReviewCards', 'molecularLab'),
-		nameOnOhip: translate('consentReviewCards', 'nameOnOhip'),
-		ohipNumber: translate('consentReviewCards', 'ohipNumber'),
-		personalHistoryOfCancer: translate('consentReviewCards', 'personalHistoryOfCancer'),
-		phone: translate('consentReviewCards', 'phone'),
-		postalCode: translate('consentReviewCards', 'postalCode'),
-		preferredName: translate('consentReviewCards', 'preferredName'),
-		recontactDescription: translate('consentReviewCards', 'recontactDescription'),
-		recontactTitle: translate('consentReviewCards', 'recontactTitle'),
-		releaseContactDescription: translate('consentReviewCards', 'releaseContactDescription'),
-		releaseContactLink: translate('consentReviewCards', 'releaseContactLink'),
-		releaseContactTitle: translate('consentReviewCards', 'releaseContactTitle'),
-		releaseHealthDataDescription: translate('consentReviewCards', 'releaseHealthDataDescription'),
-		releaseHealthDataTitle: translate('consentReviewCards', 'releaseHealthDataTitle'),
-		secondaryContact: translate('consentReviewCards', 'secondaryContact'),
-		secondaryContactDescription: translate('consentReviewCards', 'secondaryContactDescription'),
-		secondaryContactTitle: translate('consentReviewCards', 'secondaryContactTitle'),
-		sexAssignedAtBirth: translate('consentReviewCards', 'sexAssignedAtBirth'),
-	};
+	const { translateNamespace } = getTranslation(currentLang);
+	const textDict = translateNamespace('consentReviewCards');
 
 	const releaseHealthFields = [
 		{
