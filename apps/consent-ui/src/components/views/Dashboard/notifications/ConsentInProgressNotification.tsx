@@ -23,7 +23,8 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
 
 const ConsentInProgressNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
+
 	return (
 		<Notification level="warning" title={translate('consentInProgressNotification', 'title')}>
 			{translate('consentInProgressNotification', 'text1')}

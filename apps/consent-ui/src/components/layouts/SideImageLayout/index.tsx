@@ -55,7 +55,7 @@ const SideImageLayout = ({
 	mainTitle,
 	navTitle,
 }: SideImageLayoutProps) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 
 	return (
 		<div className={clsx(styles.container, className)}>
