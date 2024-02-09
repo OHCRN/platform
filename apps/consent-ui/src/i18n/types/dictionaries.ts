@@ -24,12 +24,17 @@ import { ValidLanguage } from './languages';
 export type Dictionaries = typeof dictionaries;
 export type Namespace = keyof Dictionaries[ValidLanguage];
 
-export type GetTranslation = (
-	language: ValidLanguage,
-) => <SelectedNamespace extends Namespace>(
+export type TranslateKey = <SelectedNamespace extends Namespace>(
 	namespace: SelectedNamespace,
 	label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
 	params?: { [key: string]: string | number },
 ) => string;
 
-export type TranslationFunction = ReturnType<GetTranslation>;
+export type TranslateNamespace = <SelectedNamespace extends Namespace>(
+	namespace: SelectedNamespace,
+) => Dictionaries[ValidLanguage][SelectedNamespace];
+
+export type GetTranslation = (language: ValidLanguage) => {
+	translate: TranslateKey;
+	translateNamespace: TranslateNamespace;
+};

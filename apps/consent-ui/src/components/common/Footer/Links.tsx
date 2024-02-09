@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import clsx from 'clsx';
 
-import { TranslationFunction } from 'src/i18n';
+import { TranslateKey } from 'src/i18n';
 import { FooterDictionary } from 'src/i18n/locales/en/footer.js';
 
 import styles from './Footer.module.scss';
@@ -48,7 +48,7 @@ const footerLinks: { translationKey: keyof FooterDictionary; url: string }[] = [
 	},
 ];
 
-const Links = ({ translate }: { translate: TranslationFunction }) => {
+const Links = ({ translate }: { translate: TranslateKey }) => {
 	return (
 		<div className={clsx(styles.linkGrid, styles.links)}>
 			{footerLinks.map((link) => (
