@@ -41,7 +41,7 @@ const ConsentStepsNavigation = ({
 }) => {
 	const { nextRoute, prevRoute } = getNextPrevConsentSteps(currentStep);
 
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 
 	return (
 		<div className={styles.navWrapper}>

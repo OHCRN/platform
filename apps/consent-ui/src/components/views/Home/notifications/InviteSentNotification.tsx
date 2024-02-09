@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -18,39 +18,31 @@
  */
 
 import Link from 'next/link';
-import Image from 'next/image';
 
-import { TranslateKey } from 'src/i18n';
-import OICRLogo from 'src/../public/assets/images/oicr.svg';
-import InstagramLogo from 'src/../public/assets/images/instagram.svg';
-import TwitterLogo from 'src/../public/assets/images/twitter.svg';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import Notification from 'src/components/common/Notification';
 
-import styles from './Footer.module.scss';
-
-const Left = ({ translate }: { translate: TranslateKey }) => {
+const InviteSentNotification = ({
+	currentLang,
+	dismissClick,
+}: {
+	currentLang: ValidLanguage;
+	dismissClick: () => void;
+}) => {
+	const { translate } = getTranslation(currentLang);
 	return (
-		<div className={styles.left}>
-			<Link href="#" className={styles.icon}>
-				<Image src={OICRLogo} alt={translate('footer', 'oicrLogoAlt')} className={styles.oicr} />
-			</Link>
-			<div className={styles.mediaIcons}>
-				<Link href="#" className={styles.icon}>
-					<Image
-						src={InstagramLogo}
-						alt={translate('footer', 'instagramLogoAlt')}
-						className={styles.instagram}
-					/>
-				</Link>
-				<Link href="#" className={styles.icon}>
-					<Image
-						src={TwitterLogo}
-						alt={translate('footer', 'twitterLogoAlt')}
-						className={styles.twitter}
-					/>
-				</Link>
-			</div>
-		</div>
+		<Notification
+			dismissClick={dismissClick}
+			level="success"
+			title={translate('inviteSentNotification', 'title')}
+		>
+			{translate('inviteSentNotification', 'description1')}{' '}
+			<b>{translate('inviteSentNotification', 'boldText')}</b>{' '}
+			{translate('inviteSentNotification', 'description2')}
+			{/* TODO add contact us link https://github.com/OHCRN/platform/issues/393 */}
+			<Link href="#">{translate('inviteSentNotification', 'linkText')}</Link>.
+		</Notification>
 	);
 };
 
-export default Left;
+export default InviteSentNotification;
