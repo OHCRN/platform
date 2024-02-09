@@ -17,100 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
-import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import RegisterForm from 'src/components/views/Register/RegisterForm';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
-import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
-import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import registerBg from 'src/../public/assets/images/register-bg.jpg';
-import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
-import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
-
-	const errorsDict: FormErrorsDictionary = {
-		required: translate('formErrors', 'required'),
-	};
-
-	const step1LabelsDict: RegisterFormStep1LabelsDictionary = {
-		dateOfBirth: translate('registerFormStep1Labels', 'dateOfBirth'),
-		firstName: translate('registerFormStep1Labels', 'firstName'),
-		lastName: translate('registerFormStep1Labels', 'lastName'),
-		no: translate('registerFormStep1Labels', 'no'),
-		phone: translate('registerFormStep1Labels', 'phone'),
-		preferredName: translate('registerFormStep1Labels', 'preferredName'),
-		yes: translate('registerFormStep1Labels', 'yes'),
-		yourName: translate('registerFormStep1Labels', 'yourName'),
-		yourPhone: translate('registerFormStep1Labels', 'yourPhone'),
-		yourRelationship: translate('registerFormStep1Labels', 'yourRelationship'),
-	};
-
-	const step2LabelsDict: RegisterFormStep2LabelsDictionary = {
-		confirmPassword: translate('registerFormStep2Labels', 'confirmPassword'),
-		consentContact: translate('registerFormStep2Labels', 'consentContact'),
-		email: translate('registerFormStep2Labels', 'email'),
-		password: translate('registerFormStep2Labels', 'password'),
-	};
-
-	const textDict: RegisterFormTextDictionary = {
-		indicatesRequiredField: translate('registerFormText', 'indicatesRequiredField'),
-		stepCurrentOfTotal: translate('registerFormText', 'stepCurrentOfTotal'),
-	};
-
-	const step1textDict: RegisterFormStep1TextDictionary = {
-		afterRegistering: translate('registerFormStep1Text', 'afterRegistering'),
-		dateOfBirthTooltip: translate('registerFormStep1Text', 'dateOfBirthTooltip'),
-		enterInfo: translate('registerFormStep1Text', 'enterInfo'),
-		enterParticipantInfo: translate('registerFormStep1Text', 'enterParticipantInfo'),
-		goToStep: translate('registerFormStep1Text', 'goToStep'),
-		isGuardianDescription: translate('registerFormStep1Text', 'isGuardianDescription'),
-		next: translate('registerFormStep1Text', 'next'),
-		participantFirstNameTooltip: translate('registerFormStep1Text', 'participantFirstNameTooltip'),
-		participantLastNameTooltip: translate('registerFormStep1Text', 'participantLastNameTooltip'),
-		participantPhoneNumberTooltip: translate(
-			'registerFormStep1Text',
-			'participantPhoneNumberTooltip',
-		),
-		participantPreferredNameTooltip: translate(
-			'registerFormStep1Text',
-			'participantPreferredNameTooltip',
-		),
-		questions: translate('registerFormStep1Text', 'questions'),
-		registeringForSomeoneElse: translate('registerFormStep1Text', 'registeringForSomeoneElse'),
-	};
-
-	const step2textDict: RegisterFormStep2TextDictionary = {
-		afterRegistering: translate('registerFormStep2Text', 'afterRegistering'),
-		back: translate('registerFormStep2Text', 'back'),
-		consentContactDescription: translate('registerFormStep2Text', 'consentContactDescription'),
-		createAccount: translate('registerFormStep2Text', 'createAccount'),
-		goToStep: translate('registerFormStep2Text', 'goToStep'),
-		indicatesRequiredField: translate('registerFormStep2Text', 'indicatesRequiredField'),
-		stepCurrentOfTotal: translate('registerFormStep2Text', 'stepCurrentOfTotal'),
-	};
+	const { translateNamespace } = getTranslation(currentLang);
+	const errorsDict = translateNamespace('formErrors');
+	const pageDict = translateNamespace('registerPage');
+	const step1LabelsDict = translateNamespace('registerFormStep1Labels');
+	const step1textDict = translateNamespace('registerFormStep1Text');
+	const step2LabelsDict = translateNamespace('registerFormStep2Labels');
+	const step2textDict = translateNamespace('registerFormStep2Text');
+	const textDict = translateNamespace('registerFormText');
 
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
 			desktopHeaderImage={registerBg}
 			desktopNavAction={{
-				bottomText: translate('registerPage', 'registerPatients'),
-				topText: translate('registerPage', 'ifClinician'),
+				bottomText: pageDict.registerPatients,
+				topText: pageDict.ifClinician,
 				url: 'invite',
 			}}
 			desktopNavButton={{
-				description: translate('registerPage', 'alreadyRegistered'),
+				description: pageDict.alreadyRegistered,
 				// TODO add link to login page
 				// https://github.com/OHCRN/platform/issues/359
-				button: <LinkButton href="">{translate('registerPage', 'login')}</LinkButton>,
+				button: <LinkButton href="">{pageDict.login}</LinkButton>,
 			}}
-			mainSubtitle={translate('registerPage', 'enrollInOhcrn')}
-			mainTitle={translate('registerPage', 'registerYourself')}
-			navTitle={translate('registerPage', 'participantRegistration')}
+			mainSubtitle={pageDict.enrollInOhcrn}
+			mainTitle={pageDict.registerYourself}
+			navTitle={pageDict.participantRegistration}
 		>
 			<RegisterForm
 				currentLang={currentLang}

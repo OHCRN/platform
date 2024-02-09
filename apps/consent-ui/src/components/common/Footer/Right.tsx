@@ -20,12 +20,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { TranslationFunction } from 'src/i18n';
+import { TranslateKey } from 'src/i18n';
 import ONGovtLogo from 'src/../public/assets/images/on_govt.svg';
 
 import styles from './Footer.module.scss';
 
-const Right = ({ translate }: { translate: TranslationFunction }) => {
+const Right = ({ translate }: { translate: TranslateKey }) => {
 	return (
 		<div className={styles.right}>
 			<Link href="#">
