@@ -1,51 +1,69 @@
-import { ConsentClinicianInviteRequest } from 'types/consentDas';
-import { Result, failure, success } from 'types/httpResponses';
+/*
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
+ *
+ * This program and the accompanying materials are made available under the terms of
+ * the GNU Affero General Public License v3.0. You should have received a copy of the
+ * GNU Affero General Public License along with this program.
+ *  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+ * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+import { ConsentClinicianInviteRequest, ConsentCreateParticipantRequest } from 'types/consentDas';
+import { Result, failure, success, SystemError } from 'types/httpResponses';
 
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
 import prisma, {
 	ClinicianInvite,
 	ConsentCategory,
-	ConsentGroup,
 	ConsentQuestion,
 	ConsentQuestionId,
-	LifecycleState,
 	Participant,
 	ParticipantResponse,
 } from '../prismaClient.js';
 
-const logger = serviceLogger.forModule('PrismaClient');
+const logger = serviceLogger.forModule('CreateService');
 
-export const createParticipant = async ({
-	emailVerified,
-	isGuardian,
-	consentGroup,
-	guardianIdVerified,
-	participantId,
-	currentLifecycleState,
-	previousLifecycleState,
-}: {
-	emailVerified: boolean;
-	isGuardian: boolean;
-	consentGroup: ConsentGroup;
-	guardianIdVerified?: boolean;
-	participantId?: string;
-	currentLifecycleState?: LifecycleState;
-	previousLifecycleState?: LifecycleState;
-}): Promise<Participant> => {
-	// TODO: add error handling
-	const result = await prisma.participant.create({
-		data: {
-			emailVerified,
-			isGuardian,
-			consentGroup,
-			guardianIdVerified,
-			id: participantId,
-			currentLifecycleState,
-			previousLifecycleState,
-		},
-	});
-	return result;
+type CreateParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
+export const createParticipant = async (
+	participantRequest: ConsentCreateParticipantRequest,
+): Promise<Result<Participant, CreateParticipantFailureStatus>> => {
+	return await prisma.participant
+		.create({
+			data: participantRequest,
+		})
+		.then((participant) => success(participant))
+		.catch((error) => {
+			if (error instanceof PrismaClientKnownRequestError) {
+				if (error.code === 'P2002') {
+					const errorMessage = `A participant already exists with that '${
+						error.meta?.target ?? 'data'
+					}'`;
+					logger.error('POST /participants', errorMessage, error.message);
+					return failure('PARTICIPANT_EXISTS', errorMessage);
+				}
+				logger.error('POST /participants', error.code, error.message);
+				return failure(
+					'SYSTEM_ERROR',
+					`An unexpected error occurred in the PrismaClient - ${error.code}`,
+				);
+			}
+			logger.error(
+				'POST /participants',
+				'Unexpected error handling create participant request.',
+				error.message,
+			);
+			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+		});
 };
 
 export const createConsentQuestion = async ({
@@ -88,7 +106,7 @@ export const createParticipantResponse = async ({
 	return result;
 };
 
-type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
+type CreateInviteFailureStatus = SystemError | 'INVITE_EXISTS';
 /**
  * Creates a ClinicianInvite entry in the Consent DB
  * @param inviteRequest Clinician Invite data
