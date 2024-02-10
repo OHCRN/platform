@@ -17,6 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ConsentClinicianInvite.js';
-export * from './ConsentCreateParticipant.js';
-export * from './ParticipantResponse.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+
+import { ConsentParticipant, LifecycleState } from '../../../entities/index.js';
+
+export const ConsentCreateParticipantResponse = ConsentParticipant.extend({
+	previousLifecycleState: LifecycleState.nullable().transform((input) => input ?? undefined),
+});
+
+export type ConsentCreateParticipantResponse = z.infer<typeof ConsentCreateParticipantResponse>;
+export const ConsentCreateParticipantResponseSchema = generateSchema(
+	ConsentCreateParticipantResponse,
+);
