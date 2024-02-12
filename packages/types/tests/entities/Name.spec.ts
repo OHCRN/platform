@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { Name } from '../../src/entities/fields/index.js';
+import { Name, NameOptionalAPI, NameOptionalUI } from '../../src/entities/fields/index.js';
 
 describe('Name', () => {
 	it('Can only contain letters and whitespace', () => {
@@ -34,5 +34,37 @@ describe('Name', () => {
 		expect(Name.safeParse(null).success).false;
 		expect(Name.safeParse('').success).false;
 		expect(Name.safeParse(' ').success).false;
+	});
+});
+
+describe('NameOptionalAPI', () => {
+	it('Can only contain letters and whitespace, or undefined', () => {
+		expect(NameOptionalAPI.safeParse('Homer Simpson').success).true;
+		expect(NameOptionalAPI.safeParse('homer simpson').success).true;
+		expect(NameOptionalAPI.safeParse('Homer Simpon!').success).false;
+		expect(NameOptionalAPI.safeParse("D'oh").success).false;
+		expect(NameOptionalAPI.safeParse('Homer_Simpson').success).false;
+		expect(NameOptionalAPI.safeParse('-Homer Simpson').success).false;
+		expect(NameOptionalAPI.safeParse('Homer Simpson1').success).false;
+		expect(NameOptionalAPI.safeParse(undefined).success).true;
+		expect(NameOptionalAPI.safeParse(null).success).false;
+		expect(NameOptionalAPI.safeParse('').success).false;
+		expect(NameOptionalAPI.safeParse(' ').success).false;
+	});
+});
+
+describe('NameOptionalUI', () => {
+	it('Can only contain letters and whitespace, empty strings, or undefined', () => {
+		expect(NameOptionalUI.safeParse('Homer Simpson').success).true;
+		expect(NameOptionalUI.safeParse('homer simpson').success).true;
+		expect(NameOptionalUI.safeParse('Homer Simpon!').success).false;
+		expect(NameOptionalUI.safeParse("D'oh").success).false;
+		expect(NameOptionalUI.safeParse('Homer_Simpson').success).false;
+		expect(NameOptionalUI.safeParse('-Homer Simpson').success).false;
+		expect(NameOptionalUI.safeParse('Homer Simpson1').success).false;
+		expect(NameOptionalUI.safeParse(undefined).success).true;
+		expect(NameOptionalUI.safeParse(null).success).false;
+		expect(NameOptionalUI.safeParse('').success).true;
+		expect(NameOptionalUI.safeParse(' ').success).true;
 	});
 });

@@ -17,6 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import z from 'zod';
+
 import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
 
 // TODO: separate name into two fields with + without whitespace, include French chars in both
@@ -27,3 +29,21 @@ export const PHONE_NUMBER_REGEX = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
 export const POSTAL_CODE_REGEX = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
 
 export const REGEX_FLAG_GLOBAL = 'g';
+
+/** check for strings with a length of 0 */
+const EmptyString = z.string().trim().max(0);
+
+/**
+ * Makes a Zod schema for regexes, that enforces a string type and trims whitespace.
+ * Also handles optional field validation for UI (allows empty strings) and API (doesn't allow empty strings).
+ * @param regex regular expression
+ * @example getRegexSchema(NAME_REGEX).optionalUI
+ */
+export const getRegexSchema = (regex: RegExp) => {
+	const regexSchema = z.string().trim().regex(regex);
+	return {
+		optionalAPI: regexSchema.optional(),
+		optionalUI: regexSchema.or(EmptyString).optional(),
+		required: regexSchema,
+	};
+};

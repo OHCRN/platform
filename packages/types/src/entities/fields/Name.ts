@@ -19,7 +19,15 @@
 
 import { z } from 'zod';
 
-import { NAME_REGEX } from '../../common/regexes.js';
+import { NAME_REGEX, getRegexSchema } from '../../common/regexes.js';
 
-export const Name = z.string().trim().regex(NAME_REGEX);
+const { optionalAPI, optionalUI, required } = getRegexSchema(NAME_REGEX);
+
+export const Name = required;
 export type Name = z.infer<typeof Name>;
+
+export const NameOptionalUI = optionalUI;
+export type NameOptionalUI = z.infer<typeof NameOptionalUI>;
+
+export const NameOptionalAPI = optionalAPI;
+export type NameOptionalAPI = z.infer<typeof NameOptionalAPI>;
