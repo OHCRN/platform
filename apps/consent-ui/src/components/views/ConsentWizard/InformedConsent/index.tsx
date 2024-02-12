@@ -41,7 +41,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<h2 className={styles.title}>{pageDict.title}</h2>
 			<p className={styles.description}>
 				{pageDict.description1}
-				<Link href={studyConsentPdfUrl} prefetch={false} target="__blank">
+				<Link href={studyConsentPdfUrl} prefetch={false} target="_blank">
 					{pageDict.linkText}
 				</Link>{' '}
 				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
