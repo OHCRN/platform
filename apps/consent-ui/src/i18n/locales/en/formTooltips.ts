@@ -27,9 +27,14 @@ const dictionary = {
 	participantEmailAddressTooltip: 'The patient will receive an invitation to this account.',
 	participantFirstNameTooltip: 'As it appears on their health card.',
 	participantLastNameTooltip: 'As it appears on their health card.',
+	participantMiddleNameTooltip: 'As it appears on their health card.',
 	participantPhoneNumberTooltip:
 		'If we contact the participant, it will be for health updates and consent.',
 	participantPreferredNameTooltip: 'What would the participant like to be called when contacted.',
+	postalCodeTooltip:
+		'We require this to request your clinical information, this is not used to identify you or your location of residence.',
+	clinicianTitleOrRoleTooltip:
+		'Please provide the name of the clinician that ordered your genetic testing, or the main clinician handling your clinical care.',
 } satisfies Record<string, string>;
 
 export type FormTooltipsDictionary = Record<keyof typeof dictionary, string>;

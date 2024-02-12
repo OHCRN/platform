@@ -17,7 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+const dictionary = {
+	description:
+		'We are inviting you to take part in an Ontario registry (Ontario Hereditary Cancer Research Network – OHCRN) because you have undergone germline genetic testing for a known or suspected hereditary cancer predisposition syndrome. \n\nTo register in OHCRN, you must consent to the release and update of clinical and genetic data from applicable institutions to be stored in OHCRN, and participate in de-identified research.',
+	title: 'Consent to Participate in OHCRN',
+} satisfies Record<string, string>;
 
 export type ConsentReleaseDataPageDictionary = Record<keyof typeof dictionary, string>;
 

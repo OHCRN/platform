@@ -17,7 +17,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+import formLabels from './formLabels';
+
+const {
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	firstName,
+	lastName,
+	middleName,
+	postalCode,
+	preferredName,
+} = formLabels;
+
+const dictionary = {
+	ancestry: 'Ancestry',
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer: 'Family History of Cancer',
+	firstName,
+	genderIdentity: 'Gender Identity',
+	geneticsClinic: 'Genetics Clinic',
+	lastName,
+	middleName,
+	molecularLab: 'Molecular Lab',
+	OHIP: 'OHIP #',
+	personalHistoryOfCancer: 'Personal History of Cancer',
+	postalCode,
+	preferredName,
+	primaryCancerDiagnosis: 'Primary Cancer Diagnosis',
+	sexAssignedAtBirth: 'Sex Assigned at Birth',
+} satisfies Record<string, string>;
 
 export type ConsentReleaseDataLabelsDictionary = Record<keyof typeof dictionary, string>;
 

@@ -19,6 +19,39 @@
 
 import { ConsentReleaseDataLabelsDictionary } from 'src/i18n/locales/en/consentReleaseDataLabels';
 
-const dictionary = {} satisfies ConsentReleaseDataLabelsDictionary;
+import formLabels from './formLabels';
+
+const {
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	firstName,
+	lastName,
+	middleName,
+	postalCode,
+	preferredName,
+} = formLabels;
+
+const dictionary = {
+	ancestry: 'Ascendance',
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer: 'Antécédents familiaux de cancer',
+	firstName,
+	genderIdentity: 'Identité de genre',
+	geneticsClinic: 'Clinique de génétique',
+	lastName,
+	middleName,
+	molecularLab: 'Laboratoire moléculaire',
+	OHIP: 'OHIP #',
+	personalHistoryOfCancer: 'Antécédents personnels de cancer',
+	postalCode,
+	preferredName,
+	primaryCancerDiagnosis: 'Diagnostic primaire du cancer',
+	sexAssignedAtBirth: 'Sexe attribué à la naissance',
+} satisfies ConsentReleaseDataLabelsDictionary;
 
 export default dictionary;

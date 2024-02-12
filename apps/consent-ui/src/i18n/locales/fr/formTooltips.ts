@@ -30,11 +30,16 @@ const dictionary = {
 		'Si nous les contactons, ce sera pour des mises à jour de santé et un consentement.',
 	participantEmailAddressTooltip: 'Le patient recevra une invitation sur ce compte.',
 	participantFirstNameTooltip: 'Tel qu’il apparaît sur leur carte Santé.',
+	participantMiddleNameTooltip: 'Tel qu’il apparaît sur leur carte Santé.',
 	participantLastNameTooltip: 'Tel qu’il apparaît sur leur carte Santé.',
 	participantPhoneNumberTooltip:
 		'Si nous contactons le participant, ce sera pour des mises à jour de santé et son consentement.',
 	participantPreferredNameTooltip:
 		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
+	postalCodeTooltip:
+		'Nous en avons besoin pour demander vos informations cliniques, celles-ci ne sont pas utilisées pour vous identifier ou identifier votre lieu de résidence.',
+	clinicianTitleOrRoleTooltip:
+		"Veuillez fournir le nom du clinicien qui a ordonné vos tests génétiques ou du clinicien principal qui s'occupe de vos soins cliniques.",
 } satisfies FormTooltipsDictionary;
 
 export default dictionary;
