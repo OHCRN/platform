@@ -81,8 +81,8 @@ const ConsentRecontactForm = ({
 						required
 						title={formDict.recontactFutureResearchTitle}
 						description={formDict.recontactFutureResearchDesc}
-						yesText={formDict.yesText}
-						noText={formDict.noText}
+						yesText={formDict.yes}
+						noText={formDict.no}
 					/>
 					<RadioFieldSet
 						error={errors.RECONTACT__SECONDARY_CONTACT?.type && errorsDict.required}
@@ -90,8 +90,8 @@ const ConsentRecontactForm = ({
 						required
 						title={formDict.recontactSecondaryContactTitle}
 						description={formDict.recontactSecondaryContactDesc}
-						yesText={formDict.yesText}
-						noText={formDict.noText}
+						yesText={formDict.yes}
+						noText={formDict.no}
 					/>
 				</FormSection>
 

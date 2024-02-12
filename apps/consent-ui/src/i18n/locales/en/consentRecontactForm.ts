@@ -19,23 +19,23 @@
 
 import formLabels from './formLabels';
 
-const { firstName, lastName, phone } = formLabels;
+const { firstName, lastName, phone, yes, no } = formLabels;
 
 const dictionary = {
-	recontactFutureResearchTitle: 'Optional Re-Contact',
-	recontactFutureResearchDesc:
-		'I agree that my study doctor, or someone on the study team, may contact me in future, and/or provide my contact information to the research team for future research studies, and clinical trials, if applicable.',
-	recontactSecondaryContactTitle: 'Optional Secondary Contact',
-	recontactSecondaryContactDesc:
-		'I agree that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to my health information if attempts to contact me have not been successful.',
-	secondaryContactFormDescription:
-		'Please provide the following required information for your next of kin.',
 	firstName,
 	lastName,
+	no,
 	phone,
 	phoneDescription: 'If we contact them, it will be for health updates only.',
-	yesText: 'Yes',
-	noText: 'No',
+	recontactFutureResearchDesc:
+		'I agree that my study doctor, or someone on the study team, may contact me in future, and/or provide my contact information to the research team for future research studies, and clinical trials, if applicable.',
+	recontactFutureResearchTitle: 'Optional Re-Contact',
+	recontactSecondaryContactDesc:
+		'I agree that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to my health information if attempts to contact me have not been successful.',
+	recontactSecondaryContactTitle: 'Optional Secondary Contact',
+	secondaryContactFormDescription:
+		'Please provide the following required information for your next of kin.',
+	yes,
 } satisfies Record<string, string>;
 
 export type ConsentRecontactFormDictionary = Record<keyof typeof dictionary, string>;

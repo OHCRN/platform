@@ -21,23 +21,23 @@ import { ConsentRecontactFormDictionary } from 'src/i18n/locales/en/consentRecon
 
 import formLabels from './formLabels';
 
-const { firstName, lastName, phone } = formLabels;
+const { firstName, lastName, phone, yes, no } = formLabels;
 
 const dictionary = {
-	recontactFutureResearchTitle: 'Recontact facultatif',
-	recontactFutureResearchDesc:
-		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse me contacter à l'avenir et/ou fournir mes coordonnées à l'équipe de recherche pour de futures études de recherche et essais cliniques, le cas échéant.",
-	recontactSecondaryContactTitle: 'Contact secondaire en option',
-	recontactSecondaryContactDesc:
-		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse contacter mon plus proche parent ou mon contact secondaire pour obtenir des mises à jour de mes informations de santé si les tentatives pour me contacter n'ont pas abouti.",
-	secondaryContactFormDescription:
-		'Veuillez fournir les informations requises suivantes pour votre plus proche parent.',
 	firstName,
 	lastName,
+	no,
 	phone,
 	phoneDescription: 'Si nous les contactons, ce sera uniquement pour des mises à jour sanitaires.',
-	yesText: 'Oui',
-	noText: 'Non',
+	recontactFutureResearchDesc:
+		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse me contacter à l'avenir et/ou fournir mes coordonnées à l'équipe de recherche pour de futures études de recherche et essais cliniques, le cas échéant.",
+	recontactFutureResearchTitle: 'Recontact facultatif',
+	recontactSecondaryContactDesc:
+		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse contacter mon plus proche parent ou mon contact secondaire pour obtenir des mises à jour de mes informations de santé si les tentatives pour me contacter n'ont pas abouti.",
+	recontactSecondaryContactTitle: 'Contact secondaire en option',
+	secondaryContactFormDescription:
+		'Veuillez fournir les informations requises suivantes pour votre plus proche parent.',
+	yes,
 } satisfies ConsentRecontactFormDictionary;
 
 export default dictionary;
