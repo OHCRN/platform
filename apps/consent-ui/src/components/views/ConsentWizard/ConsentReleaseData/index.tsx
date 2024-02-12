@@ -40,35 +40,42 @@ import {
 import styles from './ConsentReleaseData.module.scss';
 
 const ConsentReleaseData = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
+
+	const genderDict = translateNamespace('gender');
+	const birthSexDict = translateNamespace('birthSex');
+	const ancestryDict = translateNamespace('ancestry');
+	const historyOfCancerDict = translateNamespace('historyOfCancer');
+	const geneticsClinicDict = translateNamespace('geneticsClinic');
+	const molecularLabDict = translateNamespace('molecularLab');
 
 	const genderOptions: GenderOption[] = Gender.options.map((group) => ({
-		label: translate('gender', group),
+		label: genderDict[group],
 		value: group,
 	}));
 
 	const birthSexOptions: BirthSexOption[] = BirthSex.options.map((group) => ({
-		label: translate('birthSex', group),
+		label: birthSexDict[group],
 		value: group,
 	}));
 
 	const ancestryOptions: AncestryOption[] = Ancestry.options.map((group) => ({
-		label: translate('ancestry', group),
+		label: ancestryDict[group],
 		value: group,
 	}));
 
 	const historyOfCancerOptions: HistoryOfCancerOption[] = HistoryOfCancer.options.map((group) => ({
-		label: translate('historyOfCancer', group),
+		label: historyOfCancerDict[group],
 		value: group,
 	}));
 
 	const geneticsClinicOptions: GeneticsClinicOption[] = GeneticsClinic.options.map((group) => ({
-		label: translate('geneticsClinic', group),
+		label: geneticsClinicDict[group],
 		value: group,
 	}));
 
 	const molecularLabOptions: MolecularLabOption[] = MolecularLab.options.map((group) => ({
-		label: translate('molecularLab', group),
+		label: molecularLabDict[group],
 		value: group,
 	}));
 
