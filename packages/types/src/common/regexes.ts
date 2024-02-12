@@ -30,12 +30,13 @@ export const POSTAL_CODE_REGEX = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
 
 export const REGEX_FLAG_GLOBAL = 'g';
 
-/** check for strings with a length of 0 */
+/** check for empty strings or whitespace */
 const EmptyString = z.string().trim().max(0);
 
 /**
  * Makes a Zod schema for regexes, that enforces a string type and trims whitespace.
- * Also handles optional field validation for UI (allows empty strings) and API (doesn't allow empty strings).
+ * Also handles optional field validation for UI (allows empty strings and whitespace)
+ * and API (doesn't allow empty strings or whitespace).
  * @param regex regular expression
  * @example getRegexSchema(NAME_REGEX).optionalUI
  */
