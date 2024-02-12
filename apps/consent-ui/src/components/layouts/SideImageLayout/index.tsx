@@ -72,6 +72,7 @@ const SideImageLayout = ({
 					<h1 className={styles.title}>{navTitle}</h1>
 				</div>
 			</header>
+			<div className={styles.desktopHeaderSpace}></div>
 			<header className={styles.mobileTabletHeader}>
 				<h1 className={styles.title}>{navTitle}</h1>
 			</header>
