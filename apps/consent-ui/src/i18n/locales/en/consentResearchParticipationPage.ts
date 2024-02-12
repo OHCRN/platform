@@ -23,12 +23,12 @@ const { studyConsentPdf } = assetUrls;
 
 const dictionary = {
 	heading: 'Consent for Research Participation',
-	subheading:
-		'This part of the consent form is about optional studies that you can choose to take part in.  By taking part in these optional studies, we hope the results will help other people with hereditary cancer in the future. \n\nParticipating in these optional studies is your choice.  You can still take part in the main OHCRN registry even if you say “no” to the optional studies.  Additional information about the optional studies can be found in the ',
-	subheadingLink: 'study information and informed consent document.',
-	studyConsentPdf,
 	smallText:
 		'Please select you answer below to show if you would or would not like to take part in each optional study. You can change your consent at any time:',
+	studyConsentPdf,
+	subheading:
+		'This part of the consent form is about optional studies that you can choose to take part in.    By taking part in these optional studies, we hope the results will help other people with hereditary cancer in the future. \n\nParticipating in these optional studies is your choice.    You can still take part in the main OHCRN registry even if you say “no” to the optional studies.    Additional information about the optional studies can be found in the ',
+	subheadingLink: 'study information and informed consent document.',
 } satisfies Record<string, string>;
 
 export type ConsentResearchParticipationPageDictionary = Record<keyof typeof dictionary, string>;

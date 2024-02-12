@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -24,18 +24,18 @@ import formLabels from '../en/formLabels';
 const { yes, no } = formLabels;
 
 const dictionary = {
-	researchParticipationFutureResearchTitle:
-		"Consentement facultatif pour permettre la collecte d'échantillons précédemment collectés pour de futures recherches inconnues",
-	researchParticipationFutureResearchTitleDesc:
-		"J'accepte que mes échantillons précédemment collectés puissent être inclus dans la biobanque décentralisée et utilisés pour des études de recherche futures inconnues.",
-	researchParticipationContactInformationTitle:
-		'Publication facultative des coordonnées des registres du cancer approuvés existants',
+	no,
 	researchParticipationContactInformationDesc:
 		"J'accepte que mon médecin de l'étude, ou un membre de l'équipe d'étude, puisse fournir mes coordonnées et les résultats de mes tests génétiques à un registre du cancer existant, le cas échéant. ",
 	researchParticipationContactInformationDescLink:
 		'Cliquez ici pour consulter la liste actuelle des registres du cancer approuvés.',
+	researchParticipationContactInformationTitle:
+		'Publication facultative des coordonnées des registres du cancer approuvés existants',
+	researchParticipationFutureResearchTitle:
+		"Consentement facultatif pour permettre la collecte d'échantillons précédemment collectés pour de futures recherches inconnues",
+	researchParticipationFutureResearchTitleDesc:
+		"J'accepte que mes échantillons précédemment collectés puissent être inclus dans la biobanque décentralisée et utilisés pour des études de recherche futures inconnues.",
 	yes,
-	no,
 } satisfies ConsentResearchParticipationFormDictionary;
 
 export default dictionary;

@@ -37,12 +37,12 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 	return (
 		<div>
 			<h3 className={clsx(styles.heading)}>{pageDict.heading}</h3>
-			<h4 className={clsx(styles.subheading)}>
+			<p className={clsx(styles.subheading)}>
 				{pageDict.subheading}
-				<Link href={studyConsentPdfUrl} prefetch={false} target="__blank">
+				<Link href={studyConsentPdfUrl} prefetch={false} target="_blank">
 					{pageDict.subheadingLink}
 				</Link>
-			</h4>
+			</p>
 			<p className={clsx(styles.smallText)}>{pageDict.smallText}</p>
 
 			<ConsentResearchParticipationForm
