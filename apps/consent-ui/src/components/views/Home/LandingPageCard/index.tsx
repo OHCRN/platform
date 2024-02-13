@@ -16,6 +16,7 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 import clsx from 'clsx';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
@@ -30,7 +31,8 @@ import linkStyles from 'src/components/common/Link/LocalizedLink.module.scss';
 import styles from './LandingPageCard.module.scss';
 
 const LandingPageCard = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
+
 	return (
 		<Card dropShadow="none" className={styles['landing-page-card']}>
 			<h2>{translate('landingPage', 'joinOhcrn')}</h2>

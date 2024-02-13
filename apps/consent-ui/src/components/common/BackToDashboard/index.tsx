@@ -24,7 +24,7 @@ import RightArrow from 'src/components/common/Icons/Arrow';
 import styles from './BackToDashboard.module.scss';
 
 const BackToDashboard = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	return (
 		<div className={styles.links}>
 			<LocalizedLink name={'dashboard'} linkLang={currentLang} className={styles.link}>
