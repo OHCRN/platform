@@ -54,9 +54,9 @@ import formStyles from './ClinicianInviteForm.module.scss';
 
 const styles = Object.assign({}, formStyles, layoutStyles);
 
-const ClinicianInviteUI = InviteFieldsPreRefine.merge(
-	z.object({ participantPreferredName: NameOptionalUI }),
-).refine(hasRequiredGuardianInformation, {
+const ClinicianInviteUI = InviteFieldsPreRefine.extend({
+	participantPreferredName: NameOptionalUI,
+}).refine(hasRequiredGuardianInformation, {
 	message: 'Guardian contact fields are required for that consentGroup',
 });
 type ClinicianInviteUI = z.infer<typeof ClinicianInviteUI>;
