@@ -30,21 +30,33 @@ export const POSTAL_CODE_REGEX = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
 
 export const REGEX_FLAG_GLOBAL = 'g';
 
-/** check for empty strings or whitespace */
-const EmptyString = z.string().trim().max(0);
-
 /**
- * Makes a Zod schema for regexes, that enforces a string type and trims whitespace.
- * Also handles optional field validation for UI (allows empty strings and whitespace)
- * and API (doesn't allow empty strings or whitespace).
- * @param regex regular expression
- * @example getRegexSchema(NAME_REGEX).optionalUI
+ * Make a Zod schema for a regular expression, for required fields.
  */
 export const getRegexSchema = (regex: RegExp) => {
 	const regexSchema = z.string().trim().regex(regex);
-	return {
-		optionalAPI: regexSchema.optional(),
-		optionalUI: regexSchema.or(EmptyString).optional(),
-		required: regexSchema,
-	};
+	return regexSchema;
+};
+
+/**
+ * Make a Zod schema for a regular expression, for optional fields in the API.
+ * The resulting schema will allow inputs that match the regex, and undefined values.
+ */
+export const getRegexOptionalAPISchema = (regex: RegExp) => {
+	const regexOptionalAPISchema = getRegexSchema(regex).optional();
+	return regexOptionalAPISchema;
+};
+
+/** check for empty strings or whitespace */
+const EmptyStringOrWhitespace = z.string().trim().max(0);
+
+/**
+ * Makes a Zod schema for a regular expression, for optional fields in the UI.
+ * Allows fields that match the regex, undefined values, and
+ * empty or whitespace-only strings, because empty HTML inputs contain empty strings
+ * rather than undefined values.
+ */
+export const getRegexOptionalUISchema = (regex: RegExp) => {
+	const regexOptionalUISchema = getRegexSchema(regex).or(EmptyStringOrWhitespace).optional();
+	return regexOptionalUISchema;
 };
