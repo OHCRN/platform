@@ -22,12 +22,15 @@
 import { ConsentReleaseDataRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 
 import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import FormSection from 'src/components/common/Form/FormSection';
-// import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
+import { ConsentReleaseDataLabelsDictionary } from 'src/i18n/locales/en/consentReleaseDataLabels';
+import { ConsentReleaseDataTextDictionary } from 'src/i18n/locales/en/consentReleaseDataText';
 import { ValidLanguage } from 'src/i18n';
 import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
@@ -56,8 +59,9 @@ const ConsentReleaseDataForm = ({
 	historyOfCancerOptions,
 	geneticsClinicOptions,
 	molecularLabOptions,
-	// errorsDict,
-	// formDict,
+	errorsDict,
+	labelsDict,
+	textDict,
 }: {
 	currentLang: ValidLanguage;
 	genderOptions: GenderOption[];
@@ -66,8 +70,9 @@ const ConsentReleaseDataForm = ({
 	historyOfCancerOptions: HistoryOfCancerOption[];
 	geneticsClinicOptions: GeneticsClinicOption[];
 	molecularLabOptions: MolecularLabOption[];
-	// errorsDict: FormErrorsDictionary;
-	// formDict: InformedConsentFormDictionary;
+	errorsDict: FormErrorsDictionary;
+	labelsDict: ConsentReleaseDataLabelsDictionary;
+	textDict: ConsentReleaseDataTextDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentReleaseDataRequest>({
@@ -75,7 +80,7 @@ const ConsentReleaseDataForm = ({
 		shouldUnregister: true,
 	});
 	const {
-		// formState: { errors },
+		formState: { errors },
 		handleSubmit,
 	} = methods;
 
@@ -94,61 +99,61 @@ const ConsentReleaseDataForm = ({
 				<FormSection>
 					<CheckboxFieldSet
 						className={styles.checkbox}
-						description={
-							'I agree to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.'
-						}
-						error={undefined}
-						name="1"
+						description={textDict.releaseAndUpdateData || ''}
+						error={errors.RELEASE_DATA__CLINICAL_AND_GENETIC?.type && errorsDict.required}
+						name="RELEASE_DATA__CLINICAL_AND_GENETIC"
 						required
-						title={''}
 					/>
 					<CheckboxFieldSet
 						className={styles.checkbox}
 						description={
-							'I agree to the use my registry data in de-identified research (including display of aggregate data on OHCRN website and research facilitated by longitudinal linkage to administrative health databases.) Learn more about privacy and de-identified information.'
+							(
+								<>
+									{textDict.deIdentifiedResearch}
+									<Link href={''}>{textDict.deIdentifiedResearchLink}</Link>
+								</>
+							) || ''
 						}
-						error={undefined}
-						name="2"
+						error={errors.RELEASE_DATA__DE_IDENTIFIED?.type && errorsDict.required}
+						name="RELEASE_DATA__DE_IDENTIFIED"
 						required
-						title={''}
 					/>
 				</FormSection>
 
-				<p className={styles.smallText}>
-					To make this possible, we will need the following information from you:
-				</p>
+				<p className={styles.smallText}>{textDict.sectionDescription || ''}</p>
 
 				<FormSection>
 					<TextFieldSet
-						description={'As it appears on your health card'}
-						error={undefined}
-						name="3"
+						description={textDict.participantFirstNameTooltip || ''}
+						error={errors.firstName?.type && errorsDict.required}
+						name="firstName"
 						required
-						label={'First Name'}
+						label={labelsDict.firstName || ''}
 					/>
 					<TextFieldSet
-						description={'As it appears on your health card'}
-						error={undefined}
-						name="4"
-						label={'Middle Name'}
+						description={textDict.participantMiddleNameTooltip || ''}
+						error={errors.middleName?.type && errorsDict.required}
+						name="middleName"
+						label={labelsDict.middleName || ''}
 					/>
 					<TextFieldSet
-						description={'As it appears on your health card'}
-						error={undefined}
-						name="5"
+						description={textDict.participantLastNameTooltip || ''}
+						error={errors.lastName?.type && errorsDict.required}
+						name="lastName"
 						required
-						label={'Last Name'}
+						label={labelsDict.lastName || ''}
 					/>
 					<TextFieldSet
-						description={'What would the participant like to be called when they are contacted.'}
-						error={undefined}
-						name="6"
-						label={'Preferred Name'}
+						description={textDict.participantPreferredNameTooltip || ''}
+						error={errors.preferredName?.type && errorsDict.required}
+						name="preferredName"
+						label={labelsDict.preferredName || ''}
 					/>
 
 					<SelectFieldSet
-						label={'Gender Identity'}
-						name="7"
+						label={labelsDict.genderIdentity || ''}
+						name="genderIdentity"
+						error={errors.genderIdentity?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={genderOptions}
 						required
@@ -156,94 +161,97 @@ const ConsentReleaseDataForm = ({
 					{/* TODO: add OhipFieldSet when merged */}
 					<CalendarFieldSet
 						currentLang={currentLang}
-						label={'Date of Birth'}
-						name="8"
-						description={'We require this to request your clinical information.'}
+						label={labelsDict.dateOfBirth || ''}
+						error={errors.dateOfBirth?.type && errorsDict.required}
+						name="dateOfBirth"
+						description={textDict.dateOfBirthTooltip || ''}
 						required
 					/>
 
 					<SelectFieldSet
-						label={'Sex Assigned at Birth'}
-						description={
-							'Sex assigned at birth can help improve our understanding of cancer causes and risks.'
-						}
-						name="9"
+						label={labelsDict.sexAssignedAtBirth || ''}
+						description={textDict.sexAssignedAtBirthTooltip || ''}
+						name="birthSex"
+						error={errors.birthSex?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={birthSexOptions}
 						required
 					/>
 					<SelectFieldSet
-						label={'Ancestry'}
-						name="10"
+						label={labelsDict.ancestry || ''}
+						name="ancestry"
+						error={errors.ancestry?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={ancestryOptions}
 						required
 					/>
 					<SelectFieldSet
-						label={'Personal History of Cancer'}
-						name="11"
+						label={labelsDict.personalHistoryOfCancer || ''}
+						name="historyOfCancer"
+						error={errors.historyOfCancer?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={historyOfCancerOptions}
 						required
 					/>
 					<SelectFieldSet
-						label={'Primary Cancer Diagnosis'}
-						description={'You may select multiple cancers you have been diagnosed with.'}
-						name="12"
+						label={labelsDict.primaryCancerDiagnosis || ''}
+						description={textDict.primaryCancerDiagnosisTooltip || ''}
+						name="primaryCancerDiagnosis"
+						error={undefined} // TODO: Add primaryCancerDiagnosis to zod schema
 						placeholder={'- Select an option -'}
 						options={[]} // TODO: Add cancer options
 						required
 					/>
 					<SelectFieldSet
-						label={'Family History of Cancer'}
-						description={
-							'Select yes only if the family member is: parent, sibling, child, aunt/uncle, or grandparents.'
-						}
-						name="13"
+						label={labelsDict.familyHistoryOfCancer || ''}
+						description={textDict.familyHistoryOfCancerTooltip || ''}
+						name="familyHistoryOfCancer"
+						error={errors.familyHistoryOfCancer?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={historyOfCancerOptions}
 						required
 					/>
 
 					<TextFieldSet
-						description={
-							'We require this to request your clinical information, this is not used to identify you or your location of residence.'
-						}
-						error={undefined}
-						name="14"
-						label={'Postal Code'}
+						label={labelsDict.postalCode || ''}
+						description={textDict.postalCodeTooltip || ''}
+						error={errors.postalCode?.type && errorsDict.required}
+						name="postalCode"
 						required
 					/>
 				</FormSection>
 
-				<p className={styles.smallText}>
-					OHCRN is open to participants who have had genetic testing. Please tell us about where
-					your testing was completed:
-				</p>
+				<p className={styles.smallText}>{textDict.sectionDescription2 || ''}</p>
 
 				<FormSection>
 					<TextFieldSet
-						description={
-							'Please provide the name of the clinician that ordered your genetic testing, or the main clinician handling your clinical care.'
-						}
-						error={undefined}
-						name="15"
-						label={'Clinician Title/Role'}
+						description={textDict.clinicianTitleOrRoleTooltip || ''}
+						error={errors.selfReportedClinicianTitle?.type && errorsDict.required}
+						name="selfReportedClinicianTitle"
+						label={labelsDict.clinicianTitleOrRole || ''}
 					/>
-					<TextFieldSet error={undefined} name="16" label={'Clinician First Name'} />
-					<TextFieldSet error={undefined} name="17" label={'Clinician Last Name'} />
+					<TextFieldSet
+						error={errors.selfReportedClinicianFirstName?.type && errorsDict.required}
+						name="selfReportedClinicianFirstName"
+						label={labelsDict.clinicianFirstName || ''}
+					/>
+					<TextFieldSet
+						error={errors.selfReportedClinicianLastName?.type && errorsDict.required}
+						name="selfReportedClinicianLastName"
+						label={labelsDict.clinicianLastName || ''}
+					/>
 					<SelectFieldSet
-						label={'Genetics Clinic'}
-						name="16"
+						label={labelsDict.geneticsClinic || ''}
+						name="selfReportedGeneticsClinic"
+						error={errors.selfReportedGeneticsClinic?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={geneticsClinicOptions}
 					/>
 					<SelectFieldSet
-						label={'Molecular Lab'}
-						description={
-							'Please provide the name of the lab that did your genetic testing, if you know this.'
-						}
-						name="17"
+						label={labelsDict.molecularLab || ''}
+						description={textDict.molecularLabNameTooltip || ''}
+						name="selfReportedMolecularLab"
+						error={errors.selfReportedMolecularLab?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={molecularLabOptions}
 					/>
