@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"engines": {
 		"node": "18.18.2"
-	  },
+	},
 	"scripts": {
 		"\n==========  Build  ==========": "",
 		"build": "pnpm -r build",
@@ -53,6 +53,7 @@
 		}
 	},
 	"dependencies": {
+		"date-fns": "2.30.0",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.0"
 	}
