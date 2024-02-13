@@ -17,34 +17,31 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
-import { useNotification } from 'src/components/providers/NotificationProvider';
+import ConsentCompletionNotification from 'src/components/views/Dashboard/notifications/ConsentCompleteNotification';
+import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
+import ConsentInProgressNotification from 'src/components/views/Dashboard/notifications/ConsentInProgressNotification';
+import InviteSentNotification from 'src/components/views/Home/notifications/InviteSentNotification';
 import { ValidLanguage } from 'src/i18n';
-import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
 
-import styles from './DashboardNotificationDisplay.module.scss';
+import { NotificationConfig } from '.';
 
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { dismissNotification, notificationConfig } = useNotification();
-
-	// check if there's a notification for this page in context
-	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
-		return <></>;
-	}
-
-	const notificationProps = {
-		currentLang,
-		dismissClick: dismissNotification,
-	};
-
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
-
-	if (notificationComponent) {
-		return <div className={styles.notification}>{notificationComponent}</div>;
-	} else {
-		return <></>;
+export const getNotificationComponent = ({
+	notificationConfig,
+	notificationProps,
+}: {
+	notificationConfig: NotificationConfig;
+	notificationProps: { currentLang: ValidLanguage; dismissClick: () => void };
+}) => {
+	switch (notificationConfig?.notification) {
+		case 'emailVerified':
+			return <EmailVerifiedNotification {...notificationProps} />;
+		case 'consentInProgress':
+			return <ConsentInProgressNotification currentLang={notificationProps.currentLang} />;
+		case 'consentComplete':
+			return <ConsentCompletionNotification {...notificationProps} />;
+		case 'inviteSent':
+			return <InviteSentNotification {...notificationProps} />;
+		default:
+			return null;
 	}
 };
-
-export default DashboardNotificationDisplay;

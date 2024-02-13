@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,24 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import dictionaries from '../locales/index.js';
+const dictionary = {
+	boldText:
+		'Please ask them to finish their account creation by clicking the button in that email.',
+	description1:
+		'We have sent a message to the email address that you registered your patient with.',
+	description2: 'If they did not receive the email, please ask them to ',
+	linkText: 'contact us',
+	title: 'Thank you for inviting your patient to join the OHCRN Registry!',
+} satisfies Record<string, string>;
 
-import { ValidLanguage } from './languages';
+export type InviteSentNotificationDictionary = Record<keyof typeof dictionary, string>;
 
-export type Dictionaries = typeof dictionaries;
-export type Namespace = keyof Dictionaries[ValidLanguage];
-
-export type TranslateKey = <SelectedNamespace extends Namespace>(
-	namespace: SelectedNamespace,
-	label: keyof Dictionaries[ValidLanguage][SelectedNamespace],
-	params?: { [key: string]: string | number },
-) => string;
-
-export type TranslateNamespace = <SelectedNamespace extends Namespace>(
-	namespace: SelectedNamespace,
-) => Dictionaries[ValidLanguage][SelectedNamespace];
-
-export type GetTranslation = (language: ValidLanguage) => {
-	translate: TranslateKey;
-	translateNamespace: TranslateNamespace;
-};
+export default dictionary;

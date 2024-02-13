@@ -19,7 +19,7 @@
 import { REGEX_FLAG_GLOBAL } from 'types/common';
 
 import dictionaries from 'src/i18n/locales';
-import { GetTranslation } from 'src/i18n/types';
+import { GetTranslation, TranslateKey, TranslateNamespace } from 'src/i18n/types';
 
 /**
  * ```
@@ -38,7 +38,7 @@ import { GetTranslation } from 'src/i18n/types';
  * 		'sampleSentence': 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.'
  * 	}
  * }
- * const translate = getTranslation('en')
+ * const { translate } = getTranslation('en')
  * translate('common', 'sampleSentence', { dayOfWeek: 'Thursday', dayOfMonth: 'October' }) would call replaceParams as:
  * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
  * // returns 'Translated this string on a Thursday in October.'
@@ -54,9 +54,24 @@ export const replaceParams = (
 };
 
 // TODO: is there a way to enforce this function for server side use only?
+/**
+ * @param language ValidLanguage
+ * @exports {translate, translateNamespace}
+ */
 export const getTranslation: GetTranslation = (language) => {
 	const dictionary = dictionaries[language];
-	return (namespace, key, params) => {
+
+	/**
+	 * Translate one key from a namespace.
+	 * @param namespace
+	 * @param key
+	 * @param params
+	 * @returns string
+	 * @example
+	 * <span>{translate('common', 'copyright', { year: 2024 })}</span>
+	 * // returns 'Copyright 2024'
+	 */
+	const translate: TranslateKey = (namespace, key, params): string => {
 		// TODO: consider throwing error if translation not a string/undefined
 		// Decide whether to have a UI error handler for this, and whether failure is at full page or component level
 		// warning log and `|| ''` is currently provided as a stopgap
@@ -66,4 +81,21 @@ export const getTranslation: GetTranslation = (language) => {
 		const translation = `${dictionary[namespace][key] || ''}`;
 		return replaceParams(translation, params);
 	};
+
+	/**
+	 * Translate an entire namespace, e.g. to collect all translations
+	 *  for a client component, such as a form.
+	 * @param namespace
+	 * @example
+	 * const formDict = translateNamespace('myFormDictionary');
+	 * <MyForm formDict={formDict} />
+	 */
+	const translateNamespace: TranslateNamespace = (namespace) => {
+		if (!(dictionary && namespace)) {
+			console.warn(`Missing translation in ${language} dictionary!`);
+		}
+		return dictionary[namespace];
+	};
+
+	return { translate, translateNamespace };
 };
