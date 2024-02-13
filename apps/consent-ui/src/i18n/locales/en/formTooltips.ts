@@ -31,7 +31,7 @@ const dictionary = {
 	participantPhoneNumberTooltip:
 		'If we contact the participant, it will be for health updates and consent.',
 	participantPreferredNameTooltip: 'What would the participant like to be called when contacted.',
-	postalCodeTooltip:
+	residentialPostalCodeTooltip:
 		'We require this to request your clinical information, this is not used to identify you or your location of residence.',
 	clinicianTitleOrRoleTooltip:
 		'Please provide the name of the clinician that ordered your genetic testing, or the main clinician handling your clinical care.',

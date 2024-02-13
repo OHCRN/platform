@@ -36,7 +36,7 @@ const dictionary = {
 		'Si nous contactons le participant, ce sera pour des mises à jour de santé et son consentement.',
 	participantPreferredNameTooltip:
 		"Comment le participant aimerait-il être appelé lorsqu'il est contacté ?",
-	postalCodeTooltip:
+	residentialPostalCodeTooltip:
 		'Nous en avons besoin pour demander vos informations cliniques, celles-ci ne sont pas utilisées pour vous identifier ou identifier votre lieu de résidence.',
 	clinicianTitleOrRoleTooltip:
 		"Veuillez fournir le nom du clinicien qui a ordonné vos tests génétiques ou du clinicien principal qui s'occupe de vos soins cliniques.",

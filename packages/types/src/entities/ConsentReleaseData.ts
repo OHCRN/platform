@@ -38,6 +38,7 @@ export const ConsentReleaseDataBase = z.object({
 	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
 	[RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
 	firstName: Name,
+	middleName: Name.optional(),
 	lastName: Name,
 	preferredName: Name.optional(),
 	genderIdentity: Gender,

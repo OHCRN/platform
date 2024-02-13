@@ -24,7 +24,7 @@ const {
 	participantLastNameTooltip,
 	participantMiddleNameTooltip,
 	participantPreferredNameTooltip,
-	postalCodeTooltip,
+	residentialPostalCodeTooltip,
 	clinicianTitleOrRoleTooltip,
 } = formTooltips;
 
@@ -48,7 +48,7 @@ const dictionary = {
 	primaryCancerDiagnosisTooltip: 'You may select multiple cancers you have been diagnosed with.',
 	familyHistoryOfCancerTooltip:
 		'Select yes only if the family member is: parent, sibling, child, aunt/uncle, or grandparents.',
-	postalCodeTooltip,
+	residentialPostalCodeTooltip,
 	sectionDescription2:
 		'OHCRN is open to participants who have had genetic testing. Please tell us about where your testing was completed:',
 	clinicianTitleOrRoleTooltip,

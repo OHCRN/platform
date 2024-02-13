@@ -39,7 +39,7 @@ const dictionary = {
 	no: 'Non',
 	password: 'Mot de passe',
 	phone: 'Numéro de téléphone',
-	postalCode: 'Code Postal',
+	residentialPostalCode: 'Code Postal',
 	preferredName: 'Nom préféré',
 	yes: 'Oui',
 	yourName: 'Votre nom',

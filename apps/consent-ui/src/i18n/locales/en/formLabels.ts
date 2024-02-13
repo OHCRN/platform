@@ -37,7 +37,7 @@ const dictionary = {
 	no: 'No',
 	password: 'Password',
 	phone: 'Phone Number',
-	postalCode: 'Postal Code',
+	residentialPostalCode: 'Postal Code',
 	preferredName: 'Preferred Name',
 	yes: 'Yes',
 	yourName: 'Your Name',

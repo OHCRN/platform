@@ -110,7 +110,9 @@ const ConsentReleaseDataForm = ({
 							(
 								<>
 									{textDict.deIdentifiedResearch}
-									<Link href={''}>{textDict.deIdentifiedResearchLink}</Link>
+									<Link href={''} prefetch={false} target="_blank">
+										{textDict.deIdentifiedResearchLink}
+									</Link>
 								</>
 							) || ''
 						}
@@ -213,10 +215,10 @@ const ConsentReleaseDataForm = ({
 					/>
 
 					<TextFieldSet
-						label={labelsDict.postalCode || ''}
-						description={textDict.postalCodeTooltip || ''}
-						error={errors.postalCode?.type && errorsDict.required}
-						name="postalCode"
+						label={labelsDict.residentialPostalCode || ''}
+						description={textDict.residentialPostalCodeTooltip || ''}
+						error={errors.residentialPostalCode?.type && errorsDict.required}
+						name="residentialPostalCode"
 						required
 					/>
 				</FormSection>

@@ -27,7 +27,7 @@ const {
 	firstName,
 	lastName,
 	middleName,
-	postalCode,
+	residentialPostalCode,
 	preferredName,
 } = formLabels;
 
@@ -46,7 +46,7 @@ const dictionary = {
 	molecularLab: 'Molecular Lab',
 	OHIP: 'OHIP #',
 	personalHistoryOfCancer: 'Personal History of Cancer',
-	postalCode,
+	residentialPostalCode,
 	preferredName,
 	primaryCancerDiagnosis: 'Primary Cancer Diagnosis',
 	sexAssignedAtBirth: 'Sex Assigned at Birth',
