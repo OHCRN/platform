@@ -139,22 +139,13 @@ const FormStep2 = ({
 		if (watchPassword && watchConfirmPassword && touchedFields.confirmPassword) {
 			if (watchPassword === watchConfirmPassword) {
 				// clear error if inputs match
-				if (errors.confirmPassword?.message === 'passwordMismatch') {
-					clearErrors('confirmPassword');
-				}
+				clearErrors('confirmPassword');
 			} else {
 				// set error if inputs don't match
 				setError('confirmPassword', { type: 'custom', message: 'passwordMismatch' });
 			}
 		}
-	}, [
-		clearErrors,
-		errors.confirmPassword,
-		setError,
-		touchedFields.confirmPassword,
-		watchConfirmPassword,
-		watchPassword,
-	]);
+	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
 
 	return (
 		<FormProvider {...methods}>
