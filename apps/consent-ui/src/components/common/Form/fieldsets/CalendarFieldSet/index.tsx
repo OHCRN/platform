@@ -62,7 +62,10 @@ const CalendarFieldSet = <T extends FieldValues>({
 			descriptionId={descriptionId}
 		>
 			<CalendarInput
-				ariaProps={description ? { 'aria-describedby': descriptionId } : {}}
+				ariaProps={{
+					...(description ? { 'aria-describedby': descriptionId } : {}),
+					...(required ? { 'aria-required': 'true' } : {}),
+				}}
 				disabled={disabled}
 				className={clsx(styles.calendarInput, error && styles.hasError)}
 				popperClassName={clsx(styles.calendarPopper)}

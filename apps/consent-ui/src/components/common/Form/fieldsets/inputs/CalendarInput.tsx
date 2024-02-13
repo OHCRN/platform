@@ -58,7 +58,6 @@ const CalendarInput = <T extends FieldValues>({
 				<DatePicker
 					selected={value}
 					onChange={(date) => onChange(date)}
-					required={required}
 					className={clsx(className)}
 					popperClassName={clsx(popperClassName)}
 					id={id}

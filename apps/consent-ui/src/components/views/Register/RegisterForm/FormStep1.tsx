@@ -149,7 +149,6 @@ const FormStep1 = ({
 						required
 						description={textDict.participantPhoneNumberTooltip}
 					/>
-					{/* TODO #366 implement date input */}
 					<CalendarFieldSet
 						currentLang={currentLang}
 						description={textDict.dateOfBirthTooltip}
