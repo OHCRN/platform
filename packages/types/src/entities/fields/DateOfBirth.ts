@@ -17,20 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './DateOfBirth.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './UserRole.js';
+import { differenceInYears } from 'date-fns';
+
+/**
+ * Check if age is at least 18 years
+ * @returns {boolean} returns true if age is greater than or equal to 18
+ */
+const checkAge18AndOver = (dob: Date): boolean => {
+	const age = differenceInYears(new Date(), dob);
+	return age >= 18;
+};
+
+/**
+ * Checks if a Participant is at least 18 years old.
+ * @returns {boolean} returns true if participant is an adult
+ */
+export const checkParticipantIsAdult = (props: { dateOfBirth: Date }): boolean => {
+	const { dateOfBirth } = props;
+	return checkAge18AndOver(dateOfBirth);
+};

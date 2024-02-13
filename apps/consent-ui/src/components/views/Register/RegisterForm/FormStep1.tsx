@@ -79,8 +79,6 @@ const FormStep1 = ({
 		setFocus('guardianName');
 	}, [setFocus]);
 
-	console.log(errors.dateOfBirth);
-
 	return (
 		<FormProvider {...methods}>
 			<Form className={className} onSubmit={handleSubmit(onSubmit)}>

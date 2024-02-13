@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Name, PhoneNumber } from 'types/entities';
+import { Name, PhoneNumber, checkParticipantIsAdult } from 'types/entities';
 import { z } from 'zod';
 
 // TODO hookup backend #368
@@ -39,11 +39,13 @@ const RegisterFormStep1Fields = z.object({
 	// with unused fields in the Zod schema
 });
 
-const DateOfBirthField = z.object({
-	dateOfBirth: z.date(),
-});
+const DateOfBirthField = z
+	.object({
+		dateOfBirth: z.coerce.date(),
+	})
+	.refine(checkParticipantIsAdult, { message: 'participantIsMinor', path: ['dateOfBirth'] });
 
-export const RegisterFormStep1 = z.intersection(RegisterFormStep1Fields, DateOfBirthField);
+export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2
