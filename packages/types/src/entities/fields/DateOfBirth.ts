@@ -29,7 +29,7 @@ export const checkAge18AndOver = (dob: Date): boolean => {
 };
 
 /**
- * Checks if a Participant is at least 18 years old.
+ * Checks if a Participant is at least 18 years old. Use with refine() validation.
  * @returns {boolean} returns true if participant is an adult
  */
 export const checkParticipantIsAdult = (props: { dateOfBirth: Date }): boolean => {
