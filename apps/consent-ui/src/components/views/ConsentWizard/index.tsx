@@ -27,6 +27,7 @@ import BackToDashboard from 'src/components/common/BackToDashboard';
 import ConsentResearchParticipation from 'src/components/views/ConsentWizard/ConsentResearchParticipation';
 
 import styles from './ConsentWizard.module.scss';
+import ConsentReviewSign from './ConsentReviewSign';
 import InformedConsent from './InformedConsent';
 
 const {
@@ -85,7 +86,7 @@ const ConsentWizard = async ({
 							<ConsentResearchParticipation currentLang={currentLang} />
 						)}
 						{currentStep === CONSENT_RECONTACT && <></>}
-						{currentStep === CONSENT_REVIEW_SIGN && <></>}
+						{currentStep === CONSENT_REVIEW_SIGN && <ConsentReviewSign currentLang={currentLang} />}
 					</div>
 				</Card>
 			</div>

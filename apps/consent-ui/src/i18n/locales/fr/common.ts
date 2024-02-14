@@ -23,6 +23,7 @@ const dictionary = {
 	backToDashboard: 'Retour au tableau de bord',
 	consent: 'Formulaires de consentement',
 	dashboard: 'Tableau de bord',
+	edit: 'Modifier',
 	home: "Page d'accueil",
 	invite: 'Invitation du clinicien',
 	register: 'Inscription du participant',
