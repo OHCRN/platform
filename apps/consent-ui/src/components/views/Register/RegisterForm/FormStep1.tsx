@@ -23,6 +23,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { checkAge18AndOver } from 'types/entities';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -63,6 +64,7 @@ const FormStep1 = ({
 
 	const {
 		formState: { errors, isValid },
+		getValues,
 		handleSubmit,
 		setFocus,
 	} = methods;
@@ -78,6 +80,14 @@ const FormStep1 = ({
 		// TODO #366 change to isGuardian
 		setFocus('guardianName');
 	}, [setFocus]);
+
+	const handleDateOfBirthBlur = () => {
+		const dateOfBirthValue = getValues('dateOfBirth');
+		const userIsAdult = checkAge18AndOver(dateOfBirthValue);
+		if (!userIsAdult) {
+			console.log('participant is a minor');
+		}
+	};
 
 	return (
 		<FormProvider {...methods}>
@@ -153,6 +163,7 @@ const FormStep1 = ({
 						error={errors.dateOfBirth?.type && errorsDict.required}
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
+						onBlur={handleDateOfBirthBlur}
 						required
 					/>
 				</FormSection>

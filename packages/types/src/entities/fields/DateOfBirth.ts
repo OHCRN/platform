@@ -23,7 +23,7 @@ import { differenceInYears } from 'date-fns';
  * Check if age is at least 18 years
  * @returns {boolean} returns true if age is greater than or equal to 18
  */
-const checkAge18AndOver = (dob: Date): boolean => {
+export const checkAge18AndOver = (dob: Date): boolean => {
 	const age = differenceInYears(new Date(), dob);
 	return age >= 18;
 };
