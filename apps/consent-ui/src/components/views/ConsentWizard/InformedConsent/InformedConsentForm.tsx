@@ -36,7 +36,7 @@ import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-2'];
 
 const InformedConsentForm = ({
 	currentLang,

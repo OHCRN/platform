@@ -19,16 +19,16 @@
 
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, SyntheticEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
 import Button from 'src/components/common/Button';
 import { ValidLanguage } from 'src/i18n';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
-import { useModal } from 'src/components/common/Modal';
 import { ConsentStepRoute } from 'src/components/common/Link/types';
 import { handleMouseDownBlur } from 'src/components/utils';
+import { useModal } from 'src/components/providers/ModalProvider';
 
 import FormEditedModal from './FormEditedModal';
 import styles from './ConsentStepsNavigation.module.scss';
@@ -50,15 +50,13 @@ const PreviousButton = ({
 
 	const { openModal, closeModal } = useModal();
 	const formEditedModalConfig = {
-		title: 'Modal text TBD',
-		actionButtonText: 'OK',
-		onActionClick: closeModal,
-		onCancelClick: closeModal,
-		body: <FormEditedModal />,
+		modalComponent: <FormEditedModal closeModal={closeModal} />,
 	};
 
-	const handleClick = () => {
+	const handleClick = (e: SyntheticEvent) => {
+		e.preventDefault();
 		if (isDirty) {
+			console.log('hello');
 			// form has been edited - warn & prevent user from leaving page
 			openModal(formEditedModalConfig);
 		} else {

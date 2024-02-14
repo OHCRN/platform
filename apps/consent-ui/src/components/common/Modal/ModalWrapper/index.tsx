@@ -17,19 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
+import { ReactNode } from 'react';
 
-const FormEditedModal = ({ closeModal }: { closeModal: () => void }) => {
-	return (
-		<Modal
-			actionButtonText="OK"
-			cancelButtonText="cancel"
-			onActionClick={closeModal}
-			onCancelClick={closeModal}
-		>
-			<p>modal text TBD</p>
-		</Modal>
-	);
+import styles from './ModalWrapper.module.scss';
+
+const ModalWrapper = ({ children }: { children: ReactNode }) => {
+	return <div className={styles.modalWrapper}>{children}</div>;
 };
 
-export default FormEditedModal;
+export default ModalWrapper;

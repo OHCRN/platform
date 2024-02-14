@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -19,108 +19,65 @@
 
 'use client';
 
-import {
-	ReactNode,
-	isValidElement,
-	createContext,
-	useCallback,
-	useContext,
-	useMemo,
-	useState,
-} from 'react';
-import { useDetectClickOutside } from 'react-detect-click-outside';
+import { ReactNode, ComponentProps } from 'react';
 
 import Card from 'src/components/common/Card';
 import Button from 'src/components/common/Button';
 import LinkButton from 'src/components/common/Button/LinkButton';
 
-import { ModalConfig, ModalContextType, defaultModalContext } from './types';
 import styles from './Modal.module.scss';
 
-const ModalContext = createContext<ModalContextType>(defaultModalContext);
-
-const ModalProvider = ({ children }: { children: ReactNode }) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [config, setConfig] = useState<ModalConfig>({});
-	const {
-		title,
-		body,
-		actionButtonText,
-		cancelButtonText,
-		onActionClick,
-		actionLink,
-		onCancelClick,
-		cancelLink,
-		actionDisabled,
-		cancelDisabled,
-	} = config;
-
-	const openModal = useCallback(
-		(config: ModalConfig) => {
-			setConfig(config);
-			setIsOpen(true);
-		},
-		[setIsOpen, setConfig],
-	);
-
-	const closeModal = useCallback(() => {
-		setConfig({});
-		setIsOpen(false);
-	}, [setIsOpen, setConfig]);
-
-	const value = useMemo(
-		() => ({
-			openModal,
-			closeModal,
-		}),
-		[openModal, closeModal],
-	);
-
-	const ref = useDetectClickOutside({ onTriggered: closeModal });
-
+const Modal = ({
+	actionButtonText,
+	actionDisabled,
+	actionLink,
+	cancelButtonText,
+	cancelDisabled,
+	cancelLink,
+	children,
+	onActionClick,
+	onCancelClick,
+	title,
+}: {
+	actionButtonText?: ReactNode;
+	actionDisabled?: boolean;
+	actionLink?: ComponentProps<typeof LinkButton>['href'];
+	cancelButtonText?: ReactNode;
+	cancelDisabled?: boolean;
+	cancelLink?: ComponentProps<typeof LinkButton>['href'];
+	children?: ReactNode;
+	onActionClick?: ComponentProps<typeof Button>['onClick'];
+	onCancelClick?: ComponentProps<typeof Button>['onClick'];
+	title?: string;
+}) => {
 	return (
-		<ModalContext.Provider value={value}>
-			{isOpen && (
-				<div className={styles.modal}>
-					<div ref={ref}>
-						<Card className={styles.card} dropShadow="none">
-							{title && <h3>{title}</h3>}
-							<div className={styles.body}>
-								{body && isValidElement(body) ? body : body && <p>{body}</p>}
-							</div>
-							{(actionButtonText || cancelButtonText) && (
-								<div className={styles.buttons}>
-									{cancelButtonText && onCancelClick && (
-										<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
-											{cancelButtonText}
-										</Button>
-									)}
-									{cancelButtonText && cancelLink && (
-										<LinkButton href={cancelLink} variant="secondary">
-											{cancelButtonText}
-										</LinkButton>
-									)}
-									{actionButtonText && onActionClick && (
-										<Button onClick={onActionClick} disabled={actionDisabled}>
-											{actionButtonText}
-										</Button>
-									)}
-									{actionButtonText && actionLink && (
-										<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
-									)}
-								</div>
-							)}
-						</Card>
-					</div>
+		<Card className={styles.card} dropShadow="none">
+			{title && <h3>{title}</h3>}
+			<div className={styles.body}>{children}</div>
+			{(actionButtonText || cancelButtonText) && (
+				<div className={styles.buttons}>
+					{cancelButtonText && onCancelClick && (
+						<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
+							{cancelButtonText}
+						</Button>
+					)}
+					{cancelButtonText && cancelLink && (
+						<LinkButton href={cancelLink} variant="secondary">
+							{cancelButtonText}
+						</LinkButton>
+					)}
+					{actionButtonText && onActionClick && (
+						<Button onClick={onActionClick} disabled={actionDisabled}>
+							{actionButtonText}
+						</Button>
+					)}
+					{actionButtonText && actionLink && (
+						<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
+					)}
 				</div>
 			)}
-			{children}
-		</ModalContext.Provider>
+		</Card>
 	);
 };
 
-export const useModal = () => {
-	return useContext(ModalContext);
-};
-
-export default ModalProvider;
+export default Modal;
