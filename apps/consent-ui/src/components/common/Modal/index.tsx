@@ -24,6 +24,7 @@ import { ReactNode, ComponentProps } from 'react';
 import Card from 'src/components/common/Card';
 import Button from 'src/components/common/Button';
 import LinkButton from 'src/components/common/Button/LinkButton';
+import { useModal } from 'src/components/providers/ModalProvider';
 
 import styles from './Modal.module.scss';
 
@@ -50,30 +51,35 @@ const Modal = ({
 	onCancelClick?: ComponentProps<typeof Button>['onClick'];
 	title?: string;
 }) => {
+	const { closeModal } = useModal();
 	return (
 		<Card className={styles.card} dropShadow="none">
 			{title && <h3>{title}</h3>}
 			<div className={styles.body}>{children}</div>
 			{(actionButtonText || cancelButtonText) && (
 				<div className={styles.buttons}>
-					{cancelButtonText && onCancelClick && (
-						<Button onClick={onCancelClick} variant="secondary" disabled={cancelDisabled}>
-							{cancelButtonText}
-						</Button>
-					)}
-					{cancelButtonText && cancelLink && (
-						<LinkButton href={cancelLink} variant="secondary">
-							{cancelButtonText}
-						</LinkButton>
-					)}
-					{actionButtonText && onActionClick && (
-						<Button onClick={onActionClick} disabled={actionDisabled}>
-							{actionButtonText}
-						</Button>
-					)}
-					{actionButtonText && actionLink && (
-						<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
-					)}
+					{cancelButtonText &&
+						(cancelLink ? (
+							<LinkButton href={cancelLink} variant="secondary">
+								{cancelButtonText}
+							</LinkButton>
+						) : (
+							<Button
+								onClick={onCancelClick || closeModal}
+								variant="secondary"
+								disabled={cancelDisabled}
+							>
+								{cancelButtonText}
+							</Button>
+						))}
+					{actionButtonText &&
+						(actionLink ? (
+							<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
+						) : (
+							<Button onClick={onActionClick || closeModal} disabled={actionDisabled}>
+								{actionButtonText}
+							</Button>
+						))}
 				</div>
 			)}
 		</Card>

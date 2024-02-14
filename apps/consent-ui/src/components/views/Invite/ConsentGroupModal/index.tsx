@@ -35,23 +35,12 @@ const ModalSection = ({ items, title }: { items: string[]; title: string }) => {
 	);
 };
 
-const ConsentGroupModal = ({
-	closeModal,
-	currentLang,
-}: {
-	closeModal: () => void;
-	currentLang: ValidLanguage;
-}) => {
+const ConsentGroupModal = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
 	const modalDict = translateNamespace('inviteFormConsentGroupModal');
 
 	return (
-		<Modal
-			actionButtonText={modalDict.actionButtonText}
-			onActionClick={closeModal}
-			onCancelClick={closeModal}
-			title={modalDict.title}
-		>
+		<Modal actionButtonText={modalDict.actionButtonText} title={modalDict.title}>
 			<ModalSection
 				title={modalDict.adultConsent}
 				items={[modalDict.adultConsentPoint1, modalDict.adultConsentPoint2]}

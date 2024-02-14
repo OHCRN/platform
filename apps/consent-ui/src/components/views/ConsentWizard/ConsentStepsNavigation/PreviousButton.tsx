@@ -48,9 +48,9 @@ const PreviousButton = ({
 
 	const router = useRouter();
 
-	const { openModal, closeModal } = useModal();
+	const { openModal } = useModal();
 	const formEditedModalConfig = {
-		modalComponent: <FormEditedModal closeModal={closeModal} />,
+		modalComponent: <FormEditedModal />,
 	};
 
 	const handleClick = () => {

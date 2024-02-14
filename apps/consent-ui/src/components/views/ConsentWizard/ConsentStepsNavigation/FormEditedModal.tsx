@@ -19,14 +19,9 @@
 
 import Modal from 'src/components/common/Modal';
 
-const FormEditedModal = ({ closeModal }: { closeModal: () => void }) => {
+const FormEditedModal = () => {
 	return (
-		<Modal
-			actionButtonText="OK"
-			cancelButtonText="cancel"
-			onActionClick={closeModal}
-			onCancelClick={closeModal}
-		>
+		<Modal actionButtonText="OK" cancelButtonText="cancel">
 			<p>modal text TBD</p>
 		</Modal>
 	);

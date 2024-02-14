@@ -142,9 +142,9 @@ const ClinicianInviteFormComponent = ({
 	}, [watchConsentGroup]);
 
 	// setup consent group info modal
-	const { openModal, closeModal } = useModal();
+	const { openModal } = useModal();
 	const consentGroupModalConfig = {
-		modalComponent: <ConsentGroupModal closeModal={closeModal} currentLang={currentLang} />,
+		modalComponent: <ConsentGroupModal currentLang={currentLang} />,
 	};
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 
