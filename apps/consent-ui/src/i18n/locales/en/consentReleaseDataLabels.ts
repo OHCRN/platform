@@ -46,9 +46,9 @@ const dictionary = {
 	molecularLab: 'Molecular Lab',
 	OHIP: 'OHIP #',
 	personalHistoryOfCancer: 'Personal History of Cancer',
-	residentialPostalCode,
 	preferredName,
 	primaryCancerDiagnosis: 'Primary Cancer Diagnosis',
+	residentialPostalCode,
 	sexAssignedAtBirth: 'Sex Assigned at Birth',
 } satisfies Record<string, string>;
 

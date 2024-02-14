@@ -155,7 +155,7 @@ const ConsentReleaseDataForm = ({
 						label={labelsDict.genderIdentity}
 						name="genderIdentity"
 						error={errors.genderIdentity?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={genderOptions}
 						required
 					/>
@@ -174,7 +174,7 @@ const ConsentReleaseDataForm = ({
 						description={textDict.sexAssignedAtBirthTooltip}
 						name="birthSex"
 						error={errors.birthSex?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={birthSexOptions}
 						required
 					/>
@@ -182,7 +182,7 @@ const ConsentReleaseDataForm = ({
 						label={labelsDict.ancestry}
 						name="ancestry"
 						error={errors.ancestry?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={ancestryOptions}
 						required
 					/>
@@ -190,7 +190,7 @@ const ConsentReleaseDataForm = ({
 						label={labelsDict.personalHistoryOfCancer}
 						name="historyOfCancer"
 						error={errors.historyOfCancer?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={historyOfCancerOptions}
 						required
 					/>
@@ -199,7 +199,7 @@ const ConsentReleaseDataForm = ({
 						description={textDict.primaryCancerDiagnosisTooltip}
 						name="primaryCancerDiagnosis"
 						error={undefined} // TODO: Add primaryCancerDiagnosis to zod schema
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={[]} // TODO: Add cancer options
 						required
 					/>
@@ -208,7 +208,7 @@ const ConsentReleaseDataForm = ({
 						description={textDict.familyHistoryOfCancerTooltip}
 						name="familyHistoryOfCancer"
 						error={errors.familyHistoryOfCancer?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={historyOfCancerOptions}
 						required
 					/>
@@ -245,7 +245,7 @@ const ConsentReleaseDataForm = ({
 						label={labelsDict.geneticsClinic}
 						name="selfReportedGeneticsClinic"
 						error={errors.selfReportedGeneticsClinic?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={textDict.selectPlaceholder}
 						options={geneticsClinicOptions}
 					/>
 					<SelectFieldSet
@@ -253,7 +253,7 @@ const ConsentReleaseDataForm = ({
 						description={textDict.molecularLabNameTooltip}
 						name="selfReportedMolecularLab"
 						error={errors.selfReportedMolecularLab?.type && errorsDict.required}
-						placeholder={'- Select an option -'} // TODO: translate
+						placeholder={textDict.selectPlaceholder}
 						options={molecularLabOptions}
 					/>
 				</FormSection>

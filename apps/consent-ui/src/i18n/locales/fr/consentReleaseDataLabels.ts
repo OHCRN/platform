@@ -48,9 +48,9 @@ const dictionary = {
 	molecularLab: 'Laboratoire moléculaire',
 	OHIP: 'OHIP #',
 	personalHistoryOfCancer: 'Antécédents personnels de cancer',
-	residentialPostalCode,
 	preferredName,
 	primaryCancerDiagnosis: 'Diagnostic primaire du cancer',
+	residentialPostalCode,
 	sexAssignedAtBirth: 'Sexe attribué à la naissance',
 } satisfies ConsentReleaseDataLabelsDictionary;
 

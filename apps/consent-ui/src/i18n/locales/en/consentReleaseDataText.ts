@@ -18,6 +18,7 @@
  */
 
 import formTooltips from './formTooltips';
+import formText from './formText';
 
 const {
 	participantFirstNameTooltip,
@@ -28,32 +29,35 @@ const {
 	clinicianTitleOrRoleTooltip,
 } = formTooltips;
 
+const { selectPlaceholder } = formText;
+
 const dictionary = {
-	releaseAndUpdateData:
-		'I agree to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.',
+	clinicianTitleOrRoleTooltip,
+	dateOfBirthTooltip: 'We require this to request your clinical information.',
 	deIdentifiedResearch:
 		'I agree to the use my registry data in de-identified research (including display of aggregate data on OHCRN website and research facilitated by longitudinal linkage to administrative health databases.) ',
 	deIdentifiedResearchLink: 'Learn more about privacy and de-identified information.',
-	sectionDescription: 'To make this possible, we will need the following information from you:',
+	familyHistoryOfCancerTooltip:
+		'Select yes only if the family member is: parent, sibling, child, aunt/uncle, or grandparents.',
+	molecularLabNameTooltip:
+		'Please provide the name of the lab that did your genetic testing, if you know this.',
+	ohipCheckboxText: 'I do not have an Ontario health card.',
+	ohipTooltip:
+		'Enter the first 10 digits of your green health card. We require this in order to access your lab reports.',
 	participantFirstNameTooltip,
 	participantLastNameTooltip,
 	participantMiddleNameTooltip,
 	participantPreferredNameTooltip,
-	ohipTooltip:
-		'Enter the first 10 digits of your green health card. We require this in order to access your lab reports.',
-	ohipCheckboxText: 'I do not have an Ontario health card.',
-	dateOfBirthTooltip: 'We require this to request your clinical information.',
-	sexAssignedAtBirthTooltip:
-		'Sex assigned at birth can help improve our understanding of cancer causes and risks.',
 	primaryCancerDiagnosisTooltip: 'You may select multiple cancers you have been diagnosed with.',
-	familyHistoryOfCancerTooltip:
-		'Select yes only if the family member is: parent, sibling, child, aunt/uncle, or grandparents.',
+	releaseAndUpdateData:
+		'I agree to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.',
 	residentialPostalCodeTooltip,
+	sectionDescription: 'To make this possible, we will need the following information from you:',
 	sectionDescription2:
 		'OHCRN is open to participants who have had genetic testing. Please tell us about where your testing was completed:',
-	clinicianTitleOrRoleTooltip,
-	molecularLabNameTooltip:
-		'Please provide the name of the lab that did your genetic testing, if you know this.',
+	selectPlaceholder,
+	sexAssignedAtBirthTooltip:
+		'Sex assigned at birth can help improve our understanding of cancer causes and risks.',
 } satisfies Record<string, string>;
 
 export type ConsentReleaseDataTextDictionary = Record<keyof typeof dictionary, string>;
