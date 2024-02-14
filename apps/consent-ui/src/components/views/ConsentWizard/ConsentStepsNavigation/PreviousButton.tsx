@@ -19,7 +19,7 @@
 
 'use client';
 
-import { ReactNode, SyntheticEvent } from 'react';
+import { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
@@ -53,10 +53,8 @@ const PreviousButton = ({
 		modalComponent: <FormEditedModal closeModal={closeModal} />,
 	};
 
-	const handleClick = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleClick = () => {
 		if (isDirty) {
-			console.log('hello');
 			// form has been edited - warn & prevent user from leaving page
 			openModal(formEditedModalConfig);
 		} else {
