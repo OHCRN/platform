@@ -78,6 +78,7 @@ const ConsentReleaseDataForm = ({
 	const methods = useForm<ConsentReleaseDataRequest>({
 		resolver: zodResolver(ConsentReleaseDataRequest),
 		shouldUnregister: true,
+		mode: 'onBlur',
 	});
 	const {
 		formState: { errors },
@@ -99,7 +100,7 @@ const ConsentReleaseDataForm = ({
 				<FormSection>
 					<CheckboxFieldSet
 						className={styles.checkbox}
-						description={textDict.releaseAndUpdateData || ''}
+						description={textDict.releaseAndUpdateData}
 						error={errors.RELEASE_DATA__CLINICAL_AND_GENETIC?.type && errorsDict.required}
 						name="RELEASE_DATA__CLINICAL_AND_GENETIC"
 						required
@@ -107,14 +108,12 @@ const ConsentReleaseDataForm = ({
 					<CheckboxFieldSet
 						className={styles.checkbox}
 						description={
-							(
-								<>
-									{textDict.deIdentifiedResearch}
-									<Link href={''} prefetch={false} target="_blank">
-										{textDict.deIdentifiedResearchLink}
-									</Link>
-								</>
-							) || ''
+							<>
+								{textDict.deIdentifiedResearch}
+								<Link href={''} prefetch={false} target="_blank">
+									{textDict.deIdentifiedResearchLink}
+								</Link>
+							</>
 						}
 						error={errors.RELEASE_DATA__DE_IDENTIFIED?.type && errorsDict.required}
 						name="RELEASE_DATA__DE_IDENTIFIED"
@@ -122,57 +121,57 @@ const ConsentReleaseDataForm = ({
 					/>
 				</FormSection>
 
-				<p className={styles.smallText}>{textDict.sectionDescription || ''}</p>
+				<p className={styles.smallText}>{textDict.sectionDescription}</p>
 
 				<FormSection>
 					<TextFieldSet
-						description={textDict.participantFirstNameTooltip || ''}
+						description={textDict.participantFirstNameTooltip}
 						error={errors.firstName?.type && errorsDict.required}
 						name="firstName"
 						required
-						label={labelsDict.firstName || ''}
+						label={labelsDict.firstName}
 					/>
 					<TextFieldSet
-						description={textDict.participantMiddleNameTooltip || ''}
+						description={textDict.participantMiddleNameTooltip}
 						error={errors.middleName?.type && errorsDict.required}
 						name="middleName"
-						label={labelsDict.middleName || ''}
+						label={labelsDict.middleName}
 					/>
 					<TextFieldSet
-						description={textDict.participantLastNameTooltip || ''}
+						description={textDict.participantLastNameTooltip}
 						error={errors.lastName?.type && errorsDict.required}
 						name="lastName"
 						required
-						label={labelsDict.lastName || ''}
+						label={labelsDict.lastName}
 					/>
 					<TextFieldSet
-						description={textDict.participantPreferredNameTooltip || ''}
+						description={textDict.participantPreferredNameTooltip}
 						error={errors.preferredName?.type && errorsDict.required}
 						name="preferredName"
-						label={labelsDict.preferredName || ''}
+						label={labelsDict.preferredName}
 					/>
 
 					<SelectFieldSet
-						label={labelsDict.genderIdentity || ''}
+						label={labelsDict.genderIdentity}
 						name="genderIdentity"
 						error={errors.genderIdentity?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={genderOptions}
 						required
 					/>
-					{/* TODO: add OhipFieldSet when merged */}
+					{/* TODO: add OhipFieldSet and its related model changes #432 */}
 					<CalendarFieldSet
 						currentLang={currentLang}
-						label={labelsDict.dateOfBirth || ''}
+						label={labelsDict.dateOfBirth}
 						error={errors.dateOfBirth?.type && errorsDict.required}
 						name="dateOfBirth"
-						description={textDict.dateOfBirthTooltip || ''}
+						description={textDict.dateOfBirthTooltip}
 						required
 					/>
 
 					<SelectFieldSet
-						label={labelsDict.sexAssignedAtBirth || ''}
-						description={textDict.sexAssignedAtBirthTooltip || ''}
+						label={labelsDict.sexAssignedAtBirth}
+						description={textDict.sexAssignedAtBirthTooltip}
 						name="birthSex"
 						error={errors.birthSex?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
@@ -180,7 +179,7 @@ const ConsentReleaseDataForm = ({
 						required
 					/>
 					<SelectFieldSet
-						label={labelsDict.ancestry || ''}
+						label={labelsDict.ancestry}
 						name="ancestry"
 						error={errors.ancestry?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
@@ -188,7 +187,7 @@ const ConsentReleaseDataForm = ({
 						required
 					/>
 					<SelectFieldSet
-						label={labelsDict.personalHistoryOfCancer || ''}
+						label={labelsDict.personalHistoryOfCancer}
 						name="historyOfCancer"
 						error={errors.historyOfCancer?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
@@ -196,8 +195,8 @@ const ConsentReleaseDataForm = ({
 						required
 					/>
 					<SelectFieldSet
-						label={labelsDict.primaryCancerDiagnosis || ''}
-						description={textDict.primaryCancerDiagnosisTooltip || ''}
+						label={labelsDict.primaryCancerDiagnosis}
+						description={textDict.primaryCancerDiagnosisTooltip}
 						name="primaryCancerDiagnosis"
 						error={undefined} // TODO: Add primaryCancerDiagnosis to zod schema
 						placeholder={'- Select an option -'}
@@ -205,8 +204,8 @@ const ConsentReleaseDataForm = ({
 						required
 					/>
 					<SelectFieldSet
-						label={labelsDict.familyHistoryOfCancer || ''}
-						description={textDict.familyHistoryOfCancerTooltip || ''}
+						label={labelsDict.familyHistoryOfCancer}
+						description={textDict.familyHistoryOfCancerTooltip}
 						name="familyHistoryOfCancer"
 						error={errors.familyHistoryOfCancer?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
@@ -215,46 +214,46 @@ const ConsentReleaseDataForm = ({
 					/>
 
 					<TextFieldSet
-						label={labelsDict.residentialPostalCode || ''}
-						description={textDict.residentialPostalCodeTooltip || ''}
+						label={labelsDict.residentialPostalCode}
+						description={textDict.residentialPostalCodeTooltip}
 						error={errors.residentialPostalCode?.type && errorsDict.required}
 						name="residentialPostalCode"
 						required
 					/>
 				</FormSection>
 
-				<p className={styles.smallText}>{textDict.sectionDescription2 || ''}</p>
+				<p className={styles.smallText}>{textDict.sectionDescription2}</p>
 
 				<FormSection>
 					<TextFieldSet
-						description={textDict.clinicianTitleOrRoleTooltip || ''}
+						description={textDict.clinicianTitleOrRoleTooltip}
 						error={errors.selfReportedClinicianTitle?.type && errorsDict.required}
 						name="selfReportedClinicianTitle"
-						label={labelsDict.clinicianTitleOrRole || ''}
+						label={labelsDict.clinicianTitleOrRole}
 					/>
 					<TextFieldSet
 						error={errors.selfReportedClinicianFirstName?.type && errorsDict.required}
 						name="selfReportedClinicianFirstName"
-						label={labelsDict.clinicianFirstName || ''}
+						label={labelsDict.clinicianFirstName}
 					/>
 					<TextFieldSet
 						error={errors.selfReportedClinicianLastName?.type && errorsDict.required}
 						name="selfReportedClinicianLastName"
-						label={labelsDict.clinicianLastName || ''}
+						label={labelsDict.clinicianLastName}
 					/>
 					<SelectFieldSet
-						label={labelsDict.geneticsClinic || ''}
+						label={labelsDict.geneticsClinic}
 						name="selfReportedGeneticsClinic"
 						error={errors.selfReportedGeneticsClinic?.type && errorsDict.required}
 						placeholder={'- Select an option -'}
 						options={geneticsClinicOptions}
 					/>
 					<SelectFieldSet
-						label={labelsDict.molecularLab || ''}
-						description={textDict.molecularLabNameTooltip || ''}
+						label={labelsDict.molecularLab}
+						description={textDict.molecularLabNameTooltip}
 						name="selfReportedMolecularLab"
 						error={errors.selfReportedMolecularLab?.type && errorsDict.required}
-						placeholder={'- Select an option -'}
+						placeholder={'- Select an option -'} // TODO: translate
 						options={molecularLabOptions}
 					/>
 				</FormSection>
