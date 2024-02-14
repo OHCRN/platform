@@ -58,6 +58,7 @@ import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
 import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
+import registerMinorModalDictionary from 'src/i18n/locales/fr/registerMinorModal';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
 const dictionaries = {
@@ -101,6 +102,7 @@ const dictionaries = {
 	registerFormStep2Labels: registerFormStep2LabelsDictionary,
 	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
+	registerMinorModal: registerMinorModalDictionary,
 	registerPage: registerPageDictionary,
 } satisfies typeof en;
 

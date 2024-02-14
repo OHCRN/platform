@@ -26,6 +26,8 @@ const dictionary = {
 	home: "Page d'accueil",
 	invite: 'Invitation du clinicien',
 	register: 'Inscription du participant',
+	ok: 'OK',
+	backToHomepage: "Retour à la page d'accueil",
 } satisfies CommonDictionary;
 
 export default dictionary;
