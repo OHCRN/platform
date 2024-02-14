@@ -19,8 +19,10 @@
 
 'use client';
 import clsx from 'clsx';
+import urlJoin from 'url-join';
 import Link from 'next/link';
 
+import { PDF_ASSETS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import styles from './ConsentResearchParticipation.module.scss';
@@ -32,7 +34,7 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 	const errorsDict = translateNamespace('formErrors');
 	const pageDict = translateNamespace('consentResearchParticipationPage');
 
-	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
+	const studyConsentPdfUrl = urlJoin(PDF_ASSETS_PATH, pageDict.studyConsentPdf);
 
 	return (
 		<div>
