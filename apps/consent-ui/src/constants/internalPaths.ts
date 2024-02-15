@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const ASSETS_PATH = 'assets';
+export const ASSETS_PATH = '/assets';
 
 // where to find PDFs
 export const CONSENT_PDFS_PATH = 'pdfs/study-consent';
