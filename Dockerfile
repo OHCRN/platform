@@ -99,7 +99,7 @@ WORKDIR ${CONSENT_API_DIR}
 USER ${APP_USER}
 
 COPY --from=prod-deps ${CONSENT_API_DIR}/node_modules/ ./node_modules
-COPY --from=build ${CONSENT_API_DIR}/dist ./dist
+COPY --from=build ${CONSENT_API_DIR}/src ./src
 # Required for ts-node
 COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
 
@@ -121,7 +121,7 @@ WORKDIR ${DATA_MAPPER_DIR}
 USER ${APP_USER}
 
 COPY --from=prod-deps ${DATA_MAPPER_DIR}/node_modules/ ./node_modules
-COPY --from=build ${DATA_MAPPER_DIR}/dist ./dist
+COPY --from=build ${DATA_MAPPER_DIR}/src ./src
 # Required for ts-node
 COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
 
@@ -143,7 +143,7 @@ WORKDIR ${PI_DAS_DIR}
 USER ${APP_USER}
 
 COPY --from=prod-deps ${PI_DAS_DIR}/node_modules/ ./node_modules
-COPY --from=build ${PI_DAS_DIR}/dist ./dist
+COPY --from=build ${PI_DAS_DIR}/src ./src
 COPY --from=build ${PI_DAS_DIR}/prisma ./prisma
 # Required for ts-node
 COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
@@ -166,7 +166,7 @@ WORKDIR ${PHI_DAS_DIR}
 USER ${APP_USER}
 
 COPY --from=prod-deps ${PHI_DAS_DIR}/node_modules/ ./node_modules
-COPY --from=build ${PHI_DAS_DIR}/dist ./dist
+COPY --from=build ${PHI_DAS_DIR}/src ./src
 COPY --from=build ${PHI_DAS_DIR}/prisma ./prisma
 # Required for ts-node
 COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
@@ -189,7 +189,7 @@ WORKDIR ${KEYS_DAS_DIR}
 USER ${APP_USER}
 
 COPY --from=prod-deps ${KEYS_DAS_DIR}/node_modules/ ./node_modules
-COPY --from=build ${KEYS_DAS_DIR}/dist ./dist
+COPY --from=build ${KEYS_DAS_DIR}/src ./src
 COPY --from=build ${KEYS_DAS_DIR}/prisma ./prisma
 # Required for ts-node
 COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
@@ -212,7 +212,7 @@ WORKDIR ${CONSENT_DAS_DIR}
 USER ${APP_USER}
 
 COPY --from=prod-deps ${CONSENT_DAS_DIR}/node_modules/ ./node_modules
-COPY --from=build ${CONSENT_DAS_DIR}/dist ./dist
+COPY --from=build ${CONSENT_DAS_DIR}/src ./src
 COPY --from=build ${CONSENT_DAS_DIR}/prisma ./prisma
 # Required for ts-node
 COPY --from=build ${WORKDIR}/node_modules ${WORKDIR}/node_modules
