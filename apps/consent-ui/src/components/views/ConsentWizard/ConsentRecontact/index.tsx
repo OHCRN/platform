@@ -18,9 +18,11 @@
  */
 
 import Link from 'next/link';
+import urlJoin from 'url-join';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import styles from './ConsentRecontact.module.scss';
 import ConsentRecontactForm from './ConsentRecontactForm';
 
@@ -30,13 +32,14 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const errorsDict = translateNamespace('formErrors');
 	const pageDict = translateNamespace('consentRecontactPage');
 
-	const studyConsentPdfUrl = `/assets/pdfs/study-consent/${pageDict.studyConsentPdf}`;
+	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
 
 	return (
 		<div>
 			<h2 className={styles.title}>{pageDict.title}</h2>
+			<p className={styles.description}>{pageDict.subheading}</p>
 			<p className={styles.description}>
-				{pageDict.subheading}
+				{pageDict.subheading2}
 				<Link href={studyConsentPdfUrl} prefetch={false} target="_blank">
 					{pageDict.subheadingLink}
 				</Link>

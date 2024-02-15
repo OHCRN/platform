@@ -32,8 +32,8 @@ import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
 import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 
-import ConsentStepsNavigation from '../ConsentStepsNavigation';
-import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
+import ConsentStepsNavigation from '../../ConsentStepsNavigation';
+import useGoToNextConsentStep from '../../ConsentStepsNavigation/useGoToNextConsentStep';
 
 import styles from './ConsentRecontactForm.module.scss';
 
@@ -64,8 +64,6 @@ const ConsentRecontactForm = ({
 
 	const onSubmit: SubmitHandler<ConsentRecontactRequest> = (data, event) => {
 		event?.preventDefault();
-
-		// go to next page after successful API request
 		goToNextConsentStep();
 	};
 
