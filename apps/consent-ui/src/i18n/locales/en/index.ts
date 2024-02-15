@@ -27,7 +27,8 @@ import consentGroupDictionary from './consentGroup';
 import consentInProgressNotificationDictionary from './consentInProgressNotification';
 import consentRecontactDictionary from './consentRecontact';
 import consentReleaseDataDictionary from './consentReleaseData';
-import consentResearchParticipationDictionary from './consentResearchParticipation';
+import consentResearchParticipationFormDictionary from './consentResearchParticipationForm';
+import consentResearchParticipationPageDictionary from './consentResearchParticipationPage';
 import consentReviewCardsDictionary from './consentReviewCards';
 import consentReviewSignPageDictionary from './consentReviewSignPage';
 import consentWizardDictionary from './consentWizard';
@@ -71,7 +72,8 @@ const dictionaries = {
 	consentInProgressNotification: consentInProgressNotificationDictionary,
 	consentRecontact: consentRecontactDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
-	consentResearchParticipation: consentResearchParticipationDictionary,
+	consentResearchParticipationForm: consentResearchParticipationFormDictionary,
+	consentResearchParticipationPage: consentResearchParticipationPageDictionary,
 	consentReviewCards: consentReviewCardsDictionary,
 	consentReviewSignPage: consentReviewSignPageDictionary,
 	consentWizard: consentWizardDictionary,
