@@ -22,7 +22,7 @@ import clsx from 'clsx';
 import urlJoin from 'url-join';
 import Link from 'next/link';
 
-import { PDF_ASSETS_PATH } from 'src/constants';
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import styles from './ConsentResearchParticipation.module.scss';
@@ -34,13 +34,14 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 	const errorsDict = translateNamespace('formErrors');
 	const pageDict = translateNamespace('consentResearchParticipationPage');
 
-	const studyConsentPdfUrl = urlJoin(PDF_ASSETS_PATH, pageDict.studyConsentPdf);
+	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
 
 	return (
 		<div>
 			<h3 className={clsx(styles.heading)}>{pageDict.heading}</h3>
+			<p className={clsx(styles.subheading)}>{pageDict.subheading}</p>
 			<p className={clsx(styles.subheading)}>
-				{pageDict.subheading}
+				{pageDict.subheading2}
 				<Link href={studyConsentPdfUrl} prefetch={false} target="_blank">
 					{pageDict.subheadingLink}
 				</Link>

@@ -29,7 +29,9 @@ const dictionary = {
 		'Veuillez sélectionner votre réponse ci-dessous pour indiquer si vous souhaitez ou non participer à chaque étude facultative. Vous pouvez modifier votre consentement à tout moment:',
 	studyConsentPdf,
 	subheading:
-		"Cette partie du formulaire de consentement concerne les études facultatives auxquelles vous pouvez choisir de participer. En participant à ces études facultatives, nous espérons que les résultats aideront d'autres personnes atteintes d'un cancer héréditaire à l'avenir. \n\nParticiper à ces études facultatives est votre choix. Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » aux études facultatives. Des informations supplémentaires sur les études facultatives peuvent être trouvées dans les informations sur l'étude et le document de consentement éclairé. ",
+		"Cette partie du formulaire de consentement concerne les études facultatives auxquelles vous pouvez choisir de participer. En participant à ces études facultatives, nous espérons que les résultats aideront d'autres personnes atteintes d'un cancer héréditaire à l'avenir. ",
+	subheading2:
+		"Participer à ces études facultatives est votre choix. Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » aux études facultatives. Des informations supplémentaires sur les études facultatives peuvent être trouvées dans les informations sur l'étude et le document de consentement éclairé. ",
 	subheadingLink: "l'étude et le document de consentement éclairé.",
 } satisfies ConsentResearchParticipationPageDictionary;
 

@@ -20,7 +20,7 @@
 import urlJoin from 'url-join';
 import Link from 'next/link';
 
-import { PDF_ASSETS_PATH } from 'src/constants';
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { getAppConfig } from 'src/config/appConfig';
@@ -36,7 +36,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 
 	const { OHCRN_EMAIL } = getAppConfig(process.env);
 
-	const studyConsentPdfUrl = urlJoin(PDF_ASSETS_PATH, pageDict.studyConsentPdf);
+	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
 
 	return (
 		<div>
