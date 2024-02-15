@@ -20,6 +20,7 @@
 import z from 'zod';
 
 import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
+import { EmptyStringOrWhitespace } from './String.js';
 
 // TODO: separate name into two fields with + without whitespace, include French chars in both
 export const NAME_REGEX = /^[A-Za-z\s]+$/;
@@ -46,9 +47,6 @@ export const getRegexOptionalAPISchema = (regex: RegExp) => {
 	const regexOptionalAPISchema = getRegexSchema(regex).optional();
 	return regexOptionalAPISchema;
 };
-
-/** check for empty strings or whitespace */
-const EmptyStringOrWhitespace = z.string().trim().max(0);
 
 /**
  * Makes a Zod schema for a regular expression, for optional fields in the UI.

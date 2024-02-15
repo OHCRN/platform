@@ -17,13 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './SortOrder.js';
-export * from './Status.js';
-export * from './String.js';
-export * from './conditionalFieldUtils.js';
-export * from './expand.js';
-export * from './keys.js';
-export * from './lengthConstraints.js';
-export * from './recursivePartial.js';
-export * from './regexes.js';
-export * from './values.js';
+import z from 'zod';
+
+export const TrimmedString = z.string().trim();
+export type TrimmedString = z.infer<typeof TrimmedString>;
+
+export const OptionalString = TrimmedString.optional();
+export type OptionalString = z.infer<typeof OptionalString>;
+
+/** check for empty strings or whitespace */
+export const EmptyStringOrWhitespace = TrimmedString.max(0);
+export type EmptyStringOrWhitespace = z.infer<typeof EmptyStringOrWhitespace>;

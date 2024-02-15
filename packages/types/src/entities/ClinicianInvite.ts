@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { hasRequiredGuardianInformation } from '../common/index.js';
+// import { hasRequiredGuardianInformation } from '../common/index.js';
 
 import { ConsentGroup, Name, NameOptionalAPI, NanoId } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
@@ -60,10 +60,14 @@ export const InviteEntity = z.object({
 	inviteAccepted: z.boolean().default(false),
 });
 
-export const InviteFieldsPreRefine =
-	InviteClinicianFields.merge(InviteGuardianFields).merge(InviteParticipantFields);
+// export const InviteFieldsPreRefine =
+// 	InviteClinicianFields.merge(InviteGuardianFields).merge(InviteParticipantFields);
 
-// base type req/res for the "full" invite types used in consent-api and data-mapper
-export const ClinicianInviteBase = InviteFieldsPreRefine.refine(hasRequiredGuardianInformation, {
-	message: 'Guardian contact fields are required for that consentGroup',
-});
+// // base type req/res for the "full" invite types used in consent-api and data-mapper
+// export const ClinicianInviteBase = InviteFieldsPreRefine.refine(hasRequiredGuardianInformation, {
+// 	message: 'Guardian contact fields are required for that consentGroup',
+// });
+
+export const ClinicianInviteBase =
+	InviteClinicianFields.merge(InviteGuardianFields).merge(InviteParticipantFields);
+export type ClinicianInviteBase = z.infer<typeof ClinicianInviteBase>;
