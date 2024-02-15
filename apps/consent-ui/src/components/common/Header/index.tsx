@@ -24,6 +24,7 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
+import HamburgerMenu from './HamburgerMenu';
 
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
@@ -40,32 +41,35 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	return (
-		<HeaderWrapper currentLang={currentLang}>
-			<div>
-				<Link href={`/${currentLang}`}>
-					<Image
-						src={icon}
-						priority
-						alt={translate('header', 'logoAltText')}
-						className={styles.logo}
-					/>
-				</Link>
-			</div>
-			<div className={styles.right}>
-				<div className={styles.headerItem}>
-					<LanguageToggle currentLang={currentLang} />
+		<>
+			<HeaderWrapper currentLang={currentLang}>
+				<div>
+					<Link href={`/${currentLang}`}>
+						<Image
+							src={icon}
+							priority
+							alt={translate('header', 'logoAltText')}
+							className={styles.logo}
+						/>
+					</Link>
 				</div>
-				{/* TODO: implement real help button, ticket TBD */}
-				<div className={styles.help}>
-					<HelpButton label={translate('header', 'help')} />
+				<div className={styles.right}>
+					<div className={styles.headerItem}>
+						<LanguageToggle currentLang={currentLang} />
+					</div>
+					{/* TODO: implement real help button, ticket TBD */}
+					<div className={styles.help}>
+						<HelpButton label={translate('header', 'help')} />
+					</div>
+					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
+					{/* TODO: implement user menu, ticket TBD */}
+					<div className={styles['user-menu']}>
+						<div>Hello</div>
+					</div>
 				</div>
-				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
-				{/* TODO: implement user menu, ticket TBD */}
-				<div className={styles['user-menu']}>
-					<div>Hello</div>
-				</div>
-			</div>
-		</HeaderWrapper>
+			</HeaderWrapper>
+			<HamburgerMenu registerLabel={'Register'} loginLabel={'Login'} />
+		</>
 	);
 };
 
