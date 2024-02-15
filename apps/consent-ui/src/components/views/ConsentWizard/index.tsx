@@ -24,8 +24,10 @@ import Card from 'src/components/common/Card';
 import ProgressHeader from 'src/components/common/ProgressHeader';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import BackToDashboard from 'src/components/common/BackToDashboard';
+import ConsentResearchParticipation from 'src/components/views/ConsentWizard/ConsentResearchParticipation';
 
 import styles from './ConsentWizard.module.scss';
+import ConsentReviewSign from './ConsentReviewSign';
 import InformedConsent from './InformedConsent';
 import ConsentRecontact from './ConsentRecontact';
 
@@ -81,9 +83,11 @@ const ConsentWizard = async ({
 						{/* TODO: add consent form for each section */}
 						{currentStep === INFORMED_CONSENT && <InformedConsent currentLang={currentLang} />}
 						{currentStep === CONSENT_RELEASE_DATA && <></>}
-						{currentStep === CONSENT_RESEARCH_PARTICIPATION && <></>}
+						{currentStep === CONSENT_RESEARCH_PARTICIPATION && (
+							<ConsentResearchParticipation currentLang={currentLang} />
+						)}
 						{currentStep === CONSENT_RECONTACT && <ConsentRecontact currentLang={currentLang} />}
-						{currentStep === CONSENT_REVIEW_SIGN && <></>}
+						{currentStep === CONSENT_REVIEW_SIGN && <ConsentReviewSign currentLang={currentLang} />}
 					</div>
 				</Card>
 			</div>

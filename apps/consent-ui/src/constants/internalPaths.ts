@@ -17,47 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { ComponentProps } from 'react';
-import Link from 'next/link';
+export const ASSETS_PATH = '/assets';
 
-import { ValidLanguage } from 'src/i18n';
-
-import { ButtonProps } from '../Button/types';
-
-export const CONSENT_STEP_ROUTES = [
-	'consent-1',
-	'consent-2',
-	'consent-3',
-	'consent-4',
-	'consent-5',
-] as const;
-
-export const ConsentStepRouteEnum = z.enum(CONSENT_STEP_ROUTES);
-export type ConsentStepRoute = z.infer<typeof ConsentStepRouteEnum>;
-
-const GENERAL_ROUTES = ['dashboard', 'home', 'invite', 'register'] as const;
-
-export const GeneralRouteNameEnum = z.enum(GENERAL_ROUTES);
-export type GeneralRouteName = z.infer<typeof GeneralRouteNameEnum>;
-
-export const RouteNameEnum = GeneralRouteNameEnum.or(ConsentStepRouteEnum);
-export type RouteName = z.infer<typeof RouteNameEnum>;
-
-export type RouteParams = { [k: string]: string };
-export type Route =
-	| {
-			name: 'home';
-			params?: never;
-	  }
-	| {
-			name: RouteName;
-			params?: RouteParams;
-	  };
-
-export type LocalizedLinkProps = Omit<ComponentProps<typeof Link>, 'href'> &
-	ButtonProps &
-	Route & {
-		linkLang: ValidLanguage;
-		defaultStyle?: boolean;
-	};
+// where to find PDFs
+export const CONSENT_PDFS_PATH = 'pdfs/study-consent';
