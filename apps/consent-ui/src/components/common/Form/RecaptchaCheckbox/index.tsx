@@ -42,7 +42,7 @@ const RecaptchaCheckbox = ({
 			ref={recaptchaCheckboxRef}
 			sitekey={RECAPTCHA_SITE_KEY}
 			onChange={onChange}
-			hl={currentLang === ValidLanguage.Enum.fr ? 'fr-CA' : 'en'}
+			hl={currentLang === ValidLanguage.enum.fr ? 'fr-CA' : 'en'}
 		/>
 	) : null;
 };
