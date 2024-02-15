@@ -28,7 +28,7 @@ const dictionary = {
 	subheading:
 		'This part of the consent form is about optional future consent to be recontacted. You may choose to be recontacted about future research studies, clinical trials, surveys and to discuss collection of additional biological specimens.',
 	subheading2:
-		'You can still take part in the main OHCRN registry even if you say “no” to future contact.    Additional information about consent to be recontacted can be found in the ',
+		'You can still take part in the main OHCRN registry even if you say “no” to future contact. Additional information about consent to be recontacted can be found in the ',
 	subheadingLink: 'study information and informed consent document.',
 	title: 'Optional Consent to Be Recontacted',
 } satisfies Record<string, string>;
