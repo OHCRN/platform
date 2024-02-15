@@ -16,7 +16,9 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 
@@ -37,9 +39,15 @@ const icons: {
 	fr: OhcrnImage, // TODO: get FR icon
 };
 
-const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
+	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 	const icon = icons[currentLang || defaultLanguage];
+
+	const toggleHamburgerMenu = () => {
+		setShowHamburgerMenu(!showHamburgerMenu);
+	};
+
 	return (
 		<>
 			<HeaderWrapper currentLang={currentLang}>
@@ -62,13 +70,15 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 						<HelpButton label={translate('header', 'help')} />
 					</div>
 					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
-					{/* TODO: implement user menu, ticket TBD */}
 					<div className={styles['user-menu']}>
-						<div>Hello</div>
+						<div className={styles.desktopUserMenu}>Hello</div>
+						<div className={styles.hamburgerToggle} onClick={toggleHamburgerMenu}>
+							Hey
+						</div>
 					</div>
 				</div>
 			</HeaderWrapper>
-			<HamburgerMenu registerLabel={'Register'} loginLabel={'Login'} />
+			{showHamburgerMenu && <HamburgerMenu registerLabel={'Register'} loginLabel={'Login'} />}
 		</>
 	);
 };
