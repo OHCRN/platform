@@ -25,6 +25,8 @@ export type TrimmedString = z.infer<typeof TrimmedString>;
 export const OptionalString = TrimmedString.optional();
 export type OptionalString = z.infer<typeof OptionalString>;
 
-/** check for empty strings or whitespace */
-export const EmptyStringOrWhitespace = TrimmedString.max(0);
-export type EmptyStringOrWhitespace = z.infer<typeof EmptyStringOrWhitespace>;
+export const EmptyString = z.literal('');
+export type EmptyString = z.infer<typeof EmptyString>;
+
+export const EmptyWhiteSpace = TrimmedString.max(0);
+export type EmptyWhiteSpace = z.infer<typeof EmptyWhiteSpace>;

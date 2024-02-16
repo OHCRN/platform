@@ -21,7 +21,7 @@ import { z } from 'zod';
 
 // import { hasRequiredGuardianInformation } from '../common/index.js';
 
-import { ConsentGroup, Name, NameOptionalAPI, NanoId } from './fields/index.js';
+import { ConsentGroup, Name, NanoId } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
 import {
 	ConsentToBeContacted,
@@ -49,7 +49,7 @@ export const InviteGuardianFields = GuardianBaseFields;
 export type InviteGuardianFields = z.infer<typeof InviteGuardianFields>;
 
 export const InviteParticipantFields = ParticipantNameFields.merge(
-	z.object({ participantPreferredName: NameOptionalAPI }),
+	z.object({ participantPreferredName: Name.optional() }),
 ).merge(ParticipantContactFields);
 export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;
 

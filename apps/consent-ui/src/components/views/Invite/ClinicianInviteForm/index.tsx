@@ -22,7 +22,7 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ConsentGroup, InviteFieldsPreRefine, NameOptionalUI } from 'types/entities';
+import { ConsentGroup, ClinicianInviteBase, EmptyOrOptionalName } from 'types/entities';
 import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
@@ -54,11 +54,10 @@ import formStyles from './ClinicianInviteForm.module.scss';
 
 const styles = Object.assign({}, formStyles, layoutStyles);
 
-const ClinicianInviteUI = InviteFieldsPreRefine.extend({
-	participantPreferredName: NameOptionalUI,
-}).refine(hasRequiredGuardianInformation, {
-	message: 'Guardian contact fields are required for that consentGroup',
-});
+const ClinicianInviteUI = ClinicianInviteBase.extend({
+	participantPreferredName: EmptyOrOptionalName,
+}).refine(hasRequiredGuardianInformation);
+
 type ClinicianInviteUI = z.infer<typeof ClinicianInviteUI>;
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [

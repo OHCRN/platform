@@ -17,10 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import z from 'zod';
-
 import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
-import { EmptyStringOrWhitespace } from './String.js';
 
 // TODO: separate name into two fields with + without whitespace, include French chars in both
 export const NAME_REGEX = /^[A-Za-z\s]+$/;
@@ -30,31 +27,3 @@ export const PHONE_NUMBER_REGEX = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
 export const POSTAL_CODE_REGEX = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
 
 export const REGEX_FLAG_GLOBAL = 'g';
-
-/**
- * Make a Zod schema for a regular expression, for required fields.
- */
-export const getRegexSchema = (regex: RegExp) => {
-	const regexSchema = z.string().trim().regex(regex);
-	return regexSchema;
-};
-
-/**
- * Make a Zod schema for a regular expression, for optional fields in the API.
- * The resulting schema will allow inputs that match the regex, and undefined values.
- */
-export const getRegexOptionalAPISchema = (regex: RegExp) => {
-	const regexOptionalAPISchema = getRegexSchema(regex).optional();
-	return regexOptionalAPISchema;
-};
-
-/**
- * Makes a Zod schema for a regular expression, for optional fields in the UI.
- * Allows fields that match the regex, undefined values, and
- * empty or whitespace-only strings, because empty HTML inputs contain empty strings
- * rather than undefined values.
- */
-export const getRegexOptionalUISchema = (regex: RegExp) => {
-	const regexOptionalUISchema = getRegexSchema(regex).or(EmptyStringOrWhitespace).optional();
-	return regexOptionalUISchema;
-};
