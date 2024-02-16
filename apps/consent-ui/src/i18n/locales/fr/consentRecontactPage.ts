@@ -17,8 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+import { ConsentRecontactPageDictionary } from 'src/i18n/locales/en/consentRecontactPage';
 
-export type ConsentRecontactDictionary = Record<keyof typeof dictionary, string>;
+import assetUrlsDictionary from './assetUrls';
+
+const { studyConsentPdf } = assetUrlsDictionary;
+
+const dictionary = {
+	smallText:
+		'Veuillez sélectionner votre réponse ci-dessous pour indiquer si vous souhaitez ou non participer à chaque étude facultative. Vous pouvez modifier votre consentement à tout moment:',
+	studyConsentPdf,
+	subheading:
+		"Cette partie du formulaire de consentement concerne le consentement futur facultatif à être recontacté. Vous pouvez choisir d'être recontacté au sujet de futures études de recherche, essais cliniques, enquêtes et pour discuter de la collecte d'échantillons biologiques supplémentaires.",
+	subheading2:
+		'Vous pouvez toujours participer au registre principal de l’OHCRN même si vous dites « non » à un futur contact. Des informations supplémentaires sur le consentement à être recontacté peuvent être trouvées dans les ',
+	subheadingLink: "informations sur l'étude et le document de consentement éclairé.",
+	title: 'Consentement facultatif à être recontacté',
+} satisfies ConsentRecontactPageDictionary;
 
 export default dictionary;

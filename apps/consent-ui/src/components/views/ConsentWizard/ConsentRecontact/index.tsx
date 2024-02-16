@@ -17,50 +17,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import urlJoin from 'url-join';
 import Link from 'next/link';
+import urlJoin from 'url-join';
+
+import { ValidLanguage, getTranslation } from 'src/i18n';
 
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import LinkButton from 'src/components/common/Button/LinkButton';
-import { getAppConfig } from 'src/config/appConfig';
+import styles from './ConsentRecontact.module.scss';
+import ConsentRecontactForm from './ConsentRecontactForm';
 
-import InformedConsentForm from './InformedConsentForm';
-import styles from './InformedConsent.module.scss';
-
-const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
-	const formDict = translateNamespace('informedConsentForm');
+	const formDict = translateNamespace('consentRecontactForm');
 	const errorsDict = translateNamespace('formErrors');
-	const pageDict = translateNamespace('informedConsentPage');
-
-	const { OHCRN_EMAIL } = getAppConfig(process.env);
+	const pageDict = translateNamespace('consentRecontactPage');
 
 	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
 
 	return (
 		<div>
 			<h2 className={styles.title}>{pageDict.title}</h2>
+			<p className={styles.description}>{pageDict.subheading}</p>
 			<p className={styles.description}>
-				{pageDict.description1}
+				{pageDict.subheading2}
 				<Link href={studyConsentPdfUrl} prefetch={false} target="_blank">
-					{pageDict.linkText}
-				</Link>{' '}
-				{pageDict.description2} <Link href={`mailto:${OHCRN_EMAIL}`}>{OHCRN_EMAIL}</Link>.
+					{pageDict.subheadingLink}
+				</Link>
 			</p>
-			<LinkButton
-				color="blue"
-				href={studyConsentPdfUrl}
-				prefetch={false}
-				target="_blank"
-				variant="secondary"
-			>
-				{pageDict.downloadConsentPdf}
-			</LinkButton>
-			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}
-			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
+			<p className={styles.smallText}>{pageDict.smallText}</p>
+			<ConsentRecontactForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
 		</div>
 	);
 };
 
-export default InformedConsent;
+export default ConsentRecontact;

@@ -17,47 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { ComponentProps } from 'react';
-import Link from 'next/link';
+import assetUrlsDictionary from './assetUrls';
 
-import { ValidLanguage } from 'src/i18n';
+const { studyConsentPdf } = assetUrlsDictionary;
 
-import { ButtonProps } from '../Button/types';
+const dictionary = {
+	smallText:
+		'Please select you answer below to show if you would or would not like to take part in each optional study. You can change your consent at any time:',
+	studyConsentPdf,
+	subheading:
+		'This part of the consent form is about optional future consent to be recontacted. You may choose to be recontacted about future research studies, clinical trials, surveys and to discuss collection of additional biological specimens.',
+	subheading2:
+		'You can still take part in the main OHCRN registry even if you say “no” to future contact. Additional information about consent to be recontacted can be found in the ',
+	subheadingLink: 'study information and informed consent document.',
+	title: 'Optional Consent to Be Recontacted',
+} satisfies Record<string, string>;
 
-export const CONSENT_STEP_ROUTES = [
-	'consent-1',
-	'consent-2',
-	'consent-3',
-	'consent-4',
-	'consent-5',
-] as const;
+export type ConsentRecontactPageDictionary = Record<keyof typeof dictionary, string>;
 
-export const ConsentStepRouteEnum = z.enum(CONSENT_STEP_ROUTES);
-export type ConsentStepRoute = z.infer<typeof ConsentStepRouteEnum>;
-
-const GENERAL_ROUTES = ['dashboard', 'home', 'invite', 'register'] as const;
-
-export const GeneralRouteNameEnum = z.enum(GENERAL_ROUTES);
-export type GeneralRouteName = z.infer<typeof GeneralRouteNameEnum>;
-
-export const RouteNameEnum = GeneralRouteNameEnum.or(ConsentStepRouteEnum);
-export type RouteName = z.infer<typeof RouteNameEnum>;
-
-export type RouteParams = { [k: string]: string };
-export type Route =
-	| {
-			name: 'home';
-			params?: never;
-	  }
-	| {
-			name: RouteName;
-			params?: RouteParams;
-	  };
-
-export type LocalizedLinkProps = Omit<ComponentProps<typeof Link>, 'href'> &
-	ButtonProps &
-	Route & {
-		linkLang: ValidLanguage;
-		defaultStyle?: boolean;
-	};
+export default dictionary;
