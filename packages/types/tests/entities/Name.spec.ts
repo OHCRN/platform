@@ -22,11 +22,17 @@ import { describe, expect, it } from 'vitest';
 import { Name, OptionalName, EmptyOrOptionalName } from '../../src/entities/fields/index.js';
 
 describe('Name', () => {
-	// tests for Name
+	it('Can be a string containing only letters', () => {
+		expect(Name.safeParse('Simpson').success).true;
+	});
+	// add necessary tests
 });
 
 describe('OptionalName', () => {
-	// tests for OptionalName
+	it('Can be a string containing only letters', () => {
+		expect(OptionalName.safeParse('Simpson').success).true;
+	});
+	// add necessary tests
 });
 
 // TODO: add tests for special characters (accented letters) when added to the NAME_REGEX

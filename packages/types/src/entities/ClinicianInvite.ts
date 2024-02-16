@@ -60,14 +60,6 @@ export const InviteEntity = z.object({
 	inviteAccepted: z.boolean().default(false),
 });
 
-// export const InviteFieldsPreRefine =
-// 	InviteClinicianFields.merge(InviteGuardianFields).merge(InviteParticipantFields);
-
-// // base type req/res for the "full" invite types used in consent-api and data-mapper
-// export const ClinicianInviteBase = InviteFieldsPreRefine.refine(hasRequiredGuardianInformation, {
-// 	message: 'Guardian contact fields are required for that consentGroup',
-// });
-
 export const ClinicianInviteBase =
 	InviteClinicianFields.merge(InviteGuardianFields).merge(InviteParticipantFields);
 export type ClinicianInviteBase = z.infer<typeof ClinicianInviteBase>;
