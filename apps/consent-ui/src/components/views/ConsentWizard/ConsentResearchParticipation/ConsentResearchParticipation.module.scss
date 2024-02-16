@@ -1,0 +1,28 @@
+@use '../../../../theme/mixins';
+
+.heading {
+	font-size: theme('fontSize.base');
+	font-weight: theme('fontWeight.header');
+
+	margin-bottom: 1rem;
+
+	@media (min-width: theme('screens.sm')) {
+		font-size: theme('fontSize.xl');
+	}
+}
+
+.subheading {
+	font-size: theme('fontSize.base');
+	font-weight: theme('fontWeight.normal');
+
+	white-space: pre-line;
+	margin-bottom: 2rem;
+
+	a {
+		@include mixins.text-link;
+	}
+}
+
+.smallText {
+	font-size: theme('fontSize.sm');
+}

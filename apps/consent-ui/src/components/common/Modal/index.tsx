@@ -76,10 +76,15 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 		[openModal, closeModal],
 	);
 
-	const ref = useDetectClickOutside({ onTriggered: closeModal });
+	const ref = useDetectClickOutside({
+		onTriggered: () => {
+			closeModal();
+		},
+	});
 
 	return (
 		<ModalContext.Provider value={value}>
+			{children}
 			{isOpen && (
 				<div className={styles.modal}>
 					<div ref={ref}>
@@ -114,7 +119,6 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 					</div>
 				</div>
 			)}
-			{children}
 		</ModalContext.Provider>
 	);
 };

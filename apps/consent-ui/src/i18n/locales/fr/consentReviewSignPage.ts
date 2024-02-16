@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,8 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentResearchParticipationDictionary } from 'src/i18n/locales/en/consentResearchParticipation';
+import { ConsentReviewSignPageDictionary } from 'src/i18n/locales/en/consentReviewSignPage';
 
-const dictionary = {} satisfies ConsentResearchParticipationDictionary;
+const dictionary = {
+	description:
+		"Veuillez examiner les informations ci-dessous et confirmer qu'elles sont correctes. Si vous souhaitez modifier quelque chose, veuillez cliquer sur le bouton Modifier à côté du champ que vous souhaitez modifier.",
+	title: 'Vérifiez vos informations',
+} satisfies ConsentReviewSignPageDictionary;
 
 export default dictionary;

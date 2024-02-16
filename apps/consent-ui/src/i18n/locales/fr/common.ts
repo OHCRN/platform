@@ -24,6 +24,7 @@ const dictionary = {
 	backToHomepage: "Retour à la page d'accueil",
 	consent: 'Formulaires de consentement',
 	dashboard: 'Tableau de bord',
+	edit: 'Modifier',
 	home: "Page d'accueil",
 	invite: 'Invitation du clinicien',
 	ok: 'OK',

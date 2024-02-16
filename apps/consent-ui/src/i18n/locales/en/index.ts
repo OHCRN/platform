@@ -25,10 +25,13 @@ import consentCategoryDictionary from './consentCategory';
 import consentCompleteNotificationDictionary from './consentCompleteNotification';
 import consentGroupDictionary from './consentGroup';
 import consentInProgressNotificationDictionary from './consentInProgressNotification';
-import consentRecontactDictionary from './consentRecontact';
+import consentRecontactFormDictionary from './consentRecontactForm';
+import consentRecontactPageDictionary from './consentRecontactPage';
 import consentReleaseDataDictionary from './consentReleaseData';
-import consentResearchParticipationDictionary from './consentResearchParticipation';
-import consentReviewSignDictionary from './consentReviewSign';
+import consentResearchParticipationFormDictionary from './consentResearchParticipationForm';
+import consentResearchParticipationPageDictionary from './consentResearchParticipationPage';
+import consentReviewCardsDictionary from './consentReviewCards';
+import consentReviewSignPageDictionary from './consentReviewSignPage';
 import consentWizardDictionary from './consentWizard';
 import dashboardDictionary from './dashboard';
 import emailVerifiedNotificationDictionary from './emailVerifiedNotification';
@@ -69,10 +72,13 @@ const dictionaries = {
 	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentInProgressNotification: consentInProgressNotificationDictionary,
-	consentRecontact: consentRecontactDictionary,
+	consentRecontactForm: consentRecontactFormDictionary,
+	consentRecontactPage: consentRecontactPageDictionary,
 	consentReleaseData: consentReleaseDataDictionary,
-	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentReviewSign: consentReviewSignDictionary,
+	consentResearchParticipationForm: consentResearchParticipationFormDictionary,
+	consentResearchParticipationPage: consentResearchParticipationPageDictionary,
+	consentReviewCards: consentReviewCardsDictionary,
+	consentReviewSignPage: consentReviewSignPageDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	emailVerifiedNotification: emailVerifiedNotificationDictionary,

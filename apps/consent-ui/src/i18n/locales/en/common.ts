@@ -22,6 +22,7 @@ const dictionary = {
 	backToHomepage: 'Back To Homepage',
 	consent: 'Consent Forms',
 	dashboard: 'Dashboard',
+	edit: 'Edit',
 	home: 'Homepage',
 	invite: 'Clinician Invite',
 	ok: 'OK',
