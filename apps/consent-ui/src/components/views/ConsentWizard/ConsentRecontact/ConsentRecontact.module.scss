@@ -1,0 +1,22 @@
+@use '../../../../theme/mixins';
+
+.title {
+	margin-bottom: 0.5rem;
+}
+
+.description {
+	font-size: theme('fontSize.base');
+	margin-bottom: 1rem;
+	white-space: pre-line;
+	a {
+		@include mixins.text-link;
+	}
+
+	@media (min-width: theme('screens.sm')) {
+		font-size: theme('fontSize.lg');
+	}
+}
+
+.smallText {
+	font-size: theme('fontSize.sm');
+}
