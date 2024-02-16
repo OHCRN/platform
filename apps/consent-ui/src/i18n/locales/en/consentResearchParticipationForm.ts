@@ -17,26 +17,25 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { useRouter } from 'next/navigation';
+import formLabels from '../en/formLabels';
 
-import { ValidLanguage } from 'src/i18n';
-import { getLocalizedRoute } from 'src/components/common/Link/utils';
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from 'src/components/common/Link/types';
+const { yes, no } = formLabels;
 
-export const getNextPrevConsentSteps = (currentStep: ConsentStepRoute) => {
-	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
-	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1];
-	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1];
-	return { nextRoute, prevRoute };
-};
+const dictionary = {
+	no,
+	researchParticipationContactInformationDesc:
+		'I agree that my study doctor, or someone on the study team, may provide my contact information and genetic test results to an existing cancer registry, if applicable. ',
+	researchParticipationContactInformationDescLink:
+		'Click here to view current list of approved cancer registries.',
+	researchParticipationContactInformationTitle:
+		'Optional release of contact information to existing approved cancer registries',
+	researchParticipationFutureResearchTitle:
+		'Optional consent to allow collection of previously collected samples for future unknown research',
+	researchParticipationFutureResearchTitleDesc:
+		'I agree that my previously collected samples may be included in the decentralized biobank and used for unknown future research studies.',
+	yes,
+} satisfies Record<string, string>;
 
-// go to next page after successful API request
-const useGoToNextConsentStep = (currentLang: ValidLanguage, currentStep: ConsentStepRoute) => {
-	const router = useRouter();
-	const { nextRoute } = getNextPrevConsentSteps(currentStep);
+export type ConsentResearchParticipationFormDictionary = Record<keyof typeof dictionary, string>;
 
-	// no nextRoute? currently on last step -> go to dashboard
-	return () => router.push(getLocalizedRoute(currentLang, nextRoute || 'dashboard'));
-};
-
-export default useGoToNextConsentStep;
+export default dictionary;

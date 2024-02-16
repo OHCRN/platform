@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,8 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+import assetUrlsDictionary from './assetUrls';
 
-export type ConsentRecontactDictionary = Record<keyof typeof dictionary, string>;
+const { studyConsentPdf } = assetUrlsDictionary;
+
+const dictionary = {
+	smallText:
+		'Please select you answer below to show if you would or would not like to take part in each optional study. You can change your consent at any time:',
+	studyConsentPdf,
+	subheading:
+		'This part of the consent form is about optional future consent to be recontacted. You may choose to be recontacted about future research studies, clinical trials, surveys and to discuss collection of additional biological specimens.',
+	subheading2:
+		'You can still take part in the main OHCRN registry even if you say “no” to future contact. Additional information about consent to be recontacted can be found in the ',
+	subheadingLink: 'study information and informed consent document.',
+	title: 'Optional Consent to Be Recontacted',
+} satisfies Record<string, string>;
+
+export type ConsentRecontactPageDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;
