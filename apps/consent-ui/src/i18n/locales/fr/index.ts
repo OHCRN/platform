@@ -17,8 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
-import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import ancestryDictionary from 'src/i18n/locales/fr/ancestry';
 import assetUrlsDictionary from 'src/i18n/locales/fr/assetUrls';
 import birthSexDictionary from 'src/i18n/locales/fr/birthSex';
@@ -27,10 +25,15 @@ import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
 import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consentInProgressNotification';
-import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
-import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
-import consentResearchParticipationDictionary from 'src/i18n/locales/fr/consentResearchParticipation';
-import consentReviewSignDictionary from 'src/i18n/locales/fr/consentReviewSign';
+import consentReleaseDataLabelsDictionary from 'src/i18n/locales/fr/consentReleaseDataLabels';
+import consentReleaseDataPageDictionary from 'src/i18n/locales/fr/consentReleaseDataPage';
+import consentReleaseDataTextDictionary from 'src/i18n/locales/fr/consentReleaseDataText';
+import ConsentRecontactFormDictionary from 'src/i18n/locales/fr/consentRecontactForm';
+import ConsentRecontactPageDictionary from 'src/i18n/locales/fr/consentRecontactPage';
+import consentResearchParticipationFormDictionary from 'src/i18n/locales/fr/consentResearchParticipationForm';
+import consentResearchParticipationPageDictionary from 'src/i18n/locales/fr/consentResearchParticipationPage';
+import consentReviewCardsDictionary from 'src/i18n/locales/fr/consentReviewCards';
+import consentReviewSignPageDictionary from 'src/i18n/locales/fr/consentReviewSignPage';
 import consentWizardDictionary from 'src/i18n/locales/fr/consentWizard';
 import dashboardDictionary from 'src/i18n/locales/fr/dashboard';
 import emailVerifiedNotificationDictionary from 'src/i18n/locales/fr/emailVerifiedNotification';
@@ -56,7 +59,9 @@ import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
 import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
+import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
 import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
+import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
@@ -69,10 +74,15 @@ const dictionaries = {
 	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentInProgressNotification: consentInProgressNotificationDictionary,
-	consentRecontact: consentRecontactDictionary,
-	consentReleaseData: consentReleaseDataDictionary,
-	consentResearchParticipation: consentResearchParticipationDictionary,
-	consentReviewSign: consentReviewSignDictionary,
+	consentReleaseDataLabels: consentReleaseDataLabelsDictionary,
+	consentReleaseDataPage: consentReleaseDataPageDictionary,
+	consentReleaseDataText: consentReleaseDataTextDictionary,
+	consentRecontactForm: ConsentRecontactFormDictionary,
+	consentRecontactPage: ConsentRecontactPageDictionary,
+	consentResearchParticipationForm: consentResearchParticipationFormDictionary,
+	consentResearchParticipationPage: consentResearchParticipationPageDictionary,
+	consentReviewCards: consentReviewCardsDictionary,
+	consentReviewSignPage: consentReviewSignPageDictionary,
 	consentWizard: consentWizardDictionary,
 	dashboard: dashboardDictionary,
 	emailVerifiedNotification: emailVerifiedNotificationDictionary,

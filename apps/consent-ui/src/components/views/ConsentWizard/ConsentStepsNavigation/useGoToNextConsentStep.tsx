@@ -30,6 +30,7 @@ export const getNextPrevConsentSteps = (currentStep: ConsentStepRoute) => {
 	return { nextRoute, prevRoute };
 };
 
+// go to next page after successful API request
 const useGoToNextConsentStep = (currentLang: ValidLanguage, currentStep: ConsentStepRoute) => {
 	const router = useRouter();
 	const { nextRoute } = getNextPrevConsentSteps(currentStep);
