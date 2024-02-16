@@ -23,8 +23,9 @@ import { generateSchema } from '@anatine/zod-openapi';
 import {
 	ParticipantIdentityBase,
 	GuardianNullableResponseFields,
+	ParticipantNullableFields,
 } from '../../../entities/index.js';
-import { Name, NanoId } from '../../../entities/fields/index.js';
+import { NanoId } from '../../../entities/fields/index.js';
 
 export const PICreateParticipantResponse = ParticipantIdentityBase.merge(
 	z.object({
@@ -32,8 +33,7 @@ export const PICreateParticipantResponse = ParticipantIdentityBase.merge(
 	}),
 )
 	.extend(GuardianNullableResponseFields)
-	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
-// TODO: add in transforms for all optional fields
+	.extend(ParticipantNullableFields);
 
 export type PICreateParticipantResponse = z.infer<typeof PICreateParticipantResponse>;
 export const PICreateParticipantResponseSchema = generateSchema(PICreateParticipantResponse);
