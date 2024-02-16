@@ -17,5 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './PIClinicianInvite.js';
-export * from './PICreateParticipant.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+
+import {
+	ParticipantIdentityBase,
+	GuardianNullableResponseFields,
+} from '../../../entities/index.js';
+import { Name, NanoId } from '../../../entities/fields/index.js';
+
+export const PICreateParticipantResponse = ParticipantIdentityBase.merge(
+	z.object({
+		id: NanoId,
+	}),
+)
+	.extend(GuardianNullableResponseFields)
+	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
+// TODO: add in transforms for all optional fields
+
+export type PICreateParticipantResponse = z.infer<typeof PICreateParticipantResponse>;
+export const PICreateParticipantResponseSchema = generateSchema(PICreateParticipantResponse);
