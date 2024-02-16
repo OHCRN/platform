@@ -35,8 +35,8 @@ import {
 const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
 
 export const ConsentReleaseDataBase = z.object({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
+	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
+	[RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
 	firstName: Name,
 	middleName: Name.optional(),
 	lastName: Name,

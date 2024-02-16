@@ -23,12 +23,18 @@ import formTooltips from './formTooltips';
 import formText from './formText';
 
 const {
+	clinicianTitleOrRoleTooltip,
+	familyHistoryOfCancerTooltip,
+	molecularLabNameTooltip,
+	ohipCheckboxText,
+	ohipTooltip,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,
 	participantMiddleNameTooltip,
 	participantPreferredNameTooltip,
+	primaryCancerDiagnosisTooltip,
 	residentialPostalCodeTooltip,
-	clinicianTitleOrRoleTooltip,
+	sexAssignedAtBirthTooltip,
 } = formTooltips;
 
 const { selectPlaceholder } = formText;
@@ -40,19 +46,15 @@ const dictionary = {
 		"J'accepte d'utiliser les données de mon registre dans le cadre de recherches anonymisées (y compris l'affichage de données agrégées sur le site Web de l'OHCRN et la recherche facilitée par un lien longitudinal avec des bases de données administratives sur la santé.) ",
 	deIdentifiedResearchLink:
 		'Apprenez-en davantage sur la confidentialité et les informations anonymisées.',
-	familyHistoryOfCancerTooltip:
-		'Sélectionnez oui uniquement si le membre de la famille est : un parent, un frère ou une sœur, un enfant, une tante/un oncle ou des grands-parents.',
-	molecularLabNameTooltip:
-		'Veuillez indiquer le nom du laboratoire qui a effectué vos tests génétiques, si vous le connaissez.',
-	ohipCheckboxText: "Je n'ai pas de carte Santé de l'Ontario.",
-	ohipTooltip:
-		'Saisissez les 10 premiers chiffres de votre carte santé verte. Nous en avons besoin pour accéder à vos rapports de laboratoire.',
+	familyHistoryOfCancerTooltip,
+	molecularLabNameTooltip,
+	ohipCheckboxText,
+	ohipTooltip,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,
 	participantMiddleNameTooltip,
 	participantPreferredNameTooltip,
-	primaryCancerDiagnosisTooltip:
-		'Vous pouvez sélectionner plusieurs cancers pour lesquels vous avez reçu un diagnostic.',
+	primaryCancerDiagnosisTooltip,
 	releaseAndUpdateData:
 		"J'accepte la publication et la mise à jour des données cliniques et génétiques obtenues auprès des institutions concernées et fournies par le patient, qui seront stockées au sein de l'OHCRN.",
 	residentialPostalCodeTooltip,
@@ -61,8 +63,7 @@ const dictionary = {
 	sectionDescription2:
 		'L’OHCRN est ouvert aux participants ayant subi des tests génétiques. Veuillez nous indiquer où vos tests ont été effectués :',
 	selectPlaceholder,
-	sexAssignedAtBirthTooltip:
-		'Le sexe attribué à la naissance peut aider à améliorer notre compréhension des causes et des risques de cancer.',
+	sexAssignedAtBirthTooltip,
 } satisfies ConsentReleaseDataTextDictionary;
 
 export default dictionary;

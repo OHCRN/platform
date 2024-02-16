@@ -21,34 +21,38 @@ import formTooltips from './formTooltips';
 import formText from './formText';
 
 const {
+	clinicianTitleOrRoleTooltip,
+	dateOfBirthTooltip2,
+	familyHistoryOfCancerTooltip,
+	molecularLabNameTooltip,
+	ohipCheckboxText,
+	ohipTooltip,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,
 	participantMiddleNameTooltip,
 	participantPreferredNameTooltip,
+	primaryCancerDiagnosisTooltip,
 	residentialPostalCodeTooltip,
-	clinicianTitleOrRoleTooltip,
+	sexAssignedAtBirthTooltip,
 } = formTooltips;
 
 const { selectPlaceholder } = formText;
 
 const dictionary = {
 	clinicianTitleOrRoleTooltip,
-	dateOfBirthTooltip: 'We require this to request your clinical information.',
+	dateOfBirthTooltip: dateOfBirthTooltip2,
 	deIdentifiedResearch:
 		'I agree to the use my registry data in de-identified research (including display of aggregate data on OHCRN website and research facilitated by longitudinal linkage to administrative health databases.) ',
 	deIdentifiedResearchLink: 'Learn more about privacy and de-identified information.',
-	familyHistoryOfCancerTooltip:
-		'Select yes only if the family member is: parent, sibling, child, aunt/uncle, or grandparents.',
-	molecularLabNameTooltip:
-		'Please provide the name of the lab that did your genetic testing, if you know this.',
-	ohipCheckboxText: 'I do not have an Ontario health card.',
-	ohipTooltip:
-		'Enter the first 10 digits of your green health card. We require this in order to access your lab reports.',
+	familyHistoryOfCancerTooltip,
+	molecularLabNameTooltip,
+	ohipCheckboxText,
+	ohipTooltip,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,
 	participantMiddleNameTooltip,
 	participantPreferredNameTooltip,
-	primaryCancerDiagnosisTooltip: 'You may select multiple cancers you have been diagnosed with.',
+	primaryCancerDiagnosisTooltip,
 	releaseAndUpdateData:
 		'I agree to the release and update of clinical and genetic data obtained from applicable institutions and provided by the patient, to be stored within OHCRN.',
 	residentialPostalCodeTooltip,
@@ -56,8 +60,7 @@ const dictionary = {
 	sectionDescription2:
 		'OHCRN is open to participants who have had genetic testing. Please tell us about where your testing was completed:',
 	selectPlaceholder,
-	sexAssignedAtBirthTooltip:
-		'Sex assigned at birth can help improve our understanding of cancer causes and risks.',
+	sexAssignedAtBirthTooltip,
 } satisfies Record<string, string>;
 
 export type ConsentReleaseDataTextDictionary = Record<keyof typeof dictionary, string>;

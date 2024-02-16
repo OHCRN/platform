@@ -89,8 +89,6 @@ const ConsentReleaseDataForm = ({
 
 	const onSubmit: SubmitHandler<ConsentReleaseDataRequest> = (_data, event) => {
 		event?.preventDefault();
-
-		// go to next page after successful API request
 		goToNextConsentStep();
 	};
 
@@ -110,7 +108,7 @@ const ConsentReleaseDataForm = ({
 						description={
 							<>
 								{textDict.deIdentifiedResearch}
-								<Link href={''} prefetch={false} target="_blank">
+								<Link href={''} target="_blank">
 									{textDict.deIdentifiedResearchLink}
 								</Link>
 							</>

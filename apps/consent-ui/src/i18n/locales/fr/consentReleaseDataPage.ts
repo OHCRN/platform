@@ -21,7 +21,9 @@ import { ConsentReleaseDataPageDictionary } from 'src/i18n/locales/en/consentRel
 
 const dictionary = {
 	description:
-		"Nous vous invitons à participer à un registre ontarien (Réseau ontarien de recherche sur le cancer héréditaire – OHCRN) parce que vous avez subi des tests génétiques germinaux pour un syndrome de prédisposition héréditaire au cancer connu ou soupçonné. \n\nPour vous inscrire à l'OHCRN, vous devez consentir à la publication et à la mise à jour des données cliniques et génétiques des institutions concernées qui seront stockées dans l'OHCRN et participer à des recherches anonymisées.",
+		'Nous vous invitons à participer à un registre ontarien (Réseau ontarien de recherche sur le cancer héréditaire – OHCRN) parce que vous avez subi des tests génétiques germinaux pour un syndrome de prédisposition héréditaire au cancer connu ou soupçonné.',
+	description2:
+		"Pour vous inscrire à l'OHCRN, vous devez consentir à la publication et à la mise à jour des données cliniques et génétiques des institutions concernées qui seront stockées dans l'OHCRN et participer à des recherches anonymisées.",
 	title: "Consentement à participer à l'OHCRN",
 } satisfies ConsentReleaseDataPageDictionary;
 
