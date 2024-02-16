@@ -17,26 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { useRouter } from 'next/navigation';
+import formLabels from './formLabels';
 
-import { ValidLanguage } from 'src/i18n';
-import { getLocalizedRoute } from 'src/components/common/Link/utils';
-import { CONSENT_STEP_ROUTES, ConsentStepRoute } from 'src/components/common/Link/types';
+const { firstName, lastName, phone, yes, no } = formLabels;
 
-export const getNextPrevConsentSteps = (currentStep: ConsentStepRoute) => {
-	const currentStepIndex = CONSENT_STEP_ROUTES.indexOf(currentStep);
-	const prevRoute = CONSENT_STEP_ROUTES[currentStepIndex - 1];
-	const nextRoute = CONSENT_STEP_ROUTES[currentStepIndex + 1];
-	return { nextRoute, prevRoute };
-};
+const dictionary = {
+	firstName,
+	lastName,
+	no,
+	phone,
+	phoneDescription: 'If we contact them, it will be for health updates only.',
+	recontactFutureResearchDesc:
+		'I agree that my study doctor, or someone on the study team, may contact me in future, and/or provide my contact information to the research team for future research studies, and clinical trials, if applicable.',
+	recontactFutureResearchTitle: 'Optional Re-Contact',
+	recontactSecondaryContactDesc:
+		'I agree that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to my health information if attempts to contact me have not been successful.',
+	recontactSecondaryContactTitle: 'Optional Secondary Contact',
+	secondaryContactFormDescription:
+		'Please provide the following required information for your next of kin.',
+	yes,
+} satisfies Record<string, string>;
 
-// go to next page after successful API request
-const useGoToNextConsentStep = (currentLang: ValidLanguage, currentStep: ConsentStepRoute) => {
-	const router = useRouter();
-	const { nextRoute } = getNextPrevConsentSteps(currentStep);
+export type ConsentRecontactFormDictionary = Record<keyof typeof dictionary, string>;
 
-	// no nextRoute? currently on last step -> go to dashboard
-	return () => router.push(getLocalizedRoute(currentLang, nextRoute || 'dashboard'));
-};
-
-export default useGoToNextConsentStep;
+export default dictionary;

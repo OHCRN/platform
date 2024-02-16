@@ -42,6 +42,7 @@ import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1, RegisterFormStep2 } from './types';
 
 const FormStep2 = ({
+	currentLang,
 	errorsDict,
 	handleBackClick,
 	labelsDict,
@@ -195,6 +196,7 @@ const FormStep2 = ({
 						<RecaptchaCheckbox
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
+							currentLang={currentLang}
 						/>
 					</div>
 				</FormSection>
