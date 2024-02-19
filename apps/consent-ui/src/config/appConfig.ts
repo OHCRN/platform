@@ -25,6 +25,8 @@ export type AppConfig = {
 	RECAPTCHA_SITE_KEY?: string;
 	KEYCLOAK_ISSUER: string;
 	KEYCLOAK_CLIENT_ID: string;
+	TOKEN_ENCRYPTION_KEY: string;
+	TOKEN_MAX_AGE: number;
 };
 
 export const defaultAppConfig: AppConfig = {
@@ -33,8 +35,10 @@ export const defaultAppConfig: AppConfig = {
 	OHCRN_EMAIL: '',
 	OHCRN_HOME_LINK: '',
 	RECAPTCHA_SITE_KEY: undefined,
-	KEYCLOAK_ISSUER: '', // should set this up to error on server start, if not provided
-	KEYCLOAK_CLIENT_ID: '', // should set this up to error on server start, if not provided
+	KEYCLOAK_ISSUER: '', // TODO: should set this up to error on server start, if not provided
+	KEYCLOAK_CLIENT_ID: '', // TODO:  should set this up to error on server start, if not provided
+	TOKEN_ENCRYPTION_KEY: '', // TODO:  should set this up to error on server start, if not provided
+	TOKEN_MAX_AGE: 3600,
 };
 
 /**
@@ -71,6 +75,14 @@ const getAppConfig = (serverEnv: any): AppConfig => ({
 		serverEnv.AUTH_KEYCLOAK_ID ||
 		process.env.AUTH_KEYCLOAK_ID ||
 		defaultAppConfig.KEYCLOAK_CLIENT_ID,
+	TOKEN_ENCRYPTION_KEY:
+		serverEnv.TOKEN_ENCRYPTION_KEY ||
+		process.env.TOKEN_ENCRYPTION_KEY ||
+		defaultAppConfig.TOKEN_ENCRYPTION_KEY,
+	TOKEN_MAX_AGE:
+		Number(serverEnv.TOKEN_MAX_AGE) ||
+		Number(process.env.TOKEN_MAX_AGE) ||
+		defaultAppConfig.TOKEN_MAX_AGE,
 });
 
 export { getAppConfig };

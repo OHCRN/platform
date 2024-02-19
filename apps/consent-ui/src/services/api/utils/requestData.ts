@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,6 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './axiosClient';
-export * from './axiosProxyClient';
-export * from './status';
+import { NextRequest } from 'next/server';
+
+/**
+ * Parses data from a request based on the request header 'Content-Type'
+ * Defaults to null if content-type is not 'application/json' or 'multipart/form-data'
+ * @param request NextRequest
+ * @returns a plain object containing request data, or null
+ */
+export const getRequestData = async (request: NextRequest): Promise<FormData | null | object> => {
+	const contentType = request.headers.get('content-type');
+	if (contentType?.includes('multipart/form-data')) {
+		const reqData = await request.formData();
+		return reqData;
+	} else if (contentType === 'application/json') {
+		const reqData: object = await request.json();
+		return reqData;
+	} else {
+		return null;
+	}
+};
