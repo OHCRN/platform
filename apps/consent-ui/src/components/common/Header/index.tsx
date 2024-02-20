@@ -22,12 +22,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 
+import CloseMenuIcon from 'src/../public/assets/images/x.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
-import HamburgerMenu from './HamburgerMenu';
+import HamburgerMenuIcon from 'src/../public/assets/images/hamburger.svg';
 
+import HamburgerMenu from './HamburgerMenu';
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
 import HeaderWrapper from './HeaderWrapper';
@@ -73,7 +75,11 @@ const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 					<div className={styles['user-menu']}>
 						<div className={styles.desktopUserMenu}>Hello</div>
 						<div className={styles.hamburgerToggle} onClick={toggleHamburgerMenu}>
-							Hey
+							{showHamburgerMenu ? (
+								<Image src={CloseMenuIcon} alt={translate('header', 'hamburgerMenuAltText')} />
+							) : (
+								<Image src={HamburgerMenuIcon} alt={translate('header', 'hamburgerMenuAltText')} />
+							)}
 						</div>
 					</div>
 				</div>
