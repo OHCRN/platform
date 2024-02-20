@@ -66,7 +66,7 @@ export const InviteClinicianFields = z.object({
 	clinicianFirstName: Name,
 	clinicianInstitutionalEmailAddress: z.string().email(),
 	clinicianLastName: Name,
-	clinicianTitleOrRole: RequiredString,
+	clinicianTitleOrRole: NonEmptyString,
 	consentGroup: ConsentGroup,
 	consentToBeContacted: z.literal(true),
 });

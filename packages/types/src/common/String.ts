@@ -22,10 +22,12 @@ import z from 'zod';
 export const TrimmedString = z.string().trim();
 export type TrimmedString = z.infer<typeof TrimmedString>;
 
-export const RequiredString = TrimmedString.min(1);
-export type RequiredString = z.infer<typeof RequiredString>;
+// string with at least one non-whitespace character
+export const NonEmptyString = TrimmedString.min(1);
+export type NonEmptyString = z.infer<typeof NonEmptyString>;
 
-export const OptionalString = TrimmedString.optional();
+// string with at least one non-whitespace character, or undefined
+export const OptionalString = NonEmptyString.optional();
 export type OptionalString = z.infer<typeof OptionalString>;
 
 export const EmptyString = z.literal('');
