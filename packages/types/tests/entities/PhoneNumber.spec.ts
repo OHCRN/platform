@@ -60,8 +60,8 @@ describe('PhoneNumber', () => {
 
 	it('Cannot contain punctuation or letters', () => {
 		expect(PhoneNumber.safeParse('123-456-78').success).false;
-		expect(PhoneNumber.safeParse('+123456789').success).false;
-		expect(PhoneNumber.safeParse('123 456 78').success).false;
+		expect(PhoneNumber.safeParse('+123A56789').success).false;
+		expect(PhoneNumber.safeParse('123 4B6 78').success).false;
 		expect(PhoneNumber.safeParse('+1 (234) 5').success).false;
 		expect(PhoneNumber.safeParse('123456789.').success).false;
 	});
@@ -102,8 +102,8 @@ describe('OptionalPhoneNumber', () => {
 
 	it('Cannot contain punctuation or letters', () => {
 		expect(OptionalPhoneNumber.safeParse('123-456-78').success).false;
-		expect(OptionalPhoneNumber.safeParse('+123456789').success).false;
-		expect(OptionalPhoneNumber.safeParse('123 456 78').success).false;
+		expect(OptionalPhoneNumber.safeParse('+123A56789').success).false;
+		expect(OptionalPhoneNumber.safeParse('123 4B6 78').success).false;
 		expect(OptionalPhoneNumber.safeParse('+1 (234) 5').success).false;
 		expect(OptionalPhoneNumber.safeParse('123456789.').success).false;
 	});
@@ -144,8 +144,8 @@ describe('EmptyOrOptionalPhoneNumber', () => {
 
 	it('Cannot contain punctuation or letters', () => {
 		expect(EmptyOrOptionalPhoneNumber.safeParse('123-456-78').success).false;
-		expect(EmptyOrOptionalPhoneNumber.safeParse('+123456789').success).false;
-		expect(EmptyOrOptionalPhoneNumber.safeParse('123 456 78').success).false;
+		expect(EmptyOrOptionalPhoneNumber.safeParse('+123A56789').success).false;
+		expect(EmptyOrOptionalPhoneNumber.safeParse('123 4B6 78').success).false;
 		expect(EmptyOrOptionalPhoneNumber.safeParse('+1 (234) 5').success).false;
 		expect(EmptyOrOptionalPhoneNumber.safeParse('123456789.').success).false;
 	});

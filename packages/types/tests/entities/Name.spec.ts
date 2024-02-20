@@ -43,7 +43,7 @@ describe('Name', () => {
 		expect(Name.safeParse(null).success).false;
 	});
 
-	it('Cannot be a string containing only whitespace', () => {
+	it('Cannot contain only whitespace', () => {
 		expect(Name.safeParse(' ').success).false;
 	});
 

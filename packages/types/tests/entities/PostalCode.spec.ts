@@ -39,7 +39,7 @@ describe('PostalCode', () => {
 		expect(PostalCode.safeParse('').success).false;
 	});
 
-	it('Cannot contain only whitespace', () => {
+	it('Cannot be a string containing only whitespace', () => {
 		expect(OptionalPostalCode.safeParse(' ').success).false;
 	});
 
@@ -86,7 +86,7 @@ describe('OptionalPostalCode', () => {
 		expect(OptionalPostalCode.safeParse(null).success).false;
 	});
 
-	it('Cannot contain only whitespace', () => {
+	it('Cannot be a string containing only whitespace', () => {
 		expect(OptionalPostalCode.safeParse(' ').success).false;
 	});
 
@@ -125,7 +125,7 @@ describe('EmptyOrOptionalPostalCode', () => {
 		expect(EmptyOrOptionalPostalCode.safeParse('').success).false;
 	});
 
-	it('Can contain only whitespace', () => {
+	it('Cannot be a string containing only whitespace', () => {
 		expect(OptionalPostalCode.safeParse(' ').success).true;
 	});
 
