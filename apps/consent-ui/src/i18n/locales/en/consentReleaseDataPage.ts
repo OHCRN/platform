@@ -17,19 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+const dictionary = {
+	description:
+		'We are inviting you to take part in an Ontario registry (Ontario Hereditary Cancer Research Network – OHCRN) because you have undergone germline genetic testing for a known or suspected hereditary cancer predisposition syndrome.',
+	description2:
+		'To register in OHCRN, you must consent to the release and update of clinical and genetic data from applicable institutions to be stored in OHCRN, and participate in de-identified research.',
+	title: 'Consent to Participate in OHCRN',
+} satisfies Record<string, string>;
 
-import { ConsentReleaseDataBase } from '../../../entities/index.js';
-import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
+export type ConsentReleaseDataPageDictionary = Record<keyof typeof dictionary, string>;
 
-const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
-
-export const ConsentReleaseDataRequest = ConsentReleaseDataBase.extend({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
-});
-export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
-export const ConsentReleaseDataRequestSchema: SchemaObject =
-	generateSchema(ConsentReleaseDataRequest);
+export default dictionary;
