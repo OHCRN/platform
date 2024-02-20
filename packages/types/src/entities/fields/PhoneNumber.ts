@@ -22,14 +22,14 @@ import { z } from 'zod';
 import { EmptyString, EmptyWhiteSpace } from '../../common/String.js';
 import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
 
-// trimmed string with regex
+// string with regex
 export const PhoneNumber = z.string().regex(PHONE_NUMBER_REGEX);
 export type PhoneNumber = z.infer<typeof PhoneNumber>;
 
-// optional trimmed string with regex
+// optional string with regex
 export const OptionalPhoneNumber = PhoneNumber.optional();
 export type OptionalPhoneNumber = z.infer<typeof OptionalPhoneNumber>;
 
-// optional trimmed string with regex OR empty/whitespace string
+// optional string with regex OR empty/whitespace string
 export const EmptyOrOptionalPhoneNumber = OptionalPhoneNumber.or(EmptyString).or(EmptyWhiteSpace);
 export type EmptyOrOptionalPhoneNumber = z.infer<typeof EmptyOrOptionalPhoneNumber>;

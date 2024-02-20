@@ -26,6 +26,11 @@ import { NANOID_REGEX } from '../../common/regexes.js';
 export const ID_ALPHABET =
 	'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' as const;
 
+// string with regex
 export const NanoId = z.string().regex(NANOID_REGEX);
 export type NanoId = z.infer<typeof NanoId>;
 export const NanoIdSchema: SchemaObject = generateSchema(NanoId);
+
+// optional string with regex
+export const OptionalNanoId = NanoId.optional();
+export type OptionalNanoId = z.infer<typeof OptionalNanoId>;
