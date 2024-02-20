@@ -52,6 +52,10 @@ describe('PostalCode', () => {
 		expect(PostalCode.safeParse('T4B-0V').success).false;
 	});
 
+	it('Cannot have 6 characters in postal code format, and whitespace', () => {
+		expect(PostalCode.safeParse('T4B0V7 ').success).false;
+	});
+
 	it('Can contain lowercase letters and transforms all letters to uppercase', () => {
 		expect(PostalCode.safeParse('t4b0v7').success).true;
 		expect(PostalCode.parse('t4b0v7')).to.equal('T4B0V7');
@@ -95,6 +99,10 @@ describe('OptionalPostalCode', () => {
 		expect(OptionalPostalCode.safeParse('T4B-0V').success).false;
 	});
 
+	it('Cannot have 6 characters in postal code format, and whitespace', () => {
+		expect(OptionalPostalCode.safeParse('T4B0V7 ').success).false;
+	});
+
 	it('Can contain lowercase letters and transforms all letters to uppercase', () => {
 		expect(OptionalPostalCode.safeParse('t4b0v7').success).true;
 		expect(OptionalPostalCode.parse('t4b0v7')).to.equal('T4B0V7');
@@ -133,7 +141,7 @@ describe('EmptyOrOptionalPostalCode', () => {
 		expect(EmptyOrOptionalPostalCode.safeParse(null).success).false;
 	});
 
-	it('Can be 6 characters long and in postal code format, and whitespace', () => {
+	it('Can have 6 characters in postal code format, and whitespace', () => {
 		expect(EmptyOrOptionalPostalCode.safeParse('T4B0V7 ').success).true;
 	});
 

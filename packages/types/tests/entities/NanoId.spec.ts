@@ -57,7 +57,7 @@ describe('NanoId', () => {
 });
 
 describe('OptionalNanoId', () => {
-	it('Must be a string containing 21 alphanumeric characters', () => {
+	it('Can be a string containing 21 alphanumeric characters', () => {
 		expect(OptionalNanoId.safeParse('YNrYyf9a739F9VxeMB8G8').success).true;
 	});
 
