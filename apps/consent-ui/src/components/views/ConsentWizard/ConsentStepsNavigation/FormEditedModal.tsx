@@ -20,6 +20,7 @@
 import Modal from 'src/components/common/Modal';
 
 const FormEditedModal = () => {
+	// TODO add text here https://github.com/OHCRN/platform/issues/402
 	return (
 		<Modal actionButtonText="OK" cancelButtonText="cancel">
 			<p>modal text TBD</p>
