@@ -27,6 +27,7 @@ import {
 	NanoId,
 	OhipNumber,
 	OptionalName,
+	OptionalNanoId,
 	OptionalPostalCode,
 	PostalCode,
 	Province,
@@ -37,7 +38,7 @@ import { ParticipantIdentityBase } from './index.js';
 export const ParticipantIdentification = ParticipantIdentityBase.merge(
 	z.object({
 		id: NanoId,
-		inviteId: NanoId.optional(),
+		inviteId: OptionalNanoId,
 		currentLifecycleState: LifecycleState,
 		previousLifecycleState: LifecycleState.optional(),
 		ohipNumber: OhipNumber,

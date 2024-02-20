@@ -27,6 +27,7 @@ import {
 	Name,
 	NanoId,
 	OptionalName,
+	OptionalNanoId,
 	OptionalPostalCode,
 	PhoneNumber,
 	PostalCode,
@@ -77,7 +78,7 @@ export const PIParticipantBase = ParticipantIdentityBase.merge(
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: OptionalPostalCode,
 		residentialPostalCode: PostalCode,
-		inviteId: NanoId.optional(),
+		inviteId: OptionalNanoId,
 		participantOhipMiddleName: OptionalName,
 	}),
 );
