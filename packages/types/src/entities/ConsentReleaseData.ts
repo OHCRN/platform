@@ -19,6 +19,8 @@
 
 import { z } from 'zod';
 
+import { OptionalString } from '../common/String.js';
+
 import { ConsentQuestionId } from './ConsentQuestion.js';
 import {
 	Ancestry,
@@ -29,6 +31,7 @@ import {
 	MolecularLab,
 	Name,
 	OhipNumber,
+	OptionalName,
 	PostalCode,
 } from './fields/index.js';
 
@@ -38,9 +41,9 @@ export const ConsentReleaseDataBase = z.object({
 	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
 	[RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
 	firstName: Name,
-	middleName: Name.optional(),
+	middleName: OptionalName,
 	lastName: Name,
-	preferredName: Name.optional(),
+	preferredName: OptionalName,
 	genderIdentity: Gender,
 	ohipNumber: OhipNumber.optional(),
 	dateOfBirth: z.coerce.date(),
@@ -49,9 +52,9 @@ export const ConsentReleaseDataBase = z.object({
 	historyOfCancer: HistoryOfCancer,
 	familyHistoryOfCancer: HistoryOfCancer,
 	residentialPostalCode: PostalCode,
-	selfReportedClinicianTitle: z.string().optional(),
-	selfReportedClinicianFirstName: Name.optional(),
-	selfReportedClinicianLastName: Name.optional(),
+	selfReportedClinicianTitle: OptionalString,
+	selfReportedClinicianFirstName: OptionalName,
+	selfReportedClinicianLastName: OptionalName,
 	selfReportedGeneticsClinic: GeneticsClinic.optional(),
 	selfReportedMolecularLab: MolecularLab.optional(),
 });

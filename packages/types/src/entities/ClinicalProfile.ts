@@ -19,6 +19,8 @@
 
 import { z } from 'zod';
 
+import { OptionalString } from '../common/index.js';
+
 import {
 	Ancestry,
 	BirthSex,
@@ -39,12 +41,12 @@ export const ClinicalProfile = z
 		gender: Gender,
 		selfReportedClinicianFirstName: Name.optional(),
 		selfReportedClinicianLastName: Name.optional(),
-		selfReportedClinicianTitleOrRole: z.string().optional(),
+		selfReportedClinicianTitleOrRole: OptionalString,
 		selfReportedGeneticsClinicVisited: GeneticsClinic.optional(),
 		selfReportedMolecularLabVisited: MolecularLab.optional(),
 		historyOfCancer: HistoryOfCancer,
 		participantId: NanoId,
-		selfIdentifiedGender: z.string().trim().optional(),
+		selfIdentifiedGender: OptionalString,
 	})
 	.refine((input) => {
 		// selfIdentifiedGender must be defined if

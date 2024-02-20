@@ -19,11 +19,14 @@
 
 import { z } from 'zod';
 
+import { OptionalString } from '../common/index.js';
+
 import {
 	ConsentGroup,
 	LifecycleState,
 	Name,
 	NanoId,
+	OptionalName,
 	PhoneNumber,
 	PostalCode,
 	Province,
@@ -59,7 +62,7 @@ export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(Parti
 	.merge(
 		z.object({
 			dateOfBirth: z.coerce.date(),
-			participantPreferredName: Name.optional(),
+			participantPreferredName: OptionalName,
 			keycloakId: z.string().uuid(),
 		}),
 	);
@@ -68,13 +71,13 @@ export type ParticipantIdentityBase = z.infer<typeof ParticipantIdentityBase>;
 
 export const PIParticipantBase = ParticipantIdentityBase.merge(
 	z.object({
-		mailingAddressStreet: z.string().optional(),
-		mailingAddressCity: z.string().optional(),
+		mailingAddressStreet: OptionalString,
+		mailingAddressCity: OptionalString,
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: PostalCode.optional(),
 		residentialPostalCode: PostalCode,
 		inviteId: NanoId.optional(),
-		participantOhipMiddleName: Name.optional(),
+		participantOhipMiddleName: OptionalName,
 	}),
 );
 export type PIParticipantBase = z.infer<typeof PIParticipantBase>;

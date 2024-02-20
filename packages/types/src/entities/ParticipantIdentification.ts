@@ -19,14 +19,14 @@
 
 import { z } from 'zod';
 
-import { hasRequiredGuardianInformation } from '../common/index.js';
+import { OptionalString, hasRequiredGuardianInformation } from '../common/index.js';
 
 import {
 	ConsentGroup,
 	LifecycleState,
-	Name,
 	NanoId,
 	OhipNumber,
+	OptionalName,
 	PostalCode,
 	Province,
 } from './fields/index.js';
@@ -40,13 +40,13 @@ export const ParticipantIdentification = ParticipantIdentityBase.merge(
 		currentLifecycleState: LifecycleState,
 		previousLifecycleState: LifecycleState.optional(),
 		ohipNumber: OhipNumber,
-		mailingAddressStreet: z.string().optional(),
-		mailingAddressCity: z.string().optional(),
+		mailingAddressStreet: OptionalString,
+		mailingAddressCity: OptionalString,
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: PostalCode.optional(),
 		residentialPostalCode: PostalCode,
 		consentGroup: ConsentGroup,
-		participantOhipMiddleName: Name.optional(),
+		participantOhipMiddleName: OptionalName,
 	}),
 ).refine(hasRequiredGuardianInformation);
 
