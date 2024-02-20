@@ -27,6 +27,7 @@ import {
 	NanoId,
 	OhipNumber,
 	OptionalName,
+	OptionalPostalCode,
 	PostalCode,
 	Province,
 } from './fields/index.js';
@@ -43,7 +44,7 @@ export const ParticipantIdentification = ParticipantIdentityBase.merge(
 		mailingAddressStreet: OptionalString,
 		mailingAddressCity: OptionalString,
 		mailingAddressProvince: Province.optional(),
-		mailingAddressPostalCode: PostalCode.optional(),
+		mailingAddressPostalCode: OptionalPostalCode,
 		residentialPostalCode: PostalCode,
 		consentGroup: ConsentGroup,
 		participantOhipMiddleName: OptionalName,

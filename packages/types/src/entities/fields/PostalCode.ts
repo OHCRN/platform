@@ -19,10 +19,19 @@
 
 import { z } from 'zod';
 
+import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { POSTAL_CODE_REGEX } from '../../common/regexes.js';
 
-export const PostalCode = z
-	.string()
-	.regex(POSTAL_CODE_REGEX)
-	.transform((data) => data.toUpperCase());
+// trimmed string with regex
+export const PostalCode = TrimmedString.regex(POSTAL_CODE_REGEX).transform((data) =>
+	data.toUpperCase(),
+);
 export type PostalCode = z.infer<typeof PostalCode>;
+
+// optional trimmed string with regex
+export const OptionalPostalCode = PostalCode.optional();
+export type OptionalPostalCode = z.infer<typeof OptionalPostalCode>;
+
+// optional trimmed string with regex OR empty/whitespace string
+export const EmptyOrOptionalPostalCode = OptionalPostalCode.or(EmptyString).or(EmptyWhiteSpace);
+export type EmptyOrOptionalPostalCode = z.infer<typeof EmptyOrOptionalPostalCode>;
