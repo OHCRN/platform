@@ -19,19 +19,122 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { OhipNumber } from '../../src/entities/fields/index.js';
+import {
+	EmptyOrOptionalOhipNumber,
+	OhipNumber,
+	OptionalOhipNumber,
+} from '../../src/entities/fields/index.js';
 
 describe('OhipNumber', () => {
-	it('Must be 10 digits long', () => {
+	it('Must be a string of 10 digits', () => {
 		expect(OhipNumber.safeParse('1234567890').success).true;
-		expect(OhipNumber.safeParse('1').success).false;
-		expect(OhipNumber.safeParse('12345678901').success).false;
 	});
-	it('Can only contain numbers', () => {
+
+	it('Cannot be more than 10 digits', () => {
+		expect(OhipNumber.safeParse('1234567890123').success).false;
+	});
+
+	it('Cannot be less than 10 digits', () => {
+		expect(OhipNumber.safeParse('1234').success).false;
+	});
+
+	it('Cannot contain letters or symbols', () => {
 		expect(OhipNumber.safeParse('123456789A').success).false;
 		expect(OhipNumber.safeParse('123-456-78').success).false;
 		expect(OhipNumber.safeParse('123 456 78').success).false;
 		expect(OhipNumber.safeParse('#123456789').success).false;
 		expect(OhipNumber.safeParse('123456789.').success).false;
+	});
+
+	it('Cannot be undefined', () => {
+		expect(OhipNumber.safeParse(undefined).success).false;
+	});
+
+	it('Cannot be an empty string', () => {
+		expect(OhipNumber.safeParse('').success).false;
+	});
+
+	it('Cannot be null', () => {
+		expect(OhipNumber.safeParse(null).success).false;
+	});
+
+	it('Cannot contain only whitespace', () => {
+		expect(OhipNumber.safeParse(' ').success).false;
+	});
+});
+
+describe('OptionalOhipNumber', () => {
+	it('Can be a string of 10 digits', () => {
+		expect(OptionalOhipNumber.safeParse('1234567890').success).true;
+	});
+
+	it('Cannot be more than 10 digits', () => {
+		expect(OptionalOhipNumber.safeParse('1234567890123').success).false;
+	});
+
+	it('Cannot be less than 10 digits', () => {
+		expect(OptionalOhipNumber.safeParse('1234').success).false;
+	});
+
+	it('Cannot contain letters or symbols', () => {
+		expect(OptionalOhipNumber.safeParse('123456789A').success).false;
+		expect(OptionalOhipNumber.safeParse('123-456-78').success).false;
+		expect(OptionalOhipNumber.safeParse('123 456 78').success).false;
+		expect(OptionalOhipNumber.safeParse('#123456789').success).false;
+		expect(OptionalOhipNumber.safeParse('123456789.').success).false;
+	});
+
+	it('Can be undefined', () => {
+		expect(OptionalOhipNumber.safeParse(undefined).success).true;
+	});
+
+	it('Cannot be an empty string', () => {
+		expect(OptionalOhipNumber.safeParse('').success).false;
+	});
+
+	it('Cannot be null', () => {
+		expect(OptionalOhipNumber.safeParse(null).success).false;
+	});
+
+	it('Cannot contain only whitespace', () => {
+		expect(OptionalOhipNumber.safeParse(' ').success).false;
+	});
+});
+
+describe('EmptyOrOptionalOhipNumber', () => {
+	it('Can be a string of 10 digits', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse('1234567890').success).true;
+	});
+
+	it('Cannot be more than 10 digits', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse('1234567890123').success).false;
+	});
+
+	it('Cannot be less than 10 digits', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse('1234').success).false;
+	});
+
+	it('Cannot contain letters or symbols', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse('123456789A').success).false;
+		expect(EmptyOrOptionalOhipNumber.safeParse('123-456-78').success).false;
+		expect(EmptyOrOptionalOhipNumber.safeParse('123 456 78').success).false;
+		expect(EmptyOrOptionalOhipNumber.safeParse('#123456789').success).false;
+		expect(EmptyOrOptionalOhipNumber.safeParse('123456789.').success).false;
+	});
+
+	it('Can be undefined', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse(undefined).success).true;
+	});
+
+	it('Can be an empty string', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse('').success).true;
+	});
+
+	it('Cannot be null', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse(null).success).false;
+	});
+
+	it('Can contain only whitespace', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse(' ').success).true;
 	});
 });

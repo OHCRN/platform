@@ -30,8 +30,8 @@ import {
 	HistoryOfCancer,
 	MolecularLab,
 	Name,
-	OhipNumber,
 	OptionalName,
+	OptionalOhipNumber,
 	PostalCode,
 } from './fields/index.js';
 
@@ -45,7 +45,7 @@ export const ConsentReleaseDataBase = z.object({
 	lastName: Name,
 	preferredName: OptionalName,
 	genderIdentity: Gender,
-	ohipNumber: OhipNumber.optional(),
+	ohipNumber: OptionalOhipNumber,
 	dateOfBirth: z.coerce.date(),
 	birthSex: BirthSex,
 	ancestry: Ancestry,
