@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,8 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {} satisfies Record<string, string>;
+import { GenderDictionary } from 'src/i18n/locales/en/gender';
+import { BirthSexDictionary } from 'src/i18n/locales/en/birthSex';
+import { AncestryDictionary } from 'src/i18n/locales/en/ancestry';
+import { HistoryOfCancerDictionary } from 'src/i18n/locales/en/historyOfCancer';
+import { GeneticsClinicDictionary } from 'src/i18n/locales/en/geneticsClinic';
+import { MolecularLabDictionary } from 'src/i18n/locales/en/molecularLab';
+import { FormSelectOption } from 'src/components/common/Form/types';
 
-export type ConsentReviewSignDictionary = Record<keyof typeof dictionary, string>;
-
-export default dictionary;
+export type GenderOption = FormSelectOption<keyof GenderDictionary>;
+export type BirthSexOption = FormSelectOption<keyof BirthSexDictionary>;
+export type AncestryOption = FormSelectOption<keyof AncestryDictionary>;
+export type HistoryOfCancerOption = FormSelectOption<keyof HistoryOfCancerDictionary>;
+export type GeneticsClinicOption = FormSelectOption<keyof GeneticsClinicDictionary>;
+export type MolecularLabOption = FormSelectOption<keyof MolecularLabDictionary>;
