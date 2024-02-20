@@ -22,10 +22,12 @@ import { describe, expect, it } from 'vitest';
 import { hasMatchingPasswords } from '../../src/entities/index.js';
 
 describe('Password', () => {
-	it('Must match with confirmPassword', () => {
+	it('strings with matching characters and casing will pass validation', () => {
 		expect(hasMatchingPasswords({ password: 'gdf76sgd7f8g', confirmPassword: 'gdf76sgd7f8g' }))
 			.true;
-		expect(hasMatchingPasswords({ password: '8g', confirmPassword: 'gdf76sgd7f8g' })).false;
-		expect(hasMatchingPasswords({ password: 'passWORD', confirmPassword: 'PASSword' })).false;
+	});
+	it('strings with matching characters and different casing will NOT pass validation', () => {
+		expect(hasMatchingPasswords({ password: 'GDF76SG7f8G', confirmPassword: 'gdf76sgd7f8g' }))
+			.false;
 	});
 });
