@@ -25,8 +25,11 @@ import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
 import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consentInProgressNotification';
-import consentRecontactDictionary from 'src/i18n/locales/fr/consentRecontact';
-import consentReleaseDataDictionary from 'src/i18n/locales/fr/consentReleaseData';
+import consentReleaseDataLabelsDictionary from 'src/i18n/locales/fr/consentReleaseDataLabels';
+import consentReleaseDataPageDictionary from 'src/i18n/locales/fr/consentReleaseDataPage';
+import consentReleaseDataTextDictionary from 'src/i18n/locales/fr/consentReleaseDataText';
+import ConsentRecontactFormDictionary from 'src/i18n/locales/fr/consentRecontactForm';
+import ConsentRecontactPageDictionary from 'src/i18n/locales/fr/consentRecontactPage';
 import consentResearchParticipationFormDictionary from 'src/i18n/locales/fr/consentResearchParticipationForm';
 import consentResearchParticipationPageDictionary from 'src/i18n/locales/fr/consentResearchParticipationPage';
 import consentReviewCardsDictionary from 'src/i18n/locales/fr/consentReviewCards';
@@ -71,8 +74,11 @@ const dictionaries = {
 	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentInProgressNotification: consentInProgressNotificationDictionary,
-	consentRecontact: consentRecontactDictionary,
-	consentReleaseData: consentReleaseDataDictionary,
+	consentReleaseDataLabels: consentReleaseDataLabelsDictionary,
+	consentReleaseDataPage: consentReleaseDataPageDictionary,
+	consentReleaseDataText: consentReleaseDataTextDictionary,
+	consentRecontactForm: ConsentRecontactFormDictionary,
+	consentRecontactPage: ConsentRecontactPageDictionary,
 	consentResearchParticipationForm: consentResearchParticipationFormDictionary,
 	consentResearchParticipationPage: consentResearchParticipationPageDictionary,
 	consentReviewCards: consentReviewCardsDictionary,

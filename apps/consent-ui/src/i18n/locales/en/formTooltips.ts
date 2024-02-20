@@ -20,16 +20,32 @@
 const dictionary = {
 	clinicianInstitutionalEmailAddressTooltip:
 		'We require this to confirm your authority to register patients.',
+	clinicianTitleOrRoleTooltip:
+		'Please provide the name of the clinician that ordered your genetic testing, or the main clinician handling your clinical care.',
 	consentGroupTooltip: 'This will determine if a guardian must be involved with consents.',
 	dateOfBirthTooltip: "We require this to request participant's clinical information.",
+	dateOfBirthTooltip2: 'We require this to request your clinical information.',
+	familyHistoryOfCancerTooltip:
+		'Select yes only if the family member is: parent, sibling, child, aunt/uncle, or grandparents.',
 	guardianEmailAddressTooltip: 'The guardian will receive an invitation to this account.',
 	guardianPhoneNumberTooltip: 'If we contact them, it will be for health updates and consent.',
+	molecularLabNameTooltip:
+		'Please provide the name of the lab that did your genetic testing, if you know this.',
+	ohipCheckboxText: 'I do not have an Ontario health card.',
+	ohipTooltip:
+		'Enter the first 10 digits of your green health card. We require this in order to access your lab reports.',
 	participantEmailAddressTooltip: 'The patient will receive an invitation to this account.',
 	participantFirstNameTooltip: 'As it appears on their health card.',
 	participantLastNameTooltip: 'As it appears on their health card.',
+	participantMiddleNameTooltip: 'As it appears on their health card.',
 	participantPhoneNumberTooltip:
 		'If we contact the participant, it will be for health updates and consent.',
 	participantPreferredNameTooltip: 'What would the participant like to be called when contacted.',
+	primaryCancerDiagnosisTooltip: 'You may select multiple cancers you have been diagnosed with.',
+	residentialPostalCodeTooltip:
+		'We require this to request your clinical information, this is not used to identify you or your location of residence.',
+	sexAssignedAtBirthTooltip:
+		'Sex assigned at birth can help improve our understanding of cancer causes and risks.',
 } satisfies Record<string, string>;
 
 export type FormTooltipsDictionary = Record<keyof typeof dictionary, string>;

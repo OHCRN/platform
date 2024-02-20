@@ -29,6 +29,8 @@ import ConsentResearchParticipation from 'src/components/views/ConsentWizard/Con
 import styles from './ConsentWizard.module.scss';
 import ConsentReviewSign from './ConsentReviewSign';
 import InformedConsent from './InformedConsent';
+import ConsentReleaseData from './ConsentReleaseData';
+import ConsentRecontact from './ConsentRecontact';
 
 const {
 	INFORMED_CONSENT,
@@ -79,13 +81,14 @@ const ConsentWizard = async ({
 					<ProgressHeader currentLang={currentLang} steps={progressHeaderSteps} />
 					<hr className={styles.divider} />
 					<div className={styles.content}>
-						{/* TODO: add consent form for each section */}
 						{currentStep === INFORMED_CONSENT && <InformedConsent currentLang={currentLang} />}
-						{currentStep === CONSENT_RELEASE_DATA && <></>}
+						{currentStep === CONSENT_RELEASE_DATA && (
+							<ConsentReleaseData currentLang={currentLang} />
+						)}
 						{currentStep === CONSENT_RESEARCH_PARTICIPATION && (
 							<ConsentResearchParticipation currentLang={currentLang} />
 						)}
-						{currentStep === CONSENT_RECONTACT && <></>}
+						{currentStep === CONSENT_RECONTACT && <ConsentRecontact currentLang={currentLang} />}
 						{currentStep === CONSENT_REVIEW_SIGN && <ConsentReviewSign currentLang={currentLang} />}
 					</div>
 				</Card>

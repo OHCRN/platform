@@ -77,6 +77,7 @@ USER ${APP_USER}
 COPY --from=prod-deps ${CONSENT_UI_DIR}/node_modules/ ./node_modules
 COPY --from=build ${CONSENT_UI_DIR}/.next/standalone ./
 COPY --from=build ${CONSENT_UI_DIR}/.next/static ./apps/consent-ui/.next/static
+COPY --from=build ${CONSENT_UI_DIR}/public ./apps/consent-ui/public
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1

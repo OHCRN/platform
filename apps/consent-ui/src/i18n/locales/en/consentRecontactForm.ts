@@ -17,19 +17,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import formLabels from './formLabels';
 
-import { ConsentReleaseDataBase } from '../../../entities/index.js';
-import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
+const { firstName, lastName, phone, yes, no } = formLabels;
 
-const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
+const dictionary = {
+	firstName,
+	lastName,
+	no,
+	phone,
+	phoneDescription: 'If we contact them, it will be for health updates only.',
+	recontactFutureResearchDesc:
+		'I agree that my study doctor, or someone on the study team, may contact me in future, and/or provide my contact information to the research team for future research studies, and clinical trials, if applicable.',
+	recontactFutureResearchTitle: 'Optional Re-Contact',
+	recontactSecondaryContactDesc:
+		'I agree that my study doctor, or someone on the study team, may contact my next of kin or secondary contact for updates to my health information if attempts to contact me have not been successful.',
+	recontactSecondaryContactTitle: 'Optional Secondary Contact',
+	secondaryContactFormDescription:
+		'Please provide the following required information for your next of kin.',
+	yes,
+} satisfies Record<string, string>;
 
-export const ConsentReleaseDataRequest = ConsentReleaseDataBase.extend({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
-});
-export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
-export const ConsentReleaseDataRequestSchema: SchemaObject =
-	generateSchema(ConsentReleaseDataRequest);
+export type ConsentRecontactFormDictionary = Record<keyof typeof dictionary, string>;
+
+export default dictionary;
