@@ -28,8 +28,8 @@ import {
 	GeneticsClinic,
 	HistoryOfCancer,
 	MolecularLab,
-	Name,
 	NanoId,
+	OptionalName,
 } from './fields/index.js';
 
 export const ClinicalProfile = z
@@ -39,8 +39,8 @@ export const ClinicalProfile = z
 		clinicalProfilePrivateKey: NanoId,
 		familyHistoryOfCancer: HistoryOfCancer,
 		gender: Gender,
-		selfReportedClinicianFirstName: Name.optional(),
-		selfReportedClinicianLastName: Name.optional(),
+		selfReportedClinicianFirstName: OptionalName,
+		selfReportedClinicianLastName: OptionalName,
 		selfReportedClinicianTitleOrRole: OptionalString,
 		selfReportedGeneticsClinicVisited: GeneticsClinic.optional(),
 		selfReportedMolecularLabVisited: MolecularLab.optional(),
