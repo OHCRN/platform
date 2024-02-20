@@ -17,15 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
+import { GenderDictionary } from 'src/i18n/locales/en/gender';
+import { BirthSexDictionary } from 'src/i18n/locales/en/birthSex';
+import { AncestryDictionary } from 'src/i18n/locales/en/ancestry';
+import { HistoryOfCancerDictionary } from 'src/i18n/locales/en/historyOfCancer';
+import { GeneticsClinicDictionary } from 'src/i18n/locales/en/geneticsClinic';
+import { MolecularLabDictionary } from 'src/i18n/locales/en/molecularLab';
+import { FormSelectOption } from 'src/components/common/Form/types';
 
-const FormEditedModal = () => {
-	// TODO add text here https://github.com/OHCRN/platform/issues/402
-	return (
-		<Modal actionButtonText="OK" cancelButtonText="cancel">
-			<p>modal text TBD</p>
-		</Modal>
-	);
-};
-
-export default FormEditedModal;
+export type GenderOption = FormSelectOption<keyof GenderDictionary>;
+export type BirthSexOption = FormSelectOption<keyof BirthSexDictionary>;
+export type AncestryOption = FormSelectOption<keyof AncestryDictionary>;
+export type HistoryOfCancerOption = FormSelectOption<keyof HistoryOfCancerDictionary>;
+export type GeneticsClinicOption = FormSelectOption<keyof GeneticsClinicDictionary>;
+export type MolecularLabOption = FormSelectOption<keyof MolecularLabDictionary>;

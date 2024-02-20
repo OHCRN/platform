@@ -17,20 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Button from '../Button';
-import LinkButton from '../Button/LinkButton';
+import { ReactNode } from 'react';
 
 export type ModalConfig = {
-	title?: string;
-	body?: React.ReactNode;
-	actionButtonText?: React.ReactNode;
-	actionDisabled?: boolean;
-	cancelButtonText?: React.ReactNode;
-	cancelDisabled?: boolean;
-	onActionClick?: React.ComponentProps<typeof Button>['onClick'];
-	actionLink?: React.ComponentProps<typeof LinkButton>['href'];
-	onCancelClick?: React.ComponentProps<typeof Button>['onClick'];
-	cancelLink?: React.ComponentProps<typeof LinkButton>['href'];
+	modalComponent?: ReactNode;
 };
 
 export type ModalContextType = {

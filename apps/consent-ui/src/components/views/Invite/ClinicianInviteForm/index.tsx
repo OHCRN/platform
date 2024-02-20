@@ -41,13 +41,13 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
 import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
-import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
+import { useModal } from 'src/components/providers/ModalProvider';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -150,13 +150,9 @@ const ClinicianInviteFormComponent = ({
 	}, [watchConsentGroup]);
 
 	// setup consent group info modal
-	const { openModal, closeModal } = useModal();
+	const { openModal } = useModal();
 	const consentGroupModalConfig = {
-		title: textDict.consentGroups,
-		actionButtonText: 'OK',
-		onActionClick: closeModal,
-		onCancelClick: closeModal,
-		body: <ConsentGroupModal currentLang={currentLang} />,
+		modalComponent: <ConsentGroupModal currentLang={currentLang} />,
 	};
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 

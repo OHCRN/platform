@@ -17,15 +17,50 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
+import formLabels from './formLabels';
 
-const FormEditedModal = () => {
-	// TODO add text here https://github.com/OHCRN/platform/issues/402
-	return (
-		<Modal actionButtonText="OK" cancelButtonText="cancel">
-			<p>modal text TBD</p>
-		</Modal>
-	);
-};
+const {
+	ancestry,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	firstName,
+	genderIdentity,
+	geneticsClinic,
+	lastName,
+	middleName,
+	molecularLab,
+	ohipNumber,
+	personalHistoryOfCancer,
+	preferredName,
+	primaryCancerDiagnosis,
+	residentialPostalCode,
+	sexAssignedAtBirth,
+} = formLabels;
 
-export default FormEditedModal;
+const dictionary = {
+	ancestry,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	firstName,
+	genderIdentity,
+	geneticsClinic,
+	lastName,
+	middleName,
+	molecularLab,
+	ohipNumber,
+	personalHistoryOfCancer,
+	preferredName,
+	primaryCancerDiagnosis,
+	residentialPostalCode,
+	sexAssignedAtBirth,
+} satisfies Record<string, string>;
+
+export type ConsentReleaseDataLabelsDictionary = Record<keyof typeof dictionary, string>;
+
+export default dictionary;

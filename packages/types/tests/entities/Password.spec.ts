@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,15 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
+import { describe, expect, it } from 'vitest';
 
-const FormEditedModal = () => {
-	// TODO add text here https://github.com/OHCRN/platform/issues/402
-	return (
-		<Modal actionButtonText="OK" cancelButtonText="cancel">
-			<p>modal text TBD</p>
-		</Modal>
-	);
-};
+import { hasMatchingPasswords } from '../../src/entities/index.js';
 
-export default FormEditedModal;
+describe('Password', () => {
+	it('strings with matching characters and casing will pass validation', () => {
+		expect(hasMatchingPasswords({ password: 'gdf76sgd7f8g', confirmPassword: 'gdf76sgd7f8g' }))
+			.true;
+	});
+	it('strings with matching characters and different casing will NOT pass validation', () => {
+		expect(hasMatchingPasswords({ password: 'GDF76SG7f8G', confirmPassword: 'gdf76sgd7f8g' }))
+			.false;
+	});
+});

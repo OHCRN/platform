@@ -17,15 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
+import { ConsentReleaseDataPageDictionary } from 'src/i18n/locales/en/consentReleaseDataPage';
 
-const FormEditedModal = () => {
-	// TODO add text here https://github.com/OHCRN/platform/issues/402
-	return (
-		<Modal actionButtonText="OK" cancelButtonText="cancel">
-			<p>modal text TBD</p>
-		</Modal>
-	);
-};
+const dictionary = {
+	description:
+		'Nous vous invitons à participer à un registre ontarien (Réseau ontarien de recherche sur le cancer héréditaire – OHCRN) parce que vous avez subi des tests génétiques germinaux pour un syndrome de prédisposition héréditaire au cancer connu ou soupçonné.',
+	description2:
+		"Pour vous inscrire à l'OHCRN, vous devez consentir à la publication et à la mise à jour des données cliniques et génétiques des institutions concernées qui seront stockées dans l'OHCRN et participer à des recherches anonymisées.",
+	title: "Consentement à participer à l'OHCRN",
+} satisfies ConsentReleaseDataPageDictionary;
 
-export default FormEditedModal;
+export default dictionary;

@@ -17,15 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
-
-const FormEditedModal = () => {
-	// TODO add text here https://github.com/OHCRN/platform/issues/402
-	return (
-		<Modal actionButtonText="OK" cancelButtonText="cancel">
-			<p>modal text TBD</p>
-		</Modal>
-	);
+/**
+ * Checks if the values of password and confirm password match.
+ * Password & confirm password must match.
+ * @param props confirmPassword, password
+ * @returns {boolean} returns true if passwords match
+ */
+export const hasMatchingPasswords = (props: {
+	confirmPassword: string;
+	password: string;
+}): boolean => {
+	const { confirmPassword, password } = props;
+	return password === confirmPassword;
 };
-
-export default FormEditedModal;
