@@ -22,6 +22,9 @@ import { z } from 'zod';
 import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { NAME_REGEX } from '../../common/regexes.js';
 
+// name value must be trimmed to remove whitespace to determine if a field is empty
+// or improperly filled out, because the regex allows whitespace.
+
 // trimmed string with regex
 export const Name = TrimmedString.regex(NAME_REGEX);
 export type Name = z.infer<typeof Name>;

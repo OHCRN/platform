@@ -19,8 +19,6 @@
 
 import { z } from 'zod';
 
-// import { hasRequiredGuardianInformation } from '../common/index.js';
-
 import { NonEmptyString } from '../common/index.js';
 
 import { ConsentGroup, Name, NanoId, OptionalName } from './fields/index.js';
