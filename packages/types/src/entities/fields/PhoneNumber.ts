@@ -19,11 +19,11 @@
 
 import { z } from 'zod';
 
-import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
+import { EmptyString, EmptyWhiteSpace } from '../../common/String.js';
 import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
 
 // trimmed string with regex
-export const PhoneNumber = TrimmedString.regex(PHONE_NUMBER_REGEX);
+export const PhoneNumber = z.string().regex(PHONE_NUMBER_REGEX);
 export type PhoneNumber = z.infer<typeof PhoneNumber>;
 
 // optional trimmed string with regex

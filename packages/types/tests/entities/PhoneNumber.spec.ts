@@ -19,24 +19,80 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { PhoneNumber } from '../../src/entities/fields/index.js';
+import { PhoneNumber, OptionalPhoneNumber } from '../../src/entities/fields/index.js';
 
 describe('PhoneNumber', () => {
-	it('Must be 10 digits long', () => {
+	it('Can only be a string containing 10 digits', () => {
 		expect(PhoneNumber.safeParse('1234567890').success).true;
-		expect(PhoneNumber.safeParse('1').success).false;
-		expect(PhoneNumber.safeParse('12345678901').success).false;
 	});
-	it('Can only contain numbers', () => {
-		expect(PhoneNumber.safeParse('123456789A').success).false;
+
+	it('Cannot be less than 10 digits', () => {
+		expect(PhoneNumber.safeParse('12345').success).false;
+	});
+
+	it('Cannot be more than 10 digits', () => {
+		expect(PhoneNumber.safeParse('1234567890123').success).false;
+	});
+
+	it('Cannot be 10 digits and whitespace', () => {
+		expect(PhoneNumber.safeParse('1234567890 ').success).false;
+	});
+
+	it('Cannot be undefined', () => {
+		expect(PhoneNumber.safeParse(undefined).success).false;
+	});
+
+	it('Cannot be an empty string', () => {
+		expect(PhoneNumber.safeParse('').success).false;
+	});
+
+	it('Cannot be a string containing only whitespace', () => {
+		expect(PhoneNumber.safeParse(' ').success).false;
+	});
+
+	it('Cannot contain punctuation or letters', () => {
 		expect(PhoneNumber.safeParse('123-456-78').success).false;
 		expect(PhoneNumber.safeParse('+123456789').success).false;
 		expect(PhoneNumber.safeParse('123 456 78').success).false;
 		expect(PhoneNumber.safeParse('+1 (234) 5').success).false;
 		expect(PhoneNumber.safeParse('123456789.').success).false;
-		expect(PhoneNumber.safeParse(undefined).success).false;
-		expect(PhoneNumber.safeParse(null).success).false;
-		expect(PhoneNumber.safeParse('').success).false;
-		expect(PhoneNumber.safeParse(' ').success).false;
+	});
+});
+
+describe('OptionalPhoneNumber', () => {
+	it('Can only be a string containing 10 digits', () => {
+		expect(OptionalPhoneNumber.safeParse('1234567890').success).true;
+	});
+
+	it('Cannot be less than 10 digits', () => {
+		expect(OptionalPhoneNumber.safeParse('12345').success).false;
+	});
+
+	it('Cannot be more than 10 digits', () => {
+		expect(OptionalPhoneNumber.safeParse('1234567890123').success).false;
+	});
+
+	it('Cannot be 10 digits and whitespace', () => {
+		expect(OptionalPhoneNumber.safeParse('1234567890 ').success).false;
+	});
+
+	it('Can be undefined', () => {
+		expect(OptionalPhoneNumber.safeParse(undefined).success).true;
+	});
+
+	it('Cannot be an empty string', () => {
+		expect(OptionalPhoneNumber.safeParse('').success).false;
+	});
+
+	it('Cannot be a string containing only whitespace', () => {
+		expect(OptionalPhoneNumber.safeParse(' ').success).false;
+	});
+
+	it('Cannot contain punctuation or letters', () => {
+		expect(OptionalPhoneNumber.safeParse('123-456-78').success).false;
+		expect(OptionalPhoneNumber.safeParse('+123456789').success).false;
+		expect(OptionalPhoneNumber.safeParse('123 456 78').success).false;
+		expect(OptionalPhoneNumber.safeParse('+1 (234) 5').success).false;
+		expect(OptionalPhoneNumber.safeParse('123456789.').success).false;
 	});
 });
