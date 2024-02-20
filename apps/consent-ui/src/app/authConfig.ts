@@ -27,6 +27,7 @@ import urlJoin from 'url-join';
 import { getLinkNameByPath } from 'src/components/common/Link/utils';
 import { getAppConfig } from 'src/config';
 import { ValidLanguage } from 'src/i18n';
+import { PUBLIC_ROUTES } from 'src/components/common/Link/types';
 
 import { encryptContent, decryptContent } from '../services/api/utils';
 
@@ -75,10 +76,6 @@ async function doFinalSignoutHandshake(jwt: JWT) {
 		console.error('Unable to perform post-logout handshake', (e as any)?.code || e);
 	}
 }
-
-// routes that do not require authentication
-// move to Route types file
-const openRouteNames = ['home', 'invite', 'register'];
 
 export const authConfig = {
 	providers: [Keycloak],
@@ -131,7 +128,7 @@ export const authConfig = {
 			const currentLang = parsedLang.success ? parsedLang.data : ValidLanguage.enum.en;
 			const pathByName = getLinkNameByPath(nextUrl.pathname, currentLang);
 			// TODO: is it necessary to check session expiry here or does next-auth clear expired sessions automatically?
-			if (openRouteNames.includes(pathByName) || auth?.user) {
+			if (PUBLIC_ROUTES.includes(pathByName) || auth?.user) {
 				return true;
 			} else {
 				console.log('not authorized to see this route');
