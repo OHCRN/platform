@@ -17,19 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { ConsentReleaseDataPageDictionary } from 'src/i18n/locales/en/consentReleaseDataPage';
 
-import { ConsentReleaseDataBase } from '../../../entities/index.js';
-import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
+const dictionary = {
+	description:
+		'Nous vous invitons à participer à un registre ontarien (Réseau ontarien de recherche sur le cancer héréditaire – OHCRN) parce que vous avez subi des tests génétiques germinaux pour un syndrome de prédisposition héréditaire au cancer connu ou soupçonné.',
+	description2:
+		"Pour vous inscrire à l'OHCRN, vous devez consentir à la publication et à la mise à jour des données cliniques et génétiques des institutions concernées qui seront stockées dans l'OHCRN et participer à des recherches anonymisées.",
+	title: "Consentement à participer à l'OHCRN",
+} satisfies ConsentReleaseDataPageDictionary;
 
-const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
-
-export const ConsentReleaseDataRequest = ConsentReleaseDataBase.extend({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
-});
-export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
-export const ConsentReleaseDataRequestSchema: SchemaObject =
-	generateSchema(ConsentReleaseDataRequest);
+export default dictionary;

@@ -17,19 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import type { SchemaObject } from 'openapi3-ts/oas31';
+import { GenderDictionary } from 'src/i18n/locales/en/gender';
+import { BirthSexDictionary } from 'src/i18n/locales/en/birthSex';
+import { AncestryDictionary } from 'src/i18n/locales/en/ancestry';
+import { HistoryOfCancerDictionary } from 'src/i18n/locales/en/historyOfCancer';
+import { GeneticsClinicDictionary } from 'src/i18n/locales/en/geneticsClinic';
+import { MolecularLabDictionary } from 'src/i18n/locales/en/molecularLab';
+import { FormSelectOption } from 'src/components/common/Form/types';
 
-import { ConsentReleaseDataBase } from '../../../entities/index.js';
-import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
-
-const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
-
-export const ConsentReleaseDataRequest = ConsentReleaseDataBase.extend({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
-});
-export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
-export const ConsentReleaseDataRequestSchema: SchemaObject =
-	generateSchema(ConsentReleaseDataRequest);
+export type GenderOption = FormSelectOption<keyof GenderDictionary>;
+export type BirthSexOption = FormSelectOption<keyof BirthSexDictionary>;
+export type AncestryOption = FormSelectOption<keyof AncestryDictionary>;
+export type HistoryOfCancerOption = FormSelectOption<keyof HistoryOfCancerDictionary>;
+export type GeneticsClinicOption = FormSelectOption<keyof GeneticsClinicDictionary>;
+export type MolecularLabOption = FormSelectOption<keyof MolecularLabDictionary>;

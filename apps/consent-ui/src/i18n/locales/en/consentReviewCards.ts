@@ -34,7 +34,7 @@ const {
 	ohipNumber,
 	personalHistoryOfCancer,
 	phone,
-	postalCode,
+	residentialPostalCode,
 	preferredName,
 	secondaryContact,
 	sexAssignedAtBirth,
@@ -63,7 +63,7 @@ const dictionary = {
 	ohipNumber,
 	personalHistoryOfCancer,
 	phone,
-	postalCode,
+	residentialPostalCode,
 	preferredName,
 	recontactTitle: 'Optional Re-Contact',
 	recontactDescription:
