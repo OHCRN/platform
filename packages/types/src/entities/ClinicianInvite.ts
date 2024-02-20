@@ -21,6 +21,8 @@ import { z } from 'zod';
 
 // import { hasRequiredGuardianInformation } from '../common/index.js';
 
+import { RequiredString } from '../common/index.js';
+
 import { ConsentGroup, Name, NanoId } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
 import {
@@ -34,7 +36,7 @@ export const InviteClinicianFields = z
 		clinicianFirstName: Name,
 		clinicianInstitutionalEmailAddress: z.string().email(),
 		clinicianLastName: Name,
-		clinicianTitleOrRole: z.string().trim().min(1),
+		clinicianTitleOrRole: RequiredString,
 	})
 	.merge(ConsentToBeContacted)
 	.merge(

@@ -22,6 +22,9 @@ import z from 'zod';
 export const TrimmedString = z.string().trim();
 export type TrimmedString = z.infer<typeof TrimmedString>;
 
+export const RequiredString = TrimmedString.min(1);
+export type RequiredString = z.infer<typeof RequiredString>;
+
 export const OptionalString = TrimmedString.optional();
 export type OptionalString = z.infer<typeof OptionalString>;
 
@@ -30,3 +33,6 @@ export type EmptyString = z.infer<typeof EmptyString>;
 
 export const EmptyWhiteSpace = TrimmedString.max(0);
 export type EmptyWhiteSpace = z.infer<typeof EmptyWhiteSpace>;
+
+export const EmptyOrOptionalString = OptionalString.or(EmptyString).or(EmptyWhiteSpace);
+export type EmptyOrOptionalString = z.infer<typeof EmptyOrOptionalString>;

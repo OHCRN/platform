@@ -22,6 +22,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { RequiredString } from 'types/common';
 
 import Form from 'src/components/common/Form';
 import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
@@ -31,7 +32,7 @@ import { useNotification } from 'src/components/providers/NotificationProvider';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
-export const ConsentReviewSignRequest = z.object({ stub: z.string().min(1) });
+export const ConsentReviewSignRequest = z.object({ stub: RequiredString });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
 const currentConsentStep = ConsentStepRouteEnum.enum['consent-5'];
