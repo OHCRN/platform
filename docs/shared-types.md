@@ -74,7 +74,7 @@ export const InviteClinicianFields = z.object({
 export const InviteGuardianFields = z.object({
 	guardianEmailAddress: z.string().email().optional(),
 	guardianName: OptionalName,
-	guardianPhoneNumber: PhoneNumber.optional(),
+	guardianPhoneNumber: OptionalPhoneNumber,
 	guardianRelationship: OptionalName,
 });
 

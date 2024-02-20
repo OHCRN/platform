@@ -20,7 +20,7 @@
 import { z } from 'zod';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
-import { OptionalName, PhoneNumber } from './fields/index.js';
+import { OptionalName, OptionalPhoneNumber } from './fields/index.js';
 
 const { RECONTACT__FUTURE_RESEARCH, RECONTACT__SECONDARY_CONTACT } = ConsentQuestionId.enum;
 
@@ -29,7 +29,7 @@ export const ConsentRecontactBase = z.object({
 	[RECONTACT__SECONDARY_CONTACT]: z.boolean(),
 	secondaryContactFirstName: OptionalName,
 	secondaryContactLastName: OptionalName,
-	secondaryContactPhoneNumber: PhoneNumber.optional(),
+	secondaryContactPhoneNumber: OptionalPhoneNumber,
 });
 
 export const hasRequiredSecondaryContactInfo = ({
