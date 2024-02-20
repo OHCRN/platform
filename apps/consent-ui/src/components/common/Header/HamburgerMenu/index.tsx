@@ -1,16 +1,15 @@
+import Link from 'next/link';
+
 import styles from './HamburgerMenu.module.scss';
 
-const HamburgerMenu = ({
-	registerLabel,
-	loginLabel,
-}: {
-	registerLabel: string;
-	loginLabel: string;
-}) => {
+const HamburgerMenu = ({ options }: { options: { label: React.ReactNode; link?: string }[] }) => {
 	return (
 		<div>
-			<div className={styles.hamburgerLine}>{registerLabel}</div>
-			<div className={styles.hamburgerLine}>{loginLabel}</div>
+			{options.map((option, index) => (
+				<Link href={option.link || ''} className={styles.hamburgerLine} key={index}>
+					{option.label}
+				</Link>
+			))}
 		</div>
 	);
 };

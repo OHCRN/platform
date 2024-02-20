@@ -21,6 +21,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
+import { useRouter } from 'next/router';
 
 import CloseMenuIcon from 'src/../public/assets/images/x.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
@@ -41,6 +42,8 @@ const icons: {
 	fr: OhcrnImage, // TODO: get FR icon
 };
 
+const hamburgerMenuOptions: { label: React.ReactNode; link?: string }[] = [];
+
 const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
@@ -49,6 +52,9 @@ const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const toggleHamburgerMenu = () => {
 		setShowHamburgerMenu(!showHamburgerMenu);
 	};
+
+	const router = useRouter();
+	console.log(router.pathname);
 
 	return (
 		<>
@@ -74,6 +80,7 @@ const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 					<div className={styles['user-menu']}>
 						<div className={styles.desktopUserMenu}>Hello</div>
+						{/* // TODO: close menu when click outside (check in with patrick) */}
 						<div className={styles.hamburgerToggle} onClick={toggleHamburgerMenu}>
 							{showHamburgerMenu ? (
 								<Image src={CloseMenuIcon} alt={translate('header', 'hamburgerMenuAltText')} />
@@ -84,7 +91,7 @@ const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
 					</div>
 				</div>
 			</HeaderWrapper>
-			{showHamburgerMenu && <HamburgerMenu registerLabel={'Register'} loginLabel={'Login'} />}
+			{showHamburgerMenu && <HamburgerMenu options={hamburgerMenuOptions} />}
 		</>
 	);
 };
