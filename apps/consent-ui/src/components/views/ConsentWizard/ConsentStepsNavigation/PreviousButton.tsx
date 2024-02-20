@@ -26,9 +26,9 @@ import { useRouter } from 'next/navigation';
 import Button from 'src/components/common/Button';
 import { ValidLanguage } from 'src/i18n';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
-import { useModal } from 'src/components/common/Modal';
 import { ConsentStepRoute } from 'src/components/common/Link/types';
 import { handleMouseDownBlur } from 'src/components/utils';
+import { useModal } from 'src/components/providers/ModalProvider';
 
 import FormEditedModal from './FormEditedModal';
 import styles from './ConsentStepsNavigation.module.scss';
@@ -48,13 +48,9 @@ const PreviousButton = ({
 
 	const router = useRouter();
 
-	const { openModal, closeModal } = useModal();
+	const { openModal } = useModal();
 	const formEditedModalConfig = {
-		title: 'Modal text TBD',
-		actionButtonText: 'OK',
-		onActionClick: closeModal,
-		onCancelClick: closeModal,
-		body: <FormEditedModal />,
+		modalComponent: <FormEditedModal />,
 	};
 
 	const handleClick = () => {

@@ -18,6 +18,7 @@
  */
 
 const dictionary = {
+	actionButtonText: 'OK',
 	adultConsent: 'Adult Consent',
 	adultConsentPoint1: '18 years old or older',
 	adultConsentPoint2: 'has capacity to provide consent',
@@ -34,6 +35,7 @@ const dictionary = {
 	guardianConsentPoint1: 'consent provided by parent or guardian',
 	guardianConsentPoint2: 'assessed by their clinician as not requiring consent',
 	guardianConsentPoint3: 'most often less than 12 years old',
+	title: 'Consent Groups',
 	youngAdultConsent: 'Young Adult Consent',
 	youngAdultConsentPoint1: 'most often between the ages of 16 and 18',
 	youngAdultConsentPoint2: 'assessed by their clinician as having capacity to provide consent',
