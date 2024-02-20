@@ -17,13 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NANOID_LENGTH, OHIP_NUMBER_LENGTH, PHONE_NUMBER_LENGTH } from './lengthConstraints.js';
+import z from 'zod';
 
-// TODO: separate name into two fields with + without whitespace, include French chars in both
-export const NAME_REGEX = /^[A-Za-z\s]+$/;
-export const NANOID_REGEX = new RegExp(`^[A-Za-z0-9]{${NANOID_LENGTH}}$`);
-export const OHIP_NUMBER_REGEX = new RegExp(`^[0-9]{${OHIP_NUMBER_LENGTH}}$`);
-export const PHONE_NUMBER_REGEX = new RegExp(`^[0-9]{${PHONE_NUMBER_LENGTH}}$`);
-export const POSTAL_CODE_REGEX = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
+export const TrimmedString = z.string().trim();
+export type TrimmedString = z.infer<typeof TrimmedString>;
 
-export const REGEX_FLAG_GLOBAL = 'g';
+export const OptionalString = TrimmedString.optional();
+export type OptionalString = z.infer<typeof OptionalString>;
+
+export const EmptyString = z.literal('');
+export type EmptyString = z.infer<typeof EmptyString>;
+
+export const EmptyWhiteSpace = TrimmedString.max(0);
+export type EmptyWhiteSpace = z.infer<typeof EmptyWhiteSpace>;

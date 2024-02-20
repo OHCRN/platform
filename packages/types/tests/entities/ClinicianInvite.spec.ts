@@ -20,13 +20,13 @@
 import { describe, expect, it } from 'vitest';
 
 import { ConsentGroup } from '../../src/entities/fields/index.js';
-import { ClinicianInviteBase } from '../../src/entities/index.js';
 import { ConsentClinicianInviteResponse } from '../../src/services/consentDas/index.js';
 import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
+import { ClinicianInviteRequest } from '../../src/services/consentApi/requests/ClinicianInvite.js';
 
 describe('ClinicianInviteResponse', () => {
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
-		const result = ClinicianInviteBase.safeParse({
+		const result = ClinicianInviteRequest.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteSentDate: new Date(),
 			clinicianFirstName: 'Homer',
@@ -47,7 +47,7 @@ describe('ClinicianInviteResponse', () => {
 		expect(result.success).true;
 	});
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are provided', () => {
-		const result = ClinicianInviteBase.safeParse({
+		const result = ClinicianInviteRequest.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteSentDate: new Date(),
 			clinicianFirstName: 'Homer',
@@ -68,7 +68,7 @@ describe('ClinicianInviteResponse', () => {
 		expect(result.success).true;
 	});
 	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and some guardian contact fields are NOT provided', () => {
-		const result = ClinicianInviteBase.safeParse({
+		const result = ClinicianInviteRequest.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteSentDate: new Date(),
 			clinicianFirstName: 'Homer',
@@ -87,7 +87,7 @@ describe('ClinicianInviteResponse', () => {
 		expect(result.success).false;
 	});
 	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are NOT provided', () => {
-		const result = ClinicianInviteBase.safeParse({
+		const result = ClinicianInviteRequest.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteSentDate: new Date(),
 			clinicianFirstName: 'Homer',

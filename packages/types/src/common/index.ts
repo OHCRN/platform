@@ -19,6 +19,7 @@
 
 export * from './SortOrder.js';
 export * from './Status.js';
+export * from './String.js';
 export * from './conditionalFieldUtils.js';
 export * from './expand.js';
 export * from './keys.js';

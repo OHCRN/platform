@@ -19,18 +19,20 @@
 
 import { z } from 'zod';
 
-import {
-	getRegexOptionalAPISchema,
-	getRegexOptionalUISchema,
-	getRegexSchema,
-	NAME_REGEX,
-} from '../../common/regexes.js';
+import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
+import { NAME_REGEX } from '../../common/regexes.js';
 
-export const Name = getRegexSchema(NAME_REGEX);
+// trimmed string with regex
+export const Name = TrimmedString.regex(NAME_REGEX);
 export type Name = z.infer<typeof Name>;
 
-export const NameOptionalAPI = getRegexOptionalAPISchema(NAME_REGEX);
-export type NameOptionalAPI = z.infer<typeof NameOptionalAPI>;
+// optional trimmed string with regex
+export const OptionalName = TrimmedString.regex(NAME_REGEX).optional();
+export type OptionalName = z.infer<typeof OptionalName>;
 
-export const NameOptionalUI = getRegexOptionalUISchema(NAME_REGEX);
-export type NameOptionalUI = z.infer<typeof NameOptionalUI>;
+// optional trimmed string with regex OR empty/whitespace string
+export const EmptyOrOptionalName = TrimmedString.regex(NAME_REGEX)
+	.optional()
+	.or(EmptyString)
+	.or(EmptyWhiteSpace);
+export type EmptyOrOptionalName = z.infer<typeof EmptyOrOptionalName>;

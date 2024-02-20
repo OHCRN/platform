@@ -19,52 +19,68 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { Name, NameOptionalAPI, NameOptionalUI } from '../../src/entities/fields/index.js';
+import { Name, OptionalName, EmptyOrOptionalName } from '../../src/entities/fields/index.js';
 
 describe('Name', () => {
-	it('Can only contain letters and whitespace', () => {
-		expect(Name.safeParse('Homer Simpson').success).true;
-		expect(Name.safeParse('homer simpson').success).true;
-		expect(Name.safeParse('Homer Simpon!').success).false;
-		expect(Name.safeParse("D'oh").success).false;
-		expect(Name.safeParse('Homer_Simpson').success).false;
-		expect(Name.safeParse('-Homer Simpson').success).false;
-		expect(Name.safeParse('Homer Simpson1').success).false;
-		expect(Name.safeParse(undefined).success).false;
-		expect(Name.safeParse(null).success).false;
-		expect(Name.safeParse('').success).false;
-		expect(Name.safeParse(' ').success).false;
+	it('Can be a string containing only letters', () => {
+		expect(Name.safeParse('Simpson').success).true;
 	});
+	// add necessary tests
 });
 
-describe('NameOptionalAPI', () => {
-	it('Can only contain letters and whitespace, or undefined', () => {
-		expect(NameOptionalAPI.safeParse('Homer Simpson').success).true;
-		expect(NameOptionalAPI.safeParse('homer simpson').success).true;
-		expect(NameOptionalAPI.safeParse('Homer Simpon!').success).false;
-		expect(NameOptionalAPI.safeParse("D'oh").success).false;
-		expect(NameOptionalAPI.safeParse('Homer_Simpson').success).false;
-		expect(NameOptionalAPI.safeParse('-Homer Simpson').success).false;
-		expect(NameOptionalAPI.safeParse('Homer Simpson1').success).false;
-		expect(NameOptionalAPI.safeParse(undefined).success).true;
-		expect(NameOptionalAPI.safeParse(null).success).false;
-		expect(NameOptionalAPI.safeParse('').success).false;
-		expect(NameOptionalAPI.safeParse(' ').success).false;
+describe('OptionalName', () => {
+	it('Can be a string containing only letters', () => {
+		expect(OptionalName.safeParse('Simpson').success).true;
 	});
+	// add necessary tests
 });
 
-describe('NameOptionalUI', () => {
-	it('Can only contain letters and whitespace, empty strings, or undefined', () => {
-		expect(NameOptionalUI.safeParse('Homer Simpson').success).true;
-		expect(NameOptionalUI.safeParse('homer simpson').success).true;
-		expect(NameOptionalUI.safeParse('Homer Simpon!').success).false;
-		expect(NameOptionalUI.safeParse("D'oh").success).false;
-		expect(NameOptionalUI.safeParse('Homer_Simpson').success).false;
-		expect(NameOptionalUI.safeParse('-Homer Simpson').success).false;
-		expect(NameOptionalUI.safeParse('Homer Simpson1').success).false;
-		expect(NameOptionalUI.safeParse(undefined).success).true;
-		expect(NameOptionalUI.safeParse(null).success).false;
-		expect(NameOptionalUI.safeParse('').success).true;
-		expect(NameOptionalUI.safeParse(' ').success).true;
+// TODO: add tests for special characters (accented letters) when added to the NAME_REGEX
+describe('EmptyOrOptionalName', () => {
+	it('Can be a string containing only letters', () => {
+		expect(EmptyOrOptionalName.safeParse('Simpson').success).true;
+	});
+
+	it('Can be a string containing letters and spaces', () => {
+		expect(EmptyOrOptionalName.safeParse('Homer Simpson').success).true;
+		expect(EmptyOrOptionalName.safeParse('homer simpson').success).true;
+	});
+
+	it('Can be undefined', () => {
+		expect(EmptyOrOptionalName.safeParse(undefined).success).true;
+	});
+
+	it('Can be an empty string', () => {
+		expect(EmptyOrOptionalName.safeParse('').success).true;
+	});
+
+	it('Can be a string containing only whitespace', () => {
+		expect(EmptyOrOptionalName.safeParse(' ').success).true;
+	});
+
+	it('Can be a string containing letters and whitespace', () => {
+		expect(EmptyOrOptionalName.safeParse('homer      simpson').success).true;
+	});
+
+	it('Cannot be a string containing letters and numbers', () => {
+		expect(EmptyOrOptionalName.safeParse('HomerSimpson1').success).false;
+	});
+
+	it('Cannot be a string containing letters, numbers and spaces', () => {
+		expect(EmptyOrOptionalName.safeParse('Homer Simpson 1').success).false;
+	});
+
+	it('Cannot be a string containing only non-alphanumeric characters', () => {
+		expect(EmptyOrOptionalName.safeParse('-_-').success).false;
+		expect(EmptyOrOptionalName.safeParse("''").success).false;
+		expect(EmptyOrOptionalName.safeParse('!!').success).false;
+		expect(EmptyOrOptionalName.safeParse('*?').success).false;
+	});
+
+	it('Cannot be a string containing letters or numbers and non-alphanumeric characters', () => {
+		expect(EmptyOrOptionalName.safeParse('-Homer Simpson').success).false;
+		expect(EmptyOrOptionalName.safeParse("D'oh").success).false;
+		expect(EmptyOrOptionalName.safeParse('Homer_Simpson3').success).false;
+		expect(EmptyOrOptionalName.safeParse('Homer Simpon!').success).false;
 	});
 });

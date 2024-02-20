@@ -23,7 +23,7 @@ import type { SchemaObject } from 'openapi3-ts/oas31';
 
 import { InviteEntity, ClinicianInviteBase } from '../../../entities/index.js';
 
-export const ClinicianInvite = InviteEntity.and(ClinicianInviteBase);
+export const ClinicianInvite = InviteEntity.merge(ClinicianInviteBase);
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
 
 export const ClinicianInviteResponse = ClinicianInvite;
