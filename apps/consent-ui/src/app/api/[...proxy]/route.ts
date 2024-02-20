@@ -17,24 +17,47 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { NextRequest, NextResponse } from 'next/server';
+import urlJoin from 'url-join';
+import { AxiosHeaders } from 'axios';
+
 import { getAppConfig } from 'src/config';
 import { PROXY_API_PATH } from 'src/constants';
+import { axiosProxyClient } from 'src/services/api';
+import { getRequestData } from 'src/services/api/utils';
 
-async function handler(req: Request, res: Response) {
-	console.log('In public route handler');
-	const { CONSENT_API_URL } = getAppConfig(process.env);
-	console.log('req url: ', req.url);
-	let target = '';
-	target = CONSENT_API_URL;
-	return res;
-	// } else {
-	// 	return res.status(404).end();
-	// }
-	// req.url = path;
-
+/**
+ * Route handler for creating proxy requests from /api routes to public consent-api endpoints
+ * @param req NextRequest obj
+ * @param routePaths path params interpolated from app/api/[...proxy] directory structure
+ * @returns response obj from consent-api as NextResponse
+ */
+const handler = async (
+	req: NextRequest,
+	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
+): Promise<NextResponse<any>> => {
+	const { CONSENT_API_URL, CONSENT_UI_URL } = getAppConfig(process.env);
+	const clientSideRootUrl = urlJoin(CONSENT_UI_URL, PROXY_API_PATH);
+	if (!req?.url?.startsWith(clientSideRootUrl)) {
+		// An http error status will trigger an AxiosError in the original ui request
+		return NextResponse.json({ error: 'Invalid URL' }, { status: 400 });
+	}
+	const path = urlJoin(routePaths.params.proxy);
+	const reqUrl = urlJoin(CONSENT_API_URL, path);
+	const requestData = await getRequestData(req);
+	// TODO: are there any other headers needed here?
+	const headers = new AxiosHeaders();
+	headers.set('Content-Type', 'application/json');
 	// Don't forward cookies to the API:
-	// req.headers.cookie = '';
-	// console.info(`proxy without authentication - proxying to target:${target} path:${path}`);
-}
+	headers.set('Set-Cookie', '');
+	const res = await axiosProxyClient(reqUrl, {
+		method: req.method,
+		headers,
+		...(requestData && { data: requestData }),
+	});
+
+	const data = await res.data;
+	return NextResponse.json(data);
+};
 
 export { handler as GET, handler as POST };

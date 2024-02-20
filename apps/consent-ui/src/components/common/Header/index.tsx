@@ -72,7 +72,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				{/* TODO: implement user menu, ticket TBD */}
 				<div className={styles['user-menu']}>
 					{session?.user ? (
-						<div>Hello, {session.user.name}</div>
+						<div>Hello, {session.user.preferredUsername}</div>
 					) : (
 						<LoginButton currentLang={currentLang} />
 					)}

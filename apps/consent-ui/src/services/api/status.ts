@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -21,19 +21,20 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { APIStatus } from 'types/common';
 import urlJoin from 'url-join';
 
-import { API, PROXY_API_PATH, PROXY_PROTECTED_API_PATH } from 'src/constants';
+import { API, PROXY_API_PATH } from 'src/constants';
 import { axiosClient } from 'src/services/api';
 
 const getAPIStatus = async () => {
 	return await axiosClient
-		.post(urlJoin(PROXY_PROTECTED_API_PATH, API.STATUS, 'test'))
-		// .get(urlJoin(PROXY_API_PATH, API.STATUS))
-		// .get(API.STATUS)
+		.get(urlJoin(PROXY_API_PATH, API.STATUS))
 		.then((res: AxiosResponse<APIStatus>) => {
+			if (res.status !== 200) {
+				throw new AxiosError(res.statusText);
+			}
 			return res.data;
 		})
 		.catch((err: AxiosError<APIStatus>) => {
-			console.error('Unable to receive consent-api status ⛔️: ', err);
+			console.error('Unable to receive consent-api status ⛔️: ', err.message);
 			const errorRes: APIStatus = {
 				version: 'N/A',
 				status: 'API fetch failed',
