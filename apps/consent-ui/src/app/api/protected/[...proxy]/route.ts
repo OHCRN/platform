@@ -18,51 +18,60 @@
  */
 
 import urlJoin from 'url-join';
+import { NextRequest, NextResponse } from 'next/server';
+import { AxiosHeaders } from 'axios';
 
+import { auth } from 'src/app/auth';
+import { decryptContent, getRequestData } from 'src/services/api/utils';
 import { getAppConfig } from 'src/config';
 import { PROXY_PROTECTED_API_PATH } from 'src/constants';
+import { axiosProxyClient } from 'src/services/api';
 
-import { auth } from '../../../auth';
-
-const handler = async (req: Request, paths: { params: { proxy: string[] } }) => {
-	console.log('In protected route handler: ', paths.params.proxy);
+/**
+ * Route handler for creating authenticated proxy requests from /api routes to protected consent-api endpoints
+ * @param req NextRequest obj
+ * @param routePaths path params interpolated from app/api/protected/[...proxy] directory structure
+ * @returns response from consent-api
+ */
+const handler = async (
+	req: NextRequest,
+	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
+): Promise<NextResponse> => {
 	const { CONSENT_API_URL, CONSENT_UI_URL } = getAppConfig(process.env);
-	let path = '';
 	const clientSideRootUrl = urlJoin(CONSENT_UI_URL, PROXY_PROTECTED_API_PATH);
-	if (req.url.startsWith(clientSideRootUrl)) {
-		path = req.url.replace(clientSideRootUrl, '');
-	} else {
-		return Response.json({ status: 400, error: 'Bad request' });
+	if (!req?.url?.startsWith(clientSideRootUrl)) {
+		// An http error status will trigger an AxiosError in the original ui request
+		return NextResponse.json({ error: 'Invalid URL' }, { status: 400 });
 	}
-	const reqUrl = urlJoin(CONSENT_API_URL, path);
-	console.log('REQ URL: ', reqUrl);
-	const res = await fetch(reqUrl, {
-		method: req.method,
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	});
-	console.log('RES STATUS: ', res.status);
-	const data = await res.json();
-	console.log('DATA:', data);
-	return Response.json({ data });
+	const session = await auth();
+	// check for existence of a session before attempting a request to consent-api
+	// consent-api will also have its own auth middleware to verify sessions
+	if (!session?.user) {
+		// TODO: should this redirect, if user tries to access a protected resource while unauthorized
+		return NextResponse.json({ error: 'You must be signed in' }, { status: 401 });
+	} else {
+		const path = urlJoin(routePaths.params.proxy);
+		const reqUrl = urlJoin(CONSENT_API_URL, path);
 
-	// const session = await auth(req, res);
-	// if (session) {
-	// 	// Do something with the session
-	// 	return res.json('This is protected content.');
-	// }
-	// res.status(401).json('You must be signed in.');
-	// const session = await getServerSession(req, res, getAuthOptions(req));
+		const requestData = await getRequestData(req);
+		// TODO: are there any other headers needed here?
+		const headers = new AxiosHeaders();
+		headers.set('Content-Type', 'application/json');
+		// Don't forward cookies to the API:
+		headers.set('Set-Cookie', '');
+		if (session.account.accessToken) {
+			const decryptedToken = decryptContent(session.account.accessToken);
+			headers.setAuthorization(`Bearer ${decryptedToken}`);
+		}
+		const res = await axiosProxyClient(reqUrl, {
+			method: req.method,
+			headers,
+			...(requestData && { data: requestData }),
+		});
 
-	// console.info(`protected proxy - proxing to target:${target} path:${path}`);
-
-	// if (session?.account?.accessToken) {
-	// 	req.headers['Authorization'] = 'Bearer ' + decryptContent(session?.account?.accessToken);
-	// }
-
-	// Don't forward cookies to the API:
-	// req.headers.cookie = '';
+		const data = await res.data;
+		return NextResponse.json(data);
+	}
 };
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, handler as PATCH };

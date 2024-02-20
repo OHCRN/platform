@@ -19,72 +19,134 @@
 
 import axios from 'axios';
 import { NextAuthConfig } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
 import Keycloak from 'next-auth/providers/keycloak';
 import { NextResponse } from 'next/server';
+import urlJoin from 'url-join';
 
 import { getLinkNameByPath } from 'src/components/common/Link/utils';
 import { getAppConfig } from 'src/config';
+import { ValidLanguage } from 'src/i18n';
 
-async function doFinalSignoutHandshake(jwt: any) {
-	const { id_token } = jwt;
-	const { KEYCLOAK_ISSUER, KEYCLOAK_CLIENT_ID } = getAppConfig(process.env);
+import { encryptContent, decryptContent } from '../services/api/utils';
+
+declare module 'next-auth' {
+	interface User {
+		preferredUsername: string | null;
+	}
+
+	interface Session {
+		account: {
+			accessToken: string;
+			idToken: string;
+		};
+	}
+}
+
+declare module 'next-auth/jwt' {
+	interface JWT {
+		account: {
+			access_token: string;
+			id_token: string;
+		};
+		profile: {
+			preferred_username: string | null;
+			email: string;
+		};
+		exp?: number;
+	}
+}
+
+async function doFinalSignoutHandshake(jwt: JWT) {
 	try {
+		const { id_token } = jwt.account;
+		const { KEYCLOAK_ISSUER, KEYCLOAK_CLIENT_ID } = getAppConfig(process.env);
 		// Add the id_token_hint to the query string
+		const decryptedIdToken = decryptContent(id_token);
 		const params = new URLSearchParams();
-		params.append('id_token_hint', id_token);
+		params.append('id_token_hint', decryptedIdToken);
 		params.append('client_id', KEYCLOAK_CLIENT_ID);
 		const logoutUrl = `${KEYCLOAK_ISSUER}/protocol/openid-connect/logout?${params.toString()}`;
 		const { status, statusText } = await axios.get(logoutUrl);
 
 		// The response body should contain a confirmation that the user has been logged out
-		console.log('Completed post-logout handshake', status, statusText);
+		console.info('Completed post-logout handshake', status, statusText);
 	} catch (e: any) {
 		console.error('Unable to perform post-logout handshake', (e as any)?.code || e);
 	}
 }
 
+// routes that do not require authentication
+// move to Route types file
 const openRouteNames = ['home', 'invite', 'register'];
+
 export const authConfig = {
 	providers: [Keycloak],
+	session: {
+		strategy: 'jwt',
+		maxAge: getAppConfig(process.env).TOKEN_MAX_AGE,
+	},
 	callbacks: {
-		jwt: async ({ token, user, account, profile, trigger }) => {
-			console.log('jwt callback');
+		jwt: ({ token, account, profile, trigger }) => {
+			// account contains access_token, id_token and refresh_token from Keycloak
+			// account is only available on signIn
 			if (trigger === 'signIn') {
-				if (account) {
+				if (account?.access_token && account.id_token) {
+					const encryptedAccessToken = encryptContent(account.access_token);
+					const encryptedIdToken = encryptContent(account.id_token);
+					token.account = {
+						access_token: encryptedAccessToken,
+						id_token: encryptedIdToken,
+					};
 					// copy the expiry from the original keycloak token
+					token.exp = account.expires_at; // unix timestamp
 					// overrides the settings in NextAuth.session
-					token.exp = account.expires_at;
-					token.id_token = account.id_token;
+					token.profile = {
+						preferred_username: profile?.preferred_username || '',
+						email: profile?.email || '',
+					};
 				}
 			}
-
 			return token;
 		},
-		session: ({ session }) => {
-			console.log('session callback');
+		session: async ({ session, token }) => {
+			// add token properties here so they are available to the session
+			const tokenProperties = {
+				accessToken: token?.account?.access_token,
+				idToken: token?.account?.id_token,
+				exp: token.exp, // TODO: is any manual handling of expiry needed, between Keycloak and NextAuth session?
+			};
+			session.account = tokenProperties;
+			session.user = {
+				...session.user,
+				email: session.user.email || token.profile.email,
+				preferredUsername: token.profile.preferred_username,
+			};
+			// session.expires is a date string
 			return session;
 		},
 		authorized: ({ auth, request: { nextUrl } }) => {
-			console.log('Authorized callback');
-			// it does work to handle protected routes here. is this the best place for it?
-			// also, you would need a good way to detect the current language.
-			// could accomplish that via a lang header or looking at the path
-			const pathByName = getLinkNameByPath(nextUrl.pathname, 'en');
-			console.log('pathByName: ', pathByName);
-			if (openRouteNames.includes(pathByName)) {
+			const urlLang = nextUrl.pathname.split('/').filter((item) => item !== '')[0];
+			const parsedLang = ValidLanguage.safeParse(urlLang);
+			const currentLang = parsedLang.success ? parsedLang.data : ValidLanguage.enum.en;
+			const pathByName = getLinkNameByPath(nextUrl.pathname, currentLang);
+			// TODO: is it necessary to check session expiry here or does next-auth clear expired sessions automatically?
+			if (openRouteNames.includes(pathByName) || auth?.user) {
 				return true;
 			} else {
 				console.log('not authorized to see this route');
-				return NextResponse.redirect('http://localhost:3000/en?session_expired=true');
+				const sessionExpiredUri = new URL(urlJoin(nextUrl.origin, currentLang));
+				sessionExpiredUri.searchParams.append('session_expired', 'true');
+				return NextResponse.redirect(sessionExpiredUri.href);
 			}
 		},
 	},
 	events: {
-		async signOut({ session, token }) {
-			await doFinalSignoutHandshake(token);
+		// ts error coming from next-auth lib
+		// TS Property 'token' does not exist on type '{ session: void | Awaitable<AdapterSession | null | undefined>; } | { token: Awaitable<JWT | null>; }
+		// @ts-expect-error error TS2339
+		async signOut({ token }) {
+			return await doFinalSignoutHandshake(token);
 		},
-	},
-	session: {
-		strategy: 'jwt',
 	},
 } satisfies NextAuthConfig;
