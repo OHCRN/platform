@@ -69,7 +69,7 @@ describe('PostalCode', () => {
 });
 
 describe('OptionalPostalCode', () => {
-	it('Must be 6 characters long and in postal code format', () => {
+	it('Can be 6 characters long and in postal code format', () => {
 		expect(OptionalPostalCode.safeParse('T4B0V7').success).true;
 		expect(OptionalPostalCode.safeParse('TBV407').success).false;
 	});
@@ -112,7 +112,7 @@ describe('OptionalPostalCode', () => {
 });
 
 describe('EmptyOrOptionalPostalCode', () => {
-	it('Must be 6 characters long and in postal code format', () => {
+	it('Can be 6 characters long and in postal code format', () => {
 		expect(EmptyOrOptionalPostalCode.safeParse('T4B0V7').success).true;
 		expect(EmptyOrOptionalPostalCode.safeParse('TBV407').success).false;
 	});
@@ -122,15 +122,19 @@ describe('EmptyOrOptionalPostalCode', () => {
 	});
 
 	it('Can be an empty string', () => {
-		expect(EmptyOrOptionalPostalCode.safeParse('').success).false;
+		expect(EmptyOrOptionalPostalCode.safeParse('').success).true;
 	});
 
-	it('Cannot be a string containing only whitespace', () => {
-		expect(OptionalPostalCode.safeParse(' ').success).true;
+	it('Can be a string containing only whitespace', () => {
+		expect(EmptyOrOptionalPostalCode.safeParse(' ').success).true;
 	});
 
 	it('Cannot be null', () => {
 		expect(EmptyOrOptionalPostalCode.safeParse(null).success).false;
+	});
+
+	it('Can be 6 characters long and in postal code format, and whitespace', () => {
+		expect(EmptyOrOptionalPostalCode.safeParse('T4B0V7 ').success).true;
 	});
 
 	it('Can only contain letters and numbers', () => {

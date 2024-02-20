@@ -33,6 +33,10 @@ export type PostalCode = z.infer<typeof PostalCode>;
 export const OptionalPostalCode = PostalCode.optional();
 export type OptionalPostalCode = z.infer<typeof OptionalPostalCode>;
 
-// optional string with regex OR empty/whitespace string
-export const EmptyOrOptionalPostalCode = OptionalPostalCode.or(EmptyString).or(EmptyWhiteSpace);
+// optional trimmed string with regex OR empty/whitespace string
+export const EmptyOrOptionalPostalCode = TrimmedString.regex(POSTAL_CODE_REGEX)
+	.transform((data) => data.toUpperCase())
+	.optional()
+	.or(EmptyString)
+	.or(EmptyWhiteSpace);
 export type EmptyOrOptionalPostalCode = z.infer<typeof EmptyOrOptionalPostalCode>;

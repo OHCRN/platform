@@ -26,7 +26,7 @@ import {
 } from '../../src/entities/fields/index.js';
 
 describe('PhoneNumber', () => {
-	it('Can only be a string containing 10 digits', () => {
+	it('Must be a string containing 10 digits', () => {
 		expect(PhoneNumber.safeParse('1234567890').success).true;
 	});
 
@@ -122,8 +122,8 @@ describe('EmptyOrOptionalPhoneNumber', () => {
 		expect(EmptyOrOptionalPhoneNumber.safeParse('1234567890123').success).false;
 	});
 
-	it('Cannot be 10 digits and whitespace', () => {
-		expect(EmptyOrOptionalPhoneNumber.safeParse('1234567890 ').success).false;
+	it('Can be 10 digits and whitespace', () => {
+		expect(EmptyOrOptionalPhoneNumber.safeParse('1234567890 ').success).true;
 	});
 
 	it('Can be undefined', () => {

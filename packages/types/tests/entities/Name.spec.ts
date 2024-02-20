@@ -21,6 +21,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Name, OptionalName, EmptyOrOptionalName } from '../../src/entities/fields/index.js';
 
+// TODO: add tests for special characters (accented letters) when added to the NAME_REGEX
 describe('Name', () => {
 	it('Can be a string containing only letters', () => {
 		expect(Name.safeParse('Simpson').success).true;
@@ -72,9 +73,9 @@ describe('Name', () => {
 		expect(Name.safeParse('Homer_Simpson3').success).false;
 		expect(Name.safeParse('Homer Simpon!').success).false;
 	});
-	// add necessary tests
 });
 
+// TODO: add tests for special characters (accented letters) when added to the NAME_REGEX
 describe('OptionalName', () => {
 	it('Can be a string containing only letters', () => {
 		expect(OptionalName.safeParse('Simpson').success).true;
