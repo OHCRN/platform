@@ -20,6 +20,7 @@
 import { InviteFormConsentGroupModalDictionary } from '../en/inviteFormConsentGroupModal';
 
 const dictionary = {
+	actionButtonText: 'OK',
 	adultConsent: 'Consentement adulte',
 	adultConsentPoint1: '18 ans ou plus',
 	adultConsentPoint2: 'a la capacité de donner son consentement',
@@ -37,6 +38,7 @@ const dictionary = {
 	guardianConsentPoint1: 'consentement fourni par le parent ou le tuteur',
 	guardianConsentPoint2: 'évalué par leur clinicien comme ne nécessitant pas de consentement',
 	guardianConsentPoint3: 'le plus souvent moins de 12 ans',
+	title: 'Groupes de consentement',
 	youngAdultConsent: 'Consentement du jeune adulte',
 	youngAdultConsentPoint1: 'le plus souvent entre 16 et 18 ans',
 	youngAdultConsentPoint2:

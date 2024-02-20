@@ -21,6 +21,7 @@ import Image from 'next/image';
 import { SyntheticEvent } from 'react';
 
 import InfoSvg from 'src/../public/assets/images/info.svg';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import styles from './InfoButton.module.scss';
 
@@ -35,7 +36,13 @@ const InfoButton = ({ label, onClick }: InfoButtonProps) => {
 		onClick();
 	};
 	return (
-		<button aria-label={label} className={styles.infoButton} onClick={handleClick} type="button">
+		<button
+			aria-label={label}
+			className={styles.infoButton}
+			onClick={handleClick}
+			onMouseDown={handleMouseDownBlur}
+			type="button"
+		>
 			<Image alt="" src={InfoSvg} />
 		</button>
 	);
