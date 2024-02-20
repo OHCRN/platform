@@ -18,13 +18,15 @@
  */
 
 import { AxiosError } from 'axios';
-import { ConsentCategory, ConsentQuestionArray, ConsentQuestionId } from 'types/entities';
-import { Result, failure, success } from 'types/httpResponses';
 import {
-	ParticipantResponseArray,
 	ConsentClinicianInviteRequest,
 	ConsentClinicianInviteResponse,
+	ConsentCreateParticipantRequest,
+	ConsentCreateParticipantResponse,
+	ParticipantResponseArray,
 } from 'types/dataMapper';
+import { ConsentCategory, ConsentQuestionArray, ConsentQuestionId } from 'types/entities';
+import { Result, SystemError, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../../config.js';
@@ -209,6 +211,34 @@ export const getParticipantResponsesByQuestionId = async ({
 			return failure('SYSTEM_ERROR', data.message);
 		}
 		logger.error('Unexpected error retrieving participant responses', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+type CreateConsentParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
+/**
+ * Makes request to Consent DAS to create a Participant
+ * @param ConsentCreateParticipantRequest Consent create participant data
+ * @returns {ConsentCreateParticipantResponse} Participant object from Consent DAS
+ */
+export const createParticipantConsentData = async (
+	req: ConsentCreateParticipantRequest,
+): Promise<Result<ConsentCreateParticipantResponse, CreateConsentParticipantFailureStatus>> => {
+	const { consentDasUrl } = getAppConfig();
+	try {
+		const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), req);
+		return success(result.data.participant);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			if (status === 409) {
+				return failure('PARTICIPANT_EXISTS', data.message);
+			}
+			logger.error('AxiosError creating participant', data);
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error('Unexpected error creating participant', error);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };

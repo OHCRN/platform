@@ -54,7 +54,7 @@ const ReviewInfoCard = ({
 	return (
 		<div className={clsx(styles.reviewInfoCard, styles[boxColor], className)}>
 			<div className={clsx(styles.header)}>
-				<h2>{title}</h2>
+				<h2 className={styles.title}>{title}</h2>
 				<LocalizedLink role={`button`} name={name} linkLang={linkLang}>
 					{editText}
 				</LocalizedLink>

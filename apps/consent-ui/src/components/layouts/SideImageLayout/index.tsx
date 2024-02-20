@@ -38,6 +38,7 @@ interface SideImageLayoutProps {
 	currentLang: ValidLanguage;
 	desktopHeaderImage: StaticImageData;
 	desktopNavAction?: { bottomText: string; topText: string; url: RouteName };
+	desktopNavButton?: { description: string; button: JSX.Element };
 	mainSubtitle: ReactNode;
 	mainTitle: string;
 	navTitle: string;
@@ -49,11 +50,12 @@ const SideImageLayout = ({
 	currentLang,
 	desktopHeaderImage,
 	desktopNavAction,
+	desktopNavButton,
 	mainSubtitle,
 	mainTitle,
 	navTitle,
 }: SideImageLayoutProps) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 
 	return (
 		<div className={clsx(styles.container, className)}>
@@ -70,6 +72,7 @@ const SideImageLayout = ({
 					<h1 className={styles.title}>{navTitle}</h1>
 				</div>
 			</header>
+			<div className={styles.desktopHeaderSpace}></div>
 			<header className={styles.mobileTabletHeader}>
 				<h1 className={styles.title}>{navTitle}</h1>
 			</header>
@@ -80,6 +83,12 @@ const SideImageLayout = ({
 						<HelpButton label={translate('header', 'help')} />
 					</div>
 					<div className={styles.rightButtons}>
+						{desktopNavButton && (
+							<div className={styles.desktopNavButton}>
+								<span className={styles.description}>{desktopNavButton.description}</span>
+								{desktopNavButton.button}
+							</div>
+						)}
 						{desktopNavAction && (
 							<LocalizedLink
 								className={styles.desktopNavAction}
@@ -91,7 +100,7 @@ const SideImageLayout = ({
 									<span>{desktopNavAction.topText}</span>
 									<span className={styles.bottomText}>{desktopNavAction.bottomText}</span>
 								</div>
-								<Image src={ChevronSvg} alt="" className={styles.chevron} />
+								<Image src={ChevronSvg} alt="" className={styles.chevron} priority />
 							</LocalizedLink>
 						)}
 					</div>

@@ -14,6 +14,7 @@
 	@media (min-width: theme('screens.xl')) {
 		@apply grid-cols-5 grid-rows-2;
 	}
+	z-index: 5;
 }
 
 .left {

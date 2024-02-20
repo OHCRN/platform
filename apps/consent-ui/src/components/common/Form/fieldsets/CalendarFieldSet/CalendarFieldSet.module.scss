@@ -1,0 +1,64 @@
+.calendarFieldSet {
+	width: 100%;
+
+	:global {
+		.react-datepicker-wrapper {
+			width: 100%;
+		}
+	}
+}
+
+.calendarPopper {
+	:global {
+		.react-datepicker__month-container {
+			padding: 0.3rem 1rem;
+		}
+
+		.react-datepicker__header {
+			background-color: theme('colors.grayscale.100');
+			border-bottom: 0px;
+			font-weight: 700;
+			padding: 0;
+		}
+
+		.react-datepicker__navigation {
+			margin-top: 1.3rem;
+		}
+
+		.react-datepicker__current-month {
+			font-size: 14px;
+			padding: 1rem;
+		}
+
+		.react-datepicker__day--selected {
+			background-color: theme('colors.accent1.200');
+			color: theme('colors.grayscale.800');
+			border-radius: 50%;
+		}
+	}
+}
+
+.calendarInput {
+	display: block;
+	width: 100%;
+	border: 1px solid theme('colors.grayscale.500');
+	border-radius: 1.25rem;
+	height: 2.5rem;
+	padding: 0.38rem 1rem;
+	transition: border-color 300ms ease-in-out;
+	&:focus {
+		outline: 0;
+		padding: calc(0.38rem - 1px) calc(1rem - 1px);
+		border: 2px solid theme('colors.grayscale.800');
+	}
+	&.__has-error {
+		border-color: theme('colors.error.500');
+	}
+	&:disabled {
+		background: theme('colors.grayscale.200');
+	}
+}
+
+.hasError {
+	border-color: theme('colors.error.500') !important;
+}

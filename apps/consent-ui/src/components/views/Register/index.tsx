@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,20 +17,51 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-
 import { getTranslation, ValidLanguage } from 'src/i18n';
-import RegistrationForm from 'src/components/views/Register/RegistrationForm';
+import RegisterForm from 'src/components/views/Register/RegisterForm';
+import SideImageLayout from 'src/components/layouts/SideImageLayout';
+import LinkButton from 'src/components/common/Button/LinkButton';
+import registerBg from 'src/../public/assets/images/register-bg.jpg';
 
 const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
-	return (
-		<div>
-			<h2>{translate('common', 'register')}</h2>
-			<Link href={`/${currentLang}`}>{translate('common', 'home')}</Link>
+	const { translateNamespace } = getTranslation(currentLang);
+	const errorsDict = translateNamespace('formErrors');
+	const pageDict = translateNamespace('registerPage');
+	const step1LabelsDict = translateNamespace('registerFormStep1Labels');
+	const step1textDict = translateNamespace('registerFormStep1Text');
+	const step2LabelsDict = translateNamespace('registerFormStep2Labels');
+	const step2textDict = translateNamespace('registerFormStep2Text');
+	const textDict = translateNamespace('registerFormText');
 
-			<RegistrationForm />
-		</div>
+	return (
+		<SideImageLayout
+			currentLang={currentLang}
+			desktopHeaderImage={registerBg}
+			desktopNavAction={{
+				bottomText: pageDict.registerPatients,
+				topText: pageDict.ifClinician,
+				url: 'invite',
+			}}
+			desktopNavButton={{
+				description: pageDict.alreadyRegistered,
+				// TODO add link to login page
+				// https://github.com/OHCRN/platform/issues/359
+				button: <LinkButton href="">{pageDict.login}</LinkButton>,
+			}}
+			mainSubtitle={pageDict.enrollInOhcrn}
+			mainTitle={pageDict.registerYourself}
+			navTitle={pageDict.participantRegistration}
+		>
+			<RegisterForm
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				step1LabelsDict={step1LabelsDict}
+				step1TextDict={step1textDict}
+				step2LabelsDict={step2LabelsDict}
+				step2TextDict={step2textDict}
+				textDict={textDict}
+			/>
+		</SideImageLayout>
 	);
 };
 

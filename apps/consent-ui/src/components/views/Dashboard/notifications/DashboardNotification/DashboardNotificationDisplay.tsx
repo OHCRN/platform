@@ -19,37 +19,16 @@
 
 'use client';
 
-import { NotificationConfig, useNotification } from 'src/components/providers/NotificationProvider';
+import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
-import ConsentCompletionNotification from 'src/components/views/Dashboard/notifications/ConsentCompleteNotification';
-import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
-import ConsentInProgressNotification from 'src/components/views/Dashboard/notifications/ConsentInProgressNotification';
+import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
 
 import styles from './DashboardNotificationDisplay.module.scss';
-
-const getNotificationComponent = ({
-	notificationConfig,
-	notificationProps,
-}: {
-	notificationConfig: NotificationConfig;
-	notificationProps: { currentLang: ValidLanguage; dismissClick: () => void };
-}) => {
-	switch (notificationConfig?.notification) {
-		case 'emailVerified':
-			return <EmailVerifiedNotification {...notificationProps} />;
-		case 'consentInProgress':
-			return <ConsentInProgressNotification currentLang={notificationProps.currentLang} />;
-		case 'consentComplete':
-			return <ConsentCompletionNotification {...notificationProps} />;
-		default:
-			return null;
-	}
-};
 
 const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { dismissNotification, notificationConfig } = useNotification();
 
-	// check if there's a notification for the dashboard
+	// check if there's a notification for this page in context
 	if (!(notificationConfig && notificationConfig.page === 'dashboard')) {
 		return <></>;
 	}

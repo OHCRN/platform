@@ -25,6 +25,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { ConsentGroup } from 'types/entities';
 import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -33,18 +34,18 @@ import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet'
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import Notification from 'src/components/common/Notification';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
-import { axiosClient } from 'src/services/api/axiosClient';
-import { API } from 'src/constants';
 import Form from 'src/components/common/Form';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
-import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
-import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
 import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
 import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
+import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
+import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
+import { useNotification } from 'src/components/providers/NotificationProvider';
+import { getLocalizedRoute } from 'src/components/common/Link/utils';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -69,6 +70,9 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
 }) => {
+	const { showNotification } = useNotification();
+	const router = useRouter();
+
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
 	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
@@ -95,7 +99,6 @@ const ClinicianInviteFormComponent = ({
 		onRecaptchaChange,
 		recaptchaCheckboxRef,
 		recaptchaError,
-		resetRecaptcha,
 		setRecaptchaError,
 	} = useRecaptcha();
 
@@ -113,16 +116,10 @@ const ClinicianInviteFormComponent = ({
 
 		if (recaptchaToken) {
 			console.log('form data', data);
-			axiosClient
-				.post(API.INVITES, { data, recaptchaToken })
-				.then(() => {
-					setRecaptchaError('');
-					resetRecaptcha();
-				})
-				.catch((e) => {
-					console.error(e);
-					setRecaptchaError('Something went wrong, please try again');
-				});
+
+			// on success, go to homepage & show success message
+			showNotification({ page: 'home', notification: 'inviteSent' });
+			router.push(getLocalizedRoute(currentLang, 'home'));
 		} else {
 			setRecaptchaError('Please complete captcha');
 		}
@@ -173,23 +170,20 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.firstName || ''}
 						name="participantFirstName"
 						required
-						tooltipContent={textDict.participantFirstNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantFirstNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantLastName?.type && errorsDict.required}
 						label={labelsDict.lastName || ''}
 						name="participantLastName"
 						required
-						tooltipContent={textDict.participantLastNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantLastNameTooltip}
 					/>
 					<TextFieldSet
 						error={errors.participantPreferredName?.type && errorsDict.required}
 						label={labelsDict.preferredName || ''}
 						name="participantPreferredName"
-						tooltipContent={textDict.participantPreferredNameTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantPreferredNameTooltip}
 					/>
 
 					<SelectFieldSet
@@ -203,25 +197,22 @@ const ClinicianInviteFormComponent = ({
 						options={consentGroupOptions}
 						placeholder={textDict.selectPlaceholder || ''}
 						required
-						tooltipContent={textDict.consentGroupTooltip}
-						withNarrowDesktopLayout
+						description={textDict.consentGroupTooltip}
 					/>
 
 					<TextFieldSet
-						tooltipContent={textDict.participantPhoneNumberTooltip}
+						description={textDict.participantPhoneNumberTooltip}
 						error={errors.participantPhoneNumber?.type && errorsDict.required}
 						label={labelsDict.phone || ''}
 						name="participantPhoneNumber"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.participantEmailAddress?.type && errorsDict.required}
 						label={labelsDict.email || ''}
 						name="participantEmailAddress"
 						required
-						tooltipContent={textDict.participantEmailAddressTooltip}
-						withNarrowDesktopLayout
+						description={textDict.participantEmailAddressTooltip}
 					/>
 				</FormSection>
 
@@ -241,32 +232,28 @@ const ClinicianInviteFormComponent = ({
 							label={labelsDict.guardianName || ''}
 							name="guardianName"
 							required
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianPhoneNumber?.type && errorsDict.required}
 							label={labelsDict.guardianPhone || ''}
 							name="guardianPhoneNumber"
 							required
-							tooltipContent={textDict.guardianPhoneNumberTooltip}
+							description={textDict.guardianPhoneNumberTooltip}
 							type="tel"
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email || ''}
 							name="guardianEmailAddress"
 							required
-							tooltipContent={textDict.guardianEmailAddressTooltip}
+							description={textDict.guardianEmailAddressTooltip}
 							type="email"
-							withNarrowDesktopLayout
 						/>
 						<TextFieldSet
 							error={errors.guardianRelationship?.type && errorsDict.required}
 							label={labelsDict.guardianRelationship || ''}
 							name="guardianRelationship"
 							required
-							withNarrowDesktopLayout
 						/>
 						<p>
 							{textDict.uploadFileDescription1}
@@ -299,30 +286,26 @@ const ClinicianInviteFormComponent = ({
 						label={labelsDict.clinicianTitleOrRole || ''}
 						name="clinicianTitleOrRole"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianFirstName?.type && errorsDict.required}
 						label={labelsDict.clinicianFirstName || ''}
 						name="clinicianFirstName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianLastName?.type && errorsDict.required}
 						label={labelsDict.clinicianLastName || ''}
 						name="clinicianLastName"
 						required
-						withNarrowDesktopLayout
 					/>
 					<TextFieldSet
 						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
 						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
 						name="clinicianInstitutionalEmailAddress"
 						required
-						tooltipContent={textDict.clinicianInstitutionalEmailAddressTooltip}
+						description={textDict.clinicianInstitutionalEmailAddressTooltip}
 						type="email"
-						withNarrowDesktopLayout
 					/>
 				</FormSection>
 
@@ -336,12 +319,14 @@ const ClinicianInviteFormComponent = ({
 						<RecaptchaCheckbox
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
+							currentLang={currentLang}
 						/>
 					</div>
 
 					<Button
 						className={styles.submitButton}
 						color={enableSubmit ? 'green' : 'default'}
+						onMouseDown={(e) => e.preventDefault()}
 						type="submit"
 					>
 						{textDict.submit}

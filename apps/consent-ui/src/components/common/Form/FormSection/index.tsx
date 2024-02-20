@@ -24,12 +24,16 @@ import styles from './FormSection.module.scss';
 
 const FormSection = ({
 	children,
+	className,
 	variant = 'white',
 }: {
 	children: ReactNode;
+	className?: string;
 	variant?: 'grey' | 'white';
 }) => {
-	return <section className={clsx(styles.formSection, styles[variant])}>{children}</section>;
+	return (
+		<section className={clsx(styles.formSection, styles[variant], className)}>{children}</section>
+	);
 };
 
 export default FormSection;

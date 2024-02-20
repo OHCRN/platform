@@ -40,7 +40,7 @@ const icons: {
 };
 
 const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const translate = getTranslation(currentLang);
+	const { translate } = getTranslation(currentLang);
 	const icon = icons[currentLang || defaultLanguage];
 	const session = await auth();
 	return (

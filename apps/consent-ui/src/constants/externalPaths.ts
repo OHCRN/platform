@@ -23,7 +23,9 @@ export const PROXY_PROTECTED_API_PATH = '/api/protected';
 // API
 export const API = {
 	INVITES: '/invites',
+	REGISTER: '/register',
 	STATUS: '/status',
 };
 
-export const OHCRN_HOME_LINK = 'https://ohcrn.ca/';
+// TODO add link to help centre https://github.com/OHCRN/platform/issues/367
+export const OHCRN_HELP_CENTRE_URL = '';

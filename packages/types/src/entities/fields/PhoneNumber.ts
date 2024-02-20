@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { PHONE_NUMBER_REGEX } from '../../common/index.js';
+import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
 
 export const PhoneNumber = z.string().trim().regex(PHONE_NUMBER_REGEX);
 export type PhoneNumber = z.infer<typeof PhoneNumber>;

@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { OHIP_NUMBER_REGEX } from '../../common/index.js';
+import { OHIP_NUMBER_REGEX } from '../../common/regexes.js';
 
 export const OhipNumber = z.string().regex(OHIP_NUMBER_REGEX);
 export type OhipNumber = z.infer<typeof OhipNumber>;
