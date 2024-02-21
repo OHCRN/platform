@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Name, PhoneNumber, checkParticipantIsAdult } from 'types/entities';
+import { Name, PhoneNumber, checkParticipantIsAdult, hasMatchingPasswords } from 'types/entities';
 import { z } from 'zod';
 
 // TODO hookup backend #368
@@ -60,7 +60,7 @@ export const PasswordFields = z
 		confirmPassword: z.string().min(1), // TEMP #368
 		password: z.string().min(1), // TEMP #368
 	})
-	.refine((data) => data.password === data.confirmPassword, {
+	.refine(hasMatchingPasswords, {
 		message: 'passwordMismatch',
 		path: ['confirmPassword'],
 	});

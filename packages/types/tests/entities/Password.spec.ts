@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,21 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './DateOfBirth.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './Password.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './UserRole.js';
+import { describe, expect, it } from 'vitest';
+
+import { hasMatchingPasswords } from '../../src/entities/index.js';
+
+describe('Password', () => {
+	it('strings with matching characters and casing will pass validation', () => {
+		expect(hasMatchingPasswords({ password: 'gdf76sgd7f8g', confirmPassword: 'gdf76sgd7f8g' }))
+			.true;
+	});
+	it('strings with matching characters and different casing will NOT pass validation', () => {
+		expect(hasMatchingPasswords({ password: 'GDF76SG7f8G', confirmPassword: 'gdf76sgd7f8g' }))
+			.false;
+	});
+});

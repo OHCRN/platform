@@ -17,21 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './DateOfBirth.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './Password.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './UserRole.js';
+import { GenderDictionary } from 'src/i18n/locales/en/gender';
+import { BirthSexDictionary } from 'src/i18n/locales/en/birthSex';
+import { AncestryDictionary } from 'src/i18n/locales/en/ancestry';
+import { HistoryOfCancerDictionary } from 'src/i18n/locales/en/historyOfCancer';
+import { GeneticsClinicDictionary } from 'src/i18n/locales/en/geneticsClinic';
+import { MolecularLabDictionary } from 'src/i18n/locales/en/molecularLab';
+import { FormSelectOption } from 'src/components/common/Form/types';
+
+export type GenderOption = FormSelectOption<keyof GenderDictionary>;
+export type BirthSexOption = FormSelectOption<keyof BirthSexDictionary>;
+export type AncestryOption = FormSelectOption<keyof AncestryDictionary>;
+export type HistoryOfCancerOption = FormSelectOption<keyof HistoryOfCancerDictionary>;
+export type GeneticsClinicOption = FormSelectOption<keyof GeneticsClinicDictionary>;
+export type MolecularLabOption = FormSelectOption<keyof MolecularLabDictionary>;

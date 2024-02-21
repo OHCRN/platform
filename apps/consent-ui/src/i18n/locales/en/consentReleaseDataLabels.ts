@@ -17,21 +17,50 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Ancestry.js';
-export * from './BirthSex.js';
-export * from './ConsentCategory.js';
-export * from './ConsentGroup.js';
-export * from './DateOfBirth.js';
-export * from './Gender.js';
-export * from './GeneticsClinic.js';
-export * from './HistoryOfCancer.js';
-export * from './LifecycleState.js';
-export * from './MolecularLab.js';
-export * from './Name.js';
-export * from './NanoId.js';
-export * from './OhipNumber.js';
-export * from './Password.js';
-export * from './PhoneNumber.js';
-export * from './PostalCode.js';
-export * from './Province.js';
-export * from './UserRole.js';
+import formLabels from './formLabels';
+
+const {
+	ancestry,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	firstName,
+	genderIdentity,
+	geneticsClinic,
+	lastName,
+	middleName,
+	molecularLab,
+	ohipNumber,
+	personalHistoryOfCancer,
+	preferredName,
+	primaryCancerDiagnosis,
+	residentialPostalCode,
+	sexAssignedAtBirth,
+} = formLabels;
+
+const dictionary = {
+	ancestry,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	firstName,
+	genderIdentity,
+	geneticsClinic,
+	lastName,
+	middleName,
+	molecularLab,
+	ohipNumber,
+	personalHistoryOfCancer,
+	preferredName,
+	primaryCancerDiagnosis,
+	residentialPostalCode,
+	sexAssignedAtBirth,
+} satisfies Record<string, string>;
+
+export type ConsentReleaseDataLabelsDictionary = Record<keyof typeof dictionary, string>;
+
+export default dictionary;

@@ -18,6 +18,7 @@
  */
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import Modal from 'src/components/common/Modal';
 
 import styles from './ConsentGroupModal.module.scss';
 
@@ -39,7 +40,7 @@ const ConsentGroupModal = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const modalDict = translateNamespace('inviteFormConsentGroupModal');
 
 	return (
-		<>
+		<Modal actionButtonText={modalDict.actionButtonText} title={modalDict.title}>
 			<ModalSection
 				title={modalDict.adultConsent}
 				items={[modalDict.adultConsentPoint1, modalDict.adultConsentPoint2]}
@@ -73,7 +74,7 @@ const ConsentGroupModal = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				title={modalDict.youngAdultConsent}
 				items={[modalDict.youngAdultConsentPoint1, modalDict.youngAdultConsentPoint2]}
 			/>
-		</>
+		</Modal>
 	);
 };
 
