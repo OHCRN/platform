@@ -71,7 +71,6 @@ const FormStep1 = ({
 
 	const onSubmit: SubmitHandler<RegisterFormStep1> = (data, event) => {
 		event?.preventDefault();
-		// TODO #366 don't go to next page if user is a minor
 		handleNextClick(data);
 	};
 

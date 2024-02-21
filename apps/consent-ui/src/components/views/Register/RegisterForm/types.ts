@@ -64,7 +64,6 @@ export const PasswordFields = z
 		message: 'passwordMismatch',
 		path: ['confirmPassword'],
 	});
-export type PasswordFields = z.infer<typeof PasswordFields>;
 
 export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
