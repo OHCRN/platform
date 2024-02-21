@@ -98,6 +98,10 @@ describe('OptionalName', () => {
 		expect(OptionalName.safeParse(' ').success).false;
 	});
 
+	it('Cannot be null', () => {
+		expect(OptionalName.safeParse(null).success).false;
+	});
+
 	it('Can be a string containing letters and whitespace', () => {
 		expect(OptionalName.safeParse('homer      simpson').success).true;
 	});
@@ -146,6 +150,10 @@ describe('EmptyOrOptionalName', () => {
 
 	it('Can be a string containing only whitespace', () => {
 		expect(EmptyOrOptionalName.safeParse(' ').success).true;
+	});
+
+	it('Cannot be null', () => {
+		expect(EmptyOrOptionalName.safeParse(null).success).false;
 	});
 
 	it('Can be a string containing letters and whitespace', () => {
