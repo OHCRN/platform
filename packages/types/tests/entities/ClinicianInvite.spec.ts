@@ -24,7 +24,7 @@ import { ConsentClinicianInviteResponse } from '../../src/services/consentDas/in
 import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
 import { ClinicianInviteRequest } from '../../src/services/consentApi/requests/ClinicianInvite.js';
 
-describe('ClinicianInviteResponse', () => {
+describe('ClinicianInviteRequest', () => {
 	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
 		const result = ClinicianInviteRequest.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
