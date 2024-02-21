@@ -20,7 +20,6 @@
 		"postcss": "8.4.23",
 		"react": "18.2.0",
 		"react-datepicker": "^4.25.0",
-		"react-detect-click-outside": "^1.1.7",
 		"react-dom": "18.2.0",
 		"react-google-recaptcha": "^3.1.0",
 		"react-hook-form": "^7.47.0",
@@ -30,6 +29,7 @@
 		"tailwindcss": "3.3.2",
 		"types": "workspace:^",
 		"url-join": "^5.0.0",
+		"use-onclickoutside": "^0.4.1",
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {

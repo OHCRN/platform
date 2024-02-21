@@ -36,9 +36,11 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 import { ValidLanguage } from 'src/i18n';
+import { useModal } from 'src/components/providers/ModalProvider';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
+import RegisterMinorModal from './RegisterMinorModal';
 
 const FormStep1 = ({
 	className,
@@ -80,11 +82,18 @@ const FormStep1 = ({
 		setFocus('guardianName');
 	}, [setFocus]);
 
+	// show a warning modal if the user is a minor
+	const { openModal } = useModal();
+	const registerMinorModalConfig = {
+		modalComponent: <RegisterMinorModal currentLang={currentLang} />,
+	};
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
-		const userIsAdult = checkAge18AndOver(dateOfBirthValue);
-		if (!userIsAdult) {
-			console.log('participant is a minor');
+		if (dateOfBirthValue) {
+			const userIsAdult = checkAge18AndOver(dateOfBirthValue);
+			if (!userIsAdult) {
+				openModal(registerMinorModalConfig);
+			}
 		}
 	};
 
