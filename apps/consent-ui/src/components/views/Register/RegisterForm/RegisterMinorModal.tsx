@@ -17,15 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Modal from 'src/components/common/Modal';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 
 const RegisterMinorModal = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
 	const modalDict = translateNamespace('registerMinorModal');
 	return (
-		<>
-			{modalDict.title} {modalDict.description} {modalDict.actionText} {modalDict.cancelText}
-		</>
+		<Modal
+			actionButtonText={modalDict.actionText}
+			cancelButtonText={modalDict.cancelText}
+			title={modalDict.title}
+		>
+			{modalDict.description}
+		</Modal>
 	);
 };
 
