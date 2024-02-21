@@ -23,7 +23,7 @@ import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String
 import { NAME_REGEX } from '../../common/regexes.js';
 
 // string with regex
-export const Name = z.string().regex(NAME_REGEX);
+export const Name = TrimmedString.regex(NAME_REGEX);
 export type Name = z.infer<typeof Name>;
 
 // optional string with regex
@@ -31,8 +31,5 @@ export const OptionalName = Name.optional();
 export type OptionalName = z.infer<typeof OptionalName>;
 
 // optional trimmed string with regex OR empty/whitespace string
-export const EmptyOrOptionalName = TrimmedString.regex(NAME_REGEX)
-	.optional()
-	.or(EmptyString)
-	.or(EmptyWhiteSpace);
+export const EmptyOrOptionalName = OptionalName.or(EmptyString).or(EmptyWhiteSpace);
 export type EmptyOrOptionalName = z.infer<typeof EmptyOrOptionalName>;
