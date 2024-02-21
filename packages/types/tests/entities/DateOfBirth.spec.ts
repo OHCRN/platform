@@ -32,9 +32,12 @@ describe('Date of Birth', () => {
 	const childDateOfBirth = new Date(`09/12/${year - 10}`);
 	const futureDateOfBirth = new Date(`03/25/${year + 50}`);
 
-	it('Must check if users are adults', () => {
+	it('must return true if user is an adult', () => {
 		expect(checkAge18AndOver(adultDateOfBirth)).true;
 		expect(checkAge18AndOver(todayMinus18Years)).true;
+	});
+
+	it('must return false if user is a minor', () => {
 		expect(checkAge18AndOver(today)).false;
 		expect(checkAge18AndOver(childDateOfBirth)).false;
 		expect(checkAge18AndOver(futureDateOfBirth)).false;
