@@ -43,6 +43,7 @@ export const ConsentReleaseDataBase = z.object({
 	preferredName: Name.optional(),
 	genderIdentity: Gender,
 	ohipNumber: OhipNumber.optional(),
+	ohipNumberDisabled: z.boolean(),
 	dateOfBirth: z.coerce.date(),
 	birthSex: BirthSex,
 	ancestry: Ancestry,

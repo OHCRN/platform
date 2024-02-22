@@ -29,6 +29,9 @@ const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = Cons
 export const ConsentReleaseDataRequest = ConsentReleaseDataBase.extend({
 	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
 	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
+}).refine((input) => {
+	const { ohipNumber, ohipNumberDisabled } = input;
+	return (ohipNumberDisabled && ohipNumber === undefined) || !ohipNumberDisabled;
 });
 export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
 export const ConsentReleaseDataRequestSchema: SchemaObject =

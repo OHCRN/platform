@@ -32,7 +32,14 @@ import FieldSet from '../FieldSet';
 
 import styles from './OhipFieldSet.module.scss';
 
-export type OhipFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
+// These are constants, since this is a special component that is only used in one location
+const ohipFieldName = 'ohipNumber';
+const ohipFieldDisabledName = 'ohipNumberDisabled';
+
+export type OhipFieldSetProps<T extends FieldValues> = Omit<
+	FormFieldSetWithDescriptionProps<T>,
+	'name'
+> & {
 	checkboxLabel: ReactNode;
 };
 
@@ -40,7 +47,6 @@ const OhipFieldSet = <T extends FieldValues>({
 	className,
 	disabled,
 	error,
-	name,
 	required,
 	label,
 	description,
@@ -51,13 +57,13 @@ const OhipFieldSet = <T extends FieldValues>({
 	const ohipCheckboxId = `${ohipFieldId}-checkbox`;
 
 	const { watch, resetField } = useFormContext();
-	const checkboxValue: boolean = watch(ohipCheckboxId);
+	const checkboxValue: boolean = watch(ohipFieldDisabledName);
 
 	useEffect(() => {
 		if (checkboxValue) {
-			resetField(name, { keepError: true });
+			resetField(ohipFieldName);
 		}
-	}, [checkboxValue, name, resetField]);
+	}, [checkboxValue, resetField]);
 
 	return (
 		<FieldSet
@@ -73,7 +79,7 @@ const OhipFieldSet = <T extends FieldValues>({
 				className={clsx(styles.ohipTextInput, error && styles.error)}
 				disabled={disabled || checkboxValue}
 				id={ohipTextInputId}
-				name={name}
+				name={ohipFieldName}
 				type={'text'}
 			/>
 
@@ -85,7 +91,7 @@ const OhipFieldSet = <T extends FieldValues>({
 					className={clsx(styles.ohipCheckboxInput, error && styles.error)}
 					disabled={disabled}
 					id={ohipCheckboxId}
-					name={ohipCheckboxId}
+					name={ohipFieldDisabledName}
 				/>
 				<span className={styles.ohipCheckboxLabel}>{checkboxLabel}</span>
 			</label>
