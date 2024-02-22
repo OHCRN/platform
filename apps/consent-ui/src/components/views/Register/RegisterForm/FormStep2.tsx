@@ -32,8 +32,8 @@ import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
-import { API } from 'src/constants/externalPaths';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
+import { API } from 'src/constants/externalPaths';
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
@@ -71,9 +71,12 @@ const FormStep2 = ({
 	});
 
 	const {
-		formState: { errors, isValid },
+		clearErrors,
+		formState: { errors, isValid, touchedFields },
 		handleSubmit,
+		setError,
 		setFocus,
+		watch,
 	} = methods;
 
 	// setup recaptcha
@@ -125,6 +128,25 @@ const FormStep2 = ({
 		// set focus to first field on mount
 		setFocus('participantEmailAddress');
 	}, [setFocus]);
+
+	// set an error on confirmPassword if the 2 password fields are different.
+	// fires on first confirmPassword onBlur validation,
+	// then onChange for both fields, if they both have input.
+	const watchPassword = watch('password');
+	const watchConfirmPassword = watch('confirmPassword');
+	useEffect(() => {
+		// check if password & confirmPassword have inputs
+		// and confirmPassword has had a blur event
+		if (watchPassword && watchConfirmPassword && touchedFields.confirmPassword) {
+			if (watchPassword === watchConfirmPassword) {
+				// clear error if inputs match
+				clearErrors('confirmPassword');
+			} else {
+				// set error if inputs don't match
+				setError('confirmPassword', { type: 'custom', message: 'passwordMismatch' });
+			}
+		}
+	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
 
 	return (
 		<FormProvider {...methods}>
