@@ -32,6 +32,8 @@ import {
 import {
 	ConsentClinicianInviteRequestSchema as ClinicianInviteRequest,
 	ParticipantResponseArraySchema as ParticipantResponseArray,
+	ConsentCreateParticipantRequestSchema as ConsentCreateParticipantRequest,
+	ConsentCreateParticipantResponseSchema as ConsentCreateParticipantResponse,
 } from 'types/consentDas';
 
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -78,6 +80,8 @@ const options = swaggerJsdoc({
 		components: {
 			schemas: {
 				ConsentCategory,
+				ConsentCreateParticipantRequest,
+				ConsentCreateParticipantResponse,
 				ConsentGroup,
 				ConsentQuestion,
 				ConsentQuestionId,
