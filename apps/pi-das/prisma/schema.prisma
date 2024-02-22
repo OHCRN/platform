@@ -4,8 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  provider      = "prisma-client-js"
+  output        = "../src/generated/client"
   // required for building locally and running in Docker
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
@@ -31,23 +31,23 @@ model Participant {
   inviteId                  String?
   clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   dateOfBirth               DateTime         @db.Date
-  emailAddress              String           @unique
+  participantEmailAddress   String?          @unique
   participantOhipFirstName  String
   participantOhipLastName   String
   participantOhipMiddleName String?
-  phoneNumber               String           @db.Char(10)
+  participantPhoneNumber    String?          @db.Char(10)
   participantPreferredName  String?
   guardianName              String?
   guardianPhoneNumber       String?          @db.Char(10)
-  guardianEmailAddress      String?
+  guardianEmailAddress      String?          @unique
   guardianRelationship      String?
+  keycloakId                String           @unique
   mailingAddressStreet      String?
   mailingAddressCity        String?
   mailingAddressProvince    Province?
   mailingAddressPostalCode  String?          @db.Char(6)
-  residentialPostalCode     String           @db.Char(6)
+  residentialPostalCode     String?          @db.Char(6)
 }
-
 
 model ClinicianInvite {
   id                       String        @id @default("") @db.Char(21)
@@ -62,4 +62,3 @@ model ClinicianInvite {
   guardianRelationship     String?
   Participant              Participant[]
 }
-
