@@ -43,8 +43,6 @@ export const ParticipantBaseOhipNameFields = z.object({
 });
 export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNameFields>;
 
-// TODO : participant contact info will need to be optional if excluding these fields based on presence of guardian
-// TBD in https://github.com/OHCRN/platform/issues/388
 export const ParticipantContactFields = z.object({
 	participantEmailAddress: z.string().email().optional(),
 	participantPhoneNumber: PhoneNumber.optional(),
