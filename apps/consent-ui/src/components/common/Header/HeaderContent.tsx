@@ -62,13 +62,12 @@ type HeaderContentProps = {
 const HeaderContent = ({ currentLang, icons, textDict }: HeaderContentProps) => {
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 	const mainIcon = icons[currentLang || defaultLanguage];
+	const pathname = usePathname();
+	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
 
 	const toggleHamburgerMenu = () => {
 		setShowHamburgerMenu(!showHamburgerMenu);
 	};
-
-	const pathname = usePathname();
-	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
 
 	return (
 		<>
@@ -88,8 +87,9 @@ const HeaderContent = ({ currentLang, icons, textDict }: HeaderContentProps) => 
 					</div>
 					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 					<div className={styles['user-menu']}>
+						{/* Desktop */}
 						<div className={styles.desktopUserMenu}>Hello</div>
-						{/* // TODO: close menu when click outside (check in with patrick) */}
+						{/* Mobile */}
 						<div className={styles.hamburgerToggle} onClick={toggleHamburgerMenu}>
 							{showHamburgerMenu ? (
 								<Image src={icons.closeHamburger} alt={textDict.hamburgerMenuAltText} />
@@ -100,7 +100,9 @@ const HeaderContent = ({ currentLang, icons, textDict }: HeaderContentProps) => 
 					</div>
 				</div>
 			</header>
-			{showHamburgerMenu && <HamburgerMenu options={hamburgerMenuOptions} />}
+			{showHamburgerMenu && (
+				<HamburgerMenu options={hamburgerMenuOptions} setShowHamburgerMenu={setShowHamburgerMenu} />
+			)}
 		</>
 	);
 };
