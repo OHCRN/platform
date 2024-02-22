@@ -17,6 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './ConsentClinicianInvite.js';
-export * from './ConsentCreateParticipant.js';
-export * from './ParticipantResponse.js';
+/**
+ * Checks if the values of password and confirm password match.
+ * Password & confirm password must match.
+ * @param props confirmPassword, password
+ * @returns {boolean} returns true if passwords match
+ */
+export const hasMatchingPasswords = (props: {
+	confirmPassword: string;
+	password: string;
+}): boolean => {
+	const { confirmPassword, password } = props;
+	return password === confirmPassword;
+};
