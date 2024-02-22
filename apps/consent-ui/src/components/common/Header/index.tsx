@@ -16,84 +16,32 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import Image, { StaticImageData } from 'next/image';
-import { useRouter } from 'next/router';
+import { StaticImageData } from 'next/image';
 
 import CloseMenuIcon from 'src/../public/assets/images/x.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import { defaultLanguage } from 'src/i18n/settings';
-import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 import HamburgerMenuIcon from 'src/../public/assets/images/hamburger.svg';
 
-import HamburgerMenu from './HamburgerMenu';
-import styles from './Header.module.scss';
-import HelpButton from './HelpButton';
-import HeaderWrapper from './HeaderWrapper';
+import HeaderContent from './HeaderContent';
 
-const icons: {
-	[k in ValidLanguage]: StaticImageData;
-} = {
+const icons = {
 	en: OhcrnImage,
 	fr: OhcrnImage, // TODO: get FR icon
+	closeHamburger: CloseMenuIcon,
+	openHamburger: HamburgerMenuIcon,
 };
 
-const hamburgerMenuOptions: { label: React.ReactNode; link?: string }[] = [];
+export type HeaderIcons = {
+	[key in keyof typeof icons]: StaticImageData;
+};
 
 const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
-	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
-	const icon = icons[currentLang || defaultLanguage];
+	const { translateNamespace } = getTranslation(currentLang);
+	const textDict = translateNamespace('header');
 
-	const toggleHamburgerMenu = () => {
-		setShowHamburgerMenu(!showHamburgerMenu);
-	};
-
-	const router = useRouter();
-	console.log(router.pathname);
-
-	return (
-		<>
-			<HeaderWrapper currentLang={currentLang}>
-				<div>
-					<Link href={`/${currentLang}`}>
-						<Image
-							src={icon}
-							priority
-							alt={translate('header', 'logoAltText')}
-							className={styles.logo}
-						/>
-					</Link>
-				</div>
-				<div className={styles.right}>
-					<div className={styles.headerItem}>
-						<LanguageToggle currentLang={currentLang} />
-					</div>
-					{/* TODO: implement real help button, ticket TBD */}
-					<div className={styles.help}>
-						<HelpButton label={translate('header', 'help')} />
-					</div>
-					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
-					<div className={styles['user-menu']}>
-						<div className={styles.desktopUserMenu}>Hello</div>
-						{/* // TODO: close menu when click outside (check in with patrick) */}
-						<div className={styles.hamburgerToggle} onClick={toggleHamburgerMenu}>
-							{showHamburgerMenu ? (
-								<Image src={CloseMenuIcon} alt={translate('header', 'hamburgerMenuAltText')} />
-							) : (
-								<Image src={HamburgerMenuIcon} alt={translate('header', 'hamburgerMenuAltText')} />
-							)}
-						</div>
-					</div>
-				</div>
-			</HeaderWrapper>
-			{showHamburgerMenu && <HamburgerMenu options={hamburgerMenuOptions} />}
-		</>
-	);
+	return <HeaderContent currentLang={currentLang} icons={icons} textDict={textDict} />;
 };
 
 export default Header;

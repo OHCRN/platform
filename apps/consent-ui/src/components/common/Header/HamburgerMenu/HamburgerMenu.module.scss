@@ -1,7 +1,13 @@
+.hamburgerContainer {
+	display: flex;
+	flex-direction: column;
+}
+
 .hamburgerLine {
 	padding: 1rem 1.5rem;
 	font-size: theme('fontSize.xl');
 	font-weight: theme('fontWeight.header');
 	border: 1px solid theme('colors.grayscale.400');
 	margin-bottom: -1px;
+	width: 100%;
 }
