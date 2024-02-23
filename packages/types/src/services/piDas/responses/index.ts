@@ -18,3 +18,4 @@
  */
 
 export * from './PIClinicianInvite.js';
+export * from './PICreateParticipant.js';

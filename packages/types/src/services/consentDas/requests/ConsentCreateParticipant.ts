@@ -17,5 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './PIClinicianInvite.js';
-export * from './PICreateParticipant.js';
+import { z } from 'zod';
+import { generateSchema } from '@anatine/zod-openapi';
+
+import { ConsentParticipantBase, NanoId } from '../../../entities/index.js';
+
+export const ConsentCreateParticipantRequest = ConsentParticipantBase.merge(
+	z.object({ id: NanoId }),
+);
+export type ConsentCreateParticipantRequest = z.infer<typeof ConsentCreateParticipantRequest>;
+export const ConsentCreateParticipantRequestSchema = generateSchema(
+	ConsentCreateParticipantRequest,
+);

@@ -48,11 +48,9 @@ export const ParticipantBaseOhipNameFields = z.object({
 });
 export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNameFields>;
 
-// TODO : participant contact info will need to be optional if excluding these fields based on presence of guardian
-// TBD in https://github.com/OHCRN/platform/issues/388
 export const ParticipantContactFields = z.object({
-	participantEmailAddress: z.string().email(),
-	participantPhoneNumber: PhoneNumber,
+	participantEmailAddress: z.string().email().optional(),
+	participantPhoneNumber: PhoneNumber.optional(),
 });
 export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
 
@@ -66,6 +64,7 @@ export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(Parti
 			dateOfBirth: z.coerce.date(),
 			participantPreferredName: OptionalName,
 			keycloakId: z.string().uuid(),
+			inviteId: NanoId.optional(),
 		}),
 	);
 
@@ -101,3 +100,32 @@ export const ConsentParticipant = ConsentParticipantBase.merge(
 	}),
 );
 export type ConsentParticipant = z.infer<typeof ConsentParticipant>;
+
+export const ParticipantNullableFields = {
+	inviteId: NanoId.nullable().transform((input) => input ?? undefined),
+	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
+	participantEmailAddress: z
+		.string()
+		.email()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	participantPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
+	participantOhipMiddleName: Name.nullable().transform((input) => input ?? undefined),
+	mailingAddressStreet: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	mailingAddressCity: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	mailingAddressProvince: Province.nullable().transform((input) => input ?? undefined),
+	mailingAddressPostalCode: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	residentialPostalCode: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+};

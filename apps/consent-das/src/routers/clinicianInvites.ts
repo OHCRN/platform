@@ -182,7 +182,7 @@ router.post(
 				}
 			}
 		} catch (error) {
-			logger.error('DELETE /invites', 'Unexpected error handling delete invite request', error);
+			logger.error('POST /invites', 'Unexpected error handling create invite request', error);
 			return res.status(500).json(ServerErrorResponse());
 		}
 	}),

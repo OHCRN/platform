@@ -4,8 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  provider      = "prisma-client-js"
+  output        = "../src/generated/client"
   // required for building locally and running in Docker
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
@@ -37,9 +37,9 @@ model Participant {
   consentGroup           ConsentGroup
   emailVerified          Boolean               @default(false)
   isGuardian             Boolean
-  guardianIdVerified     Boolean?
   currentLifecycleState  LifecycleState        @default(REGISTERED)
   previousLifecycleState LifecycleState?
+  consentToBeContacted   Boolean
   ParticipantResponse    ParticipantResponse[]
 }
 
