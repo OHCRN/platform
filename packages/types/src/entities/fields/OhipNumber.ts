@@ -22,15 +22,12 @@ import { z } from 'zod';
 import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { OHIP_NUMBER_REGEX } from '../../common/regexes.js';
 
-// string with regex
 export const OhipNumber = z.string().regex(OHIP_NUMBER_REGEX);
 export type OhipNumber = z.infer<typeof OhipNumber>;
 
-// optional string with regex
 export const OptionalOhipNumber = OhipNumber.optional();
 export type OptionalOhipNumber = z.infer<typeof OptionalOhipNumber>;
 
-// optional trimmed string with regex OR empty/whitespace string
 export const EmptyOrOptionalOhipNumber = TrimmedString.regex(OHIP_NUMBER_REGEX)
 	.optional()
 	.or(EmptyString)

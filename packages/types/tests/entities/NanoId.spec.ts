@@ -39,6 +39,10 @@ describe('NanoId', () => {
 		expect(NanoId.safeParse('yEjfm_j-Eq9gkdXLna3yw').success).false;
 	});
 
+	it('Cannot be a string containing 21 alphanumeric characters and whitespace', () => {
+		expect(NanoId.safeParse('YNrYyf9a739F9VxeMB8G8  ').success).false;
+	});
+
 	it('Cannot be undefined', () => {
 		expect(NanoId.safeParse(undefined).success).false;
 	});
@@ -72,6 +76,10 @@ describe('OptionalNanoId', () => {
 	it('Cannot contain symbols', () => {
 		expect(OptionalNanoId.safeParse('EeyGrbmXyty9egJeW_nJx').success).false;
 		expect(OptionalNanoId.safeParse('yEjfm_j-Eq9gkdXLna3yw').success).false;
+	});
+
+	it('Cannot be a string containing 21 alphanumeric characters and whitespace', () => {
+		expect(NanoId.safeParse('YNrYyf9a739F9VxeMB8G8  ').success).false;
 	});
 
 	it('Can be undefined', () => {

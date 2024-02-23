@@ -21,10 +21,8 @@ import { z } from 'zod';
 
 import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
 
-// string with regex
 export const PhoneNumber = z.string().regex(PHONE_NUMBER_REGEX);
 export type PhoneNumber = z.infer<typeof PhoneNumber>;
 
-// optional string with regex
 export const OptionalPhoneNumber = PhoneNumber.optional();
 export type OptionalPhoneNumber = z.infer<typeof OptionalPhoneNumber>;

@@ -22,14 +22,11 @@ import { z } from 'zod';
 import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { NAME_REGEX } from '../../common/regexes.js';
 
-// string with regex
 export const Name = TrimmedString.regex(NAME_REGEX);
 export type Name = z.infer<typeof Name>;
 
-// optional string with regex
 export const OptionalName = Name.optional();
 export type OptionalName = z.infer<typeof OptionalName>;
 
-// optional trimmed string with regex OR empty/whitespace string
 export const EmptyOrOptionalName = OptionalName.or(EmptyString).or(EmptyWhiteSpace);
 export type EmptyOrOptionalName = z.infer<typeof EmptyOrOptionalName>;

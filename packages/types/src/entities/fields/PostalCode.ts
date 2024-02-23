@@ -22,18 +22,15 @@ import { z } from 'zod';
 import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { POSTAL_CODE_REGEX } from '../../common/regexes.js';
 
-// string with regex
 export const PostalCode = z
 	.string()
 	.regex(POSTAL_CODE_REGEX)
 	.transform((data) => data.toUpperCase());
 export type PostalCode = z.infer<typeof PostalCode>;
 
-// optional string with regex
 export const OptionalPostalCode = PostalCode.optional();
 export type OptionalPostalCode = z.infer<typeof OptionalPostalCode>;
 
-// optional trimmed string with regex OR empty/whitespace string
 export const EmptyOrOptionalPostalCode = TrimmedString.regex(POSTAL_CODE_REGEX)
 	.transform((data) => data.toUpperCase())
 	.optional()

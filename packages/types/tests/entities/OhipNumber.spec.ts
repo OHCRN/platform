@@ -46,6 +46,10 @@ describe('OhipNumber', () => {
 		expect(OhipNumber.safeParse('123456789.').success).false;
 	});
 
+	it('Cannot be a string of 10 digits and whitespace', () => {
+		expect(OhipNumber.safeParse('1234567890  ').success).false;
+	});
+
 	it('Cannot be undefined', () => {
 		expect(OhipNumber.safeParse(undefined).success).false;
 	});
@@ -84,6 +88,10 @@ describe('OptionalOhipNumber', () => {
 		expect(OptionalOhipNumber.safeParse('123456789.').success).false;
 	});
 
+	it('Cannot be a string of 10 digits and whitespace', () => {
+		expect(OptionalOhipNumber.safeParse('1234567890  ').success).false;
+	});
+
 	it('Can be undefined', () => {
 		expect(OptionalOhipNumber.safeParse(undefined).success).true;
 	});
@@ -120,6 +128,10 @@ describe('EmptyOrOptionalOhipNumber', () => {
 		expect(EmptyOrOptionalOhipNumber.safeParse('123 456 78').success).false;
 		expect(EmptyOrOptionalOhipNumber.safeParse('#123456789').success).false;
 		expect(EmptyOrOptionalOhipNumber.safeParse('123456789.').success).false;
+	});
+
+	it('Can be a string of 10 digits and whitespace', () => {
+		expect(EmptyOrOptionalOhipNumber.safeParse('1234567890 ').success).true;
 	});
 
 	it('Can be undefined', () => {
