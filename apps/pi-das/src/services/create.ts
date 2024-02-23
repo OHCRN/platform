@@ -1,78 +1,79 @@
-import { Result, failure, success } from 'types/httpResponses';
-import { PIClinicianInviteRequest } from 'types/piDas';
+import { Result, SystemError, failure, success } from 'types/httpResponses';
+import { PIClinicianInviteRequest, PICreateParticipantRequest } from 'types/piDas';
 
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
-import prisma, { ClinicianInvite, Participant, Province } from '../prismaClient.js';
+import prisma, { ClinicianInvite, Participant } from '../prismaClient.js';
 
-const logger = serviceLogger.forModule('PrismaClient');
+const logger = serviceLogger.forModule('CreateService');
 
-export const createParticipant = async ({
-	inviteId,
-	dateOfBirth,
-	emailAddress,
-	participantOhipFirstName,
-	participantOhipLastName,
-	participantOhipMiddleName,
-	phoneNumber,
-	participantPreferredName,
-	guardianName,
-	guardianPhoneNumber,
-	guardianEmailAddress,
-	guardianRelationship,
-	mailingAddressStreet,
-	mailingAddressCity,
-	mailingAddressProvince,
-	mailingAddressPostalCode,
-	residentialPostalCode,
-	participantId,
-}: {
-	inviteId?: string;
-	dateOfBirth: Date;
-	emailAddress: string;
-	participantOhipFirstName: string;
-	participantOhipLastName: string;
-	participantOhipMiddleName?: string;
-	phoneNumber: string;
-	participantPreferredName?: string;
-	guardianName?: string;
-	guardianPhoneNumber?: string;
-	guardianEmailAddress?: string;
-	guardianRelationship?: string;
-	mailingAddressStreet?: string;
-	mailingAddressCity?: string;
-	mailingAddressProvince?: Province;
-	mailingAddressPostalCode?: string;
-	residentialPostalCode: string;
-	participantId?: string;
-}): Promise<Participant> => {
-	// TODO: add error handling
-	const result = await prisma.participant.create({
-		data: {
-			inviteId,
-			dateOfBirth,
-			emailAddress,
-			participantOhipFirstName,
-			participantOhipLastName,
-			participantOhipMiddleName,
-			phoneNumber,
-			participantPreferredName,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-			mailingAddressStreet,
-			mailingAddressCity,
-			mailingAddressProvince,
-			mailingAddressPostalCode,
-			residentialPostalCode,
-			id: participantId,
-		},
-	});
+type CreateParticipantFailure = SystemError | 'PARTICIPANT_EXISTS';
+/**
+ * Creates a Participant entry in the PI DB
+ * @param PICreateParticipantRequest Create Participant data
+ * @returns PICreateParticipantResponse object from PI DB
+ */
+export const createParticipant = async (
+	req: PICreateParticipantRequest,
+): Promise<Result<Participant, CreateParticipantFailure>> => {
+	const {
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantEmailAddress,
+		participantPhoneNumber,
+		participantPreferredName,
+		dateOfBirth,
+		guardianName,
+		guardianEmailAddress,
+		guardianPhoneNumber,
+		guardianRelationship,
+		keycloakId,
+		inviteId,
+	} = req;
+	const result = await prisma.participant
+		.create({
+			data: {
+				participantOhipFirstName,
+				participantOhipLastName,
+				dateOfBirth,
+				participantEmailAddress,
+				participantPhoneNumber,
+				participantPreferredName,
+				guardianName,
+				guardianEmailAddress,
+				guardianPhoneNumber,
+				guardianRelationship,
+				keycloakId,
+				inviteId,
+			},
+		})
+		.then((participant) => success(participant))
+		.catch((error) => {
+			if (error instanceof PrismaClientKnownRequestError) {
+				if (error.code === 'P2002') {
+					const errorMessage = `A participant already exists with that '${
+						error.meta?.target ?? 'data'
+					}'`;
+					logger.error('POST /participants', errorMessage, error.message);
+					return failure('PARTICIPANT_EXISTS', errorMessage);
+				}
+				logger.error('POST /participants', error.code, error.message);
+				return failure(
+					'SYSTEM_ERROR',
+					`An unexpected error occurred in the PrismaClient - ${error.code}`,
+				);
+			}
+			logger.error(
+				'POST /participants',
+				'Unexpected error handling create participant request.',
+				error.message,
+			);
+			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+		});
 	return result;
 };
 
-type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
+type CreateInviteFailureStatus = SystemError | 'INVITE_EXISTS';
 /**
  * Creates a ClinicianInvite entry in the PI DB
  * @param inviteRequest Clinician Invite data

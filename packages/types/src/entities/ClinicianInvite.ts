@@ -21,13 +21,14 @@ import { z } from 'zod';
 
 import { hasRequiredGuardianInformation } from '../common/index.js';
 
-import { ConsentGroup, Name, NanoId } from './fields/index.js';
+import { ConsentGroup, Name, NanoId, PhoneNumber } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
-import {
-	ConsentToBeContacted,
-	ParticipantContactFields,
-	ParticipantNameFields,
-} from './Participant.js';
+import { ConsentToBeContacted, ParticipantNameFields } from './Participant.js';
+
+export const InviteParticipantContactFields = z.object({
+	participantEmailAddress: z.string().email(),
+	participantPhoneNumber: PhoneNumber,
+});
 
 export const InviteClinicianFields = z
 	.object({
@@ -50,7 +51,7 @@ export type InviteGuardianFields = z.infer<typeof InviteGuardianFields>;
 
 export const InviteParticipantFields = ParticipantNameFields.merge(
 	z.object({ participantPreferredName: Name.optional() }),
-).merge(ParticipantContactFields);
+).merge(InviteParticipantContactFields);
 export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;
 
 export const InviteEntity = z.object({
