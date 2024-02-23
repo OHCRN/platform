@@ -54,11 +54,11 @@ import formStyles from './ClinicianInviteForm.module.scss';
 
 const styles = Object.assign({}, formStyles, layoutStyles);
 
-const ClinicianInviteFormValidation = ClinicianInviteBase.extend({
+const ClinicianInviteFormRequest = ClinicianInviteBase.extend({
 	participantPreferredName: EmptyOrOptionalName,
 }).refine(hasRequiredGuardianInformation);
 
-type ClinicianInviteFormValidation = z.infer<typeof ClinicianInviteFormValidation>;
+type ClinicianInviteFormRequest = z.infer<typeof ClinicianInviteFormRequest>;
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -89,9 +89,9 @@ const ClinicianInviteFormComponent = ({
 	};
 
 	// setup react-hook-forms
-	const methods = useForm<ClinicianInviteFormValidation>({
+	const methods = useForm<ClinicianInviteFormRequest>({
 		mode: 'onBlur',
-		resolver: zodResolver(ClinicianInviteFormValidation),
+		resolver: zodResolver(ClinicianInviteFormRequest),
 		shouldUnregister: true,
 	});
 
