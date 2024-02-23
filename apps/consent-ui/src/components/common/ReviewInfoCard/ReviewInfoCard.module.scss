@@ -48,7 +48,6 @@
 
 	a {
 		@include mixins.text-link;
-		color: theme('colors.other.500') !important;
 	}
 
 	@media (min-width: theme('screens.sm')) {
