@@ -56,7 +56,7 @@ const Name = TrimmedString.regex(NAME_REGEX); // allows whitespace in regex
 const OhipNumber = z.string().regex(OHIP_NUMBER_REGEX); // doesn't allow whitespace in regex
 ```
 
-For optional fields **in the API specifically**: Use the schema defined for the required field and chain `.optional()`. This will allow `undefined` values.
+For optional fields **in Request types in services other than Consent UI**: Use the schema defined for the required field and chain `.optional()`. This will allow `undefined` values.
 
 ```ts
 const OptionalName = Name.optional();
