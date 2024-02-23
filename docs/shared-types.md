@@ -45,6 +45,37 @@ See the section on [merging smaller schemas](#merging-schemas) for a more comple
 
 > **Note**: There may some scenarios where only the request OR the response type is needed in a service.
 
+#### Using regular expressions
+
+When values need to follow a specific pattern, such as 10 digits for a phone number, use Zod string and regular expression methods.
+
+For required fields: Use `z.string().regex(MY_REGEX)`. If the regex allows whitespace (such as `NAME_REGEX`), use `TrimmedString.regex()` to remove trailing whitespace and transform whitespace-only strings to empty strings. This is because some whitespace is allowed, but not strings that are only whitespace.
+
+```ts
+const Name = TrimmedString.regex(NAME_REGEX); // allows whitespace in regex
+const OhipNumber = z.string().regex(OHIP_NUMBER_REGEX); // doesn't allow whitespace in regex
+```
+
+For optional fields **in the API specifically**: Use the schema defined for the required field and chain `.optional()`. This will allow `undefined` values.
+
+```ts
+const OptionalName = Name.optional();
+const OptionalOhipNumber = OhipNumber.optional();
+```
+
+For optional fields **in the UI, e.g. in form validation**: An additional `EmptyOrOptional` schema is needed. It has to accept empty strings, because HTML inputs can't have `undefined` values. It can also accept strings that only contain whitespace or have trailing whitespace, since text values are trimmed before API requests.
+
+```ts
+// OptionalName is trimmed already
+const EmptyOrOptionalName = OptionalName.or(EmptyString).or(EmptyWhiteSpace);
+
+// OptionalOhip is not trimmed, so start with a TrimmedString instead.
+const EmptyOrOptionalOhipNumber = TrimmedString.regex(OHIP_NUMBER_REGEX)
+	.optional()
+	.or(EmptyString)
+	.or(EmptyWhiteSpace);
+```
+
 ### Preprocessing
 
 Zod provides some methods that can be used on schemas after the general data type validation and before parsing.
