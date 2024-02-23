@@ -22,6 +22,9 @@ import { z } from 'zod';
 import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { NAME_REGEX } from '../../common/regexes.js';
 
+// trim the string for Name & OptionalName so that whitespace-only strings
+// do not pass NAME_REGEX validation.
+
 export const Name = TrimmedString.regex(NAME_REGEX);
 export type Name = z.infer<typeof Name>;
 
