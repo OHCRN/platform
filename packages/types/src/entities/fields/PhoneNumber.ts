@@ -19,7 +19,6 @@
 
 import { z } from 'zod';
 
-import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
 
 // string with regex
@@ -29,10 +28,3 @@ export type PhoneNumber = z.infer<typeof PhoneNumber>;
 // optional string with regex
 export const OptionalPhoneNumber = PhoneNumber.optional();
 export type OptionalPhoneNumber = z.infer<typeof OptionalPhoneNumber>;
-
-// optional trimmed string with regex OR empty/whitespace string
-export const EmptyOrOptionalPhoneNumber = TrimmedString.regex(PHONE_NUMBER_REGEX)
-	.optional()
-	.or(EmptyString)
-	.or(EmptyWhiteSpace);
-export type EmptyOrOptionalPhoneNumber = z.infer<typeof EmptyOrOptionalPhoneNumber>;
