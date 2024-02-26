@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RefObject, createRef, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -29,7 +29,7 @@ export type RecaptchaCheckboxRef = RefObject<ReCAPTCHA>;
 const resetDelay = 45 * 1000;
 
 const useRecaptcha = () => {
-	const recaptchaCheckboxRef: RecaptchaCheckboxRef = createRef<ReCAPTCHA>();
+	const recaptchaCheckboxRef: RecaptchaCheckboxRef = useRef<ReCAPTCHA>(null);
 	const [recaptchaError, setRecaptchaError] = useState('');
 
 	// check that token exists before submitting form
