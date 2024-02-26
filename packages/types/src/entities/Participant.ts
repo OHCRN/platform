@@ -64,7 +64,7 @@ export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(Parti
 			dateOfBirth: z.coerce.date(),
 			participantPreferredName: OptionalName,
 			keycloakId: z.string().uuid(),
-			inviteId: NanoId.optional(),
+			inviteId: OptionalNanoId,
 		}),
 	);
 
@@ -77,7 +77,6 @@ export const PIParticipantBase = ParticipantIdentityBase.merge(
 		mailingAddressProvince: Province.optional(),
 		mailingAddressPostalCode: OptionalPostalCode,
 		residentialPostalCode: PostalCode,
-		inviteId: OptionalNanoId,
 		participantOhipMiddleName: OptionalName,
 	}),
 );
