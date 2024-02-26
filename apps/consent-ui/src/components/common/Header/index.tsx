@@ -17,31 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { StaticImageData } from 'next/image';
-
-import CloseMenuIcon from 'src/../public/assets/images/x.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
-import HamburgerMenuIcon from 'src/../public/assets/images/hamburger.svg';
 
-import HeaderContent from './HeaderContent';
+import Header from './Header';
 
-const icons = {
-	en: OhcrnImage,
-	fr: OhcrnImage, // TODO: get FR icon
-	closeHamburger: CloseMenuIcon,
-	openHamburger: HamburgerMenuIcon,
-};
-
-export type HeaderIcons = {
-	[key in keyof typeof icons]: StaticImageData;
-};
-
-const Header = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const HeaderWrapper = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
 	const textDict = translateNamespace('header');
 
-	return <HeaderContent currentLang={currentLang} icons={icons} textDict={textDict} />;
+	return <Header currentLang={currentLang} textDict={textDict} />;
 };
 
-export default Header;
+export default HeaderWrapper;

@@ -22,7 +22,7 @@ import { HeaderDictionary } from 'src/i18n/locales/en/header';
 const dictionary = {
 	en: 'English',
 	fr: 'Français',
-	hamburgerMenuAltText: 'Afficher le menu hamburger',
+	hamburgerMenuAltText: 'Basculer le menu',
 	help: 'Assistance',
 	logoAltText: 'Logo OICR-OHCRN',
 } satisfies HeaderDictionary;

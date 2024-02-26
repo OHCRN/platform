@@ -1,13 +1,16 @@
 .header {
-	@apply grid grid-cols-2;
 	background-color: theme('colors.grayscale.100');
-	padding: 0.5rem 1rem;
 	align-items: center;
 	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 1;
+}
+
+.headerBar {
+	@apply grid grid-cols-2;
+	padding: 0.5rem 1rem;
 	&.hide-desktop {
 		@media (min-width: theme('screens.md')) {
 			display: none;
@@ -50,7 +53,7 @@
 
 .desktopUserMenu {
 	display: none;
-	@media (min-width: theme('screens.md')) {
+	@media (min-width: theme('screens.sm')) {
 		display: block;
 	}
 }

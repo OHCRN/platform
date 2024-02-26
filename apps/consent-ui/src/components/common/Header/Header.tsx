@@ -19,15 +19,19 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
+import { useDetectClickOutside } from 'react-detect-click-outside';
 
 import { ValidLanguage } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
 import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import { HeaderDictionary } from 'src/i18n/locales/en/header';
+import OpenMenuIcon from 'src/../public/assets/images/hamburger.svg';
+import CloseMenuIcon from 'src/../public/assets/images/close-icon.svg';
+import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 
 import { RouteName } from '../Link/types';
 import { getLinkNameByPath } from '../Link/utils';
@@ -36,9 +40,14 @@ import HamburgerMenu from './HamburgerMenu';
 import styles from './Header.module.scss';
 import HelpButton from './HelpButton';
 
-import { HeaderIcons } from './';
-
 const ROUTES_WITHOUT_DESKTOP_HEADER: RouteName[] = ['invite', 'register'];
+
+const icons: {
+	[k in ValidLanguage]: StaticImageData;
+} = {
+	en: OhcrnImage,
+	fr: OhcrnImage, // TODO: get FR icon
+};
 
 const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
 	// checks english and french paths by using route names
@@ -55,29 +64,36 @@ const hamburgerMenuOptions: { label: React.ReactNode; link?: string }[] = [
 
 type HeaderContentProps = {
 	currentLang: ValidLanguage;
-	icons: HeaderIcons;
 	textDict: HeaderDictionary;
 };
 
-const HeaderContent = ({ currentLang, icons, textDict }: HeaderContentProps) => {
+const Header = ({ currentLang, textDict }: HeaderContentProps) => {
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 	const mainIcon = icons[currentLang || defaultLanguage];
 	const pathname = usePathname();
 	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
+	const hamburgerMenuId = `menu-${useId()}`;
+
+	const ref = useDetectClickOutside({
+		onTriggered: () => {
+			console.log('click outside');
+			setShowHamburgerMenu(false);
+		},
+	});
 
 	const toggleHamburgerMenu = () => {
 		setShowHamburgerMenu(!showHamburgerMenu);
 	};
 
 	return (
-		<>
-			<header className={clsx(styles.header, hiddenOnDesktop && styles['hide-desktop'])}>
+		<header className={styles.header}>
+			<div className={clsx(styles.headerBar, hiddenOnDesktop && styles['hide-desktop'])}>
 				<div>
 					<Link href={`/${currentLang}`}>
 						<Image src={mainIcon} priority alt={textDict.logoAltText} className={styles.logo} />
 					</Link>
 				</div>
-				<div className={styles.right}>
+				<nav role="navigation" className={styles.right}>
 					<div className={styles.headerItem}>
 						<LanguageToggle currentLang={currentLang} />
 					</div>
@@ -90,21 +106,32 @@ const HeaderContent = ({ currentLang, icons, textDict }: HeaderContentProps) => 
 						{/* Desktop */}
 						<div className={styles.desktopUserMenu}>Hello</div>
 						{/* Mobile */}
-						<div className={styles.hamburgerToggle} onClick={toggleHamburgerMenu}>
+						<button
+							type="button"
+							className={styles.hamburgerToggle}
+							onClick={toggleHamburgerMenu}
+							ref={ref}
+							aria-label={textDict.hamburgerMenuAltText}
+							aria-expanded={showHamburgerMenu}
+							aria-controls={hamburgerMenuId}
+						>
 							{showHamburgerMenu ? (
-								<Image src={icons.closeHamburger} alt={textDict.hamburgerMenuAltText} />
+								<Image src={CloseMenuIcon} alt={textDict.hamburgerMenuAltText} />
 							) : (
-								<Image src={icons.openHamburger} alt={textDict.hamburgerMenuAltText} />
+								<Image src={OpenMenuIcon} alt={textDict.hamburgerMenuAltText} />
 							)}
-						</div>
+						</button>
 					</div>
-				</div>
-			</header>
-			{showHamburgerMenu && (
-				<HamburgerMenu options={hamburgerMenuOptions} setShowHamburgerMenu={setShowHamburgerMenu} />
-			)}
-		</>
+				</nav>
+			</div>
+			<HamburgerMenu
+				id={hamburgerMenuId}
+				options={hamburgerMenuOptions}
+				ref={ref}
+				showHambugerMenu={showHamburgerMenu}
+			/>
+		</header>
 	);
 };
 
-export default HeaderContent;
+export default Header;

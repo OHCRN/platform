@@ -20,7 +20,7 @@
 const dictionary = {
 	en: 'English',
 	fr: 'Français',
-	hamburgerMenuAltText: 'Show Hamburger Menu',
+	hamburgerMenuAltText: 'Toggle Menu',
 	help: 'Help',
 	logoAltText: 'OICR-OHCRN Logo',
 } satisfies Record<string, string>;

@@ -5,6 +5,10 @@
 	@media (min-width: theme('screens.sm')) {
 		display: none;
 	}
+
+	&.hamburgerHidden {
+		display: none;
+	}
 }
 
 .hamburgerLine {
