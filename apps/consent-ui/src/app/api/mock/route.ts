@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
  *              type: string
  *   responses:
  *     200:
- *       description: You'll receive what you send in, or 200 OK & empty {} body if there's no body provided.
+ *       description: You'll receive what you send in, or 200 OK & empty {} body if there's no request body.
  */
 export async function POST(request: Request) {
 	const data = await request.json();

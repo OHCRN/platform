@@ -48,6 +48,7 @@ import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/providers/ModalProvider';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -90,13 +91,25 @@ const ClinicianInviteFormComponent = ({
 
 	// setup react-hook-forms
 	const methods = useForm<ClinicianInviteFormRequest>({
+		defaultValues: {
+			clinicianFirstName: 'dr',
+			clinicianInstitutionalEmailAddress: 'hello@example.com',
+			clinicianLastName: 'nick',
+			clinicianTitleOrRole: 'doctor',
+			consentGroup: 'ADULT_CONSENT',
+			consentToBeContacted: true,
+			participantEmailAddress: 'hello@example.com',
+			participantFirstName: 'homer',
+			participantLastName: 'simpson',
+			participantPhoneNumber: '1234567890',
+		},
 		mode: 'onBlur',
 		resolver: zodResolver(ClinicianInviteFormRequest),
 		shouldUnregister: true,
 	});
 
 	const {
-		formState: { errors, isValid },
+		formState: { errors, isSubmitting, isValid },
 		handleSubmit,
 		watch,
 	} = methods;
@@ -114,13 +127,15 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 		recaptchaToken && setRecaptchaError('');
 		handleEnableSubmit(isValid, recaptchaToken);
-		onRecaptchaChange();
+		onRecaptchaChange(recaptchaToken);
 	};
 
 	const onSubmit: SubmitHandler<ClinicianInviteRequest> = (data, event) => {
+		// prevent page refresh on submit
 		event?.preventDefault();
 
 		const recaptchaToken = getRecaptchaToken();
+		console.log('recaptchaToken', recaptchaToken);
 
 		if (recaptchaToken) {
 			console.log('form data', data);
@@ -329,11 +344,12 @@ const ClinicianInviteFormComponent = ({
 
 					<Button
 						className={styles.submitButton}
-						color={enableSubmit ? 'green' : 'default'}
-						onMouseDown={(e) => e.preventDefault()}
+						color={enableSubmit && !isSubmitting ? 'green' : 'default'}
+						disabled={isSubmitting}
+						onMouseDown={handleMouseDownBlur}
 						type="submit"
 					>
-						{textDict.submit}
+						{isSubmitting ? '...' : textDict.submit}
 					</Button>
 				</FormSection>
 			</Form>
