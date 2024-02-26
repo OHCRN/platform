@@ -21,8 +21,10 @@ import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 import { z } from 'zod';
 
+import { hasRequiredGuardianInformation } from 'src/common/index.js';
+
 import { ClinicianInviteBase } from '../../../entities/ClinicianInvite.js';
 
-export const ClinicianInviteRequest = ClinicianInviteBase;
+export const ClinicianInviteRequest = ClinicianInviteBase.refine(hasRequiredGuardianInformation);
 export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteBase>;
 export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteBase);
