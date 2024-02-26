@@ -17,44 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
+import z from 'zod';
 
-import { OptionalString } from '../common/String.js';
+export const TrimmedString = z.string().trim();
+export type TrimmedString = z.infer<typeof TrimmedString>;
 
-import { ConsentQuestionId } from './ConsentQuestion.js';
-import {
-	Ancestry,
-	BirthSex,
-	Gender,
-	GeneticsClinic,
-	HistoryOfCancer,
-	MolecularLab,
-	Name,
-	OptionalName,
-	OptionalOhipNumber,
-	PostalCode,
-} from './fields/index.js';
+// string with at least one non-whitespace character
+export const NonEmptyString = TrimmedString.min(1);
+export type NonEmptyString = z.infer<typeof NonEmptyString>;
 
-const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
+// string with at least one non-whitespace character, or undefined
+export const OptionalString = NonEmptyString.optional();
+export type OptionalString = z.infer<typeof OptionalString>;
 
-export const ConsentReleaseDataBase = z.object({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.boolean(),
-	firstName: Name,
-	middleName: OptionalName,
-	lastName: Name,
-	preferredName: OptionalName,
-	genderIdentity: Gender,
-	ohipNumber: OptionalOhipNumber,
-	dateOfBirth: z.coerce.date(),
-	birthSex: BirthSex,
-	ancestry: Ancestry,
-	historyOfCancer: HistoryOfCancer,
-	familyHistoryOfCancer: HistoryOfCancer,
-	residentialPostalCode: PostalCode,
-	selfReportedClinicianTitle: OptionalString,
-	selfReportedClinicianFirstName: OptionalName,
-	selfReportedClinicianLastName: OptionalName,
-	selfReportedGeneticsClinic: GeneticsClinic.optional(),
-	selfReportedMolecularLab: MolecularLab.optional(),
-});
+export const EmptyString = z.literal('');
+export type EmptyString = z.infer<typeof EmptyString>;
+
+export const EmptyWhiteSpace = TrimmedString.max(0);
+export type EmptyWhiteSpace = z.infer<typeof EmptyWhiteSpace>;
+
+export const EmptyOrOptionalString = OptionalString.or(EmptyString).or(EmptyWhiteSpace);
+export type EmptyOrOptionalString = z.infer<typeof EmptyOrOptionalString>;
