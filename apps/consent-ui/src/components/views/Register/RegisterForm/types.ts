@@ -17,6 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { NonEmptyString } from 'types/common';
 import { Name, PhoneNumber, hasMatchingPasswords } from 'types/entities';
 import { z } from 'zod';
 
@@ -25,7 +26,7 @@ import { z } from 'zod';
 // and optional name fields
 
 export const RegisterFormStep1 = z.object({
-	dateOfBirth: z.string().min(1), // TEMP #366
+	dateOfBirth: NonEmptyString, // TEMP #366
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
 	guardianRelationship: Name,
@@ -47,8 +48,8 @@ export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
 
 export const PasswordFields = z
 	.object({
-		confirmPassword: z.string().min(1), // TEMP #368
-		password: z.string().min(1), // TEMP #368
+		confirmPassword: NonEmptyString, // TEMP #368
+		password: NonEmptyString, // TEMP #368
 	})
 	.refine(hasMatchingPasswords, {
 		message: 'passwordMismatch',

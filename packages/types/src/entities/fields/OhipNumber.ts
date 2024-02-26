@@ -19,7 +19,17 @@
 
 import { z } from 'zod';
 
+import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
 import { OHIP_NUMBER_REGEX } from '../../common/regexes.js';
 
 export const OhipNumber = z.string().regex(OHIP_NUMBER_REGEX);
 export type OhipNumber = z.infer<typeof OhipNumber>;
+
+export const OptionalOhipNumber = OhipNumber.optional();
+export type OptionalOhipNumber = z.infer<typeof OptionalOhipNumber>;
+
+export const EmptyOrOptionalOhipNumber = TrimmedString.regex(OHIP_NUMBER_REGEX)
+	.optional()
+	.or(EmptyString)
+	.or(EmptyWhiteSpace);
+export type EmptyOrOptionalOhipNumber = z.infer<typeof EmptyOrOptionalOhipNumber>;
