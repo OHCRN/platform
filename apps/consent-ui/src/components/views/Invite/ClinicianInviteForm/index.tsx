@@ -28,6 +28,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { hasRequiredGuardianInformation } from 'types/common';
+import axios, { AxiosResponse } from 'axios';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -138,11 +139,20 @@ const ClinicianInviteFormComponent = ({
 		console.log('recaptchaToken', recaptchaToken);
 
 		if (recaptchaToken) {
-			console.log('form data', data);
-
-			// on success, go to homepage & show success message
-			showNotification({ page: 'home', notification: 'inviteSent' });
-			router.push(getLocalizedRoute(currentLang, 'home'));
+			axios
+				.post('http://localhost:3000/api/mock', {
+					body: { ...data, recaptchaToken },
+					status: 200,
+					statusText: 'OK',
+				})
+				.then((res: AxiosResponse) => {
+					console.log(res);
+					showNotification({ page: 'home', notification: 'inviteSent' });
+					router.push(getLocalizedRoute(currentLang, 'home'));
+				})
+				.catch(() => {
+					setRecaptchaError('Something went wrong');
+				});
 		} else {
 			setRecaptchaError('Please complete captcha');
 		}
