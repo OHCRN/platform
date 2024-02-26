@@ -146,11 +146,12 @@ const ClinicianInviteFormComponent = ({
 					body: { ...formattedData, recaptchaToken },
 				})
 				.then(() => {
+					// on success, go to homepage & show success message
 					showNotification({ page: 'home', notification: 'inviteSent' });
 					router.push(getLocalizedRoute(currentLang, 'home'));
 				})
 				.catch(() => {
-					// TODO set a different error
+					// TODO set a different error, not the recaptcha one
 					setRecaptchaError('Something went wrong');
 				})
 				.finally(() => {
