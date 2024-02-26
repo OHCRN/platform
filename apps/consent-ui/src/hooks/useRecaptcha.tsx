@@ -36,13 +36,11 @@ const useRecaptcha = () => {
 	const getRecaptchaToken = (): RecaptchaToken => recaptchaCheckboxRef.current?.getValue();
 
 	const resetRecaptcha = () => {
-		console.log('reset recaptcha');
 		// reset after receiving API response (success or fail) for form submission
 		recaptchaCheckboxRef.current?.reset();
 	};
 
 	const onRecaptchaChange = (token?: RecaptchaToken) => {
-		console.log('onRecaptchaChange', token);
 		// after user is verified by recaptcha,
 		// reset the checkbox shortly before the token expires
 		token && setTimeout(() => resetRecaptcha(), resetDelay);
