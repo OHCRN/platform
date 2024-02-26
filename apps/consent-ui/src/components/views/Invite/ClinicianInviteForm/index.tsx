@@ -28,6 +28,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { hasRequiredGuardianInformation } from 'types/common';
+import urlJoin from 'url-join';
 import axios from 'axios';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
@@ -67,6 +68,8 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
+
+const MOCK_API_URL = 'http://localhost:3000/api/mock';
 
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
@@ -142,16 +145,16 @@ const ClinicianInviteFormComponent = ({
 		if (recaptchaToken) {
 			const formattedData = formatFormRequest(data);
 			axios
-				.post('http://localhost:3000/api/mock', {
+				.post(urlJoin(MOCK_API_URL), {
+					// MOCK REQUEST BODY, not final
 					body: { ...formattedData, recaptchaToken },
+					status: 200,
 				})
 				.then(() => {
-					// on success, go to homepage & show success message
 					showNotification({ page: 'home', notification: 'inviteSent' });
 					router.push(getLocalizedRoute(currentLang, 'home'));
 				})
 				.catch(() => {
-					// TODO set a different error, not the recaptcha one
 					setRecaptchaError('Something went wrong');
 				})
 				.finally(() => {

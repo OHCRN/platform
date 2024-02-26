@@ -38,7 +38,6 @@ export const formatFormRequest = (data: Record<string, any>) =>
 			default:
 				break;
 		}
-
 		return {
 			...acc,
 			[key]: formattedValue,
