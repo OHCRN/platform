@@ -19,13 +19,13 @@
 
 import { z } from 'zod';
 
-import { Name, PhoneNumber } from './fields/index.js';
+import { Name, OptionalName, OptionalPhoneNumber, PhoneNumber } from './fields/index.js';
 
 export const GuardianBaseFields = z.object({
 	guardianEmailAddress: z.string().email().optional(),
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianRelationship: Name.optional(),
+	guardianName: OptionalName,
+	guardianPhoneNumber: OptionalPhoneNumber,
+	guardianRelationship: OptionalName,
 });
 
 export type GuardianBaseFields = z.infer<typeof GuardianBaseFields>;

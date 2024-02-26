@@ -29,3 +29,6 @@ export const ID_ALPHABET =
 export const NanoId = z.string().regex(NANOID_REGEX);
 export type NanoId = z.infer<typeof NanoId>;
 export const NanoIdSchema: SchemaObject = generateSchema(NanoId);
+
+export const OptionalNanoId = NanoId.optional();
+export type OptionalNanoId = z.infer<typeof OptionalNanoId>;
