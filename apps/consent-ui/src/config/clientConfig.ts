@@ -26,7 +26,7 @@ const BUILD_TIME_VARIABLES = {
 	BLOCKING_FETCH_URL: urlJoin(
 		process.env.CONSENT_UI_URL || 'http://localhost:3000',
 		'api',
-		'dummy',
+		'ready',
 	),
 };
 

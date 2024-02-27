@@ -21,7 +21,7 @@ import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 
 /**
- * GET /api/dummy
+ * GET /api/ready
  *
  * Dummy Next.js local API route for the blocking data fetch in clientConfig.ts
  */

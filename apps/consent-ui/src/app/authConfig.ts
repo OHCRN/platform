@@ -119,7 +119,6 @@ export const authConfig = {
 				email: session.user.email || token.profile.email,
 				preferredUsername: token.profile.preferred_username,
 			};
-			// session.expires is a date string
 			return session;
 		},
 		authorized: ({ auth, request: { nextUrl } }) => {
@@ -131,7 +130,8 @@ export const authConfig = {
 			if (PUBLIC_ROUTES.includes(pathByName) || auth?.user) {
 				return true;
 			} else {
-				console.log('not authorized to see this route');
+				// TODO: remove this log once QA testing is completed
+				console.error('not authorized to see this route');
 				const sessionExpiredUri = new URL(urlJoin(nextUrl.origin, currentLang));
 				sessionExpiredUri.searchParams.append('session_expired', 'true');
 				return NextResponse.redirect(sessionExpiredUri.href);

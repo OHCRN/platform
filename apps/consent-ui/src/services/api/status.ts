@@ -33,8 +33,7 @@ const getAPIStatus = async () => {
 			}
 			return res.data;
 		})
-		.catch((err: AxiosError<APIStatus>) => {
-			console.error('Unable to receive consent-api status ⛔️: ', err.message);
+		.catch(() => {
 			const errorRes: APIStatus = {
 				version: 'N/A',
 				status: 'API fetch failed',
