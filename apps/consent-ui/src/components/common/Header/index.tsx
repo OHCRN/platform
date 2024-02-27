@@ -56,7 +56,7 @@ const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>
 			</div>
 			<div className={styles.right}>
-				{/* TODO: implement logout button as part of the user menu dropdown, ticket TBD */}
+				{/* TODO: implement logout button as part of the user menu dropdown: https://github.com/OHCRN/platform/issues/403 */}
 				{session?.user && (
 					<div className={styles.headerItem}>
 						<LogoutButton currentLang={currentLang} />

@@ -38,7 +38,7 @@ export const defaultAppConfig: AppConfig = {
 	KEYCLOAK_ISSUER: '', // TODO: should set this up to error on server start, if not provided
 	KEYCLOAK_CLIENT_ID: '', // TODO:  should set this up to error on server start, if not provided
 	// TODO: remove default value for encryption key once secrets are available: https://github.com/OHCRN/platform/issues/446
-	TOKEN_ENCRYPTION_KEY: 'supersecretz', // TODO:  should set this up to error on server start, if not provided
+	TOKEN_ENCRYPTION_KEY: '',
 	TOKEN_MAX_AGE: 3600,
 };
 
