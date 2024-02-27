@@ -25,7 +25,7 @@ import { z } from 'zod';
 // create a better zod schema with conditional validation,
 // and optional name fields
 
-export const RegisterFormStep1Fields = z.object({
+const RegisterFormStep1Fields = z.object({
 	dateOfBirth: NonEmptyString, // TEMP #366
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
@@ -55,7 +55,7 @@ const RegisterFormStep2Fields = z.object({
 	participantEmailAddress: z.string().email(),
 });
 
-export const PasswordFields = z
+const PasswordFields = z
 	.object({
 		confirmPassword: NonEmptyString, // TEMP #368
 		password: NonEmptyString, // TEMP #368
