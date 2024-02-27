@@ -63,7 +63,6 @@ import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormSte
 import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
 import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
-import registerMinorModalDictionary from 'src/i18n/locales/fr/registerMinorModal';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
 const dictionaries = {
@@ -112,7 +111,6 @@ const dictionaries = {
 	registerFormStep2Labels: registerFormStep2LabelsDictionary,
 	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
-	registerMinorModal: registerMinorModalDictionary,
 	registerPage: registerPageDictionary,
 } satisfies typeof en;
 

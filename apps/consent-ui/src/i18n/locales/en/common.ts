@@ -19,13 +19,11 @@
 
 const dictionary = {
 	backToDashboard: 'Back to Dashboard',
-	backToHomepage: 'Back To Homepage',
 	consent: 'Consent Forms',
 	dashboard: 'Dashboard',
 	edit: 'Edit',
 	home: 'Homepage',
 	invite: 'Clinician Invite',
-	ok: 'OK',
 	register: 'Participant Registration',
 } satisfies Record<string, string>;
 

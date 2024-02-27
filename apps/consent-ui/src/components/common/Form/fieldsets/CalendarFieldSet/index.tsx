@@ -33,7 +33,6 @@ import styles from './CalendarFieldSet.module.scss';
 type CalendarFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
 	placeholder?: string;
 	currentLang: ValidLanguage;
-	onBlur?: () => void;
 };
 
 const CalendarFieldSet = <T extends FieldValues>({
@@ -43,7 +42,6 @@ const CalendarFieldSet = <T extends FieldValues>({
 	infoButtonProps,
 	label,
 	name,
-	onBlur,
 	required,
 	description,
 	currentLang,
@@ -70,7 +68,6 @@ const CalendarFieldSet = <T extends FieldValues>({
 				popperClassName={clsx(styles.calendarPopper)}
 				id={fieldId}
 				name={name}
-				onBlur={onBlur}
 				required={required}
 				currentLang={currentLang}
 			/>
