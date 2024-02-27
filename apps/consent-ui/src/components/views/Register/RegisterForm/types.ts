@@ -28,18 +28,17 @@ import { z } from 'zod';
 // REGISTER STEP 1
 
 const RegisterFormStep1Fields = z.object({
-	isGuardian: z.boolean(),
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
 	participantPreferredName: Name.optional(),
 });
 
-const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true });
+const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true })
+	.extend({ isGuardian: z.boolean() })
+	.refine(registerHasRequiredGuardianInfo);
 
-export const RegisterFormStep1 = RegisterFormStep1Fields.merge(RegisterGuardianFields).refine(
-	registerHasRequiredGuardianInfo,
-);
+export const RegisterFormStep1 = z.intersection(RegisterFormStep1Fields, RegisterGuardianFields);
 // TODO #366 add refine - make sure participant is an adult
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
