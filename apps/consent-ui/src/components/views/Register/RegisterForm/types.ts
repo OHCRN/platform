@@ -17,6 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { registerHasRequiredGuardianInfo } from 'types/common';
 import { GuardianBaseFields, Name, PhoneNumber } from 'types/entities';
 import { z } from 'zod';
 
@@ -26,8 +27,7 @@ import { z } from 'zod';
 
 // REGISTER STEP 1
 
-export const RegisterFormStep1Fields = z.object({
-	dateOfBirth: z.coerce.date(),
+const RegisterFormStep1Fields = z.object({
 	isGuardian: z.boolean(),
 	participantFirstName: Name,
 	participantLastName: Name,
@@ -36,24 +36,21 @@ export const RegisterFormStep1Fields = z.object({
 });
 
 const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true });
-export type RegisterGuardianFields = z.infer<typeof RegisterGuardianFields>;
 
-export const RegisterFormStep1 = RegisterFormStep1Fields.merge(RegisterGuardianFields);
-// 	.refine(
-// 	registerHasRequiredGuardianInfo,
-// );
+export const RegisterFormStep1 = RegisterFormStep1Fields.merge(RegisterGuardianFields).refine(
+	registerHasRequiredGuardianInfo,
+);
 // TODO #366 add refine - make sure participant is an adult
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // REGISTER STEP 2
 
-export const RegisterFormStep2Fields = z.object({
+const RegisterFormStep2Fields = z.object({
 	consentToBeContacted: z.literal(true),
 	participantEmailAddress: z.string().email(),
 });
-export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
 
-export const PasswordFields = z
+const PasswordFields = z
 	.object({
 		confirmPassword: z.string().min(1), // TEMP #368
 		password: z.string().min(1), // TEMP #368
@@ -62,7 +59,6 @@ export const PasswordFields = z
 		message: 'passwordMismatch',
 		path: ['confirmPassword'],
 	});
-export type PasswordFields = z.infer<typeof PasswordFields>;
 
 export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;

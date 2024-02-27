@@ -153,7 +153,6 @@ const FormStep1 = ({
 					/>
 					{/* TODO #366 implement date input */}
 					<TextFieldSet
-						error={errors.dateOfBirth?.type && errorsDict.required}
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
