@@ -23,7 +23,6 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { checkAge18AndOver } from 'types/entities';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -36,11 +35,9 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 import { ValidLanguage } from 'src/i18n';
-import { useModal } from 'src/components/providers/ModalProvider';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
-import RegisterMinorModal from './RegisterMinorModal';
 
 const FormStep1 = ({
 	className,
@@ -66,7 +63,6 @@ const FormStep1 = ({
 
 	const {
 		formState: { errors, isValid },
-		getValues,
 		handleSubmit,
 		setFocus,
 	} = methods;
@@ -81,21 +77,6 @@ const FormStep1 = ({
 		// TODO #366 change to isGuardian
 		setFocus('guardianName');
 	}, [setFocus]);
-
-	// show a warning modal if the user is a minor
-	const { openModal } = useModal();
-	const registerMinorModalConfig = {
-		modalComponent: <RegisterMinorModal currentLang={currentLang} />,
-	};
-	const handleDateOfBirthBlur = () => {
-		const dateOfBirthValue = getValues('dateOfBirth');
-		if (dateOfBirthValue) {
-			const userIsAdult = checkAge18AndOver(dateOfBirthValue);
-			if (!userIsAdult) {
-				openModal(registerMinorModalConfig);
-			}
-		}
-	};
 
 	return (
 		<FormProvider {...methods}>
@@ -171,7 +152,6 @@ const FormStep1 = ({
 						error={errors.dateOfBirth?.type && errorsDict.required}
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
-						onBlur={handleDateOfBirthBlur}
 						required
 					/>
 				</FormSection>

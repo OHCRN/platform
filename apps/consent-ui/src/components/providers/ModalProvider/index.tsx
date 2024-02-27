@@ -19,16 +19,8 @@
 
 'use client';
 
-import {
-	ReactNode,
-	createContext,
-	useCallback,
-	useContext,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import useOnClickOutside from 'use-onclickoutside';
+import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { useDetectClickOutside } from 'react-detect-click-outside';
 
 import ModalWrapper from 'src/components/common/Modal/ModalWrapper';
 
@@ -63,8 +55,11 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 		[openModal, closeModal],
 	);
 
-	const ref = useRef(null);
-	useOnClickOutside(ref, closeModal);
+	const ref = useDetectClickOutside({
+		onTriggered: () => {
+			closeModal();
+		},
+	});
 
 	return (
 		<ModalContext.Provider value={value}>
