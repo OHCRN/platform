@@ -17,5 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './PIClinicianInvite.js';
-export * from './PICreateParticipant.js';
+import z from 'zod';
+
+export const TrimmedString = z.string().trim();
+export type TrimmedString = z.infer<typeof TrimmedString>;
+
+// string with at least one non-whitespace character
+export const NonEmptyString = TrimmedString.min(1);
+export type NonEmptyString = z.infer<typeof NonEmptyString>;
+
+// string with at least one non-whitespace character, or undefined
+export const OptionalString = NonEmptyString.optional();
+export type OptionalString = z.infer<typeof OptionalString>;
+
+export const EmptyString = z.literal('');
+export type EmptyString = z.infer<typeof EmptyString>;
+
+export const EmptyWhiteSpace = TrimmedString.max(0);
+export type EmptyWhiteSpace = z.infer<typeof EmptyWhiteSpace>;
+
+export const EmptyOrOptionalString = OptionalString.or(EmptyString).or(EmptyWhiteSpace);
+export type EmptyOrOptionalString = z.infer<typeof EmptyOrOptionalString>;

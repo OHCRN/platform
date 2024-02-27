@@ -19,11 +19,16 @@
 
 import { z } from 'zod';
 
+import { OptionalString } from '../common/index.js';
+
 import {
 	ConsentGroup,
 	LifecycleState,
 	Name,
 	NanoId,
+	OptionalName,
+	OptionalNanoId,
+	OptionalPostalCode,
 	PhoneNumber,
 	PostalCode,
 	Province,
@@ -43,11 +48,9 @@ export const ParticipantBaseOhipNameFields = z.object({
 });
 export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNameFields>;
 
-// TODO : participant contact info will need to be optional if excluding these fields based on presence of guardian
-// TBD in https://github.com/OHCRN/platform/issues/388
 export const ParticipantContactFields = z.object({
-	participantEmailAddress: z.string().email(),
-	participantPhoneNumber: PhoneNumber,
+	participantEmailAddress: z.string().email().optional(),
+	participantPhoneNumber: PhoneNumber.optional(),
 });
 export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
 
@@ -59,8 +62,9 @@ export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(Parti
 	.merge(
 		z.object({
 			dateOfBirth: z.coerce.date(),
-			participantPreferredName: Name.optional(),
+			participantPreferredName: OptionalName,
 			keycloakId: z.string().uuid(),
+			inviteId: OptionalNanoId,
 		}),
 	);
 
@@ -68,13 +72,12 @@ export type ParticipantIdentityBase = z.infer<typeof ParticipantIdentityBase>;
 
 export const PIParticipantBase = ParticipantIdentityBase.merge(
 	z.object({
-		mailingAddressStreet: z.string().optional(),
-		mailingAddressCity: z.string().optional(),
+		mailingAddressStreet: OptionalString,
+		mailingAddressCity: OptionalString,
 		mailingAddressProvince: Province.optional(),
-		mailingAddressPostalCode: PostalCode.optional(),
+		mailingAddressPostalCode: OptionalPostalCode,
 		residentialPostalCode: PostalCode,
-		inviteId: NanoId.optional(),
-		participantOhipMiddleName: Name.optional(),
+		participantOhipMiddleName: OptionalName,
 	}),
 );
 export type PIParticipantBase = z.infer<typeof PIParticipantBase>;
@@ -96,3 +99,32 @@ export const ConsentParticipant = ConsentParticipantBase.merge(
 	}),
 );
 export type ConsentParticipant = z.infer<typeof ConsentParticipant>;
+
+export const ParticipantNullableFields = {
+	inviteId: NanoId.nullable().transform((input) => input ?? undefined),
+	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
+	participantEmailAddress: z
+		.string()
+		.email()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	participantPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
+	participantOhipMiddleName: Name.nullable().transform((input) => input ?? undefined),
+	mailingAddressStreet: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	mailingAddressCity: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	mailingAddressProvince: Province.nullable().transform((input) => input ?? undefined),
+	mailingAddressPostalCode: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+	residentialPostalCode: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
+};

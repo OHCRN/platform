@@ -4,7 +4,7 @@ import prisma, { Participant, ClinicianInvite } from '../prismaClient.js';
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
 
-const logger = serviceLogger.forModule('PrismaClient');
+const logger = serviceLogger.forModule('SearchService');
 
 export const getParticipant = async (participantId: string): Promise<Participant> => {
 	// TODO: add error handling

@@ -18,6 +18,9 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { ConsentCreateParticipantRequest } from 'types/consentDas';
+import { ConflictErrorResponse, ServerErrorResponse } from 'types/httpResponses';
 
 import { getParticipantById, getParticipants } from '../services/search.js';
 import { createParticipant } from '../services/create.js';
@@ -112,58 +115,39 @@ router.get('/:participantId', async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               emailVerified:
- *                 type: boolean
- *               isGuardian:
- *                 type: boolean
- *               consentGroup:
- *                 $ref: '#/components/schemas/ConsentGroup'
- *               guardianIdVerified:
- *                 type: boolean
- *               participantId:
- *                 type: string
- *               currentLifecycleState:
- *                 $ref: '#/components/schemas/LifecycleState'
- *               previousLifecycleState:
- *                 $ref: '#/components/schemas/LifecycleState'
- *             required:
- *               - emailVerified
- *               - isGuardian
+ *             $ref: '#/components/schemas/ConsentCreateParticipantRequest'
  *     responses:
  *       201:
- *         description: The participant was successfully created.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ConsentCreateParticipantResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
  *       500:
- *         description: Error creating participant.
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', async (req, res) => {
-	logger.info('POST /participants');
-	const {
-		emailVerified,
-		isGuardian,
-		consentGroup,
-		guardianIdVerified,
-		participantId,
-		currentLifecycleState,
-		previousLifecycleState,
-	} = req.body;
-	// TODO: add validation
-	try {
-		const participant = await createParticipant({
-			emailVerified,
-			isGuardian,
-			consentGroup,
-			guardianIdVerified,
-			participantId,
-			currentLifecycleState,
-			previousLifecycleState,
-		});
-		res.status(201).send({ participant });
-	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
-	}
-});
+router.post(
+	'/',
+	withRequestValidation(ConsentCreateParticipantRequest, async (req, res) => {
+		try {
+			const participant = await createParticipant(req.body);
+			switch (participant.status) {
+				case 'SUCCESS':
+					return res.status(201).json(participant.data);
+				case 'PARTICIPANT_EXISTS':
+					return res.status(409).json(ConflictErrorResponse(participant.message));
+				case 'SYSTEM_ERROR':
+					return res.status(500).json(ServerErrorResponse(participant.message));
+			}
+		} catch (error) {
+			logger.error(error);
+			return res.status(500).json(ServerErrorResponse());
+		}
+	}),
+);
 
 export default router;

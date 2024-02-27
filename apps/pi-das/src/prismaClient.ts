@@ -22,7 +22,9 @@ import { NANOID_LENGTH } from 'types/common';
 import { ID_ALPHABET, NanoId } from 'types/entities';
 
 import { ClinicianInvite, Participant, PrismaClient, Province } from './generated/client/index.js';
-import logger from './logger.js';
+import serviceLogger from './logger.js';
+
+const logger = serviceLogger.forModule('PrismaClient');
 
 logger.info('Initializing prismaClient.ts');
 

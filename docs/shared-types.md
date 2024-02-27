@@ -8,14 +8,14 @@ This document describes how we use [Zod](https://zod.dev/) schemas to validate a
 
 All shared types and schemas are located in the `types` package. Schema types are organized as follows:
 
-| Category       | Directory                   | Description                       | Exported as    |
-| ------------- | ---------------------- | --------------------------------- | -------- |
-| Common | [`types/src/common`](../packages/types/src/common/) |utility functions, constants, and generic types not specific to any section of the data model | `'types/common'` |
-| Base schemas | [`types/src/entities`](../packages/types/src/entities/) | | `'types/entities'` |
-| Field types | [`types/src/entities/fields`](../packages/types/src/entities/fields/) | types for fields in the data model, such as enums | `'types/entities'` |
-| Request schemas | [`types/src/services/<service-name>/requests`](../packages/types/src/services/<service-name>/requests/) | Schemas extended from applicable base type, used for requests to the specified service | `'types/<service-name>` |
-| Response schemas | [`types/src/services/<service-name>/responses`](../packages/types/src/services/<service-name>/responses/) | Schemas extended from applicable base type, used for responses from the specified service | `'types/<service-name>` |
-| HTTP response schemas | [`types/src/httpResponses`](../packages/types/src/httpResponses/) | Generic HTTP success and error responses for all services |
+| Category              | Directory                                                                                                 | Description                                                                                   | Exported as             |
+| --------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------- |
+| Common                | [`types/src/common`](../packages/types/src/common/)                                                       | utility functions, constants, and generic types not specific to any section of the data model | `'types/common'`        |
+| Base schemas          | [`types/src/entities`](../packages/types/src/entities/)                                                   |                                                                                               | `'types/entities'`      |
+| Field types           | [`types/src/entities/fields`](../packages/types/src/entities/fields/)                                     | types for fields in the data model, such as enums                                             | `'types/entities'`      |
+| Request schemas       | [`types/src/services/<service-name>/requests`](../packages/types/src/services/<service-name>/requests/)   | Schemas extended from applicable base type, used for requests to the specified service        | `'types/<service-name>` |
+| Response schemas      | [`types/src/services/<service-name>/responses`](../packages/types/src/services/<service-name>/responses/) | Schemas extended from applicable base type, used for responses from the specified service     | `'types/<service-name>` |
+| HTTP response schemas | [`types/src/httpResponses`](../packages/types/src/httpResponses/)                                         | Generic HTTP success and error responses for all services                                     |
 
 The intended pattern with this directory structure is to align the base types schemas directly with the data model. Base types can be extended, merged or refined as they are needed within each service (app). Response and request types are defined separately for each service, to help keep definitions clear and easier to trace.
 
@@ -39,11 +39,42 @@ type ClinicianInvite = { ...baseFields };
 type ClinicianInviteResponse = ClinicianInvite
 ```
 
- In the example above, the base schema does not need to be extended in `dataMapper/responses` file, but the `response` type still has its own definition based on the type from `entities` (note this example type is for illustration only).
+In the example above, the base schema does not need to be extended in `dataMapper/responses` file, but the `response` type still has its own definition based on the type from `entities` (note this example type is for illustration only).
 
- See the section on [merging smaller schemas](#merging-schemas) for a more complex example.
+See the section on [merging smaller schemas](#merging-schemas) for a more complex example.
 
 > **Note**: There may some scenarios where only the request OR the response type is needed in a service.
+
+#### Using regular expressions
+
+When values need to follow a specific pattern, such as 10 digits for a phone number, use Zod string and regular expression methods.
+
+For required fields: Use `z.string().regex(MY_REGEX)`. If the regex allows whitespace (such as `NAME_REGEX`), use `TrimmedString.regex()` to remove trailing whitespace and transform whitespace-only strings to empty strings. This is because some whitespace is allowed, but not strings that are only whitespace.
+
+```ts
+const Name = TrimmedString.regex(NAME_REGEX); // allows whitespace in regex
+const OhipNumber = z.string().regex(OHIP_NUMBER_REGEX); // doesn't allow whitespace in regex
+```
+
+For optional fields **in Request types in services other than Consent UI**: Use the schema defined for the required field and chain `.optional()`. This will allow `undefined` values.
+
+```ts
+const OptionalName = Name.optional();
+const OptionalOhipNumber = OhipNumber.optional();
+```
+
+For optional fields **in the UI, e.g. in form validation**: An additional `EmptyOrOptional` schema is needed. It has to accept empty strings, because HTML inputs can't have `undefined` values. It can also accept strings that only contain whitespace or have trailing whitespace, since text values are trimmed before API requests.
+
+```ts
+// OptionalName is trimmed already
+const EmptyOrOptionalName = OptionalName.or(EmptyString).or(EmptyWhiteSpace);
+
+// OptionalOhip is not trimmed, so start with a TrimmedString instead.
+const EmptyOrOptionalOhipNumber = TrimmedString.regex(OHIP_NUMBER_REGEX)
+	.optional()
+	.or(EmptyString)
+	.or(EmptyWhiteSpace);
+```
 
 ### Preprocessing
 
@@ -66,16 +97,16 @@ export const InviteClinicianFields = z.object({
 	clinicianFirstName: Name,
 	clinicianInstitutionalEmailAddress: z.string().email(),
 	clinicianLastName: Name,
-	clinicianTitleOrRole: z.string().trim().min(1),
+	clinicianTitleOrRole: NonEmptyString,
 	consentGroup: ConsentGroup,
 	consentToBeContacted: z.literal(true),
 });
 
 export const InviteGuardianFields = z.object({
 	guardianEmailAddress: z.string().email().optional(),
-	guardianName: Name.optional(),
-	guardianPhoneNumber: PhoneNumber.optional(),
-	guardianRelationship: Name.optional(),
+	guardianName: OptionalName,
+	guardianPhoneNumber: OptionalPhoneNumber,
+	guardianRelationship: OptionalName,
 });
 
 export const InviteParticipantFields = z.object({
@@ -83,7 +114,7 @@ export const InviteParticipantFields = z.object({
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name.optional(),
+	participantPreferredName: OptionalName,
 });
 
 export const InviteEntity = z.object({

@@ -22,7 +22,7 @@ import clsx from 'clsx';
 import styles from './RequiredAsterisk.module.scss';
 
 const RequiredAsterisk = ({ className }: { className?: string }) => (
-	<span className={clsx(styles.requiredAsterisk, className)}>*</span>
+	<span className={clsx(styles.requiredAsterisk, className)}> *</span>
 );
 
 export default RequiredAsterisk;

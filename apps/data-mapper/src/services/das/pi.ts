@@ -155,12 +155,9 @@ export const createParticipantPiData = async (
 	const { piDasUrl } = getAppConfig();
 	try {
 		const { data } = await axiosClient.post(urlJoin(piDasUrl, 'participants'), req);
-
-		const participant = PICreateParticipantResponse.safeParse(data.participant);
+		const participant = PICreateParticipantResponse.safeParse(data);
 		if (!participant.success) {
-			const participantIdInfo = data.participant.id
-				? `for participantId: ${data.participant.id}`
-				: '';
+			const participantIdInfo = data.id ? `for participantId: ${data.id}` : '';
 			logger.error(
 				'Received invalid data from create participant response',
 				participantIdInfo,

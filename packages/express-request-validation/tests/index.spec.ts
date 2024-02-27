@@ -21,12 +21,13 @@ import { RequestHandler } from 'express-serve-static-core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 import { ErrorName } from 'types/httpResponses';
+import { NonEmptyString } from 'types/common';
 
 import withRequestBodyValidation from '../src/index.js';
 
 const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
-const TestSchema = z.object({ someString: z.string(), someNumber: z.number() });
+const TestSchema = z.object({ someString: NonEmptyString, someNumber: z.number() });
 const validTestBody: z.infer<typeof TestSchema> = {
 	someNumber: 123,
 	someString: 'asdf',

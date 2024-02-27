@@ -1,4 +1,9 @@
-import { Prisma, ConsentCategory, ConsentGroup, ConsentQuestionId } from '../../src/generated/client/index.js';
+import {
+	Prisma,
+	ConsentCategory,
+	ConsentGroup,
+	ConsentQuestionId,
+} from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
 	{
@@ -6,18 +11,21 @@ const participants: Prisma.ParticipantCreateInput[] = [
 		emailVerified: false,
 		isGuardian: false,
 		consentGroup: ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+		consentToBeContacted: true,
 	},
 	{
 		id: 'cllgoufw3000208l3c6gy',
 		emailVerified: false,
 		isGuardian: false,
 		consentGroup: ConsentGroup.ADULT_CONSENT,
+		consentToBeContacted: true,
 	},
 	{
 		id: 'cllgouzph000308l35o99',
 		emailVerified: false,
 		isGuardian: false,
 		consentGroup: ConsentGroup.GUARDIAN_CONSENT_OF_MINOR,
+		consentToBeContacted: true,
 	},
 ];
 

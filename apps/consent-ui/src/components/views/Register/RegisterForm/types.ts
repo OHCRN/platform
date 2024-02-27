@@ -18,15 +18,15 @@
  */
 
 import { Name, PhoneNumber, checkParticipantIsAdult, hasMatchingPasswords } from 'types/entities';
+import { NonEmptyString } from 'types/common';
 import { z } from 'zod';
 
 // TODO hookup backend #368
 // create a better zod schema with conditional validation,
 // and optional name fields
 
-// STEP 1
-
-const RegisterFormStep1Fields = z.object({
+export const RegisterFormStep1Fields = z.object({
+	dateOfBirth: NonEmptyString, // TEMP #366
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
 	guardianRelationship: Name,
@@ -57,8 +57,8 @@ const RegisterFormStep2Fields = z.object({
 
 export const PasswordFields = z
 	.object({
-		confirmPassword: z.string().min(1), // TEMP #368
-		password: z.string().min(1), // TEMP #368
+		confirmPassword: NonEmptyString, // TEMP #368
+		password: NonEmptyString, // TEMP #368
 	})
 	.refine(hasMatchingPasswords, {
 		message: 'passwordMismatch',
