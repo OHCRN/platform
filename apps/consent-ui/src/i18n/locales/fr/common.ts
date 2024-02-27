@@ -21,11 +21,13 @@ import { CommonDictionary } from 'src/i18n/locales/en/common';
 
 const dictionary = {
 	backToDashboard: 'Retour au tableau de bord',
+	backToHomepage: "Retour à la page d'accueil",
 	consent: 'Formulaires de consentement',
 	dashboard: 'Tableau de bord',
 	edit: 'Modifier',
 	home: "Page d'accueil",
 	invite: 'Invitation du clinicien',
+	ok: 'OK',
 	register: 'Inscription du participant',
 } satisfies CommonDictionary;
 

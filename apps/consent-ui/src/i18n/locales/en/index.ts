@@ -62,6 +62,7 @@ import registerFormStep1TextDictionary from './registerFormStep1Text';
 import registerFormStep2LabelsDictionary from './registerFormStep2Labels';
 import registerFormStep2TextDictionary from './registerFormStep2Text';
 import registerFormTextDictionary from './registerFormText';
+import registerMinorModalDictionary from './registerMinorModal';
 import registerPageDictionary from './registerPage';
 
 const dictionaries = {
@@ -110,6 +111,7 @@ const dictionaries = {
 	registerFormStep2Labels: registerFormStep2LabelsDictionary,
 	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
+	registerMinorModal: registerMinorModalDictionary,
 	registerPage: registerPageDictionary,
 };
 
