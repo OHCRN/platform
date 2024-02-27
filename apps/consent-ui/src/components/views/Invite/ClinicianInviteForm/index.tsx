@@ -52,6 +52,7 @@ import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/providers/ModalProvider';
 import { handleMouseDownBlur } from 'src/components/utils';
 import { formatFormRequest } from 'src/components/common/Form/utils';
+import { MOCK_API_URL } from 'src/constants';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -68,8 +69,6 @@ const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 ];
-
-const MOCK_API_URL = 'http://localhost:3000/api/mock';
 
 const ClinicianInviteFormComponent = ({
 	consentGroupOptions,
@@ -137,7 +136,6 @@ const ClinicianInviteFormComponent = ({
 	};
 
 	const onSubmit: SubmitHandler<ClinicianInviteRequest> = (data, event) => {
-		// prevent page refresh on submit
 		event?.preventDefault();
 
 		const recaptchaToken = getRecaptchaToken();
@@ -145,7 +143,7 @@ const ClinicianInviteFormComponent = ({
 		if (recaptchaToken) {
 			const formattedData = formatFormRequest(data);
 			axios
-				.post(urlJoin(MOCK_API_URL), {
+				.post(MOCK_API_URL, {
 					// MOCK REQUEST BODY, not final
 					body: { ...formattedData, recaptchaToken },
 					status: 200,
@@ -155,6 +153,7 @@ const ClinicianInviteFormComponent = ({
 					router.push(getLocalizedRoute(currentLang, 'home'));
 				})
 				.catch(() => {
+					// TODO: show error, not recaptcha error
 					setRecaptchaError('Something went wrong');
 				})
 				.finally(() => {

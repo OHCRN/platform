@@ -26,3 +26,5 @@ export const API = {
 
 // TODO add link to help centre https://github.com/OHCRN/platform/issues/367
 export const OHCRN_HELP_CENTRE_URL = '';
+
+export const MOCK_API_URL = 'http://localhost:3000/api';

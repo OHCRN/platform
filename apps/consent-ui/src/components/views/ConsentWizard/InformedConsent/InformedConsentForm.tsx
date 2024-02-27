@@ -23,6 +23,7 @@ import Link from 'next/link';
 import { InformedConsentRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 
 import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
@@ -32,6 +33,7 @@ import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
 import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+import { MOCK_API_URL } from 'src/constants';
 
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
@@ -59,11 +61,22 @@ const InformedConsentForm = ({
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
 
-	const onSubmit: SubmitHandler<InformedConsentRequest> = (_data, event) => {
+	const onSubmit: SubmitHandler<InformedConsentRequest> = (data, event) => {
 		event?.preventDefault();
 
-		// go to next page after successful API request
-		goToNextConsentStep();
+		axios
+			.post(MOCK_API_URL, {
+				// MOCK REQUEST BODY, not final
+				body: data,
+				status: 200,
+			})
+			.then(() => {
+				goToNextConsentStep();
+			})
+			.catch((e) => {
+				// TODO: show error
+				console.log(e);
+			});
 	};
 
 	return (
