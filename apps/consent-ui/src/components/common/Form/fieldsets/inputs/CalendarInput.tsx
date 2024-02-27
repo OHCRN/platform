@@ -72,6 +72,7 @@ const CalendarInput = <T extends FieldValues>({
 						onFocus={onFocus}
 						disabled={disabled}
 						{...ariaProps}
+						aria-required={required}
 					/>
 				);
 			}}
