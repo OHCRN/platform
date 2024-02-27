@@ -17,8 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { registerHasRequiredGuardianInfo } from 'types/common';
-import { GuardianBaseFields, Name, PhoneNumber } from 'types/entities';
+import { registerHasRequiredGuardianInfo, NonEmptyString } from 'types/common';
+import {
+	GuardianBaseFields,
+	Name,
+	OptionalName,
+	PhoneNumber,
+	hasMatchingPasswords,
+} from 'types/entities';
 import { z } from 'zod';
 
 // TODO hookup backend #368
@@ -28,10 +34,14 @@ import { z } from 'zod';
 // REGISTER STEP 1
 
 const RegisterFormStep1Fields = z.object({
+	dateOfBirth: NonEmptyString, // TEMP #366
+	guardianName: Name,
+	guardianPhoneNumber: PhoneNumber,
+	guardianRelationship: Name,
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name.optional(),
+	participantPreferredName: OptionalName,
 });
 
 const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true })
@@ -51,10 +61,10 @@ const RegisterFormStep2Fields = z.object({
 
 const PasswordFields = z
 	.object({
-		confirmPassword: z.string().min(1), // TEMP #368
-		password: z.string().min(1), // TEMP #368
+		confirmPassword: NonEmptyString, // TEMP #368
+		password: NonEmptyString, // TEMP #368
 	})
-	.refine((data) => data.password === data.confirmPassword, {
+	.refine(hasMatchingPasswords, {
 		message: 'passwordMismatch',
 		path: ['confirmPassword'],
 	});

@@ -1,3 +1,5 @@
+@use '../../../theme/mixins';
+
 .green {
 	background-color: theme('colors.primary.100');
 	border-color: theme('colors.primary.600');
@@ -17,13 +19,15 @@
 	flex-direction: column;
 	gap: 1.5rem;
 	padding: 0.5rem;
+	margin-bottom: 1.5rem;
 
 	@media (min-width: theme('screens.sm')) {
 		padding: 0.5rem 0.75rem;
 		gap: 1rem;
+		margin-bottom: 1.25rem;
 	}
 
-	h2 {
+	.title {
 		font-size: theme('fontSize.base');
 		@media (min-width: theme('screens.sm')) {
 			font-size: theme('fontSize.xl');
@@ -40,6 +44,12 @@
 
 .subtitle {
 	font-size: theme('fontSize.sm');
+	line-height: 1.7;
+
+	a {
+		@include mixins.text-link;
+	}
+
 	@media (min-width: theme('screens.sm')) {
 		font-size: theme('fontSize.base');
 	}
@@ -55,7 +65,7 @@
 	grid-template-columns: 1fr;
 	@media (min-width: theme('screens.sm')) {
 		grid-template-columns: 1fr 1fr;
-		padding: 1.5rem;
+		padding: 0rem;
 	}
 	@media (min-width: theme('screens.md')) {
 		padding: 0.5rem 0;

@@ -18,9 +18,13 @@
  */
 
 import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { PIClinicianInviteRequestSchema as ClinicianInviteRequest } from 'types/piDas';
+import { serve, setup } from 'swagger-ui-express';
+import {
+	PIClinicianInviteRequestSchema as ClinicianInviteRequest,
+	PICreateParticipantRequestSchema as PICreateParticipantRequest,
+	PICreateParticipantResponseSchema as PICreateParticipantResponse,
+} from 'types/piDas';
 
 import packageJson from '../../package.json' assert { type: 'json' };
 
@@ -66,6 +70,8 @@ const options = swaggerJsdoc({
 		components: {
 			schemas: {
 				ClinicianInviteRequest,
+				PICreateParticipantRequest,
+				PICreateParticipantResponse,
 			},
 		},
 	},

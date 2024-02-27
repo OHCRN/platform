@@ -18,4 +18,5 @@
  */
 
 export * from './ConsentClinicianInvite.js';
+export * from './ConsentCreateParticipant.js';
 export * from './ParticipantResponse.js';

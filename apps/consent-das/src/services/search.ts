@@ -12,7 +12,7 @@ import prisma, {
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
 
-const logger = serviceLogger.forModule('PrismaClient');
+const logger = serviceLogger.forModule('SearchService');
 
 type GetParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST';
 /**

@@ -93,6 +93,11 @@ export const createParticipant = async ({
 
 		if (participantConsentData.status !== 'SUCCESS') {
 			// Unable to create participant in Consent DAS, rollback participant already created in PI-DAS
+			logger.info(
+				'Creating participant in Consent DAS failed.',
+				'Attempting to delete participant in PI DAS with id',
+				participantId,
+			);
 			const deletePiParticipant = await deletePIParticipant(participantId);
 			if (deletePiParticipant.status !== 'SUCCESS') {
 				logger.error(

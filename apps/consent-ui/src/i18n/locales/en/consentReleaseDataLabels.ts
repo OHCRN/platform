@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,8 +17,50 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentRecontactDictionary } from 'src/i18n/locales/en/consentRecontact';
+import formLabels from './formLabels';
 
-const dictionary = {} satisfies ConsentRecontactDictionary;
+const {
+	ancestry,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	firstName,
+	genderIdentity,
+	geneticsClinic,
+	lastName,
+	middleName,
+	molecularLab,
+	ohipNumber,
+	personalHistoryOfCancer,
+	preferredName,
+	primaryCancerDiagnosis,
+	residentialPostalCode,
+	sexAssignedAtBirth,
+} = formLabels;
+
+const dictionary = {
+	ancestry,
+	clinicianFirstName,
+	clinicianLastName,
+	clinicianTitleOrRole,
+	dateOfBirth,
+	familyHistoryOfCancer,
+	firstName,
+	genderIdentity,
+	geneticsClinic,
+	lastName,
+	middleName,
+	molecularLab,
+	ohipNumber,
+	personalHistoryOfCancer,
+	preferredName,
+	primaryCancerDiagnosis,
+	residentialPostalCode,
+	sexAssignedAtBirth,
+} satisfies Record<string, string>;
+
+export type ConsentReleaseDataLabelsDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

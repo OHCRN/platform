@@ -18,7 +18,15 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { PICreateParticipantRequest } from 'types/piDas';
+import {
+	ConflictErrorResponse,
+	NotFoundErrorResponse,
+	ServerErrorResponse,
+} from 'types/httpResponses';
 
+import { deleteParticipant } from '../services/delete.js';
 import { getParticipant, getParticipants } from '../services/search.js';
 import { createParticipant } from '../services/create.js';
 import { updateParticipant } from '../services/update.js';
@@ -111,106 +119,98 @@ router.get('/:participantId', async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               inviteId:
- *                 type: string
- *               dateOfBirth:
- *                 type: string
- *                 format: date
- *                 required: true
- *               emailAddress:
- *                 type: string
- *                 format: email
- *                 required: true
- *               participantOhipFirstName:
- *                 type: string
- *                 required: true
- *               participantOhipLastName:
- *                 type: string
- *                 required: true
- *               phoneNumber:
- *                 type: string
- *               participantOhipMiddleName:
- *                 type: string
- *               participantPreferredName:
- *                 type: string
- *               guardianName:
- *                 type: string
- *               guardianPhoneNumber:
- *                 type: string
- *               guardianEmailAddress:
- *                 type: string
- *               guardianRelationship:
- *                 type: string
- *               mailingAddressStreet:
- *                 type: string
- *               mailingAddressCity:
- *                 type: string
- *               mailingAddressProvince:
- *                 type: string
- *               mailingAddressPostalCode:
- *                 type: string
- *               residentialPostalCode:
- *                 type: string
- *                 required: true
- *               participantId:
- *                 type: string
+ *             $ref: '#/components/schemas/PICreateParticipantRequest'
  *     responses:
  *       201:
- *         description: The participant was successfully created.
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/PICreateParticipantResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - The request failed because it conflicts with data that already exists.
  *       500:
- *         description: Error creating participant.
+ *         description: ServerError - An unexpected error occurred.
  */
-router.post('/', async (req, res) => {
-	logger.info('POST /participants');
-	const {
-		inviteId,
-		dateOfBirth,
-		emailAddress,
-		participantOhipFirstName,
-		participantOhipLastName,
-		participantOhipMiddleName,
-		phoneNumber,
-		participantPreferredName,
-		guardianName,
-		guardianPhoneNumber,
-		guardianEmailAddress,
-		guardianRelationship,
-		mailingAddressStreet,
-		mailingAddressCity,
-		mailingAddressProvince,
-		mailingAddressPostalCode,
-		residentialPostalCode,
-		participantId,
-	} = req.body;
-	// TODO: add validation
+router.post(
+	'/',
+	withRequestValidation(PICreateParticipantRequest, async (req, res) => {
+		try {
+			const { dateOfBirth } = req.body;
+			const parsedDateOfBirth = new Date(dateOfBirth);
+			const participant = await createParticipant({ ...req.body, dateOfBirth: parsedDateOfBirth });
+			switch (participant.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(participant.data);
+				}
+				case 'PARTICIPANT_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(participant.message));
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ServerErrorResponse(participant.message));
+				}
+			}
+		} catch (error) {
+			logger.error(
+				'POST /participants',
+				`Unexpected error handling create participant request.`,
+				error,
+			);
+			return res.status(500).json(ServerErrorResponse());
+		}
+	}),
+);
+
+/**
+ * @openapi
+ * /participants/{participantId}:
+ *   delete:
+ *     tags:
+ *       - Participants
+ *     produces: application/json
+ *     name: Delete Participant
+ *     description: Deletes a participant by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: participantId
+ *         in: path
+ *         required: true
+ *         description: ID of the participant to be deleted
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *       404:
+ *         description: NotFoundError - The requested data could not be found.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.delete('/:participantId', async (req, res) => {
 	try {
-		const parsedDateOfBirth = new Date(dateOfBirth);
-		const participant = await createParticipant({
-			inviteId,
-			dateOfBirth: parsedDateOfBirth,
-			emailAddress,
-			participantOhipFirstName,
-			participantOhipLastName,
-			participantOhipMiddleName,
-			phoneNumber,
-			participantPreferredName,
-			guardianName,
-			guardianPhoneNumber,
-			guardianEmailAddress,
-			guardianRelationship,
-			mailingAddressStreet,
-			mailingAddressCity,
-			mailingAddressProvince,
-			mailingAddressPostalCode,
-			residentialPostalCode,
-			participantId,
-		});
-		res.status(201).send({ participant });
+		const { participantId } = req.params;
+		const participant = await deleteParticipant(participantId);
+		switch (participant.status) {
+			case 'SUCCESS': {
+				return res.status(200).json(participant.data);
+			}
+			case 'PARTICIPANT_DOES_NOT_EXIST': {
+				return res.status(404).json(NotFoundErrorResponse(participant.message));
+			}
+			case 'SYSTEM_ERROR': {
+				return res.status(500).json(ServerErrorResponse(participant.message));
+			}
+		}
 	} catch (error) {
-		logger.error(error);
-		res.status(500).send({ error: 'Error creating participant' });
+		logger.error(
+			'DELETE /participants',
+			'Unexpected error handling delete participant request',
+			error,
+		);
+		return res.status(500).json(ServerErrorResponse());
 	}
 });
 
@@ -286,11 +286,11 @@ router.patch('/:participantId', async (req, res) => {
 	const {
 		inviteId,
 		dateOfBirth,
-		emailAddress,
+		participantEmailAddress,
 		participantOhipFirstName,
 		participantOhipLastName,
 		participantOhipMiddleName,
-		phoneNumber,
+		participantPhoneNumber,
 		participantPreferredName,
 		guardianName,
 		guardianPhoneNumber,
@@ -309,11 +309,11 @@ router.patch('/:participantId', async (req, res) => {
 			participantId,
 			inviteId,
 			dateOfBirth: parsedDateOfBirth,
-			emailAddress,
+			participantEmailAddress,
 			participantOhipFirstName,
 			participantOhipLastName,
 			participantOhipMiddleName,
-			phoneNumber,
+			participantPhoneNumber,
 			participantPreferredName,
 			guardianName,
 			guardianPhoneNumber,
