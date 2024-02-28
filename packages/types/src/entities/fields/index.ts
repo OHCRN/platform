@@ -21,7 +21,6 @@ export * from './Ancestry.js';
 export * from './BirthSex.js';
 export * from './ConsentCategory.js';
 export * from './ConsentGroup.js';
-export * from './DateOfBirth.js';
 export * from './Gender.js';
 export * from './GeneticsClinic.js';
 export * from './HistoryOfCancer.js';

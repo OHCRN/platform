@@ -17,16 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Name, PhoneNumber, checkParticipantIsAdult, hasMatchingPasswords } from 'types/entities';
-import { NonEmptyString } from 'types/common';
 import { z } from 'zod';
+
+import { Name, PhoneNumber, hasMatchingPasswords } from 'types/entities';
+import { refineCheckIsMinimumAgeOrGreater, NonEmptyString } from 'types/common';
 
 // TODO hookup backend #368
 // create a better zod schema with conditional validation,
 // and optional name fields
 
 const RegisterFormStep1Fields = z.object({
-	dateOfBirth: NonEmptyString, // TEMP #366
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
 	guardianRelationship: Name,
@@ -43,7 +43,10 @@ const DateOfBirthField = z
 	.object({
 		dateOfBirth: z.coerce.date(),
 	})
-	.refine(checkParticipantIsAdult, { message: 'participantIsMinor', path: ['dateOfBirth'] });
+	.refine(refineCheckIsMinimumAgeOrGreater, {
+		message: 'participantIsMinor',
+		path: ['dateOfBirth'],
+	});
 
 export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
@@ -68,5 +71,5 @@ const PasswordFields = z
 export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
-export const RegisterRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
-export type RegisterRequest = z.infer<typeof RegisterRequest>;
+export const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
+export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

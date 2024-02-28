@@ -22,6 +22,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { RegisterFormStep1, RegisterFormStep2 } from 'types/consentUi';
 
 import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { ValidLanguage } from 'src/i18n';
@@ -39,7 +40,6 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 
 import styles from './RegisterForm.module.scss';
-import { RegisterFormStep1, RegisterFormStep2 } from './types';
 
 const FormStep2 = ({
 	currentLang,

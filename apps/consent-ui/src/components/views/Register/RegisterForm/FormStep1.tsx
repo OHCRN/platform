@@ -23,6 +23,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { RegisterFormStep1 } from 'types/consentUi';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -37,7 +38,6 @@ import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarField
 import { ValidLanguage } from 'src/i18n';
 
 import styles from './RegisterForm.module.scss';
-import { RegisterFormStep1 } from './types';
 
 const FormStep1 = ({
 	className,

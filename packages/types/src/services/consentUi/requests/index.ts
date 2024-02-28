@@ -17,22 +17,4 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { differenceInYears } from 'date-fns';
-
-/**
- * Check if age is at least 18 years
- * @returns {boolean} returns true if age is greater than or equal to 18
- */
-export const checkAge18AndOver = (dob: Date): boolean => {
-	const age = differenceInYears(new Date(), dob);
-	return age >= 18;
-};
-
-/**
- * Checks if a Participant is at least 18 years old. Use with refine() validation.
- * @returns {boolean} returns true if participant is an adult
- */
-export const checkParticipantIsAdult = (props: { dateOfBirth: Date }): boolean => {
-	const { dateOfBirth } = props;
-	return checkAge18AndOver(dateOfBirth);
-};
+export * from './Register.js';

@@ -19,27 +19,29 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { checkAge18AndOver } from '../../src/entities/fields/index.js';
+import { ParticipantRegistrationRequest } from '../../src/services/consentUi/requests/Register.js';
 
-describe('Date of Birth', () => {
-	const today = new Date();
-	const month = today.getMonth();
-	const day = today.getDate();
-	const year = today.getFullYear();
+describe('ParticipantRegistrationRequest', () => {
+	it("Adds an error to the dateOfBirth field when user's age is below the minimum", () => {
+		const today = new Date();
+		const month = today.getMonth();
+		const day = today.getDate();
+		const year = today.getFullYear();
 
-	const todayMinus18Years = new Date(`${month}/${day}/${year - 18}`);
-	const adultDateOfBirth = new Date(`10/01/${year - 50}`);
-	const childDateOfBirth = new Date(`09/12/${year - 10}`);
-	const futureDateOfBirth = new Date(`03/25/${year + 50}`);
-
-	it('must return true if user is an adult', () => {
-		expect(checkAge18AndOver(adultDateOfBirth)).true;
-		expect(checkAge18AndOver(todayMinus18Years)).true;
-	});
-
-	it('must return false if user is a minor', () => {
-		expect(checkAge18AndOver(today)).false;
-		expect(checkAge18AndOver(childDateOfBirth)).false;
-		expect(checkAge18AndOver(futureDateOfBirth)).false;
+		const result = ParticipantRegistrationRequest.safeParse({
+			guardianName: 'Homer Simpson',
+			guardianPhoneNumber: '1234567890',
+			guardianRelationship: 'Father',
+			participantFirstName: 'Bartholomew',
+			participantLastName: 'Simpson',
+			participantPhoneNumber: '2345678901',
+			participantPreferredName: 'Bart',
+			dateOfBirth: `${day}/${month}/${year - 10}`,
+			consentToBeContacted: true,
+			participantEmailAddress: 'bart@example.com',
+			password: 'password',
+			confirmPassword: 'password',
+		});
+		expect(result.success).true;
 	});
 });

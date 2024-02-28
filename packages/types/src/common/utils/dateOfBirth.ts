@@ -17,14 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './SortOrder.js';
-export * from './Status.js';
-export * from './String.js';
-export * from './conditionalFieldUtils.js';
-export * from './expand.js';
-export * from './keys.js';
-export * from './lengthConstraints.js';
-export * from './recursivePartial.js';
-export * from './regexes.js';
-export * from './values.js';
-export * from './utils/index.js';
+import { differenceInYears } from 'date-fns';
+
+export const MINIMUM_AGE_IN_YEARS = 18;
+
+/**
+ * Check if age is at least MINIMUM_AGE_IN_YEARS
+ * @returns {boolean} returns true if age is greater than or equal to MINIMUM_AGE_IN_YEARS
+ */
+export const checkIsMinimumAgeOrGreater = (dob: Date): boolean => {
+	const age = differenceInYears(new Date(), dob);
+	return age >= MINIMUM_AGE_IN_YEARS;
+};
+
+/**
+ * Checks if a Participant is at least MINIMUM_AGE_IN_YEARS old. Use with refine() validation.
+ * @returns {boolean} returns true if participant age is greater than or equal to MINIMUM_AGE_IN_YEARS
+ */
+export const refineCheckIsMinimumAgeOrGreater = (props: { dateOfBirth: Date }): boolean => {
+	const { dateOfBirth } = props;
+	return checkIsMinimumAgeOrGreater(dateOfBirth);
+};
