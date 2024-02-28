@@ -33,3 +33,15 @@ export const EmptyOrOptionalOhipNumber = TrimmedString.regex(OHIP_NUMBER_REGEX)
 	.or(EmptyString)
 	.or(EmptyWhiteSpace);
 export type EmptyOrOptionalOhipNumber = z.infer<typeof EmptyOrOptionalOhipNumber>;
+
+export const OhipInfoUI = z.object({
+	ohipNumber: EmptyOrOptionalOhipNumber,
+	ohipDisabled: z.boolean(),
+});
+export type OhipInfoUI = z.infer<typeof OhipInfoUI>;
+
+export const OhipInfo = z.object({
+	ohipNumber: EmptyOrOptionalOhipNumber,
+	hasOhip: z.boolean(),
+});
+export type OhipInfo = z.infer<typeof OhipInfo>;

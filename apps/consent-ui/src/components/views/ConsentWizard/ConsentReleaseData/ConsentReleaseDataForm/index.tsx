@@ -19,7 +19,10 @@
 
 'use client';
 
+import { z } from 'zod';
 import { ConsentReleaseDataRequest } from 'types/consentApi';
+import { OhipInfoUI } from 'types/entities';
+import { hasRequiredOhipInformationUI } from 'types/common';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -50,6 +53,24 @@ import {
 } from './types';
 import styles from './ConsentReleaseDataForm.module.scss';
 
+const ConsentReleaseDataUI = ConsentReleaseDataRequest.extend({
+	ohipInfo: OhipInfoUI.refine(hasRequiredOhipInformationUI, {
+		message: 'missingOhipError',
+		path: ['ohipNumber'],
+	}),
+});
+type ConsentReleaseDataUI = z.infer<typeof ConsentReleaseDataUI>;
+
+const transformData = (data: ConsentReleaseDataUI): ConsentReleaseDataRequest => {
+	return {
+		...data,
+		ohipInfo: {
+			ohipNumber: data.ohipInfo.ohipNumber,
+			hasOhip: !data.ohipInfo.ohipDisabled,
+		},
+	};
+};
+
 const currentConsentStep = ConsentStepRouteEnum.enum['consent-2'];
 
 const ConsentReleaseDataForm = ({
@@ -76,8 +97,8 @@ const ConsentReleaseDataForm = ({
 	textDict: ConsentReleaseDataTextDictionary;
 }) => {
 	// setup react-hook-forms
-	const methods = useForm<ConsentReleaseDataRequest>({
-		resolver: zodResolver(ConsentReleaseDataRequest),
+	const methods = useForm<ConsentReleaseDataUI>({
+		resolver: zodResolver(ConsentReleaseDataUI),
 		shouldUnregister: true,
 		mode: 'onBlur',
 	});
@@ -88,8 +109,10 @@ const ConsentReleaseDataForm = ({
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
 
-	const onSubmit: SubmitHandler<ConsentReleaseDataRequest> = (_data, event) => {
+	const onSubmit: SubmitHandler<ConsentReleaseDataUI> = (data, event) => {
 		event?.preventDefault();
+		const _data = transformData(data);
+		console.log(_data); // work with this _data on form submit
 		goToNextConsentStep();
 	};
 
@@ -160,7 +183,7 @@ const ConsentReleaseDataForm = ({
 					/>
 					<OhipFieldSet
 						label={labelsDict.ohipNumber}
-						error={errors.ohipNumber?.type && errorsDict.required}
+						error={errors.ohipInfo?.ohipNumber?.type && errorsDict.required}
 						checkboxLabel={textDict.ohipCheckboxText}
 						required
 					/>

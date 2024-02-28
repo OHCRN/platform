@@ -20,6 +20,7 @@
 import { z } from 'zod';
 
 import { OptionalString } from '../common/String.js';
+import { hasRequiredOhipInformation } from '../common/conditionalFieldUtils.js';
 
 import { ConsentQuestionId } from './ConsentQuestion.js';
 import {
@@ -30,8 +31,8 @@ import {
 	HistoryOfCancer,
 	MolecularLab,
 	Name,
+	OhipInfo,
 	OptionalName,
-	OptionalOhipNumber,
 	PostalCode,
 } from './fields/index.js';
 
@@ -45,7 +46,10 @@ export const ConsentReleaseDataBase = z.object({
 	lastName: Name,
 	preferredName: OptionalName,
 	genderIdentity: Gender,
-	ohipNumber: OptionalOhipNumber,
+	ohipInfo: OhipInfo.refine(hasRequiredOhipInformation, {
+		message: 'missingOhipError',
+		path: ['ohipNumber'],
+	}),
 	dateOfBirth: z.coerce.date(),
 	birthSex: BirthSex,
 	ancestry: Ancestry,
