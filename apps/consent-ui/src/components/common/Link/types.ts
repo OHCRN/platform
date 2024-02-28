@@ -61,3 +61,7 @@ export type LocalizedLinkProps = Omit<ComponentProps<typeof Link>, 'href'> &
 		linkLang: ValidLanguage;
 		defaultStyle?: boolean;
 	};
+
+// routes that do not require authentication
+const { home, invite, register } = GeneralRouteNameEnum.enum;
+export const PUBLIC_ROUTES: RouteName[] = [home, invite, register];

@@ -17,29 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'types/common';
-import urlJoin from 'url-join';
+import Cryptr from 'cryptr';
 
-import { API, PROXY_API_PATH } from 'src/constants';
-import { axiosClient } from 'src/services/api';
+import { getAppConfig } from 'src/config';
 
-const getAPIStatus = async () => {
-	return await axiosClient
-		.get(urlJoin(PROXY_API_PATH, API.STATUS))
-		.then((res: AxiosResponse<APIStatus>) => {
-			if (res.status !== 200) {
-				throw new AxiosError(res.statusText);
-			}
-			return res.data;
-		})
-		.catch(() => {
-			const errorRes: APIStatus = {
-				version: 'N/A',
-				status: 'API fetch failed',
-			};
-			return errorRes;
-		});
+const { TOKEN_ENCRYPTION_KEY } = getAppConfig(process.env);
+const BUILDTIME_PLACEHOLDER_KEY = 'supersecretz';
+// BUILDTIME_PLACEHOLDER_KEY will be replaced by TOKEN_ENCRYPTION_KEY from runtime vars
+const cryptr = new Cryptr(
+	process.env.NEXT_IS_BUILDING ? BUILDTIME_PLACEHOLDER_KEY : TOKEN_ENCRYPTION_KEY,
+);
+
+export const encryptContent = (value: string) => {
+	return cryptr.encrypt(value);
 };
 
-export { getAPIStatus };
+export const decryptContent = (encryptedValue: string) => {
+	return cryptr.decrypt(encryptedValue);
+};
