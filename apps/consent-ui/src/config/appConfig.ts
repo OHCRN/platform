@@ -45,6 +45,7 @@ export const defaultAppConfig: AppConfig = {
  * Returns environment variables for server components
  * @returns {AppConfig}
  */
+// TODO: enforce server-only usage. To be completed as a follow-up to https://github.com/OHCRN/platform/issues/422
 const getAppConfig = (): AppConfig => ({
 	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
 	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
