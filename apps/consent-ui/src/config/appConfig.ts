@@ -42,47 +42,19 @@ export const defaultAppConfig: AppConfig = {
 };
 
 /**
- * returns app config env vars
- * order of priority: server runtime > process.env build time > default
+ * Returns environment variables for server components
+ * @returns {AppConfig}
  */
-
-const getAppConfig = (serverEnv: any): AppConfig => ({
-	/**
-	 * keep explicit style of: Server || Client to prevent errors with Next inlining build variables
-	 */
-	CONSENT_API_URL:
-		serverEnv.CONSENT_API_URL || process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
-	CONSENT_UI_URL:
-		serverEnv.CONSENT_UI_URL || process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
-	OHCRN_EMAIL: serverEnv.OHCRN_EMAIL || process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
-	OHCRN_HOME_LINK:
-		serverEnv.OHCRN_HOME_LINK || process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,
-	FEATURE_FLAG:
-		serverEnv.FEATURE_FLAG === 'false'
-			? false
-			: serverEnv.FEATURE_FLAG === 'true' ||
-			  process.env.FEATURE_FLAG === 'true' ||
-			  defaultAppConfig.FEATURE_FLAG,
-	RECAPTCHA_SITE_KEY:
-		serverEnv.RECAPTCHA_SITE_KEY ||
-		process.env.RECAPTCHA_SITE_KEY ||
-		defaultAppConfig.RECAPTCHA_SITE_KEY,
-	KEYCLOAK_ISSUER:
-		serverEnv.AUTH_KEYCLOAK_ISSUER ||
-		process.env.AUTH_KEYCLOAK_ISSUER ||
-		defaultAppConfig.KEYCLOAK_ISSUER,
-	KEYCLOAK_CLIENT_ID:
-		serverEnv.AUTH_KEYCLOAK_ID ||
-		process.env.AUTH_KEYCLOAK_ID ||
-		defaultAppConfig.KEYCLOAK_CLIENT_ID,
-	TOKEN_ENCRYPTION_KEY:
-		serverEnv.TOKEN_ENCRYPTION_KEY ||
-		process.env.TOKEN_ENCRYPTION_KEY ||
-		defaultAppConfig.TOKEN_ENCRYPTION_KEY,
-	TOKEN_MAX_AGE:
-		Number(serverEnv.TOKEN_MAX_AGE) ||
-		Number(process.env.TOKEN_MAX_AGE) ||
-		defaultAppConfig.TOKEN_MAX_AGE,
+const getAppConfig = (): AppConfig => ({
+	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
+	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
+	OHCRN_EMAIL: process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
+	OHCRN_HOME_LINK: process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,
+	RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY || defaultAppConfig.RECAPTCHA_SITE_KEY,
+	KEYCLOAK_ISSUER: process.env.AUTH_KEYCLOAK_ISSUER || defaultAppConfig.KEYCLOAK_ISSUER,
+	KEYCLOAK_CLIENT_ID: process.env.AUTH_KEYCLOAK_ID || defaultAppConfig.KEYCLOAK_CLIENT_ID,
+	TOKEN_ENCRYPTION_KEY: process.env.TOKEN_ENCRYPTION_KEY || defaultAppConfig.TOKEN_ENCRYPTION_KEY,
+	TOKEN_MAX_AGE: Number(process.env.TOKEN_MAX_AGE) || defaultAppConfig.TOKEN_MAX_AGE,
 });
 
 export { getAppConfig };
