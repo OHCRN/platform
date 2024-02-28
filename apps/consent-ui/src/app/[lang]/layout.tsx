@@ -50,7 +50,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 	params: { lang: ValidLanguage };
 }) {
-	const clientAppConfig = await getClientAppConfig();
+	const clientAppConfig = getClientAppConfig();
 	return (
 		<html lang={lang}>
 			<body className={`${montserrat.className}`}>
