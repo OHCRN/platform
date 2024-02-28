@@ -20,7 +20,9 @@
 import { defaultAppConfig } from 'src/config';
 
 /**
- * Environment variables exposed to client components via AppConfigContextProvider
+ * Environment variables exposed to client components via AppConfigContext
+ *
+ * Note: this config is exposed to the client, so it should not contain any sensitive information
  */
 export type ClientAppConfig = {
 	CONSENT_API_URL: string;
@@ -40,8 +42,11 @@ export const defaultClientAppConfig: ClientAppConfig = {
 
 /**
  * Returns environment variables for client components
+ *
+ * Note: intended for **SERVER COMPONENTS ONLY**. Access these values from the client using the `useAppConfigContext` hook.
  * @returns {ClientAppConfig}
  */
+// TODO: enforce server-only usage. To be completed as a follow-up to https://github.com/OHCRN/platform/issues/422
 const getClientAppConfig = (): ClientAppConfig => ({
 	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
 	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
