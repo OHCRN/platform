@@ -61,7 +61,7 @@ declare module 'next-auth/jwt' {
 async function doFinalSignoutHandshake(jwt: JWT) {
 	try {
 		const { id_token } = jwt.account;
-		const { KEYCLOAK_ISSUER, KEYCLOAK_CLIENT_ID } = getAppConfig(process.env);
+		const { KEYCLOAK_ISSUER, KEYCLOAK_CLIENT_ID } = getAppConfig();
 		// Add the id_token_hint to the query string
 		const decryptedIdToken = decryptContent(id_token);
 		const params = new URLSearchParams();
@@ -81,7 +81,7 @@ export const authConfig = {
 	providers: [Keycloak],
 	session: {
 		strategy: 'jwt',
-		maxAge: getAppConfig(process.env).TOKEN_MAX_AGE,
+		maxAge: getAppConfig().TOKEN_MAX_AGE,
 	},
 	callbacks: {
 		jwt: ({ token, account, profile, trigger }) => {

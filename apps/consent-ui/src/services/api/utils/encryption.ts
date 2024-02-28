@@ -21,7 +21,7 @@ import Cryptr from 'cryptr';
 
 import { getAppConfig } from 'src/config';
 
-const { TOKEN_ENCRYPTION_KEY } = getAppConfig(process.env);
+const { TOKEN_ENCRYPTION_KEY } = getAppConfig();
 const BUILDTIME_PLACEHOLDER_KEY = 'supersecretz';
 // BUILDTIME_PLACEHOLDER_KEY will be replaced by TOKEN_ENCRYPTION_KEY from runtime vars
 const cryptr = new Cryptr(

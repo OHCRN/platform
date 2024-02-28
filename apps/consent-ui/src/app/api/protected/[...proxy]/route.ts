@@ -37,7 +37,7 @@ const handler = async (
 	req: NextRequest,
 	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
 ): Promise<NextResponse> => {
-	const { CONSENT_API_URL, CONSENT_UI_URL } = getAppConfig(process.env);
+	const { CONSENT_API_URL, CONSENT_UI_URL } = getAppConfig();
 	const clientSideRootUrl = urlJoin(CONSENT_UI_URL, PROXY_PROTECTED_API_PATH);
 	if (!req?.url?.startsWith(clientSideRootUrl)) {
 		// An http error status will trigger an AxiosError in the original ui request

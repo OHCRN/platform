@@ -21,16 +21,16 @@
 
 import { ReactNode, createContext, useContext } from 'react';
 
-import { AppConfig, defaultAppConfig } from 'src/config';
+import { ClientAppConfig, defaultClientAppConfig } from 'src/config';
 
-const AppConfigContext = createContext(defaultAppConfig);
+const AppConfigContext = createContext(defaultClientAppConfig);
 
 export const AppConfigProvider = ({
 	children,
 	config,
 }: {
 	children: ReactNode;
-	config: AppConfig;
+	config: ClientAppConfig;
 }) => {
 	return <AppConfigContext.Provider value={config}>{children}</AppConfigContext.Provider>;
 };
@@ -45,7 +45,7 @@ const AppConfigContextProvider = ({
 	config,
 }: {
 	children: ReactNode;
-	config: AppConfig;
+	config: ClientAppConfig;
 }) => <AppConfigProvider config={config}>{children}</AppConfigProvider>;
 
 export default AppConfigContextProvider;
