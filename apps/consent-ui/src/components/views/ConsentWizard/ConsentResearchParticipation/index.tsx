@@ -21,6 +21,7 @@
 import clsx from 'clsx';
 import urlJoin from 'url-join';
 import Link from 'next/link';
+import { ConsentResearchParticipationResponse } from 'types/consentApi';
 
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
@@ -36,6 +37,12 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 
 	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
 
+	// TODO needs to come from the API
+	const mockData: ConsentResearchParticipationResponse = {
+		RESEARCH_PARTICIPATION__CONTACT_INFORMATION: false,
+		RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
+	};
+
 	return (
 		<div>
 			<h3 className={clsx(styles.heading)}>{pageDict.heading}</h3>
@@ -50,6 +57,7 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 
 			<ConsentResearchParticipationForm
 				currentLang={currentLang}
+				defaultValues={mockData}
 				errorsDict={errorsDict}
 				formDict={formDict}
 			/>

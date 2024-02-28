@@ -20,7 +20,7 @@
 'use client';
 
 import Link from 'next/link';
-import { InformedConsentRequest } from 'types/consentApi';
+import { InformedConsentRequest, InformedConsentResponse } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -42,16 +42,19 @@ const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
 
 const InformedConsentForm = ({
 	currentLang,
+	defaultValues = {},
 	errorsDict,
 	formDict,
 }: {
 	currentLang: ValidLanguage;
+	defaultValues: InformedConsentResponse;
 	errorsDict: FormErrorsDictionary;
 	formDict: InformedConsentFormDictionary;
 }) => {
 	const { OHCRN_EMAIL } = useAppConfigContext();
 	// setup react-hook-forms
 	const methods = useForm<InformedConsentRequest>({
+		defaultValues,
 		resolver: zodResolver(InformedConsentRequest),
 	});
 	const {
@@ -66,9 +69,8 @@ const InformedConsentForm = ({
 
 		axios
 			.post(MOCK_API_URL, {
-				// MOCK REQUEST BODY, not final
+				// MOCK REQUEST, not final
 				body: data,
-				status: 200,
 			})
 			.then(() => {
 				goToNextConsentStep();

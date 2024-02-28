@@ -25,9 +25,9 @@ export const convertEmptyStringToUndefined = (val: string): string | undefined =
 	val.trim() === '' ? undefined : val;
 
 /**
- * Format form data before submitting to consent API, to match its schemas.
+ * Replace empty string values in an object with undefined values.
  */
-export const formatFormRequest = (data: Record<string, any>) =>
+export const convertEmptyStringValuesToUndefined = (data: Record<string, any>) =>
 	Object.entries(data).reduce((acc, [key, value]) => {
 		let formattedValue = value;
 
@@ -45,9 +45,9 @@ export const formatFormRequest = (data: Record<string, any>) =>
 	}, {});
 
 /**
- * Format form data before populating a form in the UI, to match the HTML spec.
+ * Replace undefined values in an object with empty strings.
  */
-export const formatFormResponse = (data: Record<string, any>) =>
+export const convertUndefinedValuesToEmptyStrings = (data: Record<string, any>) =>
 	Object.entries(data).reduce((acc, [key, value]) => {
 		let formattedValue = value;
 

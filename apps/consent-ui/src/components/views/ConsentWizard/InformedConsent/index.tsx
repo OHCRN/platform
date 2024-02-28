@@ -19,6 +19,7 @@
 
 import urlJoin from 'url-join';
 import Link from 'next/link';
+import { InformedConsentResponse } from 'types/consentApi';
 
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
@@ -37,6 +38,11 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { OHCRN_EMAIL } = getAppConfig(process.env);
 
 	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
+
+	// TODO needs to come from the API
+	const mockFormData: InformedConsentResponse = {
+		INFORMED_CONSENT__READ_AND_UNDERSTAND: true,
+	};
 
 	return (
 		<div>
@@ -58,7 +64,12 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
 			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}
-			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
+			<InformedConsentForm
+				currentLang={currentLang}
+				defaultValues={mockFormData}
+				errorsDict={errorsDict}
+				formDict={formDict}
+			/>
 		</div>
 	);
 };

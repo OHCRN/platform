@@ -19,10 +19,11 @@
 
 import Link from 'next/link';
 import urlJoin from 'url-join';
+import { ConsentRecontactResponse } from 'types/consentApi';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
-
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+
 import styles from './ConsentRecontact.module.scss';
 import ConsentRecontactForm from './ConsentRecontactForm';
 
@@ -33,6 +34,15 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const pageDict = translateNamespace('consentRecontactPage');
 
 	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
+
+	// TODO needs to come from the API
+	const mockData: ConsentRecontactResponse = {
+		RECONTACT__FUTURE_RESEARCH: false,
+		RECONTACT__SECONDARY_CONTACT: true,
+		secondaryContactFirstName: 'Homer',
+		secondaryContactLastName: undefined,
+		secondaryContactPhoneNumber: '1234567890',
+	};
 
 	return (
 		<div>
@@ -45,7 +55,12 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>
 			</p>
 			<p className={styles.smallText}>{pageDict.smallText}</p>
-			<ConsentRecontactForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
+			<ConsentRecontactForm
+				currentLang={currentLang}
+				defaultValues={mockData}
+				errorsDict={errorsDict}
+				formDict={formDict}
+			/>
 		</div>
 	);
 };

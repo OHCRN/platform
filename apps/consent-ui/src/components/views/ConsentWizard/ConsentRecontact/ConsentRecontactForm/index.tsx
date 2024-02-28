@@ -41,15 +41,18 @@ const currentConsentStep = ConsentStepRouteEnum.enum['consent-4'];
 
 const ConsentRecontactForm = ({
 	currentLang,
+	defaultValues,
 	errorsDict,
 	formDict,
 }: {
 	currentLang: ValidLanguage;
+	defaultValues: ConsentRecontactRequest;
 	errorsDict: FormErrorsDictionary;
 	formDict: ConsentRecontactFormDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentRecontactRequest>({
+		defaultValues,
 		mode: 'onBlur',
 		resolver: zodResolver(ConsentRecontactRequest),
 		shouldUnregister: true,

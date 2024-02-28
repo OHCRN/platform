@@ -20,7 +20,10 @@
 'use client';
 
 import Link from 'next/link';
-import { ConsentResearchParticipationRequest } from 'types/consentApi';
+import {
+	ConsentResearchParticipationRequest,
+	ConsentResearchParticipationResponse,
+} from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -41,15 +44,18 @@ const currentConsentStep = ConsentStepRouteEnum.enum['consent-3'];
 
 const ConsentResearchParticipationForm = ({
 	currentLang,
+	defaultValues,
 	errorsDict,
 	formDict,
 }: {
 	currentLang: ValidLanguage;
+	defaultValues: ConsentResearchParticipationResponse;
 	errorsDict: FormErrorsDictionary;
 	formDict: ConsentResearchParticipationFormDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentResearchParticipationRequest>({
+		defaultValues,
 		resolver: zodResolver(ConsentResearchParticipationRequest),
 	});
 	const {

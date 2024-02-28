@@ -28,7 +28,6 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { hasRequiredGuardianInformation } from 'types/common';
-import urlJoin from 'url-join';
 import axios from 'axios';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
@@ -51,7 +50,7 @@ import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/providers/ModalProvider';
 import { handleMouseDownBlur } from 'src/components/utils';
-import { formatFormRequest } from 'src/components/common/Form/utils';
+import { convertEmptyStringValuesToUndefined } from 'src/components/common/Form/utils';
 import { MOCK_API_URL } from 'src/constants';
 
 import { ConsentGroupOption } from './types';
@@ -141,7 +140,7 @@ const ClinicianInviteFormComponent = ({
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
-			const formattedData = formatFormRequest(data);
+			const formattedData = convertEmptyStringValuesToUndefined(data);
 			axios
 				.post(MOCK_API_URL, {
 					// MOCK REQUEST BODY, not final
