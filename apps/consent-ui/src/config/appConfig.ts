@@ -18,6 +18,7 @@
  */
 
 export type AppConfig = {
+	AUTH_DISABLED?: boolean;
 	CONSENT_API_URL: string;
 	CONSENT_UI_URL: string;
 	OHCRN_EMAIL?: string;
@@ -30,6 +31,7 @@ export type AppConfig = {
 };
 
 export const defaultAppConfig: AppConfig = {
+	AUTH_DISABLED: undefined,
 	CONSENT_API_URL: 'http://localhost:8080',
 	CONSENT_UI_URL: 'http://localhost:3000',
 	OHCRN_EMAIL: '',
@@ -47,6 +49,7 @@ export const defaultAppConfig: AppConfig = {
  */
 // TODO: enforce server-only usage. To be completed as a follow-up to https://github.com/OHCRN/platform/issues/422
 const getAppConfig = (): AppConfig => ({
+	AUTH_DISABLED: process.env.AUTH_DISABLED === 'true' || defaultAppConfig.AUTH_DISABLED,
 	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
 	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
 	OHCRN_EMAIL: process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
