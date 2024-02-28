@@ -19,8 +19,8 @@
 
 import { z } from 'zod';
 
-import { Name, PhoneNumber, hasMatchingPasswords } from 'types/entities';
-import { refineCheckIsMinimumAgeOrGreater, NonEmptyString } from 'types/common';
+import { refineCheckIsMinimumAgeOrGreater, NonEmptyString } from '../../../common/index.js';
+import { Name, PhoneNumber, hasMatchingPasswords } from '../../../entities/fields/index.js';
 
 // TODO hookup backend #368
 // create a better zod schema with conditional validation,
