@@ -24,8 +24,6 @@ import { ParticipantIdentityBase } from '../../../entities/index.js';
 import { ConsentGroup } from '../../../entities/fields/index.js';
 import { hasRequiredGuardianInformation } from '../../../common/index.js';
 
-// TODO: consentToBeContacted will need to be added to the consent DAS Participant table, currently it is tracked only in the ClinicianInvite table
-// TBD in https://github.com/OHCRN/platform/issues/388
 export const PICreateParticipantRequest = ParticipantIdentityBase.merge(
 	z.object({ consentGroup: ConsentGroup }), // consentGroup added to allow required fields check, not required for pi-das
 ).refine(hasRequiredGuardianInformation);

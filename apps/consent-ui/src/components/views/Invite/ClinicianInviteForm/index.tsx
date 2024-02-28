@@ -22,10 +22,12 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ConsentGroup } from 'types/entities';
+import { ConsentGroup, ClinicianInviteBase, EmptyOrOptionalName } from 'types/entities';
 import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { z } from 'zod';
+import { hasRequiredGuardianInformation } from 'types/common';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -39,18 +41,24 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import FormSection from 'src/components/common/Form/FormSection';
 import Button from 'src/components/common/Button';
 import layoutStyles from 'src/components/layouts/SideImageLayout/SideImageLayout.module.scss';
-import { useModal } from 'src/components/common/Modal';
 import ConsentGroupModal from 'src/components/views/Invite/ConsentGroupModal';
 import { ValidLanguage } from 'src/i18n';
 import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels';
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
+import { useModal } from 'src/components/providers/ModalProvider';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
 
 const styles = Object.assign({}, formStyles, layoutStyles);
+
+const ClinicianInviteFormRequest = ClinicianInviteBase.extend({
+	participantPreferredName: EmptyOrOptionalName,
+}).refine(hasRequiredGuardianInformation);
+
+type ClinicianInviteFormRequest = z.infer<typeof ClinicianInviteFormRequest>;
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -81,9 +89,9 @@ const ClinicianInviteFormComponent = ({
 	};
 
 	// setup react-hook-forms
-	const methods = useForm<ClinicianInviteRequest>({
+	const methods = useForm<ClinicianInviteFormRequest>({
 		mode: 'onBlur',
-		resolver: zodResolver(ClinicianInviteRequest),
+		resolver: zodResolver(ClinicianInviteFormRequest),
 		shouldUnregister: true,
 	});
 
@@ -142,13 +150,9 @@ const ClinicianInviteFormComponent = ({
 	}, [watchConsentGroup]);
 
 	// setup consent group info modal
-	const { openModal, closeModal } = useModal();
+	const { openModal } = useModal();
 	const consentGroupModalConfig = {
-		title: textDict.consentGroups,
-		actionButtonText: 'OK',
-		onActionClick: closeModal,
-		onCancelClick: closeModal,
-		body: <ConsentGroupModal currentLang={currentLang} />,
+		modalComponent: <ConsentGroupModal currentLang={currentLang} />,
 	};
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 

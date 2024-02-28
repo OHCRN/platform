@@ -32,7 +32,9 @@ import {
 	ParticipantResponse,
 	PrismaClient,
 } from './generated/client/index.js';
-import logger from './logger.js';
+import serviceLogger from './logger.js';
+
+const logger = serviceLogger.forModule('PrismaClient');
 
 const nanoid = customAlphabet(ID_ALPHABET, NANOID_LENGTH);
 

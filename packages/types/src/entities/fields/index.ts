@@ -29,6 +29,7 @@ export * from './MolecularLab.js';
 export * from './Name.js';
 export * from './NanoId.js';
 export * from './OhipNumber.js';
+export * from './Password.js';
 export * from './PhoneNumber.js';
 export * from './PostalCode.js';
 export * from './Province.js';

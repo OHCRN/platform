@@ -4,11 +4,11 @@ export const updateParticipant = async ({
 	participantId,
 	inviteId,
 	dateOfBirth,
-	emailAddress,
+	participantEmailAddress,
 	participantOhipFirstName,
 	participantOhipLastName,
 	participantOhipMiddleName,
-	phoneNumber,
+	participantPhoneNumber,
 	participantPreferredName,
 	guardianName,
 	guardianPhoneNumber,
@@ -23,11 +23,11 @@ export const updateParticipant = async ({
 	participantId: string;
 	inviteId?: string;
 	dateOfBirth?: Date;
-	emailAddress?: string;
+	participantEmailAddress?: string;
 	participantOhipFirstName?: string;
 	participantOhipLastName?: string;
 	participantOhipMiddleName?: string;
-	phoneNumber?: string;
+	participantPhoneNumber?: string;
 	participantPreferredName?: string;
 	guardianName?: string;
 	guardianPhoneNumber?: string;
@@ -47,11 +47,11 @@ export const updateParticipant = async ({
 		data: {
 			inviteId,
 			dateOfBirth,
-			emailAddress,
+			participantEmailAddress,
 			participantOhipFirstName,
 			participantOhipLastName,
 			participantOhipMiddleName,
-			phoneNumber,
+			participantPhoneNumber,
 			participantPreferredName,
 			guardianName,
 			guardianPhoneNumber,

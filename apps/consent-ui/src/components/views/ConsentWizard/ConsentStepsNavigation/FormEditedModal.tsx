@@ -17,8 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Modal from 'src/components/common/Modal';
+
 const FormEditedModal = () => {
-	return <div>modal text TBD</div>;
+	// TODO add text here https://github.com/OHCRN/platform/issues/402
+	return (
+		<Modal actionButtonText="OK" cancelButtonText="cancel">
+			<p>modal text TBD</p>
+		</Modal>
+	);
 };
 
 export default FormEditedModal;

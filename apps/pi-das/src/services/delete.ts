@@ -17,15 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { Result, failure, success } from 'types/httpResponses';
+import { Result, SystemError, failure, success } from 'types/httpResponses';
 
 import prisma from '../prismaClient.js';
 import { PrismaClientKnownRequestError } from '../generated/client/runtime/library.js';
 import serviceLogger from '../logger.js';
 
-const logger = serviceLogger.forModule('PrismaClient');
+const logger = serviceLogger.forModule('DeleteService');
 
-type DeleteInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_DOES_NOT_EXIST';
+type DeleteInviteFailureStatus = SystemError | 'INVITE_DOES_NOT_EXIST';
 const DeleteInviteSuccess = { message: 'success' };
 /**
  * Deletes a ClinicianInvite entry in the PI DB by invite ID
@@ -56,6 +56,42 @@ export const deleteClinicianInvite = async (
 			logger.error(
 				'DELETE /invites',
 				'Unexpected error handling delete invite request.',
+				error.message,
+			);
+			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+		});
+};
+
+type DeleteParticipantFailureStatus = SystemError | 'PARTICIPANT_DOES_NOT_EXIST';
+const DeleteParticipantSuccess = { message: 'success' };
+/**
+ * Deletes a Participant entry in the PI DB by participant ID
+ * @param id  ID
+ */
+export const deleteParticipant = async (
+	participantId: string,
+): Promise<Result<typeof DeleteParticipantSuccess, DeleteParticipantFailureStatus>> => {
+	return prisma.participant
+		.delete({
+			where: { id: participantId },
+		})
+		.then(() => success(DeleteParticipantSuccess))
+		.catch((error) => {
+			if (error instanceof PrismaClientKnownRequestError) {
+				if (error.code === 'P2025') {
+					const errorMessage = `Participant with id '${participantId}' does not exist.`;
+					logger.error('DELETE /participants', errorMessage, error.message);
+					return failure('PARTICIPANT_DOES_NOT_EXIST', errorMessage);
+				}
+				logger.error('DELETE /participants', error.code, error.message);
+				return failure(
+					'SYSTEM_ERROR',
+					`An unexpected error occurred in the PrismaClient - ${error.code}`,
+				);
+			}
+			logger.error(
+				'DELETE /participants',
+				'Unexpected error handling delete participant request.',
 				error.message,
 			);
 			return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
