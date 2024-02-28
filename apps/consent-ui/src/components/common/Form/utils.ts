@@ -43,24 +43,3 @@ export const convertEmptyStringValuesToUndefined = (data: Record<string, any>) =
 			[key]: formattedValue,
 		};
 	}, {});
-
-/**
- * Replace undefined values in an object with empty strings.
- */
-export const convertUndefinedValuesToEmptyStrings = (data: Record<string, any>) =>
-	Object.entries(data).reduce((acc, [key, value]) => {
-		let formattedValue = value;
-
-		switch (typeof value) {
-			case 'undefined':
-				formattedValue = '';
-				break;
-			default:
-				break;
-		}
-
-		return {
-			...acc,
-			[key]: formattedValue,
-		};
-	}, {});
