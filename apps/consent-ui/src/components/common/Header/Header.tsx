@@ -58,11 +58,12 @@ const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
 	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(linkName);
 };
 
-const hamburgerMenuOptions: { label: React.ReactNode; link?: string }[] = [
+export type HamburgerMenuOptions = { label: React.ReactNode; link: string; key: string }[];
+const hamburgerMenuOptions: HamburgerMenuOptions = [
 	// TODO: replace with actual links
-	{ label: 'Login', link: '/' },
-	{ label: 'Register', link: '/' },
-	{ label: 'Help', link: '/' },
+	{ label: 'Login', link: '/', key: 'login' },
+	{ label: 'Register', link: '/', key: 'register' },
+	{ label: 'Help', link: '/', key: 'help' },
 ];
 
 type HeaderContentProps = {
@@ -72,25 +73,24 @@ type HeaderContentProps = {
 };
 
 const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
-	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 	const mainIcon = icons[currentLang || defaultLanguage];
 	const pathname = usePathname();
 	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
-	const hamburgerMenuId = `menu-${useId()}`;
+	const menuId = `menu-${useId()}`;
 
 	const ref = useDetectClickOutside({
 		onTriggered: () => {
-			console.log('click outside');
-			setShowHamburgerMenu(false);
+			setShowMenu(false);
 		},
 	});
 
 	const toggleHamburgerMenu = () => {
-		setShowHamburgerMenu(!showHamburgerMenu);
+		setShowMenu(!showMenu);
 	};
 
 	return (
-		<header className={styles.header}>
+		<header className={styles.header} ref={ref}>
 			<div className={clsx(styles.headerBar, hiddenOnDesktop && styles['hide-desktop'])}>
 				<div>
 					<Link href={`/${currentLang}`}>
@@ -127,12 +127,11 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 							type="button"
 							className={styles.hamburgerToggle}
 							onClick={toggleHamburgerMenu}
-							ref={ref}
 							aria-label={textDict.hamburgerMenuAltText}
-							aria-expanded={showHamburgerMenu}
-							aria-controls={hamburgerMenuId}
+							aria-expanded={showMenu}
+							aria-controls={menuId}
 						>
-							{showHamburgerMenu ? (
+							{showMenu ? (
 								<Image src={CloseMenuIcon} alt={textDict.hamburgerMenuAltText} />
 							) : (
 								<Image src={OpenMenuIcon} alt={textDict.hamburgerMenuAltText} />
@@ -141,12 +140,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 					</div>
 				</nav>
 			</div>
-			<HamburgerMenu
-				id={hamburgerMenuId}
-				options={hamburgerMenuOptions}
-				ref={ref}
-				showHambugerMenu={showHamburgerMenu}
-			/>
+			<HamburgerMenu id={menuId} options={hamburgerMenuOptions} showMenu={showMenu} />
 		</header>
 	);
 };

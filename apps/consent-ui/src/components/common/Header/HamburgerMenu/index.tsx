@@ -19,30 +19,28 @@
 
 import clsx from 'clsx';
 import Link from 'next/link';
-import { MutableRefObject } from 'react';
+
+import { HamburgerMenuOptions } from '../Header';
 
 import styles from './HamburgerMenu.module.scss';
 
 const HamburgerMenu = ({
 	id,
 	options,
-	ref,
-	showHambugerMenu,
+	showMenu,
 }: {
 	id: string;
-	options: { label: React.ReactNode; link?: string }[];
-	ref: MutableRefObject<null>;
-	showHambugerMenu: boolean;
+	options: HamburgerMenuOptions;
+	showMenu: boolean;
 }) => {
 	return (
 		<div
-			className={clsx(styles.hamburgerContainer, !showHambugerMenu && styles.hamburgerHidden)}
+			className={clsx(styles.hamburgerContainer, !showMenu && styles.hamburgerHidden)}
 			id={id}
-			ref={ref}
-			aria-hidden={!showHambugerMenu}
+			aria-hidden={!showMenu}
 		>
 			{options.map((option) => (
-				<Link href={option.link || ''} className={styles.hamburgerLine} key={option.link}>
+				<Link href={option.link || ''} className={styles.hamburgerLine} key={option.key}>
 					{option.label}
 				</Link>
 			))}
