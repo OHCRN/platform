@@ -17,27 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import { getTranslation, ValidLanguage } from 'src/i18n';
 
-import { useEffect, useState } from 'react';
+const APIVersion = async ({
+	apiVersion,
+	currentLang,
+}: {
+	apiVersion: string;
+	currentLang: ValidLanguage;
+}) => {
+	const { translate } = getTranslation(currentLang);
 
-import { ValidLanguage } from 'src/i18n';
-import { getAPIStatus } from 'src/services/api';
-
-import APIVersionLabel from './APIVersionLabel';
-
-const APIVersion = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const [apiVersion, setApiVersion] = useState<string>('N/A');
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const { version } = await getAPIStatus();
-			setApiVersion(version);
-		};
-		fetchData();
-	}, []);
-
-	return <APIVersionLabel apiVersion={apiVersion} currentLang={currentLang} />;
+	return <span>{translate('footer', 'api', { apiVersion })}</span>;
 };
 
 export default APIVersion;
