@@ -22,6 +22,8 @@ import { describe, expect, it } from 'vitest';
 import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
+	hasRequiredOhipInformationUI,
+	hasRequiredOhipInformation
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
@@ -172,4 +174,80 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 	});
+
+	describe('hasRequiredOhipInformationUI', () => {
+		it('returns TRUE for ohipDisabled is false and ohipNumber is provided', () => {
+			const testSchemaObj = {
+				ohipNumber: '1234567890',
+				ohipDisabled: false,
+			};
+			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE for ohipDisabled is false and ohipNumber is NOT provided', () => {
+			const testSchemaObj = {
+				ohipNumber: undefined,
+				ohipDisabled: false,
+			};
+			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns TRUE for ohipDisabled is true and ohipNumber is NOT provided', () => {
+			const testSchemaObj = {
+				ohipNumber: undefined,
+				ohipDisabled: true,
+			};
+			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE for ohipDisabled is true and ohipNumber is provided', () => {
+			const testSchemaObj = {
+				ohipNumber: '1234567890',
+				ohipDisabled: true,
+			};
+			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			expect(result).false;
+		});
+	})
+
+	describe('hasRequiredOhipInformation', () => {
+		it('returns TRUE for hasOhip is true and ohipNumber is provided', () => {
+			const testSchemaObj = {
+				ohipNumber: '1234567890',
+				hasOhip: true,
+			};
+			const result = hasRequiredOhipInformation(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE for hasOhip is true and ohipNumber is NOT provided', () => {
+			const testSchemaObj = {
+				ohipNumber: undefined,
+				hasOhip: true,
+			};
+			const result = hasRequiredOhipInformation(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns TRUE for hasOhip is false and ohipNumber is NOT provided', () => {
+			const testSchemaObj = {
+				ohipNumber: undefined,
+				hasOhip: false,
+			};
+			const result = hasRequiredOhipInformation(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE for hasOhip is false and ohipNumber is provided', () => {
+			const testSchemaObj = {
+				ohipNumber: '1234567890',
+				hasOhip: false,
+			};
+			const result = hasRequiredOhipInformation(testSchemaObj);
+			expect(result).false;
+		});
+	})
 });
