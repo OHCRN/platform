@@ -18,14 +18,16 @@
  */
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { auth } from 'src/app/auth';
 
 import Header from './Header';
 
-const HeaderWrapper = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const HeaderWrapper = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
 	const textDict = translateNamespace('header');
+	const session = await auth();
 
-	return <Header currentLang={currentLang} textDict={textDict} />;
+	return <Header currentLang={currentLang} textDict={textDict} session={session} />;
 };
 
 export default HeaderWrapper;

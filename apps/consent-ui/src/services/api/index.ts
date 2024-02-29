@@ -18,4 +18,5 @@
  */
 
 export * from './axiosClient';
+export * from './axiosProxyClient';
 export * from './status';

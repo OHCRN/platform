@@ -16,30 +16,29 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+'use client';
 
-import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'types/common';
+import { signIn } from 'next-auth/react';
 import urlJoin from 'url-join';
 
-import { API, PROXY_API_PATH } from 'src/constants';
-import { axiosClient } from 'src/services/api';
+import { ValidLanguage } from 'src/i18n';
+import routesByLocale from 'src/i18n/routes/routesByLocale.json';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 
-const getAPIStatus = async () => {
-	return await axiosClient
-		.get(urlJoin(PROXY_API_PATH, API.STATUS))
-		.then((res: AxiosResponse<APIStatus>) => {
-			if (res.status !== 200) {
-				throw new AxiosError(res.statusText);
+import Button from '../Button';
+
+const LoginButton = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { CONSENT_UI_URL } = useAppConfigContext();
+	const loginRedirect = urlJoin(CONSENT_UI_URL, currentLang, routesByLocale[currentLang].dashboard);
+	return (
+		<Button
+			onClick={() =>
+				signIn('keycloak', { callbackUrl: loginRedirect }, { ui_locales: currentLang })
 			}
-			return res.data;
-		})
-		.catch(() => {
-			const errorRes: APIStatus = {
-				version: 'N/A',
-				status: 'API fetch failed',
-			};
-			return errorRes;
-		});
+		>
+			Login
+		</Button>
+	);
 };
 
-export { getAPIStatus };
+export default LoginButton;

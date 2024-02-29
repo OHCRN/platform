@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image, { StaticImageData } from 'next/image';
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { Session } from 'next-auth';
 
 import { ValidLanguage } from 'src/i18n';
 import { defaultLanguage } from 'src/i18n/settings';
@@ -38,6 +39,8 @@ import { getLinkNameByPath } from '../Link/utils';
 
 import HamburgerMenu from './HamburgerMenu';
 import styles from './Header.module.scss';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 import HelpButton from './HelpButton';
 
 const ROUTES_WITHOUT_DESKTOP_HEADER: RouteName[] = ['invite', 'register'];
@@ -65,9 +68,10 @@ const hamburgerMenuOptions: { label: React.ReactNode; link?: string }[] = [
 type HeaderContentProps = {
 	currentLang: ValidLanguage;
 	textDict: HeaderDictionary;
+	session: Session | null;
 };
 
-const Header = ({ currentLang, textDict }: HeaderContentProps) => {
+const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 	const mainIcon = icons[currentLang || defaultLanguage];
 	const pathname = usePathname();
@@ -94,6 +98,12 @@ const Header = ({ currentLang, textDict }: HeaderContentProps) => {
 					</Link>
 				</div>
 				<nav role="navigation" className={styles.right}>
+					{/* TODO: implement logout button as part of the user menu dropdown: https://github.com/OHCRN/platform/issues/403 */}
+					{session?.user && (
+						<div className={styles.headerItem}>
+							<LogoutButton currentLang={currentLang} />
+						</div>
+					)}
 					<div className={styles.headerItem}>
 						<LanguageToggle currentLang={currentLang} />
 					</div>
@@ -103,8 +113,11 @@ const Header = ({ currentLang, textDict }: HeaderContentProps) => {
 					</div>
 					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 					<div className={styles['user-menu']}>
-						{/* Desktop */}
-						<div className={styles.desktopUserMenu}>Hello</div>
+						{session?.user ? (
+							<div>Hello, {session.user.preferredUsername}</div>
+						) : (
+							<LoginButton currentLang={currentLang} />
+						)}
 						{/* Mobile */}
 						<button
 							type="button"
