@@ -17,29 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'types/common';
-import urlJoin from 'url-join';
+import { NextRequest } from 'next/server';
 
-import { API, PROXY_API_PATH } from 'src/constants';
-import { axiosClient } from 'src/services/api';
-
-const getAPIStatus = async () => {
-	return await axiosClient
-		.get(urlJoin(PROXY_API_PATH, API.STATUS))
-		.then((res: AxiosResponse<APIStatus>) => {
-			if (res.status !== 200) {
-				throw new AxiosError(res.statusText);
-			}
-			return res.data;
-		})
-		.catch(() => {
-			const errorRes: APIStatus = {
-				version: 'N/A',
-				status: 'API fetch failed',
-			};
-			return errorRes;
-		});
+/**
+ * Parses data from a request based on the request header 'Content-Type'
+ * Defaults to null if content-type is not 'application/json' or 'multipart/form-data'
+ * @param request NextRequest
+ * @returns a plain object containing request data, or null
+ */
+export const getRequestData = async (request: NextRequest): Promise<FormData | null | object> => {
+	const contentType = request.headers.get('content-type');
+	if (contentType?.includes('multipart/form-data')) {
+		const reqData = await request.formData();
+		return reqData;
+	} else if (contentType === 'application/json') {
+		const reqData: object = await request.json();
+		return reqData;
+	} else {
+		return null;
+	}
 };
-
-export { getAPIStatus };
