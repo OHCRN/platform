@@ -30,7 +30,7 @@ import HomepageNotification from './notifications/HomepageNotification';
 
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
-	const { OHCRN_HOME_LINK } = getAppConfig(process.env);
+	const { OHCRN_HOME_LINK } = getAppConfig();
 
 	return (
 		<div className={styles.pageWrapper}>
