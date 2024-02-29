@@ -122,12 +122,13 @@ export const authConfig = {
 			return session;
 		},
 		authorized: ({ auth, request: { nextUrl } }) => {
+			const { AUTH_DISABLED } = getAppConfig();
 			const urlLang = nextUrl.pathname.split('/').filter((item) => item !== '')[0];
 			const parsedLang = ValidLanguage.safeParse(urlLang);
 			const currentLang = parsedLang.success ? parsedLang.data : ValidLanguage.enum.en;
 			const pathByName = getLinkNameByPath(nextUrl.pathname, currentLang);
 			// TODO: is it necessary to check session expiry here or does next-auth clear expired sessions automatically?
-			if (PUBLIC_ROUTES.includes(pathByName) || auth?.user) {
+			if (AUTH_DISABLED || PUBLIC_ROUTES.includes(pathByName) || auth?.user) {
 				return true;
 			} else {
 				// TODO: remove this log once QA testing is completed
