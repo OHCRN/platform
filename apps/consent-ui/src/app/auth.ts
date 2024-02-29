@@ -17,29 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AxiosError, AxiosResponse } from 'axios';
-import { APIStatus } from 'types/common';
-import urlJoin from 'url-join';
+import NextAuth from 'next-auth';
 
-import { API, PROXY_API_PATH } from 'src/constants';
-import { axiosClient } from 'src/services/api';
+import { authConfig } from './authConfig';
 
-const getAPIStatus = async () => {
-	return await axiosClient
-		.get(urlJoin(PROXY_API_PATH, API.STATUS))
-		.then((res: AxiosResponse<APIStatus>) => {
-			if (res.status !== 200) {
-				throw new AxiosError(res.statusText);
-			}
-			return res.data;
-		})
-		.catch(() => {
-			const errorRes: APIStatus = {
-				version: 'N/A',
-				status: 'API fetch failed',
-			};
-			return errorRes;
-		});
-};
-
-export { getAPIStatus };
+export const {
+	handlers: { GET, POST },
+	auth,
+	signIn,
+	signOut,
+} = NextAuth(authConfig);
