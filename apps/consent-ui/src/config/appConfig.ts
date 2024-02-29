@@ -18,7 +18,7 @@
  */
 
 export type AppConfig = {
-	AUTH_DISABLED?: boolean;
+	AUTH_DISABLED: boolean;
 	CONSENT_API_URL: string;
 	CONSENT_UI_URL: string;
 	OHCRN_EMAIL?: string;
@@ -31,7 +31,7 @@ export type AppConfig = {
 };
 
 export const defaultAppConfig: AppConfig = {
-	AUTH_DISABLED: undefined,
+	AUTH_DISABLED: false,
 	CONSENT_API_URL: 'http://localhost:8080',
 	CONSENT_UI_URL: 'http://localhost:3000',
 	OHCRN_EMAIL: '',
