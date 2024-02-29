@@ -113,11 +113,15 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 					</div>
 					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
 					<div className={styles['user-menu']}>
-						{session?.user ? (
-							<div>Hello, {session.user.preferredUsername}</div>
-						) : (
-							<LoginButton currentLang={currentLang} />
-						)}
+						{/* Desktop */}
+						<div className={styles.desktopUserMenu}>
+							{session?.user ? (
+								<div>Hello, {session.user.preferredUsername}</div>
+							) : (
+								<LoginButton currentLang={currentLang} />
+							)}
+						</div>
+
 						{/* Mobile */}
 						<button
 							type="button"
