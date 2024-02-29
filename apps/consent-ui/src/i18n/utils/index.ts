@@ -18,3 +18,4 @@
  */
 
 export * from './getTranslation';
+export * from './replaceParams';
