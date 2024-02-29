@@ -34,7 +34,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const errorsDict = translateNamespace('formErrors');
 	const pageDict = translateNamespace('informedConsentPage');
 
-	const { OHCRN_EMAIL } = getAppConfig(process.env);
+	const { OHCRN_EMAIL } = getAppConfig();
 
 	const studyConsentPdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, pageDict.studyConsentPdf);
 

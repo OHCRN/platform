@@ -21,6 +21,8 @@ import { NextResponse, NextRequest } from 'next/server';
 
 import { defaultLanguage, supportedLanguages } from 'src/i18n/settings';
 
+import { auth } from './app/auth';
+
 export const config = {
 	matcher: [
 		// Skip all internal paths (_next)
@@ -29,7 +31,7 @@ export const config = {
 	],
 };
 
-export function middleware(request: NextRequest) {
+function middleware(request: NextRequest) {
 	// Check if there is any supported locale in the pathname
 	const pathname = request.nextUrl.pathname;
 	const pathnameIsMissingLocale = supportedLanguages.every(
@@ -39,10 +41,13 @@ export function middleware(request: NextRequest) {
 	// this setup will result in a 404 if the locale is not supported, as it will be treated as the pathname
 	// i.e. `/es` would redirect to `/en/es`
 	if (pathnameIsMissingLocale) {
+		// TODO: nice-to-have - try to find locale via provided path; if not found, set locale to defaultLanguage
+		// i.e. "/tableau-de-bord" -> {fr: "dashboard"} -> locale = "fr"
 		const locale = defaultLanguage;
 
 		return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url));
 	}
-
 	return NextResponse.next();
 }
+
+export default auth(middleware);
