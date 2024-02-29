@@ -20,28 +20,63 @@
 import { describe, expect, it } from 'vitest';
 
 import { ParticipantRegistrationRequest } from '../../src/services/consentUi/requests/Register.js';
+import { MINIMUM_AGE_IN_YEARS } from '../../src/common/utils/dateOfBirth.js';
 
 describe('ParticipantRegistrationRequest', () => {
-	it("Adds an error to the dateOfBirth field when user's age is below the minimum", () => {
-		const today = new Date();
-		const month = today.getMonth();
-		const day = today.getDate();
-		const year = today.getFullYear();
+	const startDate = new Date('02/28/2024');
+	const month = startDate.getMonth() + 1;
+	const day = startDate.getDate();
+	const year = startDate.getFullYear();
 
+	const monthDay = `${month}/${day}/`;
+	const exactlyMinimumAgeDateOfBirth = new Date(`${monthDay}${year - MINIMUM_AGE_IN_YEARS}`);
+	const olderThanMinimumAgeDateOfBirth = new Date(
+		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS * 1.5)}`,
+	);
+	const lessThanMinimumAgeDateOfBirth = new Date(
+		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS / 2)}`,
+	);
+
+	const testData = {
+		confirmPassword: 'password',
+		consentToBeContacted: true,
+		dateOfBirth: olderThanMinimumAgeDateOfBirth,
+		guardianName: 'Homer Simpson',
+		guardianPhoneNumber: '1234567890',
+		guardianRelationship: 'Father',
+		participantEmailAddress: 'bart@example.com',
+		participantFirstName: 'Bartholomew',
+		participantLastName: 'Simpson',
+		participantPhoneNumber: '2345678901',
+		participantPreferredName: 'Bart',
+		password: 'password',
+	};
+
+	it("Adds an error to the dateOfBirth field when user's age is below the minimum", () => {
 		const result = ParticipantRegistrationRequest.safeParse({
-			guardianName: 'Homer Simpson',
-			guardianPhoneNumber: '1234567890',
-			guardianRelationship: 'Father',
-			participantFirstName: 'Bartholomew',
-			participantLastName: 'Simpson',
-			participantPhoneNumber: '2345678901',
-			participantPreferredName: 'Bart',
-			dateOfBirth: `${day}/${month}/${year - 10}`,
-			consentToBeContacted: true,
-			participantEmailAddress: 'bart@example.com',
-			password: 'password',
-			confirmPassword: 'password',
+			...testData,
+			dateOfBirth: lessThanMinimumAgeDateOfBirth,
 		});
-		expect(result.success).true;
+		const resultParsed = JSON.parse((result as { error: Error }).error.message)[0];
+		const resultMessage = resultParsed.message;
+		const resultPath = resultParsed.path[0];
+		expect(result.success).false;
+		expect(resultMessage).toBe('participantLessThanMinimumAge');
+		expect(resultPath).toBe('dateOfBirth');
+	});
+
+	it("Parses correctly when the user's age is equal to or greater than the minimum", () => {
+		expect(
+			ParticipantRegistrationRequest.safeParse({
+				...testData,
+				dateOfBirth: exactlyMinimumAgeDateOfBirth,
+			}).success,
+		).true;
+		expect(
+			ParticipantRegistrationRequest.safeParse({
+				...testData,
+				dateOfBirth: olderThanMinimumAgeDateOfBirth,
+			}).success,
+		).true;
 	});
 });

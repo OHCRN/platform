@@ -26,7 +26,7 @@ import {
 
 describe('Date of Birth', () => {
 	const startDate = new Date('02/28/2024');
-	const month = startDate.getMonth();
+	const month = startDate.getMonth() + 1;
 	const day = startDate.getDate();
 	const year = startDate.getFullYear();
 

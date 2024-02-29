@@ -44,7 +44,7 @@ const DateOfBirthField = z
 		dateOfBirth: z.coerce.date(),
 	})
 	.refine(refineCheckIsMinimumAgeOrGreater, {
-		message: 'participantIsMinor',
+		message: 'participantLessThanMinimumAge',
 		path: ['dateOfBirth'],
 	});
 
