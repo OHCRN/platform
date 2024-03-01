@@ -31,6 +31,7 @@ import type { ValidLanguage } from 'src/i18n';
 type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
 	popperClassName?: string;
 	currentLang: ValidLanguage;
+	onBlur?: () => void;
 };
 
 const CalendarInput = <T extends FieldValues>({

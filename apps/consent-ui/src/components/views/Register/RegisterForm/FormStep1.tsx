@@ -22,8 +22,9 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { checkAge18AndOver } from 'types/entities';
+import ReactModal from 'react-modal';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -36,11 +37,9 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 import { ValidLanguage } from 'src/i18n';
-import { useModal } from 'src/components/providers/ModalProvider';
 
 import styles from './RegisterForm.module.scss';
 import { RegisterFormStep1 } from './types';
-import RegisterMinorModal from './RegisterMinorModal';
 
 const FormStep1 = ({
 	className,
@@ -82,124 +81,145 @@ const FormStep1 = ({
 		setFocus('guardianName');
 	}, [setFocus]);
 
-	// show a warning modal if the user is a minor
-	const { openModal } = useModal();
-	const registerMinorModalConfig = {
-		modalComponent: <RegisterMinorModal currentLang={currentLang} />,
+	const [showModal, setShowModal] = useState(false);
+
+	const handleOpenModal = () => {
+		setShowModal(true);
 	};
+
+	const handleCloseModal = () => {
+		setShowModal(false);
+	};
+
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
 		if (dateOfBirthValue) {
 			const dateOfBirth = new Date(dateOfBirthValue);
 			const userIsAdult = checkAge18AndOver(dateOfBirth);
 			if (!userIsAdult) {
-				openModal(registerMinorModalConfig);
+				handleOpenModal();
 			}
 		}
 	};
 
 	return (
-		<FormProvider {...methods}>
-			<Form className={className} onSubmit={handleSubmit(onSubmit)}>
-				{/* SECTION - CHECK IF USER IS A GUARDIAN */}
-				<FormSection>
-					{/* TODO implement radio button #366
+		<>
+			<ReactModal
+				style={{ overlay: { zIndex: 1000 } }}
+				isOpen={showModal}
+				contentLabel="testing"
+				onRequestClose={handleCloseModal}
+			>
+				<button type="button" onClick={handleCloseModal}>
+					Close modal
+				</button>
+			</ReactModal>
+			<FormProvider {...methods}>
+				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
+					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
+					<FormSection>
+						{/* TODO implement radio button #366
 								this field is called isGuardian in the data model */}
-					{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
-				</FormSection>
+						{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
+					</FormSection>
 
-				{/* OPTIONAL SECTION - GUARDIAN INFO */}
-				{/* these fields are conditionally required, i.e. if the user is
+					<button type="button" onClick={handleOpenModal}>
+						Show modal
+					</button>
+
+					{/* OPTIONAL SECTION - GUARDIAN INFO */}
+					{/* these fields are conditionally required, i.e. if the user is
 						registering as a guardian */}
 
-				{/* TODO #366 update this section - add conditional rendering.
+					{/* TODO #366 update this section - add conditional rendering.
 							see guardian fields on invite form for an example. */}
-				<FormSection variant="grey">
-					<p className={styles.instructions}>{textDict.enterInfo}</p>
-					<TextFieldSet
-						error={errors.guardianName?.type && errorsDict.required}
-						label={labelsDict.yourName}
-						name="guardianName"
-						required
-					/>
-					<TextFieldSet
-						error={errors.guardianPhoneNumber?.type && errorsDict.required}
-						label={labelsDict.yourPhone}
-						name="guardianPhoneNumber"
-						required
-					/>
-					<TextFieldSet
-						error={errors.guardianRelationship?.type && errorsDict.required}
-						label={labelsDict.yourRelationship}
-						name="guardianRelationship"
-						required
-					/>
-				</FormSection>
+					<FormSection variant="grey">
+						<p className={styles.instructions}>{textDict.enterInfo}</p>
+						<TextFieldSet
+							error={errors.guardianName?.type && errorsDict.required}
+							label={labelsDict.yourName}
+							name="guardianName"
+							required
+						/>
+						<TextFieldSet
+							error={errors.guardianPhoneNumber?.type && errorsDict.required}
+							label={labelsDict.yourPhone}
+							name="guardianPhoneNumber"
+							required
+						/>
+						<TextFieldSet
+							error={errors.guardianRelationship?.type && errorsDict.required}
+							label={labelsDict.yourRelationship}
+							name="guardianRelationship"
+							required
+						/>
+					</FormSection>
 
-				{/* SECTION - PARTICIPANT INFO */}
-				<FormSection>
-					<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
-					<TextFieldSet
-						error={errors.participantFirstName?.type && errorsDict.required}
-						label={labelsDict.firstName}
-						name="participantFirstName"
-						required
-						description={textDict.participantFirstNameTooltip}
-					/>
-					<TextFieldSet
-						error={errors.participantLastName?.type && errorsDict.required}
-						label={labelsDict.lastName}
-						name="participantLastName"
-						required
-						description={textDict.participantLastNameTooltip}
-					/>
-					<TextFieldSet
-						error={errors.participantPreferredName?.type && errorsDict.required}
-						label={labelsDict.preferredName}
-						name="participantPreferredName"
-						description={textDict.participantPreferredNameTooltip}
-					/>
-					<TextFieldSet
-						error={errors.participantPhoneNumber?.type && errorsDict.required}
-						label={labelsDict.phone}
-						name="participantPhoneNumber"
-						required
-						description={textDict.participantPhoneNumberTooltip}
-					/>
-					<CalendarFieldSet
-						currentLang={currentLang}
-						description={textDict.dateOfBirthTooltip}
-						error={errors.dateOfBirth?.type && errorsDict.required}
-						label={labelsDict.dateOfBirth}
-						name="dateOfBirth"
-						onBlur={handleDateOfBirthBlur}
-						required
-					/>
-				</FormSection>
+					{/* SECTION - PARTICIPANT INFO */}
+					<FormSection>
+						<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
+						<TextFieldSet
+							error={errors.participantFirstName?.type && errorsDict.required}
+							label={labelsDict.firstName}
+							name="participantFirstName"
+							required
+							description={textDict.participantFirstNameTooltip}
+						/>
+						<TextFieldSet
+							error={errors.participantLastName?.type && errorsDict.required}
+							label={labelsDict.lastName}
+							name="participantLastName"
+							required
+							description={textDict.participantLastNameTooltip}
+						/>
+						<TextFieldSet
+							error={errors.participantPreferredName?.type && errorsDict.required}
+							label={labelsDict.preferredName}
+							name="participantPreferredName"
+							description={textDict.participantPreferredNameTooltip}
+						/>
+						<TextFieldSet
+							error={errors.participantPhoneNumber?.type && errorsDict.required}
+							label={labelsDict.phone}
+							name="participantPhoneNumber"
+							required
+							description={textDict.participantPhoneNumberTooltip}
+						/>
+						<CalendarFieldSet
+							currentLang={currentLang}
+							description={textDict.dateOfBirthTooltip}
+							error={errors.dateOfBirth?.type && errorsDict.required}
+							label={labelsDict.dateOfBirth}
+							name="dateOfBirth"
+							onBlur={handleDateOfBirthBlur}
+							required
+						/>
+					</FormSection>
 
-				{/* SECTION - CONTACT AFTER REGISTERING NOTICE */}
-				<div className={styles.afterRegistering}>
-					<p>{textDict.afterRegistering}</p>
-					{/* TODO add link to help centre #367 */}
-					<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
-						{textDict.questions}
-					</Link>
-				</div>
+					{/* SECTION - CONTACT AFTER REGISTERING NOTICE */}
+					<div className={styles.afterRegistering}>
+						<p>{textDict.afterRegistering}</p>
+						{/* TODO add link to help centre #367 */}
+						<Link className={styles.questionsLink} href={OHCRN_HELP_CENTRE_URL}>
+							{textDict.questions}
+						</Link>
+					</div>
 
-				{/* GO TO NEXT PAGE */}
-				<div className={styles.buttonWrapper}>
-					<Button
-						action="next"
-						aria-label={`${textDict.goToStep} 2`}
-						color={isValid ? 'green' : 'default'}
-						onMouseDown={handleMouseDownBlur}
-						type="submit"
-					>
-						{textDict.next}
-					</Button>
-				</div>
-			</Form>
-		</FormProvider>
+					{/* GO TO NEXT PAGE */}
+					<div className={styles.buttonWrapper}>
+						<Button
+							action="next"
+							aria-label={`${textDict.goToStep} 2`}
+							color={isValid ? 'green' : 'default'}
+							onMouseDown={handleMouseDownBlur}
+							type="submit"
+						>
+							{textDict.next}
+						</Button>
+					</div>
+				</Form>
+			</FormProvider>
+		</>
 	);
 };
 
