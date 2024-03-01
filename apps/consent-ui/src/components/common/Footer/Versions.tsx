@@ -26,12 +26,14 @@ import packageJson from 'src/../package.json';
 import OvertureLogo from 'src/../public/assets/images/overture.svg';
 import GithubLogo from 'src/../public/assets/images/github.svg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { getAPIStatus } from 'src/services/api';
 
 import APIVersion from './APIVersion';
 import styles from './Footer.module.scss';
 
 const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
+	const { version } = await getAPIStatus();
 
 	return (
 		<div className={styles.versions}>
@@ -52,7 +54,7 @@ const Versions = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 					{translate('footer', 'ohcrnRegistry', { registryVersion: packageJson.version })} -{' '}
 				</span>
 				<Suspense fallback={<span />}>
-					<APIVersion currentLang={currentLang} />
+					<APIVersion apiVersion={version} currentLang={currentLang} />
 				</Suspense>
 			</div>
 		</div>
