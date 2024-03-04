@@ -50,8 +50,8 @@ export const GuardianNullableResponseFields = {
 };
 
 export const GuardianRegisterRequestFields = z.object({
-	isGuardian: z.boolean(),
 	guardianName: EmptyOrOptionalName,
 	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
 	guardianRelationship: EmptyOrOptionalName,
+	isGuardian: z.boolean(),
 });
