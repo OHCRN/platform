@@ -35,9 +35,6 @@ import { z } from 'zod';
 
 const RegisterFormStep1Fields = z.object({
 	dateOfBirth: NonEmptyString, // TEMP #366
-	guardianName: Name,
-	guardianPhoneNumber: PhoneNumber,
-	guardianRelationship: Name,
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
