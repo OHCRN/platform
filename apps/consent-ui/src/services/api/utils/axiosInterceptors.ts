@@ -16,35 +16,48 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import axios from 'axios';
 
-import { getAppConfig } from 'src/config';
-import {
-	axiosErrorInterceptor,
-	axiosRequestInterceptor,
-	axiosResponseInterceptor,
-} from 'src/services/api/utils';
+import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-const { CONSENT_API_URL, VERBOSE_AXIOS_LOGGING } = getAppConfig();
-const AXIOS_CLIENT_NAME = 'axiosProxyClient';
-
-const initAxiosClient = () =>
-	axios.create({
-		baseURL: CONSENT_API_URL,
-	});
-
-const axiosProxyClient = initAxiosClient();
-
-if (VERBOSE_AXIOS_LOGGING) {
-	axiosProxyClient.interceptors.request.use(
-		(request) => axiosRequestInterceptor(request, AXIOS_CLIENT_NAME),
-		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Request`),
+export const axiosRequestInterceptor = (
+	request: InternalAxiosRequestConfig,
+	axiosClientName: string,
+) => {
+	console.log(
+		`${axiosClientName || 'Axios'} Request:`,
+		JSON.stringify(
+			{
+				url: request.url,
+				method: request.method,
+				headers: request.headers,
+				params: request.params,
+				data: request.data,
+			},
+			null,
+			2,
+		),
 	);
+	return request;
+};
 
-	axiosProxyClient.interceptors.response.use(
-		(response) => axiosResponseInterceptor(response, AXIOS_CLIENT_NAME),
-		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Response`),
+export const axiosResponseInterceptor = (response: AxiosResponse, axiosClientName: string) => {
+	console.log(
+		`${axiosClientName || 'Axios'} Response:`,
+		JSON.stringify(
+			{
+				status: response.status,
+				statusText: response.statusText,
+				headers: response.headers,
+				data: response.data,
+			},
+			null,
+			2,
+		),
 	);
-}
+	return response;
+};
 
-export { axiosProxyClient };
+export const axiosErrorInterceptor = (error: any, axiosClientName: string) => {
+	console.error(`${axiosClientName || 'Axios'} Error:`, error);
+	return error;
+};
