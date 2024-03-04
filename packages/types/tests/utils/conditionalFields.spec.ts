@@ -22,19 +22,14 @@ import { describe, expect, it } from 'vitest';
 import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
-	registerHasRequiredGuardianInfo,
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
-const mockRegisterGuardianFields = {
+const mockCompleteGuardianFields = {
+	guardianEmailAddress: 'gina_g@example.com',
 	guardianName: 'Gina Guardian',
 	guardianPhoneNumber: '0123456789',
 	guardianRelationship: 'Mother',
-};
-
-const mockCompleteGuardianFields = {
-	...mockRegisterGuardianFields,
-	guardianEmailAddress: 'gina_g@example.com',
 };
 
 const mockCompleteParticipantContactFields = {
@@ -117,58 +112,6 @@ describe('Conditional fields utility functions', () => {
 				consentGroup: ADULT_CONSENT,
 			};
 			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).true;
-		});
-	});
-
-	describe('registerHasRequiredGuardianInfo', () => {
-		it('returns TRUE for user is a guardian and all required guardian fields are provided', () => {
-			const testSchemaObj = {
-				...mockRegisterGuardianFields,
-				isGuardian: true,
-			};
-			const result = registerHasRequiredGuardianInfo(testSchemaObj);
-			expect(result).true;
-		});
-
-		it('returns FALSE for user is a guardian and one required guardian field is NOT provided', () => {
-			const guardianFields = {
-				guardianPhoneNumber: '0123456789',
-				guardianRelationship: 'Mother',
-			};
-			const testSchemaObj = {
-				...guardianFields,
-				isGuardian: true,
-			};
-			const result = registerHasRequiredGuardianInfo(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns FALSE for user is a guardian and several required guardian fields are NOT provided', () => {
-			const guardianFields = {
-				guardianRelationship: 'Mother',
-			};
-			const testSchemaObj = {
-				...guardianFields,
-				isGuardian: true,
-			};
-			const result = registerHasRequiredGuardianInfo(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns FALSE for user is a guardian and NO required guardian fields are provided', () => {
-			const testSchemaObj = {
-				isGuardian: true,
-			};
-			const result = registerHasRequiredGuardianInfo(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns TRUE for user is NOT a guardian and no guardian fields are provided', () => {
-			const testSchemaObj = {
-				isGuardian: false,
-			};
-			const result = registerHasRequiredGuardianInfo(testSchemaObj);
 			expect(result).true;
 		});
 	});

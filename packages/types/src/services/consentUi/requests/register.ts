@@ -20,7 +20,7 @@
 import { z } from 'zod';
 
 import {
-	GuardianBaseFields,
+	GuardianRegisterRequestFields,
 	Name,
 	OptionalName,
 	PhoneNumber,
@@ -42,9 +42,9 @@ const RegisterFormStep1Fields = z.object({
 	participantPreferredName: OptionalName,
 });
 
-const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true })
-	.extend({ isGuardian: z.boolean() })
-	.superRefine(registerHasRequiredGuardianInfo);
+const RegisterGuardianFields = GuardianRegisterRequestFields.superRefine(
+	registerHasRequiredGuardianInfo,
+);
 
 export const RegisterFormStep1 = z.intersection(RegisterFormStep1Fields, RegisterGuardianFields);
 // TODO #366 add refine - make sure participant is an adult
@@ -73,5 +73,5 @@ export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 // REGISTER POST REQUEST
 // combine both steps
 
-export const RegisterRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
-export type RegisterRequest = z.infer<typeof RegisterRequest>;
+export const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
+export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

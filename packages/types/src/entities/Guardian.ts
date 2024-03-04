@@ -19,7 +19,14 @@
 
 import { z } from 'zod';
 
-import { Name, OptionalName, OptionalPhoneNumber, PhoneNumber } from './fields/index.js';
+import {
+	EmptyOrOptionalName,
+	EmptyOrOptionalPhoneNumber,
+	Name,
+	OptionalName,
+	OptionalPhoneNumber,
+	PhoneNumber,
+} from './fields/index.js';
 
 export const GuardianBaseFields = z.object({
 	guardianEmailAddress: z.string().email().optional(),
@@ -41,3 +48,10 @@ export const GuardianNullableResponseFields = {
 		.transform((input) => input ?? undefined),
 	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
 };
+
+export const GuardianRegisterRequestFields = z.object({
+	isGuardian: z.boolean(),
+	guardianName: EmptyOrOptionalName,
+	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
+	guardianRelationship: EmptyOrOptionalName,
+});
