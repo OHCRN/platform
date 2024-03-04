@@ -132,9 +132,9 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 							aria-controls={menuId}
 						>
 							{showMenu ? (
-								<Image src={CloseMenuIcon} alt={textDict.hamburgerMenuAltText} />
+								<Image src={CloseMenuIcon} alt={''} />
 							) : (
-								<Image src={OpenMenuIcon} alt={textDict.hamburgerMenuAltText} />
+								<Image src={OpenMenuIcon} alt={''} />
 							)}
 						</button>
 					</div>
