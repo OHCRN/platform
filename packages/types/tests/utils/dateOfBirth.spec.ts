@@ -22,10 +22,10 @@ import { describe, expect, it } from 'vitest';
 import { checkIsMinimumAgeOrGreater, MINIMUM_AGE_IN_YEARS } from '../../src/common/utils/index.js';
 
 describe('Date of Birth', () => {
-	const startDate = new Date('02/28/2024');
-	const month = startDate.getMonth() + 1;
-	const day = startDate.getDate();
-	const year = startDate.getFullYear();
+	const mockDate = new Date('02/28/2024');
+	const month = mockDate.getMonth() + 1;
+	const day = mockDate.getDate();
+	const year = mockDate.getFullYear();
 
 	const monthDay = `${month}/${day}/`;
 	const exactlyMinimumAgeDateOfBirth = new Date(`${monthDay}${year - MINIMUM_AGE_IN_YEARS}`);
@@ -38,13 +38,13 @@ describe('Date of Birth', () => {
 	const futureDateOfBirth = new Date(`${monthDay}${year + MINIMUM_AGE_IN_YEARS}`);
 
 	it("must return true if user's age is greater than or equal to the minimum'", () => {
-		expect(checkIsMinimumAgeOrGreater(olderThanMinimumAgeDateOfBirth)).true;
-		expect(checkIsMinimumAgeOrGreater(exactlyMinimumAgeDateOfBirth)).true;
+		expect(checkIsMinimumAgeOrGreater(mockDate, olderThanMinimumAgeDateOfBirth)).true;
+		expect(checkIsMinimumAgeOrGreater(mockDate, exactlyMinimumAgeDateOfBirth)).true;
 	});
 
 	it("must return false if user's age is less than the minimum", () => {
-		expect(checkIsMinimumAgeOrGreater(startDate)).false;
-		expect(checkIsMinimumAgeOrGreater(lessThanMinimumAgeDateOfBirth)).false;
-		expect(checkIsMinimumAgeOrGreater(futureDateOfBirth)).false;
+		expect(checkIsMinimumAgeOrGreater(mockDate, mockDate)).false;
+		expect(checkIsMinimumAgeOrGreater(mockDate, lessThanMinimumAgeDateOfBirth)).false;
+		expect(checkIsMinimumAgeOrGreater(mockDate, futureDateOfBirth)).false;
 	});
 });

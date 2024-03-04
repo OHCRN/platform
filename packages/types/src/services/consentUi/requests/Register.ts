@@ -19,14 +19,14 @@
 
 import { z } from 'zod';
 
-import { refineCheckIsMinimumAgeOrGreater, NonEmptyString } from '../../../common/index.js';
+import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
 import { Name, PhoneNumber, hasMatchingPasswords } from '../../../entities/fields/index.js';
 
 // TODO hookup backend #368
 // create a better zod schema with conditional validation,
 // and optional name fields
 
-const RegisterFormStep1Fields = z.object({
+export const RegisterFormStep1Fields = z.object({
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
 	guardianRelationship: Name,
@@ -39,14 +39,7 @@ const RegisterFormStep1Fields = z.object({
 	// with unused fields in the Zod schema
 });
 
-const DateOfBirthField = z
-	.object({
-		dateOfBirth: z.coerce.date(),
-	})
-	.refine(refineCheckIsMinimumAgeOrGreater, {
-		message: 'participantLessThanMinimumAge',
-		path: ['dateOfBirth'],
-	});
+const DateOfBirthField = createDateOfBirthRequestSchema(new Date());
 
 export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;

@@ -18,15 +18,22 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { z } from 'zod';
 
-import { ParticipantRegistrationRequest } from '../../src/services/consentUi/requests/Register.js';
-import { MINIMUM_AGE_IN_YEARS } from '../../src/common/utils/dateOfBirth.js';
+import {
+	RegisterFormStep1Fields,
+	RegisterFormStep2,
+} from '../../src/services/consentUi/requests/Register.js';
+import {
+	MINIMUM_AGE_IN_YEARS,
+	createDateOfBirthRequestSchema,
+} from '../../src/common/utils/dateOfBirth.js';
 
 describe('ParticipantRegistrationRequest', () => {
-	const startDate = new Date('02/28/2024');
-	const month = startDate.getMonth() + 1;
-	const day = startDate.getDate();
-	const year = startDate.getFullYear();
+	const mockDate = new Date('02/28/2024');
+	const month = mockDate.getMonth() + 1;
+	const day = mockDate.getDate();
+	const year = mockDate.getFullYear();
 
 	const monthDay = `${month}/${day}/`;
 	const exactlyMinimumAgeDateOfBirth = new Date(`${monthDay}${year - MINIMUM_AGE_IN_YEARS}`);
@@ -36,6 +43,11 @@ describe('ParticipantRegistrationRequest', () => {
 	const lessThanMinimumAgeDateOfBirth = new Date(
 		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS / 2)}`,
 	);
+
+	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
+	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
+	const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
+	const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
 
 	const testData = {
 		confirmPassword: 'password',
