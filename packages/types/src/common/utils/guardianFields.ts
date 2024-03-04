@@ -16,15 +16,38 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import { z } from 'zod';
 
-export * from './SortOrder.js';
-export * from './Status.js';
-export * from './String.js';
-export * from './conditionalFieldUtils.js';
-export * from './expand.js';
-export * from './keys.js';
-export * from './lengthConstraints.js';
-export * from './recursivePartial.js';
-export * from './regexes.js';
-export * from './values.js';
-export * from './utils/index.js';
+import { GuardianBaseFields } from '../../entities/Guardian.js';
+import { hasValue } from '../../common/index.js';
+
+/**
+ * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
+ * Use with superRefine.
+ *
+ * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
+ * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const registerHasRequiredGuardianInfo = (
+	props: {
+		isGuardian: boolean;
+	} & Omit<GuardianBaseFields, 'guardianEmailAddress'>,
+	ctx: z.RefinementCtx,
+) => {
+	const { guardianName, guardianPhoneNumber, guardianRelationship, isGuardian } = props;
+
+	const fields = { guardianName, guardianPhoneNumber, guardianRelationship };
+
+	if (isGuardian) {
+		Object.entries(fields).forEach(([key, value]) => {
+			if (!hasValue(value)) {
+				ctx.addIssue({
+					code: 'custom',
+					message: 'guardianInfoMissing',
+					path: [key],
+				});
+			}
+		});
+	}
+};

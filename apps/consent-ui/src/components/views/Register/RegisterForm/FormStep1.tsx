@@ -23,6 +23,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { RegisterFormStep1 } from 'types/consentUi';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -36,7 +37,6 @@ import { handleMouseDownBlur } from 'src/components/utils';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
 import styles from './RegisterForm.module.scss';
-import { RegisterFormStep1 } from './types';
 
 const FormStep1 = ({
 	className,

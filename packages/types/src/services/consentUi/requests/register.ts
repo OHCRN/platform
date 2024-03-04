@@ -17,15 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { registerHasRequiredGuardianInfo, NonEmptyString } from 'types/common';
+import { z } from 'zod';
+
 import {
 	GuardianBaseFields,
 	Name,
 	OptionalName,
 	PhoneNumber,
 	hasMatchingPasswords,
-} from 'types/entities';
-import { z } from 'zod';
+} from '../../../entities/index.js';
+import { NonEmptyString, registerHasRequiredGuardianInfo } from '../../../common/index.js';
 
 // TODO hookup backend #368
 // create a better zod schema with conditional validation,
@@ -43,7 +44,7 @@ const RegisterFormStep1Fields = z.object({
 
 const RegisterGuardianFields = GuardianBaseFields.omit({ guardianEmailAddress: true })
 	.extend({ isGuardian: z.boolean() })
-	.refine(registerHasRequiredGuardianInfo);
+	.superRefine(registerHasRequiredGuardianInfo);
 
 export const RegisterFormStep1 = z.intersection(RegisterFormStep1Fields, RegisterGuardianFields);
 // TODO #366 add refine - make sure participant is an adult
