@@ -22,8 +22,8 @@ import { describe, expect, it } from 'vitest';
 import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
-	hasRequiredOhipInformationUI,
-	hasRequiredOhipInformation
+	hasRequiredOhipFormInfo,
+	hasRequiredOhipInformation,
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
@@ -48,7 +48,7 @@ describe('Conditional fields utility functions', () => {
 		YOUNG_ADULT_CONSENT, // non-guardian group
 	} = ConsentGroup.enum;
 	describe('hasRequiredGuardianInformation', () => {
-		it('returns TRUE for a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR) and all required guardian fields are provided', () => {
+		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR) and all required guardian fields are provided', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
@@ -57,7 +57,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns TRUE for a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) and all required guardian fields are provided', () => {
+		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) and all required guardian fields are provided', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
@@ -66,7 +66,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns TRUE for a guardian consentGroup (ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER) and all required guardian fields are provided', () => {
+		it('returns TRUE if a guardian consentGroup (ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER) and all required guardian fields are provided', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
 				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
@@ -75,7 +75,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns FALSE for a guardian consentGroup and one required guardian field is NOT provided', () => {
+		it('returns FALSE if a guardian consentGroup and one required guardian field is NOT provided', () => {
 			const guardianFields = {
 				guardianName: 'Gina Guardian',
 				guardianEmailAddress: 'gina_g@example.com',
@@ -89,7 +89,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
-		it('returns FALSE for a guardian consentGroup and several required guardian fields are NOT provided', () => {
+		it('returns FALSE if a guardian consentGroup and several required guardian fields are NOT provided', () => {
 			const guardianFields = {
 				guardianName: 'Gina Guardian',
 			};
@@ -101,7 +101,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
-		it('returns FALSE for a guardian consentGroup and NO required guardian fields are provided', () => {
+		it('returns FALSE if a guardian consentGroup and NO required guardian fields are provided', () => {
 			const testSchemaObj = {
 				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 			};
@@ -109,7 +109,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
-		it('returns TRUE for a non-guardian consentGroup and no guardian fields are provided', () => {
+		it('returns TRUE if a non-guardian consentGroup and no guardian fields are provided', () => {
 			const testSchemaObj = {
 				consentGroup: ADULT_CONSENT,
 			};
@@ -119,7 +119,7 @@ describe('Conditional fields utility functions', () => {
 	});
 
 	describe('hasRequiredParticipantContactInfo', () => {
-		it('returns TRUE for a non-guardian consentGroup (ADULT_CONSENT) and participant contact fields are provided', () => {
+		it('returns TRUE if a non-guardian consentGroup (ADULT_CONSENT) and participant contact fields are provided', () => {
 			const testSchemaObj = {
 				...mockCompleteParticipantContactFields,
 				consentGroup: ADULT_CONSENT,
@@ -128,7 +128,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns TRUE for a non-guardian (YOUNG_ADULT_CONSENT) and participant contact fields are provided', () => {
+		it('returns TRUE if a non-guardian (YOUNG_ADULT_CONSENT) and participant contact fields are provided', () => {
 			const testSchemaObj = {
 				...mockCompleteParticipantContactFields,
 				consentGroup: YOUNG_ADULT_CONSENT,
@@ -137,7 +137,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns FALSE for a non-guardian consentGroup and one participant contact field is NOT provided', () => {
+		it('returns FALSE if a non-guardian consentGroup and one participant contact field is NOT provided', () => {
 			const participantContactFields = {
 				participantEmailAddress: 'patti@example.com',
 			};
@@ -149,7 +149,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
-		it('returns FALSE for a non-guardian consentGroup and all participant contact fields are NOT provided', () => {
+		it('returns FALSE if a non-guardian consentGroup and all participant contact fields are NOT provided', () => {
 			const testSchemaObj = {
 				consentGroup: YOUNG_ADULT_CONSENT,
 			};
@@ -157,7 +157,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
-		it('returns TRUE for a guardian consentGroup and participant contact fields are NOT provided', () => {
+		it('returns TRUE if a guardian consentGroup and participant contact fields are NOT provided', () => {
 			const testSchemaObj = {
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
@@ -165,7 +165,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns TRUE for a guardian consentGroup and participant contact fields are provided', () => {
+		it('returns TRUE if a guardian consentGroup and participant contact fields are provided', () => {
 			const testSchemaObj = {
 				...mockCompleteParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
@@ -175,46 +175,46 @@ describe('Conditional fields utility functions', () => {
 		});
 	});
 
-	describe('hasRequiredOhipInformationUI', () => {
-		it('returns TRUE for ohipDisabled is false and ohipNumber is provided', () => {
+	describe('hasRequiredOhipFormInfo', () => {
+		it('returns TRUE if ohipDisabled is false and ohipNumber is provided', () => {
 			const testSchemaObj = {
 				ohipNumber: '1234567890',
 				ohipDisabled: false,
 			};
-			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			const result = hasRequiredOhipFormInfo(testSchemaObj);
 			expect(result).true;
 		});
 
-		it('returns FALSE for ohipDisabled is false and ohipNumber is NOT provided', () => {
+		it('returns FALSE if ohipDisabled is false and ohipNumber is NOT provided', () => {
 			const testSchemaObj = {
 				ohipNumber: undefined,
 				ohipDisabled: false,
 			};
-			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			const result = hasRequiredOhipFormInfo(testSchemaObj);
 			expect(result).false;
 		});
 
-		it('returns TRUE for ohipDisabled is true and ohipNumber is NOT provided', () => {
+		it('returns TRUE if ohipDisabled is true and ohipNumber is NOT provided', () => {
 			const testSchemaObj = {
 				ohipNumber: undefined,
 				ohipDisabled: true,
 			};
-			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			const result = hasRequiredOhipFormInfo(testSchemaObj);
 			expect(result).true;
 		});
 
-		it('returns FALSE for ohipDisabled is true and ohipNumber is provided', () => {
+		it('returns FALSE if ohipDisabled is true and ohipNumber is provided', () => {
 			const testSchemaObj = {
 				ohipNumber: '1234567890',
 				ohipDisabled: true,
 			};
-			const result = hasRequiredOhipInformationUI(testSchemaObj);
+			const result = hasRequiredOhipFormInfo(testSchemaObj);
 			expect(result).false;
 		});
-	})
+	});
 
 	describe('hasRequiredOhipInformation', () => {
-		it('returns TRUE for hasOhip is true and ohipNumber is provided', () => {
+		it('returns TRUE if hasOhip is true and ohipNumber is provided', () => {
 			const testSchemaObj = {
 				ohipNumber: '1234567890',
 				hasOhip: true,
@@ -223,7 +223,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns FALSE for hasOhip is true and ohipNumber is NOT provided', () => {
+		it('returns FALSE if hasOhip is true and ohipNumber is NOT provided', () => {
 			const testSchemaObj = {
 				ohipNumber: undefined,
 				hasOhip: true,
@@ -232,7 +232,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).false;
 		});
 
-		it('returns TRUE for hasOhip is false and ohipNumber is NOT provided', () => {
+		it('returns TRUE if hasOhip is false and ohipNumber is NOT provided', () => {
 			const testSchemaObj = {
 				ohipNumber: undefined,
 				hasOhip: false,
@@ -241,7 +241,7 @@ describe('Conditional fields utility functions', () => {
 			expect(result).true;
 		});
 
-		it('returns FALSE for hasOhip is false and ohipNumber is provided', () => {
+		it('returns FALSE if hasOhip is false and ohipNumber is provided', () => {
 			const testSchemaObj = {
 				ohipNumber: '1234567890',
 				hasOhip: false,
@@ -249,5 +249,5 @@ describe('Conditional fields utility functions', () => {
 			const result = hasRequiredOhipInformation(testSchemaObj);
 			expect(result).false;
 		});
-	})
+	});
 });

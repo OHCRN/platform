@@ -102,7 +102,7 @@ export const hasRequiredGuardianInformation = (
  * @param props ohipNumber, ohipDisabled
  * @returns {boolean} returns true if all required fields are present
  */
-export const hasRequiredOhipInformationUI = (props: {
+export const hasRequiredOhipFormInfo = (props: {
 	ohipNumber?: EmptyOrOptionalOhipNumber;
 	ohipDisabled: boolean;
 }) => {
