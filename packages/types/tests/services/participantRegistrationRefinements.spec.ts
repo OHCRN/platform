@@ -19,7 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ParticipantRegistrationRequest } from '../../src/services/consentUi/requests/Register.js';
+import { ParticipantRegistrationRequest } from '../../src/services/consentUi/requests/register.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const testData = {
