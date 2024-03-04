@@ -24,7 +24,6 @@ import { AxiosHeaders } from 'axios';
 import { auth } from 'src/app/auth';
 import { decryptContent, getRequestData } from 'src/services/api/utils';
 import { getAppConfig } from 'src/config';
-import { PROXY_PROTECTED_API_PATH } from 'src/constants';
 import { axiosProxyClient } from 'src/services/api';
 
 /**
@@ -37,12 +36,7 @@ const handler = async (
 	req: NextRequest,
 	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
 ): Promise<NextResponse> => {
-	const { CONSENT_API_URL, CONSENT_UI_URL } = getAppConfig();
-	const clientSideRootUrl = urlJoin(CONSENT_UI_URL, PROXY_PROTECTED_API_PATH);
-	if (!req?.url?.startsWith(clientSideRootUrl)) {
-		// An http error status will trigger an AxiosError in the original ui request
-		return NextResponse.json({ error: 'Invalid URL' }, { status: 400 });
-	}
+	const { CONSENT_API_URL } = getAppConfig();
 	const session = await auth();
 	// check for existence of a session before attempting a request to consent-api
 	// consent-api will also have its own auth middleware to verify sessions
