@@ -36,13 +36,16 @@ export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Da
  * @param comparisonDate: date to compare the dateOfBirth to
  *
  */
-export const createDateOfBirthRequestSchema = (comparisonDate: Date) => {
+export const createDateOfBirthRequestSchema = (comparisonDate?: Date) => {
 	return z
 		.object({
 			dateOfBirth: z.coerce.date(),
 		})
-		.refine((props) => checkIsMinimumAgeOrGreater(comparisonDate, props.dateOfBirth), {
-			message: 'participantLessThanMinimumAge',
-			path: ['dateOfBirth'],
-		});
+		.refine(
+			(props) => checkIsMinimumAgeOrGreater(comparisonDate || new Date(), props.dateOfBirth),
+			{
+				message: 'participantLessThanMinimumAge',
+				path: ['dateOfBirth'],
+			},
+		);
 };

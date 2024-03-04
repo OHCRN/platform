@@ -39,7 +39,7 @@ export const RegisterFormStep1Fields = z.object({
 	// with unused fields in the Zod schema
 });
 
-const DateOfBirthField = createDateOfBirthRequestSchema(new Date());
+const DateOfBirthField = createDateOfBirthRequestSchema();
 
 export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
