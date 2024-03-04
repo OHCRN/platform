@@ -19,10 +19,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import {
-	checkIsMinimumAgeOrGreater,
-	MINIMUM_AGE_IN_YEARS,
-} from '../../../src/common/utils/index.js';
+import { checkIsMinimumAgeOrGreater, MINIMUM_AGE_IN_YEARS } from '../../src/common/utils/index.js';
 
 describe('Date of Birth', () => {
 	const startDate = new Date('02/28/2024');
