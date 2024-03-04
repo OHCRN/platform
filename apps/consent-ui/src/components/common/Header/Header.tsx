@@ -58,14 +58,6 @@ const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
 	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(linkName);
 };
 
-export type HamburgerMenuOptions = { label: React.ReactNode; link: string; key: string }[];
-const hamburgerMenuOptions: HamburgerMenuOptions = [
-	// TODO: replace with actual links
-	{ label: 'Login', link: '/', key: 'login' },
-	{ label: 'Register', link: '/', key: 'register' },
-	{ label: 'Help', link: '/', key: 'help' },
-];
-
 type HeaderContentProps = {
 	currentLang: ValidLanguage;
 	textDict: HeaderDictionary;
@@ -92,7 +84,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 	return (
 		<header className={styles.header} ref={ref}>
 			<div className={clsx(styles.headerBar, hiddenOnDesktop && styles['hide-desktop'])}>
-				<div>
+				<div className={styles.logoLink}>
 					<Link href={`/${currentLang}`}>
 						<Image src={mainIcon} priority alt={textDict.logoAltText} className={styles.logo} />
 					</Link>
@@ -140,7 +132,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 					</div>
 				</nav>
 			</div>
-			<HamburgerMenu id={menuId} options={hamburgerMenuOptions} showMenu={showMenu} />
+			<HamburgerMenu id={menuId} showMenu={showMenu} />
 		</header>
 	);
 };

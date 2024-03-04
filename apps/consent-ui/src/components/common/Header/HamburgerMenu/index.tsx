@@ -20,26 +20,24 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { HamburgerMenuOptions } from '../Header';
-
 import styles from './HamburgerMenu.module.scss';
 
-const HamburgerMenu = ({
-	id,
-	options,
-	showMenu,
-}: {
-	id: string;
-	options: HamburgerMenuOptions;
-	showMenu: boolean;
-}) => {
+export type HamburgerMenuOptions = { label: React.ReactNode; link: string; key: string }[];
+const hamburgerMenuOptions: HamburgerMenuOptions = [
+	// TODO: replace with actual links
+	{ label: 'Login', link: '/', key: 'login' },
+	{ label: 'Register', link: '/', key: 'register' },
+	{ label: 'Help', link: '/', key: 'help' },
+];
+
+const HamburgerMenu = ({ id, showMenu }: { id: string; showMenu: boolean }) => {
 	return (
 		<div
 			className={clsx(styles.hamburgerContainer, !showMenu && styles.hamburgerHidden)}
 			id={id}
 			aria-hidden={!showMenu}
 		>
-			{options.map((option) => (
+			{hamburgerMenuOptions.map((option) => (
 				<Link href={option.link || ''} className={styles.hamburgerLine} key={option.key}>
 					{option.label}
 				</Link>
