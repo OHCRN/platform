@@ -22,10 +22,11 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { checkAge18AndOver } from 'types/entities';
 import ReactModal from 'react-modal';
 
+import useModal from 'src/components/common/Modal/useModal';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
 import FormSection from 'src/components/common/Form/FormSection';
@@ -81,15 +82,7 @@ const FormStep1 = ({
 		setFocus('guardianName');
 	}, [setFocus]);
 
-	const [showModal, setShowModal] = useState(false);
-
-	const handleOpenModal = () => {
-		setShowModal(true);
-	};
-
-	const handleCloseModal = () => {
-		setShowModal(false);
-	};
+	const { handleCloseModal, handleOpenModal, showModal } = useModal();
 
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
