@@ -85,7 +85,6 @@ const FormStep2 = ({
 		onRecaptchaChange,
 		recaptchaCheckboxRef,
 		recaptchaError,
-		// resetRecaptcha,
 		setRecaptchaError,
 	} = useRecaptcha();
 
@@ -103,6 +102,7 @@ const FormStep2 = ({
 
 		if (recaptchaToken) {
 			const data = Object.assign({}, step1Data, step2Data);
+			console.log(data);
 		} else {
 			setRecaptchaError('Please complete captcha');
 		}
