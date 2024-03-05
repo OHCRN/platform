@@ -8,6 +8,7 @@
 		"./httpResponses": "./dist/httpResponses/index.js",
 		"./consentApi": "./dist/services/consentApi/index.js",
 		"./consentDas": "./dist/services/consentDas/index.js",
+		"./consentUi": "./dist/services/consentUi/index.js",
 		"./dataMapper": "./dist/services/dataMapper/index.js",
 		"./keysDas": "./dist/services/keysDas/index.js",
 		"./phiDas": "./dist/services/phiDas/index.js",
@@ -26,6 +27,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@anatine/zod-openapi": "^2.2.0",
+		"date-fns": "2.30.0",
 		"eslint-config-ohcrn": "workspace:^",
 		"openapi3-ts": "^4.1.2",
 		"zod": "^3.21.4"
