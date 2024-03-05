@@ -24,6 +24,7 @@ export const MINIMUM_AGE_IN_YEARS = 18;
 
 /**
  * Check if age is at least MINIMUM_AGE_IN_YEARS
+ * @param comparisonDate: date to compare the dateOfBirth to
  * @returns {boolean} returns true if age is greater than or equal to MINIMUM_AGE_IN_YEARS
  */
 export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Date): boolean => {
@@ -33,7 +34,7 @@ export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Da
 
 /**
  * Create a schema for the dateOfBirth field, with a refinement for checking the user's age.
- * @param comparisonDate: date to compare the dateOfBirth to
+ * @param comparisonDate: date to compare the dateOfBirth to. default is today's date
  *
  */
 export const createDateOfBirthRequestSchema = (comparisonDate?: Date) => {
