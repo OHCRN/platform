@@ -20,6 +20,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import { ConsentResearchParticipationRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,23 +31,24 @@ import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
-import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
-import ConsentStepsNavigation from '../../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../../ConsentStepsNavigation/useGoToNextConsentStep';
 
 import styles from './ConsentResearchParticipationForm.module.scss';
-
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-3'];
 
 const ConsentResearchParticipationForm = ({
 	currentLang,
 	errorsDict,
 	formDict,
+	children,
+	currentStep,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	formDict: ConsentResearchParticipationFormDictionary;
+	children: ReactNode;
+	currentStep: ConsentStepRoute;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentResearchParticipationRequest>({
@@ -57,7 +59,7 @@ const ConsentResearchParticipationForm = ({
 		handleSubmit,
 	} = methods;
 
-	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentStep);
 
 	const onSubmit: SubmitHandler<ConsentResearchParticipationRequest> = (data, event) => {
 		event?.preventDefault();
@@ -93,7 +95,8 @@ const ConsentResearchParticipationForm = ({
 					/>
 				</FormSection>
 
-				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+				{/* ConsentStepsNavigation */}
+				{children}
 			</Form>
 		</FormProvider>
 	);

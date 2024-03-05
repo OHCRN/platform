@@ -21,7 +21,7 @@
 
 import { useState } from 'react';
 
-import { ValidLanguage, replaceParams } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -44,6 +44,7 @@ const RegisterForm = ({
 	step2LabelsDict,
 	step2TextDict,
 	textDict,
+	stepTitleDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
@@ -52,6 +53,7 @@ const RegisterForm = ({
 	step2LabelsDict: RegisterFormStep2LabelsDictionary;
 	step2TextDict: RegisterFormStep2TextDictionary;
 	textDict: RegisterFormTextDictionary;
+	stepTitleDict: Record<1 | 2, string>;
 }) => {
 	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
@@ -60,7 +62,6 @@ const RegisterForm = ({
 	// - step 1 must be valid to proceed to step 2.
 	// - show/hide guardian section & step 2 with conditional rendering.
 	//   - these fields will unregister on unmount (removed from form state & validation)
-	const STEP_COUNT = 2;
 	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
 	const handleNextClick = (data: RegisterFormStep1) => {
 		setStep1Data(data);
@@ -74,12 +75,7 @@ const RegisterForm = ({
 
 	return (
 		<>
-			<h3 className={styles.stepTitle}>
-				{replaceParams(textDict.stepCurrentOfTotal, {
-					current: currentStep,
-					total: STEP_COUNT,
-				})}
-			</h3>
+			<h3 className={styles.stepTitle}>{stepTitleDict[currentStep]}</h3>
 			<p className={styles.smallText}>
 				<RequiredAsterisk /> {textDict.indicatesRequiredField}
 			</p>

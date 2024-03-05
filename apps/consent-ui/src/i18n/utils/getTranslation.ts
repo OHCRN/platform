@@ -23,7 +23,6 @@ import { GetTranslation, TranslateKey, TranslateNamespace } from 'src/i18n/types
 
 import { replaceParams } from './replaceParams';
 
-// TODO: is there a way to enforce this function for server side use only?
 /**
  * @param language ValidLanguage
  * @exports {translate, translateNamespace}

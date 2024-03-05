@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getTranslation, ValidLanguage } from 'src/i18n';
+import { getTranslation, ValidLanguage, replaceParams } from 'src/i18n';
 import RegisterForm from 'src/components/views/Register/RegisterForm';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
@@ -32,6 +32,18 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const step2LabelsDict = translateNamespace('registerFormStep2Labels');
 	const step2textDict = translateNamespace('registerFormStep2Text');
 	const textDict = translateNamespace('registerFormText');
+
+	const STEP_COUNT = 2;
+	const stepTitleDict = {
+		1: replaceParams(textDict.stepCurrentOfTotal, {
+			current: 1,
+			total: STEP_COUNT,
+		}),
+		2: replaceParams(textDict.stepCurrentOfTotal, {
+			current: 2,
+			total: STEP_COUNT,
+		}),
+	};
 
 	return (
 		<SideImageLayout
@@ -60,6 +72,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				step2LabelsDict={step2LabelsDict}
 				step2TextDict={step2textDict}
 				textDict={textDict}
+				stepTitleDict={stepTitleDict}
 			/>
 		</SideImageLayout>
 	);

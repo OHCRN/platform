@@ -19,10 +19,12 @@
 
 'use client';
 
+import { ReactNode } from 'react';
 import { ConsentRecontactRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 import Form from 'src/components/common/Form';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
@@ -30,23 +32,23 @@ import { ConsentRecontactFormDictionary } from 'src/i18n/locales/en/consentRecon
 import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
-import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 
-import ConsentStepsNavigation from '../../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../../ConsentStepsNavigation/useGoToNextConsentStep';
 
 import styles from './ConsentRecontactForm.module.scss';
-
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-4'];
 
 const ConsentRecontactForm = ({
 	currentLang,
 	errorsDict,
 	formDict,
+	children,
+	currentStep,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	formDict: ConsentRecontactFormDictionary;
+	children: ReactNode;
+	currentStep: ConsentStepRoute;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentRecontactRequest>({
@@ -60,7 +62,7 @@ const ConsentRecontactForm = ({
 		watch,
 	} = methods;
 
-	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentStep);
 
 	const onSubmit: SubmitHandler<ConsentRecontactRequest> = (data, event) => {
 		event?.preventDefault();
@@ -123,7 +125,8 @@ const ConsentRecontactForm = ({
 						/>
 					</FormSection>
 				)}
-				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+				{/* ConsentStepsNavigation */}
+				{children}
 			</Form>
 		</FormProvider>
 	);

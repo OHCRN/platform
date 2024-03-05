@@ -23,6 +23,7 @@ import { ConsentReleaseDataRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
@@ -32,11 +33,10 @@ import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ConsentReleaseDataLabelsDictionary } from 'src/i18n/locales/en/consentReleaseDataLabels';
 import { ConsentReleaseDataTextDictionary } from 'src/i18n/locales/en/consentReleaseDataText';
 import { ValidLanguage } from 'src/i18n';
-import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 
-import ConsentStepsNavigation from '../../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../../ConsentStepsNavigation/useGoToNextConsentStep';
 
 import {
@@ -49,8 +49,6 @@ import {
 } from './types';
 import styles from './ConsentReleaseDataForm.module.scss';
 
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-2'];
-
 const ConsentReleaseDataForm = ({
 	currentLang,
 	genderOptions,
@@ -62,6 +60,8 @@ const ConsentReleaseDataForm = ({
 	errorsDict,
 	labelsDict,
 	textDict,
+	children,
+	currentStep,
 }: {
 	currentLang: ValidLanguage;
 	genderOptions: GenderOption[];
@@ -73,6 +73,8 @@ const ConsentReleaseDataForm = ({
 	errorsDict: FormErrorsDictionary;
 	labelsDict: ConsentReleaseDataLabelsDictionary;
 	textDict: ConsentReleaseDataTextDictionary;
+	children: ReactNode;
+	currentStep: ConsentStepRoute;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<ConsentReleaseDataRequest>({
@@ -85,7 +87,7 @@ const ConsentReleaseDataForm = ({
 		handleSubmit,
 	} = methods;
 
-	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentStep);
 
 	const onSubmit: SubmitHandler<ConsentReleaseDataRequest> = (_data, event) => {
 		event?.preventDefault();
@@ -256,7 +258,8 @@ const ConsentReleaseDataForm = ({
 					/>
 				</FormSection>
 
-				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+				{/* ConsentStepsNavigation */}
+				{children}
 			</Form>
 		</FormProvider>
 	);
