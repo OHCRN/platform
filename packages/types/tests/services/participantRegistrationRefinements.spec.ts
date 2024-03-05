@@ -25,7 +25,7 @@ import {
 	RegisterFormStep2,
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
-import { makeDateOfBirthTestSetup } from '../utils/dateOfBirth.spec.js';
+import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const {
@@ -33,7 +33,7 @@ describe('ParticipantRegistrationRequest', () => {
 		lessThanMinimumAgeDateOfBirth,
 		mockDate,
 		olderThanMinimumAgeDateOfBirth,
-	} = makeDateOfBirthTestSetup();
+	} = setupDateOfBirthTest();
 
 	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
 	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);

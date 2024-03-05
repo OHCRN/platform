@@ -21,7 +21,7 @@ import { describe, expect, it } from 'vitest';
 
 import { checkIsMinimumAgeOrGreater, MINIMUM_AGE_IN_YEARS } from '../../src/common/utils/index.js';
 
-export const makeDateOfBirthTestSetup = () => {
+export const setupDateOfBirthTest = () => {
 	const mockDate = new Date('02/28/2024');
 	const month = mockDate.getMonth() + 1;
 	const day = mockDate.getDate();
@@ -53,7 +53,7 @@ describe('Date of Birth', () => {
 		lessThanMinimumAgeDateOfBirth,
 		mockDate,
 		olderThanMinimumAgeDateOfBirth,
-	} = makeDateOfBirthTestSetup();
+	} = setupDateOfBirthTest();
 
 	it("must return true if user's age is greater than or equal to the minimum'", () => {
 		expect(checkIsMinimumAgeOrGreater(mockDate, olderThanMinimumAgeDateOfBirth)).true;
