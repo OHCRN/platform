@@ -28,6 +28,7 @@ export type AppConfig = {
 	KEYCLOAK_CLIENT_ID: string;
 	TOKEN_ENCRYPTION_KEY: string;
 	TOKEN_MAX_AGE: number;
+	VERBOSE_AXIOS_LOGGING: boolean;
 };
 
 export const defaultAppConfig: AppConfig = {
@@ -41,6 +42,7 @@ export const defaultAppConfig: AppConfig = {
 	KEYCLOAK_CLIENT_ID: '', // TODO:  should set this up to error on server start, if not provided
 	TOKEN_ENCRYPTION_KEY: '',
 	TOKEN_MAX_AGE: 3600,
+	VERBOSE_AXIOS_LOGGING: false,
 };
 
 /**
@@ -59,6 +61,8 @@ const getAppConfig = (): AppConfig => ({
 	KEYCLOAK_CLIENT_ID: process.env.AUTH_KEYCLOAK_ID || defaultAppConfig.KEYCLOAK_CLIENT_ID,
 	TOKEN_ENCRYPTION_KEY: process.env.TOKEN_ENCRYPTION_KEY || defaultAppConfig.TOKEN_ENCRYPTION_KEY,
 	TOKEN_MAX_AGE: Number(process.env.TOKEN_MAX_AGE) || defaultAppConfig.TOKEN_MAX_AGE,
+	VERBOSE_AXIOS_LOGGING:
+		process.env.VERBOSE_AXIOS_LOGGING === 'true' || defaultAppConfig.VERBOSE_AXIOS_LOGGING,
 });
 
 export { getAppConfig };
