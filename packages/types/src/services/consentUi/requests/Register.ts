@@ -17,16 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NonEmptyString } from 'types/common';
-import { Name, PhoneNumber, hasMatchingPasswords } from 'types/entities';
 import { z } from 'zod';
+
+import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
+import { Name, PhoneNumber, hasMatchingPasswords } from '../../../entities/fields/index.js';
 
 // TODO hookup backend #368
 // create a better zod schema with conditional validation,
 // and optional name fields
 
-export const RegisterFormStep1 = z.object({
-	dateOfBirth: NonEmptyString, // TEMP #366
+export const RegisterFormStep1Fields = z.object({
 	guardianName: Name,
 	guardianPhoneNumber: PhoneNumber,
 	guardianRelationship: Name,
@@ -38,15 +38,20 @@ export const RegisterFormStep1 = z.object({
 	// commenting this out because the form won't work
 	// with unused fields in the Zod schema
 });
+
+const DateOfBirthField = createDateOfBirthRequestSchema();
+
+export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
-export const RegisterFormStep2Fields = z.object({
+// STEP 2
+
+const RegisterFormStep2Fields = z.object({
 	consentToBeContacted: z.literal(true),
 	participantEmailAddress: z.string().email(),
 });
-export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
 
-export const PasswordFields = z
+const PasswordFields = z
 	.object({
 		confirmPassword: NonEmptyString, // TEMP #368
 		password: NonEmptyString, // TEMP #368
@@ -55,10 +60,9 @@ export const PasswordFields = z
 		message: 'passwordMismatch',
 		path: ['confirmPassword'],
 	});
-export type PasswordFields = z.infer<typeof PasswordFields>;
 
 export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
-export const RegisterRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
-export type RegisterRequest = z.infer<typeof RegisterRequest>;
+export const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
+export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

@@ -17,14 +17,4 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './SortOrder.js';
-export * from './Status.js';
-export * from './String.js';
-export * from './conditionalFieldUtils.js';
-export * from './expand.js';
-export * from './keys.js';
-export * from './lengthConstraints.js';
-export * from './recursivePartial.js';
-export * from './regexes.js';
-export * from './values.js';
-export * from './utils/index.js';
+export * from './Register.js';
