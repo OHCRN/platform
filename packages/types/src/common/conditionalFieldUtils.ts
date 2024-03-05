@@ -43,7 +43,10 @@ const requiresParticipantContactInfo = (consentGroup: ConsentGroup) => {
 };
 
 const isUndefined = (arg: any): arg is undefined => arg === undefined;
-const hasValue = <T>(input: T | undefined): input is T => !isUndefined(input);
+type EmptyString = '';
+const isEmptyString = (arg: any): arg is EmptyString => arg === ''; // empty HTML text inputs contain empty strings
+export const hasValue = <T>(input: T | undefined): input is T =>
+	!isUndefined(input) && !isEmptyString(input);
 
 // TODO: decide if participant contact fields will be excluded in a guardian is present
 // TBD in https://github.com/OHCRN/platform/issues/388
@@ -90,6 +93,6 @@ export const hasRequiredGuardianInformation = (
 	return requiresGuardianInformation(consentGroup)
 		? [guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship].every(
 				hasValue,
-			)
+		  )
 		: true;
 };

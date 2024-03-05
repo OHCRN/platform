@@ -19,29 +19,37 @@
 
 import { z } from 'zod';
 
-import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
-import { Name, PhoneNumber, hasMatchingPasswords } from '../../../entities/fields/index.js';
+import {
+	NonEmptyString,
+	createDateOfBirthRequestSchema,
+	registerHasRequiredGuardianInfo,
+} from '../../../common/index.js';
+import {
+	EmptyOrOptionalName,
+	Name,
+	PhoneNumber,
+	hasMatchingPasswords,
+} from '../../../entities/fields/index.js';
+import { GuardianRegisterRequestFields } from '../../../entities/Guardian.js';
 
-// TODO hookup backend #368
-// create a better zod schema with conditional validation,
-// and optional name fields
+// STEP 1
 
 export const RegisterFormStep1Fields = z.object({
-	guardianName: Name,
-	guardianPhoneNumber: PhoneNumber,
-	guardianRelationship: Name,
 	participantFirstName: Name,
 	participantLastName: Name,
 	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name,
-	// isGuardian: z.boolean(), TODO #366
-	// commenting this out because the form won't work
-	// with unused fields in the Zod schema
+	participantPreferredName: EmptyOrOptionalName,
 });
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
-export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
+export const GuardianRegisterRequestFieldsRefined = GuardianRegisterRequestFields.superRefine(
+	registerHasRequiredGuardianInfo,
+);
+
+export const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
+	GuardianRegisterRequestFieldsRefined,
+);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2
@@ -61,8 +69,10 @@ const PasswordFields = z
 		path: ['confirmPassword'],
 	});
 
-export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
+export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
+
+// COMBINE STEPS
 
 export const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
 export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

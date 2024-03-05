@@ -16,43 +16,36 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 import { z } from 'zod';
 
-import {
-	EmptyOrOptionalName,
-	EmptyOrOptionalPhoneNumber,
-	Name,
-	OptionalName,
-	OptionalPhoneNumber,
-	PhoneNumber,
-} from './fields/index.js';
+import { GuardianRegisterRequestFields } from '../../entities/Guardian.js';
+import { hasValue } from '../../common/index.js';
 
-export const GuardianBaseFields = z.object({
-	guardianEmailAddress: z.string().email().optional(),
-	guardianName: OptionalName,
-	guardianPhoneNumber: OptionalPhoneNumber,
-	guardianRelationship: OptionalName,
-});
+/**
+ * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
+ * Use with superRefine.
+ *
+ * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
+ * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const registerHasRequiredGuardianInfo = (
+	props: GuardianRegisterRequestFields,
+	ctx: z.RefinementCtx,
+) => {
+	const { guardianName, guardianPhoneNumber, guardianRelationship, isGuardian } = props;
 
-export type GuardianBaseFields = z.infer<typeof GuardianBaseFields>;
+	const fields = { guardianName, guardianPhoneNumber, guardianRelationship };
 
-// export as plain object to work with zod .extend()
-export const GuardianNullableResponseFields = {
-	guardianName: Name.nullable().transform((input) => input ?? undefined),
-	guardianPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
-	guardianEmailAddress: z
-		.string()
-		.email()
-		.nullable()
-		.transform((input) => input ?? undefined),
-	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
+	if (isGuardian) {
+		Object.entries(fields).forEach(([key, value]) => {
+			if (!hasValue(value)) {
+				ctx.addIssue({
+					code: 'custom',
+					message: 'guardianInfoMissing',
+					path: [key],
+				});
+			}
+		});
+	}
 };
-
-export const GuardianRegisterRequestFields = z.object({
-	guardianName: EmptyOrOptionalName,
-	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
-	guardianRelationship: EmptyOrOptionalName,
-	isGuardian: z.boolean(),
-});
-export type GuardianRegisterRequestFields = z.infer<typeof GuardianRegisterRequestFields>;
