@@ -38,9 +38,9 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 import { ValidLanguage } from 'src/i18n';
-import NewModal from 'src/components/common/Modal/NewModal';
 
 import styles from './RegisterForm.module.scss';
+import RegisterMinorModal from './RegisterMinorModal';
 
 const FormStep1 = ({
 	className,
@@ -95,21 +95,13 @@ const FormStep1 = ({
 		}
 	};
 
-	useEffect(() => {
-		openModal();
-	}, [openModal]);
-
 	return (
 		<>
-			<NewModal
-				actionButtonText="test"
-				contentLabel="my test modal"
-				handleClose={closeModal}
-				isOpen={modalIsOpen}
-				title="testing"
-			>
-				testing
-			</NewModal>
+			<RegisterMinorModal
+				currentLang={currentLang}
+				closeModal={closeModal}
+				modalIsOpen={modalIsOpen}
+			/>
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}

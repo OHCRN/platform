@@ -1,28 +1,46 @@
-.card {
-	padding: 16px;
-	position: relative;
-	margin: 0 auto;
-	width: 100%;
-	max-width: 100%;
-	max-height: 100%;
-	max-width: 45rem;
+.overlay {
+	z-index: 1000;
+	position: fixed;
+	inset: 0;
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: theme('colors.grayscale.800');
+		opacity: 0.5;
+	}
+	padding: 3rem 1rem 5rem;
 	@media (min-width: theme('screens.sm')) {
-		padding: 1.5rem 3rem;
+		padding: 5rem 1rem;
+	}
+	@media (min-width: theme('screens.md')) {
+		padding: 5rem 3rem;
 	}
 }
 
-.body {
+.modal {
+	z-index: 1001;
+	position: relative;
+	background: white;
+	padding: 1rem;
+	max-width: 45rem;
+	margin: 0 auto;
 	max-height: 100%;
-	overflow: auto;
-}
-
-.buttons {
-	margin-top: 1rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1rem;
 	@media (min-width: theme('screens.sm')) {
-		justify-content: end;
+		padding: 1.5rem 3rem;
+	}
+	.body {
+		max-height: 100%;
+		overflow: auto;
+	}
+	.buttons {
+		margin-top: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		@media (min-width: theme('screens.sm')) {
+			justify-content: end;
+		}
 	}
 }

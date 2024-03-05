@@ -47,7 +47,7 @@ import { InviteFormLabelsDictionary } from 'src/i18n/locales/en/inviteFormLabels
 import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
-import { useModal } from 'src/components/providers/ModalProvider';
+import useModal from 'src/components/common/Modal/useModal';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -150,194 +150,197 @@ const ClinicianInviteFormComponent = ({
 	}, [watchConsentGroup]);
 
 	// setup consent group info modal
-	const { openModal } = useModal();
-	const consentGroupModalConfig = {
-		modalComponent: <ConsentGroupModal currentLang={currentLang} />,
-	};
-	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
+	const { closeModal, modalIsOpen, openModal } = useModal();
 
 	return (
-		<FormProvider {...methods}>
-			<Form onSubmit={handleSubmit(onSubmit)}>
-				{/* HEADING */}
-				<FormSection>
-					<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
-					<p className={styles.smallText}>
-						<RequiredAsterisk /> {textDict.indicatesRequiredField}
-					</p>
-				</FormSection>
-
-				{/* SECTION - PARTICIPANT INFO */}
-				<FormSection>
-					<TextFieldSet
-						error={errors.participantFirstName?.type && errorsDict.required}
-						label={labelsDict.firstName || ''}
-						name="participantFirstName"
-						required
-						description={textDict.participantFirstNameTooltip}
-					/>
-					<TextFieldSet
-						error={errors.participantLastName?.type && errorsDict.required}
-						label={labelsDict.lastName || ''}
-						name="participantLastName"
-						required
-						description={textDict.participantLastNameTooltip}
-					/>
-					<TextFieldSet
-						error={errors.participantPreferredName?.type && errorsDict.required}
-						label={labelsDict.preferredName || ''}
-						name="participantPreferredName"
-						description={textDict.participantPreferredNameTooltip}
-					/>
-
-					<SelectFieldSet
-						error={errors.consentGroup?.type && errorsDict.required}
-						infoButtonProps={{
-							label: textDict.learnMoreConsentGroups,
-							onClick: handleConsentGroupInfoButtonClick,
-						}}
-						label={labelsDict.consentGroup || ''}
-						name="consentGroup"
-						options={consentGroupOptions}
-						placeholder={textDict.selectPlaceholder || ''}
-						required
-						description={textDict.consentGroupTooltip}
-					/>
-
-					<TextFieldSet
-						description={textDict.participantPhoneNumberTooltip}
-						error={errors.participantPhoneNumber?.type && errorsDict.required}
-						label={labelsDict.phone || ''}
-						name="participantPhoneNumber"
-						required
-					/>
-					<TextFieldSet
-						error={errors.participantEmailAddress?.type && errorsDict.required}
-						label={labelsDict.email || ''}
-						name="participantEmailAddress"
-						required
-						description={textDict.participantEmailAddressTooltip}
-					/>
-				</FormSection>
-
-				{/* SECTION - GUARDIAN INFO */}
-				{/* show/hide this field with conditional rendering.
-						fields will be removed from form state when hidden. */}
-				{showGuardianFields && (
-					<FormSection variant="grey">
-						{/*
-						 * guardian fields are marked required in the UI & optional in zod schema.
-						 * they're required if they're visible,
-						 * i.e. if the user has indicated the participant is a minor
-						 */}
-						<p>{textDict.enterGuardianInfo}</p>
-						<TextFieldSet
-							error={errors.guardianName?.type && errorsDict.required}
-							label={labelsDict.guardianName || ''}
-							name="guardianName"
-							required
-						/>
-						<TextFieldSet
-							error={errors.guardianPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.guardianPhone || ''}
-							name="guardianPhoneNumber"
-							required
-							description={textDict.guardianPhoneNumberTooltip}
-							type="tel"
-						/>
-						<TextFieldSet
-							error={errors.guardianEmailAddress?.type && errorsDict.required}
-							label={labelsDict.email || ''}
-							name="guardianEmailAddress"
-							required
-							description={textDict.guardianEmailAddressTooltip}
-							type="email"
-						/>
-						<TextFieldSet
-							error={errors.guardianRelationship?.type && errorsDict.required}
-							label={labelsDict.guardianRelationship || ''}
-							name="guardianRelationship"
-							required
-						/>
-						<p>
-							{textDict.uploadFileDescription1}
-							<a href="">{textDict.uploadFileLink}</a>
-							{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
-							{textDict.uploadFileDescription2}
-							{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
+		<>
+			<ConsentGroupModal
+				currentLang={currentLang}
+				closeModal={closeModal}
+				modalIsOpen={modalIsOpen}
+			/>
+			<FormProvider {...methods}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
+					{/* HEADING */}
+					<FormSection>
+						<h3 className={styles.sectionTitle}>{textDict.patientInformation}</h3>
+						<p className={styles.smallText}>
+							<RequiredAsterisk /> {textDict.indicatesRequiredField}
 						</p>
 					</FormSection>
-				)}
 
-				<FormSection>
-					<p className={styles.afterRegistering}>{textDict.afterRegistering}</p>
-					<CheckboxFieldSet
-						description={textDict.consentContactDescription}
-						error={errors.consentToBeContacted?.type && errorsDict.required}
-						name="consentToBeContacted"
-						required
-						title={labelsDict.consentContact}
-					/>
-				</FormSection>
+					{/* SECTION - PARTICIPANT INFO */}
+					<FormSection>
+						<TextFieldSet
+							error={errors.participantFirstName?.type && errorsDict.required}
+							label={labelsDict.firstName || ''}
+							name="participantFirstName"
+							required
+							description={textDict.participantFirstNameTooltip}
+						/>
+						<TextFieldSet
+							error={errors.participantLastName?.type && errorsDict.required}
+							label={labelsDict.lastName || ''}
+							name="participantLastName"
+							required
+							description={textDict.participantLastNameTooltip}
+						/>
+						<TextFieldSet
+							error={errors.participantPreferredName?.type && errorsDict.required}
+							label={labelsDict.preferredName || ''}
+							name="participantPreferredName"
+							description={textDict.participantPreferredNameTooltip}
+						/>
 
-				{/* SECTION - CLINICIAN INFO */}
-				<FormSection>
-					<h3 className={clsx(styles.sectionTitle, styles.clinicianTitle)}>
-						{textDict.clinicianInformation}
-					</h3>
-					<TextFieldSet
-						error={errors.clinicianTitleOrRole?.type && errorsDict.required}
-						label={labelsDict.clinicianTitleOrRole || ''}
-						name="clinicianTitleOrRole"
-						required
-					/>
-					<TextFieldSet
-						error={errors.clinicianFirstName?.type && errorsDict.required}
-						label={labelsDict.clinicianFirstName || ''}
-						name="clinicianFirstName"
-						required
-					/>
-					<TextFieldSet
-						error={errors.clinicianLastName?.type && errorsDict.required}
-						label={labelsDict.clinicianLastName || ''}
-						name="clinicianLastName"
-						required
-					/>
-					<TextFieldSet
-						error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
-						label={labelsDict.clinicianInstitutionalEmailAddress || ''}
-						name="clinicianInstitutionalEmailAddress"
-						required
-						description={textDict.clinicianInstitutionalEmailAddressTooltip}
-						type="email"
-					/>
-				</FormSection>
+						<SelectFieldSet
+							error={errors.consentGroup?.type && errorsDict.required}
+							infoButtonProps={{
+								label: textDict.learnMoreConsentGroups,
+								onClick: openModal,
+							}}
+							label={labelsDict.consentGroup || ''}
+							name="consentGroup"
+							options={consentGroupOptions}
+							placeholder={textDict.selectPlaceholder || ''}
+							required
+							description={textDict.consentGroupTooltip}
+						/>
 
-				{/* SECTION - RECAPTCHA & SUBMIT */}
-				<FormSection>
-					{recaptchaError && (
-						<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+						<TextFieldSet
+							description={textDict.participantPhoneNumberTooltip}
+							error={errors.participantPhoneNumber?.type && errorsDict.required}
+							label={labelsDict.phone || ''}
+							name="participantPhoneNumber"
+							required
+						/>
+						<TextFieldSet
+							error={errors.participantEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email || ''}
+							name="participantEmailAddress"
+							required
+							description={textDict.participantEmailAddressTooltip}
+						/>
+					</FormSection>
+
+					{/* SECTION - GUARDIAN INFO */}
+					{/* show/hide this field with conditional rendering.
+						fields will be removed from form state when hidden. */}
+					{showGuardianFields && (
+						<FormSection variant="grey">
+							{/*
+							 * guardian fields are marked required in the UI & optional in zod schema.
+							 * they're required if they're visible,
+							 * i.e. if the user has indicated the participant is a minor
+							 */}
+							<p>{textDict.enterGuardianInfo}</p>
+							<TextFieldSet
+								error={errors.guardianName?.type && errorsDict.required}
+								label={labelsDict.guardianName || ''}
+								name="guardianName"
+								required
+							/>
+							<TextFieldSet
+								error={errors.guardianPhoneNumber?.type && errorsDict.required}
+								label={labelsDict.guardianPhone || ''}
+								name="guardianPhoneNumber"
+								required
+								description={textDict.guardianPhoneNumberTooltip}
+								type="tel"
+							/>
+							<TextFieldSet
+								error={errors.guardianEmailAddress?.type && errorsDict.required}
+								label={labelsDict.email || ''}
+								name="guardianEmailAddress"
+								required
+								description={textDict.guardianEmailAddressTooltip}
+								type="email"
+							/>
+							<TextFieldSet
+								error={errors.guardianRelationship?.type && errorsDict.required}
+								label={labelsDict.guardianRelationship || ''}
+								name="guardianRelationship"
+								required
+							/>
+							<p>
+								{textDict.uploadFileDescription1}
+								<a href="">{textDict.uploadFileLink}</a>
+								{/* TODO download assent form https://github.com/OHCRN/platform/issues/287 */}
+								{textDict.uploadFileDescription2}
+								{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
+							</p>
+						</FormSection>
 					)}
 
-					<div className={styles.recaptchaCheckbox}>
-						<RecaptchaCheckbox
-							onChange={handleRecaptchaChange}
-							recaptchaCheckboxRef={recaptchaCheckboxRef}
-							currentLang={currentLang}
+					<FormSection>
+						<p className={styles.afterRegistering}>{textDict.afterRegistering}</p>
+						<CheckboxFieldSet
+							description={textDict.consentContactDescription}
+							error={errors.consentToBeContacted?.type && errorsDict.required}
+							name="consentToBeContacted"
+							required
+							title={labelsDict.consentContact}
 						/>
-					</div>
+					</FormSection>
 
-					<Button
-						className={styles.submitButton}
-						color={enableSubmit ? 'green' : 'default'}
-						onMouseDown={(e) => e.preventDefault()}
-						type="submit"
-					>
-						{textDict.submit}
-					</Button>
-				</FormSection>
-			</Form>
-		</FormProvider>
+					{/* SECTION - CLINICIAN INFO */}
+					<FormSection>
+						<h3 className={clsx(styles.sectionTitle, styles.clinicianTitle)}>
+							{textDict.clinicianInformation}
+						</h3>
+						<TextFieldSet
+							error={errors.clinicianTitleOrRole?.type && errorsDict.required}
+							label={labelsDict.clinicianTitleOrRole || ''}
+							name="clinicianTitleOrRole"
+							required
+						/>
+						<TextFieldSet
+							error={errors.clinicianFirstName?.type && errorsDict.required}
+							label={labelsDict.clinicianFirstName || ''}
+							name="clinicianFirstName"
+							required
+						/>
+						<TextFieldSet
+							error={errors.clinicianLastName?.type && errorsDict.required}
+							label={labelsDict.clinicianLastName || ''}
+							name="clinicianLastName"
+							required
+						/>
+						<TextFieldSet
+							error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
+							label={labelsDict.clinicianInstitutionalEmailAddress || ''}
+							name="clinicianInstitutionalEmailAddress"
+							required
+							description={textDict.clinicianInstitutionalEmailAddressTooltip}
+							type="email"
+						/>
+					</FormSection>
+
+					{/* SECTION - RECAPTCHA & SUBMIT */}
+					<FormSection>
+						{recaptchaError && (
+							<Notification level="error" variant="small" title={`Error: ${recaptchaError}`} />
+						)}
+
+						<div className={styles.recaptchaCheckbox}>
+							<RecaptchaCheckbox
+								onChange={handleRecaptchaChange}
+								recaptchaCheckboxRef={recaptchaCheckboxRef}
+								currentLang={currentLang}
+							/>
+						</div>
+
+						<Button
+							className={styles.submitButton}
+							color={enableSubmit ? 'green' : 'default'}
+							onMouseDown={(e) => e.preventDefault()}
+							type="submit"
+						>
+							{textDict.submit}
+						</Button>
+					</FormSection>
+				</Form>
+			</FormProvider>
+		</>
 	);
 };
 
