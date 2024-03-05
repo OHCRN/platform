@@ -516,6 +516,9 @@ importers:
       '@anatine/zod-openapi':
         specifier: ^2.2.0
         version: 2.2.0(openapi3-ts@4.1.2)(zod@3.21.4)
+      date-fns:
+        specifier: 2.30.0
+        version: 2.30.0
       eslint-config-ohcrn:
         specifier: workspace:^
         version: link:../config/eslint-config-ohcrn
@@ -1628,7 +1631,7 @@ packages:
     resolution: {integrity: sha512-rClGrMuyS/3j0ETa1Ui7s6GkLhfZGKZL3ZrChLeAiACBE/tRc1wq8SNZESUuluxhLj9FkUefRs2l6bCIArWBiQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
-      '@typescript-eslint/parser': 6.2.0
+      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
       eslint: ^7.0.0 || ^8.0.0
       typescript: '*'
     peerDependenciesMeta:
@@ -3051,7 +3054,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: ^2.27.5
+      eslint-plugin-import: '*'
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.14.0
@@ -3075,7 +3078,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
-      eslint-plugin-import: ^2.27.5
+      eslint-plugin-import: '*'
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.15.0

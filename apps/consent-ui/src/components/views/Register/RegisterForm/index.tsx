@@ -20,6 +20,7 @@
 'use client';
 
 import { useState } from 'react';
+import { RegisterFormStep1 } from 'types/consentUi';
 
 import { ValidLanguage, replaceParams } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -34,7 +35,6 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
-import { RegisterFormStep1 } from './types';
 
 const RegisterForm = ({
 	currentLang,
@@ -86,6 +86,7 @@ const RegisterForm = ({
 
 			<FormStep1
 				className={currentStep === 1 ? styles.visible : styles.hidden}
+				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
 				labelsDict={step1LabelsDict}

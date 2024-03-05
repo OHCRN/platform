@@ -21,8 +21,8 @@ import Link from 'next/link';
 import urlJoin from 'url-join';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
-
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+
 import styles from './ConsentRecontact.module.scss';
 import ConsentRecontactForm from './ConsentRecontactForm';
 

@@ -17,14 +17,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './SortOrder.js';
-export * from './Status.js';
-export * from './String.js';
-export * from './conditionalFieldUtils.js';
-export * from './expand.js';
-export * from './keys.js';
-export * from './lengthConstraints.js';
-export * from './recursivePartial.js';
-export * from './regexes.js';
-export * from './values.js';
-export * from './utils/index.js';
+import { differenceInYears } from 'date-fns';
+import { z } from 'zod';
+
+export const MINIMUM_AGE_IN_YEARS = 18;
+
+/**
+ * Check if age is at least MINIMUM_AGE_IN_YEARS
+ * @param comparisonDate: date to compare the dateOfBirth to
+ * @returns {boolean} returns true if age is greater than or equal to MINIMUM_AGE_IN_YEARS
+ */
+export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Date): boolean => {
+	const age = differenceInYears(comparisonDate, dateOfBirth);
+	return age >= MINIMUM_AGE_IN_YEARS;
+};
+
+/**
+ * Create a schema for the dateOfBirth field, with a refinement for checking the user's age.
+ * @param comparisonDate: date to compare the dateOfBirth to. default is today's date
+ *
+ */
+export const createDateOfBirthRequestSchema = (comparisonDate?: Date) => {
+	return z
+		.object({
+			dateOfBirth: z.coerce.date(),
+		})
+		.refine(
+			(props) => checkIsMinimumAgeOrGreater(comparisonDate || new Date(), props.dateOfBirth),
+			{
+				message: 'participantLessThanMinimumAge',
+				path: ['dateOfBirth'],
+			},
+		);
+};

@@ -23,6 +23,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { RegisterFormStep1 } from 'types/consentUi';
 
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import Form from 'src/components/common/Form';
@@ -33,18 +34,21 @@ import { OHCRN_HELP_CENTRE_URL } from 'src/constants/externalPaths';
 import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerFormStep1Labels';
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { handleMouseDownBlur } from 'src/components/utils';
+import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
+import { ValidLanguage } from 'src/i18n';
 
 import styles from './RegisterForm.module.scss';
-import { RegisterFormStep1 } from './types';
 
 const FormStep1 = ({
 	className,
+	currentLang,
 	errorsDict,
 	handleNextClick,
 	labelsDict,
 	textDict,
 }: {
 	className?: string;
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
 	labelsDict: RegisterFormStep1LabelsDictionary;
@@ -65,7 +69,6 @@ const FormStep1 = ({
 
 	const onSubmit: SubmitHandler<RegisterFormStep1> = (data, event) => {
 		event?.preventDefault();
-		// TODO #366 don't go to next page if user is a minor
 		handleNextClick(data);
 	};
 
@@ -143,13 +146,13 @@ const FormStep1 = ({
 						required
 						description={textDict.participantPhoneNumberTooltip}
 					/>
-					{/* TODO #366 implement date input */}
-					<TextFieldSet
+					<CalendarFieldSet
+						currentLang={currentLang}
+						description={textDict.dateOfBirthTooltip}
 						error={errors.dateOfBirth?.type && errorsDict.required}
 						label={labelsDict.dateOfBirth}
 						name="dateOfBirth"
 						required
-						description={textDict.dateOfBirthTooltip}
 					/>
 				</FormSection>
 
