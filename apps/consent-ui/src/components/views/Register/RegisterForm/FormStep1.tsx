@@ -101,7 +101,13 @@ const FormStep1 = ({
 
 	return (
 		<>
-			<NewModal isOpen={modalIsOpen} handleClose={closeModal}>
+			<NewModal
+				actionButtonText="test"
+				contentLabel="my test modal"
+				handleClose={closeModal}
+				isOpen={modalIsOpen}
+				title="testing"
+			>
 				testing
 			</NewModal>
 			<FormProvider {...methods}>

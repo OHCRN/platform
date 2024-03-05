@@ -18,31 +18,78 @@
  */
 
 import ReactModal from 'react-modal';
-import { ReactNode } from 'react';
+import { ComponentProps, ReactNode } from 'react';
+
+import LinkButton from '../Button/LinkButton';
+import Button from '../Button';
 
 import styles from './NewModal.module.scss';
 
 const NewModal = ({
+	actionButtonText,
+	actionDisabled,
+	actionLink,
+	cancelButtonText,
+	cancelDisabled,
+	cancelLink,
 	children,
+	contentLabel,
 	handleClose,
 	isOpen,
+	onActionClick,
+	onCancelClick,
+	title,
 }: {
-	children: ReactNode;
+	actionButtonText?: ReactNode;
+	actionDisabled?: boolean;
+	actionLink?: ComponentProps<typeof LinkButton>['href'];
+	cancelButtonText?: ReactNode;
+	cancelDisabled?: boolean;
+	cancelLink?: ComponentProps<typeof LinkButton>['href'];
+	children?: ReactNode;
+	contentLabel: string;
 	handleClose: () => void;
 	isOpen: boolean;
+	onActionClick?: ComponentProps<typeof Button>['onClick'];
+	onCancelClick?: ComponentProps<typeof Button>['onClick'];
+	title?: string;
 }) => {
 	return (
 		<ReactModal
 			className={styles.modal}
-			contentLabel="testing"
+			contentLabel={contentLabel}
 			isOpen={isOpen}
 			onRequestClose={handleClose}
 			overlayClassName={styles.overlay}
 		>
+			{title && <h3>{title}</h3>}
 			<div className={styles.body}>{children}</div>
-			<button type="button" onClick={handleClose}>
-				Close modal
-			</button>
+			{(actionButtonText || cancelButtonText) && (
+				<div className={styles.buttons}>
+					{cancelButtonText &&
+						(cancelLink ? (
+							<LinkButton href={cancelLink} variant="secondary">
+								{cancelButtonText}
+							</LinkButton>
+						) : (
+							<Button
+								onClick={onCancelClick || handleClose}
+								variant="secondary"
+								disabled={cancelDisabled}
+							>
+								{cancelButtonText}
+							</Button>
+						))}
+					{actionButtonText &&
+						(actionLink ? (
+							<LinkButton href={actionLink}>{actionButtonText}</LinkButton>
+						) : (
+							<Button onClick={onActionClick || handleClose} disabled={actionDisabled}>
+								{actionButtonText}
+							</Button>
+						))}
+				</div>
+			)}
 		</ReactModal>
 	);
 };
