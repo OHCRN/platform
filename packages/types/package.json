@@ -8,6 +8,7 @@
 		"./httpResponses": "./dist/httpResponses/index.js",
 		"./consentApi": "./dist/services/consentApi/index.js",
 		"./consentDas": "./dist/services/consentDas/index.js",
+		"./consentUi": "./dist/services/consentUi/index.js",
 		"./dataMapper": "./dist/services/dataMapper/index.js",
 		"./keysDas": "./dist/services/keysDas/index.js",
 		"./phiDas": "./dist/services/phiDas/index.js",

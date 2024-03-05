@@ -31,6 +31,7 @@ model Participant {
   inviteId                  String?
   clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   dateOfBirth               DateTime         @db.Date
+  hasOhip                   Boolean          @default(true) 
   participantEmailAddress   String?          @unique
   participantOhipFirstName  String
   participantOhipLastName   String

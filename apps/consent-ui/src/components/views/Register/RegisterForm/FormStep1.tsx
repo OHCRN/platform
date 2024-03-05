@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { checkAge18AndOver } from 'types/entities';
 import ReactModal from 'react-modal';
+import { RegisterFormStep1 } from 'types/consentUi';
 
 import useModal from 'src/components/common/Modal/useModal';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -40,7 +41,6 @@ import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarField
 import { ValidLanguage } from 'src/i18n';
 
 import styles from './RegisterForm.module.scss';
-import { RegisterFormStep1 } from './types';
 
 const FormStep1 = ({
 	className,
