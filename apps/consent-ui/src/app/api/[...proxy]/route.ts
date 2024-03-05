@@ -22,7 +22,6 @@ import urlJoin from 'url-join';
 import { AxiosHeaders } from 'axios';
 
 import { getAppConfig } from 'src/config';
-import { PROXY_API_PATH } from 'src/constants';
 import { axiosProxyClient } from 'src/services/api';
 import { getRequestData } from 'src/services/api/utils';
 
@@ -36,12 +35,7 @@ const handler = async (
 	req: NextRequest,
 	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
 ): Promise<NextResponse<any>> => {
-	const { CONSENT_API_URL, CONSENT_UI_URL } = getAppConfig();
-	const clientSideRootUrl = urlJoin(CONSENT_UI_URL, PROXY_API_PATH);
-	if (!req?.url?.startsWith(clientSideRootUrl)) {
-		// An http error status will trigger an AxiosError in the original ui request
-		return NextResponse.json({ error: 'Invalid URL' }, { status: 400 });
-	}
+	const { CONSENT_API_URL } = getAppConfig();
 	const path = urlJoin(routePaths.params.proxy);
 	const reqUrl = urlJoin(CONSENT_API_URL, path);
 	const requestData = await getRequestData(req);
