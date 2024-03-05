@@ -1,8 +1,7 @@
 .overlay {
+	z-index: 1000;
 	position: fixed;
 	inset: 0;
-	z-index: 1000;
-
 	&::before {
 		content: '';
 		position: absolute;
@@ -10,7 +9,6 @@
 		background: theme('colors.grayscale.800');
 		opacity: 0.5;
 	}
-
 	padding: 3rem 1rem 5rem;
 	@media (min-width: theme('screens.sm')) {
 		padding: 5rem 1rem;
@@ -21,5 +19,28 @@
 }
 
 .modal {
-	background: pink;
+	z-index: 1001;
+	position: relative;
+	background: white;
+	padding: 1rem;
+	max-width: 45rem;
+	margin: 0 auto;
+	max-height: 100%;
+	@media (min-width: theme('screens.sm')) {
+		padding: 1.5rem 3rem;
+	}
+	.body {
+		max-height: 100%;
+		overflow: auto;
+	}
+	.buttons {
+		margin-top: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		@media (min-width: theme('screens.sm')) {
+			justify-content: end;
+		}
+	}
 }

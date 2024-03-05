@@ -18,12 +18,19 @@
  */
 
 import ReactModal from 'react-modal';
+import { ReactNode } from 'react';
 
 import styles from './NewModal.module.scss';
 
-const customStyles: ReactModal.Styles = { overlay: { zIndex: 1000 } };
-
-const NewModal = ({ handleClose, isOpen }: { handleClose: () => void; isOpen: boolean }) => {
+const NewModal = ({
+	children,
+	handleClose,
+	isOpen,
+}: {
+	children: ReactNode;
+	handleClose: () => void;
+	isOpen: boolean;
+}) => {
 	return (
 		<ReactModal
 			className={styles.modal}
@@ -31,8 +38,8 @@ const NewModal = ({ handleClose, isOpen }: { handleClose: () => void; isOpen: bo
 			isOpen={isOpen}
 			onRequestClose={handleClose}
 			overlayClassName={styles.overlay}
-			style={customStyles}
 		>
+			<div className={styles.body}>{children}</div>
 			<button type="button" onClick={handleClose}>
 				Close modal
 			</button>

@@ -24,7 +24,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { checkAge18AndOver } from 'types/entities';
-import ReactModal from 'react-modal';
 import { RegisterFormStep1 } from 'types/consentUi';
 
 import useModal from 'src/components/common/Modal/useModal';
@@ -39,6 +38,7 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 import { ValidLanguage } from 'src/i18n';
+import NewModal from 'src/components/common/Modal/NewModal';
 
 import styles from './RegisterForm.module.scss';
 
@@ -82,7 +82,7 @@ const FormStep1 = ({
 		setFocus('guardianName');
 	}, [setFocus]);
 
-	const { handleCloseModal, handleOpenModal, showModal } = useModal();
+	const { closeModal, openModal, modalIsOpen } = useModal();
 
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
@@ -90,23 +90,20 @@ const FormStep1 = ({
 			const dateOfBirth = new Date(dateOfBirthValue);
 			const userIsAdult = checkAge18AndOver(dateOfBirth);
 			if (!userIsAdult) {
-				handleOpenModal();
+				openModal();
 			}
 		}
 	};
 
+	useEffect(() => {
+		openModal();
+	}, [openModal]);
+
 	return (
 		<>
-			<ReactModal
-				style={{ overlay: { zIndex: 1000 } }}
-				isOpen={showModal}
-				contentLabel="testing"
-				onRequestClose={handleCloseModal}
-			>
-				<button type="button" onClick={handleCloseModal}>
-					Close modal
-				</button>
-			</ReactModal>
+			<NewModal isOpen={modalIsOpen} handleClose={closeModal}>
+				testing
+			</NewModal>
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
@@ -116,7 +113,7 @@ const FormStep1 = ({
 						{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
 					</FormSection>
 
-					<button type="button" onClick={handleOpenModal}>
+					<button type="button" onClick={openModal}>
 						Show modal
 					</button>
 

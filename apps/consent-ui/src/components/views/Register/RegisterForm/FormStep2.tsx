@@ -103,16 +103,16 @@ const FormStep2 = ({
 
 		if (recaptchaToken) {
 			const data = Object.assign({}, step1Data, step2Data);
-			axiosClient
-				.post(API.REGISTER, { data, recaptchaToken })
-				.then(() => {
-					setRecaptchaError('');
-					resetRecaptcha();
-				})
-				.catch((e) => {
-					console.error(e);
-					setRecaptchaError('Something went wrong, please try again');
-				});
+			// axiosClient
+			// 	.post(API.REGISTER, { data, recaptchaToken })
+			// 	.then(() => {
+			// 		setRecaptchaError('');
+			// 		resetRecaptcha();
+			// 	})
+			// 	.catch((e) => {
+			// 		console.error(e);
+			// 		setRecaptchaError('Something went wrong, please try again');
+			// 	});
 		} else {
 			setRecaptchaError('Please complete captcha');
 		}
