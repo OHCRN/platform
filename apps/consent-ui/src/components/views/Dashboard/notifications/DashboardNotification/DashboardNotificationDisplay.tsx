@@ -22,10 +22,17 @@
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { ValidLanguage } from 'src/i18n';
 import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
+import { NotificationTranslations } from 'src/components/providers/NotificationProvider/getNotificationTranslations';
 
 import styles from './DashboardNotificationDisplay.module.scss';
 
-const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const DashboardNotificationDisplay = ({
+	currentLang,
+	notificationTranslations,
+}: {
+	currentLang: ValidLanguage;
+	notificationTranslations: NotificationTranslations;
+}) => {
 	const { dismissNotification, notificationConfig } = useNotification();
 
 	// check if there's a notification for this page in context
@@ -39,7 +46,11 @@ const DashboardNotificationDisplay = ({ currentLang }: { currentLang: ValidLangu
 	};
 
 	// pass in the notification title down to the notification component
-	const notificationComponent = getNotificationComponent({ notificationConfig, notificationProps });
+	const notificationComponent = getNotificationComponent({
+		notificationConfig,
+		notificationProps,
+		notificationTranslations,
+	});
 
 	if (notificationComponent) {
 		return <div className={styles.notification}>{notificationComponent}</div>;

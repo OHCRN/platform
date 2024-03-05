@@ -17,24 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
+import { ConsentCompleteNotificationDictionary } from 'src/i18n/locales/en/consentCompleteNotification';
 
 const ConsentCompletionNotification = ({
-	currentLang,
 	dismissClick,
+	textDict,
 }: {
-	currentLang: ValidLanguage;
 	dismissClick: () => void;
+	textDict: ConsentCompleteNotificationDictionary;
 }) => {
-	const { translate } = getTranslation(currentLang);
-
 	return (
-		<Notification
-			dismissClick={dismissClick}
-			level="success"
-			title={translate('consentCompleteNotification', 'notificationText')}
-		/>
+		<Notification dismissClick={dismissClick} level="success" title={textDict.notificationText} />
 	);
 };
 

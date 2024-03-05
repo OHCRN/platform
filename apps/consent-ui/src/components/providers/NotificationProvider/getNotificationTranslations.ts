@@ -17,19 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Notification from 'src/components/common/Notification';
+import { ValidLanguage, getTranslation } from 'src/i18n';
 import { EmailVerifiedNotificationDictionary } from 'src/i18n/locales/en/emailVerifiedNotification';
+import { ConsentInProgressNotificationDictionary } from 'src/i18n/locales/en/consentInProgressNotification';
+import { ConsentCompleteNotificationDictionary } from 'src/i18n/locales/en/consentCompleteNotification';
+import { InviteSentNotificationDictionary } from 'src/i18n/locales/en/inviteSentNotification';
 
-const EmailVerifiedNotification = ({
-	dismissClick,
-	textDict,
-}: {
-	dismissClick: () => void;
-	textDict: EmailVerifiedNotificationDictionary;
-}) => {
-	return (
-		<Notification dismissClick={dismissClick} level="success" title={textDict.notificationText} />
-	);
+export type NotificationTranslations = {
+	emailVerified: EmailVerifiedNotificationDictionary;
+	consentInProgress: ConsentInProgressNotificationDictionary;
+	consentComplete: ConsentCompleteNotificationDictionary;
+	inviteSent: InviteSentNotificationDictionary;
 };
 
-export default EmailVerifiedNotification;
+/**
+ * Returns an object with the translated notification namespaces
+ */
+export const getNotificationTranslations = (currentLang: ValidLanguage) => {
+	const { translateNamespace } = getTranslation(currentLang);
+	const notificationTranslations: NotificationTranslations = {
+		emailVerified: translateNamespace('emailVerifiedNotification'),
+		consentInProgress: translateNamespace('consentInProgressNotification'),
+		consentComplete: translateNamespace('consentCompleteNotification'),
+		inviteSent: translateNamespace('inviteSentNotification'),
+	};
+	return notificationTranslations;
+};
