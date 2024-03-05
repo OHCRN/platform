@@ -48,6 +48,7 @@ import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { useModal } from 'src/components/providers/ModalProvider';
+import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -71,12 +72,14 @@ const ClinicianInviteFormComponent = ({
 	errorsDict,
 	labelsDict,
 	textDict,
+	modalDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
+	modalDict: InviteFormConsentGroupModalDictionary;
 }) => {
 	const { showNotification } = useNotification();
 	const router = useRouter();
@@ -152,7 +155,7 @@ const ClinicianInviteFormComponent = ({
 	// setup consent group info modal
 	const { openModal } = useModal();
 	const consentGroupModalConfig = {
-		modalComponent: <ConsentGroupModal currentLang={currentLang} />,
+		modalComponent: <ConsentGroupModal modalDict={modalDict} />,
 	};
 	const handleConsentGroupInfoButtonClick = () => openModal(consentGroupModalConfig);
 

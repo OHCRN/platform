@@ -17,8 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -42,7 +40,7 @@ const RecaptchaCheckbox = ({
 			ref={recaptchaCheckboxRef}
 			sitekey={RECAPTCHA_SITE_KEY}
 			onChange={onChange}
-			hl={currentLang === ValidLanguage.enum.fr ? 'fr-CA' : 'en'}
+			hl={currentLang}
 		/>
 	) : null;
 };
