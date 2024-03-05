@@ -33,7 +33,7 @@ export const makeDateOfBirthTestSetup = () => {
 		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS * 1.5)}`,
 	);
 	const lessThanMinimumAgeDateOfBirth = new Date(
-		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS / 2)}`,
+		`${monthDay}${year - Math.ceil(MINIMUM_AGE_IN_YEARS / 2)}`,
 	);
 	const futureDateOfBirth = new Date(`${monthDay}${year + MINIMUM_AGE_IN_YEARS}`);
 
