@@ -24,25 +24,16 @@ import {
 	RegisterFormStep1Fields,
 	RegisterFormStep2,
 } from '../../src/services/consentUi/requests/Register.js';
-import {
-	MINIMUM_AGE_IN_YEARS,
-	createDateOfBirthRequestSchema,
-} from '../../src/common/utils/dateOfBirth.js';
+import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
+import { makeDateOfBirthTestSetup } from '../utils/dateOfBirth.spec.js';
 
 describe('ParticipantRegistrationRequest', () => {
-	const mockDate = new Date('02/28/2024');
-	const month = mockDate.getMonth() + 1;
-	const day = mockDate.getDate();
-	const year = mockDate.getFullYear();
-
-	const monthDay = `${month}/${day}/`;
-	const exactlyMinimumAgeDateOfBirth = new Date(`${monthDay}${year - MINIMUM_AGE_IN_YEARS}`);
-	const olderThanMinimumAgeDateOfBirth = new Date(
-		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS * 1.5)}`,
-	);
-	const lessThanMinimumAgeDateOfBirth = new Date(
-		`${monthDay}${year - Math.floor(MINIMUM_AGE_IN_YEARS / 2)}`,
-	);
+	const {
+		exactlyMinimumAgeDateOfBirth,
+		lessThanMinimumAgeDateOfBirth,
+		mockDate,
+		olderThanMinimumAgeDateOfBirth,
+	} = makeDateOfBirthTestSetup();
 
 	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
 	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
