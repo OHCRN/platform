@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,18 +17,47 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getTranslation, ValidLanguage } from 'src/i18n';
+import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-const APIVersionLabel = async ({
-	apiVersion,
-	currentLang,
-}: {
-	apiVersion: string;
-	currentLang: ValidLanguage;
-}) => {
-	const { translate } = getTranslation(currentLang);
-
-	return <span>{translate('footer', 'api', { apiVersion })}</span>;
+export const axiosRequestInterceptor = (
+	request: InternalAxiosRequestConfig,
+	axiosClientName: string,
+) => {
+	console.log(
+		`${axiosClientName || 'Axios'} Request:`,
+		JSON.stringify(
+			{
+				url: request.url,
+				method: request.method,
+				headers: request.headers,
+				params: request.params,
+				data: request.data,
+			},
+			null,
+			2,
+		),
+	);
+	return request;
 };
 
-export default APIVersionLabel;
+export const axiosResponseInterceptor = (response: AxiosResponse, axiosClientName: string) => {
+	console.log(
+		`${axiosClientName || 'Axios'} Response:`,
+		JSON.stringify(
+			{
+				status: response.status,
+				statusText: response.statusText,
+				headers: response.headers,
+				data: response.data,
+			},
+			null,
+			2,
+		),
+	);
+	return response;
+};
+
+export const axiosErrorInterceptor = (error: any, axiosClientName: string) => {
+	console.error(`${axiosClientName || 'Axios'} Error:`, error);
+	return error;
+};

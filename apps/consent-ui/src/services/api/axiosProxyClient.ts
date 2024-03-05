@@ -19,14 +19,32 @@
 import axios from 'axios';
 
 import { getAppConfig } from 'src/config';
+import {
+	axiosErrorInterceptor,
+	axiosRequestInterceptor,
+	axiosResponseInterceptor,
+} from 'src/services/api/utils';
 
-const initAxiosClient = () => {
-	const { CONSENT_API_URL } = getAppConfig();
-	return axios.create({
+const { CONSENT_API_URL, VERBOSE_AXIOS_LOGGING } = getAppConfig();
+const AXIOS_CLIENT_NAME = 'axiosProxyClient';
+
+const initAxiosClient = () =>
+	axios.create({
 		baseURL: CONSENT_API_URL,
 	});
-};
 
 const axiosProxyClient = initAxiosClient();
+
+if (VERBOSE_AXIOS_LOGGING) {
+	axiosProxyClient.interceptors.request.use(
+		(request) => axiosRequestInterceptor(request, AXIOS_CLIENT_NAME),
+		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Request`),
+	);
+
+	axiosProxyClient.interceptors.response.use(
+		(response) => axiosResponseInterceptor(response, AXIOS_CLIENT_NAME),
+		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Response`),
+	);
+}
 
 export { axiosProxyClient };
