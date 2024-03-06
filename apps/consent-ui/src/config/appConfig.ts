@@ -20,6 +20,8 @@
 export type AppConfig = {
 	AUTH_DISABLED: boolean;
 	CONSENT_API_URL: string;
+	CONSENT_PDF_URL_EN: string;
+	CONSENT_PDF_URL_FR: string;
 	CONSENT_UI_URL: string;
 	OHCRN_EMAIL?: string;
 	OHCRN_HOME_LINK?: string;
@@ -34,6 +36,8 @@ export type AppConfig = {
 export const defaultAppConfig: AppConfig = {
 	AUTH_DISABLED: false,
 	CONSENT_API_URL: 'http://localhost:8080',
+	CONSENT_PDF_URL_EN: '',
+	CONSENT_PDF_URL_FR: '',
 	CONSENT_UI_URL: 'http://localhost:3000',
 	OHCRN_EMAIL: '',
 	OHCRN_HOME_LINK: '',
@@ -53,6 +57,8 @@ export const defaultAppConfig: AppConfig = {
 const getAppConfig = (): AppConfig => ({
 	AUTH_DISABLED: process.env.AUTH_DISABLED === 'true' || defaultAppConfig.AUTH_DISABLED,
 	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
+	CONSENT_PDF_URL_EN: process.env.CONSENT_PDF_URL_EN || defaultAppConfig.CONSENT_PDF_URL_EN,
+	CONSENT_PDF_URL_FR: process.env.CONSENT_PDF_URL_FR || defaultAppConfig.CONSENT_PDF_URL_FR,
 	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
 	OHCRN_EMAIL: process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
 	OHCRN_HOME_LINK: process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,

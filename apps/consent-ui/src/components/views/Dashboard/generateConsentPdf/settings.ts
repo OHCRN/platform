@@ -17,72 +17,80 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export const fieldPropsGeneric = {
+import { rgb } from 'pdf-lib';
+
+export const settingsGeneric = {
 	ellipse: {
-		width: 50,
-		height: 25,
+		borderColor: rgb(0, 0, 0),
+		borderWidth: 2,
+		xScale: 25,
+		yScale: 12,
 	},
 };
 
-const fieldPropsEn = {
-	optionalConsent: {
-		page: 4,
-		xCoord: {
-			no: 120,
-			yes: 45,
+const settingsEn = {
+	pages: {
+		consent: {
+			pageNumber: 10,
+			xCoord: {
+				no: 188,
+				yes: 117,
+			},
+			yCoord: {
+				RECONTACT__FUTURE_RESEARCH: 508,
+				RECONTACT__SECONDARY_CONTACT: 588,
+				RESEARCH_PARTICIPATION__CONTACT_INFORMATION: 427,
+				RESEARCH_PARTICIPATION__FUTURE_RESEARCH: 346,
+			},
 		},
-		yCoord: {
-			RECONTACT__FUTURE_RESEARCH: 50,
-			RECONTACT__SECONDARY_CONTACT: 100,
-			RESEARCH_PARTICIPATION__CONTACT_INFORMATION: 150,
-			RESEARCH_PARTICIPATION__FUTURE_RESEARCH: 200,
-		},
-	},
-	signature: {
-		page: 5,
-		xCoord: {
-			date: 120,
-			printedName: 100,
-			signaturePng: 40,
-		},
-		yCoord: {
-			guardian: 80,
-			participant: 40,
-			subsitute: 60,
+		signature: {
+			pageNumber: 12,
+			xCoord: {
+				date: 120,
+				printedName: 100,
+				signaturePng: 40,
+			},
+			yCoord: {
+				guardian: 80,
+				participant: 40,
+				subsitute: 60,
+			},
 		},
 	},
 };
 
-const fieldPropsFr = {
-	optionalConsent: {
-		page: 4,
-		xCoord: {
-			no: 120,
-			yes: 45,
+const settingsFr = {
+	pages: {
+		consent: {
+			pageNumber: 10,
+			xCoord: {
+				no: 188,
+				yes: 117,
+			},
+			yCoord: {
+				RECONTACT__FUTURE_RESEARCH: 508,
+				RECONTACT__SECONDARY_CONTACT: 588,
+				RESEARCH_PARTICIPATION__CONTACT_INFORMATION: 427,
+				RESEARCH_PARTICIPATION__FUTURE_RESEARCH: 346,
+			},
 		},
-		yCoord: {
-			RECONTACT__FUTURE_RESEARCH: 50,
-			RECONTACT__SECONDARY_CONTACT: 100,
-			RESEARCH_PARTICIPATION__CONTACT_INFORMATION: 150,
-			RESEARCH_PARTICIPATION__FUTURE_RESEARCH: 200,
+		signature: {
+			pageNumber: 12,
+			xCoord: {
+				date: 120,
+				printedName: 100,
+				signaturePng: 40,
+			},
+			yCoord: {
+				guardian: 80,
+				participant: 40,
+				subsitute: 60,
+			},
 		},
 	},
-	signature: {
-		page: 5,
-		xCoord: {
-			date: 120,
-			printedName: 100,
-			signaturePng: 40,
-		},
-		yCoord: {
-			guardian: 80,
-			participant: 40,
-			subsitute: 60,
-		},
-	},
-} satisfies typeof fieldPropsEn;
+} satisfies typeof settingsEn;
 
-export const fieldPropsByLang = { en: fieldPropsEn, fr: fieldPropsFr };
+export const settingsByLang = { en: settingsEn, fr: settingsFr };
 
 // properties for:
 // circles

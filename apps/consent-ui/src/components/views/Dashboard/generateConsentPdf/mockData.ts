@@ -17,11 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { GeneratePdfParams } from './types';
+import { GenerateConsentPdfParams } from './types';
 
 // MOCK DATA
 // properties starting with mock = unknown property name
-export const mockDataGuardian: GeneratePdfParams = {
+export const mockDataGuardian: GenerateConsentPdfParams = {
 	consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
 	currentLifecycleState: 'CONSENTED',
 	guardianName: 'Marge Simpson',
@@ -31,12 +31,12 @@ export const mockDataGuardian: GeneratePdfParams = {
 	participantFirstName: 'Lisa',
 	participantLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: false,
-	RECONTACT__SECONDARY_CONTACT: false,
+	RECONTACT__SECONDARY_CONTACT: true,
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: false,
-	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: false,
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
 };
 
-export const mockDataParticipant: GeneratePdfParams = {
+export const mockDataParticipant: GenerateConsentPdfParams = {
 	consentGroup: 'ADULT_CONSENT',
 	currentLifecycleState: 'CONSENTED',
 	guardianName: undefined,
@@ -51,7 +51,7 @@ export const mockDataParticipant: GeneratePdfParams = {
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
 };
 
-export const mockDataSubstitute: GeneratePdfParams = {
+export const mockDataSubstitute: GenerateConsentPdfParams = {
 	consentGroup: 'ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER',
 	currentLifecycleState: 'CONSENTED',
 	guardianName: 'Homer Simpson',

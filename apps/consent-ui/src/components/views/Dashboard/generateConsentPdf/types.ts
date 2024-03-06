@@ -19,7 +19,7 @@
 
 import { ConsentGroup, LifecycleState } from 'types/entities';
 
-export type GeneratePdfParams = {
+export type GenerateConsentPdfParams = {
 	consentGroup: ConsentGroup;
 	currentLifecycleState: LifecycleState;
 	guardianName?: string;
