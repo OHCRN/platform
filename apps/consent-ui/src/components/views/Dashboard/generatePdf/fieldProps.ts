@@ -17,6 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+export const fieldPropsGeneric = {
+	ellipse: {
+		width: 50,
+		height: 25,
+	},
+};
+
 const fieldPropsEn = {
 	optionalConsent: {
 		page: 4,

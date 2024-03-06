@@ -22,7 +22,7 @@ import { ConsentGroup, LifecycleState } from 'types/entities';
 import { ValidLanguage } from 'src/i18n';
 
 import { GeneratePdfParams } from './types';
-import { fieldPropsByLang } from './fieldProps';
+import { fieldPropsByLang, fieldPropsGeneric } from './fieldProps';
 
 // TEMP not final list
 export const PDF_CONSENT_GROUPS_WITH_GUARDIAN: ConsentGroup[] = [
@@ -58,10 +58,13 @@ const generatePdf = async ({
 		return;
 	}
 
-	const fieldProps = fieldPropsByLang[currentLang];
+	const fieldProps = Object.assign({}, fieldPropsByLang[currentLang], fieldPropsGeneric);
 
 	// get pdf from URL (use next API for now)
 	// put pdf placeholder URL in a dictionary
+
+	// add 3 buttons to dashboard for participant, guardian, substitute
+	// create pdf on useEffect too
 
 	// modify PDF
 
