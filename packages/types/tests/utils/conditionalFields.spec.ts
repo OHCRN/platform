@@ -23,7 +23,7 @@ import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
 	hasRequiredOhipFormInfo,
-	hasRequiredOhipInformation,
+	hasRequiredOhipInfo,
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
@@ -213,13 +213,13 @@ describe('Conditional fields utility functions', () => {
 		});
 	});
 
-	describe('hasRequiredOhipInformation', () => {
+	describe('hasRequiredOhipInfo', () => {
 		it('returns TRUE if hasOhip is true and ohipNumber is provided', () => {
 			const testSchemaObj = {
 				ohipNumber: '1234567890',
 				hasOhip: true,
 			};
-			const result = hasRequiredOhipInformation(testSchemaObj);
+			const result = hasRequiredOhipInfo(testSchemaObj);
 			expect(result).true;
 		});
 
@@ -228,7 +228,7 @@ describe('Conditional fields utility functions', () => {
 				ohipNumber: undefined,
 				hasOhip: true,
 			};
-			const result = hasRequiredOhipInformation(testSchemaObj);
+			const result = hasRequiredOhipInfo(testSchemaObj);
 			expect(result).false;
 		});
 
@@ -237,7 +237,7 @@ describe('Conditional fields utility functions', () => {
 				ohipNumber: undefined,
 				hasOhip: false,
 			};
-			const result = hasRequiredOhipInformation(testSchemaObj);
+			const result = hasRequiredOhipInfo(testSchemaObj);
 			expect(result).true;
 		});
 
@@ -246,7 +246,7 @@ describe('Conditional fields utility functions', () => {
 				ohipNumber: '1234567890',
 				hasOhip: false,
 			};
-			const result = hasRequiredOhipInformation(testSchemaObj);
+			const result = hasRequiredOhipInfo(testSchemaObj);
 			expect(result).false;
 		});
 	});
