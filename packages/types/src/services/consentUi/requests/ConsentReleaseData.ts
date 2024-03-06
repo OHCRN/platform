@@ -25,7 +25,7 @@ import { hasRequiredOhipFormInfo } from '../../../common/conditionalFieldUtils.j
 
 const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
 
-const ConsentReleaseDataFormRequest = z.intersection(
+export const ConsentReleaseDataFormRequest = z.intersection(
 	ConsentReleaseDataBase.extend({
 		[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
 		[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),

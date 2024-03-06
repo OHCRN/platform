@@ -19,10 +19,8 @@
 
 'use client';
 
-import { z } from 'zod';
 import { ConsentReleaseDataRequest } from 'types/consentApi';
-import { OhipInfoUI } from 'types/entities';
-import { hasRequiredOhipInformationUI } from 'types/common';
+import { ConsentReleaseDataFormRequest } from 'types/consentUi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -53,21 +51,10 @@ import {
 } from './types';
 import styles from './ConsentReleaseDataForm.module.scss';
 
-const ConsentReleaseDataUI = ConsentReleaseDataRequest.extend({
-	ohipInfo: OhipInfoUI.refine(hasRequiredOhipInformationUI, {
-		message: 'missingOhipError',
-		path: ['ohipNumber'],
-	}),
-});
-type ConsentReleaseDataUI = z.infer<typeof ConsentReleaseDataUI>;
-
-const transformData = (data: ConsentReleaseDataUI): ConsentReleaseDataRequest => {
+const transformData = (data: ConsentReleaseDataFormRequest): ConsentReleaseDataRequest => {
 	return {
 		...data,
-		ohipInfo: {
-			ohipNumber: data.ohipInfo.ohipNumber,
-			hasOhip: !data.ohipInfo.ohipDisabled,
-		},
+		hasOhip: !data.ohipDisabled,
 	};
 };
 
@@ -97,8 +84,8 @@ const ConsentReleaseDataForm = ({
 	textDict: ConsentReleaseDataTextDictionary;
 }) => {
 	// setup react-hook-forms
-	const methods = useForm<ConsentReleaseDataUI>({
-		resolver: zodResolver(ConsentReleaseDataUI),
+	const methods = useForm<ConsentReleaseDataFormRequest>({
+		resolver: zodResolver(ConsentReleaseDataFormRequest),
 		shouldUnregister: true,
 		mode: 'onBlur',
 	});
@@ -109,10 +96,10 @@ const ConsentReleaseDataForm = ({
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
 
-	const onSubmit: SubmitHandler<ConsentReleaseDataUI> = (data, event) => {
+	const onSubmit: SubmitHandler<ConsentReleaseDataFormRequest> = (data, event) => {
 		event?.preventDefault();
-		const _data = transformData(data);
-		console.log(_data); // work with this _data on form submit
+		const transformedData = transformData(data);
+		console.log(transformedData); // this console.log makes sure transformedData is being used, to pass build
 		goToNextConsentStep();
 	};
 
@@ -183,7 +170,7 @@ const ConsentReleaseDataForm = ({
 					/>
 					<OhipFieldSet
 						label={labelsDict.ohipNumber}
-						error={errors.ohipInfo?.ohipNumber?.type && errorsDict.required}
+						error={errors.ohipNumber?.type && errorsDict.required}
 						checkboxLabel={textDict.ohipCheckboxText}
 						required
 					/>

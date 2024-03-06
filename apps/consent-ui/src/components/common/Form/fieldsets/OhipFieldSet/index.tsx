@@ -33,8 +33,8 @@ import FieldSet from '../FieldSet';
 import styles from './OhipFieldSet.module.scss';
 
 // These are constants, since this is a special component that is only used in one location
-const ohipNumberFieldName = 'ohipInfo.ohipNumber';
-const hasOhipFieldName = 'ohipInfo.hasOhip';
+const ohipNumberFieldName = 'ohipNumber';
+const ohipDisabledFieldName = 'ohipDisabled';
 
 export type OhipFieldSetProps<T extends FieldValues> = Omit<
 	FormFieldSetWithDescriptionProps<T>,
@@ -57,7 +57,7 @@ const OhipFieldSet = <T extends FieldValues>({
 	const ohipCheckboxId = `${ohipFieldId}-checkbox`;
 
 	const { watch, resetField } = useFormContext();
-	const checkboxValue: boolean = watch(hasOhipFieldName);
+	const checkboxValue: boolean = watch(ohipDisabledFieldName);
 
 	useEffect(() => {
 		if (checkboxValue) {
@@ -90,7 +90,7 @@ const OhipFieldSet = <T extends FieldValues>({
 					className={clsx(styles.ohipCheckboxInput, error && styles.error)}
 					disabled={disabled}
 					id={ohipCheckboxId}
-					name={hasOhipFieldName}
+					name={ohipDisabledFieldName}
 				/>
 				<span className={styles.ohipCheckboxLabel}>{checkboxLabel}</span>
 			</label>
