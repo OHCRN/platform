@@ -17,22 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { differenceInYears } from 'date-fns';
+import Modal, { ModalComponentProps } from 'src/components/common/Modal';
+import { getTranslation } from 'src/i18n';
 
-/**
- * Check if age is at least 18 years
- * @returns {boolean} returns true if age is greater than or equal to 18
- */
-export const checkAge18AndOver = (dob: Date): boolean => {
-	const age = differenceInYears(new Date(), dob);
-	return age >= 18;
+const RegisterDateOfBirthErrorModal = ({
+	closeModal,
+	currentLang,
+	modalIsOpen,
+}: ModalComponentProps) => {
+	const { translateNamespace } = getTranslation(currentLang);
+	const modalDict = translateNamespace('registerMinorModal');
+	return (
+		<Modal
+			actionButtonText={modalDict.actionText}
+			cancelButtonText={modalDict.cancelText}
+			closeModal={closeModal}
+			contentLabel={modalDict.title}
+			modalIsOpen={modalIsOpen}
+			title={modalDict.title}
+		>
+			{modalDict.description}
+		</Modal>
+	);
 };
 
-/**
- * Checks if a Participant is at least 18 years old. Use with refine() validation.
- * @returns {boolean} returns true if participant is an adult
- */
-export const checkParticipantIsAdult = (props: { dateOfBirth: Date }): boolean => {
-	const { dateOfBirth } = props;
-	return checkAge18AndOver(dateOfBirth);
-};
+export default RegisterDateOfBirthErrorModal;

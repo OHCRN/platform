@@ -26,7 +26,6 @@ import { RegisterFormStep1, RegisterFormStep2 } from 'types/consentUi';
 
 import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { ValidLanguage } from 'src/i18n';
-import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 import Form from 'src/components/common/Form';
@@ -34,7 +33,6 @@ import FormSection from 'src/components/common/Form/FormSection';
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import Button from 'src/components/common/Button';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
-import { API } from 'src/constants/externalPaths';
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
@@ -85,7 +83,6 @@ const FormStep2 = ({
 		onRecaptchaChange,
 		recaptchaCheckboxRef,
 		recaptchaError,
-		resetRecaptcha,
 		setRecaptchaError,
 	} = useRecaptcha();
 
@@ -103,16 +100,7 @@ const FormStep2 = ({
 
 		if (recaptchaToken) {
 			const data = Object.assign({}, step1Data, step2Data);
-			// axiosClient
-			// 	.post(API.REGISTER, { data, recaptchaToken })
-			// 	.then(() => {
-			// 		setRecaptchaError('');
-			// 		resetRecaptcha();
-			// 	})
-			// 	.catch((e) => {
-			// 		console.error(e);
-			// 		setRecaptchaError('Something went wrong, please try again');
-			// 	});
+			console.log(data);
 		} else {
 			setRecaptchaError('Please complete captcha');
 		}

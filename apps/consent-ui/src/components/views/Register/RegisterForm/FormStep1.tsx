@@ -23,7 +23,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { checkAge18AndOver } from 'types/entities';
+import { checkIsMinimumAgeOrGreater } from 'types/common';
 import { RegisterFormStep1 } from 'types/consentUi';
 
 import useModal from 'src/components/common/Modal/useModal';
@@ -40,7 +40,7 @@ import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarField
 import { ValidLanguage } from 'src/i18n';
 
 import styles from './RegisterForm.module.scss';
-import RegisterMinorModal from './RegisterMinorModal';
+import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
 
 const FormStep1 = ({
 	className,
@@ -87,9 +87,10 @@ const FormStep1 = ({
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
 		if (dateOfBirthValue) {
+			const currentDate = new Date();
 			const dateOfBirth = new Date(dateOfBirthValue);
-			const userIsAdult = checkAge18AndOver(dateOfBirth);
-			if (!userIsAdult) {
+			const userIsMinimumAgeOrGreater = checkIsMinimumAgeOrGreater(currentDate, dateOfBirth);
+			if (!userIsMinimumAgeOrGreater) {
 				openModal();
 			}
 		}
@@ -97,7 +98,7 @@ const FormStep1 = ({
 
 	return (
 		<>
-			<RegisterMinorModal
+			<RegisterDateOfBirthErrorModal
 				currentLang={currentLang}
 				closeModal={closeModal}
 				modalIsOpen={modalIsOpen}
