@@ -81,19 +81,23 @@ const generateConsentPdf = async (
 	// MODIFY OPTIONAL CONSENT PAGE
 	const consentPageNumber = pdfPages[consentSettings.pageNumber];
 
-	// circle selected answers on consent page
-	Object.entries({
+	const consentFields = {
 		RECONTACT__FUTURE_RESEARCH,
 		RECONTACT__SECONDARY_CONTACT,
 		RESEARCH_PARTICIPATION__CONTACT_INFORMATION,
 		RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
-	}).forEach(([key, value]) => {
+	};
+
+	// circle selected answers on consent page
+	for (const field in consentFields) {
 		consentPageNumber.drawEllipse({
 			...settings.ellipse,
-			x: value ? consentSettings.xCoord.yes : consentSettings.xCoord.no,
-			y: consentSettings.yCoord[key as keyof (typeof consentSettings)['yCoord']],
+			x: consentFields[field as keyof typeof consentFields]
+				? consentSettings.xCoord.yes
+				: consentSettings.xCoord.no,
+			y: consentSettings.yCoord[field as keyof typeof consentFields],
 		});
-	});
+	}
 
 	// MODIFY SIGNATURE PAGE
 	const signaturePage = pdfPages[signatureSettings.pageNumber];
