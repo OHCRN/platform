@@ -83,7 +83,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 
 	return (
 		<header className={styles.header} ref={ref}>
-			<div className={clsx(styles.headerBar, hiddenOnDesktop && styles['hide-desktop'])}>
+			<div className={clsx(styles.headerBar, hiddenOnDesktop && styles.hideDesktop)}>
 				<div className={styles.logoLink}>
 					<Link href={`/${currentLang}`}>
 						<Image src={mainIcon} priority alt={textDict.logoAltText} className={styles.logo} />
@@ -104,7 +104,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 						<HelpButton label={textDict.help} />
 					</div>
 					{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
-					<div className={styles['user-menu']}>
+					<div className={styles.userMenu}>
 						{/* Desktop */}
 						<div className={styles.desktopUserMenu}>
 							{session?.user ? (
