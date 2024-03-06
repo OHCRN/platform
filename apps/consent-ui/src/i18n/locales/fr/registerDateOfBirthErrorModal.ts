@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { RegisterMinorModalDictionary } from '../en/registerMinorModal';
+import { RegisterDateOfBirthErrorModalDictionary } from '../en/registerDateOfBirthErrorModal';
 
 import common from './common';
 
@@ -29,6 +29,6 @@ const dictionary = {
 	description:
 		"Vous avez saisi les informations d'un participant âgé de moins de 18 ans. Tous les mineurs doivent demander à leur tuteur de contacter d'abord leur clinicien pour commencer.",
 	title: 'Le participant est mineur. Veuillez contacter votre clinicien pour vous inscrire.',
-} satisfies RegisterMinorModalDictionary;
+} satisfies RegisterDateOfBirthErrorModalDictionary;
 
 export default dictionary;

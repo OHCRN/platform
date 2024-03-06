@@ -57,12 +57,12 @@ import inviteSentNotificationDictionary from './inviteSentNotification';
 import landingPageDictionary from './landingPage';
 import molecularLabDictionary from './molecularLab';
 import provinceDictionary from './province';
+import registerDateOfBirthErrorModalDictionary from './registerDateOfBirthErrorModal';
 import registerFormStep1LabelsDictionary from './registerFormStep1Labels';
 import registerFormStep1TextDictionary from './registerFormStep1Text';
 import registerFormStep2LabelsDictionary from './registerFormStep2Labels';
 import registerFormStep2TextDictionary from './registerFormStep2Text';
 import registerFormTextDictionary from './registerFormText';
-import registerMinorModalDictionary from './registerMinorModal';
 import registerPageDictionary from './registerPage';
 
 const dictionaries = {
@@ -106,12 +106,12 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
+	registerDateOfBirthErrorModal: registerDateOfBirthErrorModalDictionary,
 	registerFormStep1Labels: registerFormStep1LabelsDictionary,
 	registerFormStep1Text: registerFormStep1TextDictionary,
 	registerFormStep2Labels: registerFormStep2LabelsDictionary,
 	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
-	registerMinorModal: registerMinorModalDictionary,
 	registerPage: registerPageDictionary,
 };
 

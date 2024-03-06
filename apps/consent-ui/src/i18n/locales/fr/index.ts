@@ -58,12 +58,12 @@ import inviteSentNotificationDictionary from 'src/i18n/locales/fr/inviteSentNoti
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
+import registerDateOfBirthErrorModalDictionary from 'src/i18n/locales/fr/registerDateOfBirthErrorModal';
 import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
 import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
 import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
 import registerFormStep2TextDictionary from 'src/i18n/locales/fr/registerFormStep2Text';
 import registerFormTextDictionary from 'src/i18n/locales/fr/registerFormText';
-import registerMinorModalDictionary from 'src/i18n/locales/fr/registerMinorModal';
 import registerPageDictionary from 'src/i18n/locales/fr/registerPage';
 
 const dictionaries = {
@@ -107,12 +107,12 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
+	registerDateOfBirthErrorModal: registerDateOfBirthErrorModalDictionary,
 	registerFormStep1Labels: registerFormStep1LabelsDictionary,
 	registerFormStep1Text: registerFormStep1TextDictionary,
 	registerFormStep2Labels: registerFormStep2LabelsDictionary,
 	registerFormStep2Text: registerFormStep2TextDictionary,
 	registerFormText: registerFormTextDictionary,
-	registerMinorModal: registerMinorModalDictionary,
 	registerPage: registerPageDictionary,
 } satisfies typeof en;
 

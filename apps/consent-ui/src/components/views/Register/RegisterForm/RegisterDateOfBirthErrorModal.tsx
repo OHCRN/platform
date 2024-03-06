@@ -26,7 +26,7 @@ const RegisterDateOfBirthErrorModal = ({
 	modalIsOpen,
 }: ModalComponentProps) => {
 	const { translateNamespace } = getTranslation(currentLang);
-	const modalDict = translateNamespace('registerMinorModal');
+	const modalDict = translateNamespace('registerDateOfBirthErrorModal');
 	return (
 		<Modal
 			actionButtonText={modalDict.actionText}

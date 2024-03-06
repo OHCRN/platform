@@ -29,6 +29,6 @@ const dictionary = {
 	title: 'The participant is a minor. Please contact your clinician to register.',
 } satisfies Record<string, string>;
 
-export type RegisterMinorModalDictionary = Record<keyof typeof dictionary, string>;
+export type RegisterDateOfBirthErrorModalDictionary = Record<keyof typeof dictionary, string>;
 
 export default dictionary;

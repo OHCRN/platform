@@ -27,7 +27,7 @@ import Button from '../Button';
 
 import styles from './Modal.module.scss';
 
-// props needed when using Modal in a component ex. RegisterMinorModal
+// props needed when using Modal in a component ex. RegisterDateOfBirthErrorModal
 export type ModalComponentProps = {
 	closeModal: () => void;
 	currentLang: ValidLanguage;
