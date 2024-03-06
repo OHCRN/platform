@@ -16,35 +16,37 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import axios from 'axios';
 
-import { getAppConfig } from 'src/config';
-import {
-	axiosErrorInterceptor,
-	axiosRequestInterceptor,
-	axiosResponseInterceptor,
-} from 'src/services/api/utils';
+import { differenceInYears } from 'date-fns';
+import { z } from 'zod';
 
-const { CONSENT_API_URL, VERBOSE_AXIOS_LOGGING } = getAppConfig();
-const AXIOS_CLIENT_NAME = 'axiosProxyClient';
+export const MINIMUM_AGE_IN_YEARS = 18;
 
-const initAxiosClient = () =>
-	axios.create({
-		baseURL: CONSENT_API_URL,
-	});
+/**
+ * Check if age is at least MINIMUM_AGE_IN_YEARS
+ * @param comparisonDate: date to compare the dateOfBirth to
+ * @returns {boolean} returns true if age is greater than or equal to MINIMUM_AGE_IN_YEARS
+ */
+export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Date): boolean => {
+	const age = differenceInYears(comparisonDate, dateOfBirth);
+	return age >= MINIMUM_AGE_IN_YEARS;
+};
 
-const axiosProxyClient = initAxiosClient();
-
-if (VERBOSE_AXIOS_LOGGING) {
-	axiosProxyClient.interceptors.request.use(
-		(request) => axiosRequestInterceptor(request, AXIOS_CLIENT_NAME),
-		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Request`),
-	);
-
-	axiosProxyClient.interceptors.response.use(
-		(response) => axiosResponseInterceptor(response, AXIOS_CLIENT_NAME),
-		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Response`),
-	);
-}
-
-export { axiosProxyClient };
+/**
+ * Create a schema for the dateOfBirth field, with a refinement for checking the user's age.
+ * @param comparisonDate: date to compare the dateOfBirth to. default is today's date
+ *
+ */
+export const createDateOfBirthRequestSchema = (comparisonDate?: Date) => {
+	return z
+		.object({
+			dateOfBirth: z.coerce.date(),
+		})
+		.refine(
+			(props) => checkIsMinimumAgeOrGreater(comparisonDate || new Date(), props.dateOfBirth),
+			{
+				message: 'participantLessThanMinimumAge',
+				path: ['dateOfBirth'],
+			},
+		);
+};

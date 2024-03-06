@@ -40,8 +40,6 @@ const CalendarInput = <T extends FieldValues>({
 	popperClassName,
 	id,
 	name,
-	onBlur = () => {},
-	onFocus = () => {},
 	required,
 	currentLang,
 }: CalendarInputProps<T>) => {
@@ -54,20 +52,19 @@ const CalendarInput = <T extends FieldValues>({
 		<Controller
 			control={control}
 			name={name}
-			render={({ field: { onChange, value } }) => (
+			render={({ field: { onBlur, onChange, value } }) => (
 				<DatePicker
 					selected={value}
 					onChange={(date) => onChange(date)}
-					required={required}
 					className={clsx(className)}
 					popperClassName={clsx(popperClassName)}
 					id={id}
 					name={name}
 					locale={currentLang}
 					onBlur={onBlur}
-					onFocus={onFocus}
 					disabled={disabled}
 					{...ariaProps}
+					aria-required={required}
 				/>
 			)}
 			rules={{ required }}
