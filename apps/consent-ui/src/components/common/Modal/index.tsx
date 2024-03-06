@@ -74,7 +74,7 @@ const Modal = ({
 			overlayClassName={styles.overlay}
 		>
 			{title && <h3>{title}</h3>}
-			<div className={styles.body}>{children}</div>
+			<div>{children}</div>
 			{(actionButtonText || cancelButtonText) && (
 				<div className={styles.buttons}>
 					{cancelButtonText &&

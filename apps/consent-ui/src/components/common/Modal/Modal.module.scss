@@ -9,11 +9,11 @@
 		background: theme('colors.grayscale.800');
 		opacity: 0.5;
 	}
-	padding: 3rem 1rem 5rem;
-	@media (min-width: theme('screens.sm')) {
+	padding: 1rem;
+	@media (min-width: theme('screens.md')) {
 		padding: 5rem 1rem;
 	}
-	@media (min-width: theme('screens.md')) {
+	@media (min-width: theme('screens.lg')) {
 		padding: 5rem 3rem;
 	}
 }
@@ -24,14 +24,12 @@
 	background: white;
 	padding: 1rem;
 	max-width: 45rem;
-	margin: 0 auto;
 	max-height: 100%;
+	margin: 0 auto;
+	outline: 0 none;
+	overflow-y: auto;
 	@media (min-width: theme('screens.sm')) {
 		padding: 1.5rem 3rem;
-	}
-	.body {
-		max-height: 100%;
-		overflow: auto;
 	}
 	.buttons {
 		margin-top: 1rem;
