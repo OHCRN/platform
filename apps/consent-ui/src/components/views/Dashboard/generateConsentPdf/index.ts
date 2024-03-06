@@ -71,16 +71,14 @@ const generateConsentPdf = async (
 		return null;
 	}
 
-	// const pdfFilenameArray = pdfUrl.split('/');
-	// const pdfFilename = pdfFilenameArray[pdfFilenameArray.length - 1];
-
-	const settings = Object.assign({}, settingsByLang[currentLang], settingsGeneric);
-	const { consent: consentSettings, signature: signatureSettings } = settings.pages;
 	const { pdfDoc, pdfPages } = await getPdf(pdfUrl);
 
-	// MODIFY OPTIONAL CONSENT PAGE
-	const consentPageNumber = pdfPages[consentSettings.pageNumber];
+	// SETTINGS
+	const settings = Object.assign({}, settingsByLang[currentLang], settingsGeneric);
+	const { consent: consentSettings, signature: signatureSettings } = settings.pages;
 
+	// CONSENT PAGE
+	const consentPageNumber = pdfPages[consentSettings.pageNumber];
 	const consentFields = {
 		RECONTACT__FUTURE_RESEARCH,
 		RECONTACT__SECONDARY_CONTACT,
@@ -99,7 +97,7 @@ const generateConsentPdf = async (
 		});
 	}
 
-	// MODIFY SIGNATURE PAGE
+	// SIGNATURE PAGE
 	const signaturePage = pdfPages[signatureSettings.pageNumber];
 	// embed helvetica font
 	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -107,9 +105,11 @@ const generateConsentPdf = async (
 	// SAVE PDF
 	// const pdfBytes = await pdfDoc.save();
 	// const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+	// const pdfFilenameArray = pdfUrl.split('/');
+	// const pdfFilename = pdfFilenameArray[pdfFilenameArray.length - 1];
 	// saveAs(pdfBlob, pdfFilename); // TODO translate filename
 
-	// show in iframe
+	// SHOW IN IFRAME
 	const subDocument = await PDFDocument.create();
 	const copiedPage = await subDocument.copyPages(pdfDoc, [10]);
 	subDocument.addPage(copiedPage[0]);
