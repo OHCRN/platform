@@ -48,6 +48,7 @@ import { InviteFormTextDictionary } from 'src/i18n/locales/en/inviteFormText';
 import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import useModal from 'src/components/common/Modal/useModal';
+import { handleMouseDownBlur } from 'src/components/utils';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -173,21 +174,21 @@ const ClinicianInviteFormComponent = ({
 					<FormSection>
 						<TextFieldSet
 							error={errors.participantFirstName?.type && errorsDict.required}
-							label={labelsDict.firstName || ''}
+							label={labelsDict.firstName}
 							name="participantFirstName"
 							required
 							description={textDict.participantFirstNameTooltip}
 						/>
 						<TextFieldSet
 							error={errors.participantLastName?.type && errorsDict.required}
-							label={labelsDict.lastName || ''}
+							label={labelsDict.lastName}
 							name="participantLastName"
 							required
 							description={textDict.participantLastNameTooltip}
 						/>
 						<TextFieldSet
 							error={errors.participantPreferredName?.type && errorsDict.required}
-							label={labelsDict.preferredName || ''}
+							label={labelsDict.preferredName}
 							name="participantPreferredName"
 							description={textDict.participantPreferredNameTooltip}
 						/>
@@ -198,10 +199,10 @@ const ClinicianInviteFormComponent = ({
 								label: textDict.learnMoreConsentGroups,
 								onClick: openModal,
 							}}
-							label={labelsDict.consentGroup || ''}
+							label={labelsDict.consentGroup}
 							name="consentGroup"
 							options={consentGroupOptions}
-							placeholder={textDict.selectPlaceholder || ''}
+							placeholder={textDict.selectPlaceholder}
 							required
 							description={textDict.consentGroupTooltip}
 						/>
@@ -209,13 +210,13 @@ const ClinicianInviteFormComponent = ({
 						<TextFieldSet
 							description={textDict.participantPhoneNumberTooltip}
 							error={errors.participantPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.phone || ''}
+							label={labelsDict.phone}
 							name="participantPhoneNumber"
 							required
 						/>
 						<TextFieldSet
 							error={errors.participantEmailAddress?.type && errorsDict.required}
-							label={labelsDict.email || ''}
+							label={labelsDict.email}
 							name="participantEmailAddress"
 							required
 							description={textDict.participantEmailAddressTooltip}
@@ -235,13 +236,13 @@ const ClinicianInviteFormComponent = ({
 							<p>{textDict.enterGuardianInfo}</p>
 							<TextFieldSet
 								error={errors.guardianName?.type && errorsDict.required}
-								label={labelsDict.guardianName || ''}
+								label={labelsDict.guardianName}
 								name="guardianName"
 								required
 							/>
 							<TextFieldSet
 								error={errors.guardianPhoneNumber?.type && errorsDict.required}
-								label={labelsDict.guardianPhone || ''}
+								label={labelsDict.guardianPhone}
 								name="guardianPhoneNumber"
 								required
 								description={textDict.guardianPhoneNumberTooltip}
@@ -249,7 +250,7 @@ const ClinicianInviteFormComponent = ({
 							/>
 							<TextFieldSet
 								error={errors.guardianEmailAddress?.type && errorsDict.required}
-								label={labelsDict.email || ''}
+								label={labelsDict.email}
 								name="guardianEmailAddress"
 								required
 								description={textDict.guardianEmailAddressTooltip}
@@ -257,7 +258,7 @@ const ClinicianInviteFormComponent = ({
 							/>
 							<TextFieldSet
 								error={errors.guardianRelationship?.type && errorsDict.required}
-								label={labelsDict.guardianRelationship || ''}
+								label={labelsDict.guardianRelationship}
 								name="guardianRelationship"
 								required
 							/>
@@ -289,25 +290,25 @@ const ClinicianInviteFormComponent = ({
 						</h3>
 						<TextFieldSet
 							error={errors.clinicianTitleOrRole?.type && errorsDict.required}
-							label={labelsDict.clinicianTitleOrRole || ''}
+							label={labelsDict.clinicianTitleOrRole}
 							name="clinicianTitleOrRole"
 							required
 						/>
 						<TextFieldSet
 							error={errors.clinicianFirstName?.type && errorsDict.required}
-							label={labelsDict.clinicianFirstName || ''}
+							label={labelsDict.clinicianFirstName}
 							name="clinicianFirstName"
 							required
 						/>
 						<TextFieldSet
 							error={errors.clinicianLastName?.type && errorsDict.required}
-							label={labelsDict.clinicianLastName || ''}
+							label={labelsDict.clinicianLastName}
 							name="clinicianLastName"
 							required
 						/>
 						<TextFieldSet
 							error={errors.clinicianInstitutionalEmailAddress?.type && errorsDict.required}
-							label={labelsDict.clinicianInstitutionalEmailAddress || ''}
+							label={labelsDict.clinicianInstitutionalEmailAddress}
 							name="clinicianInstitutionalEmailAddress"
 							required
 							description={textDict.clinicianInstitutionalEmailAddressTooltip}
@@ -332,7 +333,7 @@ const ClinicianInviteFormComponent = ({
 						<Button
 							className={styles.submitButton}
 							color={enableSubmit ? 'green' : 'default'}
-							onMouseDown={(e) => e.preventDefault()}
+							onMouseDown={handleMouseDownBlur}
 							type="submit"
 						>
 							{textDict.submit}
