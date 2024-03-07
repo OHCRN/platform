@@ -19,8 +19,8 @@
 
 import { GenerateConsentPdfParams } from './types';
 
-// MOCK DATA
-// properties starting with mock = unknown property name
+// properties starting with mock = unknown property name/type/schema
+
 export const mockDataGuardian: GenerateConsentPdfParams = {
 	consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
 	currentLifecycleState: 'CONSENTED',
@@ -28,10 +28,11 @@ export const mockDataGuardian: GenerateConsentPdfParams = {
 	isGuardian: true,
 	mockDate: new Date(),
 	mockSignatureImage: 'testing',
-	participantFirstName: 'Lisa',
-	participantLastName: 'Simpson',
+	participantOhipFirstName: 'Lisa',
+	participantOhipLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: false,
 	RECONTACT__SECONDARY_CONTACT: true,
+	relationshipToParticipant: 'Mother',
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: false,
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
 };
@@ -43,10 +44,11 @@ export const mockDataParticipant: GenerateConsentPdfParams = {
 	isGuardian: false,
 	mockDate: new Date(),
 	mockSignatureImage: 'testing',
-	participantFirstName: 'Homer',
-	participantLastName: 'Simpson',
+	participantOhipFirstName: 'Homer',
+	participantOhipLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: true,
 	RECONTACT__SECONDARY_CONTACT: true,
+	relationshipToParticipant: undefined,
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: true,
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: true,
 };
@@ -58,10 +60,11 @@ export const mockDataSubstitute: GenerateConsentPdfParams = {
 	isGuardian: true,
 	mockDate: new Date(),
 	mockSignatureImage: 'testing',
-	participantFirstName: 'Abraham',
-	participantLastName: 'Simpson',
+	participantOhipFirstName: 'Abraham',
+	participantOhipLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: false,
 	RECONTACT__SECONDARY_CONTACT: false,
+	relationshipToParticipant: 'Son',
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: false,
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: false,
 };

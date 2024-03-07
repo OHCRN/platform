@@ -26,10 +26,11 @@ export type GenerateConsentPdfParams = {
 	isGuardian: boolean;
 	mockDate: Date;
 	mockSignatureImage: any;
-	participantFirstName: string;
-	participantLastName: string;
+	participantOhipFirstName: string;
+	participantOhipLastName: string;
 	RECONTACT__FUTURE_RESEARCH: boolean;
 	RECONTACT__SECONDARY_CONTACT: boolean;
+	relationshipToParticipant?: string;
 	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: boolean;
 	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: boolean;
 };
