@@ -99,7 +99,8 @@ const ConsentReleaseDataForm = ({
 	const onSubmit: SubmitHandler<ConsentReleaseDataFormRequest> = (data, event) => {
 		event?.preventDefault();
 		const transformedData = transformData(data);
-		console.log(transformedData); // this console.log makes sure transformedData is being used, to pass build
+		// TODO: submit data to API
+		console.log(transformedData);
 		goToNextConsentStep();
 	};
 
