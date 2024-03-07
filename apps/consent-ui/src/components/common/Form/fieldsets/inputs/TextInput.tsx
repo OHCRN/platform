@@ -25,7 +25,7 @@ import { SyntheticEvent } from 'react';
 import { FormInputProps, FormTextInputType } from 'src/components/common/Form/types';
 
 type TextInputProps<T extends FieldValues> = FormInputProps<T> & {
-	type: FormTextInputType;
+	type?: FormTextInputType;
 };
 
 const TextInput = <T extends FieldValues>({
