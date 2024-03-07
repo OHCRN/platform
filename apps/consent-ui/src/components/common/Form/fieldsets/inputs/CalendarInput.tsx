@@ -65,6 +65,7 @@ const CalendarInput = <T extends FieldValues>({
 						onChange={(date) => onChange(date)}
 						className={clsx(className)}
 						popperClassName={clsx(popperClassName)}
+						popperPlacement={'top'}
 						id={id}
 						name={name}
 						locale={currentLang}
