@@ -34,7 +34,7 @@ const PageLayout = async ({
 }) => {
 	return (
 		<NotificationProvider>
-			<Container>
+			<Container id="root">
 				<Header currentLang={currentLang} />
 				<main className={styles.main}>{children}</main>
 				<Footer currentLang={currentLang} />

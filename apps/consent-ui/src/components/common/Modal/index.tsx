@@ -67,7 +67,7 @@ const Modal = ({
 }: ModalProps) => {
 	return (
 		<ReactModal
-			appElement={document.getElementById('__next') as HTMLElement}
+			appElement={document.getElementById('root') as HTMLElement}
 			className={styles.modal}
 			contentLabel={contentLabel}
 			isOpen={modalIsOpen}
