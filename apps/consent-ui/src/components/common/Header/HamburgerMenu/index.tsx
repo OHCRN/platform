@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,41 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 import clsx from 'clsx';
-import { ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
-import { ValidLanguage } from 'src/i18n';
+import styles from './HamburgerMenu.module.scss';
 
-import { getLinkNameByPath } from '../Link/utils';
-import { RouteName } from '../Link/types';
+export type HamburgerMenuOptions = { label: React.ReactNode; link: string; key: string }[];
+const hamburgerMenuOptions: HamburgerMenuOptions = [
+	// TODO: replace with actual links
+	{ label: 'Login', link: '/', key: 'login' },
+	{ label: 'Register', link: '/', key: 'register' },
+	{ label: 'Help', link: '/', key: 'help' },
+];
 
-import styles from './Header.module.scss';
-
-const ROUTES_WITHOUT_DESKTOP_HEADER: RouteName[] = ['invite', 'register'];
-
-const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
-	// checks english and french paths by using route names
-	const linkName = getLinkNameByPath(pathname, currentLang);
-	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(linkName);
-};
-
-const HeaderWrapper = ({
-	children,
-	currentLang,
-}: {
-	children: ReactNode;
-	currentLang: ValidLanguage;
-}) => {
-	const pathname = usePathname();
-	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
+const HamburgerMenu = ({ id, showMenu }: { id: string; showMenu: boolean }) => {
 	return (
-		<header className={clsx(styles.header, hiddenOnDesktop && styles['hide-desktop'])}>
-			{children}
-		</header>
+		<div
+			className={clsx(styles.hamburgerContainer, !showMenu && styles.hamburgerHidden)}
+			id={id}
+			aria-hidden={!showMenu}
+		>
+			{hamburgerMenuOptions.map((option) => (
+				<Link href={option.link || ''} className={styles.hamburgerLine} key={option.key}>
+					{option.label}
+				</Link>
+			))}
+		</div>
 	);
 };
 
-export default HeaderWrapper;
+export default HamburgerMenu;
