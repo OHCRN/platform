@@ -17,12 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
+import { RegisterDateOfBirthErrorModalDictionary } from '../en/registerDateOfBirthErrorModal';
 
-import styles from './ModalWrapper.module.scss';
+import common from './common';
 
-const ModalWrapper = ({ children }: { children: ReactNode }) => {
-	return <div className={styles.modalWrapper}>{children}</div>;
-};
+const { backToHomepage, ok } = common;
 
-export default ModalWrapper;
+const dictionary = {
+	actionText: ok,
+	cancelText: backToHomepage,
+	description:
+		"Vous avez saisi les informations d'un participant âgé de moins de 18 ans. Tous les mineurs doivent demander à leur tuteur de contacter d'abord leur clinicien pour commencer.",
+	title: 'Le participant est mineur. Veuillez contacter votre clinicien pour vous inscrire.',
+} satisfies RegisterDateOfBirthErrorModalDictionary;
+
+export default dictionary;

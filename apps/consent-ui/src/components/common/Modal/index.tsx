@@ -17,16 +17,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import ReactModal from 'react-modal';
+import { ComponentProps, ReactNode } from 'react';
 
-import { ReactNode, ComponentProps } from 'react';
+import { ValidLanguage } from 'src/i18n';
 
-import Card from 'src/components/common/Card';
-import Button from 'src/components/common/Button';
-import LinkButton from 'src/components/common/Button/LinkButton';
-import { useModal } from 'src/components/providers/ModalProvider';
+import LinkButton from '../Button/LinkButton';
+import Button from '../Button';
 
 import styles from './Modal.module.scss';
+
+// props needed when using Modal in a component ex. RegisterDateOfBirthErrorModal
+export type ModalComponentProps = {
+	closeModal: () => void;
+	currentLang: ValidLanguage;
+	modalIsOpen: boolean;
+};
+
+type ModalProps = {
+	actionButtonText?: ReactNode;
+	actionDisabled?: boolean;
+	actionLink?: ComponentProps<typeof LinkButton>['href'];
+	cancelButtonText?: ReactNode;
+	cancelDisabled?: boolean;
+	cancelLink?: ComponentProps<typeof LinkButton>['href'];
+	children?: ReactNode;
+	closeModal: () => void;
+	contentLabel: string;
+	modalIsOpen: boolean;
+	onActionClick?: ComponentProps<typeof Button>['onClick'];
+	onCancelClick?: ComponentProps<typeof Button>['onClick'];
+	title?: string;
+};
 
 const Modal = ({
 	actionButtonText,
@@ -36,26 +58,24 @@ const Modal = ({
 	cancelDisabled,
 	cancelLink,
 	children,
+	closeModal,
+	contentLabel,
+	modalIsOpen,
 	onActionClick,
 	onCancelClick,
 	title,
-}: {
-	actionButtonText?: ReactNode;
-	actionDisabled?: boolean;
-	actionLink?: ComponentProps<typeof LinkButton>['href'];
-	cancelButtonText?: ReactNode;
-	cancelDisabled?: boolean;
-	cancelLink?: ComponentProps<typeof LinkButton>['href'];
-	children?: ReactNode;
-	onActionClick?: ComponentProps<typeof Button>['onClick'];
-	onCancelClick?: ComponentProps<typeof Button>['onClick'];
-	title?: string;
-}) => {
-	const { closeModal } = useModal();
+}: ModalProps) => {
 	return (
-		<Card className={styles.card} dropShadow="none">
+		<ReactModal
+			appElement={document.getElementById('root') as HTMLElement}
+			className={styles.modal}
+			contentLabel={contentLabel}
+			isOpen={modalIsOpen}
+			onRequestClose={closeModal}
+			overlayClassName={styles.overlay}
+		>
 			{title && <h3>{title}</h3>}
-			<div className={styles.body}>{children}</div>
+			<div>{children}</div>
 			{(actionButtonText || cancelButtonText) && (
 				<div className={styles.buttons}>
 					{cancelButtonText &&
@@ -82,7 +102,7 @@ const Modal = ({
 						))}
 				</div>
 			)}
-		</Card>
+		</ReactModal>
 	);
 };
 
