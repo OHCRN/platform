@@ -22,7 +22,7 @@
 import { useState } from 'react';
 import { RegisterFormStep1 } from 'types/consentUi';
 
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -62,26 +62,26 @@ const RegisterForm = ({
 	// - step 1 must be valid to proceed to step 2.
 	// - show/hide guardian section & step 2 with conditional rendering.
 	//   - these fields will unregister on unmount (removed from form state & validation)
-	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+	const [currentStep, setCurrentStep] = useState<'step1' | 'step2'>('step1');
 	const handleNextClick = (data: RegisterFormStep1) => {
 		setStep1Data(data);
 		scrollToTop();
-		setCurrentStep(2);
+		setCurrentStep('step2');
 	};
 	const handleBackClick = () => {
 		scrollToTop();
-		setCurrentStep(1);
+		setCurrentStep('step1');
 	};
 
 	return (
 		<>
-			<h3 className={styles.stepTitle}>{stepTitleDict[`step${currentStep}`]}</h3>
+			<h3 className={styles.stepTitle}>{stepTitleDict[currentStep]}</h3>
 			<p className={styles.smallText}>
 				<RequiredAsterisk /> {textDict.indicatesRequiredField}
 			</p>
 
 			<FormStep1
-				className={currentStep === 1 ? styles.visible : styles.hidden}
+				className={currentStep === 'step1' ? styles.visible : styles.hidden}
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
@@ -89,7 +89,7 @@ const RegisterForm = ({
 				textDict={step1TextDict}
 			/>
 
-			{currentStep === 2 && (
+			{currentStep === 'step2' && (
 				<FormStep2
 					currentLang={currentLang}
 					errorsDict={errorsDict}

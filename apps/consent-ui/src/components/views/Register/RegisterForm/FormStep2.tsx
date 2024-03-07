@@ -37,7 +37,7 @@ import { API } from 'src/constants/externalPaths';
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
 
 import styles from './RegisterForm.module.scss';
 

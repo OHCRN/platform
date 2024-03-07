@@ -35,7 +35,7 @@ import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerF
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
 
 import styles from './RegisterForm.module.scss';
 
