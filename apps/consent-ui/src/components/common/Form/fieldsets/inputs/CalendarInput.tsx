@@ -31,6 +31,7 @@ import type { ValidLanguage } from 'src/i18n';
 type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
 	popperClassName?: string;
 	currentLang: ValidLanguage;
+	onBlur?: () => void;
 };
 
 const CalendarInput = <T extends FieldValues>({
@@ -40,6 +41,7 @@ const CalendarInput = <T extends FieldValues>({
 	popperClassName,
 	id,
 	name,
+	onBlur = () => {},
 	required,
 	currentLang,
 }: CalendarInputProps<T>) => {
@@ -52,21 +54,27 @@ const CalendarInput = <T extends FieldValues>({
 		<Controller
 			control={control}
 			name={name}
-			render={({ field: { onBlur, onChange, value } }) => (
-				<DatePicker
-					selected={value}
-					onChange={(date) => onChange(date)}
-					className={clsx(className)}
-					popperClassName={clsx(popperClassName)}
-					id={id}
-					name={name}
-					locale={currentLang}
-					onBlur={onBlur}
-					disabled={disabled}
-					{...ariaProps}
-					aria-required={required}
-				/>
-			)}
+			render={({ field: { onBlur: controlOnBlur, onChange, value } }) => {
+				const handleBlur = () => {
+					controlOnBlur();
+					onBlur();
+				};
+				return (
+					<DatePicker
+						selected={value}
+						onChange={(date) => onChange(date)}
+						className={clsx(className)}
+						popperClassName={clsx(popperClassName)}
+						id={id}
+						name={name}
+						locale={currentLang}
+						onBlur={handleBlur}
+						disabled={disabled}
+						aria-required={required}
+						{...ariaProps}
+					/>
+				);
+			}}
 			rules={{ required }}
 		/>
 	);

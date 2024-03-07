@@ -20,8 +20,9 @@
 const dictionary = {
 	en: 'English',
 	fr: 'Français',
-	logoAltText: 'OICR-OHCRN Logo',
+	hamburgerMenuAltText: 'Toggle Menu',
 	help: 'Help',
+	logoAltText: 'OICR-OHCRN Logo',
 } satisfies Record<string, string>;
 
 export type HeaderDictionary = Record<keyof typeof dictionary, string>;

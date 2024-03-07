@@ -33,6 +33,7 @@ import styles from './CalendarFieldSet.module.scss';
 type CalendarFieldSetProps<T extends FieldValues> = FormFieldSetWithDescriptionProps<T> & {
 	placeholder?: string;
 	currentLang: ValidLanguage;
+	onBlur?: () => void;
 };
 
 const CalendarFieldSet = <T extends FieldValues>({
@@ -45,6 +46,7 @@ const CalendarFieldSet = <T extends FieldValues>({
 	required,
 	description,
 	currentLang,
+	onBlur,
 }: CalendarFieldSetProps<T>) => {
 	const idPrefix = useId();
 	const fieldId = `${idPrefix}-${name}`;
@@ -70,6 +72,7 @@ const CalendarFieldSet = <T extends FieldValues>({
 				name={name}
 				required={required}
 				currentLang={currentLang}
+				onBlur={onBlur}
 			/>
 		</FieldSet>
 	);
