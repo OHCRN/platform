@@ -17,12 +17,19 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Modal from 'src/components/common/Modal';
+import Modal, { ModalComponentProps } from 'src/components/common/Modal';
 
-const FormEditedModal = () => {
+const FormEditedModal = ({ closeModal, modalIsOpen }: Omit<ModalComponentProps, 'currentLang'>) => {
 	// TODO add text here https://github.com/OHCRN/platform/issues/402
 	return (
-		<Modal actionButtonText="OK" cancelButtonText="cancel">
+		<Modal
+			actionButtonText="OK"
+			cancelButtonText="cancel"
+			closeModal={closeModal}
+			contentLabel="my test modal"
+			modalIsOpen={modalIsOpen}
+			title="testing"
+		>
 			<p>modal text TBD</p>
 		</Modal>
 	);
