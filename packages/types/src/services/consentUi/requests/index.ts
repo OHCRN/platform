@@ -18,4 +18,5 @@
  */
 
 export * from './Register.js';
+
 export * from './ConsentReleaseData.js';
