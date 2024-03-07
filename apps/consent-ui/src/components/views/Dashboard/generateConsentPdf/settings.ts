@@ -54,6 +54,7 @@ const settingsEn = {
 			xCoord: {
 				date: 120,
 				printedName: 100,
+				relationshipToParticipant: 60,
 				signaturePng: 40,
 			},
 			yCoord: {
@@ -85,6 +86,7 @@ const settingsFr = {
 			xCoord: {
 				date: 120,
 				printedName: 100,
+				relationshipToParticipant: 60,
 				signaturePng: 40,
 			},
 			yCoord: {
