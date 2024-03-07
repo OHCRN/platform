@@ -45,8 +45,6 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		}),
 	};
 
-	const recaptchaLang = currentLang === ValidLanguage.enum.fr ? 'fr-CA' : 'en';
-
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
@@ -75,7 +73,6 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				step2TextDict={step2textDict}
 				textDict={textDict}
 				stepTitleDict={stepTitleDict}
-				recaptchaLang={recaptchaLang}
 			/>
 		</SideImageLayout>
 	);

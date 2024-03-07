@@ -37,23 +37,24 @@ import { API } from 'src/constants/externalPaths';
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
+import { ValidLanguage } from 'src/i18n';
 
 import styles from './RegisterForm.module.scss';
 
 const FormStep2 = ({
+	currentLang,
 	errorsDict,
 	handleBackClick,
 	labelsDict,
 	step1Data,
 	textDict,
-	recaptchaLang,
 }: {
+	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
 	labelsDict: RegisterFormStep2LabelsDictionary;
 	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormStep2TextDictionary;
-	recaptchaLang: 'fr-CA' | 'en';
 }) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
@@ -193,9 +194,9 @@ const FormStep2 = ({
 
 					<div className={styles.recaptchaCheckbox}>
 						<RecaptchaCheckbox
+							currentLang={currentLang}
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
-							hl={recaptchaLang}
 						/>
 					</div>
 				</FormSection>

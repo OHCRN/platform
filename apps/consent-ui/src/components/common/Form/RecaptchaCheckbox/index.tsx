@@ -20,17 +20,18 @@
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
+import { ValidLanguage } from 'src/i18n/types';
 import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 import { RecaptchaCheckboxRef } from 'src/hooks/useRecaptcha';
 
 const RecaptchaCheckbox = ({
 	onChange,
 	recaptchaCheckboxRef,
-	hl,
+	currentLang,
 }: {
 	onChange: () => void;
 	recaptchaCheckboxRef: RecaptchaCheckboxRef;
-	hl: 'fr-CA' | 'en';
+	currentLang: ValidLanguage;
 }) => {
 	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
 
@@ -39,7 +40,7 @@ const RecaptchaCheckbox = ({
 			ref={recaptchaCheckboxRef}
 			sitekey={RECAPTCHA_SITE_KEY}
 			onChange={onChange}
-			hl={hl}
+			hl={currentLang === ValidLanguage.enum.fr ? 'fr-CA' : 'en'}
 		/>
 	) : null;
 };
