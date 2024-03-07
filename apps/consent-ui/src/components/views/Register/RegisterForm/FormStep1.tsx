@@ -120,10 +120,6 @@ const FormStep1 = ({
 						/>
 					</FormSection>
 
-					<button type="button" onClick={openModal}>
-						Show modal
-					</button>
-
 					{/* OPTIONAL SECTION - GUARDIAN INFO */}
 					{/* these fields are conditionally required, i.e. if the user is
 						registering as a guardian */}
