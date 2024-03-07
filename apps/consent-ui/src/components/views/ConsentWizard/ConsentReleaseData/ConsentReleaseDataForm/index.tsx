@@ -20,6 +20,7 @@
 'use client';
 
 import { ConsentReleaseDataRequest } from 'types/consentApi';
+import { ConsentReleaseDataFormRequest } from 'types/consentUi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -35,6 +36,7 @@ import { ValidLanguage } from 'src/i18n';
 import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 import SelectFieldSet from 'src/components/common/Form/fieldsets/SelectFieldSet';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
+import OhipFieldSet from 'src/components/common/Form/fieldsets/OhipFieldSet';
 
 import ConsentStepsNavigation from '../../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../../ConsentStepsNavigation/useGoToNextConsentStep';
@@ -48,6 +50,13 @@ import {
 	MolecularLabOption,
 } from './types';
 import styles from './ConsentReleaseDataForm.module.scss';
+
+const transformData = (data: ConsentReleaseDataFormRequest): ConsentReleaseDataRequest => {
+	return {
+		...data,
+		hasOhip: !data.ohipDisabled,
+	};
+};
 
 const currentConsentStep = ConsentStepRouteEnum.enum['consent-2'];
 
@@ -75,8 +84,8 @@ const ConsentReleaseDataForm = ({
 	textDict: ConsentReleaseDataTextDictionary;
 }) => {
 	// setup react-hook-forms
-	const methods = useForm<ConsentReleaseDataRequest>({
-		resolver: zodResolver(ConsentReleaseDataRequest),
+	const methods = useForm<ConsentReleaseDataFormRequest>({
+		resolver: zodResolver(ConsentReleaseDataFormRequest),
 		shouldUnregister: true,
 		mode: 'onBlur',
 	});
@@ -87,8 +96,11 @@ const ConsentReleaseDataForm = ({
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
 
-	const onSubmit: SubmitHandler<ConsentReleaseDataRequest> = (_data, event) => {
+	const onSubmit: SubmitHandler<ConsentReleaseDataFormRequest> = (data, event) => {
 		event?.preventDefault();
+		const transformedData = transformData(data);
+		// TODO: submit data to API
+		console.log(transformedData);
 		goToNextConsentStep();
 	};
 
@@ -157,7 +169,13 @@ const ConsentReleaseDataForm = ({
 						options={genderOptions}
 						required
 					/>
-					{/* TODO: add OhipFieldSet and its related model changes #432 */}
+					<OhipFieldSet
+						label={labelsDict.ohipNumber}
+						error={errors.ohipNumber?.type && errorsDict.required}
+						checkboxLabel={textDict.ohipCheckboxText}
+						required
+					/>
+
 					<CalendarFieldSet
 						currentLang={currentLang}
 						label={labelsDict.dateOfBirth}
