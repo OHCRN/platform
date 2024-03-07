@@ -41,6 +41,10 @@ export const PDF_CONSENT_GROUPS_WITH_SUBSTITUTE: ConsentGroup[] = [
 // TEMP not final list
 export const PDF_ALLOWED_LIFECYCLE_STATES: LifecycleState[] = [LifecycleState.enum.CONSENTED];
 
+/**
+ * Fetch template consent PDF from object storage and
+ * return a document & an array of pages to use with pdf-lib.
+ */
 const getPdf = async (pdfUrl: string) => {
 	const existingPdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer());
 	const bytes = new Uint8Array(existingPdfBytes);
@@ -49,7 +53,11 @@ const getPdf = async (pdfUrl: string) => {
 	return { pdfDoc, pdfPages };
 };
 
-const generateConsentPdf = async (
+/**
+ * Modify consent PDF template with the user's information.
+ * Use with downloadConsentPdf (for end users) or displayConsentPdfSinglePage (for development).
+ */
+const modifyConsentPdf = async (
 	{
 		consentGroup,
 		currentLifecycleState,
@@ -105,20 +113,58 @@ const generateConsentPdf = async (
 	// determine type of user (guardian, participant, substitute)
 	// add signature, name, date
 
-	// SAVE PDF
-	// const pdfBytes = await pdfDoc.save();
-	// const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
-	// const pdfFilenameArray = pdfUrl.split('/');
-	// const pdfFilename = pdfFilenameArray[pdfFilenameArray.length - 1];
-	// saveAs(pdfBlob, pdfFilename); // TODO translate filename
+	return pdfDoc;
+};
 
-	// SHOW IN IFRAME
+/**
+ * Download completed consent PDF with the filename from the template PDF file.
+ */
+export const downloadConsentPdf = async (
+	params: GenerateConsentPdfParams,
+	currentLang: ValidLanguage,
+	pdfUrl: string,
+) => {
+	const pdfDoc = await modifyConsentPdf(params, currentLang, pdfUrl);
+	if (!pdfDoc || typeof pdfDoc === 'string') {
+		return;
+	}
+	const pdfBytes = await pdfDoc.save();
+	const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+	const pdfFilenameArray = pdfUrl.split('/');
+	const pdfFilename = pdfFilenameArray[pdfFilenameArray.length - 1];
+	saveAs(pdfBlob, pdfFilename);
+};
+
+/**
+ * Display one page from the consent PDF, ex. in an iframe. This is intended for development purposes.
+ * Don't call this function in a useEffect, because it has poor performance that way.
+ * @example
+ * const [docUrl, setDocUrl] = useState<string | undefined>();
+ * const getGuardianPdf = async () => {
+ * 	const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, 10);
+ * 	pdf && setDocUrl(pdf);
+ * };
+ * return (
+ * 	<>
+ * 		<Button onClick={getGuardianPdf}>Guardian</Button>
+ * 		<iframe src={docUrl} width="800" height="1000" />
+ * 	</>
+ * );
+ */
+export const displayConsentPdfSinglePage = async (
+	params: GenerateConsentPdfParams,
+	currentLang: ValidLanguage,
+	pdfUrl: string,
+	pageNumber: number,
+) => {
+	const pdfDoc = await modifyConsentPdf(params, currentLang, pdfUrl);
+	if (!pdfDoc || typeof pdfDoc === 'string') {
+		return false;
+	}
 	const subDocument = await PDFDocument.create();
-	const copiedPage = await subDocument.copyPages(pdfDoc, [10]);
+	const copiedPage = await subDocument.copyPages(pdfDoc, [pageNumber]);
 	subDocument.addPage(copiedPage[0]);
 	const subPdfBytes = await subDocument.save();
 	const pdfBlob = new Blob([subPdfBytes], { type: 'application/pdf' });
 	return URL.createObjectURL(pdfBlob);
 };
-
-export default generateConsentPdf;

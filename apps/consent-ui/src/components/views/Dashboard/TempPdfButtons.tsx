@@ -30,7 +30,7 @@ import {
 	mockDataParticipant,
 	mockDataSubstitute,
 } from './generateConsentPdf/mockData';
-import generateConsentPdf from './generateConsentPdf';
+import { displayConsentPdfSinglePage, downloadConsentPdf } from './generateConsentPdf';
 
 /**
  * Temporary component for generating PDFs for different user scenarios.
@@ -45,28 +45,46 @@ const TempPdfButtons = ({ currentLang }: { currentLang: ValidLanguage }) => {
 
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 
-	const getParticipantPdf = async () => {
-		const pdf = await generateConsentPdf(mockDataParticipant, currentLang, pdfUrl);
+	const displayParticipantPdf = async () => {
+		const pdf = await displayConsentPdfSinglePage(mockDataParticipant, currentLang, pdfUrl, 10);
 		pdf && setDocUrl(pdf);
 	};
 
-	const getSubstitutePdf = async () => {
-		const pdf = await generateConsentPdf(mockDataSubstitute, currentLang, pdfUrl);
+	const displaySubstitutePdf = async () => {
+		const pdf = await displayConsentPdfSinglePage(mockDataSubstitute, currentLang, pdfUrl, 10);
 		pdf && setDocUrl(pdf);
 	};
 
-	const getGuardianPdf = async () => {
-		const pdf = await generateConsentPdf(mockDataGuardian, currentLang, pdfUrl);
+	const displayGuardianPdf = async () => {
+		const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, 10);
 		pdf && setDocUrl(pdf);
+	};
+
+	const downloadParticipantPdf = async () => {
+		await downloadConsentPdf(mockDataParticipant, currentLang, pdfUrl);
+	};
+
+	const downloadSubstitutePdf = async () => {
+		await downloadConsentPdf(mockDataSubstitute, currentLang, pdfUrl);
+	};
+
+	const downloadGuardianPdf = async () => {
+		await downloadConsentPdf(mockDataGuardian, currentLang, pdfUrl);
 	};
 
 	return (
 		<div>
-			<div style={{ display: 'flex', gap: '1rem' }}>
-				TEMP Generate PDFs:
-				<Button onClick={getParticipantPdf}>Participant</Button>
-				<Button onClick={getSubstitutePdf}>Substitute</Button>
-				<Button onClick={getGuardianPdf}>Guardian</Button>
+			<div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+				TEMP Display PDFs:
+				<Button onClick={displayParticipantPdf}>Participant</Button>
+				<Button onClick={displaySubstitutePdf}>Substitute</Button>
+				<Button onClick={displayGuardianPdf}>Guardian</Button>
+			</div>
+			<div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+				TEMP Download PDFs:
+				<Button onClick={downloadParticipantPdf}>Participant</Button>
+				<Button onClick={downloadSubstitutePdf}>Substitute</Button>
+				<Button onClick={downloadGuardianPdf}>Guardian</Button>
 			</div>
 			{docUrl && <iframe src={docUrl} width="800" height="1000" />}
 		</div>
