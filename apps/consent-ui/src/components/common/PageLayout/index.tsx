@@ -22,7 +22,6 @@ import Container from 'src/components/common/Container';
 import Header from 'src/components/common/Header';
 import Footer from 'src/components/common/Footer';
 import NotificationProvider from 'src/components/providers/NotificationProvider';
-import ModalProvider from 'src/components/providers/ModalProvider';
 
 import styles from './PageLayout.module.scss';
 
@@ -34,15 +33,13 @@ const PageLayout = async ({
 	currentLang: ValidLanguage;
 }) => {
 	return (
-		<ModalProvider>
-			<NotificationProvider>
-				<Container>
-					<Header currentLang={currentLang} />
-					<main className={styles.main}>{children}</main>
-					<Footer currentLang={currentLang} />
-				</Container>
-			</NotificationProvider>
-		</ModalProvider>
+		<NotificationProvider>
+			<Container id="root">
+				<Header currentLang={currentLang} />
+				<main className={styles.main}>{children}</main>
+				<Footer currentLang={currentLang} />
+			</Container>
+		</NotificationProvider>
 	);
 };
 

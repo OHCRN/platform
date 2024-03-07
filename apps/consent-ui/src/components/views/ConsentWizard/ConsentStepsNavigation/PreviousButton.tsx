@@ -28,7 +28,7 @@ import { ValidLanguage } from 'src/i18n';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import { ConsentStepRoute } from 'src/components/common/Link/types';
 import { handleMouseDownBlur } from 'src/components/utils';
-import { useModal } from 'src/components/providers/ModalProvider';
+import useModal from 'src/components/common/Modal/useModal';
 
 import FormEditedModal from './FormEditedModal';
 import styles from './ConsentStepsNavigation.module.scss';
@@ -48,15 +48,12 @@ const PreviousButton = ({
 
 	const router = useRouter();
 
-	const { openModal } = useModal();
-	const formEditedModalConfig = {
-		modalComponent: <FormEditedModal />,
-	};
+	const { closeModal, modalIsOpen, openModal } = useModal();
 
 	const handleClick = () => {
 		if (isDirty) {
 			// form has been edited - warn & prevent user from leaving page
-			openModal(formEditedModalConfig);
+			openModal();
 		} else {
 			// form hasn't been edited - go to previous step
 			router.push(getLocalizedRoute(currentLang, prevRoute));
@@ -64,15 +61,18 @@ const PreviousButton = ({
 	};
 
 	return (
-		<Button
-			action="prev"
-			className={styles.button}
-			onClick={handleClick}
-			onMouseDown={handleMouseDownBlur}
-			variant="secondary"
-		>
-			{children}
-		</Button>
+		<>
+			<FormEditedModal closeModal={closeModal} modalIsOpen={modalIsOpen} />
+			<Button
+				action="prev"
+				className={styles.button}
+				onClick={handleClick}
+				onMouseDown={handleMouseDownBlur}
+				variant="secondary"
+			>
+				{children}
+			</Button>
+		</>
 	);
 };
 
