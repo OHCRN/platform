@@ -17,12 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
+import { useState } from 'react';
 
-import styles from './ModalWrapper.module.scss';
-
-const ModalWrapper = ({ children }: { children: ReactNode }) => {
-	return <div className={styles.modalWrapper}>{children}</div>;
+const useModal = () => {
+	const [modalIsOpen, setModalIsOpen] = useState(false);
+	const openModal = () => {
+		setModalIsOpen(true);
+	};
+	const closeModal = () => {
+		setModalIsOpen(false);
+	};
+	return { closeModal, modalIsOpen, openModal };
 };
 
-export default ModalWrapper;
+export default useModal;

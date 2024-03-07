@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,41 +17,28 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
+import Modal, { ModalComponentProps } from 'src/components/common/Modal';
+import { getTranslation } from 'src/i18n';
 
-import clsx from 'clsx';
-import { ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
-
-import { ValidLanguage } from 'src/i18n';
-
-import { getLinkNameByPath } from '../Link/utils';
-import { RouteName } from '../Link/types';
-
-import styles from './Header.module.scss';
-
-const ROUTES_WITHOUT_DESKTOP_HEADER: RouteName[] = ['invite', 'register'];
-
-const checkHiddenOnDesktop = (pathname: string, currentLang: ValidLanguage) => {
-	// checks english and french paths by using route names
-	const linkName = getLinkNameByPath(pathname, currentLang);
-	return ROUTES_WITHOUT_DESKTOP_HEADER.includes(linkName);
-};
-
-const HeaderWrapper = ({
-	children,
+const RegisterDateOfBirthErrorModal = ({
+	closeModal,
 	currentLang,
-}: {
-	children: ReactNode;
-	currentLang: ValidLanguage;
-}) => {
-	const pathname = usePathname();
-	const hiddenOnDesktop = checkHiddenOnDesktop(pathname, currentLang);
+	modalIsOpen,
+}: ModalComponentProps) => {
+	const { translateNamespace } = getTranslation(currentLang);
+	const modalDict = translateNamespace('registerDateOfBirthErrorModal');
 	return (
-		<header className={clsx(styles.header, hiddenOnDesktop && styles['hide-desktop'])}>
-			{children}
-		</header>
+		<Modal
+			actionButtonText={modalDict.actionText}
+			cancelButtonText={modalDict.cancelText}
+			closeModal={closeModal}
+			contentLabel={modalDict.title}
+			modalIsOpen={modalIsOpen}
+			title={modalDict.title}
+		>
+			{modalDict.description}
+		</Modal>
 	);
 };
 
-export default HeaderWrapper;
+export default RegisterDateOfBirthErrorModal;
