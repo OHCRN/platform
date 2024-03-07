@@ -57,7 +57,7 @@ const getPdf = async (pdfUrl: string) => {
  * Modify consent PDF template with the user's information.
  * Use with downloadConsentPdf (for end users) or displayConsentPdfSinglePage (for development).
  */
-const modifyConsentPdf = async (
+const generateConsentPdf = async (
 	{
 		consentGroup,
 		currentLifecycleState,
@@ -125,7 +125,7 @@ export const downloadConsentPdf = async (
 	currentLang: ValidLanguage,
 	pdfUrl: string,
 ) => {
-	const pdfDoc = await modifyConsentPdf(params, currentLang, pdfUrl);
+	const pdfDoc = await generateConsentPdf(params, currentLang, pdfUrl);
 	if (!pdfDoc || typeof pdfDoc === 'string') {
 		return;
 	}
@@ -158,7 +158,7 @@ export const displayConsentPdfSinglePage = async (
 	pdfUrl: string,
 	pageNumber: number,
 ) => {
-	const pdfDoc = await modifyConsentPdf(params, currentLang, pdfUrl);
+	const pdfDoc = await generateConsentPdf(params, currentLang, pdfUrl);
 	if (!pdfDoc || typeof pdfDoc === 'string') {
 		return false;
 	}
