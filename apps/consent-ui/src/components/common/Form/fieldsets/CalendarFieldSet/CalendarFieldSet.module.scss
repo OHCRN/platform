@@ -35,6 +35,13 @@
 			color: theme('colors.grayscale.800');
 			border-radius: 50%;
 		}
+
+		.react-datepicker__month-select,
+		.react-datepicker__year-select {
+			// font-weight: 400;
+			border: 1px solid theme('colors.grayscale.500');
+			border-radius: 5px;
+		}
 	}
 }
 

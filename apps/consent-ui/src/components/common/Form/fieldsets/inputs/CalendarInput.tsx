@@ -73,6 +73,9 @@ const CalendarInput = <T extends FieldValues>({
 						disabled={disabled}
 						aria-required={required}
 						{...ariaProps}
+						showMonthDropdown
+						showYearDropdown
+						dropdownMode="select"
 					/>
 				);
 			}}
