@@ -19,19 +19,19 @@
 
 import { z } from 'zod';
 
-import { GuardianRegisterRequestFields } from '../../entities/Guardian.js';
+import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
 import { hasValue } from '../../common/index.js';
 
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
- * Use with superRefine.
+ * Use with superRefine because it supports validating and adding errors to multiple fields.
  *
  * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
  * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
  * @returns {boolean} returns true if all required fields are present
  */
 export const registerHasRequiredGuardianInfo = (
-	props: GuardianRegisterRequestFields,
+	props: RegisterRequestGuardianFields,
 	ctx: z.RefinementCtx,
 ) => {
 	const { guardianName, guardianPhoneNumber, guardianRelationship, isGuardian } = props;

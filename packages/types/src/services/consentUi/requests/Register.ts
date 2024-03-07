@@ -19,6 +19,7 @@
 
 import { z } from 'zod';
 
+import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
 import {
 	NonEmptyString,
 	createDateOfBirthRequestSchema,
@@ -26,38 +27,46 @@ import {
 } from '../../../common/index.js';
 import {
 	EmptyOrOptionalName,
-	Name,
+	EmptyOrOptionalPhoneNumber,
 	PhoneNumber,
 	hasMatchingPasswords,
 } from '../../../entities/fields/index.js';
-import { GuardianRegisterRequestFields } from '../../../entities/Guardian.js';
 
 // STEP 1
 
-export const RegisterFormStep1Fields = z.object({
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: EmptyOrOptionalName,
-});
+export const RegisterFormStep1Fields = ParticipantNameFields.and(
+	z.object({
+		participantPhoneNumber: PhoneNumber,
+		participantPreferredName: EmptyOrOptionalName,
+	}),
+);
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
-export const GuardianRegisterRequestFieldsRefined = GuardianRegisterRequestFields.superRefine(
+export const RegisterRequestGuardianFields = z.object({
+	guardianName: EmptyOrOptionalName,
+	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
+	guardianRelationship: EmptyOrOptionalName,
+	isGuardian: z.boolean(),
+});
+export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
+
+export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	registerHasRequiredGuardianInfo,
 );
 
 export const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
-	GuardianRegisterRequestFieldsRefined,
+	RegisterRequestGuardianFieldsRefined,
 );
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2
 
-const RegisterFormStep2Fields = z.object({
-	consentToBeContacted: z.literal(true),
-	participantEmailAddress: z.string().email(),
-});
+const RegisterFormStep2Fields = ConsentToBeContacted.and(
+	z.object({
+		participantEmailAddress: z.string().email(),
+	}),
+);
 
 const PasswordFields = z
 	.object({

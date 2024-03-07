@@ -21,7 +21,7 @@ import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
 import {
-	GuardianRegisterRequestFieldsRefined,
+	RegisterRequestGuardianFieldsRefined,
 	RegisterFormStep1Fields,
 	RegisterFormStep2,
 } from '../../src/services/consentUi/requests/Register.js';
@@ -39,12 +39,11 @@ describe('ParticipantRegistrationRequest', () => {
 	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
 	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
 	const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
-		GuardianRegisterRequestFieldsRefined,
+		RegisterRequestGuardianFieldsRefined,
 	);
 	const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
 
-	// adult, not a guardian
-	const testData = {
+	const adultConsentTestData = {
 		confirmPassword: 'password',
 		consentToBeContacted: true,
 		dateOfBirth: olderThanMinimumAgeDateOfBirth,
@@ -63,7 +62,7 @@ describe('ParticipantRegistrationRequest', () => {
 	describe('Date of Birth Field', () => {
 		it("Adds an error to the dateOfBirth field when user's age is below the minimum", () => {
 			const result = ParticipantRegistrationRequest.safeParse({
-				...testData,
+				...adultConsentTestData,
 				dateOfBirth: lessThanMinimumAgeDateOfBirth,
 			});
 			const resultParsed = JSON.parse((result as { error: Error }).error.message)[0];
@@ -77,13 +76,13 @@ describe('ParticipantRegistrationRequest', () => {
 		it("Parses correctly when the user's age is equal to or greater than the minimum", () => {
 			expect(
 				ParticipantRegistrationRequest.safeParse({
-					...testData,
+					...adultConsentTestData,
 					dateOfBirth: exactlyMinimumAgeDateOfBirth,
 				}).success,
 			).true;
 			expect(
 				ParticipantRegistrationRequest.safeParse({
-					...testData,
+					...adultConsentTestData,
 					dateOfBirth: olderThanMinimumAgeDateOfBirth,
 				}).success,
 			).true;
@@ -93,7 +92,7 @@ describe('ParticipantRegistrationRequest', () => {
 	describe('Conditional Guardian Fields', () => {
 		it('Adds an error to specific fields if the user is a guardian and missing all guardian fields', () => {
 			const result = ParticipantRegistrationRequest.safeParse({
-				...testData,
+				...adultConsentTestData,
 				isGuardian: true,
 			});
 			expect(result.success).false;
@@ -120,7 +119,7 @@ describe('ParticipantRegistrationRequest', () => {
 
 		it('Adds an error to specific field if the user is a guardian and missing one guardian field', () => {
 			const result = ParticipantRegistrationRequest.safeParse({
-				...testData,
+				...adultConsentTestData,
 				guardianName: 'Homer Simpson',
 				guardianPhoneNumber: '1234567890',
 				isGuardian: true,
@@ -137,7 +136,7 @@ describe('ParticipantRegistrationRequest', () => {
 
 		it('Adds invalid field errors when the user is a guardian and has entered invalid values in guardian fields', () => {
 			const result = ParticipantRegistrationRequest.safeParse({
-				...testData,
+				...adultConsentTestData,
 				guardianName: 'Homer Simpson {}',
 				guardianPhoneNumber: '1234 + abc',
 				guardianRelationship: 'F4th3r///',
@@ -167,7 +166,7 @@ describe('ParticipantRegistrationRequest', () => {
 
 		it('Adds invalid and missing field errors when the user is a guardian and has a mix of invalid and missing values in guardian fields', () => {
 			const result = ParticipantRegistrationRequest.safeParse({
-				...testData,
+				...adultConsentTestData,
 				guardianName: 'Homer ]]]]]',
 				guardianRelationship: ' ',
 				isGuardian: true,
@@ -197,7 +196,7 @@ describe('ParticipantRegistrationRequest', () => {
 		it('Parses correctly when the user is a guardian and all guardian fields are valid', () => {
 			expect(
 				ParticipantRegistrationRequest.safeParse({
-					...testData,
+					...adultConsentTestData,
 					guardianName: 'Homer Simpson',
 					guardianPhoneNumber: '1234567890',
 					guardianRelationship: 'Father',
@@ -207,7 +206,7 @@ describe('ParticipantRegistrationRequest', () => {
 		});
 
 		it('Parses correctly when the user is not a guardian and all guardian fields are undefined', () => {
-			expect(ParticipantRegistrationRequest.safeParse(testData).success).true;
+			expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 		});
 	});
 });

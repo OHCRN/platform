@@ -48,11 +48,3 @@ export const GuardianNullableResponseFields = {
 		.transform((input) => input ?? undefined),
 	guardianRelationship: Name.nullable().transform((input) => input ?? undefined),
 };
-
-export const GuardianRegisterRequestFields = z.object({
-	guardianName: EmptyOrOptionalName,
-	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
-	guardianRelationship: EmptyOrOptionalName,
-	isGuardian: z.boolean(),
-});
-export type GuardianRegisterRequestFields = z.infer<typeof GuardianRegisterRequestFields>;
