@@ -35,17 +35,15 @@ import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsent
 export const ConsentReviewSignRequest = z.object({ stub: NonEmptyString });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
-interface ConsentReviewSignFormProps {
-	currentLang: ValidLanguage;
-	children: ReactNode;
-	currentStep: ConsentStepRoute;
-}
-
 const ConsentReviewSignForm = ({
 	currentLang,
 	children,
 	currentStep,
-}: ConsentReviewSignFormProps) => {
+}: {
+	currentLang: ValidLanguage;
+	children: ReactNode;
+	currentStep: ConsentStepRoute;
+}) => {
 	const { showNotification } = useNotification();
 
 	const methods = useForm<ConsentReviewSignRequest>({

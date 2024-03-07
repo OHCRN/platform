@@ -40,6 +40,8 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 		value: group,
 	}));
 
+	const recaptchaLang = currentLang === ValidLanguage.enum.fr ? 'fr-CA' : 'en';
+
 	return (
 		<SideImageLayout
 			currentLang={currentLang}
@@ -60,6 +62,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				labelsDict={labelsDict}
 				textDict={textDict}
 				modalDict={modalDict}
+				recaptchaLang={recaptchaLang}
 			/>
 		</SideImageLayout>
 	);

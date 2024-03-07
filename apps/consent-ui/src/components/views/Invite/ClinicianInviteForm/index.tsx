@@ -73,6 +73,7 @@ const ClinicianInviteFormComponent = ({
 	labelsDict,
 	textDict,
 	modalDict,
+	recaptchaLang,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
 	currentLang: ValidLanguage;
@@ -80,6 +81,7 @@ const ClinicianInviteFormComponent = ({
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
 	modalDict: InviteFormConsentGroupModalDictionary;
+	recaptchaLang: 'fr-CA' | 'en';
 }) => {
 	const { showNotification } = useNotification();
 	const router = useRouter();
@@ -326,7 +328,7 @@ const ClinicianInviteFormComponent = ({
 						<RecaptchaCheckbox
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
-							currentLang={currentLang}
+							hl={recaptchaLang}
 						/>
 					</div>
 

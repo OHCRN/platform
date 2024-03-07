@@ -45,6 +45,7 @@ const RegisterForm = ({
 	step2TextDict,
 	textDict,
 	stepTitleDict,
+	recaptchaLang,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
@@ -53,7 +54,8 @@ const RegisterForm = ({
 	step2LabelsDict: RegisterFormStep2LabelsDictionary;
 	step2TextDict: RegisterFormStep2TextDictionary;
 	textDict: RegisterFormTextDictionary;
-	stepTitleDict: Record<1 | 2, string>;
+	stepTitleDict: Record<'step1' | 'step2', string>;
+	recaptchaLang: 'fr-CA' | 'en';
 }) => {
 	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
@@ -75,7 +77,7 @@ const RegisterForm = ({
 
 	return (
 		<>
-			<h3 className={styles.stepTitle}>{stepTitleDict[currentStep]}</h3>
+			<h3 className={styles.stepTitle}>{stepTitleDict[`step${currentStep}`]}</h3>
 			<p className={styles.smallText}>
 				<RequiredAsterisk /> {textDict.indicatesRequiredField}
 			</p>
@@ -91,12 +93,12 @@ const RegisterForm = ({
 
 			{currentStep === 2 && (
 				<FormStep2
-					currentLang={currentLang}
 					errorsDict={errorsDict}
 					handleBackClick={handleBackClick}
 					labelsDict={step2LabelsDict}
 					step1Data={step1Data}
 					textDict={step2TextDict}
+					recaptchaLang={recaptchaLang}
 				/>
 			)}
 		</>

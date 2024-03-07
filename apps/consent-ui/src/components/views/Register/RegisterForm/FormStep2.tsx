@@ -25,7 +25,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterFormStep1, RegisterFormStep2 } from 'types/consentUi';
 
 import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
-import { ValidLanguage } from 'src/i18n';
 import { axiosClient } from 'src/services/api/axiosClient';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
@@ -42,19 +41,19 @@ import Notification from 'src/components/common/Notification';
 import styles from './RegisterForm.module.scss';
 
 const FormStep2 = ({
-	currentLang,
 	errorsDict,
 	handleBackClick,
 	labelsDict,
 	step1Data,
 	textDict,
+	recaptchaLang,
 }: {
-	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
 	labelsDict: RegisterFormStep2LabelsDictionary;
 	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormStep2TextDictionary;
+	recaptchaLang: 'fr-CA' | 'en';
 }) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
@@ -196,7 +195,7 @@ const FormStep2 = ({
 						<RecaptchaCheckbox
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
-							currentLang={currentLang}
+							hl={recaptchaLang}
 						/>
 					</div>
 				</FormSection>

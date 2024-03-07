@@ -35,15 +35,17 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 
 	const STEP_COUNT = 2;
 	const stepTitleDict = {
-		1: replaceParams(textDict.stepCurrentOfTotal, {
+		step1: replaceParams(textDict.stepCurrentOfTotal, {
 			current: 1,
 			total: STEP_COUNT,
 		}),
-		2: replaceParams(textDict.stepCurrentOfTotal, {
+		step2: replaceParams(textDict.stepCurrentOfTotal, {
 			current: 2,
 			total: STEP_COUNT,
 		}),
 	};
+
+	const recaptchaLang = currentLang === ValidLanguage.enum.fr ? 'fr-CA' : 'en';
 
 	return (
 		<SideImageLayout
@@ -73,6 +75,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				step2TextDict={step2textDict}
 				textDict={textDict}
 				stepTitleDict={stepTitleDict}
+				recaptchaLang={recaptchaLang}
 			/>
 		</SideImageLayout>
 	);

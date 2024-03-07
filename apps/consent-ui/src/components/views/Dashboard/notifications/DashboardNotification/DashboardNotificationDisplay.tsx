@@ -45,7 +45,6 @@ const DashboardNotificationDisplay = ({
 		dismissClick: dismissNotification,
 	};
 
-	// pass in the notification title down to the notification component
 	const notificationComponent = getNotificationComponent({
 		notificationConfig,
 		notificationProps,

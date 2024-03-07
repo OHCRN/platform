@@ -22,16 +22,15 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 import { RecaptchaCheckboxRef } from 'src/hooks/useRecaptcha';
-import { ValidLanguage } from 'src/i18n';
 
 const RecaptchaCheckbox = ({
 	onChange,
 	recaptchaCheckboxRef,
-	currentLang,
+	hl,
 }: {
 	onChange: () => void;
 	recaptchaCheckboxRef: RecaptchaCheckboxRef;
-	currentLang: ValidLanguage;
+	hl: 'fr-CA' | 'en';
 }) => {
 	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
 
@@ -40,7 +39,7 @@ const RecaptchaCheckbox = ({
 			ref={recaptchaCheckboxRef}
 			sitekey={RECAPTCHA_SITE_KEY}
 			onChange={onChange}
-			hl={currentLang}
+			hl={hl}
 		/>
 	) : null;
 };
