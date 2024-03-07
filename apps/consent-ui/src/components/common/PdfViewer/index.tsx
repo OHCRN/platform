@@ -22,7 +22,6 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
-import { PDFDocumentProxy } from 'pdfjs-dist';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
@@ -37,7 +36,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 const PdfViewer = ({ pdfUrl, className }: { pdfUrl: string; className?: string }) => {
 	const [numPages, setNumPages] = useState(0);
 
-	function onDocumentLoadSuccess({ numPages }: PDFDocumentProxy) {
+	function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
 		setNumPages(numPages);
 	}
 
