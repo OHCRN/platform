@@ -19,11 +19,14 @@
 
 'use client';
 
+import clsx from 'clsx';
 import { useState } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+
+import styles from './PdfViewer.module.scss';
 
 // PDF worker
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -31,12 +34,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 	import.meta.url,
 ).toString();
 
-type PdfViewerProps = {
-	pdfUrl: string;
-	className?: string;
-};
-
-const PdfViewer = ({ pdfUrl, className }: PdfViewerProps) => {
+const PdfViewer = ({ pdfUrl, className }: { pdfUrl: string; className?: string }) => {
 	const [numPages, setNumPages] = useState(0);
 
 	function onDocumentLoadSuccess({ numPages }: PDFDocumentProxy) {
@@ -44,10 +42,21 @@ const PdfViewer = ({ pdfUrl, className }: PdfViewerProps) => {
 	}
 
 	return (
-		<div className={className}>
-			<Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-				{Array.from(new Array(numPages), (el, index) => (
-					<Page key={`page_${index + 1}`} pageNumber={index + 1} />
+		<div className={clsx(className, styles.container)}>
+			<Document
+				file={pdfUrl}
+				onLoadSuccess={onDocumentLoadSuccess}
+				className={styles.document}
+				loading={<div className={styles.loading}>...Loading</div>}
+			>
+				{Array.from(new Array(numPages), (_, index) => (
+					<Page
+						key={`page_${index + 1}`}
+						pageNumber={index + 1}
+						width={649}
+						className={styles.page}
+						loading={<div className={styles.loading}></div>}
+					/>
 				))}
 			</Document>
 		</div>

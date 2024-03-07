@@ -17,10 +17,3 @@
 		display: none;
 	}
 }
-
-.pdfViewer {
-	display: none;
-	@media (min-width: theme('screens.sm')) {
-		display: block;
-	}
-}

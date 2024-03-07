@@ -59,7 +59,7 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 			>
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
-			<PdfViewer pdfUrl={studyConsentPdfUrl} className={styles.pdfViewer} />
+			<PdfViewer pdfUrl={studyConsentPdfUrl} />
 			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
 		</div>
 	);
