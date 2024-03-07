@@ -19,6 +19,12 @@
 
 import { rgb } from 'pdf-lib';
 
+// properties for:
+// signature png
+// fonts
+// name
+// date
+
 export const settingsGeneric = {
 	ellipse: {
 		borderColor: rgb(0, 0, 0),
@@ -91,10 +97,3 @@ const settingsFr = {
 } satisfies typeof settingsEn;
 
 export const settingsByLang = { en: settingsEn, fr: settingsFr };
-
-// properties for:
-// circles
-// signature png
-// fonts
-// name
-// date

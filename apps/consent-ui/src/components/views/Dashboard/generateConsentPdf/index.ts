@@ -102,6 +102,9 @@ const generateConsentPdf = async (
 	// embed helvetica font
 	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
+	// determine type of user (guardian, participant, substitute)
+	// add signature, name, date
+
 	// SAVE PDF
 	// const pdfBytes = await pdfDoc.save();
 	// const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
