@@ -23,7 +23,7 @@ import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/P
 import {
 	NonEmptyString,
 	createDateOfBirthRequestSchema,
-	registerHasRequiredGuardianInfo,
+	hasRequiredGuardianInfoForRegistration,
 } from '../../../common/index.js';
 import {
 	EmptyOrOptionalName,
@@ -52,7 +52,7 @@ export const RegisterRequestGuardianFields = z.object({
 export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
 
 export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
-	registerHasRequiredGuardianInfo,
+	hasRequiredGuardianInfoForRegistration,
 );
 
 export const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(

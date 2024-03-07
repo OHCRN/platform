@@ -20,6 +20,8 @@
 import { ConsentGroup } from '../entities/fields/index.js';
 import { GuardianBaseFields, ParticipantContactFields } from '../entities/index.js';
 
+import { EmptyString } from './String.js';
+
 const {
 	GUARDIAN_CONSENT_OF_MINOR,
 	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
@@ -43,7 +45,6 @@ const requiresParticipantContactInfo = (consentGroup: ConsentGroup) => {
 };
 
 const isUndefined = (arg: any): arg is undefined => arg === undefined;
-type EmptyString = '';
 const isEmptyString = (arg: any): arg is EmptyString => arg === ''; // empty HTML text inputs contain empty strings
 export const hasValue = <T>(input: T | undefined): input is T =>
 	!isUndefined(input) && !isEmptyString(input);

@@ -30,7 +30,7 @@ import { hasValue } from '../../common/index.js';
  * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
  * @returns {boolean} returns true if all required fields are present
  */
-export const registerHasRequiredGuardianInfo = (
+export const hasRequiredGuardianInfoForRegistration = (
 	props: RegisterRequestGuardianFields,
 	ctx: z.RefinementCtx,
 ) => {
