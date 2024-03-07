@@ -17,70 +17,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Link from 'next/link';
-import Image, { StaticImageData } from 'next/image';
-
 import { ValidLanguage, getTranslation } from 'src/i18n';
-import { defaultLanguage } from 'src/i18n/settings';
-import LanguageToggle from 'src/components/common/Header/LanguageToggle';
-import OhcrnImage from 'src/../public/assets/images/ohcrn_large.svg';
 import { auth } from 'src/app/auth';
 
-import styles from './Header.module.scss';
-import HelpButton from './HelpButton';
-import HeaderWrapper from './HeaderWrapper';
-import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
+import Header from './Header';
 
-const icons: {
-	[k in ValidLanguage]: StaticImageData;
-} = {
-	en: OhcrnImage,
-	fr: OhcrnImage, // TODO: get FR icon
-};
-
-const Header = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
-	const icon = icons[currentLang || defaultLanguage];
+const HeaderWrapper = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { translateNamespace } = getTranslation(currentLang);
+	const textDict = translateNamespace('header');
 	const session = await auth();
-	return (
-		<HeaderWrapper currentLang={currentLang}>
-			<div>
-				<Link href={`/${currentLang}`}>
-					<Image
-						src={icon}
-						priority
-						alt={translate('header', 'logoAltText')}
-						className={styles.logo}
-					/>
-				</Link>
-			</div>
-			<div className={styles.right}>
-				{/* TODO: implement logout button as part of the user menu dropdown: https://github.com/OHCRN/platform/issues/403 */}
-				{session?.user && (
-					<div className={styles.headerItem}>
-						<LogoutButton currentLang={currentLang} />
-					</div>
-				)}
-				<div className={styles.headerItem}>
-					<LanguageToggle currentLang={currentLang} />
-				</div>
-				{/* TODO: implement real help button, ticket TBD */}
-				<div className={styles.help}>
-					<HelpButton label={translate('header', 'help')} />
-				</div>
-				{/* TODO: implement mobile language toggle inside user menu in separate PR for https://github.com/OHCRN/consent-platform/issues/16 */}
-				{/* TODO: implement user menu, ticket TBD */}
-				<div className={styles['user-menu']}>
-					{session?.user ? (
-						<div>Hello, {session.user.preferredUsername}</div>
-					) : (
-						<LoginButton currentLang={currentLang} />
-					)}
-				</div>
-			</div>
-		</HeaderWrapper>
-	);
+
+	return <Header currentLang={currentLang} textDict={textDict} session={session} />;
 };
 
-export default Header;
+export default HeaderWrapper;

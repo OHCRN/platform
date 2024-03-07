@@ -19,8 +19,12 @@
 
 import styles from './Container.module.scss';
 
-const Container = ({ children }: { children: React.ReactNode }) => {
-	return <div className={styles.base}>{children}</div>;
+const Container = ({ children, id }: { children: React.ReactNode; id?: string }) => {
+	return (
+		<div className={styles.base} id={id}>
+			{children}
+		</div>
+	);
 };
 
 export default Container;

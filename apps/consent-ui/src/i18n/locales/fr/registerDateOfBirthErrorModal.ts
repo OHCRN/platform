@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,20 +17,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
+import { RegisterDateOfBirthErrorModalDictionary } from '../en/registerDateOfBirthErrorModal';
 
-export type ModalConfig = {
-	modalComponent?: ReactNode;
-};
+import common from './common';
 
-export type ModalContextType = {
-	openModal: (config: ModalConfig) => void;
-	closeModal: () => void;
-};
+const { backToHomepage, ok } = common;
 
-// this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
-// its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
-export const defaultModalContext = {
-	openModal: () => {},
-	closeModal: () => {},
-};
+const dictionary = {
+	actionText: ok,
+	cancelText: backToHomepage,
+	description:
+		"Vous avez saisi les informations d'un participant âgé de moins de 18 ans. Tous les mineurs doivent demander à leur tuteur de contacter d'abord leur clinicien pour commencer.",
+	title: 'Le participant est mineur. Veuillez contacter votre clinicien pour vous inscrire.',
+} satisfies RegisterDateOfBirthErrorModalDictionary;
+
+export default dictionary;
