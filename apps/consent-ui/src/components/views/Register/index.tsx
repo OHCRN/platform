@@ -31,6 +31,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const step1textDict = translateNamespace('registerFormStep1Text');
 	const step2LabelsDict = translateNamespace('registerFormStep2Labels');
 	const step2textDict = translateNamespace('registerFormStep2Text');
+	const dateOfBirthModalDict = translateNamespace('registerDateOfBirthErrorModal');
 	const textDict = translateNamespace('registerFormText');
 
 	const STEP_COUNT = 2;
@@ -73,6 +74,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				step2TextDict={step2textDict}
 				textDict={textDict}
 				stepTitleDict={stepTitleDict}
+				dateOfBirthModalDict={dateOfBirthModalDict}
 			/>
 		</SideImageLayout>
 	);

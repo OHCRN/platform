@@ -21,7 +21,7 @@
 
 import { usePathname } from 'next/navigation';
 
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 import { getLinkNameByPath } from 'src/components/common/Link/utils';
 

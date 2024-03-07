@@ -29,6 +29,7 @@ import LanguageToggle from 'src/components/common/Header/LanguageToggle';
 import HelpButton from 'src/components/common/Header/HelpButton';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 import { RouteName } from 'src/components/common/Link/types';
+import { getUnselectedLang } from 'src/components/common/Link/utils';
 
 import styles from './SideImageLayout.module.scss';
 
@@ -57,6 +58,8 @@ const SideImageLayout = ({
 }: SideImageLayoutProps) => {
 	const { translate } = getTranslation(currentLang);
 
+	const langToSelect = getUnselectedLang(currentLang);
+
 	return (
 		<div className={clsx(styles.container, className)}>
 			<header className={styles.desktopHeader}>
@@ -79,7 +82,11 @@ const SideImageLayout = ({
 			<div className={styles.main}>
 				<nav className={styles.desktopNav}>
 					<div className={styles.leftButtons}>
-						<LanguageToggle currentLang={currentLang} />
+						<LanguageToggle
+							currentLang={currentLang}
+							langToSelect={langToSelect}
+							fullToggleLabel={translate('header', langToSelect)}
+						/>
 						<HelpButton label={translate('header', 'help')} />
 					</div>
 					<div className={styles.rightButtons}>

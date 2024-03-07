@@ -49,6 +49,7 @@ import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import useModal from 'src/components/common/Modal/useModal';
 import { handleMouseDownBlur } from 'src/components/utils';
+import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -161,6 +162,7 @@ const ClinicianInviteFormComponent = ({
 				currentLang={currentLang}
 				closeModal={closeModal}
 				modalIsOpen={modalIsOpen}
+				modalDict={modalDict}
 			/>
 			<FormProvider {...methods}>
 				<Form onSubmit={handleSubmit(onSubmit)}>

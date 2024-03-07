@@ -31,6 +31,7 @@ import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerF
 import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
+import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
@@ -45,6 +46,7 @@ const RegisterForm = ({
 	step2TextDict,
 	textDict,
 	stepTitleDict,
+	dateOfBirthModalDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
@@ -54,6 +56,7 @@ const RegisterForm = ({
 	step2TextDict: RegisterFormStep2TextDictionary;
 	textDict: RegisterFormTextDictionary;
 	stepTitleDict: Record<'step1' | 'step2', string>;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
 	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
@@ -87,6 +90,7 @@ const RegisterForm = ({
 				handleNextClick={handleNextClick}
 				labelsDict={step1LabelsDict}
 				textDict={step1TextDict}
+				dateOfBirthModalDict={dateOfBirthModalDict}
 			/>
 
 			{currentStep === 'step2' && (

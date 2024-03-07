@@ -17,20 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getUnselectedLang } from 'src/components/common/Link/utils';
-import { ValidLanguage, getTranslation } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
 
 import LanguageToggleButton from './LanguageToggleButton';
 
-const LanguageToggle = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
-	const langToSelect = getUnselectedLang(currentLang);
-
+const LanguageToggle = ({
+	currentLang,
+	langToSelect,
+	fullToggleLabel,
+}: {
+	currentLang: ValidLanguage;
+	langToSelect: ValidLanguage;
+	fullToggleLabel: string;
+}) => {
 	return (
 		<LanguageToggleButton
 			currentLang={currentLang}
 			langToSelect={langToSelect}
-			fullToggleLabel={translate('header', langToSelect)}
+			fullToggleLabel={fullToggleLabel}
 		/>
 	);
 };

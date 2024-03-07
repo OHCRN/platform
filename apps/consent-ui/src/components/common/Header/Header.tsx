@@ -62,9 +62,13 @@ type HeaderContentProps = {
 	currentLang: ValidLanguage;
 	textDict: HeaderDictionary;
 	session: Session | null;
+	languageToggleProps: {
+		langToSelect: ValidLanguage;
+		fullToggleLabel: string;
+	};
 };
 
-const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
+const Header = ({ currentLang, textDict, session, languageToggleProps }: HeaderContentProps) => {
 	const [showMenu, setShowMenu] = useState(false);
 	const mainIcon = icons[currentLang || defaultLanguage];
 	const pathname = usePathname();
@@ -97,7 +101,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 						</div>
 					)}
 					<div className={styles.headerItem}>
-						<LanguageToggle currentLang={currentLang} />
+						<LanguageToggle currentLang={currentLang} {...languageToggleProps} />
 					</div>
 					{/* TODO: implement real help button, ticket TBD */}
 					<div className={styles.help}>

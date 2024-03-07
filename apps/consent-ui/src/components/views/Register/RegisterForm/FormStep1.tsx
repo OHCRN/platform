@@ -38,6 +38,7 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
 import { ValidLanguage } from 'src/i18n/types';
+import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
@@ -49,6 +50,7 @@ const FormStep1 = ({
 	handleNextClick,
 	labelsDict,
 	textDict,
+	dateOfBirthModalDict,
 }: {
 	className?: string;
 	currentLang: ValidLanguage;
@@ -56,6 +58,7 @@ const FormStep1 = ({
 	handleNextClick: (data: RegisterFormStep1) => void;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
@@ -102,6 +105,7 @@ const FormStep1 = ({
 				currentLang={currentLang}
 				closeModal={closeModal}
 				modalIsOpen={modalIsOpen}
+				dateOfBirthModalDict={dateOfBirthModalDict}
 			/>
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
