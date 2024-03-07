@@ -30,12 +30,20 @@ import {
 	HistoryOfCancer,
 	MolecularLab,
 	Name,
+	EmptyOrOptionalOhipNumber,
 	OptionalName,
-	OptionalOhipNumber,
 	PostalCode,
 } from './fields/index.js';
 
 const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
+
+const OhipNumberField = z.object({ ohipNumber: EmptyOrOptionalOhipNumber });
+
+export const OhipFormInfo = OhipNumberField.merge(z.object({ ohipDisabled: z.boolean() }));
+export type OhipFormInfo = z.infer<typeof OhipFormInfo>;
+
+export const OhipInfo = OhipNumberField.merge(z.object({ hasOhip: z.boolean() }));
+export type OhipInfo = z.infer<typeof OhipInfo>;
 
 export const ConsentReleaseDataBase = z.object({
 	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.boolean(),
@@ -45,7 +53,6 @@ export const ConsentReleaseDataBase = z.object({
 	lastName: Name,
 	preferredName: OptionalName,
 	genderIdentity: Gender,
-	ohipNumber: OptionalOhipNumber,
 	dateOfBirth: z.coerce.date(),
 	birthSex: BirthSex,
 	ancestry: Ancestry,

@@ -21,15 +21,19 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
-import { ConsentReleaseDataBase } from '../../../entities/index.js';
+import { hasRequiredOhipInfo } from '../../../common/index.js';
+import { ConsentReleaseDataBase, OhipInfo } from '../../../entities/index.js';
 import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
 
 const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
 
-export const ConsentReleaseDataRequest = ConsentReleaseDataBase.extend({
-	[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
-	[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
-});
+export const ConsentReleaseDataRequest = z.intersection(
+	ConsentReleaseDataBase.extend({
+		[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
+		[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
+	}),
+	OhipInfo.refine(hasRequiredOhipInfo),
+);
 export type ConsentReleaseDataRequest = z.infer<typeof ConsentReleaseDataRequest>;
 export const ConsentReleaseDataRequestSchema: SchemaObject =
 	generateSchema(ConsentReleaseDataRequest);
