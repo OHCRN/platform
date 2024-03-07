@@ -33,9 +33,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 type PdfViewerProps = {
 	pdfUrl: string;
+	className?: string;
 };
 
-const PdfViewer = ({ pdfUrl }: PdfViewerProps) => {
+const PdfViewer = ({ pdfUrl, className }: PdfViewerProps) => {
 	const [numPages, setNumPages] = useState(0);
 
 	function onDocumentLoadSuccess({ numPages }: PDFDocumentProxy) {
@@ -43,7 +44,7 @@ const PdfViewer = ({ pdfUrl }: PdfViewerProps) => {
 	}
 
 	return (
-		<div>
+		<div className={className}>
 			<Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
 				{Array.from(new Array(numPages), (el, index) => (
 					<Page key={`page_${index + 1}`} pageNumber={index + 1} />

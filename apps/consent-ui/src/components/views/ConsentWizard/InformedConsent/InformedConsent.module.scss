@@ -11,3 +11,16 @@
 		@include mixins.text-link;
 	}
 }
+
+.downloadButton {
+	@media (min-width: theme('screens.sm')) {
+		display: none;
+	}
+}
+
+.pdfViewer {
+	display: none;
+	@media (min-width: theme('screens.sm')) {
+		display: block;
+	}
+}
