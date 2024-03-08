@@ -53,6 +53,16 @@ const getPdf = async (pdfUrl: string) => {
 	return { pdfDoc, pdfPages };
 };
 
+const getUserType = (consentGroup: ConsentGroup) => {
+	if (PDF_CONSENT_GROUPS_WITH_GUARDIAN.includes(consentGroup)) {
+		return 'guardian';
+	} else if (PDF_CONSENT_GROUPS_WITH_SUBSTITUTE.includes(consentGroup)) {
+		return 'substitute';
+	} else {
+		return 'participant';
+	}
+};
+
 /**
  * Modify consent PDF template with the user's information.
  * Use with downloadConsentPdf (for end users) or displayConsentPdfSinglePage (for development).
@@ -111,7 +121,7 @@ const generateConsentPdf = async (
 	// embed helvetica font
 	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-	// determine type of user (guardian, participant, substitute)
+	const userType = getUserType(consentGroup);
 	// add signature, name, date
 
 	return pdfDoc;
@@ -148,7 +158,7 @@ export const downloadConsentPdf = async (
  * return (
  * 	<>
  * 		<Button onClick={getGuardianPdf}>Guardian</Button>
- * 		<iframe src={docUrl} width="800" height="1000" />
+ * 		<iframe src={docUrl} width="800" height="750" />
  * 	</>
  * );
  */
