@@ -17,5 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Register.js';
-export * from './ConsentReleaseData.js';
+import { z } from 'zod';
+
+import { ConsentReleaseDataBase, OhipFormInfo } from '../../../entities/index.js';
+import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
+import { hasRequiredOhipFormInfo } from '../../../common/conditionalFieldUtils.js';
+
+const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
+
+export const ConsentReleaseDataFormRequest = z.intersection(
+	ConsentReleaseDataBase.extend({
+		[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
+		[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
+	}),
+	OhipFormInfo.refine(hasRequiredOhipFormInfo, {
+		message: 'missingOhipError',
+		path: ['ohipNumber'],
+	}),
+);
+export type ConsentReleaseDataFormRequest = z.infer<typeof ConsentReleaseDataFormRequest>;

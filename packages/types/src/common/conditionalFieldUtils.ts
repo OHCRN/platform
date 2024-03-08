@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroup } from '../entities/fields/index.js';
+import { ConsentGroup, EmptyOrOptionalOhipNumber } from '../entities/fields/index.js';
 import { GuardianBaseFields, ParticipantContactFields } from '../entities/index.js';
 
 import { EmptyString } from './String.js';
@@ -45,9 +45,8 @@ const requiresParticipantContactInfo = (consentGroup: ConsentGroup) => {
 };
 
 const isUndefined = (arg: any): arg is undefined => arg === undefined;
-const isEmptyString = (arg: any): arg is EmptyString => arg === ''; // empty HTML text inputs contain empty strings
-export const hasValue = <T>(input: T | undefined): input is T =>
-	!isUndefined(input) && !isEmptyString(input);
+const isEmptyOrUndefined = (arg: any) => arg === undefined || arg === '';
+export const hasValue = <T>(input: T | undefined): input is T => !isUndefined(input);
 
 // TODO: decide if participant contact fields will be excluded in a guardian is present
 // TBD in https://github.com/OHCRN/platform/issues/388
@@ -96,4 +95,34 @@ export const hasRequiredGuardianInformation = (
 				hasValue,
 		  )
 		: true;
+};
+
+/**
+ * Checks if OHIP information is present when required by the ConsentReleaseDataRequest schema object on UI side
+ *
+ * ohipNumber must be defined if hasOhip is true
+ * @param props ohipNumber, ohipDisabled
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const hasRequiredOhipFormInfo = (props: {
+	ohipNumber?: EmptyOrOptionalOhipNumber;
+	ohipDisabled: boolean;
+}) => {
+	const { ohipNumber, ohipDisabled } = props;
+	return ohipDisabled ? isEmptyOrUndefined(ohipNumber) : !isEmptyOrUndefined(ohipNumber);
+};
+
+/**
+ * Checks if OHIP information is present when required by the ConsentReleaseData schema object
+ *
+ * ohipNumber must be defined if hasOhip is true
+ * @param props ohipNumber, hasOhip
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const hasRequiredOhipInfo = (props: {
+	ohipNumber?: EmptyOrOptionalOhipNumber;
+	hasOhip: boolean;
+}) => {
+	const { ohipNumber, hasOhip } = props;
+	return hasOhip ? !isEmptyOrUndefined(ohipNumber) : isEmptyOrUndefined(ohipNumber);
 };
