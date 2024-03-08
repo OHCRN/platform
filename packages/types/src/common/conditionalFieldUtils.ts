@@ -45,7 +45,8 @@ const requiresParticipantContactInfo = (consentGroup: ConsentGroup) => {
 };
 
 const isUndefined = (arg: any): arg is undefined => arg === undefined;
-const isEmptyOrUndefined = (arg: any) => arg === undefined || arg === '';
+const isEmptyString = (arg: any): arg is EmptyString => arg === ''; // empty HTML text inputs contain empty strings
+export const isEmptyOrUndefined = (arg: any) => isUndefined(arg) || isEmptyString(arg);
 export const hasValue = <T>(input: T | undefined): input is T => !isUndefined(input);
 
 // TODO: decide if participant contact fields will be excluded in a guardian is present

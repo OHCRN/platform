@@ -20,7 +20,7 @@
 import { z } from 'zod';
 
 import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
-import { hasValue } from '../../common/index.js';
+import { isEmptyOrUndefined } from '../../common/index.js';
 
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
@@ -40,7 +40,7 @@ export const hasRequiredGuardianInfoForRegistration = (
 
 	if (isGuardian) {
 		Object.entries(fields).forEach(([key, value]) => {
-			if (!hasValue(value)) {
+			if (isEmptyOrUndefined(value?.trim())) {
 				ctx.addIssue({
 					code: 'custom',
 					message: 'guardianInfoMissing',

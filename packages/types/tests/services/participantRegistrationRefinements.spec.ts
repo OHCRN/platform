@@ -93,6 +93,7 @@ describe('ParticipantRegistrationRequest', () => {
 		it('Adds an error to specific fields if the user is a guardian and missing all guardian fields', () => {
 			const result = ParticipantRegistrationRequest.safeParse({
 				...adultConsentTestData,
+				guardianRelationship: '',
 				isGuardian: true,
 			});
 			expect(result.success).false;
