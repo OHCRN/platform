@@ -74,7 +74,7 @@ const formatSignatureDate = (date: Date) => formatDate(date, 'MM/dd/y');
 
 /**
  * Modify consent PDF template with the user's information.
- * Use with downloadConsentPdf (for end users) or displayConsentPdfSinglePage (for development).
+ * Use with downloadConsentPdf (for end users) or displayConsentPdf (for development).
  */
 const generateConsentPdf = async (
 	{
@@ -198,7 +198,7 @@ export const downloadConsentPdf = async (
  * @example
  * const [docUrl, setDocUrl] = useState<string | undefined>();
  * const getGuardianPdf = async () => {
- * 	const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, [10, 11]);
+ * 	const pdf = await displayConsentPdf(mockDataGuardian, currentLang, pdfUrl, [10, 11]);
  * 	pdf && setDocUrl(pdf);
  * };
  * return (
@@ -208,7 +208,7 @@ export const downloadConsentPdf = async (
  * 	</>
  * );
  */
-export const displayConsentPdfSinglePage = async (
+export const displayConsentPdf = async (
 	params: GenerateConsentPdfParams,
 	currentLang: ValidLanguage,
 	pdfUrl: string,

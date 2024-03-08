@@ -30,7 +30,8 @@ import {
 	mockDataParticipant,
 	mockDataSubstitute,
 } from './generateConsentPdf/mockData';
-import { displayConsentPdfSinglePage, downloadConsentPdf } from './generateConsentPdf';
+import { displayConsentPdf, downloadConsentPdf } from './generateConsentPdf';
+import { GenerateConsentPdfParams } from './generateConsentPdf/types';
 
 /**
  * Temporary component for generating PDFs for different user scenarios.
@@ -45,41 +46,31 @@ const TempPdfButtons = ({ currentLang }: { currentLang: ValidLanguage }) => {
 
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 
+	const displayPdf = async (data: GenerateConsentPdfParams) => {
+		const pdf = await displayConsentPdf(data, currentLang, pdfUrl, [10, 11]);
+		pdf && setDocUrl(pdf);
+	};
+	const downloadPdf = async (data: GenerateConsentPdfParams) => {
+		await downloadConsentPdf(data, currentLang, pdfUrl);
+	};
+
 	const displayParticipantPdf = async () => {
-		const pdf = await displayConsentPdfSinglePage(
-			mockDataParticipant,
-			currentLang,
-			pdfUrl,
-			[10, 11],
-		);
-		pdf && setDocUrl(pdf);
+		await displayPdf(mockDataParticipant);
 	};
-
 	const displaySubstitutePdf = async () => {
-		const pdf = await displayConsentPdfSinglePage(
-			mockDataSubstitute,
-			currentLang,
-			pdfUrl,
-			[10, 11],
-		);
-		pdf && setDocUrl(pdf);
+		await displayPdf(mockDataSubstitute);
 	};
-
 	const displayGuardianPdf = async () => {
-		const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, [10, 11]);
-		pdf && setDocUrl(pdf);
+		await displayPdf(mockDataGuardian);
 	};
-
 	const downloadParticipantPdf = async () => {
-		await downloadConsentPdf(mockDataParticipant, currentLang, pdfUrl);
+		await downloadPdf(mockDataParticipant);
 	};
-
 	const downloadSubstitutePdf = async () => {
-		await downloadConsentPdf(mockDataSubstitute, currentLang, pdfUrl);
+		await downloadPdf(mockDataSubstitute);
 	};
-
 	const downloadGuardianPdf = async () => {
-		await downloadConsentPdf(mockDataGuardian, currentLang, pdfUrl);
+		await downloadPdf(mockDataGuardian);
 	};
 
 	return (
