@@ -56,7 +56,7 @@ const settingsEn = {
 		signature: {
 			pageNumber: 11,
 			xCoord: {
-				date: 120,
+				date: 450,
 				printedName: { guardian: 218, participant: 265, substitute: 265 },
 				relationshipToParticipant: 60,
 				signaturePng: 72,

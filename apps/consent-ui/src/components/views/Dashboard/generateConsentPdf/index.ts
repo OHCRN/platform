@@ -20,6 +20,7 @@
 import { ConsentGroup, LifecycleState } from 'types/entities';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
+import { format as formatDate } from 'date-fns';
 
 import { ValidLanguage } from 'src/i18n';
 
@@ -70,6 +71,8 @@ const getPrintedName = (
 	participantOhipLastName: string,
 	guardianName?: string,
 ): string => guardianName || `${participantOhipFirstName} ${participantOhipLastName}`;
+
+const formatSignatureDate = (date: Date) => formatDate(date, 'MM/dd/y');
 
 /**
  * Modify consent PDF template with the user's information.
@@ -134,7 +137,7 @@ const generateConsentPdf = async (
 		y: signatureSettings.yCoord[userType] + settings.text.size + 5,
 	};
 
-	// add signature image to the page
+	// add signature image to the signature page
 	const signatureImgBytes = await fetch(mockSignatureImage).then((res) => res.arrayBuffer());
 	const signatureImage = await pdfDoc.embedPng(signatureImgBytes);
 	const signatureImageScale = signatureImage.scale(settings.signatureImage.scale);
@@ -144,7 +147,7 @@ const generateConsentPdf = async (
 		y: signatureSettings.yCoord[userType],
 	});
 
-	// add printed name to the page
+	// add printed name to the signature page
 	const printedName = getPrintedName(
 		participantOhipFirstName,
 		participantOhipLastName,
@@ -153,6 +156,13 @@ const generateConsentPdf = async (
 	signaturePage.drawText(printedName, {
 		...textSettings,
 		x: signatureSettings.xCoord.printedName[userType],
+	});
+
+	// add date to the signature page
+	const date = formatSignatureDate(mockDate);
+	signaturePage.drawText(date, {
+		...textSettings,
+		x: signatureSettings.xCoord.date,
 	});
 
 	return pdfDoc;
