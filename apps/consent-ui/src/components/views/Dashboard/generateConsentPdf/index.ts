@@ -227,7 +227,7 @@ export const displayConsentPdf = async (
 ) => {
 	const pdfDoc = await generateConsentPdf(params, currentLang, pdfUrl);
 	if (!pdfDoc || typeof pdfDoc === 'string') {
-		return false;
+		return null;
 	}
 	const subDocument = await PDFDocument.create();
 	const copiedPages = await subDocument.copyPages(pdfDoc, pageNumbers);
