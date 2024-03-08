@@ -29,18 +29,18 @@ import { settingsByLang, settingsGeneric } from './settings';
 
 type UserType = 'guardian' | 'participant' | 'substitute';
 
-export const PDF_CONSENT_GROUPS_WITH_GUARDIAN: ConsentGroup[] = [
+const PDF_CONSENT_GROUPS_WITH_GUARDIAN: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 	ConsentGroup.enum.YOUNG_ADULT_CONSENT,
 ];
 
-export const PDF_CONSENT_GROUPS_WITH_SUBSTITUTE: ConsentGroup[] = [
+const PDF_CONSENT_GROUPS_WITH_SUBSTITUTE: ConsentGroup[] = [
 	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 ];
 
 // TEMP not final list
-export const PDF_ALLOWED_LIFECYCLE_STATES: LifecycleState[] = [LifecycleState.enum.CONSENTED];
+const PDF_ALLOWED_LIFECYCLE_STATES: LifecycleState[] = [LifecycleState.enum.CONSENTED];
 
 /**
  * Fetch template consent PDF from object storage and
@@ -54,6 +54,9 @@ const getPdf = async (pdfUrl: string) => {
 	return { pdfDoc, pdfPages };
 };
 
+/**
+ * Specify user type, to determine which elements to display & their coordinates.
+ */
 const getUserType = (consentGroup: ConsentGroup): UserType => {
 	if (PDF_CONSENT_GROUPS_WITH_GUARDIAN.includes(consentGroup)) {
 		return 'guardian';
@@ -64,17 +67,24 @@ const getUserType = (consentGroup: ConsentGroup): UserType => {
 	}
 };
 
+/**
+ * Returns guardian name if available, or combines OHIP first & last names.
+ */
 const getPrintedName = (
 	participantOhipFirstName: string,
 	participantOhipLastName: string,
 	guardianName?: string,
 ): string => guardianName || `${participantOhipFirstName} ${participantOhipLastName}`;
 
+/**
+ * Format date for the signature page.
+ * TODO French date formatting
+ */
 const formatSignatureDate = (date: Date) => formatDate(date, 'MM/dd/y');
 
 /**
  * Modify consent PDF template with the user's information.
- * Use with downloadConsentPdf (for end users) or displayConsentPdf (for development).
+ * Use with downloadConsentPdf (for users) or displayConsentPdf (for development).
  */
 const generateConsentPdf = async (
 	{
@@ -94,14 +104,14 @@ const generateConsentPdf = async (
 	currentLang: ValidLanguage,
 	pdfUrl: string,
 ) => {
-	if (!PDF_ALLOWED_LIFECYCLE_STATES.includes(currentLifecycleState)) {
+	if (!PDF_ALLOWED_LIFECYCLE_STATES.includes(currentLifecycleState) || !pdfUrl) {
 		return null;
 	}
 
 	const { pdfDoc, pdfPages } = await getPdf(pdfUrl);
 
 	// SETTINGS
-	const settings = Object.assign({}, settingsByLang[currentLang], settingsGeneric);
+	const settings = { ...settingsGeneric, ...settingsByLang[currentLang] };
 	const { consent: consentSettings, signature: signatureSettings } = settings.pages;
 	const userType = getUserType(consentGroup);
 	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -143,7 +153,8 @@ const generateConsentPdf = async (
 		y: signatureSettings.yCoord[userType],
 	});
 
-	// add printed name to the signature page
+	// add printed name to the signature page.
+	// wraps to 2 lines of text if needed.
 	const printedName = getPrintedName(
 		participantOhipFirstName,
 		participantOhipLastName,
