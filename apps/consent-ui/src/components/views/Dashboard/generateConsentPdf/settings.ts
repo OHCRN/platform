@@ -69,6 +69,7 @@ const settingsEn = {
 	},
 };
 
+// TODO make a French settings object. works the same as i18n dictionaries.
 const settingsFr = { ...settingsEn } satisfies typeof settingsEn;
 
 export const settingsByLang = { en: settingsEn, fr: settingsFr };
