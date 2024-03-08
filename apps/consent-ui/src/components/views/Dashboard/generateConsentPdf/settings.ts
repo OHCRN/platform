@@ -19,12 +19,6 @@
 
 import { rgb } from 'pdf-lib';
 
-// properties for:
-// signature png
-// fonts
-// name
-// date
-
 export const settingsGeneric = {
 	ellipse: {
 		borderColor: rgb(0, 0, 0),
@@ -34,6 +28,13 @@ export const settingsGeneric = {
 	},
 	signatureImage: {
 		scale: 0.28,
+	},
+	text: {
+		color: rgb(0, 0, 0),
+		lineHeight: 14,
+		maxWidth: 150,
+		size: 12,
+		wordBreaks: [''],
 	},
 };
 
@@ -56,7 +57,7 @@ const settingsEn = {
 			pageNumber: 11,
 			xCoord: {
 				date: 120,
-				printedName: 100,
+				printedName: { guardian: 218, participant: 265, substitute: 265 },
 				relationshipToParticipant: 60,
 				signaturePng: 72,
 			},
@@ -69,36 +70,6 @@ const settingsEn = {
 	},
 };
 
-const settingsFr = {
-	pages: {
-		consent: {
-			pageNumber: 10,
-			xCoord: {
-				no: 188,
-				yes: 117,
-			},
-			yCoord: {
-				RECONTACT__FUTURE_RESEARCH: 508,
-				RECONTACT__SECONDARY_CONTACT: 588,
-				RESEARCH_PARTICIPATION__CONTACT_INFORMATION: 427,
-				RESEARCH_PARTICIPATION__FUTURE_RESEARCH: 346,
-			},
-		},
-		signature: {
-			pageNumber: 11,
-			xCoord: {
-				date: 120,
-				printedName: 100,
-				relationshipToParticipant: 60,
-				signaturePng: 40,
-			},
-			yCoord: {
-				guardian: 80,
-				participant: 40,
-				substitute: 60,
-			},
-		},
-	},
-} satisfies typeof settingsEn;
+const settingsFr = { ...settingsEn } satisfies typeof settingsEn;
 
 export const settingsByLang = { en: settingsEn, fr: settingsFr };

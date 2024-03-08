@@ -23,7 +23,6 @@ export type GenerateConsentPdfParams = {
 	consentGroup: ConsentGroup;
 	currentLifecycleState: LifecycleState;
 	guardianName?: string;
-	isGuardian: boolean;
 	mockDate: Date;
 	mockSignatureImage: any;
 	participantOhipFirstName: string;

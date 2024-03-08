@@ -26,6 +26,8 @@ import { ValidLanguage } from 'src/i18n';
 import { GenerateConsentPdfParams } from './types';
 import { settingsByLang, settingsGeneric } from './settings';
 
+type UserType = 'guardian' | 'participant' | 'substitute';
+
 // TEMP not final list
 export const PDF_CONSENT_GROUPS_WITH_GUARDIAN: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -53,7 +55,7 @@ const getPdf = async (pdfUrl: string) => {
 	return { pdfDoc, pdfPages };
 };
 
-const getUserType = (consentGroup: ConsentGroup) => {
+const getUserType = (consentGroup: ConsentGroup): UserType => {
 	if (PDF_CONSENT_GROUPS_WITH_GUARDIAN.includes(consentGroup)) {
 		return 'guardian';
 	} else if (PDF_CONSENT_GROUPS_WITH_SUBSTITUTE.includes(consentGroup)) {
@@ -62,6 +64,12 @@ const getUserType = (consentGroup: ConsentGroup) => {
 		return 'participant';
 	}
 };
+
+const getPrintedName = (
+	participantOhipFirstName: string,
+	participantOhipLastName: string,
+	guardianName?: string,
+): string => guardianName || `${participantOhipFirstName} ${participantOhipLastName}`;
 
 /**
  * Modify consent PDF template with the user's information.
@@ -72,7 +80,6 @@ const generateConsentPdf = async (
 		consentGroup,
 		currentLifecycleState,
 		guardianName,
-		isGuardian,
 		mockDate,
 		mockSignatureImage,
 		participantOhipFirstName,
@@ -118,11 +125,14 @@ const generateConsentPdf = async (
 
 	// SIGNATURE PAGE
 	const signaturePage = pdfPages[signatureSettings.pageNumber];
-	// embed helvetica font
-	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
 	// choose the type of user, to determine Y coordinate of signature elements
 	const userType = getUserType(consentGroup);
+	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+	const textSettings = {
+		...settings.text,
+		font: helveticaFont,
+		y: signatureSettings.yCoord[userType] + settings.text.size + 5,
+	};
 
 	// add signature image to the page
 	const signatureImgBytes = await fetch(mockSignatureImage).then((res) => res.arrayBuffer());
@@ -132,6 +142,17 @@ const generateConsentPdf = async (
 		...signatureImageScale,
 		x: signatureSettings.xCoord.signaturePng,
 		y: signatureSettings.yCoord[userType],
+	});
+
+	// add printed name to the page
+	const printedName = getPrintedName(
+		participantOhipFirstName,
+		participantOhipLastName,
+		guardianName,
+	);
+	signaturePage.drawText(printedName, {
+		...textSettings,
+		x: signatureSettings.xCoord.printedName[userType],
 	});
 
 	return pdfDoc;
