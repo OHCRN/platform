@@ -65,9 +65,9 @@ const Modal = ({
 	onCancelClick,
 	title,
 }: ModalProps) => {
+	ReactModal.setAppElement('#root');
 	return (
 		<ReactModal
-			appElement={document.getElementById('root') as HTMLElement}
 			className={styles.modal}
 			contentLabel={contentLabel}
 			isOpen={modalIsOpen}
