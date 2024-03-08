@@ -29,14 +29,12 @@ import { settingsByLang, settingsGeneric } from './settings';
 
 type UserType = 'guardian' | 'participant' | 'substitute';
 
-// TEMP not final list
 export const PDF_CONSENT_GROUPS_WITH_GUARDIAN: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 	ConsentGroup.enum.YOUNG_ADULT_CONSENT,
 ];
 
-// TEMP not final list
 export const PDF_CONSENT_GROUPS_WITH_SUBSTITUTE: ConsentGroup[] = [
 	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 ];
@@ -105,6 +103,13 @@ const generateConsentPdf = async (
 	// SETTINGS
 	const settings = Object.assign({}, settingsByLang[currentLang], settingsGeneric);
 	const { consent: consentSettings, signature: signatureSettings } = settings.pages;
+	const userType = getUserType(consentGroup);
+	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+	const textSettings = {
+		...settings.text,
+		font: helveticaFont,
+		y: signatureSettings.yCoord[userType] + settings.text.size + 5,
+	};
 
 	// CONSENT PAGE
 	const consentPageNumber = pdfPages[consentSettings.pageNumber];
@@ -128,21 +133,12 @@ const generateConsentPdf = async (
 
 	// SIGNATURE PAGE
 	const signaturePage = pdfPages[signatureSettings.pageNumber];
-	// choose the type of user, to determine Y coordinate of signature elements
-	const userType = getUserType(consentGroup);
-	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-	const textSettings = {
-		...settings.text,
-		font: helveticaFont,
-		y: signatureSettings.yCoord[userType] + settings.text.size + 5,
-	};
 
 	// add signature image to the signature page
 	const signatureImgBytes = await fetch(mockSignatureImage).then((res) => res.arrayBuffer());
 	const signatureImage = await pdfDoc.embedPng(signatureImgBytes);
-	const signatureImageScale = signatureImage.scale(settings.signatureImage.scale);
 	signaturePage.drawImage(signatureImage, {
-		...signatureImageScale,
+		...signatureImage.scale(settings.signatureImageScale),
 		x: signatureSettings.xCoord.signaturePng,
 		y: signatureSettings.yCoord[userType],
 	});
@@ -164,6 +160,15 @@ const generateConsentPdf = async (
 		...textSettings,
 		x: signatureSettings.xCoord.date,
 	});
+
+	// for substitute decision makers, add relationship to the signature page
+	if (userType === 'substitute' && relationshipToParticipant) {
+		signaturePage.drawText(relationshipToParticipant, {
+			...textSettings,
+			x: signatureSettings.xCoord.relationshipToParticipant,
+			y: signatureSettings.yCoord.relationshipToParticipant,
+		});
+	}
 
 	return pdfDoc;
 };
@@ -188,12 +193,12 @@ export const downloadConsentPdf = async (
 };
 
 /**
- * Display one page from the consent PDF, ex. in an iframe. This is intended for development purposes.
- * Don't call this function in a useEffect, because it has poor performance that way.
+ * Display pages from the consent PDF, ex. in an iframe. This is intended for development purposes.
+ * Don't call this function in a useEffect, for performance reasons.
  * @example
  * const [docUrl, setDocUrl] = useState<string | undefined>();
  * const getGuardianPdf = async () => {
- * 	const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, 10);
+ * 	const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, [10, 11]);
  * 	pdf && setDocUrl(pdf);
  * };
  * return (
@@ -207,15 +212,17 @@ export const displayConsentPdfSinglePage = async (
 	params: GenerateConsentPdfParams,
 	currentLang: ValidLanguage,
 	pdfUrl: string,
-	pageNumber: number,
+	pageNumbers: number[],
 ) => {
 	const pdfDoc = await generateConsentPdf(params, currentLang, pdfUrl);
 	if (!pdfDoc || typeof pdfDoc === 'string') {
 		return false;
 	}
 	const subDocument = await PDFDocument.create();
-	const copiedPage = await subDocument.copyPages(pdfDoc, [pageNumber]);
-	subDocument.addPage(copiedPage[0]);
+	const copiedPages = await subDocument.copyPages(pdfDoc, pageNumbers);
+	copiedPages.forEach((page) => {
+		subDocument.addPage(page);
+	});
 	const subPdfBytes = await subDocument.save();
 	const pdfBlob = new Blob([subPdfBytes], { type: 'application/pdf' });
 	return URL.createObjectURL(pdfBlob);

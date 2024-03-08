@@ -26,9 +26,7 @@ export const settingsGeneric = {
 		xScale: 25,
 		yScale: 12,
 	},
-	signatureImage: {
-		scale: 0.28,
-	},
+	signatureImageScale: 0.28,
 	text: {
 		color: rgb(0, 0, 0),
 		lineHeight: 14,
@@ -58,12 +56,13 @@ const settingsEn = {
 			xCoord: {
 				date: 450,
 				printedName: { guardian: 218, participant: 265, substitute: 265 },
-				relationshipToParticipant: 60,
+				relationshipToParticipant: 72,
 				signaturePng: 72,
 			},
 			yCoord: {
 				guardian: 402,
 				participant: 612,
+				relationshipToParticipant: 125,
 				substitute: 165,
 			},
 		},

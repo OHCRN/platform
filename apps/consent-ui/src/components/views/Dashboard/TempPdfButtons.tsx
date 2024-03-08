@@ -46,17 +46,27 @@ const TempPdfButtons = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 
 	const displayParticipantPdf = async () => {
-		const pdf = await displayConsentPdfSinglePage(mockDataParticipant, currentLang, pdfUrl, 11);
+		const pdf = await displayConsentPdfSinglePage(
+			mockDataParticipant,
+			currentLang,
+			pdfUrl,
+			[10, 11],
+		);
 		pdf && setDocUrl(pdf);
 	};
 
 	const displaySubstitutePdf = async () => {
-		const pdf = await displayConsentPdfSinglePage(mockDataSubstitute, currentLang, pdfUrl, 11);
+		const pdf = await displayConsentPdfSinglePage(
+			mockDataSubstitute,
+			currentLang,
+			pdfUrl,
+			[10, 11],
+		);
 		pdf && setDocUrl(pdf);
 	};
 
 	const displayGuardianPdf = async () => {
-		const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, 11);
+		const pdf = await displayConsentPdfSinglePage(mockDataGuardian, currentLang, pdfUrl, [10, 11]);
 		pdf && setDocUrl(pdf);
 	};
 
