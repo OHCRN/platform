@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,18 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const dictionary = {
-	backToDashboard: 'Back to Dashboard',
-	backToHomepage: 'Back To Homepage',
-	consent: 'Consent Forms',
-	dashboard: 'Dashboard',
-	edit: 'Edit',
-	home: 'Homepage',
-	invite: 'Clinician Invite',
-	ok: 'OK',
-	register: 'Participant Registration',
-} satisfies Record<string, string>;
+import clsx from 'clsx';
+import Link from 'next/link';
 
-export type CommonDictionary = Record<keyof typeof dictionary, string>;
+import styles from './HamburgerMenu.module.scss';
 
-export default dictionary;
+export type HamburgerMenuOptions = { label: React.ReactNode; link: string; key: string }[];
+const hamburgerMenuOptions: HamburgerMenuOptions = [
+	// TODO: replace with actual links
+	{ label: 'Login', link: '/', key: 'login' },
+	{ label: 'Register', link: '/', key: 'register' },
+	{ label: 'Help', link: '/', key: 'help' },
+];
+
+const HamburgerMenu = ({ id, showMenu }: { id: string; showMenu: boolean }) => {
+	return (
+		<div
+			className={clsx(styles.hamburgerContainer, !showMenu && styles.hamburgerHidden)}
+			id={id}
+			aria-hidden={!showMenu}
+		>
+			{hamburgerMenuOptions.map((option) => (
+				<Link href={option.link || ''} className={styles.hamburgerLine} key={option.key}>
+					{option.label}
+				</Link>
+			))}
+		</div>
+	);
+};
+
+export default HamburgerMenu;

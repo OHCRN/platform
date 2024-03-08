@@ -25,11 +25,11 @@ import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
 import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consentInProgressNotification';
+import ConsentRecontactFormDictionary from 'src/i18n/locales/fr/consentRecontactForm';
+import ConsentRecontactPageDictionary from 'src/i18n/locales/fr/consentRecontactPage';
 import consentReleaseDataLabelsDictionary from 'src/i18n/locales/fr/consentReleaseDataLabels';
 import consentReleaseDataPageDictionary from 'src/i18n/locales/fr/consentReleaseDataPage';
 import consentReleaseDataTextDictionary from 'src/i18n/locales/fr/consentReleaseDataText';
-import ConsentRecontactFormDictionary from 'src/i18n/locales/fr/consentRecontactForm';
-import ConsentRecontactPageDictionary from 'src/i18n/locales/fr/consentRecontactPage';
 import consentResearchParticipationFormDictionary from 'src/i18n/locales/fr/consentResearchParticipationForm';
 import consentResearchParticipationPageDictionary from 'src/i18n/locales/fr/consentResearchParticipationPage';
 import consentReviewCardsDictionary from 'src/i18n/locales/fr/consentReviewCards';
@@ -58,6 +58,7 @@ import inviteSentNotificationDictionary from 'src/i18n/locales/fr/inviteSentNoti
 import landingPageDictionary from 'src/i18n/locales/fr/landingPage';
 import molecularLabDictionary from 'src/i18n/locales/fr/molecularLab';
 import provinceDictionary from 'src/i18n/locales/fr/province';
+import registerDateOfBirthErrorModalDictionary from 'src/i18n/locales/fr/registerDateOfBirthErrorModal';
 import registerFormStep1LabelsDictionary from 'src/i18n/locales/fr/registerFormStep1Labels';
 import registerFormStep1TextDictionary from 'src/i18n/locales/fr/registerFormStep1Text';
 import registerFormStep2LabelsDictionary from 'src/i18n/locales/fr/registerFormStep2Labels';
@@ -74,11 +75,11 @@ const dictionaries = {
 	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentInProgressNotification: consentInProgressNotificationDictionary,
+	consentRecontactForm: ConsentRecontactFormDictionary,
+	consentRecontactPage: ConsentRecontactPageDictionary,
 	consentReleaseDataLabels: consentReleaseDataLabelsDictionary,
 	consentReleaseDataPage: consentReleaseDataPageDictionary,
 	consentReleaseDataText: consentReleaseDataTextDictionary,
-	consentRecontactForm: ConsentRecontactFormDictionary,
-	consentRecontactPage: ConsentRecontactPageDictionary,
 	consentResearchParticipationForm: consentResearchParticipationFormDictionary,
 	consentResearchParticipationPage: consentResearchParticipationPageDictionary,
 	consentReviewCards: consentReviewCardsDictionary,
@@ -87,10 +88,10 @@ const dictionaries = {
 	dashboard: dashboardDictionary,
 	emailVerifiedNotification: emailVerifiedNotificationDictionary,
 	footer: footerDictionary,
-	formTooltips: formTooltipsDictionary,
 	formErrors: formErrorsDictionary,
 	formLabels: formLabelsDictionary,
 	formText: formTextDictionary,
+	formTooltips: formTooltipsDictionary,
 	gender: genderDictionary,
 	geneticsClinic: geneticsClinicDictionary,
 	header: headerDictionary,
@@ -106,6 +107,7 @@ const dictionaries = {
 	landingPage: landingPageDictionary,
 	molecularLab: molecularLabDictionary,
 	province: provinceDictionary,
+	registerDateOfBirthErrorModal: registerDateOfBirthErrorModalDictionary,
 	registerFormStep1Labels: registerFormStep1LabelsDictionary,
 	registerFormStep1Text: registerFormStep1TextDictionary,
 	registerFormStep2Labels: registerFormStep2LabelsDictionary,

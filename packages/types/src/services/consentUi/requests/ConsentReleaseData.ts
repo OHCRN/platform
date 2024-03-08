@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,20 +17,22 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
+import { z } from 'zod';
 
-export type ModalConfig = {
-	modalComponent?: ReactNode;
-};
+import { ConsentReleaseDataBase, OhipFormInfo } from '../../../entities/index.js';
+import { ConsentQuestionId } from '../../../entities/ConsentQuestion.js';
+import { hasRequiredOhipFormInfo } from '../../../common/conditionalFieldUtils.js';
 
-export type ModalContextType = {
-	openModal: (config: ModalConfig) => void;
-	closeModal: () => void;
-};
+const { RELEASE_DATA__CLINICAL_AND_GENETIC, RELEASE_DATA__DE_IDENTIFIED } = ConsentQuestionId.enum;
 
-// this is only used as a default value for the ModalContext if no ModalContext.Provider exists, so
-// its value is only useful for debugging, see the docs: https://react.dev/reference/react/createContext#parameters
-export const defaultModalContext = {
-	openModal: () => {},
-	closeModal: () => {},
-};
+export const ConsentReleaseDataFormRequest = z.intersection(
+	ConsentReleaseDataBase.extend({
+		[RELEASE_DATA__CLINICAL_AND_GENETIC]: z.literal(true),
+		[RELEASE_DATA__DE_IDENTIFIED]: z.literal(true),
+	}),
+	OhipFormInfo.refine(hasRequiredOhipFormInfo, {
+		message: 'missingOhipError',
+		path: ['ohipNumber'],
+	}),
+);
+export type ConsentReleaseDataFormRequest = z.infer<typeof ConsentReleaseDataFormRequest>;
