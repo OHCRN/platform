@@ -32,6 +32,9 @@ export const settingsGeneric = {
 		xScale: 25,
 		yScale: 12,
 	},
+	signatureImage: {
+		scale: 0.28,
+	},
 };
 
 const settingsEn = {
@@ -50,17 +53,17 @@ const settingsEn = {
 			},
 		},
 		signature: {
-			pageNumber: 12,
+			pageNumber: 11,
 			xCoord: {
 				date: 120,
 				printedName: 100,
 				relationshipToParticipant: 60,
-				signaturePng: 40,
+				signaturePng: 72,
 			},
 			yCoord: {
-				guardian: 80,
-				participant: 40,
-				subsitute: 60,
+				guardian: 402,
+				participant: 612,
+				substitute: 165,
 			},
 		},
 	},
@@ -82,7 +85,7 @@ const settingsFr = {
 			},
 		},
 		signature: {
-			pageNumber: 12,
+			pageNumber: 11,
 			xCoord: {
 				date: 120,
 				printedName: 100,
@@ -92,7 +95,7 @@ const settingsFr = {
 			yCoord: {
 				guardian: 80,
 				participant: 40,
-				subsitute: 60,
+				substitute: 60,
 			},
 		},
 	},

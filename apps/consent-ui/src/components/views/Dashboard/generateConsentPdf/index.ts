@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroup, ConsentQuestionId, LifecycleState } from 'types/entities';
+import { ConsentGroup, LifecycleState } from 'types/entities';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 
@@ -121,8 +121,18 @@ const generateConsentPdf = async (
 	// embed helvetica font
 	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
+	// choose the type of user, to determine Y coordinate of signature elements
 	const userType = getUserType(consentGroup);
-	// add signature, name, date
+
+	// add signature image to the page
+	const signatureImgBytes = await fetch(mockSignatureImage).then((res) => res.arrayBuffer());
+	const signatureImage = await pdfDoc.embedPng(signatureImgBytes);
+	const signatureImageScale = signatureImage.scale(settings.signatureImage.scale);
+	signaturePage.drawImage(signatureImage, {
+		...signatureImageScale,
+		x: signatureSettings.xCoord.signaturePng,
+		y: signatureSettings.yCoord[userType],
+	});
 
 	return pdfDoc;
 };
