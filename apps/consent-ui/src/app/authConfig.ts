@@ -33,14 +33,19 @@ import { encryptContent, decryptContent } from '../services/api/utils';
 
 declare module 'next-auth' {
 	interface User {
-		preferredUsername: string | null;
+		username: string | null;
 	}
 
 	interface Session {
 		account: {
 			accessToken: string;
 			idToken: string;
+			refreshToken: string;
 		};
+	}
+
+	interface Account {
+		refresh_token: string;
 	}
 }
 
@@ -49,9 +54,10 @@ declare module 'next-auth/jwt' {
 		account: {
 			access_token: string;
 			id_token: string;
+			refresh_token: string;
 		};
 		profile: {
-			preferred_username: string | null;
+			username: string | null;
 			email: string;
 		};
 		exp?: number;
@@ -91,15 +97,18 @@ export const authConfig = {
 				if (account?.access_token && account.id_token) {
 					const encryptedAccessToken = encryptContent(account.access_token);
 					const encryptedIdToken = encryptContent(account.id_token);
+					const encryptedRefreshToken = encryptContent(account.refresh_token);
+
 					token.account = {
 						access_token: encryptedAccessToken,
 						id_token: encryptedIdToken,
+						refresh_token: encryptedRefreshToken,
 					};
-					// copy the expiry from the original keycloak token
+					// 	copy the expiry from the original keycloak token
 					token.exp = account.expires_at; // unix timestamp
-					// overrides the settings in NextAuth.session
+					// 	overrides the settings in NextAuth.session
 					token.profile = {
-						preferred_username: profile?.preferred_username || '',
+						username: profile?.preferred_username || '',
 						email: profile?.email || '',
 					};
 				}
@@ -109,15 +118,17 @@ export const authConfig = {
 		session: async ({ session, token }) => {
 			// add token properties here so they are available to the session
 			const tokenProperties = {
-				accessToken: token?.account?.access_token,
-				idToken: token?.account?.id_token,
+				accessToken: token.account.access_token,
+				idToken: token.account.id_token,
+				refreshToken: token.account.refresh_token,
 				exp: token.exp, // TODO: is any manual handling of expiry needed, between Keycloak and NextAuth session?
 			};
 			session.account = tokenProperties;
+
 			session.user = {
 				...session.user,
 				email: session.user.email || token.profile.email,
-				preferredUsername: token.profile.preferred_username,
+				username: token.profile.username,
 			};
 			return session;
 		},

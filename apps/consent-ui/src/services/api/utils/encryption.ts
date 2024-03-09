@@ -24,8 +24,16 @@ import { getAppConfig } from 'src/config';
 const { TOKEN_ENCRYPTION_KEY } = getAppConfig();
 const BUILDTIME_PLACEHOLDER_KEY = 'supersecretz';
 // BUILDTIME_PLACEHOLDER_KEY will be replaced by TOKEN_ENCRYPTION_KEY from runtime vars
+
+const ENCODING = 'base64';
+const SALT_LENGTH = 32;
+
 const cryptr = new Cryptr(
 	process.env.NEXT_IS_BUILDING ? BUILDTIME_PLACEHOLDER_KEY : TOKEN_ENCRYPTION_KEY,
+	{
+		encoding: ENCODING,
+		saltLength: SALT_LENGTH,
+	},
 );
 
 export const encryptContent = (value: string) => {
