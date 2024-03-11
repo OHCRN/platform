@@ -136,7 +136,7 @@ export const hasRequiredGuardianInformation = (
 };
 
 /**
- * Checks if OHIP information is Provided when required by the ConsentReleaseDataRequest schema object on UI side
+ * Checks if OHIP information is present when required by the ConsentReleaseDataRequest schema object on UI side
  *
  * ohipNumber must be defined if hasOhip is true
  * @param props ohipNumber, ohipDisabled
@@ -151,7 +151,7 @@ export const hasRequiredOhipFormInfo = (props: {
 };
 
 /**
- * Checks if OHIP information is Provided when required by the ConsentReleaseData schema object
+ * Checks if OHIP information is present when required by the ConsentReleaseData schema object
  *
  * ohipNumber must be defined if hasOhip is true
  * @param props ohipNumber, hasOhip
