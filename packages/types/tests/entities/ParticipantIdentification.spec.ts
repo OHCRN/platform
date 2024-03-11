@@ -23,7 +23,7 @@ import { ParticipantIdentification } from '../../src/entities/index.js';
 import { ConsentGroup, LifecycleState, Province } from '../../src/entities/fields/index.js';
 
 describe('ParticipantIdentification', () => {
-	it('should validate if all optional field are present for a guardian-specific ConsentGroup', () => {
+	it('should validate if all optional fields except participant contact info are present for a guardian-specific ConsentGroup', () => {
 		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteId: 'CVCFbeKH2Njl1G41vCQre',
@@ -35,19 +35,19 @@ describe('ParticipantIdentification', () => {
 			participantOhipLastName: 'Simpson',
 			participantOhipMiddleName: 'J',
 			dateOfBirth: new Date(),
-			participantPhoneNumber: '6471234567',
+			participantPhoneNumber: undefined,
 			mailingAddressStreet: 'Evergreen Terrace',
 			mailingAddressCity: 'Springfield',
 			mailingAddressProvince: Province.enum.ONTARIO,
 			mailingAddressPostalCode: 'M1M3M4',
 			residentialPostalCode: 'M1M3M4',
-			participantEmailAddress: 'homer@example.com',
+			participantEmailAddress: undefined,
 			consentGroup: ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 			guardianName: 'Marge Simpson',
 			guardianPhoneNumber: '6471234567',
 			guardianEmailAddress: 'marge@example.com',
 			guardianRelationship: 'Wife',
-			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db'
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db',
 		});
 		expect(result.success).true;
 	});
@@ -60,15 +60,15 @@ describe('ParticipantIdentification', () => {
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simpson',
 			dateOfBirth: new Date(),
-			participantPhoneNumber: '6471234567',
+			participantPhoneNumber: undefined,
 			residentialPostalCode: 'T4B0V7',
-			participantEmailAddress: 'homer.simpson@example.com',
+			participantEmailAddress: undefined,
 			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 			guardianName: 'Marge Simpson',
 			guardianPhoneNumber: '1234567890',
 			guardianEmailAddress: 'marge.simpson@example.com',
 			guardianRelationship: 'Wife',
-			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db'
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db',
 		});
 		expect(result.success).true;
 	});
@@ -81,9 +81,9 @@ describe('ParticipantIdentification', () => {
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simson',
 			dateOfBirth: new Date(),
-			participantPhoneNumber: '6471234567',
+			participantPhoneNumber: undefined,
 			residentialPostalCode: 'T4B0V7',
-			participantEmailAddress: 'homer.simpson@example.com',
+			participantEmailAddress: undefined,
 			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR, // missing all guardian contact fields
 		});
 		expect(result.success).false;
@@ -97,9 +97,9 @@ describe('ParticipantIdentification', () => {
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simson',
 			dateOfBirth: new Date(),
-			participantPhoneNumber: '6471234567',
+			participantPhoneNumber: undefined,
 			residentialPostalCode: 'T4B0V7',
-			participantEmailAddress: 'homer.simpson@example.com',
+			participantEmailAddress: undefined,
 			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 			guardianName: 'Marge Simpson',
 			guardianPhoneNumber: '1234567890',
@@ -116,12 +116,54 @@ describe('ParticipantIdentification', () => {
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simson',
 			dateOfBirth: new Date(),
-			participantPhoneNumber: '6471234567',
+			participantPhoneNumber: undefined,
 			residentialPostalCode: 'T4B0V7',
-			participantEmailAddress: 'homer.simpson@example.com',
+			participantEmailAddress: undefined,
 			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 			guardianName: 'Marge Simpson',
 			guardianRelationship: 'Wife', // missing guardianPhoneNumber and guardianEmailAddress
+		});
+		expect(result.success).false;
+	});
+	it('Should fail to validate if ALL participant contact fields are present for a guardian-specific ConsentGroup', () => {
+		const result = ParticipantIdentification.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			currentLifecycleState: LifecycleState.enum.REGISTERED,
+			ohipNumber: '1234567890',
+			participantPreferredName: 'Homer',
+			participantOhipFirstName: 'Homer',
+			participantOhipLastName: 'Simpson',
+			dateOfBirth: new Date(),
+			participantPhoneNumber: '1234567890',
+			residentialPostalCode: 'T4B0V7',
+			participantEmailAddress: 'homer.simpson@example.com',
+			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+			guardianName: 'Marge Simpson',
+			guardianPhoneNumber: '1234567890',
+			guardianEmailAddress: 'marge.simpson@example.com',
+			guardianRelationship: 'Wife',
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db',
+		});
+		expect(result.success).false;
+	});
+	it('Should fail to validate if ONE participant contact field is present for a guardian-specific ConsentGroup', () => {
+		const result = ParticipantIdentification.safeParse({
+			id: 'CVCFbeKH2Njl1G41vCQme',
+			currentLifecycleState: LifecycleState.enum.REGISTERED,
+			ohipNumber: '1234567890',
+			participantPreferredName: 'Homer',
+			participantOhipFirstName: 'Homer',
+			participantOhipLastName: 'Simpson',
+			dateOfBirth: new Date(),
+			participantPhoneNumber: undefined,
+			residentialPostalCode: 'T4B0V7',
+			participantEmailAddress: 'homer.simpson@example.com',
+			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+			guardianName: 'Marge Simpson',
+			guardianPhoneNumber: '1234567890',
+			guardianEmailAddress: 'marge.simpson@example.com',
+			guardianRelationship: 'Wife',
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db',
 		});
 		expect(result.success).false;
 	});
