@@ -102,7 +102,7 @@ export const hasRequiredParticipantContactInfo = (
  * @param props consentGroup, guardianEmailAddress, guardianName, guardianPhoneNumber, guardianRelationship, participantEmailAddress, participantPhoneNumber
  * @returns {boolean} returns true if all required fields are present, and non-required fields are undefined
  */
-export const hasRequiredGuardianInformation = (
+export const hasRequiredGuardianInfo = (
 	props: {
 		consentGroup: ConsentGroup;
 	} & ParticipantContactFields &

@@ -160,7 +160,7 @@ With the clinician invite request, we also have conditional logic involving the 
 ```ts
 export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
 	.merge(InviteParticipantFields)
-	.refine(hasRequiredGuardianInformation, {
+	.refine(hasRequiredGuardianInfo, {
 		message: 'Guardian contact fields are required for that consentGroup',
 	});
 ```
@@ -169,7 +169,7 @@ As pointed out in the [Preprocessing](#preprocessing) section, we cannot merge m
 
 ```ts
 export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
-	.refine(hasRequiredGuardianInformation, {
+	.refine(hasRequiredGuardianInfo, {
 		message: 'Guardian contact fields are required for that consentGroup',
 	})
 	.merge(InviteParticipantFields);

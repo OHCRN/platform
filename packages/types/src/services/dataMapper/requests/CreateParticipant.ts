@@ -21,13 +21,13 @@ import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
 import {
-	hasRequiredGuardianInformation,
+	hasRequiredGuardianInfo,
 	hasRequiredParticipantContactInfo,
 } from '../../../common/index.js';
 import { ConsentParticipantBase, ParticipantIdentityBase } from '../../../entities/index.js';
 
 export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
-	.refine(hasRequiredGuardianInformation, {
+	.refine(hasRequiredGuardianInfo, {
 		message: 'Guardian contact fields are required for that consentGroup',
 	})
 	.refine(hasRequiredParticipantContactInfo);

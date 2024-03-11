@@ -20,7 +20,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-	hasRequiredGuardianInformation,
+	hasRequiredGuardianInfo,
 	hasRequiredParticipantContactInfo,
 	hasRequiredOhipFormInfo,
 	hasRequiredOhipInfo,
@@ -59,14 +59,14 @@ describe('Conditional fields utility functions', () => {
 		ADULT_CONSENT, // non-guardian group
 		YOUNG_ADULT_CONSENT, // non-guardian group
 	} = ConsentGroup.enum;
-	describe('hasRequiredGuardianInformation', () => {
+	describe('hasRequiredGuardianInfo', () => {
 		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR), all required guardian fields are provided, and all participant contact fields are undefined', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
 				...mockUndefinedParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).true;
 		});
 
@@ -76,7 +76,7 @@ describe('Conditional fields utility functions', () => {
 				...mockUndefinedParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).true;
 		});
 
@@ -86,7 +86,7 @@ describe('Conditional fields utility functions', () => {
 				...mockUndefinedParticipantContactFields,
 				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).true;
 		});
 
@@ -100,7 +100,7 @@ describe('Conditional fields utility functions', () => {
 				...guardianFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).false;
 		});
 
@@ -112,7 +112,7 @@ describe('Conditional fields utility functions', () => {
 				...guardianFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).false;
 		});
 
@@ -120,7 +120,7 @@ describe('Conditional fields utility functions', () => {
 			const testSchemaObj = {
 				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).false;
 		});
 
@@ -128,7 +128,7 @@ describe('Conditional fields utility functions', () => {
 			const testSchemaObj = {
 				consentGroup: ADULT_CONSENT,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).true;
 		});
 
@@ -138,7 +138,7 @@ describe('Conditional fields utility functions', () => {
 				...mockCompleteParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).false;
 		});
 
@@ -148,7 +148,7 @@ describe('Conditional fields utility functions', () => {
 				participantEmailAddress: 'patti@example.com',
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
+			const result = hasRequiredGuardianInfo(testSchemaObj);
 			expect(result).false;
 		});
 	});

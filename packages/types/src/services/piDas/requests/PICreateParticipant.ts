@@ -23,14 +23,14 @@ import { generateSchema } from '@anatine/zod-openapi';
 import { ParticipantIdentityBase } from '../../../entities/index.js';
 import { ConsentGroup } from '../../../entities/fields/index.js';
 import {
-	hasRequiredGuardianInformation,
+	hasRequiredGuardianInfo,
 	hasRequiredParticipantContactInfo,
 } from '../../../common/index.js';
 
 export const PICreateParticipantRequest = ParticipantIdentityBase.merge(
 	z.object({ consentGroup: ConsentGroup }), // consentGroup added to allow required fields check, not required for pi-das
 )
-	.refine(hasRequiredGuardianInformation)
+	.refine(hasRequiredGuardianInfo)
 	.refine(hasRequiredParticipantContactInfo);
 
 export type PICreateParticipantRequest = z.infer<typeof PICreateParticipantRequest>;
