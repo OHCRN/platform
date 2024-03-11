@@ -21,4 +21,5 @@ export * from './ClinicianInvite.js';
 export * from './ConsentRecontact.js';
 export * from './ConsentReleaseData.js';
 export * from './ConsentResearchParticipation.js';
+export * from './CreateParticipant.js';
 export * from './InformedConsent.js';
