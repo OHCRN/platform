@@ -18,3 +18,4 @@
  */
 
 export * from './dateOfBirth.js';
+export * from './guardianFields.js';
