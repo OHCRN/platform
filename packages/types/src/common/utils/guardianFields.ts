@@ -19,17 +19,34 @@
 
 import { z } from 'zod';
 
-import { EmptyString, EmptyWhiteSpace, TrimmedString } from '../../common/String.js';
-import { PHONE_NUMBER_REGEX } from '../../common/regexes.js';
+import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
+import { isEmptyOrUndefined } from '../../common/index.js';
 
-export const PhoneNumber = z.string().regex(PHONE_NUMBER_REGEX);
-export type PhoneNumber = z.infer<typeof PhoneNumber>;
+/**
+ * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
+ * Use with superRefine because it supports validating and adding errors to multiple fields.
+ *
+ * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
+ * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const hasRequiredGuardianInfoForRegistration = (
+	props: RegisterRequestGuardianFields,
+	ctx: z.RefinementCtx,
+) => {
+	const { guardianName, guardianPhoneNumber, guardianRelationship, isGuardian } = props;
 
-export const OptionalPhoneNumber = PhoneNumber.optional();
-export type OptionalPhoneNumber = z.infer<typeof OptionalPhoneNumber>;
+	const fields = { guardianName, guardianPhoneNumber, guardianRelationship };
 
-export const EmptyOrOptionalPhoneNumber = TrimmedString.regex(PHONE_NUMBER_REGEX)
-	.optional()
-	.or(EmptyString)
-	.or(EmptyWhiteSpace);
-export type EmptyOrOptionalPhoneNumber = z.infer<typeof EmptyOrOptionalPhoneNumber>;
+	if (isGuardian) {
+		Object.entries(fields).forEach(([key, value]) => {
+			if (isEmptyOrUndefined(value?.trim())) {
+				ctx.addIssue({
+					code: 'custom',
+					message: 'guardianInfoMissing',
+					path: [key],
+				});
+			}
+		});
+	}
+};
