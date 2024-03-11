@@ -75,9 +75,10 @@ export const hasRequiredParticipantContactInfo = (
 		guardianRelationship,
 	} = props;
 
-	const allParticipantFieldsProvided = [participantEmailAddress, participantPhoneNumber].every(
-		hasValue,
-	);
+	const allParticipantContactFieldsProvided = [
+		participantEmailAddress,
+		participantPhoneNumber,
+	].every(hasValue);
 
 	const allGuardianFieldsUndefined = [
 		guardianName,
@@ -87,7 +88,7 @@ export const hasRequiredParticipantContactInfo = (
 	].every(isUndefined);
 
 	return requiresParticipantContactInfo(consentGroup)
-		? allParticipantFieldsProvided && allGuardianFieldsUndefined
+		? allParticipantContactFieldsProvided && allGuardianFieldsUndefined
 		: true;
 };
 
@@ -104,8 +105,6 @@ export const hasRequiredParticipantContactInfo = (
 export const hasRequiredGuardianInformation = (
 	props: {
 		consentGroup: ConsentGroup;
-		participantEmailAddress?: string;
-		participantPhoneNumber?: string;
 	} & ParticipantContactFields &
 		GuardianBaseFields,
 ) => {
@@ -126,12 +125,13 @@ export const hasRequiredGuardianInformation = (
 		guardianRelationship,
 	].every(hasValue);
 
-	const allParticipantFieldsUndefined = [participantPhoneNumber, participantEmailAddress].every(
-		isUndefined,
-	);
+	const allParticipantContactFieldsUndefined = [
+		participantPhoneNumber,
+		participantEmailAddress,
+	].every(isUndefined);
 
 	return requiresGuardianInformation(consentGroup)
-		? allGuardianFieldsProvided && allParticipantFieldsUndefined
+		? allGuardianFieldsProvided && allParticipantContactFieldsUndefined
 		: true;
 };
 
