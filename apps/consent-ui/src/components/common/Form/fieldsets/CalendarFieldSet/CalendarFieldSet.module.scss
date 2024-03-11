@@ -12,6 +12,7 @@
 	:global {
 		.react-datepicker__month-container {
 			padding: 0.3rem 1rem;
+			font-family: Montserrat, sans-serif !important;
 		}
 
 		.react-datepicker__header {
@@ -19,28 +20,32 @@
 			border-bottom: 0px;
 			font-weight: 700;
 			padding: 0;
+			font-family: Montserrat, sans-serif !important;
 		}
 
 		.react-datepicker__navigation {
 			margin-top: 1.3rem;
+			font-family: Montserrat, sans-serif !important;
 		}
 
 		.react-datepicker__current-month {
 			font-size: 14px;
 			padding: 1rem;
+			font-family: Montserrat, sans-serif !important;
 		}
 
 		.react-datepicker__day--selected {
 			background-color: theme('colors.accent1.200');
 			color: theme('colors.grayscale.800');
 			border-radius: 50%;
+			font-family: Montserrat, sans-serif !important;
 		}
 
 		.react-datepicker__month-select,
 		.react-datepicker__year-select {
-			// font-weight: 400;
 			border: 1px solid theme('colors.grayscale.500');
 			border-radius: 5px;
+			font-family: Montserrat, sans-serif !important;
 		}
 	}
 }
