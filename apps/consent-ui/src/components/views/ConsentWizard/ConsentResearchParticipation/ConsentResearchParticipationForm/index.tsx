@@ -95,7 +95,6 @@ const ConsentResearchParticipationForm = ({
 					/>
 				</FormSection>
 
-				{/* ConsentStepsNavigation */}
 				{children}
 			</Form>
 		</FormProvider>

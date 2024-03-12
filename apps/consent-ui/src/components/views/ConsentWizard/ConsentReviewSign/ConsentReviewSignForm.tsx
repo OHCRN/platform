@@ -72,7 +72,6 @@ const ConsentReviewSignForm = ({
 					mock form <input {...register('stub')} id="stub" style={{ border: '1px solid grey' }} />
 				</label>
 
-				{/* ConsentStepsNavigation */}
 				{children}
 			</Form>
 		</FormProvider>

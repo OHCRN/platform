@@ -24,17 +24,17 @@ import LanguageToggleButton from './LanguageToggleButton';
 const LanguageToggle = ({
 	currentLang,
 	langToSelect,
-	fullToggleLabel,
+	fullLabel,
 }: {
 	currentLang: ValidLanguage;
 	langToSelect: ValidLanguage;
-	fullToggleLabel: string;
+	fullLabel: string;
 }) => {
 	return (
 		<LanguageToggleButton
 			currentLang={currentLang}
 			langToSelect={langToSelect}
-			fullToggleLabel={fullToggleLabel}
+			fullLabel={fullLabel}
 		/>
 	);
 };

@@ -64,7 +64,7 @@ type HeaderContentProps = {
 	session: Session | null;
 	languageToggleProps: {
 		langToSelect: ValidLanguage;
-		fullToggleLabel: string;
+		fullLabel: string;
 	};
 };
 

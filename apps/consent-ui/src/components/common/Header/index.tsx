@@ -24,14 +24,14 @@ import { getUnselectedLang } from 'src/components/common/Link/utils';
 import Header from './Header';
 
 const HeaderWrapper = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate, translateNamespace } = getTranslation(currentLang);
+	const { translateNamespace } = getTranslation(currentLang);
 	const textDict = translateNamespace('header');
 
 	const langToSelect = getUnselectedLang(currentLang);
 
 	const languageToggleProps = {
 		langToSelect,
-		fullToggleLabel: translate('header', langToSelect),
+		fullLabel: textDict[langToSelect],
 	};
 
 	const session = await auth();

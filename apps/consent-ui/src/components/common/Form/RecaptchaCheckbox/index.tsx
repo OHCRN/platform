@@ -21,8 +21,8 @@
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { ValidLanguage } from 'src/i18n/types';
-import { getAppConfig } from 'src/config';
 import { RecaptchaCheckboxRef } from 'src/hooks/useRecaptcha';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 
 const RecaptchaCheckbox = ({
 	onChange,
@@ -33,7 +33,7 @@ const RecaptchaCheckbox = ({
 	recaptchaCheckboxRef: RecaptchaCheckboxRef;
 	currentLang: ValidLanguage;
 }) => {
-	const { RECAPTCHA_SITE_KEY } = getAppConfig();
+	const { RECAPTCHA_SITE_KEY } = useAppConfigContext();
 
 	return RECAPTCHA_SITE_KEY ? (
 		<ReCAPTCHA

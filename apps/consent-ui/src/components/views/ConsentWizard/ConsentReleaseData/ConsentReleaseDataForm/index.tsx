@@ -276,7 +276,6 @@ const ConsentReleaseDataForm = ({
 					/>
 				</FormSection>
 
-				{/* ConsentStepsNavigation */}
 				{children}
 			</Form>
 		</FormProvider>

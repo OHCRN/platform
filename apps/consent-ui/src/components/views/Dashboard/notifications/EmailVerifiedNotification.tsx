@@ -27,9 +27,7 @@ const EmailVerifiedNotification = ({
 	dismissClick: () => void;
 	textDict: EmailVerifiedNotificationDictionary;
 }) => {
-	return (
-		<Notification dismissClick={dismissClick} level="success" title={textDict.notificationText} />
-	);
+	return <Notification dismissClick={dismissClick} level="success" title={textDict.title} />;
 };
 
 export default EmailVerifiedNotification;

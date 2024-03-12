@@ -86,7 +86,6 @@ const InformedConsentForm = ({
 					/>
 				</FormSection>
 
-				{/* ConsentStepsNavigation */}
 				{children}
 			</Form>
 		</FormProvider>

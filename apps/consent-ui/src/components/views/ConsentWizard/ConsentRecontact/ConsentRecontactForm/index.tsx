@@ -125,7 +125,7 @@ const ConsentRecontactForm = ({
 						/>
 					</FormSection>
 				)}
-				{/* ConsentStepsNavigation */}
+
 				{children}
 			</Form>
 		</FormProvider>

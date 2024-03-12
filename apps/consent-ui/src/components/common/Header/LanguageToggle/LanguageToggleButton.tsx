@@ -29,11 +29,11 @@ import styles from './LanguageToggleButton.module.scss';
 
 const LanguageToggleButton = ({
 	currentLang,
-	fullToggleLabel,
+	fullLabel,
 	langToSelect,
 }: {
 	currentLang: ValidLanguage;
-	fullToggleLabel: string;
+	fullLabel: string;
 	langToSelect: ValidLanguage;
 }) => {
 	const path = usePathname();
@@ -47,7 +47,7 @@ const LanguageToggleButton = ({
 			color="blue"
 			variant="secondary"
 		>
-			<span className={styles['toggle-full']}>{fullToggleLabel}</span>
+			<span className={styles['toggle-full']}>{fullLabel}</span>
 			<span className={styles['toggle-abbr']}>{langToSelect}</span>
 		</LocalizedLink>
 	);

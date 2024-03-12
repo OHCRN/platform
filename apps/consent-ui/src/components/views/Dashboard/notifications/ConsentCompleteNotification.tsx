@@ -27,9 +27,7 @@ const ConsentCompletionNotification = ({
 	dismissClick: () => void;
 	textDict: ConsentCompleteNotificationDictionary;
 }) => {
-	return (
-		<Notification dismissClick={dismissClick} level="success" title={textDict.notificationText} />
-	);
+	return <Notification dismissClick={dismissClick} level="success" title={textDict.title} />;
 };
 
 export default ConsentCompletionNotification;
