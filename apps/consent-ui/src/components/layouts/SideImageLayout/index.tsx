@@ -85,7 +85,7 @@ const SideImageLayout = ({
 						<LanguageToggle
 							currentLang={currentLang}
 							langToSelect={langToSelect}
-							fullToggleLabel={translate('header', langToSelect)}
+							fullLabel={translate('header', langToSelect)}
 						/>
 						<HelpButton label={translate('header', 'help')} />
 					</div>
