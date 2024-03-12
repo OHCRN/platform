@@ -20,10 +20,11 @@
 'use client';
 
 import { useState } from 'react';
+import urlJoin from 'url-join';
 
 import Button from 'src/components/common/Button';
-import { ValidLanguage } from 'src/i18n';
-import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+import { ValidLanguage, getTranslation } from 'src/i18n';
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 
 import {
 	mockDataGuardian,
@@ -37,12 +38,8 @@ import { GenerateConsentPdfParams } from './generateConsentPdf/types';
  * Temporary component for generating PDFs for different user scenarios.
  */
 const TempPdfButtons = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	// TEMP - not able to access app config inside generateConsentPdf()
-	const { CONSENT_PDF_URL_EN, CONSENT_PDF_URL_FR } = useAppConfigContext();
-	const pdfUrl = {
-		en: CONSENT_PDF_URL_EN,
-		fr: CONSENT_PDF_URL_FR,
-	}[currentLang];
+	const { translate } = getTranslation(currentLang);
+	const pdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, translate('assetUrls', 'studyConsentPdf'));
 
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 

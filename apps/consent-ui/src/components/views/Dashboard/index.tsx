@@ -25,6 +25,7 @@ import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/../public/assets/images/consents.jpeg';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getAppConfig } from 'src/config';
 
 import styles from './Dashboard.module.scss';
 import DashboardNotification from './notifications/DashboardNotification';
@@ -37,6 +38,8 @@ const consentStatus = statuses[2];
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
 
+	const { FEATURE_CONSENT_PDF_BUTTONS } = getAppConfig();
+
 	return (
 		<PaddedContainer>
 			<DashboardNotification currentLang={currentLang} />
@@ -47,7 +50,7 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 				<div className={styles.content}>
 					<h2>{translate('dashboard', 'reviewOhcrnConsents')}</h2>
 					<p>{translate('dashboard', 'reviewConsentsDescription')}</p>
-					<TempPdfButtons currentLang={currentLang} />
+					{FEATURE_CONSENT_PDF_BUTTONS && <TempPdfButtons currentLang={currentLang} />}
 					<div className={styles['button-container']}>
 						{consentStatus == 'complete' ? (
 							<LocalizedLink

@@ -20,7 +20,7 @@
 import { AssetUrlsDictionary } from 'src/i18n/locales/en/assetUrls';
 
 const dictionary = {
-	studyConsentPdf: 'PLACEHOLDER_consentement-a-letude.pdf',
+	studyConsentPdf: 'OHCRN_Main_Consent_Form-REB-clean_v2_5Jan2024',
 } satisfies AssetUrlsDictionary;
 
 export default dictionary;
