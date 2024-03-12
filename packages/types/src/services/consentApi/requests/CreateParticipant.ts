@@ -24,9 +24,14 @@ import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
 } from '../../../common/index.js';
-import { ConsentParticipantBase, ParticipantIdentityBase } from '../../../entities/index.js';
+import {
+	ConsentParticipantBase,
+	ConsentToBeContacted,
+	ParticipantIdentityBase,
+} from '../../../entities/index.js';
 
 export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
+	.merge(ConsentToBeContacted)
 	.refine(hasRequiredGuardianInformation)
 	.refine(hasRequiredParticipantContactInfo);
 export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;

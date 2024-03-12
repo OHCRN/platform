@@ -20,11 +20,11 @@
 import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 
-import { ConsentParticipantBase, NanoId } from '../../../entities/index.js';
+import { ConsentParticipantBase, ConsentToBeContacted, NanoId } from '../../../entities/index.js';
 
 export const ConsentCreateParticipantRequest = ConsentParticipantBase.merge(
-	z.object({ id: NanoId }),
-);
+	ConsentToBeContacted,
+).merge(z.object({ id: NanoId }));
 export type ConsentCreateParticipantRequest = z.infer<typeof ConsentCreateParticipantRequest>;
 export const ConsentCreateParticipantRequestSchema = generateSchema(
 	ConsentCreateParticipantRequest,

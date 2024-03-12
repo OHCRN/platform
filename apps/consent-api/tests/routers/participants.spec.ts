@@ -20,6 +20,7 @@
 import { describe, expect, it, vi, afterAll, beforeAll } from 'vitest';
 import request from 'supertest';
 import { ErrorName } from 'types/httpResponses';
+import { CreateParticipantRequest } from 'types/consentApi';
 
 import App from '../../src/index.js';
 import { getAppConfig } from '../../src/config.js';
@@ -27,27 +28,21 @@ import { mockEnv } from '../config.js';
 
 const { REQUEST_VALIDATION_ERROR } = ErrorName;
 
-// TODO: add a test with isGuardian: true
 const mocks = vi.hoisted(() => {
 	const createParticipantRequest = {
 		participantOhipFirstName: 'James',
 		participantOhipLastName: 'Bond',
 		participantEmailAddress: 'james007@example.com',
 		participantPhoneNumber: '0123456789',
-		// guardianEmailAddress: undefined,
-		// guardianName: undefined,
-		// guardianPhoneNumber: undefined,
-		// guardianRelationship: undefined,
 		dateOfBirth: new Date('1954-03-09'),
 		participantPreferredName: 'Jimmy',
 		keycloakId: 'ef25babd-9d01-48a1-a03e-268be937ed1a',
-		// inviteId: undefined,
 		currentLifecycleState: 'REGISTERED',
 		consentGroup: 'ADULT_CONSENT',
 		emailVerified: false,
 		isGuardian: false,
 		consentToBeContacted: true,
-	};
+	} satisfies CreateParticipantRequest;
 
 	const createParticipantResponse = {
 		id: 'skdkCD1lBpC7Rn1WzwBPL',

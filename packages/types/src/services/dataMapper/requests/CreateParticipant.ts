@@ -24,9 +24,14 @@ import {
 	hasRequiredGuardianInformation,
 	hasRequiredParticipantContactInfo,
 } from '../../../common/index.js';
-import { ConsentParticipantBase, ParticipantIdentityBase } from '../../../entities/index.js';
+import {
+	ConsentParticipantBase,
+	ConsentToBeContacted,
+	ParticipantIdentityBase,
+} from '../../../entities/index.js';
 
 export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
+	.merge(ConsentToBeContacted)
 	.refine(hasRequiredGuardianInformation, {
 		message: 'Guardian contact fields are required for that consentGroup',
 	})

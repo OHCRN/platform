@@ -20,18 +20,8 @@
 import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { ParticipantIdentityBase } from '../../../entities/Participant.js';
-import { ConsentGroup, NanoId } from '../../../entities/fields/index.js';
+import { ParticipantIdentityBase, ConsentParticipant } from '../../../entities/Participant.js';
 
-export const CreateParticipantResponse = ParticipantIdentityBase.merge(
-	z.object({
-		id: NanoId,
-		isGuardian: z.boolean(),
-		emailVerified: z.boolean(),
-		consentToBeContacted: z.boolean(),
-		consentGroup: ConsentGroup,
-	}),
-);
-
+export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentParticipant);
 export type CreateParticipantResponse = z.infer<typeof CreateParticipantResponse>;
 export const CreateParticipantResponseSchema = generateSchema(CreateParticipantResponse);
