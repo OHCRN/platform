@@ -34,6 +34,8 @@ type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
 	onBlur?: () => void;
 };
 
+const reactDatePickerFormat: Record<ValidLanguage, string> = { en: 'MM/dd/yyyy', fr: 'dd/MM/yyyy' };
+
 const CalendarInput = <T extends FieldValues>({
 	ariaProps = {},
 	disabled,
@@ -71,6 +73,7 @@ const CalendarInput = <T extends FieldValues>({
 						onBlur={handleBlur}
 						disabled={disabled}
 						aria-required={required}
+						dateFormat={reactDatePickerFormat[currentLang]}
 						{...ariaProps}
 					/>
 				);
