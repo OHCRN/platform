@@ -46,7 +46,7 @@ const PdfViewer = ({ pdfUrl, className }: { pdfUrl: string; className?: string }
 				file={pdfUrl}
 				onLoadSuccess={onDocumentLoadSuccess}
 				className={styles.document}
-				loading={<div className={styles.loading}>...Loading</div>}
+				loading={<div className={styles.loading}>...</div>}
 			>
 				{Array.from(new Array(numPages), (_, index) => (
 					<Page
