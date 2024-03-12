@@ -17,7 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroup, LifecycleState } from 'types/entities';
+import { ConsentGroup, ConsentQuestionId, LifecycleState } from 'types/entities';
+
+const {
+	RECONTACT__FUTURE_RESEARCH,
+	RECONTACT__SECONDARY_CONTACT,
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION,
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
+} = ConsentQuestionId.enum;
 
 export type GenerateConsentPdfParams = {
 	consentGroup: ConsentGroup;
@@ -27,9 +34,9 @@ export type GenerateConsentPdfParams = {
 	mockSignatureImage: any;
 	participantOhipFirstName: string;
 	participantOhipLastName: string;
-	RECONTACT__FUTURE_RESEARCH: boolean;
-	RECONTACT__SECONDARY_CONTACT: boolean;
+	[RECONTACT__FUTURE_RESEARCH]: boolean;
+	[RECONTACT__SECONDARY_CONTACT]: boolean;
 	relationshipToParticipant?: string;
-	RESEARCH_PARTICIPATION__CONTACT_INFORMATION: boolean;
-	RESEARCH_PARTICIPATION__FUTURE_RESEARCH: boolean;
+	[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: boolean;
+	[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: boolean;
 };

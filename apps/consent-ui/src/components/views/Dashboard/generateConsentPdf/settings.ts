@@ -18,6 +18,14 @@
  */
 
 import { rgb } from 'pdf-lib';
+import { ConsentQuestionId } from 'types/entities';
+
+const {
+	RECONTACT__FUTURE_RESEARCH,
+	RECONTACT__SECONDARY_CONTACT,
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION,
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
+} = ConsentQuestionId.enum;
 
 export const settingsGeneric = {
 	ellipse: {
@@ -45,10 +53,10 @@ const settingsEn = {
 				yes: 117,
 			},
 			yCoord: {
-				RECONTACT__FUTURE_RESEARCH: 508,
-				RECONTACT__SECONDARY_CONTACT: 588,
-				RESEARCH_PARTICIPATION__CONTACT_INFORMATION: 427,
-				RESEARCH_PARTICIPATION__FUTURE_RESEARCH: 346,
+				[RECONTACT__FUTURE_RESEARCH]: 508,
+				[RECONTACT__SECONDARY_CONTACT]: 588,
+				[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: 427,
+				[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: 346,
 			},
 		},
 		signature: {
