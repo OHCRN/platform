@@ -27,13 +27,6 @@ import {
 } from '../../src/common/index.js';
 import { ConsentGroup } from '../../src/entities/index.js';
 
-const mockUndefinedGuardianFields = {
-	guardianName: undefined,
-	guardianEmailAddress: undefined,
-	guardianPhoneNumber: undefined,
-	guardianRelationship: undefined,
-};
-
 const mockCompleteGuardianFields = {
 	guardianName: 'Gina Guardian',
 	guardianEmailAddress: 'gina_g@example.com',
@@ -63,7 +56,6 @@ describe('Conditional fields utility functions', () => {
 		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR), all required guardian fields are provided, and all participant contact fields are undefined', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
-				...mockUndefinedParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
 			};
 			const result = hasRequiredGuardianInfo(testSchemaObj);
@@ -73,7 +65,6 @@ describe('Conditional fields utility functions', () => {
 		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT), all required guardian fields are provided, and all participant contact fields are undefined', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
-				...mockUndefinedParticipantContactFields,
 				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 			};
 			const result = hasRequiredGuardianInfo(testSchemaObj);
@@ -83,7 +74,6 @@ describe('Conditional fields utility functions', () => {
 		it('returns TRUE if a guardian consentGroup (ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER), all required guardian fields are provided, and all participant contact fields are undefined', () => {
 			const testSchemaObj = {
 				...mockCompleteGuardianFields,
-				...mockUndefinedParticipantContactFields,
 				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 			};
 			const result = hasRequiredGuardianInfo(testSchemaObj);
@@ -157,7 +147,6 @@ describe('Conditional fields utility functions', () => {
 		it('returns TRUE if a non-guardian consentGroup (ADULT_CONSENT), participant contact fields are provided, and guardian fields are undefined', () => {
 			const testSchemaObj = {
 				...mockCompleteParticipantContactFields,
-				mockUndefinedGuardianFields,
 				consentGroup: ADULT_CONSENT,
 			};
 			const result = hasRequiredParticipantContactInfo(testSchemaObj);
@@ -167,7 +156,6 @@ describe('Conditional fields utility functions', () => {
 		it('returns TRUE if a non-guardian (YOUNG_ADULT_CONSENT), participant contact fields are provided, and guardian fields are undefined', () => {
 			const testSchemaObj = {
 				...mockCompleteParticipantContactFields,
-				mockUndefinedGuardianFields,
 				consentGroup: YOUNG_ADULT_CONSENT,
 			};
 			const result = hasRequiredParticipantContactInfo(testSchemaObj);
