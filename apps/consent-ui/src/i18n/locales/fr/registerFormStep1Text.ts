@@ -38,6 +38,7 @@ const dictionary = {
 	enterInfo: "S'il vous plaît entrer vos informations ci-dessous:",
 	enterParticipantInfo: 'Veuillez saisir les informations du participant ci-dessous :',
 	goToStep,
+	isGuardianDescription: "Vous vous inscrivez au nom de quelqu'un d'autre ?",
 	next,
 	participantFirstNameTooltip,
 	participantLastNameTooltip,
