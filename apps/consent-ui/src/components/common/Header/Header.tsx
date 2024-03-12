@@ -108,7 +108,7 @@ const Header = ({ currentLang, textDict, session }: HeaderContentProps) => {
 						{/* Desktop */}
 						<div className={styles.desktopUserMenu}>
 							{session?.user ? (
-								<div>Hello, {session.user.preferredUsername}</div>
+								<div>Hello, {session.user.username}</div>
 							) : (
 								<LoginButton currentLang={currentLang} />
 							)}
