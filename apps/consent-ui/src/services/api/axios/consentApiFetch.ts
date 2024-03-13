@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AxiosHeaders, AxiosRequestConfig } from 'axios';
+import { AxiosHeaders, AxiosRequestConfig, Method } from 'axios';
 import { Session } from 'next-auth';
 
 import { consentApiClient } from 'src/services/api';
@@ -31,28 +31,29 @@ const baseAxiosConfig: AxiosRequestConfig = {
 };
 
 const consentApiFetch = async ({
-	url,
+	body,
+	headers,
 	method,
 	session,
-	body,
+	url,
 }: {
-	url: string;
-	method: AxiosRequestConfig['method'];
-	session?: Session | null;
 	body?: AxiosRequestConfig['data'];
+	headers?: AxiosHeaders;
+	method: Method;
+	session?: Session | null;
+	url: string;
 }) => {
-	const headers = new AxiosHeaders();
+	const reqHeaders = new AxiosHeaders(headers);
 	if (session?.account.accessToken) {
-		console.log('have session');
 		const decryptedToken = decryptContent(session.account.accessToken);
-		headers.setAuthorization(`Bearer ${decryptedToken}`);
+		reqHeaders.setAuthorization(`Bearer ${decryptedToken}`);
 	}
 	return consentApiClient({
 		...baseAxiosConfig,
-		headers: { ...baseAxiosConfig.headers, ...headers },
-		url,
-		method,
 		data: body,
+		headers: { ...baseAxiosConfig.headers, ...reqHeaders },
+		method,
+		url,
 	});
 };
 
