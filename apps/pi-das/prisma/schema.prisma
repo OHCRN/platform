@@ -54,8 +54,8 @@ model ClinicianInvite {
   id                       String        @id @default("") @db.Char(21)
   participantOhipFirstName String
   participantOhipLastName  String
-  participantEmailAddress  String        @unique
-  participantPhoneNumber   String        @db.Char(10)
+  participantEmailAddress  String?       @unique
+  participantPhoneNumber   String?       @db.Char(10)
   participantPreferredName String?
   guardianName             String?
   guardianPhoneNumber      String?       @db.Char(10)
