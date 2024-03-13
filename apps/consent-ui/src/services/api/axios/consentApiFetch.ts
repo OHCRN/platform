@@ -30,6 +30,15 @@ const baseAxiosConfig: AxiosRequestConfig = {
 	},
 };
 
+/**
+ * Base function for requests to Consent API
+ * @param body Request data
+ * @param headers AxiosHeaders. These will override/extend the default headers
+ * @param method HTTP method
+ * @param session Next-Auth session object
+ * @param url Request URL as a string. Will be appended to the configured baseURL
+ * @returns Promise containing an Axios request
+ */
 const consentApiFetch = async ({
 	body,
 	headers,
