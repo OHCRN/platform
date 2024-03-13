@@ -20,7 +20,7 @@
 import { EmailVerifiedNotificationDictionary } from '../en/emailVerifiedNotification';
 
 const dictionary = {
-	notificationText:
+	title:
 		"Merci d'avoir vérifié votre adresse e-mail. Veuillez remplir vos formulaires de consentement ci-dessous !",
 } satisfies EmailVerifiedNotificationDictionary;
 

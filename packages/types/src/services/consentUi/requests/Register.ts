@@ -19,37 +19,54 @@
 
 import { z } from 'zod';
 
-import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
-import { Name, PhoneNumber, hasMatchingPasswords } from '../../../entities/fields/index.js';
+import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
+import {
+	NonEmptyString,
+	createDateOfBirthRequestSchema,
+	hasRequiredGuardianInfoForRegistration,
+} from '../../../common/index.js';
+import {
+	EmptyOrOptionalName,
+	EmptyOrOptionalPhoneNumber,
+	PhoneNumber,
+	hasMatchingPasswords,
+} from '../../../entities/fields/index.js';
 
-// TODO hookup backend #368
-// create a better zod schema with conditional validation,
-// and optional name fields
+// STEP 1
 
-export const RegisterFormStep1Fields = z.object({
-	guardianName: Name,
-	guardianPhoneNumber: PhoneNumber,
-	guardianRelationship: Name,
-	participantFirstName: Name,
-	participantLastName: Name,
-	participantPhoneNumber: PhoneNumber,
-	participantPreferredName: Name,
-	// isGuardian: z.boolean(), TODO #366
-	// commenting this out because the form won't work
-	// with unused fields in the Zod schema
-});
+export const RegisterFormStep1Fields = ParticipantNameFields.and(
+	z.object({
+		participantPhoneNumber: PhoneNumber,
+		participantPreferredName: EmptyOrOptionalName,
+	}),
+);
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
-export const RegisterFormStep1 = z.intersection(DateOfBirthField, RegisterFormStep1Fields);
+export const RegisterRequestGuardianFields = z.object({
+	guardianName: EmptyOrOptionalName,
+	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
+	guardianRelationship: EmptyOrOptionalName,
+	isGuardian: z.boolean(),
+});
+export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
+
+export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
+	hasRequiredGuardianInfoForRegistration,
+);
+
+export const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
+	RegisterRequestGuardianFieldsRefined,
+);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2
 
-const RegisterFormStep2Fields = z.object({
-	consentToBeContacted: z.literal(true),
-	participantEmailAddress: z.string().email(),
-});
+const RegisterFormStep2Fields = ConsentToBeContacted.and(
+	z.object({
+		participantEmailAddress: z.string().email(),
+	}),
+);
 
 const PasswordFields = z
 	.object({
@@ -61,8 +78,10 @@ const PasswordFields = z
 		path: ['confirmPassword'],
 	});
 
-export const RegisterFormStep2 = z.intersection(PasswordFields, RegisterFormStep2Fields);
+export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
+
+// COMBINE STEPS
 
 export const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
 export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

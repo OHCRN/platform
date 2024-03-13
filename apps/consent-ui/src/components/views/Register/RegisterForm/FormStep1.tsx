@@ -37,7 +37,9 @@ import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerF
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { handleMouseDownBlur } from 'src/components/utils';
 import CalendarFieldSet from 'src/components/common/Form/fieldsets/CalendarFieldSet';
-import { ValidLanguage } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
+import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
+import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
@@ -49,6 +51,7 @@ const FormStep1 = ({
 	handleNextClick,
 	labelsDict,
 	textDict,
+	dateOfBirthModalDict,
 }: {
 	className?: string;
 	currentLang: ValidLanguage;
@@ -56,6 +59,7 @@ const FormStep1 = ({
 	handleNextClick: (data: RegisterFormStep1) => void;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
@@ -69,6 +73,7 @@ const FormStep1 = ({
 		getValues,
 		handleSubmit,
 		setFocus,
+		watch,
 	} = methods;
 
 	const onSubmit: SubmitHandler<RegisterFormStep1> = (data, event) => {
@@ -78,9 +83,10 @@ const FormStep1 = ({
 
 	useEffect(() => {
 		// set focus to first field on mount
-		// TODO #366 change to isGuardian
-		setFocus('guardianName');
+		setFocus('isGuardian');
 	}, [setFocus]);
+
+	const watchIsGuardian = watch('isGuardian');
 
 	const { closeModal, openModal, modalIsOpen } = useModal();
 
@@ -99,50 +105,52 @@ const FormStep1 = ({
 	return (
 		<>
 			<RegisterDateOfBirthErrorModal
-				currentLang={currentLang}
 				closeModal={closeModal}
+				currentLang={currentLang}
 				modalIsOpen={modalIsOpen}
+				dateOfBirthModalDict={dateOfBirthModalDict}
 			/>
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
 					<FormSection>
-						{/* TODO implement radio button #366
-								this field is called isGuardian in the data model */}
-						{textDict.registeringForSomeoneElse} {labelsDict.yes} {labelsDict.no}
+						<RadioFieldSet
+							description={textDict.isGuardianDescription}
+							error={errors.isGuardian?.type && errorsDict.required}
+							name="isGuardian"
+							noText={labelsDict.no}
+							required
+							yesText={labelsDict.yes}
+						/>
 					</FormSection>
-
-					<button type="button" onClick={openModal}>
-						Show modal
-					</button>
 
 					{/* OPTIONAL SECTION - GUARDIAN INFO */}
 					{/* these fields are conditionally required, i.e. if the user is
 						registering as a guardian */}
 
-					{/* TODO #366 update this section - add conditional rendering.
-							see guardian fields on invite form for an example. */}
-					<FormSection variant="grey">
-						<p className={styles.instructions}>{textDict.enterInfo}</p>
-						<TextFieldSet
-							error={errors.guardianName?.type && errorsDict.required}
-							label={labelsDict.yourName}
-							name="guardianName"
-							required
-						/>
-						<TextFieldSet
-							error={errors.guardianPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.yourPhone}
-							name="guardianPhoneNumber"
-							required
-						/>
-						<TextFieldSet
-							error={errors.guardianRelationship?.type && errorsDict.required}
-							label={labelsDict.yourRelationship}
-							name="guardianRelationship"
-							required
-						/>
-					</FormSection>
+					{watchIsGuardian && (
+						<FormSection variant="grey">
+							<p className={styles.instructions}>{textDict.enterInfo}</p>
+							<TextFieldSet
+								error={errors.guardianName?.type && errorsDict.required}
+								label={labelsDict.yourName}
+								name="guardianName"
+								required
+							/>
+							<TextFieldSet
+								error={errors.guardianPhoneNumber?.type && errorsDict.required}
+								label={labelsDict.yourPhone}
+								name="guardianPhoneNumber"
+								required
+							/>
+							<TextFieldSet
+								error={errors.guardianRelationship?.type && errorsDict.required}
+								label={labelsDict.yourRelationship}
+								name="guardianRelationship"
+								required
+							/>
+						</FormSection>
+					)}
 
 					{/* SECTION - PARTICIPANT INFO */}
 					<FormSection>
