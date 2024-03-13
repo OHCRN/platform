@@ -19,28 +19,21 @@
 
 import Link from 'next/link';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
+import { InviteSentNotificationDictionary } from 'src/i18n/locales/en/inviteSentNotification';
 
 const InviteSentNotification = ({
-	currentLang,
 	dismissClick,
+	textDict,
 }: {
-	currentLang: ValidLanguage;
 	dismissClick: () => void;
+	textDict: InviteSentNotificationDictionary;
 }) => {
-	const { translate } = getTranslation(currentLang);
 	return (
-		<Notification
-			dismissClick={dismissClick}
-			level="success"
-			title={translate('inviteSentNotification', 'title')}
-		>
-			{translate('inviteSentNotification', 'description1')}{' '}
-			<b>{translate('inviteSentNotification', 'boldText')}</b>{' '}
-			{translate('inviteSentNotification', 'description2')}
+		<Notification dismissClick={dismissClick} level="success" title={textDict.title}>
+			{textDict.description1} <b>{textDict.boldText}</b> {textDict.description2}
 			{/* TODO add contact us link https://github.com/OHCRN/platform/issues/393 */}
-			<Link href="#">{translate('inviteSentNotification', 'linkText')}</Link>.
+			<Link href="#">{textDict.linkText}</Link>.
 		</Notification>
 	);
 };

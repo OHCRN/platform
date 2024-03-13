@@ -24,9 +24,14 @@ import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { getAppConfig } from 'src/config/appConfig';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 import InformedConsentForm from './InformedConsentForm';
 import styles from './InformedConsent.module.scss';
+
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
 
 const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
@@ -58,7 +63,14 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
 			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}
-			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
+			<InformedConsentForm
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				formDict={formDict}
+				currentStep={currentConsentStep}
+			>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</InformedConsentForm>
 		</div>
 	);
 };
