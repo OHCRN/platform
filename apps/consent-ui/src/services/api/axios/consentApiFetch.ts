@@ -17,5 +17,43 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './encryption';
-export * from './requestData';
+import { AxiosHeaders, AxiosRequestConfig } from 'axios';
+import { Session } from 'next-auth';
+
+import { consentApiClient } from 'src/services/api';
+
+import { decryptContent } from '../utils';
+
+const baseAxiosConfig: AxiosRequestConfig = {
+	headers: {
+		'Content-Type': 'application/json',
+	},
+};
+
+const consentApiFetch = async ({
+	url,
+	method,
+	session,
+	body,
+}: {
+	url: string;
+	method: AxiosRequestConfig['method'];
+	session?: Session | null;
+	body?: AxiosRequestConfig['data'];
+}) => {
+	const headers = new AxiosHeaders();
+	if (session?.account.accessToken) {
+		console.log('have session');
+		const decryptedToken = decryptContent(session.account.accessToken);
+		headers.setAuthorization(`Bearer ${decryptedToken}`);
+	}
+	return consentApiClient({
+		...baseAxiosConfig,
+		headers: { ...baseAxiosConfig.headers, ...headers },
+		url,
+		method,
+		data: body,
+	});
+};
+
+export default consentApiFetch;
