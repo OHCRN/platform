@@ -48,6 +48,7 @@ model Participant {
   mailingAddressProvince    Province?
   mailingAddressPostalCode  String?          @db.Char(6)
   residentialPostalCode     String?          @db.Char(6)
+  assentFormIdentifier      String?
 }
 
 model ClinicianInvite {
@@ -62,4 +63,5 @@ model ClinicianInvite {
   guardianEmailAddress     String?
   guardianRelationship     String?
   Participant              Participant[]
+  assentFormIdentifier     String?
 }
