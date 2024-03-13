@@ -18,25 +18,27 @@
  */
 
 import Modal, { ModalComponentProps } from 'src/components/common/Modal';
-import { getTranslation } from 'src/i18n';
+import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
+
+type RegisterDateOfBirthErrorModalProps = ModalComponentProps & {
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
+};
 
 const RegisterDateOfBirthErrorModal = ({
 	closeModal,
-	currentLang,
 	modalIsOpen,
-}: ModalComponentProps) => {
-	const { translateNamespace } = getTranslation(currentLang);
-	const modalDict = translateNamespace('registerDateOfBirthErrorModal');
+	dateOfBirthModalDict,
+}: RegisterDateOfBirthErrorModalProps) => {
 	return (
 		<Modal
-			actionButtonText={modalDict.actionText}
-			cancelButtonText={modalDict.cancelText}
+			actionButtonText={dateOfBirthModalDict.actionText}
+			cancelButtonText={dateOfBirthModalDict.cancelText}
 			closeModal={closeModal}
-			contentLabel={modalDict.title}
+			contentLabel={dateOfBirthModalDict.title}
 			modalIsOpen={modalIsOpen}
-			title={modalDict.title}
+			title={dateOfBirthModalDict.title}
 		>
-			{modalDict.description}
+			{dateOfBirthModalDict.description}
 		</Modal>
 	);
 };

@@ -19,15 +19,31 @@
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { auth } from 'src/app/auth';
+import { getUnselectedLang } from 'src/components/common/Link/utils';
 
 import Header from './Header';
 
 const HeaderWrapper = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
 	const textDict = translateNamespace('header');
+
+	const langToSelect = getUnselectedLang(currentLang);
+
+	const languageToggleProps = {
+		langToSelect,
+		fullLabel: textDict[langToSelect],
+	};
+
 	const session = await auth();
 
-	return <Header currentLang={currentLang} textDict={textDict} session={session} />;
+	return (
+		<Header
+			currentLang={currentLang}
+			textDict={textDict}
+			session={session}
+			languageToggleProps={languageToggleProps}
+		/>
+	);
 };
 
 export default HeaderWrapper;
