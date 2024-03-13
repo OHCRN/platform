@@ -22,7 +22,7 @@
 import { useState } from 'react';
 import { RegisterFormStep1 } from 'types/consentUi';
 
-import { ValidLanguage, replaceParams } from 'src/i18n';
+import { ValidLanguage } from 'src/i18n/types';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormTextDictionary } from 'src/i18n/locales/en/registerFormText';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -31,6 +31,7 @@ import { RegisterFormStep1LabelsDictionary } from 'src/i18n/locales/en/registerF
 import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
 import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
+import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
@@ -44,6 +45,8 @@ const RegisterForm = ({
 	step2LabelsDict,
 	step2TextDict,
 	textDict,
+	stepTitleDict,
+	dateOfBirthModalDict,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
@@ -52,6 +55,8 @@ const RegisterForm = ({
 	step2LabelsDict: RegisterFormStep2LabelsDictionary;
 	step2TextDict: RegisterFormStep2TextDictionary;
 	textDict: RegisterFormTextDictionary;
+	stepTitleDict: Record<'step1' | 'step2', string>;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
 	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
@@ -60,40 +65,35 @@ const RegisterForm = ({
 	// - step 1 must be valid to proceed to step 2.
 	// - show/hide guardian section & step 2 with conditional rendering.
 	//   - these fields will unregister on unmount (removed from form state & validation)
-	const STEP_COUNT = 2;
-	const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+	const [currentStep, setCurrentStep] = useState<'step1' | 'step2'>('step1');
 	const handleNextClick = (data: RegisterFormStep1) => {
 		setStep1Data(data);
 		scrollToTop();
-		setCurrentStep(2);
+		setCurrentStep('step2');
 	};
 	const handleBackClick = () => {
 		scrollToTop();
-		setCurrentStep(1);
+		setCurrentStep('step1');
 	};
 
 	return (
 		<>
-			<h3 className={styles.stepTitle}>
-				{replaceParams(textDict.stepCurrentOfTotal, {
-					current: currentStep,
-					total: STEP_COUNT,
-				})}
-			</h3>
+			<h3 className={styles.stepTitle}>{stepTitleDict[currentStep]}</h3>
 			<p className={styles.smallText}>
 				<RequiredAsterisk /> {textDict.indicatesRequiredField}
 			</p>
 
 			<FormStep1
-				className={currentStep === 1 ? styles.visible : styles.hidden}
+				className={currentStep === 'step1' ? styles.visible : styles.hidden}
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
 				labelsDict={step1LabelsDict}
 				textDict={step1TextDict}
+				dateOfBirthModalDict={dateOfBirthModalDict}
 			/>
 
-			{currentStep === 2 && (
+			{currentStep === 'step2' && (
 				<FormStep2
 					currentLang={currentLang}
 					errorsDict={errorsDict}
