@@ -34,11 +34,6 @@ const mockCompleteGuardianFields = {
 	guardianRelationship: 'Mother',
 };
 
-const mockUndefinedParticipantContactFields = {
-	participantEmailAddress: undefined,
-	participantPhoneNumber: undefined,
-};
-
 const mockCompleteParticipantContactFields = {
 	participantEmailAddress: 'patti@example.com',
 	participantPhoneNumber: '1112223334',
