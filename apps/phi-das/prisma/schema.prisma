@@ -334,6 +334,11 @@ enum MolecularLab {
   UNIVERSITY_HEALTH_NETWORK_TORONTO
 }
 
+enum VitalStatus {
+  ALIVE
+  DECEASED
+}
+
 model ClinicalProfile {
   clinicalProfilePrivateKey         String          @id @db.Char(21)
   ancestry                          Ancestry
@@ -347,4 +352,5 @@ model ClinicalProfile {
   selfReportedMolecularLabVisited   MolecularLab?
   historyOfCancer                   HistoryOfCancer
   selfIdentifiedGender              String?
+  vitalStatus                       VitalStatus?
 }

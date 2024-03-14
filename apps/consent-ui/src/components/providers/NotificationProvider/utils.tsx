@@ -21,26 +21,46 @@ import ConsentCompletionNotification from 'src/components/views/Dashboard/notifi
 import EmailVerifiedNotification from 'src/components/views/Dashboard/notifications/EmailVerifiedNotification';
 import ConsentInProgressNotification from 'src/components/views/Dashboard/notifications/ConsentInProgressNotification';
 import InviteSentNotification from 'src/components/views/Home/notifications/InviteSentNotification';
-import { ValidLanguage } from 'src/i18n';
+
+import { NotificationTranslations } from './getNotificationTranslations';
 
 import { NotificationConfig } from '.';
 
 export const getNotificationComponent = ({
 	notificationConfig,
 	notificationProps,
+	notificationTranslations,
 }: {
 	notificationConfig: NotificationConfig;
-	notificationProps: { currentLang: ValidLanguage; dismissClick: () => void };
+	notificationProps: { dismissClick: () => void };
+	notificationTranslations: NotificationTranslations;
 }) => {
 	switch (notificationConfig?.notification) {
 		case 'emailVerified':
-			return <EmailVerifiedNotification {...notificationProps} />;
+			return (
+				<EmailVerifiedNotification
+					textDict={notificationTranslations.emailVerified}
+					{...notificationProps}
+				/>
+			);
 		case 'consentInProgress':
-			return <ConsentInProgressNotification currentLang={notificationProps.currentLang} />;
+			return (
+				<ConsentInProgressNotification textDict={notificationTranslations.consentInProgress} />
+			);
 		case 'consentComplete':
-			return <ConsentCompletionNotification {...notificationProps} />;
+			return (
+				<ConsentCompletionNotification
+					textDict={notificationTranslations.consentComplete}
+					{...notificationProps}
+				/>
+			);
 		case 'inviteSent':
-			return <InviteSentNotification {...notificationProps} />;
+			return (
+				<InviteSentNotification
+					textDict={notificationTranslations.inviteSent}
+					{...notificationProps}
+				/>
+			);
 		default:
 			return null;
 	}

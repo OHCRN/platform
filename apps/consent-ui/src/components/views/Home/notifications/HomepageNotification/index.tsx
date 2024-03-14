@@ -20,12 +20,16 @@
 'use client';
 
 import { useNotification } from 'src/components/providers/NotificationProvider';
-import { ValidLanguage } from 'src/i18n';
 import { getNotificationComponent } from 'src/components/providers/NotificationProvider/utils';
+import { NotificationTranslations } from 'src/components/providers/NotificationProvider/getNotificationTranslations';
 
 import styles from './HomepageNotification.module.scss';
 
-const HomepageNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const HomepageNotification = ({
+	notificationTranslations,
+}: {
+	notificationTranslations: NotificationTranslations;
+}) => {
 	const { dismissNotification, notificationConfig } = useNotification();
 
 	// check if there's a notification for this page in context
@@ -36,9 +40,9 @@ const HomepageNotification = ({ currentLang }: { currentLang: ValidLanguage }) =
 	const notificationComponent = getNotificationComponent({
 		notificationConfig,
 		notificationProps: {
-			currentLang,
 			dismissClick: dismissNotification,
 		},
+		notificationTranslations,
 	});
 
 	if (notificationComponent) {

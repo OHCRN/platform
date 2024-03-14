@@ -17,16 +17,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
 import clsx from 'clsx';
 import urlJoin from 'url-join';
 import Link from 'next/link';
 
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 import styles from './ConsentResearchParticipation.module.scss';
 import ConsentResearchParticipationForm from './ConsentResearchParticipationForm';
+
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-3'];
 
 const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
@@ -52,7 +56,10 @@ const ConsentResearchParticipation = ({ currentLang }: { currentLang: ValidLangu
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				formDict={formDict}
-			/>
+				currentStep={currentConsentStep}
+			>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</ConsentResearchParticipationForm>
 		</div>
 	);
 };
