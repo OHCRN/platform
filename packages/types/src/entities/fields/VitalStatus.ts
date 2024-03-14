@@ -19,43 +19,7 @@
 
 import { z } from 'zod';
 
-import { OptionalString } from '../common/index.js';
+const VITAL_STATUSES = ['ALIVE', 'DECEASED'] as const;
 
-import {
-	Ancestry,
-	BirthSex,
-	Gender,
-	GeneticsClinic,
-	HistoryOfCancer,
-	MolecularLab,
-	NanoId,
-	OptionalName,
-	VitalStatus,
-} from './fields/index.js';
-
-export const ClinicalProfile = z
-	.object({
-		ancestry: Ancestry,
-		birthSex: BirthSex,
-		clinicalProfilePrivateKey: NanoId,
-		familyHistoryOfCancer: HistoryOfCancer,
-		gender: Gender,
-		selfReportedClinicianFirstName: OptionalName,
-		selfReportedClinicianLastName: OptionalName,
-		selfReportedClinicianTitleOrRole: OptionalString,
-		selfReportedGeneticsClinicVisited: GeneticsClinic.optional(),
-		selfReportedMolecularLabVisited: MolecularLab.optional(),
-		historyOfCancer: HistoryOfCancer,
-		participantId: NanoId,
-		selfIdentifiedGender: OptionalString,
-		vitalStatus: VitalStatus.optional(),
-	})
-	.refine((input) => {
-		// selfIdentifiedGender must be defined if
-		// Gender.PREFER_TO_SELF_IDENTIFY was selected
-
-		const requiresSelfIdentifiedGender = input.gender === Gender.enum.PREFER_TO_SELF_IDENTIFY;
-		return requiresSelfIdentifiedGender ? input.selfIdentifiedGender !== undefined : true;
-	});
-
-export type ClinicalProfile = z.infer<typeof ClinicalProfile>;
+export const VitalStatus = z.enum(VITAL_STATUSES);
+export type VitalStatus = z.infer<typeof VitalStatus>;

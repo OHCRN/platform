@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { NonEmptyString } from '../common/index.js';
+import { NonEmptyString, OptionalString } from '../common/index.js';
 
 import { ConsentGroup, Name, NanoId, OptionalName, PhoneNumber } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
@@ -50,7 +50,7 @@ export const InviteGuardianFields = GuardianBaseFields;
 export type InviteGuardianFields = z.infer<typeof InviteGuardianFields>;
 
 export const InviteParticipantFields = ParticipantBaseOhipNameFields.merge(
-	z.object({ participantPreferredName: OptionalName }),
+	z.object({ participantPreferredName: OptionalName, assentFormIdentifier: OptionalString }),
 ).merge(InviteParticipantContactFields);
 export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;
 
