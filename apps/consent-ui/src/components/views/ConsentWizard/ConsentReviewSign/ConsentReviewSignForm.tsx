@@ -23,25 +23,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { NonEmptyString } from 'types/common';
+import { ReactNode } from 'react';
 
 import Form from 'src/components/common/Form';
-import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 import { ValidLanguage } from 'src/i18n';
 import { useNotification } from 'src/components/providers/NotificationProvider';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
-import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 export const ConsentReviewSignRequest = z.object({ stub: NonEmptyString });
 export type ConsentReviewSignRequest = z.infer<typeof ConsentReviewSignRequest>;
 
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-5'];
-
-interface ConsentReviewSignFormProps {
+const ConsentReviewSignForm = ({
+	currentLang,
+	children,
+	currentStep,
+}: {
 	currentLang: ValidLanguage;
-}
-
-const ConsentReviewSignForm = ({ currentLang }: ConsentReviewSignFormProps) => {
+	children: ReactNode;
+	currentStep: ConsentStepRoute;
+}) => {
 	const { showNotification } = useNotification();
 
 	const methods = useForm<ConsentReviewSignRequest>({
@@ -51,7 +53,7 @@ const ConsentReviewSignForm = ({ currentLang }: ConsentReviewSignFormProps) => {
 
 	const { handleSubmit, register } = methods;
 
-	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentStep);
 
 	const onSubmit: SubmitHandler<ConsentReviewSignRequest> = (_data, event) => {
 		event?.preventDefault();
@@ -70,7 +72,7 @@ const ConsentReviewSignForm = ({ currentLang }: ConsentReviewSignFormProps) => {
 					mock form <input {...register('stub')} id="stub" style={{ border: '1px solid grey' }} />
 				</label>
 
-				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+				{children}
 			</Form>
 		</FormProvider>
 	);

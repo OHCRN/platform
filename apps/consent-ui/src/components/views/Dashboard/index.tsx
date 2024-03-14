@@ -28,6 +28,7 @@ import PaddedContainer from 'src/components/common/PaddedContainer';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
 import { getAppConfig } from 'src/config';
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+import { getNotificationTranslations } from 'src/components/providers/NotificationProvider/getNotificationTranslations';
 
 import styles from './Dashboard.module.scss';
 import DashboardNotification from './notifications/DashboardNotification';
@@ -39,6 +40,7 @@ const consentStatus = statuses[2];
 
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
+	const notificationTranslations = getNotificationTranslations(currentLang);
 
 	const studyConsentPdfUrl = urlJoin(
 		ASSETS_PATH,
@@ -50,7 +52,10 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 
 	return (
 		<PaddedContainer>
-			<DashboardNotification currentLang={currentLang} />
+			<DashboardNotification
+				currentLang={currentLang}
+				notificationTranslations={notificationTranslations}
+			/>
 			<Card dropShadow="sm" className={clsx(styles.card, styles[consentStatus])} layout="row">
 				<div className={styles['consents-img']}>
 					<Image src={ConsentsImage} alt="" priority />
