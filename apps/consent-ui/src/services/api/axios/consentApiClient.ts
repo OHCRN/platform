@@ -19,32 +19,35 @@
 import axios from 'axios';
 
 import { getAppConfig } from 'src/config';
+
 import {
 	axiosErrorInterceptor,
 	axiosRequestInterceptor,
 	axiosResponseInterceptor,
-} from 'src/services/api/utils';
+} from './axiosInterceptors';
 
 const { CONSENT_API_URL, VERBOSE_AXIOS_LOGGING } = getAppConfig();
-const AXIOS_CLIENT_NAME = 'axiosProxyClient';
+const AXIOS_CLIENT_NAME = 'consentApiClient';
 
-const initAxiosClient = () =>
-	axios.create({
+const initAxiosClient = () => {
+	console.info(`Initializing ${AXIOS_CLIENT_NAME}...`);
+	return axios.create({
 		baseURL: CONSENT_API_URL,
 	});
+};
 
-const axiosProxyClient = initAxiosClient();
+const consentApiClient = initAxiosClient();
 
 if (VERBOSE_AXIOS_LOGGING) {
-	axiosProxyClient.interceptors.request.use(
+	consentApiClient.interceptors.request.use(
 		(request) => axiosRequestInterceptor(request, AXIOS_CLIENT_NAME),
 		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Request`),
 	);
 
-	axiosProxyClient.interceptors.response.use(
+	consentApiClient.interceptors.response.use(
 		(response) => axiosResponseInterceptor(response, AXIOS_CLIENT_NAME),
 		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Response`),
 	);
 }
 
-export { axiosProxyClient };
+export { consentApiClient };

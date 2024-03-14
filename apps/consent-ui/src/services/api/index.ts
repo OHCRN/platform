@@ -17,6 +17,5 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './axiosClient';
-export * from './axiosProxyClient';
-export * from './status';
+export * from './axios';
+export * from './requests';
