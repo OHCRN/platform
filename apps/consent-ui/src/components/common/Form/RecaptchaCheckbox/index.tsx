@@ -17,14 +17,12 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use client';
-
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
+import { ValidLanguage } from 'src/i18n/types';
 import { RecaptchaCheckboxRef } from 'src/hooks/useRecaptcha';
-import { ValidLanguage } from 'src/i18n';
+import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
 
 const RecaptchaCheckbox = ({
 	onChange,

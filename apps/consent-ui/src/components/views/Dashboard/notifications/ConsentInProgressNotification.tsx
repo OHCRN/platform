@@ -19,18 +19,20 @@
 
 import Link from 'next/link';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
 import Notification from 'src/components/common/Notification';
+import { ConsentInProgressNotificationDictionary } from 'src/i18n/locales/en/consentInProgressNotification';
 
-const ConsentInProgressNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
-
+const ConsentInProgressNotification = ({
+	textDict,
+}: {
+	textDict: ConsentInProgressNotificationDictionary;
+}) => {
 	return (
-		<Notification level="warning" title={translate('consentInProgressNotification', 'title')}>
-			{translate('consentInProgressNotification', 'text1')}
-			<Link href="#">{translate('consentInProgressNotification', 'linkText')}</Link>
+		<Notification level="warning" title={textDict.title}>
+			{textDict.text1}
+			<Link href="#">{textDict.linkText}</Link>
 			{/* TODO add a link for "send us a message" https://github.com/OHCRN/platform/issues/354 */}
-			{translate('consentInProgressNotification', 'text2')}
+			{textDict.text2}
 		</Notification>
 	);
 };

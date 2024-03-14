@@ -17,8 +17,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getTranslation } from 'src/i18n';
 import Modal, { ModalComponentProps } from 'src/components/common/Modal';
+import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
 
 import styles from './ConsentGroupModal.module.scss';
 
@@ -35,10 +35,11 @@ const ModalSection = ({ items, title }: { items: string[]; title: string }) => {
 	);
 };
 
-const ConsentGroupModal = ({ closeModal, currentLang, modalIsOpen }: ModalComponentProps) => {
-	const { translateNamespace } = getTranslation(currentLang);
-	const modalDict = translateNamespace('inviteFormConsentGroupModal');
+type ConsentGroupModalProps = ModalComponentProps & {
+	modalDict: InviteFormConsentGroupModalDictionary;
+};
 
+const ConsentGroupModal = ({ closeModal, modalIsOpen, modalDict }: ConsentGroupModalProps) => {
 	return (
 		<Modal
 			closeModal={closeModal}

@@ -49,6 +49,7 @@ import { useNotification } from 'src/components/providers/NotificationProvider';
 import { getLocalizedRoute } from 'src/components/common/Link/utils';
 import useModal from 'src/components/common/Modal/useModal';
 import { handleMouseDownBlur } from 'src/components/utils';
+import { InviteFormConsentGroupModalDictionary } from 'src/i18n/locales/en/inviteFormConsentGroupModal';
 
 import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
@@ -72,12 +73,14 @@ const ClinicianInviteFormComponent = ({
 	errorsDict,
 	labelsDict,
 	textDict,
+	modalDict,
 }: {
 	consentGroupOptions: ConsentGroupOption[];
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	labelsDict: InviteFormLabelsDictionary;
 	textDict: InviteFormTextDictionary;
+	modalDict: InviteFormConsentGroupModalDictionary;
 }) => {
 	const { showNotification } = useNotification();
 	const router = useRouter();
@@ -159,6 +162,7 @@ const ClinicianInviteFormComponent = ({
 				currentLang={currentLang}
 				closeModal={closeModal}
 				modalIsOpen={modalIsOpen}
+				modalDict={modalDict}
 			/>
 			<FormProvider {...methods}>
 				<Form onSubmit={handleSubmit(onSubmit)}>
@@ -173,16 +177,16 @@ const ClinicianInviteFormComponent = ({
 					{/* SECTION - PARTICIPANT INFO */}
 					<FormSection>
 						<TextFieldSet
-							error={errors.participantFirstName?.type && errorsDict.required}
+							error={errors.participantOhipFirstName?.type && errorsDict.required}
 							label={labelsDict.firstName}
-							name="participantFirstName"
+							name="participantOhipFirstName"
 							required
 							description={textDict.participantFirstNameTooltip}
 						/>
 						<TextFieldSet
-							error={errors.participantLastName?.type && errorsDict.required}
+							error={errors.participantOhipLastName?.type && errorsDict.required}
 							label={labelsDict.lastName}
-							name="participantLastName"
+							name="participantOhipLastName"
 							required
 							description={textDict.participantLastNameTooltip}
 						/>

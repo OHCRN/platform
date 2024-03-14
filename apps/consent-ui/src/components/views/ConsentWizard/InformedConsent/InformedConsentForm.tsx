@@ -23,6 +23,7 @@ import Link from 'next/link';
 import { InformedConsentRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ReactNode } from 'react';
 
 import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
@@ -31,21 +32,22 @@ import FormSection from 'src/components/common/Form/FormSection';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { ValidLanguage } from 'src/i18n';
 import { useAppConfigContext } from 'src/components/providers/AppConfigContextProvider';
-import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+import { ConsentStepRoute } from 'src/components/common/Link/types';
 
-import ConsentStepsNavigation from '../ConsentStepsNavigation';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
-
-const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
 
 const InformedConsentForm = ({
 	currentLang,
 	errorsDict,
 	formDict,
+	children,
+	currentStep,
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	formDict: InformedConsentFormDictionary;
+	children: ReactNode;
+	currentStep: ConsentStepRoute;
 }) => {
 	const { OHCRN_EMAIL } = useAppConfigContext();
 	// setup react-hook-forms
@@ -57,7 +59,7 @@ const InformedConsentForm = ({
 		handleSubmit,
 	} = methods;
 
-	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentConsentStep);
+	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentStep);
 
 	const onSubmit: SubmitHandler<InformedConsentRequest> = (_data, event) => {
 		event?.preventDefault();
@@ -83,7 +85,8 @@ const InformedConsentForm = ({
 						title={formDict.consentContact}
 					/>
 				</FormSection>
-				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+
+				{children}
 			</Form>
 		</FormProvider>
 	);
