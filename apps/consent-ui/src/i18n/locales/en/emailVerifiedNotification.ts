@@ -18,8 +18,7 @@
  */
 
 const dictionary = {
-	notificationText:
-		'Thank you for verifying your email address. Please complete your consent forms below!',
+	title: 'Thank you for verifying your email address. Please complete your consent forms below!',
 } satisfies Record<string, string>;
 
 export type EmailVerifiedNotificationDictionary = Record<keyof typeof dictionary, string>;

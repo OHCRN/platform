@@ -16,44 +16,13 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import { REGEX_FLAG_GLOBAL } from 'types/common';
+import 'server-only';
 
 import dictionaries from 'src/i18n/locales';
 import { GetTranslation, TranslateKey, TranslateNamespace } from 'src/i18n/types';
 
-/**
- * ```
- * Util function that takes the parameters object passed in to the function returned from getTranslation()
- * and replaces the key in the translated string with the value of that key
- * Regex will ignore whitespace between the {{/}} and the tag, so {{key}} and {{ key }} and all other permutations of spaces are matched
- * Uses the global regex flag to ensure each instance of an argument key in a string is replaced
- *
- * ```
- * @param original
- * @param replacements
- * @returns string
- * @example
- * const dict = {
- * 	common: {
- * 		'sampleSentence': 'Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.'
- * 	}
- * }
- * const { translate } = getTranslation('en')
- * translate('common', 'sampleSentence', { dayOfWeek: 'Thursday', dayOfMonth: 'October' }) would call replaceParams as:
- * replaceParams('Translated this string on a {{dayOfWeek}} in {{ dayOfMonth }}.', { dayOfWeek: 'Thursday', dayOfMonth: 'October' } )
- * // returns 'Translated this string on a Thursday in October.'
- */
-export const replaceParams = (
-	original: string,
-	replacements?: Record<string, string | number>,
-): string => {
-	return Object.entries(replacements || {}).reduce((acc, [key, value]) => {
-		const tagRegex = new RegExp(`{{[\\s]*${key}[\\s]*}}`, REGEX_FLAG_GLOBAL);
-		return acc.replace(tagRegex, String(value));
-	}, original);
-};
+import { replaceParams } from './replaceParams';
 
-// TODO: is there a way to enforce this function for server side use only?
 /**
  * @param language ValidLanguage
  * @exports {translate, translateNamespace}
