@@ -17,7 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { format } from 'date-fns';
 import { SyntheticEvent } from 'react';
+
+import { DATE_FNS_FORMAT } from 'src/constants';
 
 export const scrollToTop = () => window.scroll(0, 0);
 
@@ -31,3 +34,10 @@ export const handleMouseDownBlur = (e: SyntheticEvent) => {
 	// prevent default blur event until after click event
 	e.preventDefault();
 };
+
+/**
+ * Format date to YYYY-MM-DD.
+ * @param date Date
+ * @returns string, ex. 2024-11-15
+ */
+export const formatDate = (date: Date) => format(date, DATE_FNS_FORMAT);

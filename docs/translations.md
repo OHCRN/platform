@@ -171,17 +171,6 @@ const dictionary = {
 > **Note:**
 > For readability the `{{ key }}` should have spaces around the key name, however the `replaceParams` util function will be able to parse `{{key}}`.
 
-## How to translate dates
-
-Dates require translation and different formatting in each language. Use `translateDate()` from the i18n utils folder:
-
-```ts
-translateDate(new Date('12/04/2024'), 'fr', 'numerical');
-// returns '04/12/2024'
-```
-
-`CalendarInput` uses react-datepicker and doesn't require additional formatting.
-
 ## Outstanding TODOs
 
 - handling missing translations - need to discuss whether this should trigger a visible UI error

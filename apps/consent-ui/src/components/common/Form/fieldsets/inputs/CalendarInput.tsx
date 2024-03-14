@@ -27,14 +27,13 @@ import { enCA, frCA } from 'date-fns/locale';
 
 import type { FormInputProps } from 'src/components/common/Form/types';
 import type { ValidLanguage } from 'src/i18n';
+import { REACT_DATEPICKER_FORMAT } from 'src/constants';
 
 type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
 	popperClassName?: string;
 	currentLang: ValidLanguage;
 	onBlur?: () => void;
 };
-
-const reactDatePickerFormat: Record<ValidLanguage, string> = { en: 'MM/dd/yyyy', fr: 'dd/MM/yyyy' };
 
 const CalendarInput = <T extends FieldValues>({
 	ariaProps = {},
@@ -73,7 +72,7 @@ const CalendarInput = <T extends FieldValues>({
 						onBlur={handleBlur}
 						disabled={disabled}
 						aria-required={required}
-						dateFormat={reactDatePickerFormat[currentLang]}
+						dateFormat={REACT_DATEPICKER_FORMAT}
 						{...ariaProps}
 					/>
 				);

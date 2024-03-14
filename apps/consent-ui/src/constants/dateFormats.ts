@@ -17,40 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { format as formatDate } from 'date-fns';
+// DATE FORMAT: YYYY-MM-DD, e.g. 2024-12-23
 
-import { ValidLanguage } from '..';
+// use with date-fns library
+export const DATE_FNS_FORMAT = 'YYYY-MM-DD';
 
-// English rules:
-// - Month before day
-const dateFormatEn = {
-	numerical: 'MM/dd/y', // 12/03/2024
-};
-
-// French rules:
-// - Day before month
-const dateFormatFr = {
-	numerical: 'dd/MM/y', // 03/12/2024
-} satisfies typeof dateFormatEn;
-
-const dateFormat: Record<ValidLanguage, typeof dateFormatEn> = {
-	en: dateFormatEn,
-	fr: dateFormatFr,
-};
-
-type DateFormat = keyof typeof dateFormatEn;
-
-type TranslateDate = (date: Date, lang: ValidLanguage, format: DateFormat) => string;
-
-/** Convert a Date object into human-readable format, translated and formatted for the given language.
- * @param date Date
- * @param lang ValidLanguage
- * @param format DateFormat
- * @returns string
- * @example translateDate(new Date('12/04/2024'), 'fr', 'numerical');
- * // returns '04/12/2024'
- */
-export const translateDate: TranslateDate = (date, lang, format = 'numerical') => {
-	const translatedDate = formatDate(date, dateFormat[lang][format]);
-	return translatedDate;
-};
+// use with react-datepicker library
+export const REACT_DATEPICKER_FORMAT = 'yyyy-MM-dd';
