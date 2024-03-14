@@ -28,6 +28,7 @@ import {
 import {
 	EmptyOrOptionalName,
 	EmptyOrOptionalPhoneNumber,
+	OptionalNanoId,
 	PhoneNumber,
 	hasMatchingPasswords,
 } from '../../../entities/fields/index.js';
@@ -83,5 +84,9 @@ export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
 // COMBINE STEPS
 
-export const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
+export const ParticipantRegistrationRequest = RegisterFormStep1.and(RegisterFormStep2).and(
+	z.object({
+		inviteId: OptionalNanoId,
+	}),
+);
 export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;
