@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { checkIsMinimumAgeOrGreater } from 'types/common';
 import { RegisterFormStep1 } from 'types/consentUi';
+import { ConsentGroup } from 'types/entities';
 
 import useModal from 'src/components/common/Modal/useModal';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -41,14 +42,27 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
+import { MockInviteData } from '../handleInvite';
+
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
+
+const consentGroupsParticipantMustBeMinor = [
+	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+];
+
+const consentGroupsRequiringGuardianInfo = [
+	...consentGroupsParticipantMustBeMinor,
+	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+];
 
 const FormStep1 = ({
 	className,
 	currentLang,
 	errorsDict,
 	handleNextClick,
+	inviteData,
 	labelsDict,
 	textDict,
 	dateOfBirthModalDict,
@@ -57,12 +71,19 @@ const FormStep1 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
+	inviteData?: MockInviteData;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
 	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
+		defaultValues: {
+			...inviteData,
+			isGuardian: consentGroupsRequiringGuardianInfo.some(
+				(group) => group === inviteData?.consentGroup,
+			),
+		},
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
 		shouldUnregister: true,
