@@ -140,7 +140,11 @@ router.post(
 		try {
 			const { dateOfBirth } = req.body;
 			const parsedDateOfBirth = new Date(dateOfBirth);
-			const participant = await createParticipant({ ...req.body, dateOfBirth: parsedDateOfBirth });
+			const participant = await createParticipant({
+				...req.body,
+				dateOfBirth: parsedDateOfBirth,
+				hasOhip: req.body.hasOhip === undefined ? true : req.body.hasOhip,
+			});
 			switch (participant.status) {
 				case 'SUCCESS': {
 					return res.status(201).json(participant.data);

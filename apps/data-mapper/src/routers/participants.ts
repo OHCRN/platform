@@ -81,7 +81,10 @@ router.post(
 	'/',
 	withRequestValidation(CreateParticipantRequest, async (req, res) => {
 		try {
-			const participant = await createParticipant(req.body);
+			const participant = await createParticipant({
+				...req.body,
+				hasOhip: req.body.hasOhip === undefined ? true : req.body.hasOhip,
+			});
 			switch (participant.status) {
 				case 'SUCCESS': {
 					return res.status(201).json(participant.data);
