@@ -31,6 +31,7 @@ import {
 } from './generateConsentPdf/mockData';
 import { displayConsentPdf, downloadConsentPdf } from './generateConsentPdf';
 import { GenerateConsentPdfParams } from './generateConsentPdf/types';
+import { settingsByLang } from './generateConsentPdf/settings';
 
 /**
  * Temporary component for generating PDFs for different user scenarios.
@@ -44,8 +45,15 @@ const TempPdfButtons = ({
 }) => {
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 
+	const pageSettings = settingsByLang[currentLang].pages;
+	const consentPageIndex = pageSettings.consent.pageNumber;
+	const signaturePageIndex = pageSettings.signature.pageNumber;
+
 	const displayPdf = async (data: GenerateConsentPdfParams) => {
-		const pdf = await displayConsentPdf(data, currentLang, studyConsentPdfUrl, [10, 11]);
+		const pdf = await displayConsentPdf(data, currentLang, studyConsentPdfUrl, [
+			consentPageIndex,
+			signaturePageIndex,
+		]);
 		pdf && setDocUrl(pdf);
 	};
 	const downloadPdf = async (data: GenerateConsentPdfParams) => {

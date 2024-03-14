@@ -21,10 +21,8 @@ import { ConsentGroup, LifecycleState } from 'types/entities';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import { format as formatDate } from 'date-fns';
-import urlJoin from 'url-join';
 
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+import { ValidLanguage } from 'src/i18n';
 
 import { GenerateConsentPdfParams } from './types';
 import { settingsByLang, settingsGeneric } from './settings';
@@ -114,6 +112,7 @@ const generateConsentPdf = async (
 		RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
 	}: GenerateConsentPdfParams,
 	currentLang: ValidLanguage,
+	pdfUrl: string,
 ) => {
 	if (!PDF_ALLOWED_LIFECYCLE_STATES.includes(currentLifecycleState)) {
 		return null;
@@ -124,14 +123,7 @@ const generateConsentPdf = async (
 		return null;
 	}
 
-	const { translate } = getTranslation(currentLang);
-	const consentPdfPath = urlJoin(
-		ASSETS_PATH,
-		CONSENT_PDFS_PATH,
-		translate('assetUrls', 'studyConsentPdf'),
-	);
-
-	const { pdfDoc, pdfPages } = await getPdf(consentPdfPath);
+	const { pdfDoc, pdfPages } = await getPdf(pdfUrl);
 
 	// SETTINGS
 	const settings = { ...settingsGeneric, ...settingsByLang[currentLang] };
@@ -214,7 +206,7 @@ export const downloadConsentPdf = async (
 	currentLang: ValidLanguage,
 	pdfUrl: string,
 ) => {
-	const pdfDoc = await generateConsentPdf(params, currentLang);
+	const pdfDoc = await generateConsentPdf(params, currentLang, pdfUrl);
 	if (!pdfDoc || typeof pdfDoc === 'string') {
 		return;
 	}
@@ -247,7 +239,7 @@ export const displayConsentPdf = async (
 	pdfUrl: string,
 	pageNumbers: number[],
 ) => {
-	const pdfDoc = await generateConsentPdf(params, currentLang);
+	const pdfDoc = await generateConsentPdf(params, currentLang, pdfUrl);
 	if (!pdfDoc || typeof pdfDoc === 'string') {
 		return null;
 	}
