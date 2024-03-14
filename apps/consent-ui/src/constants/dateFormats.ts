@@ -17,27 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { format } from 'date-fns';
-import { SyntheticEvent } from 'react';
-
-import { DATE_NUMERIC_FORMAT } from 'src/constants';
-
-export const scrollToTop = () => window.scroll(0, 0);
-
-/**
- * Add this onMouseDown handler to elements that use onClick events,
- * on pages with onBlur events (e.g. form validation). Defers blur events
- * until after click events, so the blur events don't block click events.
- * @example <Button onMouseDown={handleMouseDownBlur} />
- */
-export const handleMouseDownBlur = (e: SyntheticEvent) => {
-	// prevent default blur event until after click event
-	e.preventDefault();
-};
-
-/**
- * Format date to YYYY-MM-DD.
- * @param date Date
- * @returns string, ex. 2024-11-15
- */
-export const formatDate = (date: Date) => format(date, DATE_NUMERIC_FORMAT);
+// DATE FORMAT: YYYY-MM-DD, e.g. 2024-12-23
+// use with date-fns & react-datepicker libraries
+export const DATE_NUMERIC_FORMAT = 'yyyy-MM-dd';
