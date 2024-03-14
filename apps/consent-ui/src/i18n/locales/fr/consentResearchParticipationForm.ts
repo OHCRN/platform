@@ -19,7 +19,7 @@
 
 import { ConsentResearchParticipationFormDictionary } from 'src/i18n/locales/en/consentResearchParticipationForm';
 
-import formLabels from '../en/formLabels';
+import formLabels from './formLabels';
 
 const { yes, no } = formLabels;
 

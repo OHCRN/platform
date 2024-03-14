@@ -23,10 +23,17 @@ import { useEffect } from 'react';
 
 import { ValidLanguage } from 'src/i18n';
 import { Notification, useNotification } from 'src/components/providers/NotificationProvider';
+import { NotificationTranslations } from 'src/components/providers/NotificationProvider/getNotificationTranslations';
 
 import DashboardNotificationDisplay from './DashboardNotificationDisplay';
 
-const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) => {
+const DashboardNotification = ({
+	currentLang,
+	notificationTranslations,
+}: {
+	currentLang: ValidLanguage;
+	notificationTranslations: NotificationTranslations;
+}) => {
 	const { showNotification } = useNotification();
 
 	// STUB - get consent progress from API
@@ -50,7 +57,12 @@ const DashboardNotification = ({ currentLang }: { currentLang: ValidLanguage }) 
 		}
 	}, [consentInProgress, emailVerifiedParam, showNotification]);
 
-	return <DashboardNotificationDisplay currentLang={currentLang} />;
+	return (
+		<DashboardNotificationDisplay
+			currentLang={currentLang}
+			notificationTranslations={notificationTranslations}
+		/>
+	);
 };
 
 export default DashboardNotification;

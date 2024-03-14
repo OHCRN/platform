@@ -22,9 +22,14 @@ import urlJoin from 'url-join';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 import styles from './ConsentRecontact.module.scss';
 import ConsentRecontactForm from './ConsentRecontactForm';
+
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-4'];
 
 const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
@@ -45,7 +50,14 @@ const ConsentRecontact = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				</Link>
 			</p>
 			<p className={styles.smallText}>{pageDict.smallText}</p>
-			<ConsentRecontactForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
+			<ConsentRecontactForm
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				formDict={formDict}
+				currentStep={currentConsentStep}
+			>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</ConsentRecontactForm>
 		</div>
 	);
 };
