@@ -26,7 +26,7 @@ import { GuardianBaseFields } from './Guardian.js';
 import {
 	ConsentToBeContacted,
 	ParticipantContactFields,
-	ParticipantNameFields,
+	ParticipantBaseOhipNameFields,
 } from './Participant.js';
 
 export const InviteClinicianFields = z
@@ -48,7 +48,7 @@ export type InviteClinicianFields = z.infer<typeof InviteClinicianFields>;
 export const InviteGuardianFields = GuardianBaseFields;
 export type InviteGuardianFields = z.infer<typeof InviteGuardianFields>;
 
-export const InviteParticipantFields = ParticipantNameFields.merge(
+export const InviteParticipantFields = ParticipantBaseOhipNameFields.merge(
 	z.object({ participantPreferredName: OptionalName }),
 ).merge(ParticipantContactFields);
 export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;

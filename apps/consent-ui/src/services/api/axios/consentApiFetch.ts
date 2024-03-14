@@ -17,38 +17,53 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import urlJoin from 'url-join';
-import { AxiosHeaders } from 'axios';
+import { AxiosHeaders, AxiosRequestConfig, Method } from 'axios';
+import { Session } from 'next-auth';
 
 import { consentApiClient } from 'src/services/api';
-import { getRequestData } from 'src/services/api/utils';
 
-/**
- * Route handler for creating proxy requests from /api routes to public consent-api endpoints
- * @param req NextRequest obj
- * @param routePaths path params interpolated from app/api/[...proxy] directory structure
- * @returns response obj from consent-api as NextResponse
- */
-const handler = async (
-	req: NextRequest,
-	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
-): Promise<NextResponse<any>> => {
-	const path = urlJoin(routePaths.params.proxy);
-	const requestData = await getRequestData(req);
-	// TODO: are there any other headers needed here?
-	const headers = new AxiosHeaders();
-	headers.set('Content-Type', 'application/json');
-	// Don't forward cookies to the API:
-	headers.set('Set-Cookie', '');
-	const res = await consentApiClient(path, {
-		method: req.method,
-		headers,
-		...(requestData && { data: requestData }),
-	});
+import { decryptContent } from '../utils';
 
-	const data = await res.data;
-	return NextResponse.json(data);
+const baseAxiosConfig: AxiosRequestConfig = {
+	headers: {
+		'Content-Type': 'application/json',
+	},
 };
 
-export { handler as GET, handler as POST };
+/**
+ * Base function for requests to Consent API
+ * @param body Request data
+ * @param headers AxiosHeaders. These will override/extend the default headers
+ * @param method HTTP method
+ * @param session Next-Auth session object
+ * @param url Request URL as a string. Will be appended to the configured baseURL
+ * @returns Promise containing an Axios request
+ */
+const consentApiFetch = async ({
+	body,
+	headers,
+	method,
+	session,
+	url,
+}: {
+	body?: AxiosRequestConfig['data'];
+	headers?: AxiosHeaders;
+	method: Method;
+	session?: Session | null;
+	url: string;
+}) => {
+	const reqHeaders = new AxiosHeaders(headers);
+	if (session?.account.accessToken) {
+		const decryptedToken = decryptContent(session.account.accessToken);
+		reqHeaders.setAuthorization(`Bearer ${decryptedToken}`);
+	}
+	return consentApiClient({
+		...baseAxiosConfig,
+		data: body,
+		headers: { ...baseAxiosConfig.headers, ...reqHeaders },
+		method,
+		url,
+	});
+};
+
+export default consentApiFetch;

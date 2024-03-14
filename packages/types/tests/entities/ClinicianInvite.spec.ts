@@ -31,8 +31,8 @@ const MockInviteRequestData = {
 	clinicianLastName: 'Simpson',
 	clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
 	clinicianTitleOrRole: 'Doctor',
-	participantFirstName: 'Bart',
-	participantLastName: 'Simpson',
+	participantOhipFirstName: 'Bart',
+	participantOhipLastName: 'Simpson',
 	consentToBeContacted: true,
 };
 
@@ -191,8 +191,8 @@ describe('PIClinicianInviteResponse', () => {
 	it('Correctly converts optional values from null to undefined', () => {
 		const parsed = PIClinicianInviteResponse.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
-			participantFirstName: 'John',
-			participantLastName: 'Green',
+			participantOhipFirstName: 'John',
+			participantOhipLastName: 'Green',
 			participantEmailAddress: 'john.green@example.com',
 			participantPhoneNumber: '4155551234',
 			participantPreferredName: null,
@@ -211,8 +211,8 @@ describe('PIClinicianInviteResponse', () => {
 	it('Accepts optional values if not null', () => {
 		const parsed = PIClinicianInviteResponse.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
-			participantFirstName: 'John',
-			participantLastName: 'Green',
+			participantOhipFirstName: 'John',
+			participantOhipLastName: 'Green',
 			participantEmailAddress: 'john.green@example.com',
 			participantPhoneNumber: '4155551234',
 			participantPreferredName: 'John',
@@ -222,7 +222,7 @@ describe('PIClinicianInviteResponse', () => {
 			guardianRelationship: 'Mother',
 		});
 		expect(parsed.success).true;
-		expect(parsed.success && parsed.data.participantFirstName).to.equal('John');
+		expect(parsed.success && parsed.data.participantOhipFirstName).to.equal('John');
 		expect(parsed.success && parsed.data.guardianName).to.equal('Jane Green');
 		expect(parsed.success && parsed.data.guardianPhoneNumber).to.equal('4155551212');
 		expect(parsed.success && parsed.data.guardianEmailAddress).to.equal('jane.green@example.com');
