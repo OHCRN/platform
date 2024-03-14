@@ -23,6 +23,7 @@ import BackgroundImage from 'src/../public/assets/images/landing-page.jpg';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import { getAppConfig } from 'src/config/appConfig';
 import LinkButton from 'src/components/common/Button/LinkButton';
+import { getNotificationTranslations } from 'src/components/providers/NotificationProvider/getNotificationTranslations';
 
 import LandingPageCard from './LandingPageCard';
 import styles from './Home.module.scss';
@@ -31,10 +32,11 @@ import HomepageNotification from './notifications/HomepageNotification';
 const HomeComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
 	const { OHCRN_HOME_LINK } = getAppConfig();
+	const notificationTranslations = getNotificationTranslations(currentLang);
 
 	return (
 		<div className={styles.pageWrapper}>
-			<HomepageNotification currentLang={currentLang} />
+			<HomepageNotification notificationTranslations={notificationTranslations} />
 			<div className={styles.heroContainer}>
 				<div className={styles.backgroundImg}>
 					<Image src={BackgroundImage} alt="" fill priority sizes="100vw" placeholder="blur" />

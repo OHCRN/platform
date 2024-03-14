@@ -27,6 +27,9 @@ import {
 } from 'types/entities';
 
 import { ValidLanguage, getTranslation } from 'src/i18n';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 import ConsentReleaseDataForm from './ConsentReleaseDataForm';
 import {
@@ -38,6 +41,8 @@ import {
 	MolecularLabOption,
 } from './ConsentReleaseDataForm/types';
 import styles from './ConsentReleaseData.module.scss';
+
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-2'];
 
 const ConsentReleaseData = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
@@ -99,7 +104,10 @@ const ConsentReleaseData = ({ currentLang }: { currentLang: ValidLanguage }) => 
 				errorsDict={errorsDict}
 				labelsDict={labelsDict}
 				textDict={textDict}
-			/>
+				currentStep={currentConsentStep}
+			>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</ConsentReleaseDataForm>
 		</div>
 	);
 };

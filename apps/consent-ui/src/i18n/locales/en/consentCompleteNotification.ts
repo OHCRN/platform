@@ -18,7 +18,7 @@
  */
 
 const dictionary = {
-	notificationText:
+	title:
 		'Thank you for completing OHCRN consent forms. Your forms are available for download below.',
 } satisfies Record<string, string>;
 

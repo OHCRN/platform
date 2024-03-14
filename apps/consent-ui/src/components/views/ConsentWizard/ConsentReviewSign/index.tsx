@@ -18,6 +18,9 @@
  */
 
 import { getTranslation, ValidLanguage } from 'src/i18n';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 import ConsentReviewSignForm from './ConsentReviewSignForm';
 import ConsentReviewCards from './ConsentReviewCards';
@@ -26,6 +29,8 @@ import styles from './ConsentReviewSign.module.scss';
 interface ConsentReviewSignProps {
 	currentLang: ValidLanguage;
 }
+
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-5'];
 
 const ConsentReviewSign = ({ currentLang }: ConsentReviewSignProps) => {
 	const { translateNamespace } = getTranslation(currentLang);
@@ -38,7 +43,9 @@ const ConsentReviewSign = ({ currentLang }: ConsentReviewSignProps) => {
 
 			<ConsentReviewCards currentLang={currentLang} />
 
-			<ConsentReviewSignForm currentLang={currentLang} />
+			<ConsentReviewSignForm currentLang={currentLang} currentStep={currentConsentStep}>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</ConsentReviewSignForm>
 		</div>
 	);
 };
