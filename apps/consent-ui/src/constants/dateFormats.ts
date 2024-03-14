@@ -18,9 +18,5 @@
  */
 
 // DATE FORMAT: YYYY-MM-DD, e.g. 2024-12-23
-
-// use with date-fns library
-export const DATE_FNS_FORMAT = 'YYYY-MM-DD';
-
-// use with react-datepicker library
-export const REACT_DATEPICKER_FORMAT = 'yyyy-MM-dd';
+// use with date-fns & react-datepicker libraries
+export const DATE_NUMERIC_FORMAT = 'yyyy-MM-dd';

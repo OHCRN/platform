@@ -20,7 +20,7 @@
 import { format } from 'date-fns';
 import { SyntheticEvent } from 'react';
 
-import { DATE_FNS_FORMAT } from 'src/constants';
+import { DATE_NUMERIC_FORMAT } from 'src/constants';
 
 export const scrollToTop = () => window.scroll(0, 0);
 
@@ -40,4 +40,4 @@ export const handleMouseDownBlur = (e: SyntheticEvent) => {
  * @param date Date
  * @returns string, ex. 2024-11-15
  */
-export const formatDate = (date: Date) => format(date, DATE_FNS_FORMAT);
+export const formatDate = (date: Date) => format(date, DATE_NUMERIC_FORMAT);
