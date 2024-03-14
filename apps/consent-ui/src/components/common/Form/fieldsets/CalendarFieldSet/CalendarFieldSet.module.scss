@@ -9,6 +9,7 @@
 }
 
 .calendarPopper {
+	z-index: 1000;
 	:global {
 		.react-datepicker {
 			font-family: inherit;
