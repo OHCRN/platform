@@ -93,7 +93,6 @@ export type ConsentParticipantBase = z.infer<typeof ConsentParticipantBase>;
 export const ConsentParticipant = ConsentParticipantBase.merge(
 	z.object({
 		id: NanoId,
-		previousLifecycleState: LifecycleState.optional(),
 		consentToBeContacted: z.boolean(),
 	}),
 );

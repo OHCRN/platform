@@ -32,9 +32,7 @@ import {
 
 export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
 	.merge(ConsentToBeContacted)
-	.refine(hasRequiredGuardianInformation, {
-		message: 'Guardian contact fields are required for that consentGroup',
-	})
+	.refine(hasRequiredGuardianInformation)
 	.refine(hasRequiredParticipantContactInfo);
 export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
 export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);

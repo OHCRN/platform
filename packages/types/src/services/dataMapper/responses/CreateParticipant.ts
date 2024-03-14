@@ -20,12 +20,8 @@
 import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { LifecycleState } from '../../../entities/fields/index.js';
 import { ConsentParticipant, ParticipantIdentityBase } from '../../../entities/Participant.js';
 
-export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentParticipant).extend({
-	previousLifecycleState: LifecycleState.nullable().transform((input) => input ?? undefined),
-});
-
+export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentParticipant);
 export type CreateParticipantResponse = z.infer<typeof CreateParticipantResponse>;
 export const CreateParticipantResponseSchema = generateSchema(CreateParticipantResponse);
