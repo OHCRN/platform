@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { APIStatus } from 'types/common';
 
 import { API } from 'src/constants';
@@ -26,12 +26,7 @@ import consentApiFetch from '../axios/consentApiFetch';
 
 const getAPIStatus = async () => {
 	return consentApiFetch({ url: API.STATUS, method: 'GET' })
-		.then((res: AxiosResponse<APIStatus>) => {
-			if (res.status !== 200) {
-				throw new AxiosError(res.statusText);
-			}
-			return res.data;
-		})
+		.then((res: AxiosResponse<APIStatus>) => res.data)
 		.catch(() => {
 			const errorRes: APIStatus = {
 				version: 'N/A',
