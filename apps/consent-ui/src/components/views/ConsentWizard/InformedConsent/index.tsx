@@ -25,9 +25,14 @@ import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { getAppConfig } from 'src/config/appConfig';
 import PdfViewer from 'src/components/common/PdfViewer';
+import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
+
+import ConsentStepsNavigation from '../ConsentStepsNavigation';
 
 import InformedConsentForm from './InformedConsentForm';
 import styles from './InformedConsent.module.scss';
+
+const currentConsentStep = ConsentStepRouteEnum.enum['consent-1'];
 
 const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translateNamespace } = getTranslation(currentLang);
@@ -59,8 +64,17 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 			>
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
+
 			<PdfViewer pdfUrl={studyConsentPdfUrl} />
-			<InformedConsentForm currentLang={currentLang} errorsDict={errorsDict} formDict={formDict} />
+
+			<InformedConsentForm
+				currentLang={currentLang}
+				errorsDict={errorsDict}
+				formDict={formDict}
+				currentStep={currentConsentStep}
+			>
+				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
+			</InformedConsentForm>
 		</div>
 	);
 };

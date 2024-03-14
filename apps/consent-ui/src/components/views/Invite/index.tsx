@@ -33,6 +33,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const labelsDict = translateNamespace('inviteFormLabels');
 	const pageDict = translateNamespace('inviteFormPage');
 	const textDict = translateNamespace('inviteFormText');
+	const modalDict = translateNamespace('inviteFormConsentGroupModal');
 
 	const consentGroupOptions: ConsentGroupOption[] = CONSENT_GROUPS.map((group) => ({
 		label: consentDict[group],
@@ -58,6 +59,7 @@ const Invite = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 				errorsDict={errorsDict}
 				labelsDict={labelsDict}
 				textDict={textDict}
+				modalDict={modalDict}
 			/>
 		</SideImageLayout>
 	);

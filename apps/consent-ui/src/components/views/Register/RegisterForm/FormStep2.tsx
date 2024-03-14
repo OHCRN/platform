@@ -25,7 +25,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterFormStep1, RegisterFormStep2 } from 'types/consentUi';
 
 import { RegisterFormStep2LabelsDictionary } from 'src/i18n/locales/en/registerFormStep2Labels';
-import { ValidLanguage } from 'src/i18n';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
 import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFormStep2Text';
 import Form from 'src/components/common/Form';
@@ -36,6 +35,7 @@ import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxField
 import useRecaptcha, { RecaptchaToken } from 'src/hooks/useRecaptcha';
 import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
+import { ValidLanguage } from 'src/i18n/types';
 
 import styles from './RegisterForm.module.scss';
 
@@ -182,9 +182,9 @@ const FormStep2 = ({
 
 					<div className={styles.recaptchaCheckbox}>
 						<RecaptchaCheckbox
+							currentLang={currentLang}
 							onChange={handleRecaptchaChange}
 							recaptchaCheckboxRef={recaptchaCheckboxRef}
-							currentLang={currentLang}
 						/>
 					</div>
 				</FormSection>

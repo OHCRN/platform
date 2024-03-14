@@ -20,7 +20,7 @@
 import { ConsentCompleteNotificationDictionary } from '../en/consentCompleteNotification';
 
 const dictionary = {
-	notificationText:
+	title:
 		"Merci d'avoir rempli les formulaires de consentement de l'OHCRN. Vos formulaires sont disponibles en téléchargement ci-dessous.",
 } satisfies ConsentCompleteNotificationDictionary;
 
