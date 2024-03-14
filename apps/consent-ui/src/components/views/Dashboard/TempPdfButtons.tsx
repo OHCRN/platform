@@ -20,11 +20,9 @@
 'use client';
 
 import { useState } from 'react';
-import urlJoin from 'url-join';
 
 import Button from 'src/components/common/Button';
-import { ValidLanguage, getTranslation } from 'src/i18n';
-import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+import { ValidLanguage } from 'src/i18n/types';
 
 import {
 	mockDataGuardian,
@@ -37,18 +35,21 @@ import { GenerateConsentPdfParams } from './generateConsentPdf/types';
 /**
  * Temporary component for generating PDFs for different user scenarios.
  */
-const TempPdfButtons = ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translate } = getTranslation(currentLang);
-	const pdfUrl = urlJoin(ASSETS_PATH, CONSENT_PDFS_PATH, translate('assetUrls', 'studyConsentPdf'));
-
+const TempPdfButtons = ({
+	currentLang,
+	studyConsentPdfUrl,
+}: {
+	currentLang: ValidLanguage;
+	studyConsentPdfUrl: string;
+}) => {
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 
 	const displayPdf = async (data: GenerateConsentPdfParams) => {
-		const pdf = await displayConsentPdf(data, currentLang, pdfUrl, [10, 11]);
+		const pdf = await displayConsentPdf(data, currentLang, studyConsentPdfUrl, [10, 11]);
 		pdf && setDocUrl(pdf);
 	};
 	const downloadPdf = async (data: GenerateConsentPdfParams) => {
-		await downloadConsentPdf(data, currentLang, pdfUrl);
+		await downloadConsentPdf(data, currentLang, studyConsentPdfUrl);
 	};
 
 	const displayParticipantPdf = async () => {
