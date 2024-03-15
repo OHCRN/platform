@@ -41,6 +41,16 @@ import { MockInviteData } from '../handleInvite';
 
 import styles from './RegisterForm.module.scss';
 
+interface FormStep2Props {
+	currentLang: ValidLanguage;
+	errorsDict: FormErrorsDictionary;
+	handleBackClick: () => void;
+	inviteData?: MockInviteData;
+	labelsDict: RegisterFormStep2LabelsDictionary;
+	step1Data: RegisterFormStep1;
+	textDict: RegisterFormStep2TextDictionary;
+}
+
 const FormStep2 = ({
 	currentLang,
 	errorsDict,
@@ -49,15 +59,7 @@ const FormStep2 = ({
 	labelsDict,
 	step1Data,
 	textDict,
-}: {
-	currentLang: ValidLanguage;
-	errorsDict: FormErrorsDictionary;
-	handleBackClick: () => void;
-	inviteData?: MockInviteData;
-	labelsDict: RegisterFormStep2LabelsDictionary;
-	step1Data?: RegisterFormStep1;
-	textDict: RegisterFormStep2TextDictionary;
-}) => {
+}: FormStep2Props) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
 	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {
@@ -67,7 +69,7 @@ const FormStep2 = ({
 
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
-		defaultValues: inviteData,
+		defaultValues: { ...inviteData, ...step1Data },
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep2),
 		shouldUnregister: true,
@@ -76,9 +78,9 @@ const FormStep2 = ({
 	const {
 		clearErrors,
 		formState: { errors, isValid, touchedFields },
+		getValues,
 		handleSubmit,
 		setError,
-		setFocus,
 		watch,
 	} = methods;
 
@@ -98,13 +100,12 @@ const FormStep2 = ({
 		onRecaptchaChange();
 	};
 
-	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
+	const onSubmit: SubmitHandler<RegisterFormStep2> = (data, event) => {
 		event?.preventDefault();
 
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
-			const data = Object.assign({}, step1Data, step2Data);
 			console.log(data);
 		} else {
 			setRecaptchaError('Please complete captcha');
@@ -116,11 +117,6 @@ const FormStep2 = ({
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
 	}, [getRecaptchaToken, isValid]);
-
-	useEffect(() => {
-		// set focus to first field on mount
-		setFocus('participantEmailAddress');
-	}, [setFocus]);
 
 	// set an error on confirmPassword if the 2 password fields are different.
 	// fires on first confirmPassword onBlur validation,
@@ -141,17 +137,30 @@ const FormStep2 = ({
 		}
 	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
 
+	// determine which email field to show (participant or guardian)
+	const getIsGuardian = getValues('isGuardian');
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* SECTION - EMAIL & PASSWORD */}
 				<FormSection>
-					<TextFieldSet
-						error={errors.participantEmailAddress?.type && errorsDict.required}
-						label={labelsDict.email}
-						name="participantEmailAddress"
-						required
-					/>
+					{getIsGuardian ? (
+						<TextFieldSet
+							error={errors.guardianEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email}
+							name="guardianEmailAddress"
+							required
+						/>
+					) : (
+						<TextFieldSet
+							error={errors.participantEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email}
+							name="participantEmailAddress"
+							required
+						/>
+					)}
+
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
 						label={labelsDict.password}

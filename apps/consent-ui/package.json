@@ -17,6 +17,7 @@
 		"clsx": "^2.0.0",
 		"cryptr": "^6.3.0",
 		"date-fns": "2.30.0",
+		"lodash": "^4.17.21",
 		"next": "14.0.4",
 		"next-auth": "5.0.0-beta.9",
 		"postcss": "8.4.23",
@@ -37,6 +38,7 @@
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.17.0",
 		"@types/node": "^20.1.3",
 		"@types/react": "18.2.14",
 		"@types/react-datepicker": "^4.19.5",

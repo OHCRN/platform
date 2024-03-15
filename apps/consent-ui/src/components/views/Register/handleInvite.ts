@@ -17,37 +17,44 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { find } from 'lodash';
 import { ClinicianInviteResponse } from 'types/consentApi';
+import { NanoId } from 'types/entities';
 
-export type MockInviteData = ClinicianInviteResponse & { mockInviteExpired?: boolean };
+export type MockInviteData = Omit<
+	ClinicianInviteResponse,
+	| 'participantEmailAddress'
+	| 'participantFirstName'
+	| 'participantLastName'
+	| 'participantPhoneNumber'
+> & {
+	participantEmailAddress?: string;
+	participantOhipFirstName: string;
+	participantOhipLastName: string;
+	participantPhoneNumber?: string;
+};
+
 type HandleInvite = (
 	inviteId?: string,
-) => Promise<{ error?: string; data?: MockInviteData } | undefined>;
+) => Promise<{ data?: MockInviteData; error?: string } | undefined>;
 
-const mockData: Record<string, MockInviteData> = {
-	adult: {
+const mockData: MockInviteData[] = [
+	{
 		clinicianFirstName: 'Dr',
 		clinicianInstitutionalEmailAddress: 'drnick@example.com',
 		clinicianLastName: 'Nick',
 		clinicianTitleOrRole: 'Doctor',
 		consentGroup: 'ADULT_CONSENT',
 		consentToBeContacted: true,
-		guardianEmailAddress: undefined,
-		guardianName: undefined,
-		guardianPhoneNumber: undefined,
-		guardianRelationship: undefined,
-		id: 'homerdQaPAT3Vi33mACT8',
+		id: 'cEuCqj97ACZlO4hXjYEQf',
 		inviteAccepted: false,
-		inviteAcceptedDate: undefined,
-		inviteSentDate: new Date('2024-02-03'),
-		mockInviteExpired: false, // not a real property. invite expiry TBA
+		inviteSentDate: new Date(),
 		participantEmailAddress: 'homer@example.com',
-		participantFirstName: 'Homer',
-		participantLastName: 'Simpson',
+		participantOhipFirstName: 'Homer',
+		participantOhipLastName: 'Simpson',
 		participantPhoneNumber: '1234567890',
-		participantPreferredName: undefined,
 	},
-	minor: {
+	{
 		clinicianFirstName: 'Dr',
 		clinicianInstitutionalEmailAddress: 'drnick@example.com',
 		clinicianLastName: 'Nick',
@@ -58,44 +65,30 @@ const mockData: Record<string, MockInviteData> = {
 		guardianName: 'Homer Simpson',
 		guardianPhoneNumber: '1234567890',
 		guardianRelationship: 'Father',
-		id: 'bart9dQaPAT3Vi33mACT8',
+		id: 'kH7g7ukHc8BBqWkaDyRaS',
 		inviteAccepted: false,
-		inviteAcceptedDate: undefined,
-		inviteSentDate: new Date('2024-02-03'),
-		mockInviteExpired: false, // not a real property. invite expiry TBA
-		participantEmailAddress: 'undefined@example.com', // TODO remove, replace with undefined
-		participantFirstName: 'Bartholomew',
-		participantLastName: 'Simpson',
-		participantPhoneNumber: '1234567890', // TODO remove, replace with undefined
+		inviteSentDate: new Date(),
+		participantOhipFirstName: 'Bartholomew',
+		participantOhipLastName: 'Simpson',
 		participantPreferredName: 'Bart',
 	},
-	get expired() {
-		return { ...this.adult, mockInviteExpired: true };
-	},
-	get accepted() {
-		return { ...this.minor, inviteAccepted: true };
-	},
-};
+];
 
 const defaultError = { error: 'inviteNotFound' };
 
-const handleInvite: HandleInvite = async (inviteId) => {
-	if (!inviteId) {
-		return;
-	}
-	// check if inviteId matches format
-	// const validInviteId = NanoId.safeParse(inviteId)?.success;
-	const validInviteId = ['accepted', 'adult', 'expired', 'minor'].includes(inviteId);
+const handleInvite: HandleInvite = async (inviteId = '') => {
+	const validInviteId = NanoId.safeParse(inviteId)?.success;
 	if (!validInviteId) {
 		return defaultError;
 	}
 
 	// TODO GET /invites/:inviteId - will return ClinicianInviteResponse or error
-	if (mockData.inviteAccepted || mockData.mockInviteExpired) {
-		return defaultError;
-	}
 
-	return { data: mockData[inviteId] };
+	const data = find(mockData, { id: inviteId });
+
+	// TODO sort out step 1 & step 2 data
+
+	return { data };
 };
 
 export default handleInvite;

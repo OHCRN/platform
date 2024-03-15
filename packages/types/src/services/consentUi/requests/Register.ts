@@ -29,7 +29,6 @@ import {
 	EmptyOrOptionalName,
 	EmptyOrOptionalPhoneNumber,
 	OptionalNanoId,
-	PhoneNumber,
 	hasMatchingPasswords,
 } from '../../../entities/fields/index.js';
 
@@ -37,7 +36,8 @@ import {
 
 export const RegisterFormStep1Fields = ParticipantNameFields.and(
 	z.object({
-		participantPhoneNumber: PhoneNumber,
+		inviteId: OptionalNanoId,
+		participantPhoneNumber: EmptyOrOptionalPhoneNumber,
 		participantPreferredName: EmptyOrOptionalName,
 	}),
 );
@@ -55,6 +55,8 @@ export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardi
 export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	hasRequiredGuardianInfoForRegistration,
 );
+// TODO add check for participant data
+// TODO add checks for invites
 
 export const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
 	RegisterRequestGuardianFieldsRefined,
@@ -65,7 +67,8 @@ export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 const RegisterFormStep2Fields = ConsentToBeContacted.and(
 	z.object({
-		participantEmailAddress: z.string().email(),
+		guardianEmailAddress: z.string().email().optional(),
+		participantEmailAddress: z.string().email().optional(),
 	}),
 );
 
@@ -79,14 +82,10 @@ const PasswordFields = z
 		path: ['confirmPassword'],
 	});
 
-export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields);
+export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields).and(RegisterFormStep1);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
 // COMBINE STEPS
 
-export const ParticipantRegistrationRequest = RegisterFormStep1.and(RegisterFormStep2).and(
-	z.object({
-		inviteId: OptionalNanoId,
-	}),
-);
+export const ParticipantRegistrationRequest = RegisterFormStep2;
 export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

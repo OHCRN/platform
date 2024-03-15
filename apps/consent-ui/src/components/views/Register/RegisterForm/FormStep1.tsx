@@ -47,6 +47,17 @@ import { MockInviteData } from '../handleInvite';
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
 
+interface FormStep1Props {
+	className?: string;
+	currentLang: ValidLanguage;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
+	errorsDict: FormErrorsDictionary;
+	handleNextClick: (data: RegisterFormStep1) => void;
+	inviteData?: MockInviteData;
+	labelsDict: RegisterFormStep1LabelsDictionary;
+	textDict: RegisterFormStep1TextDictionary;
+}
+
 const consentGroupsParticipantMustBeMinor = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -60,22 +71,13 @@ const consentGroupsRequiringGuardianInfo = [
 const FormStep1 = ({
 	className,
 	currentLang,
+	dateOfBirthModalDict,
 	errorsDict,
 	handleNextClick,
 	inviteData,
 	labelsDict,
 	textDict,
-	dateOfBirthModalDict,
-}: {
-	className?: string;
-	currentLang: ValidLanguage;
-	errorsDict: FormErrorsDictionary;
-	handleNextClick: (data: RegisterFormStep1) => void;
-	inviteData?: MockInviteData;
-	labelsDict: RegisterFormStep1LabelsDictionary;
-	textDict: RegisterFormStep1TextDictionary;
-	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
-}) => {
+}: FormStep1Props) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
 		defaultValues: {
