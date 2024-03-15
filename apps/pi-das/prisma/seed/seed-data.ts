@@ -40,15 +40,15 @@ const participants: Prisma.ParticipantCreateInput[] = [
 const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksv',
-		participantFirstName: 'Bruce',
-		participantLastName: 'Wayne',
+		participantOhipFirstName: 'Bruce',
+		participantOhipLastName: 'Wayne',
 		participantEmailAddress: 'bruce.wayne@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
 		id: 'NUF9dN5ZWIfc2TLMG3p2Y',
-		participantFirstName: 'Tim',
-		participantLastName: 'Drake',
+		participantOhipFirstName: 'Tim',
+		participantOhipLastName: 'Drake',
 		participantEmailAddress: 'tim.drake@example.com',
 		participantPhoneNumber: '6475558123',
 		guardianName: 'Bruce Wayne',

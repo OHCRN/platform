@@ -17,5 +17,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './encryption';
-export * from './requestData';
+// DATE FORMAT: YYYY-MM-DD, e.g. 2024-12-23
+// use with date-fns & react-datepicker libraries
+export const DATE_NUMERIC_FORMAT = 'yyyy-MM-dd';
