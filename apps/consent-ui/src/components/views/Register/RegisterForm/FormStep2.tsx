@@ -37,7 +37,7 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 import { ValidLanguage } from 'src/i18n/types';
 
-import { MockInviteData } from '../handleInvite';
+import { MockInviteDataStep2 } from '../handleInvite';
 
 import styles from './RegisterForm.module.scss';
 
@@ -45,9 +45,9 @@ interface FormStep2Props {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
-	inviteData?: MockInviteData;
+	inviteData?: MockInviteDataStep2;
 	labelsDict: RegisterFormStep2LabelsDictionary;
-	step1Data: RegisterFormStep1;
+	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormStep2TextDictionary;
 }
 
@@ -69,7 +69,7 @@ const FormStep2 = ({
 
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
-		defaultValues: { ...inviteData, ...step1Data },
+		defaultValues: { ...inviteData, isGuardian: step1Data?.isGuardian },
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep2),
 		shouldUnregister: true,
@@ -78,7 +78,6 @@ const FormStep2 = ({
 	const {
 		clearErrors,
 		formState: { errors, isValid, touchedFields },
-		getValues,
 		handleSubmit,
 		setError,
 		watch,
@@ -100,12 +99,13 @@ const FormStep2 = ({
 		onRecaptchaChange();
 	};
 
-	const onSubmit: SubmitHandler<RegisterFormStep2> = (data, event) => {
+	const onSubmit: SubmitHandler<RegisterFormStep2> = (step2Data, event) => {
 		event?.preventDefault();
 
 		const recaptchaToken = getRecaptchaToken();
 
 		if (recaptchaToken) {
+			const data = Object.assign({}, step1Data, step2Data);
 			console.log(data);
 		} else {
 			setRecaptchaError('Please complete captcha');
@@ -138,14 +138,14 @@ const FormStep2 = ({
 	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
 
 	// determine which email field to show (participant or guardian)
-	const getIsGuardian = getValues('isGuardian');
+	const watchGuardian = watch('isGuardian');
 
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				{/* SECTION - EMAIL & PASSWORD */}
 				<FormSection>
-					{getIsGuardian ? (
+					{watchGuardian ? (
 						<TextFieldSet
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email}

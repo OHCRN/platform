@@ -19,7 +19,10 @@
 
 import { z } from 'zod';
 
-import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
+import {
+	ConsentToBeContacted,
+	ParticipantBaseOhipNameFields,
+} from '../../../entities/Participant.js';
 import {
 	NonEmptyString,
 	createDateOfBirthRequestSchema,
@@ -34,11 +37,12 @@ import {
 
 // STEP 1
 
-export const RegisterFormStep1Fields = ParticipantNameFields.and(
+export const RegisterFormStep1Fields = ParticipantBaseOhipNameFields.and(
 	z.object({
 		inviteId: OptionalNanoId,
 		participantPhoneNumber: EmptyOrOptionalPhoneNumber,
 		participantPreferredName: EmptyOrOptionalName,
+		isInvited: z.boolean(),
 	}),
 );
 
@@ -69,6 +73,7 @@ const RegisterFormStep2Fields = ConsentToBeContacted.and(
 	z.object({
 		guardianEmailAddress: z.string().email().optional(),
 		participantEmailAddress: z.string().email().optional(),
+		isGuardian: z.boolean(),
 	}),
 );
 
@@ -82,10 +87,10 @@ const PasswordFields = z
 		path: ['confirmPassword'],
 	});
 
-export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields).and(RegisterFormStep1);
+export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
 // COMBINE STEPS
 
-export const ParticipantRegistrationRequest = RegisterFormStep2;
+export const ParticipantRegistrationRequest = RegisterFormStep2.and(RegisterFormStep1);
 export type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;

@@ -18,47 +18,44 @@
  */
 
 import { find } from 'lodash';
-import { ClinicianInviteResponse } from 'types/consentApi';
-import { NanoId } from 'types/entities';
+import { ConsentGroup, NanoId } from 'types/entities';
 
-export type MockInviteData = Omit<
-	ClinicianInviteResponse,
-	| 'participantEmailAddress'
-	| 'participantFirstName'
-	| 'participantLastName'
-	| 'participantPhoneNumber'
-> & {
-	participantEmailAddress?: string;
+export type MockInviteDataStep1 = {
+	consentGroup: ConsentGroup;
+	guardianName?: string;
+	guardianPhoneNumber?: string;
+	guardianRelationship?: string;
+	id?: string;
+	inviteId?: string;
 	participantOhipFirstName: string;
 	participantOhipLastName: string;
 	participantPhoneNumber?: string;
+	participantPreferredName?: string;
 };
+
+export type MockInviteDataStep2 = {
+	consentToBeContacted?: true;
+	guardianEmailAddress?: string;
+	participantEmailAddress?: string;
+};
+
+export type MockInviteData = MockInviteDataStep1 & MockInviteDataStep2;
 
 type HandleInvite = (
 	inviteId?: string,
-) => Promise<{ data?: MockInviteData; error?: string } | undefined>;
+) => Promise<{ data?: Record<string, any>; error?: string } | undefined>;
 
 const mockData: MockInviteData[] = [
 	{
-		clinicianFirstName: 'Dr',
-		clinicianInstitutionalEmailAddress: 'drnick@example.com',
-		clinicianLastName: 'Nick',
-		clinicianTitleOrRole: 'Doctor',
 		consentGroup: 'ADULT_CONSENT',
 		consentToBeContacted: true,
 		id: 'cEuCqj97ACZlO4hXjYEQf',
-		inviteAccepted: false,
-		inviteSentDate: new Date(),
 		participantEmailAddress: 'homer@example.com',
 		participantOhipFirstName: 'Homer',
 		participantOhipLastName: 'Simpson',
 		participantPhoneNumber: '1234567890',
 	},
 	{
-		clinicianFirstName: 'Dr',
-		clinicianInstitutionalEmailAddress: 'drnick@example.com',
-		clinicianLastName: 'Nick',
-		clinicianTitleOrRole: 'Doctor',
 		consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
 		consentToBeContacted: true,
 		guardianEmailAddress: 'homer@example.com',
@@ -66,8 +63,6 @@ const mockData: MockInviteData[] = [
 		guardianPhoneNumber: '1234567890',
 		guardianRelationship: 'Father',
 		id: 'kH7g7ukHc8BBqWkaDyRaS',
-		inviteAccepted: false,
-		inviteSentDate: new Date(),
 		participantOhipFirstName: 'Bartholomew',
 		participantOhipLastName: 'Simpson',
 		participantPreferredName: 'Bart',
@@ -84,11 +79,39 @@ const handleInvite: HandleInvite = async (inviteId = '') => {
 
 	// TODO GET /invites/:inviteId - will return ClinicianInviteResponse or error
 
-	const data = find(mockData, { id: inviteId });
+	const {
+		consentGroup,
+		consentToBeContacted,
+		guardianEmailAddress,
+		guardianName,
+		guardianPhoneNumber,
+		guardianRelationship,
+		participantEmailAddress,
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantPhoneNumber,
+		participantPreferredName,
+	} = find(mockData, { id: inviteId }) || {};
 
-	// TODO sort out step 1 & step 2 data
+	const step1 = {
+		consentGroup,
+		guardianName,
+		guardianPhoneNumber,
+		guardianRelationship,
+		inviteId,
+		participantOhipFirstName,
+		participantOhipLastName,
+		participantPhoneNumber,
+		participantPreferredName,
+	};
 
-	return { data };
+	const step2 = {
+		consentToBeContacted,
+		guardianEmailAddress,
+		participantEmailAddress,
+	};
+
+	return { data: { step1, step2 } };
 };
 
 export default handleInvite;

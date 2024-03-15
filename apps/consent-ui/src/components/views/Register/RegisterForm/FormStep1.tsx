@@ -42,7 +42,7 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
-import { MockInviteData } from '../handleInvite';
+import { MockInviteDataStep1 } from '../handleInvite';
 
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
@@ -53,7 +53,7 @@ interface FormStep1Props {
 	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
-	inviteData?: MockInviteData;
+	inviteData?: MockInviteDataStep1;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
 }
@@ -81,10 +81,11 @@ const FormStep1 = ({
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
 		defaultValues: {
-			...inviteData,
+			...(inviteData || {}),
 			isGuardian: consentGroupsRequiringGuardianInfo.some(
 				(group) => group === inviteData?.consentGroup,
 			),
+			isInvited: !!inviteData?.inviteId,
 		},
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
@@ -115,7 +116,9 @@ const FormStep1 = ({
 
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
-		if (dateOfBirthValue) {
+		const getIsInvited = getValues('isInvited');
+		// invited users don't have age restrictions
+		if (dateOfBirthValue && !getIsInvited) {
 			const currentDate = new Date();
 			const dateOfBirth = new Date(dateOfBirthValue);
 			const userIsMinimumAgeOrGreater = checkIsMinimumAgeOrGreater(currentDate, dateOfBirth);
@@ -179,16 +182,16 @@ const FormStep1 = ({
 					<FormSection>
 						<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
 						<TextFieldSet
-							error={errors.participantFirstName?.type && errorsDict.required}
+							error={errors.participantOhipFirstName?.type && errorsDict.required}
 							label={labelsDict.firstName}
-							name="participantFirstName"
+							name="participantOhipFirstName"
 							required
 							description={textDict.participantFirstNameTooltip}
 						/>
 						<TextFieldSet
-							error={errors.participantLastName?.type && errorsDict.required}
+							error={errors.participantOhipLastName?.type && errorsDict.required}
 							label={labelsDict.lastName}
-							name="participantLastName"
+							name="participantOhipLastName"
 							required
 							description={textDict.participantLastNameTooltip}
 						/>
