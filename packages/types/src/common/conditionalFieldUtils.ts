@@ -50,16 +50,18 @@ export const isEmptyOrUndefined = (arg: any) => isUndefined(arg) || isEmptyStrin
 export const hasValue = <T>(input: T | undefined): input is T => !isUndefined(input);
 
 /**
- * Checks if a Participant schema object contains the required Participant contact fields needed for the ConsentGroup,
- * and doesn't contain information about a guardian.
- *
- * participantEmailAddress and participantPhoneNumber must be defined if ADULT_CONSENT or YOUNG_ADULT_CONSENT was selected.
- * guardianName, guardianPhoneNumber, guardianEmailAddress, and guardianRelationship must be undefined.
+ * Checks if a Participant schema object contains the appropriate data for the provided consent group,
+ * and doesn't have data pertaining to other consent groups.
+ * ADULT_CONSENT and YOUNG_ADULT_CONSENT must have participantEmailAddress and participantPhoneNumber. Guardian fields
+ * (guardianName, guardianPhoneNumber, guardianEmailAddress, and guardianRelationship) must be undefined.
+ * GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT or ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER must have
+ * guardianName, guardianPhoneNumber, guardianEmailAddress, and guardianRelationship. Participant contact fields
+ * (participantEmailAddress and participantPhoneNumber) must be undefined.
  * @param props consentGroup, guardianEmailAddress, guardianName, guardianPhoneNumber, guardianRelationship, participantEmailAddress, participantPhoneNumber
  * @returns {boolean} returns true if all required fields are present, and non-required fields are undefined
- *
  */
-export const hasRequiredParticipantContactInfo = (
+
+export const hasRequiredInfoForConsentGroup = (
 	props: {
 		consentGroup: ConsentGroup;
 	} & ParticipantContactFields &
@@ -87,36 +89,9 @@ export const hasRequiredParticipantContactInfo = (
 		guardianRelationship,
 	].every(isUndefined);
 
-	return requiresParticipantContactInfo(consentGroup)
-		? allParticipantContactFieldsProvided && allGuardianFieldsUndefined
-		: true;
-};
-
-/**
- * Checks if a Participant schema object contains the required Guardian contact fields needed for the ConsentGroup,
- * and does not contain participant contact information.
- *
- * guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
- * GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT or ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER was selected.
- * participantEmailAddress and participantPhoneNumber must be undefined.
- * @param props consentGroup, guardianEmailAddress, guardianName, guardianPhoneNumber, guardianRelationship, participantEmailAddress, participantPhoneNumber
- * @returns {boolean} returns true if all required fields are present, and non-required fields are undefined
- */
-export const hasRequiredGuardianInfo = (
-	props: {
-		consentGroup: ConsentGroup;
-	} & ParticipantContactFields &
-		GuardianBaseFields,
-) => {
-	const {
-		consentGroup,
-		guardianEmailAddress,
-		guardianName,
-		guardianPhoneNumber,
-		guardianRelationship,
-		participantEmailAddress,
-		participantPhoneNumber,
-	} = props;
+	if (requiresParticipantContactInfo(consentGroup)) {
+		return allParticipantContactFieldsProvided && allGuardianFieldsUndefined;
+	}
 
 	const allGuardianFieldsProvided = [
 		guardianEmailAddress,
@@ -130,9 +105,11 @@ export const hasRequiredGuardianInfo = (
 		participantPhoneNumber,
 	].every(isUndefined);
 
-	return requiresGuardianInformation(consentGroup)
-		? allGuardianFieldsProvided && allParticipantContactFieldsUndefined
-		: true;
+	if (requiresGuardianInformation(consentGroup)) {
+		return allGuardianFieldsProvided && allParticipantContactFieldsUndefined;
+	}
+
+	return true;
 };
 
 /**

@@ -25,7 +25,6 @@ import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
 import { ClinicianInviteRequest } from '../../src/services/consentApi/requests/ClinicianInvite.js';
 
 const mockInviteRequestData = {
-	id: 'CVCFbeKH2Njl1G41vCQme',
 	inviteSentDate: new Date(),
 	clinicianFirstName: 'Homer',
 	clinicianLastName: 'Simpson',
