@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { InformedConsentRequest } from 'types/consentApi';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import Form from 'src/components/common/Form';
 import CheckboxFieldSet from 'src/components/common/Form/fieldsets/CheckboxFieldSet';
@@ -44,6 +44,7 @@ const InformedConsentForm = ({
 	formDict,
 	children,
 	currentStep,
+	fetchData,
 }: {
 	consentData: any;
 	currentLang: ValidLanguage;
@@ -52,6 +53,7 @@ const InformedConsentForm = ({
 	formDict: InformedConsentFormDictionary;
 	children: ReactNode;
 	currentStep: ConsentStepRoute;
+	fetchData: any;
 }) => {
 	const { OHCRN_EMAIL } = useAppConfigContext();
 	// setup react-hook-forms
@@ -63,6 +65,17 @@ const InformedConsentForm = ({
 		formState: { errors },
 		handleSubmit,
 	} = methods;
+
+	const [testData, setTestData] = useState(undefined);
+	useEffect(() => {
+		const getMyData = async () => {
+			const testFetchData = await fetchData();
+			setTestData(testFetchData);
+		};
+		getMyData();
+	});
+
+	console.log('⭐️⭐️⭐️⭐️ testData', testData);
 
 	console.log('🌎🌎🌎 consentData', consentData);
 

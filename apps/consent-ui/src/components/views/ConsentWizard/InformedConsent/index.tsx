@@ -67,9 +67,7 @@ const InformedConsent = async ({ currentLang }: { currentLang: ValidLanguage }) 
 	// get step 1 results
 	// post step 1 results
 
-	let loading = true;
 	const consentData = await getFormData();
-	loading = false;
 	console.log('🔥🔥🔥🔥🔥 consentData', consentData);
 
 	// TEMP changing invite data to fit this page to test the API request
@@ -77,12 +75,7 @@ const InformedConsent = async ({ currentLang }: { currentLang: ValidLanguage }) 
 
 	console.log('🌈🌈🌈 formData', formData);
 
-	return loading ? (
-		// this does nothing
-		<div>
-			<h1>loading</h1>
-		</div>
-	) : (
+	return (
 		<div>
 			<h2 className={styles.title}>{pageDict.title}</h2>
 			<p className={styles.description}>
@@ -112,6 +105,7 @@ const InformedConsent = async ({ currentLang }: { currentLang: ValidLanguage }) 
 				formData={formData}
 				formDict={formDict}
 				currentStep={currentConsentStep}
+				fetchData={getFormData}
 			>
 				<ConsentStepsNavigation currentLang={currentLang} currentStep={currentConsentStep} />
 			</InformedConsentForm>
