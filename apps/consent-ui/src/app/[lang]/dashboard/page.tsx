@@ -25,6 +25,6 @@ import Dashboard from 'src/components/views/Dashboard';
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
 	// TODO: for debugging, TO BE REMOVED
 	const headersList = headers();
-	console.info(`HEADERS FROM ROUTE - HOME - `, JSON.stringify(headersList));
+	console.info(`HEADERS FROM ROUTE - DASHBOARD - `, JSON.stringify(headersList));
 	return <Dashboard currentLang={lang} />;
 }
