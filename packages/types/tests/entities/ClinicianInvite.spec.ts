@@ -43,6 +43,7 @@ describe('ClinicianInviteRequest', () => {
 			guardianEmailAddress: 'marge.simpson@example.com',
 			guardianRelationship: 'Wife',
 			consentToBeContacted: true,
+			assentFormIdentifier: '1234567890',
 		});
 		expect(result.success).true;
 	});
@@ -64,6 +65,7 @@ describe('ClinicianInviteRequest', () => {
 			guardianEmailAddress: 'marge.simpson@example.com',
 			guardianRelationship: 'Wife',
 			consentToBeContacted: true,
+			assentFormIdentifier: '1234567890',
 		});
 		expect(result.success).true;
 	});
@@ -83,6 +85,7 @@ describe('ClinicianInviteRequest', () => {
 			guardianName: 'Marge Simpson',
 			guardianRelationship: 'Wife', // missing guardianEmailAddress and guardianPhoneNumber
 			consentToBeContacted: true,
+			assentFormIdentifier: '1234567890',
 		});
 		expect(result.success).false;
 	});
@@ -100,6 +103,7 @@ describe('ClinicianInviteRequest', () => {
 			participantPhoneNumber: '6471234567',
 			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
 			consentToBeContacted: true,
+			assentFormIdentifier: '1234567890',
 		});
 		expect(result.success).false;
 	});
