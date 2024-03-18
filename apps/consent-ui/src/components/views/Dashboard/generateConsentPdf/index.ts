@@ -20,9 +20,9 @@
 import { ConsentGroup, LifecycleState } from 'types/entities';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
-import { format as formatDate } from 'date-fns';
 
 import { ValidLanguage } from 'src/i18n';
+import { formatDate } from 'src/components/utils';
 
 import { GenerateConsentPdfParams } from './types';
 import { settingsByLang, settingsGeneric } from './settings';
@@ -85,12 +85,6 @@ const getPrintedName = (
 	participantOhipLastName: string,
 	guardianName?: string,
 ): string => guardianName || `${participantOhipFirstName} ${participantOhipLastName}`;
-
-/**
- * Format date for the signature page.
- * TODO French date formatting
- */
-const formatSignatureDate = (date: Date) => formatDate(date, 'MM/dd/y');
 
 /**
  * Modify consent PDF template with the user's information.
@@ -180,7 +174,7 @@ const generateConsentPdf = async (
 	});
 
 	// add date to the signature page
-	const date = formatSignatureDate(mockDate);
+	const date = formatDate(mockDate);
 	signaturePage.drawText(date, {
 		...textSettings,
 		x: signatureSettings.xCoord.date,
