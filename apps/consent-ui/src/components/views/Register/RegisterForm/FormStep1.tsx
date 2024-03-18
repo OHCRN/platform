@@ -26,6 +26,7 @@ import { useEffect } from 'react';
 import { checkIsMinimumAgeOrGreater } from 'types/common';
 import { RegisterFormStep1 } from 'types/consentUi';
 import { ConsentGroup } from 'types/entities';
+import { find } from 'lodash';
 
 import useModal from 'src/components/common/Modal/useModal';
 import { FormErrorsDictionary } from 'src/i18n/locales/en/formErrors';
@@ -58,13 +59,9 @@ interface FormStep1Props {
 	textDict: RegisterFormStep1TextDictionary;
 }
 
-const consentGroupsParticipantMustBeMinor = [
+const guardianConsentGroups = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
-];
-
-const consentGroupsRequiringGuardianInfo = [
-	...consentGroupsParticipantMustBeMinor,
 	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 ];
 
@@ -82,9 +79,9 @@ const FormStep1 = ({
 	const methods = useForm<RegisterFormStep1>({
 		defaultValues: {
 			...(inviteData || {}),
-			isGuardian: consentGroupsRequiringGuardianInfo.some(
-				(group) => group === inviteData?.consentGroup,
-			),
+			isGuardian: inviteData
+				? !!find(guardianConsentGroups, { group: inviteData?.consentGroup })
+				: undefined,
 			isInvited: !!inviteData?.inviteId,
 		},
 		mode: 'onBlur',
@@ -201,13 +198,15 @@ const FormStep1 = ({
 							name="participantPreferredName"
 							description={textDict.participantPreferredNameTooltip}
 						/>
-						<TextFieldSet
-							error={errors.participantPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.phone}
-							name="participantPhoneNumber"
-							required
-							description={textDict.participantPhoneNumberTooltip}
-						/>
+						{!watchIsGuardian && (
+							<TextFieldSet
+								error={errors.participantPhoneNumber?.type && errorsDict.required}
+								label={labelsDict.phone}
+								name="participantPhoneNumber"
+								required
+								description={textDict.participantPhoneNumberTooltip}
+							/>
+						)}
 						<CalendarFieldSet
 							currentLang={currentLang}
 							description={textDict.dateOfBirthTooltip}
