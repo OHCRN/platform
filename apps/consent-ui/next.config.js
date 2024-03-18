@@ -3,6 +3,11 @@
 const routesByLocale = require('./src/i18n/routes/routesByLocale.json');
 
 const nextConfig = {
+	logging: {
+		fetches: {
+		  fullUrl: true,
+		},
+	  },
 	async rewrites() {
 		const locales = Object.keys(routesByLocale).filter((locale) => locale !== 'en');
 		return locales.flatMap((locale) =>

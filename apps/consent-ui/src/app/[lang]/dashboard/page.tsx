@@ -17,9 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { headers } from 'next/headers';
+
 import { ValidLanguage } from 'src/i18n';
 import Dashboard from 'src/components/views/Dashboard';
 
 export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
+	// TODO: for debugging, TO BE REMOVED
+	const headersList = headers();
+	console.info(`HEADERS FROM ROUTE - HOME - `, JSON.stringify(headersList));
 	return <Dashboard currentLang={lang} />;
 }
