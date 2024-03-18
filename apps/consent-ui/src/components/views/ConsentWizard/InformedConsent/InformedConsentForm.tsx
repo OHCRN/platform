@@ -37,14 +37,18 @@ import { ConsentStepRoute } from 'src/components/common/Link/types';
 import useGoToNextConsentStep from '../ConsentStepsNavigation/useGoToNextConsentStep';
 
 const InformedConsentForm = ({
+	consentData,
 	currentLang,
 	errorsDict,
+	formData,
 	formDict,
 	children,
 	currentStep,
 }: {
+	consentData: any;
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
+	formData: Record<string, any>;
 	formDict: InformedConsentFormDictionary;
 	children: ReactNode;
 	currentStep: ConsentStepRoute;
@@ -52,12 +56,15 @@ const InformedConsentForm = ({
 	const { OHCRN_EMAIL } = useAppConfigContext();
 	// setup react-hook-forms
 	const methods = useForm<InformedConsentRequest>({
+		defaultValues: formData,
 		resolver: zodResolver(InformedConsentRequest),
 	});
 	const {
 		formState: { errors },
 		handleSubmit,
 	} = methods;
+
+	console.log('🌎🌎🌎 consentData', consentData);
 
 	const goToNextConsentStep = useGoToNextConsentStep(currentLang, currentStep);
 
