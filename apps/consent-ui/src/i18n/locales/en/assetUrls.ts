@@ -18,7 +18,7 @@
  */
 
 const dictionary = {
-	studyConsentPdf: 'PLACEHOLDER_study-consent.pdf',
+	studyConsentPdf: 'OHCRN_Main_Consent_Form-REB-clean_v2_5Jan2024.pdf',
 } satisfies Record<string, string>;
 
 export type AssetUrlsDictionary = Record<keyof typeof dictionary, string>;

@@ -24,6 +24,7 @@ import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { ValidLanguage, getTranslation } from 'src/i18n';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import { getAppConfig } from 'src/config/appConfig';
+import PdfViewer from 'src/components/common/PdfViewer';
 import { ConsentStepRouteEnum } from 'src/components/common/Link/types';
 
 import ConsentStepsNavigation from '../ConsentStepsNavigation';
@@ -59,10 +60,13 @@ const InformedConsent = ({ currentLang }: { currentLang: ValidLanguage }) => {
 				prefetch={false}
 				target="_blank"
 				variant="secondary"
+				className={styles.downloadButton}
 			>
 				{pageDict.downloadConsentPdf}
 			</LinkButton>
-			{/* TODO pdf viewer https://github.com/OHCRN/platform/issues/329 */}
+
+			<PdfViewer pdfUrl={studyConsentPdfUrl} />
+
 			<InformedConsentForm
 				currentLang={currentLang}
 				errorsDict={errorsDict}

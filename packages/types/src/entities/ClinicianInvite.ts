@@ -23,7 +23,7 @@ import { NonEmptyString } from '../common/index.js';
 
 import { ConsentGroup, Name, NanoId, OptionalName, PhoneNumber } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
-import { ConsentToBeContacted, ParticipantNameFields } from './Participant.js';
+import { ConsentToBeContacted, ParticipantBaseOhipNameFields } from './Participant.js';
 
 export const InviteParticipantContactFields = z.object({
 	participantEmailAddress: z.string().email(),
@@ -49,7 +49,7 @@ export type InviteClinicianFields = z.infer<typeof InviteClinicianFields>;
 export const InviteGuardianFields = GuardianBaseFields;
 export type InviteGuardianFields = z.infer<typeof InviteGuardianFields>;
 
-export const InviteParticipantFields = ParticipantNameFields.merge(
+export const InviteParticipantFields = ParticipantBaseOhipNameFields.merge(
 	z.object({ participantPreferredName: OptionalName }),
 ).merge(InviteParticipantContactFields);
 export type InviteParticipantFields = z.infer<typeof InviteParticipantFields>;

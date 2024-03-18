@@ -16,35 +16,50 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import axios from 'axios';
 
-import { getAppConfig } from 'src/config';
-import {
-	axiosErrorInterceptor,
-	axiosRequestInterceptor,
-	axiosResponseInterceptor,
-} from 'src/services/api/utils';
+'use client';
 
-const { CONSENT_API_URL, VERBOSE_AXIOS_LOGGING } = getAppConfig();
-const AXIOS_CLIENT_NAME = 'axiosProxyClient';
+import clsx from 'clsx';
+import { useState } from 'react';
+import { pdfjs, Document, Page } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-const initAxiosClient = () =>
-	axios.create({
-		baseURL: CONSENT_API_URL,
-	});
+import styles from './PdfViewer.module.scss';
 
-const axiosProxyClient = initAxiosClient();
+// PDF worker
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+	'pdfjs-dist/build/pdf.worker.min.js',
+	import.meta.url,
+).toString();
 
-if (VERBOSE_AXIOS_LOGGING) {
-	axiosProxyClient.interceptors.request.use(
-		(request) => axiosRequestInterceptor(request, AXIOS_CLIENT_NAME),
-		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Request`),
+const PdfViewer = ({ pdfUrl, className }: { pdfUrl: string; className?: string }) => {
+	const [numPages, setNumPages] = useState(0);
+
+	function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+		setNumPages(numPages);
+	}
+
+	return (
+		<div className={clsx(className, styles.container)}>
+			<Document
+				file={pdfUrl}
+				onLoadSuccess={onDocumentLoadSuccess}
+				className={styles.document}
+				loading={<div className={styles.loading}>...</div>}
+			>
+				{Array.from(new Array(numPages), (_, index) => (
+					<Page
+						key={`page_${index + 1}`}
+						pageNumber={index + 1}
+						width={649}
+						className={styles.page}
+						loading={<div className={styles.loading}></div>}
+					/>
+				))}
+			</Document>
+		</div>
 	);
+};
 
-	axiosProxyClient.interceptors.response.use(
-		(response) => axiosResponseInterceptor(response, AXIOS_CLIENT_NAME),
-		(error) => axiosErrorInterceptor(error, `${AXIOS_CLIENT_NAME} Response`),
-	);
-}
-
-export { axiosProxyClient };
+export default PdfViewer;

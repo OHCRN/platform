@@ -27,7 +27,7 @@ import { getClientAppConfig } from 'src/config';
 
 import '../globals.css';
 
-export const montserrat = Montserrat({
+const montserrat = Montserrat({
 	subsets: ['latin'],
 	variable: '--font-sans',
 	display: 'swap',

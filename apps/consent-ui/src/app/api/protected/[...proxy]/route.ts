@@ -23,8 +23,7 @@ import { AxiosHeaders } from 'axios';
 
 import { auth } from 'src/app/auth';
 import { decryptContent, getRequestData } from 'src/services/api/utils';
-import { getAppConfig } from 'src/config';
-import { axiosProxyClient } from 'src/services/api';
+import { consentApiClient } from 'src/services/api';
 
 /**
  * Route handler for creating authenticated proxy requests from /api routes to protected consent-api endpoints
@@ -36,7 +35,6 @@ const handler = async (
 	req: NextRequest,
 	routePaths: { params: { proxy: string[] } }, // "proxy" key matches the [...proxy] dynamic path
 ): Promise<NextResponse> => {
-	const { CONSENT_API_URL } = getAppConfig();
 	const session = await auth();
 	// check for existence of a session before attempting a request to consent-api
 	// consent-api will also have its own auth middleware to verify sessions
@@ -45,7 +43,6 @@ const handler = async (
 		return NextResponse.json({ error: 'You must be signed in' }, { status: 401 });
 	} else {
 		const path = urlJoin(routePaths.params.proxy);
-		const reqUrl = urlJoin(CONSENT_API_URL, path);
 
 		const requestData = await getRequestData(req);
 		// TODO: are there any other headers needed here?
@@ -57,7 +54,7 @@ const handler = async (
 			const decryptedToken = decryptContent(session.account.accessToken);
 			headers.setAuthorization(`Bearer ${decryptedToken}`);
 		}
-		const res = await axiosProxyClient(reqUrl, {
+		const res = await consentApiClient(path, {
 			method: req.method,
 			headers,
 			...(requestData && { data: requestData }),
