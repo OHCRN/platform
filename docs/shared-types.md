@@ -155,13 +155,13 @@ These methods are all composable so you can chain together as many of them as yo
 
 ### Refine schemas
 
-With the clinician invite request, we also have conditional logic involving the `InviteGuardianFields` and the `InviteClinicianFields`, specifically when the `consentGroup` is `GUARDIAN_CONSENT_OF_MINOR` or `GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT`, all `InviteGuardianFields` are required to be defined, so each field is no longer `optional`. As a result, we `refine` the `ClinicianInviteRequest` schema which merges both of these schemas together:
+With the clinician invite request, we also have conditional logic involving the `InviteGuardianFields` and the `InviteClinicianFields`, specifically when the `consentGroup` is `GUARDIAN_CONSENT_OF_MINOR` or `GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT`, all `InviteGuardianFields` are required to be defined, so each field is no longer `optional`. For these consent groups, participant contact fields must be `undefined`. As a result, we `refine` the `ClinicianInviteRequest` schema which merges both of these schemas together:
 
 ```ts
 export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
 	.merge(InviteParticipantFields)
-	.refine(hasRequiredGuardianInfo, {
-		message: 'Guardian contact fields are required for that consentGroup',
+	.refine(hasRequiredInfoForConsentGroup, {
+		message: 'Fields must be related to consentGroup',
 	});
 ```
 
@@ -169,8 +169,8 @@ As pointed out in the [Preprocessing](#preprocessing) section, we cannot merge m
 
 ```ts
 export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
-	.refine(hasRequiredGuardianInfo, {
-		message: 'Guardian contact fields are required for that consentGroup',
+	.refine(hasRequiredInfoForConsentGroup, {
+		message: 'Fields must be related to consentGroup',
 	})
 	.merge(InviteParticipantFields);
 // Property 'merge' does not exist on type 'ZodEffects<...>'. ts(2339)
