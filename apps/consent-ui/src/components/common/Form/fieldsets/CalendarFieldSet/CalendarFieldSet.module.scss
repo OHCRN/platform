@@ -9,7 +9,12 @@
 }
 
 .calendarPopper {
+	z-index: 1000;
 	:global {
+		.react-datepicker {
+			font-family: inherit;
+		}
+
 		.react-datepicker__month-container {
 			padding: 0.3rem 1rem;
 		}
@@ -34,6 +39,12 @@
 			background-color: theme('colors.accent1.200');
 			color: theme('colors.grayscale.800');
 			border-radius: 50%;
+		}
+
+		.react-datepicker__month-select,
+		.react-datepicker__year-select {
+			border: 1px solid theme('colors.grayscale.500');
+			border-radius: 5px;
 		}
 	}
 }
