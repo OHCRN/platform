@@ -11,3 +11,9 @@
 		@include mixins.text-link;
 	}
 }
+
+.downloadButton {
+	@media (min-width: theme('screens.sm')) {
+		display: none;
+	}
+}

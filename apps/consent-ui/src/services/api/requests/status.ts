@@ -17,5 +17,23 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './encryption';
-export * from './requestData';
+import { AxiosResponse } from 'axios';
+import { APIStatus } from 'types/common';
+
+import { API } from 'src/constants';
+
+import consentApiFetch from '../axios/consentApiFetch';
+
+const getAPIStatus = async () => {
+	return consentApiFetch({ url: API.STATUS, method: 'GET' })
+		.then((res: AxiosResponse<APIStatus>) => res.data)
+		.catch(() => {
+			const errorRes: APIStatus = {
+				version: 'N/A',
+				status: 'API fetch failed',
+			};
+			return errorRes;
+		});
+};
+
+export { getAPIStatus };

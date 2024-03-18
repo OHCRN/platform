@@ -20,6 +20,12 @@ const nextConfig = {
 	},
 	// use standalone build for Docker
 	output: process.env.BUILD_STANDALONE === 'true' ? 'standalone' : undefined,
+
+	// setup react-pdf
+	webpack: (config) => {
+		config.resolve.alias.canvas = false;
+		return config;
+	},
 };
 
 module.exports = nextConfig;
