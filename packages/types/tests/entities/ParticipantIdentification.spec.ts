@@ -30,6 +30,8 @@ describe('ParticipantIdentification', () => {
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
 			previousLifecycleState: LifecycleState.enum.IN_PROCESSING,
 			ohipNumber: '1234567890',
+			hasOhip: true,
+			assentFormIdentifier: '1234567890',
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simpson',
@@ -47,7 +49,7 @@ describe('ParticipantIdentification', () => {
 			guardianPhoneNumber: '6471234567',
 			guardianEmailAddress: 'marge@example.com',
 			guardianRelationship: 'Wife',
-			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db'
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db',
 		});
 		expect(result.success).true;
 	});
@@ -56,6 +58,8 @@ describe('ParticipantIdentification', () => {
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
 			ohipNumber: '1234567890',
+			hasOhip: true,
+			assentFormIdentifier: '1234567890',
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simpson',
@@ -68,7 +72,7 @@ describe('ParticipantIdentification', () => {
 			guardianPhoneNumber: '1234567890',
 			guardianEmailAddress: 'marge.simpson@example.com',
 			guardianRelationship: 'Wife',
-			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db'
+			keycloakId: '7327526f-a873-40eb-9c17-13ee7e5cb0db',
 		});
 		expect(result.success).true;
 	});
@@ -77,6 +81,8 @@ describe('ParticipantIdentification', () => {
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			ohipNumber: '1234567890',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
+			hasOhip: true,
+			assentFormIdentifier: '1234567890',
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simson',
@@ -92,6 +98,8 @@ describe('ParticipantIdentification', () => {
 		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			ohipNumber: '1234567890',
+			hasOhip: true,
+			assentFormIdentifier: '1234567890',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
@@ -112,6 +120,8 @@ describe('ParticipantIdentification', () => {
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			ohipNumber: '1234567890',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
+			hasOhip: true,
+			assentFormIdentifier: '1234567890',
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simson',
