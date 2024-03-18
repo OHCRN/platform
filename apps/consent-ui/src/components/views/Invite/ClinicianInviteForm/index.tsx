@@ -177,16 +177,16 @@ const ClinicianInviteFormComponent = ({
 					{/* SECTION - PARTICIPANT INFO */}
 					<FormSection>
 						<TextFieldSet
-							error={errors.participantFirstName?.type && errorsDict.required}
+							error={errors.participantOhipFirstName?.type && errorsDict.required}
 							label={labelsDict.firstName}
-							name="participantFirstName"
+							name="participantOhipFirstName"
 							required
 							description={textDict.participantFirstNameTooltip}
 						/>
 						<TextFieldSet
-							error={errors.participantLastName?.type && errorsDict.required}
+							error={errors.participantOhipLastName?.type && errorsDict.required}
 							label={labelsDict.lastName}
-							name="participantLastName"
+							name="participantOhipLastName"
 							required
 							description={textDict.participantLastNameTooltip}
 						/>

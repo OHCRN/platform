@@ -136,8 +136,8 @@ export type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
  * @returns {ClinicianInviteResponse} Created Clinician Invite data
  */
 export const createInvite = async ({
-	participantFirstName,
-	participantLastName,
+	participantOhipFirstName,
+	participantOhipLastName,
 	participantEmailAddress,
 	participantPhoneNumber,
 	participantPreferredName,
@@ -165,8 +165,8 @@ export const createInvite = async ({
 	 */
 	try {
 		const piInviteResult = await createInvitePiData({
-			participantFirstName,
-			participantLastName,
+			participantOhipFirstName,
+			participantOhipLastName,
 			participantEmailAddress,
 			participantPhoneNumber,
 			participantPreferredName,

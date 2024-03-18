@@ -1,0 +1,40 @@
+.container {
+	display: none;
+	@media (min-width: theme('screens.sm')) {
+		display: flex;
+	}
+
+	justify-content: center;
+	align-items: center;
+
+	background-color: theme('colors.grayscale.400');
+	overflow-y: scroll;
+}
+
+.document {
+	margin: 1rem;
+	display: flex;
+	flex-direction: column;
+
+	max-height: 468px;
+	@media (min-width: theme('screens.md')) {
+		max-height: 721px;
+	}
+}
+
+.page {
+	box-shadow: 0px 4px 4px theme('colors.grayscale.600');
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 649px;
+	height: 468px;
+	@media (min-width: theme('screens.md')) {
+		height: 721px;
+	}
+	background-color: theme('colors.grayscale.100');
+	box-shadow: 0px 0px 4px theme('colors.grayscale.600');
+}
