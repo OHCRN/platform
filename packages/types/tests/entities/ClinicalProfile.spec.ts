@@ -25,6 +25,7 @@ import {
 	Gender,
 	GeneticsClinic,
 	HistoryOfCancer,
+	VitalStatus,
 } from '../../src/entities/fields/index.js';
 import { ClinicalProfile } from '../../src/entities/index.js';
 
@@ -40,6 +41,7 @@ describe('ClinicalProfile', () => {
 				selfReportedGeneticsClinicVisited: GeneticsClinic.enum.HOSPITAL_FOR_SICK_CHILDREN_TORONTO,
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'tREi8pepJ4sshATZJExqS',
+				vitalStatus: VitalStatus.enum.ALIVE,
 			}).success,
 		).true;
 	});
@@ -55,6 +57,7 @@ describe('ClinicalProfile', () => {
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'r1kIA9KK8X6HMI32338a5',
 				selfIdentifiedGender: 'Nulla labore amet minim nisi',
+				vitalStatus: VitalStatus.enum.ALIVE,
 			}).success,
 		).true;
 	});
@@ -70,6 +73,7 @@ describe('ClinicalProfile', () => {
 				historyOfCancer: HistoryOfCancer.enum.UNKNOWN,
 				participantId: 'wkIQYKCumXoARLSqNLHuV',
 				selfIdentifiedGender: undefined, // missing self-identified gender
+				vitalStatus: VitalStatus.enum.DECEASED,
 			}).success,
 		).false;
 	});
