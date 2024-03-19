@@ -7,7 +7,7 @@ const nextConfig = {
 		fetches: {
 		  fullUrl: true,
 		},
-	  },
+	},
 	async rewrites() {
 		const locales = Object.keys(routesByLocale).filter((locale) => locale !== 'en');
 		return locales.flatMap((locale) =>

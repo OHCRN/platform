@@ -25,6 +25,6 @@ import HomeComponent from 'src/components/views/Home';
 export default async function Home({ params: { lang } }: { params: { lang: ValidLanguage } }) {
 	// TODO: for debugging, TO BE REMOVED
 	const headersList = headers();
-	console.info(`HEADERS FROM ROUTE - HOME - `, JSON.stringify(headersList));
+	console.info(`[page.tsx - Home Route] Headers:`, JSON.stringify(headersList, null, 2));
 	return <HomeComponent currentLang={lang} />;
 }
