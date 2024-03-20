@@ -32,6 +32,12 @@ export const config = {
 };
 
 function middleware(request: NextRequest) {
+	// TODO: for debugging, TO BE REMOVED
+	const requestUrl = request.url;
+	const requestHeaders = request.headers;
+	console.info('[middleware] Request URL:', requestUrl);
+	console.info('[middleware] Request Headers:', requestHeaders);
+
 	// Check if there is any supported locale in the pathname
 	const pathname = request.nextUrl.pathname;
 	const pathnameIsMissingLocale = supportedLanguages.every(

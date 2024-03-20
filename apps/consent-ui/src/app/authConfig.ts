@@ -147,4 +147,6 @@ export const authConfig = {
 			return await doFinalSignoutHandshake(token);
 		},
 	},
+	// TODO: for debugging, TO BE REMOVED
+	debug: true,
 } satisfies NextAuthConfig;
