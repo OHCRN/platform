@@ -67,7 +67,8 @@ describe('ParticipantRegistrationRequest', () => {
 		guardianRelationship: 'Father',
 		isGuardian: true,
 		participantEmailAddress: undefined,
-		participantPhoneNumber: undefined,
+		// participantPhoneNumber: undefined,
+		participantPhoneNumber: '1234567890', // TEMP
 	};
 
 	describe('Date of Birth Field', () => {
@@ -208,13 +209,7 @@ describe('ParticipantRegistrationRequest', () => {
 		});
 
 		it('Parses correctly when the user is a guardian and all guardian fields are valid', () => {
-			expect(
-				ParticipantRegistrationRequest.safeParse({
-					guardianConsentData,
-					guardianName: 'hello',
-					participantPhoneNumber: '1234567890', // TEMP
-				}).success,
-			).false;
+			expect(ParticipantRegistrationRequest.safeParse(guardianConsentData).success).true;
 		});
 
 		it('Parses correctly when the user is not a guardian and all guardian fields are undefined', () => {
@@ -225,16 +220,50 @@ describe('ParticipantRegistrationRequest', () => {
 	describe('Email Address', () => {
 		describe('User is a guardian', () => {
 			it('Parses correctly if the user has a guardian email, and no participant email', () => {
-				expect(
-					ParticipantRegistrationRequest.safeParse({
-						...guardianConsentData,
-						participantPhoneNumber: '1234567890', // TEMP
-					}).success,
-				).true;
+				expect(ParticipantRegistrationRequest.safeParse(guardianConsentData).success).true;
 			});
-			it('Throws an invalid error if the user provides an invalid guardian email address', () => {});
-			it("Throws a custom error if the user didn't provide a guardian email", () => {});
-			it('Throws a custom error if user provided a participant email address', () => {});
+			it('Throws an invalid error if the user provides an invalid guardian email address', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentData,
+					guardianEmailAddress: 'homer simpson!',
+				});
+				expect(result.success).false;
+				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
+
+				const resultParsed1 = resultJsonParsed[0];
+				const resultMessage1 = resultParsed1.message;
+				const resultPath1 = resultParsed1.path[0];
+				expect(resultMessage1).toBe('Invalid email');
+				expect(resultPath1).toBe('guardianEmailAddress');
+			});
+			it("Throws a custom error if the user didn't provide a guardian email", () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentData,
+					guardianEmailAddress: undefined,
+				});
+				expect(result.success).false;
+				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
+
+				const resultParsed1 = resultJsonParsed[0];
+				const resultMessage1 = resultParsed1.message;
+				const resultPath1 = resultParsed1.path[0];
+				expect(resultMessage1).toBe('guardianEmailMissing');
+				expect(resultPath1).toBe('guardianEmailAddress');
+			});
+			it('Throws a custom error if user provided a participant email address', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentData,
+					participantEmailAddress: 'bart@example.com',
+				});
+				expect(result.success).false;
+				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
+
+				const resultParsed1 = resultJsonParsed[0];
+				const resultMessage1 = resultParsed1.message;
+				const resultPath1 = resultParsed1.path[0];
+				expect(resultMessage1).toBe('guardianHasParticipantEmail');
+				expect(resultPath1).toBe('participantEmailAddress');
+			});
 		});
 		// describe('User is a participant', () => {});
 	});
