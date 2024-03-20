@@ -50,6 +50,8 @@ export const ParticipantIdentification = ParticipantIdentityBase.merge(
 		consentGroup: ConsentGroup,
 		participantOhipMiddleName: OptionalName,
 	}),
-).refine(hasRequiredInfoForConsentGroup);
+).refine(hasRequiredInfoForConsentGroup, {
+	message: 'Contact fields must be related to consentGroup',
+});
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;

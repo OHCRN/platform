@@ -26,7 +26,7 @@ import { ConsentParticipantBase, ParticipantIdentityBase } from '../../../entiti
 export const CreateParticipantRequest = ParticipantIdentityBase.merge(
 	ConsentParticipantBase,
 ).refine(hasRequiredInfoForConsentGroup, {
-	message: 'Fields must be related to consentGroup',
+	message: 'Contact fields must be related to consentGroup',
 });
 export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
 export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);

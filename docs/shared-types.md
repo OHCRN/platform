@@ -161,7 +161,7 @@ With the clinician invite request, we also have conditional logic involving the 
 export const ClinicianInviteRequest = InviteClinicianFields.merge(InviteGuardianFields)
 	.merge(InviteParticipantFields)
 	.refine(hasRequiredInfoForConsentGroup, {
-		message: 'Fields must be related to consentGroup',
+		message: 'Contact fields must be related to consentGroup',
 	});
 ```
 

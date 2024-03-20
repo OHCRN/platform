@@ -84,15 +84,29 @@ describe('ClinicianInviteRequest', () => {
 			const result = ClinicianInviteRequest.safeParse({
 				...mockGuardianInviteRequestData,
 				participantEmailAddress: 'homer@example.com',
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
 			});
 			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
 		});
 		it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all participant contact fields are provided', () => {
 			const result = ClinicianInviteRequest.safeParse({
 				...mockGuardianInviteRequestData,
 				...mockParticipantInviteRequestData,
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
 			});
 			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
 		});
 	});
 
@@ -133,6 +147,12 @@ describe('ClinicianInviteRequest', () => {
 				guardianPhoneNumber: '1234567890',
 			});
 			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
 		});
 		it('Fails when consentGroup is YOUNG_ADULT_CONSENT and all guardian fields are provided', () => {
 			const result = ClinicianInviteRequest.safeParse({
@@ -144,6 +164,12 @@ describe('ClinicianInviteRequest', () => {
 				guardianRelationship: 'Wife',
 			});
 			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
 		});
 	});
 });

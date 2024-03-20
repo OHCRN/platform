@@ -24,6 +24,8 @@ import { z } from 'zod';
 import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
 import { ClinicianInviteBase } from '../../../entities/ClinicianInvite.js';
 
-export const ClinicianInviteRequest = ClinicianInviteBase.refine(hasRequiredInfoForConsentGroup);
+export const ClinicianInviteRequest = ClinicianInviteBase.refine(hasRequiredInfoForConsentGroup, {
+	message: 'Contact fields must be related to consentGroup',
+});
 export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteBase>;
 export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteBase);
