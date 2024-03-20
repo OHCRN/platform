@@ -27,6 +27,7 @@ import { defaultAppConfig } from 'src/config';
 export type ClientAppConfig = {
 	CONSENT_API_URL: string;
 	CONSENT_UI_URL: string;
+	FEATURE_CONSENT_PDF_BUTTONS?: boolean;
 	OHCRN_EMAIL?: string;
 	OHCRN_HOME_LINK?: string;
 	RECAPTCHA_SITE_KEY?: string;
@@ -35,6 +36,7 @@ export type ClientAppConfig = {
 export const defaultClientAppConfig: ClientAppConfig = {
 	CONSENT_API_URL: defaultAppConfig.CONSENT_API_URL,
 	CONSENT_UI_URL: defaultAppConfig.CONSENT_UI_URL,
+	FEATURE_CONSENT_PDF_BUTTONS: defaultAppConfig.FEATURE_CONSENT_PDF_BUTTONS,
 	OHCRN_EMAIL: defaultAppConfig.OHCRN_EMAIL,
 	OHCRN_HOME_LINK: defaultAppConfig.OHCRN_HOME_LINK,
 	RECAPTCHA_SITE_KEY: defaultAppConfig.RECAPTCHA_SITE_KEY,
@@ -50,6 +52,9 @@ export const defaultClientAppConfig: ClientAppConfig = {
 const getClientAppConfig = (): ClientAppConfig => ({
 	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
 	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
+	FEATURE_CONSENT_PDF_BUTTONS:
+		process.env.FEATURE_CONSENT_PDF_BUTTONS === 'true' ||
+		defaultAppConfig.FEATURE_CONSENT_PDF_BUTTONS,
 	OHCRN_EMAIL: process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
 	OHCRN_HOME_LINK: process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,
 	RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY || defaultAppConfig.RECAPTCHA_SITE_KEY,
