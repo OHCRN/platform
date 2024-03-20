@@ -17,10 +17,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { AssetUrlsDictionary } from 'src/i18n/locales/en/assetUrls';
+import { ConsentGroup, ConsentQuestionId, LifecycleState } from 'types/entities';
 
-const dictionary = {
-	studyConsentPdf: 'OHCRN_Main_Consent_Form-REB-clean_v2_5Jan2024.pdf',
-} satisfies AssetUrlsDictionary;
+const {
+	RECONTACT__FUTURE_RESEARCH,
+	RECONTACT__SECONDARY_CONTACT,
+	RESEARCH_PARTICIPATION__CONTACT_INFORMATION,
+	RESEARCH_PARTICIPATION__FUTURE_RESEARCH,
+} = ConsentQuestionId.enum;
 
-export default dictionary;
+export type GenerateConsentPdfParams = {
+	consentGroup: ConsentGroup;
+	currentLifecycleState: LifecycleState;
+	guardianName?: string;
+	mockDate: Date;
+	mockSignatureImage: string;
+	participantOhipFirstName: string;
+	participantOhipLastName: string;
+	[RECONTACT__FUTURE_RESEARCH]: boolean;
+	[RECONTACT__SECONDARY_CONTACT]: boolean;
+	relationshipToParticipant?: string;
+	[RESEARCH_PARTICIPATION__CONTACT_INFORMATION]: boolean;
+	[RESEARCH_PARTICIPATION__FUTURE_RESEARCH]: boolean;
+};
