@@ -23,6 +23,7 @@ import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/P
 import {
 	NonEmptyString,
 	createDateOfBirthRequestSchema,
+	hasRequiredEmailForConsentGroupForRegistration,
 	hasRequiredGuardianInfoForRegistration,
 } from '../../../common/index.js';
 import {
@@ -64,8 +65,15 @@ export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 const RegisterFormStep2Fields = ConsentToBeContacted.and(
 	z.object({
-		participantEmailAddress: z.string().email(),
+		isGuardian: z.boolean(),
+		guardianEmailAddress: z.string().email().optional(),
+		participantEmailAddress: z.string().email().optional(),
 	}),
+);
+export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
+
+const RegisterFormStep2FieldsRefined = RegisterFormStep2Fields.superRefine(
+	hasRequiredEmailForConsentGroupForRegistration,
 );
 
 const PasswordFields = z
@@ -78,7 +86,7 @@ const PasswordFields = z
 		path: ['confirmPassword'],
 	});
 
-export const RegisterFormStep2 = RegisterFormStep2Fields.and(PasswordFields);
+export const RegisterFormStep2 = RegisterFormStep2FieldsRefined.and(PasswordFields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
 // COMBINE STEPS

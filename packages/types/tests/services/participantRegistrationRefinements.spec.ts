@@ -59,6 +59,17 @@ describe('ParticipantRegistrationRequest', () => {
 		password: 'password',
 	};
 
+	const guardianConsentData = {
+		...adultConsentTestData,
+		guardianEmailAddress: 'homer@example.com',
+		guardianName: 'Homer Simpson',
+		guardianPhoneNumber: '5492750173',
+		guardianRelationship: 'Father',
+		isGuardian: true,
+		participantEmailAddress: undefined,
+		participantPhoneNumber: undefined,
+	};
+
 	describe('Date of Birth Field', () => {
 		it("Adds an error to the dateOfBirth field when user's age is below the minimum", () => {
 			const result = ParticipantRegistrationRequest.safeParse({
@@ -167,8 +178,10 @@ describe('ParticipantRegistrationRequest', () => {
 
 		it('Adds invalid and missing field errors when the user is a guardian and has a mix of invalid and missing values in guardian fields', () => {
 			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
+				...guardianConsentData,
+				participantPhoneNumber: '1234567890', // TEMP
 				guardianName: 'Homer ]]]]]',
+				guardianPhoneNumber: undefined,
 				guardianRelationship: ' ',
 				isGuardian: true,
 			});
@@ -197,17 +210,32 @@ describe('ParticipantRegistrationRequest', () => {
 		it('Parses correctly when the user is a guardian and all guardian fields are valid', () => {
 			expect(
 				ParticipantRegistrationRequest.safeParse({
-					...adultConsentTestData,
-					guardianName: 'Homer Simpson',
-					guardianPhoneNumber: '1234567890',
-					guardianRelationship: 'Father',
-					isGuardian: true,
+					guardianConsentData,
+					guardianName: 'hello',
+					participantPhoneNumber: '1234567890', // TEMP
 				}).success,
-			).true;
+			).false;
 		});
 
 		it('Parses correctly when the user is not a guardian and all guardian fields are undefined', () => {
 			expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 		});
+	});
+
+	describe('Email Address', () => {
+		describe('User is a guardian', () => {
+			it('Parses correctly if the user has a guardian email, and no participant email', () => {
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...guardianConsentData,
+						participantPhoneNumber: '1234567890', // TEMP
+					}).success,
+				).true;
+			});
+			it('Throws an invalid error if the user provides an invalid guardian email address', () => {});
+			it("Throws a custom error if the user didn't provide a guardian email", () => {});
+			it('Throws a custom error if user provided a participant email address', () => {});
+		});
+		// describe('User is a participant', () => {});
 	});
 });

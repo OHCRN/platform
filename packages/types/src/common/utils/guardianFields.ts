@@ -19,8 +19,19 @@
 
 import { z } from 'zod';
 
-import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
-import { isEmptyOrUndefined } from '../../common/index.js';
+import {
+	RegisterFormStep2Fields,
+	RegisterRequestGuardianFields,
+} from '../../services/consentUi/requests/Register.js';
+import { hasValue, isEmptyOrUndefined } from '../../common/index.js';
+
+const addIssue = (ctx: z.RefinementCtx, message: string, path: string) => {
+	ctx.addIssue({
+		code: 'custom',
+		message,
+		path: [path],
+	});
+};
 
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
@@ -28,6 +39,7 @@ import { isEmptyOrUndefined } from '../../common/index.js';
  *
  * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
  * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
+ * @param ctx Zod refinement context
  * @returns {boolean} returns true if all required fields are present
  */
 export const hasRequiredGuardianInfoForRegistration = (
@@ -41,12 +53,40 @@ export const hasRequiredGuardianInfoForRegistration = (
 	if (isGuardian) {
 		Object.entries(fields).forEach(([key, value]) => {
 			if (isEmptyOrUndefined(value?.trim())) {
-				ctx.addIssue({
-					code: 'custom',
-					message: 'guardianInfoMissing',
-					path: [key],
-				});
+				addIssue(ctx, 'guardianInfoMissing', key);
 			}
 		});
+	}
+};
+
+/**
+ * Checks if a Participant schema object contains the required email address for the user's consent group.
+ * Guardians must have guardianEmailAddress and can't have a participantEmailAddress.
+ * Participants must have participantEmailAddress and can't have guardianEmailAddress.
+ * Use with superRefine because it supports validating and adding errors to multiple fields.
+ * @param props isGuardian, guardianEmailAddress, participantEmailAddress
+ * @param ctx Zod refinement context
+ * @returns {boolean} returns true if appropriate fields are present
+ */
+export const hasRequiredEmailForConsentGroupForRegistration = (
+	props: RegisterFormStep2Fields,
+	ctx: z.RefinementCtx,
+) => {
+	const { isGuardian, guardianEmailAddress, participantEmailAddress } = props;
+
+	if (isGuardian) {
+		if (isEmptyOrUndefined(guardianEmailAddress)) {
+			addIssue(ctx, 'guardianEmailMissing', 'guardianEmailAddress');
+		}
+		if (!isEmptyOrUndefined(participantEmailAddress)) {
+			addIssue(ctx, 'guardianHasParticipantEmail', 'participantEmailAddress');
+		}
+	} else {
+		if (isEmptyOrUndefined(participantEmailAddress)) {
+			addIssue(ctx, 'participantEmailMissing', 'participantEmailAddress');
+		}
+		if (!isEmptyOrUndefined(guardianEmailAddress)) {
+			addIssue(ctx, 'participantHasGuardianEmail', 'guardianEmailAddress');
+		}
 	}
 };
