@@ -17,7 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import urlJoin from 'url-join';
+
+import { getAppConfig } from 'src/config';
+
 import { GenerateConsentPdfParams } from './types';
+
+const { CONSENT_UI_URL } = getAppConfig();
+
+const mockSignatureImage = urlJoin(CONSENT_UI_URL, '/assets/images/placeholder-signature.png');
 
 // properties starting with mock = unknown property name/type/schema
 
@@ -26,7 +34,7 @@ export const mockDataGuardian: GenerateConsentPdfParams = {
 	currentLifecycleState: 'CONSENTED',
 	guardianName: 'Marge Simpson',
 	mockDate: new Date(),
-	mockSignatureImage: 'http://localhost:3000/assets/images/placeholder-signature.png',
+	mockSignatureImage,
 	participantOhipFirstName: 'Lisa',
 	participantOhipLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: false,
@@ -41,7 +49,7 @@ export const mockDataParticipant: GenerateConsentPdfParams = {
 	currentLifecycleState: 'CONSENTED',
 	guardianName: undefined,
 	mockDate: new Date(),
-	mockSignatureImage: 'http://localhost:3000/assets/images/placeholder-signature.png',
+	mockSignatureImage,
 	participantOhipFirstName: 'Homer',
 	participantOhipLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: true,
@@ -56,7 +64,7 @@ export const mockDataSubstitute: GenerateConsentPdfParams = {
 	currentLifecycleState: 'CONSENTED',
 	guardianName: 'Homer Simpson',
 	mockDate: new Date(),
-	mockSignatureImage: 'http://localhost:3000/assets/images/placeholder-signature.png',
+	mockSignatureImage,
 	participantOhipFirstName: 'Abraham',
 	participantOhipLastName: 'Simpson',
 	RECONTACT__FUTURE_RESEARCH: false,
