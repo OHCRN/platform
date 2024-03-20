@@ -31,7 +31,7 @@ model Participant {
   inviteId                  String?
   clinicianInvite           ClinicianInvite? @relation(fields: [inviteId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   dateOfBirth               DateTime         @db.Date
-  hasOhip                   Boolean          @default(true) 
+  hasOhip                   Boolean          @default(true)
   participantEmailAddress   String?          @unique
   participantOhipFirstName  String
   participantOhipLastName   String
@@ -48,18 +48,20 @@ model Participant {
   mailingAddressProvince    Province?
   mailingAddressPostalCode  String?          @db.Char(6)
   residentialPostalCode     String?          @db.Char(6)
+  assentFormIdentifier      String?
 }
 
 model ClinicianInvite {
   id                       String        @id @default("") @db.Char(21)
-  participantFirstName     String
-  participantLastName      String
-  participantEmailAddress  String        @unique
-  participantPhoneNumber   String        @db.Char(10)
+  participantOhipFirstName String
+  participantOhipLastName  String
+  participantEmailAddress  String?       @unique
+  participantPhoneNumber   String?       @db.Char(10)
   participantPreferredName String?
   guardianName             String?
   guardianPhoneNumber      String?       @db.Char(10)
   guardianEmailAddress     String?
   guardianRelationship     String?
   Participant              Participant[]
+  assentFormIdentifier     String?
 }

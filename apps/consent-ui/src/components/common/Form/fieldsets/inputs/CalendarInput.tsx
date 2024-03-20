@@ -27,6 +27,7 @@ import { enCA, frCA } from 'date-fns/locale';
 
 import type { FormInputProps } from 'src/components/common/Form/types';
 import type { ValidLanguage } from 'src/i18n';
+import { DATE_NUMERIC_FORMAT } from 'src/constants';
 
 type CalendarInputProps<T extends FieldValues> = FormInputProps<T> & {
 	popperClassName?: string;
@@ -65,13 +66,18 @@ const CalendarInput = <T extends FieldValues>({
 						onChange={(date) => onChange(date)}
 						className={clsx(className)}
 						popperClassName={clsx(popperClassName)}
+						popperPlacement={'top'}
 						id={id}
 						name={name}
 						locale={currentLang}
 						onBlur={handleBlur}
 						disabled={disabled}
 						aria-required={required}
+						dateFormat={DATE_NUMERIC_FORMAT}
 						{...ariaProps}
+						showMonthDropdown
+						showYearDropdown
+						dropdownMode="select"
 					/>
 				);
 			}}

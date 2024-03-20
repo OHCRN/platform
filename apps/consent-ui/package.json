@@ -17,8 +17,10 @@
 		"clsx": "^2.0.0",
 		"cryptr": "^6.3.0",
 		"date-fns": "2.30.0",
+		"file-saver": "^2.0.5",
 		"next": "14.0.4",
 		"next-auth": "5.0.0-beta.9",
+		"pdf-lib": "^1.17.1",
 		"postcss": "8.4.23",
 		"react": "18.2.0",
 		"react-datepicker": "^4.25.0",
@@ -26,6 +28,7 @@
 		"react-dom": "18.2.0",
 		"react-google-recaptcha": "^3.1.0",
 		"react-hook-form": "^7.47.0",
+		"react-pdf": "^7.7.1",
 		"react-modal": "^3.16.1",
 		"react-select": "^5.8.0",
 		"sass": "^1.64.0",
@@ -37,6 +40,7 @@
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
+		"@types/file-saver": "^2.0.7",
 		"@types/node": "^20.1.3",
 		"@types/react": "18.2.14",
 		"@types/react-datepicker": "^4.19.5",

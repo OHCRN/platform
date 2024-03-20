@@ -19,23 +19,36 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import urlJoin from 'url-join';
 
 import Card from 'src/components/common/Card';
 import { getTranslation, ValidLanguage } from 'src/i18n';
 import ConsentsImage from 'src/../public/assets/images/consents.jpeg';
 import PaddedContainer from 'src/components/common/PaddedContainer';
 import LocalizedLink from 'src/components/common/Link/LocalizedLink';
+import { getAppConfig } from 'src/config';
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
 import { getNotificationTranslations } from 'src/components/providers/NotificationProvider/getNotificationTranslations';
 
 import styles from './Dashboard.module.scss';
 import DashboardNotification from './notifications/DashboardNotification';
+import TempPdfButtons from './TempPdfButtons';
 
+// TODO remove after backend hookup
 const statuses = ['disabled', 'incomplete', 'complete'] as const;
-const consentStatus: (typeof statuses)[number] = statuses[Math.floor(Math.random() * 3)];
+const consentStatus = statuses[2];
 
 const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const { translate } = getTranslation(currentLang);
 	const notificationTranslations = getNotificationTranslations(currentLang);
+
+	const studyConsentPdfUrl = urlJoin(
+		ASSETS_PATH,
+		CONSENT_PDFS_PATH,
+		translate('assetUrls', 'studyConsentPdf'),
+	);
+
+	const { FEATURE_CONSENT_PDF_BUTTONS } = getAppConfig();
 
 	return (
 		<PaddedContainer>
@@ -50,6 +63,9 @@ const DashboardComponent = async ({ currentLang }: { currentLang: ValidLanguage 
 				<div className={styles.content}>
 					<h2>{translate('dashboard', 'reviewOhcrnConsents')}</h2>
 					<p>{translate('dashboard', 'reviewConsentsDescription')}</p>
+					{FEATURE_CONSENT_PDF_BUTTONS && (
+						<TempPdfButtons currentLang={currentLang} studyConsentPdfUrl={studyConsentPdfUrl} />
+					)}
 					<div className={styles['button-container']}>
 						{consentStatus == 'complete' ? (
 							<LocalizedLink

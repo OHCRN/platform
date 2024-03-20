@@ -28,6 +28,7 @@ import {
 	NanoId,
 	OptionalName,
 	OptionalNanoId,
+	OptionalPhoneNumber,
 	OptionalPostalCode,
 	PhoneNumber,
 	PostalCode,
@@ -50,7 +51,7 @@ export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNa
 
 export const ParticipantContactFields = z.object({
 	participantEmailAddress: z.string().email().optional(),
-	participantPhoneNumber: PhoneNumber.optional(),
+	participantPhoneNumber: OptionalPhoneNumber,
 });
 export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
 

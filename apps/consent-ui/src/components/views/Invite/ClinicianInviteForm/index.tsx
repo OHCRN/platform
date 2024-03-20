@@ -27,7 +27,7 @@ import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
-import { hasRequiredGuardianInformation } from 'types/common';
+import { hasRequiredInfoForConsentGroup } from 'types/common';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -58,7 +58,7 @@ const styles = Object.assign({}, formStyles, layoutStyles);
 
 const ClinicianInviteFormRequest = ClinicianInviteBase.extend({
 	participantPreferredName: EmptyOrOptionalName,
-}).refine(hasRequiredGuardianInformation);
+}).refine(hasRequiredInfoForConsentGroup);
 
 type ClinicianInviteFormRequest = z.infer<typeof ClinicianInviteFormRequest>;
 
@@ -177,16 +177,16 @@ const ClinicianInviteFormComponent = ({
 					{/* SECTION - PARTICIPANT INFO */}
 					<FormSection>
 						<TextFieldSet
-							error={errors.participantFirstName?.type && errorsDict.required}
+							error={errors.participantOhipFirstName?.type && errorsDict.required}
 							label={labelsDict.firstName}
-							name="participantFirstName"
+							name="participantOhipFirstName"
 							required
 							description={textDict.participantFirstNameTooltip}
 						/>
 						<TextFieldSet
-							error={errors.participantLastName?.type && errorsDict.required}
+							error={errors.participantOhipLastName?.type && errorsDict.required}
 							label={labelsDict.lastName}
-							name="participantLastName"
+							name="participantOhipLastName"
 							required
 							description={textDict.participantLastNameTooltip}
 						/>

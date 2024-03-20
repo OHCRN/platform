@@ -20,8 +20,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-	hasRequiredGuardianInformation,
-	hasRequiredParticipantContactInfo,
+	hasRequiredInfoForConsentGroup,
 	hasRequiredOhipFormInfo,
 	hasRequiredOhipInfo,
 } from '../../src/common/index.js';
@@ -47,131 +46,117 @@ describe('Conditional fields utility functions', () => {
 		ADULT_CONSENT, // non-guardian group
 		YOUNG_ADULT_CONSENT, // non-guardian group
 	} = ConsentGroup.enum;
-	describe('hasRequiredGuardianInformation', () => {
-		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR) and all required guardian fields are provided', () => {
-			const testSchemaObj = {
-				...mockCompleteGuardianFields,
-				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).true;
+	describe('hasRequiredInfoForConsentGroup', () => {
+		describe('guardian consent groups', () => {
+			it('returns TRUE if all guardian fields and no participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteGuardianFields,
+					consentGroup: GUARDIAN_CONSENT_OF_MINOR,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).true;
+			});
+			it('returns FALSE if one guardian field is not provided and no participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteGuardianFields,
+					guardianPhoneNumber: undefined,
+					consentGroup: GUARDIAN_CONSENT_OF_MINOR,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if one guardian field and no participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteGuardianFields,
+					guardianPhoneNumber: undefined,
+					guardianRelationship: undefined,
+					guardianName: undefined,
+					consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if no guardian fields or participant contact fields are provided', () => {
+				const testSchemaObj = {
+					consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if all guardian fields and all participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteGuardianFields,
+					...mockCompleteParticipantContactFields,
+					consentGroup: GUARDIAN_CONSENT_OF_MINOR,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if some guardian fields and some participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteGuardianFields,
+					guardianName: undefined,
+					...mockCompleteParticipantContactFields,
+					participantEmailAddress: undefined,
+					consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
 		});
-
-		it('returns TRUE if a guardian consentGroup (GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) and all required guardian fields are provided', () => {
-			const testSchemaObj = {
-				...mockCompleteGuardianFields,
-				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).true;
-		});
-
-		it('returns TRUE if a guardian consentGroup (ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER) and all required guardian fields are provided', () => {
-			const testSchemaObj = {
-				...mockCompleteGuardianFields,
-				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).true;
-		});
-
-		it('returns FALSE if a guardian consentGroup and one required guardian field is NOT provided', () => {
-			const guardianFields = {
-				guardianName: 'Gina Guardian',
-				guardianEmailAddress: 'gina_g@example.com',
-				guardianPhoneNumber: '0123456789',
-			};
-			const testSchemaObj = {
-				...guardianFields,
-				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns FALSE if a guardian consentGroup and several required guardian fields are NOT provided', () => {
-			const guardianFields = {
-				guardianName: 'Gina Guardian',
-			};
-			const testSchemaObj = {
-				...guardianFields,
-				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns FALSE if a guardian consentGroup and NO required guardian fields are provided', () => {
-			const testSchemaObj = {
-				consentGroup: ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns TRUE if a non-guardian consentGroup and no guardian fields are provided', () => {
-			const testSchemaObj = {
-				consentGroup: ADULT_CONSENT,
-			};
-			const result = hasRequiredGuardianInformation(testSchemaObj);
-			expect(result).true;
-		});
-	});
-
-	describe('hasRequiredParticipantContactInfo', () => {
-		it('returns TRUE if a non-guardian consentGroup (ADULT_CONSENT) and participant contact fields are provided', () => {
-			const testSchemaObj = {
-				...mockCompleteParticipantContactFields,
-				consentGroup: ADULT_CONSENT,
-			};
-			const result = hasRequiredParticipantContactInfo(testSchemaObj);
-			expect(result).true;
-		});
-
-		it('returns TRUE if a non-guardian (YOUNG_ADULT_CONSENT) and participant contact fields are provided', () => {
-			const testSchemaObj = {
-				...mockCompleteParticipantContactFields,
-				consentGroup: YOUNG_ADULT_CONSENT,
-			};
-			const result = hasRequiredParticipantContactInfo(testSchemaObj);
-			expect(result).true;
-		});
-
-		it('returns FALSE if a non-guardian consentGroup and one participant contact field is NOT provided', () => {
-			const participantContactFields = {
-				participantEmailAddress: 'patti@example.com',
-			};
-			const testSchemaObj = {
-				...participantContactFields,
-				consentGroup: ADULT_CONSENT,
-			};
-			const result = hasRequiredParticipantContactInfo(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns FALSE if a non-guardian consentGroup and all participant contact fields are NOT provided', () => {
-			const testSchemaObj = {
-				consentGroup: YOUNG_ADULT_CONSENT,
-			};
-			const result = hasRequiredParticipantContactInfo(testSchemaObj);
-			expect(result).false;
-		});
-
-		it('returns TRUE if a guardian consentGroup and participant contact fields are NOT provided', () => {
-			const testSchemaObj = {
-				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
-			};
-			const result = hasRequiredParticipantContactInfo(testSchemaObj);
-			expect(result).true;
-		});
-
-		it('returns TRUE if a guardian consentGroup and participant contact fields are provided', () => {
-			const testSchemaObj = {
-				...mockCompleteParticipantContactFields,
-				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
-			};
-			const result = hasRequiredParticipantContactInfo(testSchemaObj);
-			expect(result).true;
+		describe('non-guardian consent groups', () => {
+			it('returns TRUE if all participant contact fields and no guardian fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteParticipantContactFields,
+					consentGroup: ADULT_CONSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).true;
+			});
+			it('returns FALSE if one participant contact field is not provided and no guardian fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteParticipantContactFields,
+					participantEmailAddress: undefined,
+					consentGroup: YOUNG_ADULT_CONSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if one participant contact field and no guardian fields are provided', () => {
+				const testSchemaObj = {
+					participantEmailAddress: 'patti@example.com',
+					consentGroup: ADULT_CONSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if no guardian fields or participant contact fields are provided', () => {
+				const testSchemaObj = {
+					consentGroup: YOUNG_ADULT_CONSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if all guardian fields and all participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteGuardianFields,
+					...mockCompleteParticipantContactFields,
+					consentGroup: ADULT_CONSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
+			it('returns FALSE if some guardian fields and some participant contact fields are provided', () => {
+				const testSchemaObj = {
+					...mockCompleteParticipantContactFields,
+					participantPhoneNumber: undefined,
+					...mockCompleteGuardianFields,
+					guardianEmailAddress: undefined,
+					consentGroup: YOUNG_ADULT_CONSENT,
+				};
+				const result = hasRequiredInfoForConsentGroup(testSchemaObj);
+				expect(result).false;
+			});
 		});
 	});
 
