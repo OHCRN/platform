@@ -35,8 +35,6 @@ const mocks = vi.hoisted(() => {
 		clinicianTitleOrRole: 'Physician',
 		participantOhipFirstName: 'Harry',
 		participantOhipLastName: 'Potter',
-		participantEmailAddress: 'harry.potter@example.com',
-		participantPhoneNumber: '3111972720',
 		participantPreferredName: 'The Chosen One',
 		consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
 		guardianName: 'Sirius Black',
