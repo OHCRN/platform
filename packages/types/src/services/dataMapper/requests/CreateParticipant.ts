@@ -28,9 +28,10 @@ import {
 import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
 
 export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
-	.merge(ConsentToBeContacted).refine(hasRequiredInfoForConsentGroup, {
-	message: 'Contact fields must be related to consentGroup',
-});
+	.merge(ConsentToBeContacted)
+	.refine(hasRequiredInfoForConsentGroup, {
+		message: 'Contact fields must be related to consentGroup',
+	});
 
 export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
 export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);
