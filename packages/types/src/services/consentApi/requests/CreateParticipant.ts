@@ -17,13 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
+import { z } from 'zod';
 
-import { ConsentParticipant } from '../../../entities/index.js';
+import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
+import {
+	ConsentParticipantBase,
+	ConsentToBeContacted,
+	ParticipantIdentityBase,
+} from '../../../entities/index.js';
 
-export const ConsentCreateParticipantResponse = ConsentParticipant;
-export type ConsentCreateParticipantResponse = z.infer<typeof ConsentCreateParticipantResponse>;
-export const ConsentCreateParticipantResponseSchema = generateSchema(
-	ConsentCreateParticipantResponse,
-);
+export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
+	.merge(ConsentToBeContacted)
+	.refine(hasRequiredInfoForConsentGroup, {
+		message: 'Contact fields must be related to consentGroup',
+	});
+
+export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
+export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);

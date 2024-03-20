@@ -83,20 +83,18 @@ export const PIParticipantBase = ParticipantIdentityBase.merge(
 );
 export type PIParticipantBase = z.infer<typeof PIParticipantBase>;
 
-export const ConsentParticipantBase = z
-	.object({
-		currentLifecycleState: LifecycleState,
-		consentGroup: ConsentGroup,
-		emailVerified: z.boolean(),
-		isGuardian: z.boolean(),
-	})
-	.merge(ConsentToBeContacted);
+export const ConsentParticipantBase = z.object({
+	currentLifecycleState: LifecycleState,
+	consentGroup: ConsentGroup,
+	emailVerified: z.boolean(),
+	isGuardian: z.boolean(),
+});
 export type ConsentParticipantBase = z.infer<typeof ConsentParticipantBase>;
 
 export const ConsentParticipant = ConsentParticipantBase.merge(
 	z.object({
 		id: NanoId,
-		previousLifecycleState: LifecycleState.optional(),
+		consentToBeContacted: z.boolean(),
 	}),
 );
 export type ConsentParticipant = z.infer<typeof ConsentParticipant>;

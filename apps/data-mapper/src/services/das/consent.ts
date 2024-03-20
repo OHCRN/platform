@@ -227,7 +227,7 @@ export const createParticipantConsentData = async (
 	const { consentDasUrl } = getAppConfig();
 	try {
 		const result = await axiosClient.post(urlJoin(consentDasUrl, 'participants'), req);
-		return success(result.data.participant);
+		return success(result.data);
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
 			const { data, status } = error.response;
