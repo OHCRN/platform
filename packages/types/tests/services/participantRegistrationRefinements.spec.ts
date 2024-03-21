@@ -18,6 +18,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import z from 'zod';
 
 import {
 	RegisterFormStep1NoDateOfBirth,
@@ -25,6 +26,24 @@ import {
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
+
+// not sure where to put this
+// i can't figure out the result type
+/**
+ * Checks Zod result for specific error messages on the provided fields.
+ * @param result Result from expect statement.
+ * @param errors Object with the path and error message for each field being tested
+ */
+export const expectErrorsByField = (result: any, errors: { path: string; message: string }[]) => {
+	const resultJsonParsed = JSON.parse(result.error.message);
+	errors.forEach(({ path, message }, i) => {
+		const resultParsed = resultJsonParsed[i];
+		const resultMessage = resultParsed.message;
+		const resultPath = resultParsed.path[0];
+		expect(resultPath).toBe(path);
+		expect(resultMessage).toBe(message);
+	});
+};
 
 describe('ParticipantRegistrationRequest', () => {
 	const {
@@ -38,6 +57,7 @@ describe('ParticipantRegistrationRequest', () => {
 	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
 	const RegisterFormStep1 = RegisterFormStep1NoDateOfBirth.and(DateOfBirthField);
 	const ParticipantRegistrationRequest = RegisterFormStep1.and(RegisterFormStep2);
+	type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;
 
 	const adultConsentTestData = {
 		confirmPassword: 'password',
@@ -78,12 +98,9 @@ describe('ParticipantRegistrationRequest', () => {
 					...guardianConsentTestData,
 					participantPhoneNumber: '1234567890',
 				});
-				const resultParsed = JSON.parse((result as { error: Error }).error.message)[0];
-				const resultMessage = resultParsed.message;
-				const resultPath = resultParsed.path[0];
-				expect(result.success).false;
-				expect(resultPath).toBe('participantPhoneNumber');
-				expect(resultMessage).toBe('guardianHasParticipantPhoneNumber');
+				expectErrorsByField(result, [
+					{ path: 'participantPhoneNumber', message: 'guardianHasParticipantPhoneNumber' },
+				]);
 			});
 		});
 
@@ -98,12 +115,9 @@ describe('ParticipantRegistrationRequest', () => {
 					...adultConsentTestData,
 					participantPhoneNumber: undefined,
 				});
-				const resultParsed = JSON.parse((result as { error: Error }).error.message)[0];
-				const resultMessage = resultParsed.message;
-				const resultPath = resultParsed.path[0];
-				expect(result.success).false;
-				expect(resultPath).toBe('participantPhoneNumber');
-				expect(resultMessage).toBe('participantMissingPhoneNumber');
+				expectErrorsByField(result, [
+					{ path: 'participantPhoneNumber', message: 'participantMissingPhoneNumber' },
+				]);
 			});
 		});
 	});
@@ -129,12 +143,9 @@ describe('ParticipantRegistrationRequest', () => {
 				...adultConsentTestData,
 				dateOfBirth: lessThanMinimumAgeDateOfBirth,
 			});
-			const resultParsed = JSON.parse((result as { error: Error }).error.message)[0];
-			const resultMessage = resultParsed.message;
-			const resultPath = resultParsed.path[0];
-			expect(result.success).false;
-			expect(resultMessage).toBe('participantLessThanMinimumAge');
-			expect(resultPath).toBe('dateOfBirth');
+			expectErrorsByField(result, [
+				{ path: 'dateOfBirth', message: 'participantLessThanMinimumAge' },
+			]);
 		});
 	});
 
@@ -151,25 +162,12 @@ describe('ParticipantRegistrationRequest', () => {
 					isGuardian: true,
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('guardianInfoMissing');
-				expect(resultPath1).toBe('guardianName');
-
-				const resultParsed2 = resultJsonParsed[1];
-				const resultMessage2 = resultParsed2.message;
-				const resultPath2 = resultParsed2.path[0];
-				expect(resultMessage2).toBe('guardianInfoMissing');
-				expect(resultPath2).toBe('guardianPhoneNumber');
-
-				const resultParsed3 = resultJsonParsed[2];
-				const resultMessage3 = resultParsed3.message;
-				const resultPath3 = resultParsed3.path[0];
-				expect(resultMessage3).toBe('guardianInfoMissing');
-				expect(resultPath3).toBe('guardianRelationship');
+				expectErrorsByField(result, [
+					{ path: 'guardianName', message: 'guardianInfoMissing' },
+					{ path: 'guardianPhoneNumber', message: 'guardianInfoMissing' },
+					{ path: 'guardianRelationship', message: 'guardianInfoMissing' },
+				]);
 			});
 
 			it('Adds an error to specific field if one guardian field is undefined', () => {
@@ -180,13 +178,10 @@ describe('ParticipantRegistrationRequest', () => {
 					isGuardian: true,
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed = resultJsonParsed[0];
-				const resultMessage = resultParsed.message;
-				const resultPath = resultParsed.path[0];
-				expect(resultMessage).toBe('guardianInfoMissing');
-				expect(resultPath).toBe('guardianRelationship');
+				expectErrorsByField(result, [
+					{ path: 'guardianRelationship', message: 'guardianInfoMissing' },
+				]);
 			});
 
 			it('Adds invalid field errors when the user has entered invalid values in guardian fields', () => {
@@ -198,62 +193,91 @@ describe('ParticipantRegistrationRequest', () => {
 					isGuardian: true,
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultPath1).toBe('guardianName');
-				expect(resultMessage1).toBe('Invalid');
-
-				const resultParsed2 = resultJsonParsed[1];
-				const resultMessage2 = resultParsed2.message;
-				const resultPath2 = resultParsed2.path[0];
-				expect(resultPath2).toBe('guardianPhoneNumber');
-				expect(resultMessage2).toBe('Invalid');
-
-				const resultParsed3 = resultJsonParsed[2];
-				const resultMessage3 = resultParsed3.message;
-				const resultPath3 = resultParsed3.path[0];
-				expect(resultPath3).toBe('guardianRelationship');
-				expect(resultMessage3).toBe('Invalid');
+				expectErrorsByField(result, [
+					{ path: 'guardianName', message: 'Invalid' },
+					{ path: 'guardianPhoneNumber', message: 'Invalid' },
+					{ path: 'guardianRelationship', message: 'Invalid' },
+				]);
 			});
 
 			it('Adds invalid and custom field errors when the user has a mix of invalid and missing values in guardian fields', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
-					participantPhoneNumber: '1234567890', // TEMP
 					guardianName: 'Homer ]]]]]',
 					guardianPhoneNumber: undefined,
 					guardianRelationship: ' ',
 					isGuardian: true,
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('Invalid');
-				expect(resultPath1).toBe('guardianName');
-
-				const resultParsed2 = resultJsonParsed[1];
-				const resultMessage2 = resultParsed2.message;
-				const resultPath2 = resultParsed2.path[0];
-				expect(resultMessage2).toBe('guardianInfoMissing');
-				expect(resultPath2).toBe('guardianPhoneNumber');
-
-				const resultParsed3 = resultJsonParsed[2];
-				const resultMessage3 = resultParsed3.message;
-				const resultPath3 = resultParsed3.path[0];
-				expect(resultMessage3).toBe('guardianInfoMissing');
-				expect(resultPath3).toBe('guardianRelationship');
+				expectErrorsByField(result, [
+					{ path: 'guardianName', message: 'Invalid' },
+					{ path: 'guardianPhoneNumber', message: 'guardianInfoMissing' },
+					{ path: 'guardianRelationship', message: 'guardianInfoMissing' },
+				]);
 			});
 		});
 
 		describe('User is a participant', () => {
 			it('Parses correctly when all guardian fields are undefined', () => {
 				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
+			});
+
+			it('Adds a custom error to guardianPhoneNumber if a value is provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianPhoneNumber: '1234567890',
+				});
+				expect(result.success).false;
+
+				expectErrorsByField(result, [
+					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
+				]);
+			});
+
+			it('Adds a custom error to guardianPhoneNumber is added to the page and not filled out', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianPhoneNumber: '',
+				});
+				expect(result.success).false;
+
+				expectErrorsByField(result, [
+					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
+				]);
+			});
+
+			it('Adds custom errors if multiple guardian fields are provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianName: 'Homer Simpson',
+					guardianPhoneNumber: '5492750173',
+					guardianRelationship: 'Father',
+				});
+				expect(result.success).false;
+
+				expectErrorsByField(result, [
+					{ path: 'guardianName', message: 'participantHasGuardianInfo' },
+					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
+					{ path: 'guardianRelationship', message: 'participantHasGuardianInfo' },
+				]);
+			});
+
+			it('Adds custom errors if multiple guardian fields are added to the page and not filled out', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianName: '',
+					guardianPhoneNumber: '',
+					guardianRelationship: '',
+				});
+				expect(result.success).false;
+
+				expectErrorsByField(result, [
+					{ path: 'guardianName', message: 'participantHasGuardianInfo' },
+					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
+					{ path: 'guardianRelationship', message: 'participantHasGuardianInfo' },
+				]);
 			});
 		});
 	});
@@ -270,28 +294,30 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: 'homer simpson!',
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('Invalid email');
-				expect(resultPath1).toBe('guardianEmailAddress');
+				expectErrorsByField(result, [{ path: 'guardianEmailAddress', message: 'Invalid email' }]);
 			});
 
-			it("Adds a custom error to guardianEmailAddress if the user didn't provide a guardian email", () => {
+			it('Adds a custom error to guardianEmailAddress if the field is missing from form state', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
 					guardianEmailAddress: undefined,
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('guardianEmailMissing');
-				expect(resultPath1).toBe('guardianEmailAddress');
+				expectErrorsByField(result, [
+					{ path: 'guardianEmailAddress', message: 'guardianEmailMissing' },
+				]);
+			});
+
+			it("Throws an invalid error if the user didn't provide a guardian email", () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianEmailAddress: '',
+				});
+				expect(result.success).false;
+
+				expectErrorsByField(result, [{ path: 'guardianEmailAddress', message: 'Invalid email' }]);
 			});
 
 			it('Adds a custom error to participantEmailAddress if user provided a participant email address', () => {
@@ -300,13 +326,10 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: 'bart@example.com',
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('guardianHasParticipantEmail');
-				expect(resultPath1).toBe('participantEmailAddress');
+				expectErrorsByField(result, [
+					{ path: 'participantEmailAddress', message: 'guardianHasParticipantEmail' },
+				]);
 			});
 		});
 
@@ -321,13 +344,10 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: 'homer simpson!',
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('Invalid email');
-				expect(resultPath1).toBe('participantEmailAddress');
+				expectErrorsByField(result, [
+					{ path: 'participantEmailAddress', message: 'Invalid email' },
+				]);
 			});
 
 			it("Adds a custom error to participantEmailAddress if the user didn't provide a participant email", () => {
@@ -336,13 +356,10 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: undefined,
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('participantEmailMissing');
-				expect(resultPath1).toBe('participantEmailAddress');
+				expectErrorsByField(result, [
+					{ path: 'participantEmailAddress', message: 'participantEmailMissing' },
+				]);
 			});
 
 			it('Adds a custom error to guardianEmailAddress if user provided a guardian email address', () => {
@@ -351,15 +368,11 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: 'bart@example.com',
 				});
 				expect(result.success).false;
-				const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-				const resultParsed1 = resultJsonParsed[0];
-				const resultMessage1 = resultParsed1.message;
-				const resultPath1 = resultParsed1.path[0];
-				expect(resultMessage1).toBe('participantHasGuardianEmail');
-				expect(resultPath1).toBe('guardianEmailAddress');
+				expectErrorsByField(result, [
+					{ path: 'guardianEmailAddress', message: 'participantHasGuardianEmail' },
+				]);
 			});
 		});
-		// describe('User is a participant', () => {});
 	});
 });

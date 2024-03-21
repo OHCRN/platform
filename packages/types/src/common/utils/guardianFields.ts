@@ -24,7 +24,7 @@ import {
 	RegisterFormStep2Fields,
 	RegisterRequestGuardianFields,
 } from '../../services/consentUi/requests/Register.js';
-import { isEmptyOrUndefined } from '../../common/index.js';
+import { hasValue, isEmptyOrUndefined } from '../../common/index.js';
 
 import { addZodIssue } from './common.js';
 
@@ -32,7 +32,8 @@ import { addZodIssue } from './common.js';
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
  * Use with superRefine because it supports validating and adding errors to multiple fields.
  *
- * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
+ * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected.
+ * These fields must be undefined if isGuardian is not selected.
  * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
  * @param ctx Zod refinement context
  */
@@ -48,6 +49,14 @@ export const hasRequiredGuardianInfoForRegistration = (
 		Object.entries(fields).forEach(([key, value]) => {
 			if (isEmptyOrUndefined(value?.trim())) {
 				addZodIssue(ctx, key, 'guardianInfoMissing');
+			}
+		});
+	} else {
+		Object.entries(fields).forEach(([key, value]) => {
+			// these fields shouldn't be on the page if the user is a participant.
+			// so, the values should be undefined.
+			if (hasValue(value)) {
+				addZodIssue(ctx, key, 'participantHasGuardianInfo');
 			}
 		});
 	}
