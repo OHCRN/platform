@@ -23,16 +23,9 @@ import {
 	RegisterFormStep2Fields,
 	RegisterRequestGuardianFields,
 } from '../../services/consentUi/requests/Register.js';
-import { hasValue, isEmptyOrUndefined } from '../../common/index.js';
+import { isEmptyOrUndefined } from '../../common/index.js';
 
-const addIssue = (ctx: z.RefinementCtx, message: string, path: string) => {
-	ctx.addIssue({
-		code: 'custom',
-		message,
-		path: [path],
-	});
-};
-
+import { addZodIssue } from './common.js';
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
  * Use with superRefine because it supports validating and adding errors to multiple fields.
@@ -53,7 +46,7 @@ export const hasRequiredGuardianInfoForRegistration = (
 	if (isGuardian) {
 		Object.entries(fields).forEach(([key, value]) => {
 			if (isEmptyOrUndefined(value?.trim())) {
-				addIssue(ctx, 'guardianInfoMissing', key);
+				addZodIssue(ctx, key, 'guardianInfoMissing');
 			}
 		});
 	}
@@ -76,17 +69,17 @@ export const hasRequiredEmailForConsentGroupForRegistration = (
 
 	if (isGuardian) {
 		if (isEmptyOrUndefined(guardianEmailAddress)) {
-			addIssue(ctx, 'guardianEmailMissing', 'guardianEmailAddress');
+			addZodIssue(ctx, 'guardianEmailAddress', 'guardianEmailMissing');
 		}
 		if (!isEmptyOrUndefined(participantEmailAddress)) {
-			addIssue(ctx, 'guardianHasParticipantEmail', 'participantEmailAddress');
+			addZodIssue(ctx, 'participantEmailAddress', 'guardianHasParticipantEmail');
 		}
 	} else {
 		if (isEmptyOrUndefined(participantEmailAddress)) {
-			addIssue(ctx, 'participantEmailMissing', 'participantEmailAddress');
+			addZodIssue(ctx, 'participantEmailAddress', 'participantEmailMissing');
 		}
 		if (!isEmptyOrUndefined(guardianEmailAddress)) {
-			addIssue(ctx, 'participantHasGuardianEmail', 'guardianEmailAddress');
+			addZodIssue(ctx, 'guardianEmailAddress', 'participantHasGuardianEmail');
 		}
 	}
 };
