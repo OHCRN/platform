@@ -34,7 +34,6 @@ import { addZodIssue } from './common.js';
  * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
  * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
  * @param ctx Zod refinement context
- * @returns {boolean} returns true if all required fields are present
  */
 export const hasRequiredGuardianInfoForRegistration = (
 	props: RegisterRequestGuardianFields,
@@ -60,7 +59,6 @@ export const hasRequiredGuardianInfoForRegistration = (
  * Use with superRefine because it supports validating and adding errors to multiple fields.
  * @param props isGuardian, guardianEmailAddress, participantEmailAddress
  * @param ctx Zod refinement context
- * @returns {boolean} returns true if appropriate fields are present
  */
 export const hasRequiredEmailForConsentGroupForRegistration = (
 	props: RegisterFormStep2Fields,
