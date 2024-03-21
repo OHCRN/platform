@@ -27,22 +27,20 @@ import {
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
 
-// not sure where to put this
-// i can't figure out the result type
+// not sure about placement or types for this
 /**
- * Checks Zod result for specific error messages on the provided fields.
- * @param result Result from expect statement.
- * @param errors Object with the path and error message for each field being tested
+ * Format Zod errors for form fields into a more easy to read format for testing.
+ * @param result The object resulting from Zod SafeParse
+ * @returns An array of objects: { path, message }
  */
-export const expectErrorsByField = (result: any, errors: { path: string; message: string }[]) => {
-	const resultJsonParsed = JSON.parse(result.error.message);
-	errors.forEach(({ path, message }, i) => {
-		const resultParsed = resultJsonParsed[i];
-		const resultMessage = resultParsed.message;
-		const resultPath = resultParsed.path[0];
-		expect(resultPath).toBe(path);
-		expect(resultMessage).toBe(message);
-	});
+const formatZodErrors = (
+	result: z.SafeParseReturnType<any, any>,
+): { path: string; message: string }[] => {
+	const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
+	return resultJsonParsed.map((item: ) => ({
+		path: item.path[0],
+		message: item.message,
+	}));
 };
 
 describe('ParticipantRegistrationRequest', () => {
@@ -89,8 +87,7 @@ describe('ParticipantRegistrationRequest', () => {
 	describe('Participant Phone Number Field', () => {
 		describe('User is a guardian', () => {
 			it('Returns true when participantPhoneNumber is not provided', () => {
-				const result = ParticipantRegistrationRequest.safeParse(guardianConsentTestData);
-				expect(result.success).true;
+				expect(ParticipantRegistrationRequest.safeParse(guardianConsentTestData).success).true;
 			});
 
 			it('Adds a custom error to participantPhoneNumber if a value is provided', () => {
@@ -98,16 +95,17 @@ describe('ParticipantRegistrationRequest', () => {
 					...guardianConsentTestData,
 					participantPhoneNumber: '1234567890',
 				});
-				expectErrorsByField(result, [
-					{ path: 'participantPhoneNumber', message: 'guardianHasParticipantPhoneNumber' },
-				]);
+				expect(result.success).false;
+
+				const fieldErrors = formatZodErrors(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
 			});
 		});
 
 		describe('User is a participant', () => {
 			it('Returns true when participantPhoneNumber is provided', () => {
-				const result = ParticipantRegistrationRequest.safeParse(adultConsentTestData);
-				expect(result.success).true;
+				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
 
 			it('Adds a custom error to participantPhoneNumber if a value is not provided', () => {
@@ -115,9 +113,10 @@ describe('ParticipantRegistrationRequest', () => {
 					...adultConsentTestData,
 					participantPhoneNumber: undefined,
 				});
-				expectErrorsByField(result, [
-					{ path: 'participantPhoneNumber', message: 'participantMissingPhoneNumber' },
-				]);
+
+				const fieldErrors = formatZodErrors(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
 			});
 		});
 	});
@@ -143,9 +142,10 @@ describe('ParticipantRegistrationRequest', () => {
 				...adultConsentTestData,
 				dateOfBirth: lessThanMinimumAgeDateOfBirth,
 			});
-			expectErrorsByField(result, [
-				{ path: 'dateOfBirth', message: 'participantLessThanMinimumAge' },
-			]);
+
+			const fieldErrors = formatZodErrors(result);
+			expect(fieldErrors[0].path).toBe('dateOfBirth');
+			expect(fieldErrors[0].message).toBe('participantLessThanMinimumAge');
 		});
 	});
 
@@ -163,11 +163,13 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianName', message: 'guardianInfoMissing' },
-					{ path: 'guardianPhoneNumber', message: 'guardianInfoMissing' },
-					{ path: 'guardianRelationship', message: 'guardianInfoMissing' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('guardianInfoMissing');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('guardianInfoMissing');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('guardianInfoMissing');
 			});
 
 			it('Adds an error to specific field if one guardian field is undefined', () => {
@@ -179,9 +181,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianRelationship', message: 'guardianInfoMissing' },
-				]);
+				const fieldErrors = formatZodErrors(result);
+				expect(fieldErrors[0].path).toBe('guardianRelationship');
+				expect(fieldErrors[0].message).toBe('guardianInfoMissing');
 			});
 
 			it('Adds invalid field errors when the user has entered invalid values in guardian fields', () => {
@@ -194,11 +196,13 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianName', message: 'Invalid' },
-					{ path: 'guardianPhoneNumber', message: 'Invalid' },
-					{ path: 'guardianRelationship', message: 'Invalid' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('Invalid');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('Invalid');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('Invalid');
 			});
 
 			it('Adds invalid and custom field errors when the user has a mix of invalid and missing values in guardian fields', () => {
@@ -211,11 +215,13 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianName', message: 'Invalid' },
-					{ path: 'guardianPhoneNumber', message: 'guardianInfoMissing' },
-					{ path: 'guardianRelationship', message: 'guardianInfoMissing' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('Invalid');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('guardianInfoMissing');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('guardianInfoMissing');
 			});
 		});
 
@@ -231,21 +237,21 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianPhoneNumber');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
 
-			it('Adds a custom error to guardianPhoneNumber is added to the page and not filled out', () => {
+			it('Adds a custom error to guardianPhoneNumber if the value is an empty string', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianPhoneNumber: '',
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianPhoneNumber');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
 
 			it('Adds custom errors if multiple guardian fields are provided', () => {
@@ -257,14 +263,16 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianName', message: 'participantHasGuardianInfo' },
-					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
-					{ path: 'guardianRelationship', message: 'participantHasGuardianInfo' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('participantHasGuardianInfo');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('participantHasGuardianInfo');
 			});
 
-			it('Adds custom errors if multiple guardian fields are added to the page and not filled out', () => {
+			it('Adds custom errors if multiple guardian fields are added to the page and have an empty string value', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianName: '',
@@ -273,11 +281,13 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianName', message: 'participantHasGuardianInfo' },
-					{ path: 'guardianPhoneNumber', message: 'participantHasGuardianInfo' },
-					{ path: 'guardianRelationship', message: 'participantHasGuardianInfo' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('participantHasGuardianInfo');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('participantHasGuardianInfo');
 			});
 		});
 	});
@@ -295,7 +305,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [{ path: 'guardianEmailAddress', message: 'Invalid email' }]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
 			});
 
 			it('Adds a custom error to guardianEmailAddress if the field is missing from form state', () => {
@@ -305,9 +317,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianEmailAddress', message: 'guardianEmailMissing' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('guardianEmailMissing');
 			});
 
 			it("Throws an invalid error if the user didn't provide a guardian email", () => {
@@ -317,7 +329,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [{ path: 'guardianEmailAddress', message: 'Invalid email' }]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
 			});
 
 			it('Adds a custom error to participantEmailAddress if user provided a participant email address', () => {
@@ -327,9 +341,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'participantEmailAddress', message: 'guardianHasParticipantEmail' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('guardianHasParticipantEmail');
 			});
 		});
 
@@ -338,16 +352,16 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
 
-			it('Throws an invalid error if the user provides an invalid guardian email address', () => {
+			it('Throws an invalid error if the user provides an invalid participant email address', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					participantEmailAddress: 'homer simpson!',
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'participantEmailAddress', message: 'Invalid email' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
 			});
 
 			it("Adds a custom error to participantEmailAddress if the user didn't provide a participant email", () => {
@@ -357,9 +371,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'participantEmailAddress', message: 'participantEmailMissing' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('participantEmailMissing');
 			});
 
 			it('Adds a custom error to guardianEmailAddress if user provided a guardian email address', () => {
@@ -369,9 +383,9 @@ describe('ParticipantRegistrationRequest', () => {
 				});
 				expect(result.success).false;
 
-				expectErrorsByField(result, [
-					{ path: 'guardianEmailAddress', message: 'participantHasGuardianEmail' },
-				]);
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('participantHasGuardianEmail');
 			});
 		});
 	});
