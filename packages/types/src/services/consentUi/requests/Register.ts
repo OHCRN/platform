@@ -35,7 +35,7 @@ import {
 
 // STEP 1
 
-export const RegistrationParticipantNameFields = ParticipantNameFields.and(
+const RegistrationParticipantNameFields = ParticipantNameFields.and(
 	z.object({
 		participantPreferredName: EmptyOrOptionalName,
 	}),
@@ -46,20 +46,20 @@ const ParticipantPhoneNumberField = z.object({
 	participantPhoneNumber: EmptyOrOptionalPhoneNumber,
 });
 export type ParticipantPhoneNumberField = z.infer<typeof ParticipantPhoneNumberField>;
-export const ParticipantPhoneNumberFieldRefined = ParticipantPhoneNumberField.superRefine(
+const ParticipantPhoneNumberFieldRefined = ParticipantPhoneNumberField.superRefine(
 	hasParticipantPhoneNumberForRegistration,
 );
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
-export const RegisterRequestGuardianFields = z.object({
+const RegisterRequestGuardianFields = z.object({
 	guardianName: EmptyOrOptionalName,
 	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
 	guardianRelationship: EmptyOrOptionalName,
 	isGuardian: z.boolean(),
 });
 export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
-export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
+const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	hasRequiredGuardianInfoForRegistration,
 );
 

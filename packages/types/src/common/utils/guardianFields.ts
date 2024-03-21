@@ -106,7 +106,7 @@ export const hasParticipantPhoneNumberForRegistration = (
 ) => {
 	const { isGuardian, participantPhoneNumber } = props;
 	if (isGuardian) {
-		if (!isEmptyOrUndefined(participantPhoneNumber)) {
+		if (hasValue(participantPhoneNumber)) {
 			addZodIssue(ctx, 'participantPhoneNumber', 'guardianHasParticipantPhoneNumber');
 		}
 	} else {
