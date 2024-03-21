@@ -55,7 +55,7 @@ describe('Date of Birth', () => {
 		olderThanMinimumAgeDateOfBirth,
 	} = setupDateOfBirthTest();
 
-	it("must return true if user's age is greater than or equal to the minimum'", () => {
+	it("must return true if user's age is greater than or equal to the minimum", () => {
 		expect(checkIsMinimumAgeOrGreater(mockDate, olderThanMinimumAgeDateOfBirth)).true;
 		expect(checkIsMinimumAgeOrGreater(mockDate, exactlyMinimumAgeDateOfBirth)).true;
 	});

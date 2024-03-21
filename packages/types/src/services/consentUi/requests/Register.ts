@@ -23,23 +23,31 @@ import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/P
 import {
 	NonEmptyString,
 	createDateOfBirthRequestSchema,
+	hasParticipantPhoneNumberForRegistration,
 	hasRequiredEmailForConsentGroupForRegistration,
 	hasRequiredGuardianInfoForRegistration,
 } from '../../../common/index.js';
 import {
 	EmptyOrOptionalName,
 	EmptyOrOptionalPhoneNumber,
-	PhoneNumber,
 	hasMatchingPasswords,
 } from '../../../entities/fields/index.js';
 
 // STEP 1
 
-export const RegisterFormStep1Fields = ParticipantNameFields.and(
+export const RegistrationParticipantNameFields = ParticipantNameFields.and(
 	z.object({
-		participantPhoneNumber: PhoneNumber,
 		participantPreferredName: EmptyOrOptionalName,
 	}),
+);
+
+const ParticipantPhoneNumberField = z.object({
+	isGuardian: z.boolean(),
+	participantPhoneNumber: EmptyOrOptionalPhoneNumber,
+});
+export type ParticipantPhoneNumberField = z.infer<typeof ParticipantPhoneNumberField>;
+export const ParticipantPhoneNumberFieldRefined = ParticipantPhoneNumberField.superRefine(
+	hasParticipantPhoneNumberForRegistration,
 );
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
@@ -51,14 +59,16 @@ export const RegisterRequestGuardianFields = z.object({
 	isGuardian: z.boolean(),
 });
 export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
-
 export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	hasRequiredGuardianInfoForRegistration,
 );
 
-export const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
+// for unit tests
+export const RegisterFormStep1NoDateOfBirth = RegistrationParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
-);
+).and(ParticipantPhoneNumberFieldRefined);
+
+export const RegisterFormStep1 = RegisterFormStep1NoDateOfBirth.and(DateOfBirthField);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2

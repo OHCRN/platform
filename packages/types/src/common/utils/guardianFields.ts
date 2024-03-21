@@ -20,6 +20,7 @@
 import { z } from 'zod';
 
 import {
+	ParticipantPhoneNumberField,
 	RegisterFormStep2Fields,
 	RegisterRequestGuardianFields,
 } from '../../services/consentUi/requests/Register.js';
@@ -79,6 +80,29 @@ export const hasRequiredEmailForConsentGroupForRegistration = (
 		}
 		if (!isEmptyOrUndefined(guardianEmailAddress)) {
 			addZodIssue(ctx, 'guardianEmailAddress', 'participantHasGuardianEmail');
+		}
+	}
+};
+
+/**
+ * Checks if a Participant schema object contains a participantPhoneNumber.
+ * This field is required for participants and not allowed for guardians.
+ * Use with superRefine because it supports validating and adding errors to multiple fields.
+ * @param props isGuardian, participantPhoneNumber
+ * @param ctx Zod refinement context
+ */
+export const hasParticipantPhoneNumberForRegistration = (
+	props: ParticipantPhoneNumberField,
+	ctx: z.RefinementCtx,
+) => {
+	const { isGuardian, participantPhoneNumber } = props;
+	if (isGuardian) {
+		if (!isEmptyOrUndefined(participantPhoneNumber)) {
+			addZodIssue(ctx, 'participantPhoneNumber', 'guardianHasParticipantPhoneNumber');
+		}
+	} else {
+		if (isEmptyOrUndefined(participantPhoneNumber)) {
+			addZodIssue(ctx, 'participantPhoneNumber', 'participantMissingPhoneNumber');
 		}
 	}
 };
