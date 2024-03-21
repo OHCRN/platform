@@ -74,8 +74,8 @@ const FormStep2 = ({
 	const {
 		clearErrors,
 		formState: { errors, isValid, touchedFields },
-		getValues,
 		handleSubmit,
+		register,
 		setError,
 		setFocus,
 		watch,
@@ -140,14 +140,17 @@ const FormStep2 = ({
 		}
 	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
 
-	const getIsGuardian = getValues('isGuardian');
+	// watch hidden isGuardian field to determine whether to show
+	// participant or guardian email field
+	const watchIsGuardian = watch('isGuardian');
 
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
+				<input disabled type="hidden" {...register('isGuardian')} />
 				{/* SECTION - EMAIL & PASSWORD */}
 				<FormSection>
-					{getIsGuardian ? (
+					{watchIsGuardian ? (
 						<TextFieldSet
 							error={errors.guardianEmailAddress?.type && errorsDict.required}
 							label={labelsDict.email}
