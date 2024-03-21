@@ -17,13 +17,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
+import { z } from 'zod';
 
-import { ConsentParticipant } from '../../../entities/index.js';
+import { ParticipantIdentityBase, ConsentParticipant } from '../../../entities/Participant.js';
 
-export const ConsentCreateParticipantResponse = ConsentParticipant;
-export type ConsentCreateParticipantResponse = z.infer<typeof ConsentCreateParticipantResponse>;
-export const ConsentCreateParticipantResponseSchema = generateSchema(
-	ConsentCreateParticipantResponse,
-);
+export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentParticipant);
+export type CreateParticipantResponse = z.infer<typeof CreateParticipantResponse>;
+export const CreateParticipantResponseSchema = generateSchema(CreateParticipantResponse);

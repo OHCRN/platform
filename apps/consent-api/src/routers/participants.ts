@@ -18,13 +18,19 @@
  */
 
 import { Router } from 'express';
+import withRequestValidation from 'express-request-validation';
+import { ConflictErrorResponse, ServerErrorResponse } from 'types/httpResponses';
+import { CreateParticipantRequest } from 'types/consentApi';
+import { z } from 'zod';
 
+import { recaptchaMiddleware } from '../middleware/recaptcha.js';
+import { createParticipant } from '../services/create.js';
+import logger from '../logger.js';
 import {
 	getLatestParticipantResponseByParticipantIdAndQuestionId,
 	getParticipant,
 	getParticipants,
 } from '../services/search.js';
-import logger from '../logger.js';
 
 /**
  * @openapi
@@ -134,5 +140,67 @@ router.get('/:id/consent-questions/:consentQuestionId', async (req, res) => {
 
 	return res.status(200).send({ latestResponse });
 });
+
+const CreateParticipantRequestSchema = z.object({ data: CreateParticipantRequest });
+/**
+ * @openapi
+ * /participants:
+ *   post:
+ *     tags:
+ *       - Participants
+ *     name: Create Participant
+ *     description: Form submission for Participant Registration
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               recaptchaToken:
+ *                 type: string
+ *               data:
+ *                 $ref: '#/components/schemas/CreateParticipantRequest'
+ *     responses:
+ *       201:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CreateParticipantResponse'
+ *       400:
+ *         description: RequestValidationError - The request body was invalid.
+ *       409:
+ *         description: ConflictError - That request could not be made because it conflicts with data that already exists.
+ *       500:
+ *         description: ServerError - An unexpected error occurred.
+ */
+router.post(
+	'/',
+	recaptchaMiddleware,
+	withRequestValidation(CreateParticipantRequestSchema, async (req, res) => {
+		try {
+			const participant = await createParticipant(req.body.data);
+			switch (participant.status) {
+				case 'SUCCESS': {
+					return res.status(201).json(participant.data);
+				}
+				case 'PARTICIPANT_EXISTS': {
+					return res.status(409).json(ConflictErrorResponse(participant.message));
+				}
+				case 'SYSTEM_ERROR': {
+					return res.status(500).json(ServerErrorResponse(participant.message));
+				}
+			}
+		} catch (error) {
+			logger.error(
+				'POST /participants',
+				`Unexpected error handling create participant request.`,
+				error,
+			);
+			return res.status(500).json(ServerErrorResponse());
+		}
+	}),
+);
 
 export default router;

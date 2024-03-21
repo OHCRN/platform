@@ -111,8 +111,8 @@ export const createParticipant = async ({
 		}
 		// parse complete result from both dases
 		const result = CreateParticipantResponse.safeParse({
-			...participantPiData,
-			...participantConsentData,
+			...participantPiData.data,
+			...participantConsentData.data,
 		});
 		if (!result.success) {
 			logger.error('Received invalid data in create participant response', result.error.issues);
