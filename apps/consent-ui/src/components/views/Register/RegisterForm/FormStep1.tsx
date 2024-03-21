@@ -125,6 +125,9 @@ const FormStep1 = ({
 		}
 	};
 
+	const userIsInvitedAndNotGuardian =
+		inviteData && !find(guardianConsentGroups, { group: inviteData.consentGroup });
+
 	return (
 		<>
 			<RegisterDateOfBirthErrorModal
@@ -136,43 +139,47 @@ const FormStep1 = ({
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
-					<FormSection>
-						<RadioFieldSet
-							description={textDict.isGuardianDescription}
-							error={errors.isGuardian?.type && errorsDict.required}
-							name="isGuardian"
-							noText={labelsDict.no}
-							required
-							yesText={labelsDict.yes}
-						/>
-					</FormSection>
+					{!userIsInvitedAndNotGuardian && (
+						<>
+							<FormSection>
+								<RadioFieldSet
+									description={textDict.isGuardianDescription}
+									error={errors.isGuardian?.type && errorsDict.required}
+									name="isGuardian"
+									noText={labelsDict.no}
+									required
+									yesText={labelsDict.yes}
+								/>
+							</FormSection>
 
-					{/* OPTIONAL SECTION - GUARDIAN INFO */}
-					{/* these fields are conditionally required, i.e. if the user is
+							{/* OPTIONAL SECTION - GUARDIAN INFO */}
+							{/* these fields are conditionally required, i.e. if the user is
 						registering as a guardian */}
 
-					{watchIsGuardian && (
-						<FormSection variant="grey">
-							<p className={styles.instructions}>{textDict.enterInfo}</p>
-							<TextFieldSet
-								error={errors.guardianName?.type && errorsDict.required}
-								label={labelsDict.yourName}
-								name="guardianName"
-								required
-							/>
-							<TextFieldSet
-								error={errors.guardianPhoneNumber?.type && errorsDict.required}
-								label={labelsDict.yourPhone}
-								name="guardianPhoneNumber"
-								required
-							/>
-							<TextFieldSet
-								error={errors.guardianRelationship?.type && errorsDict.required}
-								label={labelsDict.yourRelationship}
-								name="guardianRelationship"
-								required
-							/>
-						</FormSection>
+							{watchIsGuardian && (
+								<FormSection variant="grey">
+									<p className={styles.instructions}>{textDict.enterInfo}</p>
+									<TextFieldSet
+										error={errors.guardianName?.type && errorsDict.required}
+										label={labelsDict.yourName}
+										name="guardianName"
+										required
+									/>
+									<TextFieldSet
+										error={errors.guardianPhoneNumber?.type && errorsDict.required}
+										label={labelsDict.yourPhone}
+										name="guardianPhoneNumber"
+										required
+									/>
+									<TextFieldSet
+										error={errors.guardianRelationship?.type && errorsDict.required}
+										label={labelsDict.yourRelationship}
+										name="guardianRelationship"
+										required
+									/>
+								</FormSection>
+							)}
+						</>
 					)}
 
 					{/* SECTION - PARTICIPANT INFO */}
