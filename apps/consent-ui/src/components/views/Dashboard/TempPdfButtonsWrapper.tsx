@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,25 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import 'server-only';
+import urlJoin from 'url-join';
 
-import { defaultAppConfig, ClientAppConfig } from 'src/config/types';
+import { getAppConfig } from 'src/config';
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+import { getTranslation, ValidLanguage } from 'src/i18n';
 
-/**
- * Returns environment variables for client components
- *
- * Note: intended for **SERVER COMPONENTS ONLY**. Access these values from the client using the `useAppConfigContext` hook.
- * @returns {ClientAppConfig}
- */
-const getClientAppConfig = (): ClientAppConfig => ({
-	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
-	CONSENT_UI_URL: process.env.CONSENT_UI_URL || defaultAppConfig.CONSENT_UI_URL,
-	FEATURE_CONSENT_PDF_BUTTONS:
-		process.env.FEATURE_CONSENT_PDF_BUTTONS === 'true' ||
-		defaultAppConfig.FEATURE_CONSENT_PDF_BUTTONS,
-	OHCRN_EMAIL: process.env.OHCRN_EMAIL || defaultAppConfig.OHCRN_EMAIL,
-	OHCRN_HOME_LINK: process.env.OHCRN_HOME_LINK || defaultAppConfig.OHCRN_HOME_LINK,
-	RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY || defaultAppConfig.RECAPTCHA_SITE_KEY,
-});
+import TempPdfButtons from './TempPdfButtons';
 
-export { getClientAppConfig };
+const TempPdfButtonsWrapper = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { CONSENT_UI_URL } = getAppConfig();
+	const { translate } = getTranslation(currentLang);
+
+	const studyConsentPdfUrl = urlJoin(
+		ASSETS_PATH,
+		CONSENT_PDFS_PATH,
+		translate('assetUrls', 'studyConsentPdf'),
+	);
+
+	const mockSignatureImage = urlJoin(CONSENT_UI_URL, '/assets/images/placeholder-signature.png');
+
+	return (
+		<TempPdfButtons
+			currentLang={currentLang}
+			studyConsentPdfUrl={studyConsentPdfUrl}
+			mockSignatureImage={mockSignatureImage}
+		/>
+	);
+};
+
+export default TempPdfButtonsWrapper;

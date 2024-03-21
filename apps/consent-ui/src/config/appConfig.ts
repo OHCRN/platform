@@ -17,41 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export type AppConfig = {
-	AUTH_DISABLED: boolean;
-	CONSENT_API_URL: string;
-	CONSENT_UI_URL: string;
-	FEATURE_CONSENT_PDF_BUTTONS?: boolean;
-	OHCRN_EMAIL?: string;
-	OHCRN_HOME_LINK?: string;
-	RECAPTCHA_SITE_KEY?: string;
-	KEYCLOAK_ISSUER: string;
-	KEYCLOAK_CLIENT_ID: string;
-	TOKEN_ENCRYPTION_KEY: string;
-	TOKEN_MAX_AGE: number;
-	VERBOSE_AXIOS_LOGGING: boolean;
-};
+import 'server-only';
 
-export const defaultAppConfig: AppConfig = {
-	AUTH_DISABLED: false,
-	CONSENT_API_URL: 'http://localhost:8080',
-	CONSENT_UI_URL: 'http://localhost:3000',
-	FEATURE_CONSENT_PDF_BUTTONS: false,
-	OHCRN_EMAIL: '',
-	OHCRN_HOME_LINK: '',
-	RECAPTCHA_SITE_KEY: undefined,
-	KEYCLOAK_ISSUER: '', // TODO: should set this up to error on server start, if not provided
-	KEYCLOAK_CLIENT_ID: '', // TODO:  should set this up to error on server start, if not provided
-	TOKEN_ENCRYPTION_KEY: '',
-	TOKEN_MAX_AGE: 3600,
-	VERBOSE_AXIOS_LOGGING: false,
-};
+import { defaultAppConfig, AppConfig } from 'src/config/types';
 
 /**
  * Returns environment variables for server components
  * @returns {AppConfig}
  */
-// TODO: enforce server-only usage. To be completed as a follow-up to https://github.com/OHCRN/platform/issues/422
 const getAppConfig = (): AppConfig => ({
 	AUTH_DISABLED: process.env.AUTH_DISABLED === 'true' || defaultAppConfig.AUTH_DISABLED,
 	CONSENT_API_URL: process.env.CONSENT_API_URL || defaultAppConfig.CONSENT_API_URL,
