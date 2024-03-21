@@ -88,8 +88,8 @@ const FormStep1 = ({
 
 	const watchIsGuardian = watch('isGuardian');
 
+	// check if user's birthdate meets requirements
 	const { closeModal, openModal, modalIsOpen } = useModal();
-
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
 		if (dateOfBirthValue) {
