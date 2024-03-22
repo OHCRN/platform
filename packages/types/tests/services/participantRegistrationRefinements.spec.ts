@@ -261,31 +261,29 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
 
-			it('Adds a custom error to guardianPhoneNumber if a value is provided', () => {
+			it('Adds custom error if one guardian field is provided', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianPhoneNumber: '1234567890',
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianPhoneNumber');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
 
-			it('Adds a custom error to guardianPhoneNumber if the value is an empty string', () => {
+			it('Adds custom error if one guardian field has an empty string', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianPhoneNumber: '',
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianPhoneNumber');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
 
-			it('Adds custom errors if multiple guardian fields are provided', () => {
+			it('Adds custom errors if all guardian fields are provided', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianName: 'Homer Simpson',
@@ -293,7 +291,6 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: 'Father',
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
@@ -303,7 +300,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[2].message).toBe('participantHasGuardianInfo');
 			});
 
-			it('Adds custom errors if multiple guardian fields have an empty string value', () => {
+			it('Adds custom errors if all guardian fields have an empty string value', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianName: '',
@@ -311,7 +308,6 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: '',
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
