@@ -19,7 +19,7 @@
 
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
-import { ErrorName, ErrorResponse } from 'types/httpResponses';
+import { UnauthorizedErrorResponse } from 'types/httpResponses';
 
 import { getAppConfig } from '../config.js';
 import serviceLogger from '../logger.js';
@@ -84,7 +84,7 @@ const withAuth: RequestHandler = async (req, res, next) => {
 			logger.error('Invalid JWT', e.message);
 		}
 		// there are no scopes related to the consent portal so auth validation will always return 401 on error
-		return res.status(401).json(ErrorResponse(ErrorName.UNAUTHORIZED, 'Please login'));
+		return res.status(401).json(UnauthorizedErrorResponse());
 	}
 };
 
