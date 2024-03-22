@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The Ontario Institute for Cancer Research. All rights reserved
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
  *
  * This program and the accompanying materials are made available under the terms of
  * the GNU Affero General Public License v3.0. You should have received a copy of the
@@ -17,21 +17,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export enum ErrorName {
-	SERVER_ERROR = 'ServerError',
-	NOT_FOUND_ERROR = 'NotFoundError',
-	CONFLICT_ERROR = 'ConflictError',
-	REQUEST_VALIDATION_ERROR = 'RequestValidationError',
-	RECAPTCHA_ERROR = 'RecaptchaError',
-	UNAUTHORIZED = 'Unauthorized',
-}
+import { ErrorName, ErrorResponse } from './ErrorResponse.js';
 
-export type ErrorResponse = {
-	error: ErrorName | 'NOT_IMPLEMENTED'; // TODO: remove once all routes are implemented
-	message: string;
-};
+const { UNAUTHORIZED } = ErrorName;
 
-export const ErrorResponse = (error: ErrorName | 'NOT_IMPLEMENTED', message: string) => ({
-	error,
-	message,
+/**
+ * Creates an UnauthorizedErrorResponse.
+ * @param customMessage
+ * @returns
+ */
+export const UnauthorizedErrorResponse = (customMessage?: string): ErrorResponse => ({
+	error: UNAUTHORIZED,
+	message: customMessage ?? 'Not Authorized',
 });
