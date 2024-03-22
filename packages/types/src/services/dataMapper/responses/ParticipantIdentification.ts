@@ -19,38 +19,7 @@
 
 import { z } from 'zod';
 
-import { OptionalString, hasRequiredGuardianInformation } from '../common/index.js';
+import { ParticipantIdentification } from 'src/entities/ParticipantIdentification.js';
 
-import {
-	ConsentGroup,
-	LifecycleState,
-	NanoId,
-	OhipNumber,
-	OptionalName,
-	OptionalNanoId,
-	OptionalPostalCode,
-	PostalCode,
-	Province,
-} from './fields/index.js';
-
-import { ParticipantIdentityBase } from './index.js';
-
-export const ParticipantIdentification = ParticipantIdentityBase.merge(
-	z.object({
-		id: NanoId,
-		inviteId: OptionalNanoId,
-		currentLifecycleState: LifecycleState,
-		previousLifecycleState: LifecycleState.optional(),
-		ohipNumber: OhipNumber,
-		mailingAddressStreet: OptionalString,
-		mailingAddressCity: OptionalString,
-		mailingAddressProvince: Province.optional(),
-		mailingAddressPostalCode: OptionalPostalCode,
-		residentialPostalCode: PostalCode,
-		consentGroup: ConsentGroup,
-		participantOhipMiddleName: OptionalName,
-		hasOhip: z.boolean().default(true),
-	}),
-).refine(hasRequiredGuardianInformation);
-
-export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
+export const ParticipantIdentificationResponse = ParticipantIdentification;
+export type ParticipantIdentificationResponse = z.infer<typeof ParticipantIdentificationResponse>;

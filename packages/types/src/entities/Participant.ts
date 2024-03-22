@@ -65,7 +65,6 @@ export const ParticipantIdentityBase = ParticipantBaseOhipNameFields.merge(Parti
 			participantPreferredName: OptionalName,
 			keycloakId: z.string().uuid(),
 			inviteId: OptionalNanoId,
-			hasOhip: z.boolean().default(true),
 			assentFormIdentifier: OptionalString,
 		}),
 	);
