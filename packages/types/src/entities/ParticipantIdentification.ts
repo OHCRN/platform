@@ -19,7 +19,11 @@
 
 import { z } from 'zod';
 
-import { OptionalString, hasRequiredInfoForConsentGroup } from '../common/index.js';
+import {
+	OptionalString,
+	hasRequiredAssentFormIdentifier,
+	hasRequiredInfoForConsentGroup,
+} from '../common/index.js';
 
 import {
 	ConsentGroup,
@@ -51,8 +55,10 @@ export const ParticipantIdentification = ParticipantIdentityBase.merge(
 		participantOhipMiddleName: OptionalName,
 		hasOhip: z.boolean().default(true),
 	}),
-).refine(hasRequiredInfoForConsentGroup, {
-	message: 'Contact fields must be related to consentGroup',
-});
+)
+	.refine(hasRequiredInfoForConsentGroup, {
+		message: 'Contact fields must be related to consentGroup',
+	})
+	.refine(hasRequiredAssentFormIdentifier);
 
 export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;

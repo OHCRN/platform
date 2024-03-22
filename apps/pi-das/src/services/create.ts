@@ -29,6 +29,7 @@ export const createParticipant = async (
 		guardianRelationship,
 		keycloakId,
 		inviteId,
+		assentFormIdentifier,
 	} = req;
 	const result = await prisma.participant
 		.create({
@@ -45,6 +46,7 @@ export const createParticipant = async (
 				guardianRelationship,
 				keycloakId,
 				inviteId,
+				assentFormIdentifier,
 			},
 		})
 		.then((participant) => success(participant))

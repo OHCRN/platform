@@ -20,7 +20,10 @@
 import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
+import {
+	hasRequiredAssentFormIdentifier,
+	hasRequiredInfoForConsentGroup,
+} from '../../../common/index.js';
 import {
 	ConsentParticipantBase,
 	ConsentToBeContacted,
@@ -31,7 +34,8 @@ export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentPar
 	.merge(ConsentToBeContacted)
 	.refine(hasRequiredInfoForConsentGroup, {
 		message: 'Contact fields must be related to consentGroup',
-	});
+	})
+	.refine(hasRequiredAssentFormIdentifier);
 
 export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
 export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);
