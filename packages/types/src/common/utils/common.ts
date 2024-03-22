@@ -25,7 +25,7 @@ import z from 'zod';
  * @param message Error message. In UI use, this should be a translation key.
  * @param path Name of the field where the error will be displayed
  */
-export const addZodIssue = (ctx: z.RefinementCtx, path: string, message: string) => {
+export const addZodCustomError = (ctx: z.RefinementCtx, path: string, message: string) => {
 	ctx.addIssue({
 		code: 'custom',
 		message,

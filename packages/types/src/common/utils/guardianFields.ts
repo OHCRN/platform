@@ -26,7 +26,7 @@ import {
 } from '../../services/consentUi/requests/Register.js';
 import { hasValue, isEmptyOrUndefined } from '../../common/index.js';
 
-import { addZodIssue } from './common.js';
+import { addZodCustomError } from './common.js';
 
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
@@ -48,13 +48,13 @@ export const hasRequiredGuardianInfoForRegistration = (
 	if (isGuardian) {
 		Object.entries(fields).forEach(([key, value]) => {
 			if (isEmptyOrUndefined(value?.trim())) {
-				addZodIssue(ctx, key, 'guardianInfoMissing');
+				addZodCustomError(ctx, key, 'guardianInfoMissing');
 			}
 		});
 	} else {
 		Object.entries(fields).forEach(([key, value]) => {
 			if (hasValue(value)) {
-				addZodIssue(ctx, key, 'participantHasGuardianInfo');
+				addZodCustomError(ctx, key, 'participantHasGuardianInfo');
 			}
 		});
 	}
@@ -76,17 +76,17 @@ export const hasRequiredEmailForConsentGroupForRegistration = (
 
 	if (isGuardian) {
 		if (isEmptyOrUndefined(guardianEmailAddress)) {
-			addZodIssue(ctx, 'guardianEmailAddress', 'guardianEmailMissing');
+			addZodCustomError(ctx, 'guardianEmailAddress', 'guardianEmailMissing');
 		}
 		if (hasValue(participantEmailAddress)) {
-			addZodIssue(ctx, 'participantEmailAddress', 'guardianHasParticipantEmail');
+			addZodCustomError(ctx, 'participantEmailAddress', 'guardianHasParticipantEmail');
 		}
 	} else {
 		if (isEmptyOrUndefined(participantEmailAddress)) {
-			addZodIssue(ctx, 'participantEmailAddress', 'participantEmailMissing');
+			addZodCustomError(ctx, 'participantEmailAddress', 'participantEmailMissing');
 		}
 		if (hasValue(guardianEmailAddress)) {
-			addZodIssue(ctx, 'guardianEmailAddress', 'participantHasGuardianEmail');
+			addZodCustomError(ctx, 'guardianEmailAddress', 'participantHasGuardianEmail');
 		}
 	}
 };
@@ -105,11 +105,11 @@ export const hasParticipantPhoneNumberForRegistration = (
 	const { isGuardian, participantPhoneNumber } = props;
 	if (isGuardian) {
 		if (hasValue(participantPhoneNumber)) {
-			addZodIssue(ctx, 'participantPhoneNumber', 'guardianHasParticipantPhoneNumber');
+			addZodCustomError(ctx, 'participantPhoneNumber', 'guardianHasParticipantPhoneNumber');
 		}
 	} else {
 		if (isEmptyOrUndefined(participantPhoneNumber)) {
-			addZodIssue(ctx, 'participantPhoneNumber', 'participantMissingPhoneNumber');
+			addZodCustomError(ctx, 'participantPhoneNumber', 'participantMissingPhoneNumber');
 		}
 	}
 };
