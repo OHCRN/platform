@@ -158,12 +158,12 @@ describe('ParticipantRegistrationRequest', () => {
 			).true;
 		});
 
-		it("Adds a custom error to dateOfBirth when user's age is below the minimum", () => {
+		it("Adds custom error to dateOfBirth when user's age is below the minimum", () => {
 			const result = ParticipantRegistrationRequest.safeParse({
 				...adultConsentTestData,
 				dateOfBirth: lessThanMinimumAgeDateOfBirth,
 			});
-
+			expect(result.success).false;
 			const fieldErrors = formatZodErrors(result);
 			expect(fieldErrors[0].path).toBe('dateOfBirth');
 			expect(fieldErrors[0].message).toBe('participantLessThanMinimumAge');
@@ -176,14 +176,14 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(ParticipantRegistrationRequest.safeParse(guardianConsentTestData).success).true;
 			});
 
-			it('Adds an error to specific fields if all guardian fields are undefined', () => {
+			it('Adds custom errors if all guardian fields are undefined', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
-					...adultConsentTestData,
-					guardianRelationship: '',
-					isGuardian: true,
+					...guardianConsentTestData,
+					guardianName: undefined,
+					guardianPhoneNumber: undefined,
+					guardianRelationship: undefined,
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('guardianInfoMissing');
@@ -193,30 +193,25 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[2].message).toBe('guardianInfoMissing');
 			});
 
-			it('Adds an error to specific field if one guardian field is undefined', () => {
+			it('Adds custom error if one guardian field is undefined', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
-					...adultConsentTestData,
-					guardianName: 'Homer Simpson',
-					guardianPhoneNumber: '1234567890',
-					isGuardian: true,
+					...guardianConsentTestData,
+					guardianRelationship: undefined,
 				});
 				expect(result.success).false;
-
 				const fieldErrors = formatZodErrors(result);
 				expect(fieldErrors[0].path).toBe('guardianRelationship');
 				expect(fieldErrors[0].message).toBe('guardianInfoMissing');
 			});
 
-			it('Adds invalid field errors when the user has entered invalid values in guardian fields', () => {
+			it('Adds custom errors if guardian fields contain invalid values', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
-					...adultConsentTestData,
+					...guardianConsentTestData,
 					guardianName: 'Homer Simpson {}',
 					guardianPhoneNumber: '1234 + abc',
 					guardianRelationship: 'F4th3r///',
-					isGuardian: true,
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('Invalid');
@@ -226,16 +221,31 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[2].message).toBe('Invalid');
 			});
 
-			it('Adds invalid and custom field errors when the user has a mix of invalid and missing values in guardian fields', () => {
+			it('Adds custom errors if guardian fields contain empty strings', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianName: '',
+					guardianPhoneNumber: '',
+					guardianRelationship: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodErrors(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('guardianInfoMissing');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('guardianInfoMissing');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('guardianInfoMissing');
+			});
+
+			it('Adds invalid and custom errors if guardian fields contain a mix of undefined and invalid values', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
 					guardianName: 'Homer ]]]]]',
 					guardianPhoneNumber: undefined,
 					guardianRelationship: ' ',
-					isGuardian: true,
 				});
 				expect(result.success).false;
-
 				const errors = formatZodErrors(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('Invalid');
