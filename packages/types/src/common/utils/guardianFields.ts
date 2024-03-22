@@ -21,7 +21,7 @@ import { z } from 'zod';
 
 import {
 	ParticipantPhoneNumberField,
-	RegisterFormStep2Fields,
+	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
 } from '../../services/consentUi/requests/Register.js';
 import { hasValue, isEmptyOrUndefined } from '../../common/index.js';
@@ -53,8 +53,6 @@ export const hasRequiredGuardianInfoForRegistration = (
 		});
 	} else {
 		Object.entries(fields).forEach(([key, value]) => {
-			// these fields shouldn't be on the page if the user is a participant.
-			// so, the values should be undefined.
 			if (hasValue(value)) {
 				addZodIssue(ctx, key, 'participantHasGuardianInfo');
 			}
@@ -71,7 +69,7 @@ export const hasRequiredGuardianInfoForRegistration = (
  * @param ctx Zod refinement context
  */
 export const hasRequiredEmailForConsentGroupForRegistration = (
-	props: RegisterFormStep2Fields,
+	props: RegisterRequestEmailAddressFields,
 	ctx: z.RefinementCtx,
 ) => {
 	const { isGuardian, guardianEmailAddress, participantEmailAddress } = props;
@@ -80,14 +78,14 @@ export const hasRequiredEmailForConsentGroupForRegistration = (
 		if (isEmptyOrUndefined(guardianEmailAddress)) {
 			addZodIssue(ctx, 'guardianEmailAddress', 'guardianEmailMissing');
 		}
-		if (!isEmptyOrUndefined(participantEmailAddress)) {
+		if (hasValue(participantEmailAddress)) {
 			addZodIssue(ctx, 'participantEmailAddress', 'guardianHasParticipantEmail');
 		}
 	} else {
 		if (isEmptyOrUndefined(participantEmailAddress)) {
 			addZodIssue(ctx, 'participantEmailAddress', 'participantEmailMissing');
 		}
-		if (!isEmptyOrUndefined(guardianEmailAddress)) {
+		if (hasValue(guardianEmailAddress)) {
 			addZodIssue(ctx, 'guardianEmailAddress', 'participantHasGuardianEmail');
 		}
 	}

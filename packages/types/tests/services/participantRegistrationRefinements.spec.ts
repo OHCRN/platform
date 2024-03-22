@@ -27,7 +27,6 @@ import {
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
 
-// not sure about placement or types for this
 /**
  * Format Zod errors for form fields into a more easy to read format for testing.
  * @param result The object resulting from Zod SafeParse

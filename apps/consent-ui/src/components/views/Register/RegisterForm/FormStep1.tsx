@@ -86,6 +86,8 @@ const FormStep1 = ({
 		setFocus('isGuardian');
 	}, [setFocus]);
 
+	// watch isGuardian field to determine whether to show guardian fields
+	// and participant phone number
 	const watchIsGuardian = watch('isGuardian');
 
 	// check if user's birthdate meets requirements

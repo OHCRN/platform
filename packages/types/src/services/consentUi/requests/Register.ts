@@ -33,18 +33,23 @@ import {
 	hasMatchingPasswords,
 } from '../../../entities/fields/index.js';
 
+const isGuardianField = z.object({
+	isGuardian: z.boolean(),
+});
+
 // STEP 1
 
-const RegistrationParticipantNameFields = ParticipantNameFields.and(
+const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
 	z.object({
 		participantPreferredName: EmptyOrOptionalName,
 	}),
 );
 
-const ParticipantPhoneNumberField = z.object({
-	isGuardian: z.boolean(),
-	participantPhoneNumber: EmptyOrOptionalPhoneNumber,
-});
+const ParticipantPhoneNumberField = isGuardianField.and(
+	z.object({
+		participantPhoneNumber: EmptyOrOptionalPhoneNumber,
+	}),
+);
 export type ParticipantPhoneNumberField = z.infer<typeof ParticipantPhoneNumberField>;
 const ParticipantPhoneNumberFieldRefined = ParticipantPhoneNumberField.superRefine(
 	hasParticipantPhoneNumberForRegistration,
@@ -52,19 +57,19 @@ const ParticipantPhoneNumberFieldRefined = ParticipantPhoneNumberField.superRefi
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
-const RegisterRequestGuardianFields = z.object({
-	guardianName: EmptyOrOptionalName,
-	guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
-	guardianRelationship: EmptyOrOptionalName,
-	isGuardian: z.boolean(),
-});
+const RegisterRequestGuardianFields = isGuardianField.and(
+	z.object({
+		guardianName: EmptyOrOptionalName,
+		guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
+		guardianRelationship: EmptyOrOptionalName,
+	}),
+);
 export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
 const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	hasRequiredGuardianInfoForRegistration,
 );
 
-// for unit tests
-export const RegisterFormStep1NoDateOfBirth = RegistrationParticipantNameFields.and(
+export const RegisterFormStep1NoDateOfBirth = RegisterRequestParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
 ).and(ParticipantPhoneNumberFieldRefined);
 
@@ -73,30 +78,29 @@ export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2
 
-const RegisterFormStep2Fields = ConsentToBeContacted.and(
+const RegisterRequestEmailAddressFields = isGuardianField.and(
 	z.object({
-		isGuardian: z.boolean(),
 		guardianEmailAddress: z.string().email().optional(),
 		participantEmailAddress: z.string().email().optional(),
 	}),
 );
-export type RegisterFormStep2Fields = z.infer<typeof RegisterFormStep2Fields>;
-
-const RegisterFormStep2FieldsRefined = RegisterFormStep2Fields.superRefine(
+export type RegisterRequestEmailAddressFields = z.infer<typeof RegisterRequestEmailAddressFields>;
+const RegisterEmailAddressFieldsRefined = RegisterRequestEmailAddressFields.superRefine(
 	hasRequiredEmailForConsentGroupForRegistration,
 );
 
 const PasswordFields = z
 	.object({
-		confirmPassword: NonEmptyString, // TEMP #368
-		password: NonEmptyString, // TEMP #368
+		confirmPassword: NonEmptyString,
+		password: NonEmptyString,
 	})
 	.refine(hasMatchingPasswords, {
 		message: 'passwordMismatch',
 		path: ['confirmPassword'],
 	});
 
-export const RegisterFormStep2 = RegisterFormStep2FieldsRefined.and(PasswordFields);
+export const RegisterFormStep2 =
+	RegisterEmailAddressFieldsRefined.and(ConsentToBeContacted).and(PasswordFields);
 export type RegisterFormStep2 = z.infer<typeof RegisterFormStep2>;
 
 // COMBINE STEPS
