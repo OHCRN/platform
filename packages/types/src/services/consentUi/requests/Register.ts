@@ -22,7 +22,7 @@ import { z } from 'zod';
 import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
 import {
 	NonEmptyString,
-	createDateOfBirthRequestSchema,
+	checkIsMinimumAgeOrGreater,
 	hasParticipantPhoneNumberForRegistration,
 	hasRequiredEmailForConsentGroupForRegistration,
 	hasRequiredGuardianInfoForRegistration,
@@ -57,7 +57,20 @@ export type RegisterRequestParticipantPhoneNumberField = z.infer<
 export const RegisterRequestParticipantPhoneNumberFieldRefined =
 	RegisterRequestParticipantPhoneNumberField.superRefine(hasParticipantPhoneNumberForRegistration);
 
-const DateOfBirthField = createDateOfBirthRequestSchema();
+const RegisterRequestAgeVerification = z
+	.object({
+		currentDate: z.coerce.date(),
+		dateOfBirth: z.coerce.date(),
+		isInvited: z.boolean(),
+	})
+	.refine(
+		({ currentDate, dateOfBirth, isInvited }) =>
+			isInvited || checkIsMinimumAgeOrGreater(currentDate, dateOfBirth),
+		{
+			message: 'participantLessThanMinimumAge',
+			path: ['dateOfBirth'],
+		},
+	);
 
 // guardian fields - required for guardians, not allowed for participants
 const RegisterRequestGuardianFields = isGuardianField.and(
@@ -72,11 +85,16 @@ export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianField
 	hasRequiredGuardianInfoForRegistration,
 );
 
+const IsInvitedField = z.object({
+	isInvited: z.boolean().optional(),
+});
+
 export const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
 )
 	.and(RegisterRequestParticipantPhoneNumberFieldRefined)
-	.and(DateOfBirthField);
+	.and(RegisterRequestAgeVerification)
+	.and(IsInvitedField);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2

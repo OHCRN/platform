@@ -33,17 +33,25 @@ export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Da
 };
 
 /**
- * Create a schema for the dateOfBirth field, with a refinement for checking the user's age.
+ * Create a schema for the dateOfBirth field, with an optional refinement for checking the user's age.
  * @param comparisonDate: date to compare the dateOfBirth to. default is today's date
  *
  */
-export const createDateOfBirthRequestSchema = (comparisonDate?: Date) => {
+export const createDateOfBirthRequestSchema = ({
+	checkMinimumAge = true,
+	comparisonDate,
+}: {
+	checkMinimumAge?: boolean;
+	comparisonDate?: Date;
+}) => {
 	return z
 		.object({
 			dateOfBirth: z.coerce.date(),
 		})
 		.refine(
-			(props) => checkIsMinimumAgeOrGreater(comparisonDate || new Date(), props.dateOfBirth),
+			(props) =>
+				checkMinimumAge &&
+				checkIsMinimumAgeOrGreater(comparisonDate || new Date(), props.dateOfBirth),
 			{
 				message: 'participantLessThanMinimumAge',
 				path: ['dateOfBirth'],

@@ -41,28 +41,39 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
+import { MockInviteDataRegisterStep1 } from '../handleInvite';
+
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
+
+interface FormStep1Props {
+	className?: string;
+	currentLang: ValidLanguage;
+	errorsDict: FormErrorsDictionary;
+	handleNextClick: (data: RegisterFormStep1) => void;
+	inviteData?: MockInviteDataRegisterStep1;
+	labelsDict: RegisterFormStep1LabelsDictionary;
+	textDict: RegisterFormStep1TextDictionary;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
+}
 
 const FormStep1 = ({
 	className,
 	currentLang,
 	errorsDict,
 	handleNextClick,
+	inviteData,
 	labelsDict,
 	textDict,
 	dateOfBirthModalDict,
-}: {
-	className?: string;
-	currentLang: ValidLanguage;
-	errorsDict: FormErrorsDictionary;
-	handleNextClick: (data: RegisterFormStep1) => void;
-	labelsDict: RegisterFormStep1LabelsDictionary;
-	textDict: RegisterFormStep1TextDictionary;
-	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
-}) => {
+}: FormStep1Props) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
+		defaultValues: {
+			...(inviteData || {}),
+			currentDate: new Date(),
+			isInvited: !!inviteData?.isInvited,
+		},
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
 		shouldUnregister: true,
@@ -72,6 +83,7 @@ const FormStep1 = ({
 		formState: { errors, isValid },
 		getValues,
 		handleSubmit,
+		register,
 		setFocus,
 		watch,
 	} = methods;
@@ -114,6 +126,8 @@ const FormStep1 = ({
 			/>
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
+					<input disabled hidden={true} {...register('currentDate')} />
+					<input disabled hidden={true} {...register('isInvited')} />
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
 					<FormSection>
 						<RadioFieldSet
