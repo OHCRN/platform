@@ -20,20 +20,8 @@
 import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { GuardianNullableResponseFields } from '../../../entities/Guardian.js';
-import { ConsentToBeContacted, ParticipantIdentityBase } from '../../../entities/Participant.js';
-import { Name, NanoId } from '../../../entities/fields/index.js';
+import { ConsentParticipant, ParticipantIdentityBase } from '../../../entities/Participant.js';
 
-export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentToBeContacted)
-	.merge(
-		z.object({
-			id: NanoId,
-			isGuardian: z.boolean(),
-			emailVerified: z.boolean(),
-		}),
-	)
-	.extend(GuardianNullableResponseFields)
-	.extend({ participantPreferredName: Name.nullable().transform((input) => input ?? undefined) });
-
+export const CreateParticipantResponse = ParticipantIdentityBase.merge(ConsentParticipant);
 export type CreateParticipantResponse = z.infer<typeof CreateParticipantResponse>;
 export const CreateParticipantResponseSchema = generateSchema(CreateParticipantResponse);

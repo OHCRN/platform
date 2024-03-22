@@ -39,9 +39,11 @@ import { settingsByLang } from './generateConsentPdf/settings';
 const TempPdfButtons = ({
 	currentLang,
 	studyConsentPdfUrl,
+	mockSignatureImage,
 }: {
 	currentLang: ValidLanguage;
 	studyConsentPdfUrl: string;
+	mockSignatureImage: string;
 }) => {
 	const [docUrl, setDocUrl] = useState<string | undefined>();
 
@@ -61,22 +63,40 @@ const TempPdfButtons = ({
 	};
 
 	const displayParticipantPdf = async () => {
-		await displayPdf(mockDataParticipant);
+		await displayPdf({
+			...mockDataParticipant,
+			mockSignatureImage,
+		});
 	};
 	const displaySubstitutePdf = async () => {
-		await displayPdf(mockDataSubstitute);
+		await displayPdf({
+			...mockDataSubstitute,
+			mockSignatureImage,
+		});
 	};
 	const displayGuardianPdf = async () => {
-		await displayPdf(mockDataGuardian);
+		await displayPdf({
+			...mockDataGuardian,
+			mockSignatureImage,
+		});
 	};
 	const downloadParticipantPdf = async () => {
-		await downloadPdf(mockDataParticipant);
+		await downloadPdf({
+			...mockDataParticipant,
+			mockSignatureImage,
+		});
 	};
 	const downloadSubstitutePdf = async () => {
-		await downloadPdf(mockDataSubstitute);
+		await downloadPdf({
+			...mockDataSubstitute,
+			mockSignatureImage,
+		});
 	};
 	const downloadGuardianPdf = async () => {
-		await downloadPdf(mockDataGuardian);
+		await downloadPdf({
+			...mockDataGuardian,
+			mockSignatureImage,
+		});
 	};
 
 	return (

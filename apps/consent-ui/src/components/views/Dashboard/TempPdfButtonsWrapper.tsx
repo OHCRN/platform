@@ -17,13 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z } from 'zod';
-import { generateSchema } from '@anatine/zod-openapi';
+import urlJoin from 'url-join';
 
-import { ConsentParticipant } from '../../../entities/index.js';
+import { getAppConfig } from 'src/config';
+import { ASSETS_PATH, CONSENT_PDFS_PATH } from 'src/constants';
+import { getTranslation, ValidLanguage } from 'src/i18n';
 
-export const ConsentCreateParticipantResponse = ConsentParticipant;
-export type ConsentCreateParticipantResponse = z.infer<typeof ConsentCreateParticipantResponse>;
-export const ConsentCreateParticipantResponseSchema = generateSchema(
-	ConsentCreateParticipantResponse,
-);
+import TempPdfButtons from './TempPdfButtons';
+
+const TempPdfButtonsWrapper = ({ currentLang }: { currentLang: ValidLanguage }) => {
+	const { CONSENT_UI_URL } = getAppConfig();
+	const { translate } = getTranslation(currentLang);
+
+	const studyConsentPdfUrl = urlJoin(
+		ASSETS_PATH,
+		CONSENT_PDFS_PATH,
+		translate('assetUrls', 'studyConsentPdf'),
+	);
+
+	const mockSignatureImage = urlJoin(CONSENT_UI_URL, '/assets/images/placeholder-signature.png');
+
+	return (
+		<TempPdfButtons
+			currentLang={currentLang}
+			studyConsentPdfUrl={studyConsentPdfUrl}
+			mockSignatureImage={mockSignatureImage}
+		/>
+	);
+};
+
+export default TempPdfButtonsWrapper;
