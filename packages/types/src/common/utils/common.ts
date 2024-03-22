@@ -34,11 +34,11 @@ export const addZodCustomError = (ctx: z.RefinementCtx, path: string, message: s
 };
 
 /**
- * Format Zod errors for form fields into a more easy to read format for testing.
+ * Format Zod errors for specific form fields, for easier testing.
  * @param result The object resulting from Zod SafeParse
  * @returns An array of objects: { path, message }
  */
-export const formatZodErrorsForTesting = (
+export const formatZodFieldErrorsForTesting = (
 	result: z.SafeParseReturnType<any, any>,
 ): { path: string; message: string }[] => {
 	const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
