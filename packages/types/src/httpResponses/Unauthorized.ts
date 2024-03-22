@@ -28,5 +28,5 @@ const { UNAUTHORIZED } = ErrorName;
  */
 export const UnauthorizedErrorResponse = (customMessage?: string): ErrorResponse => ({
 	error: UNAUTHORIZED,
-	message: customMessage ?? 'Not Authorized',
+	message: customMessage ?? 'Access token is missing or invalid',
 });
