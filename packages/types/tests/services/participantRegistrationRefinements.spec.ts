@@ -26,21 +26,7 @@ import {
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
-
-/**
- * Format Zod errors for form fields into a more easy to read format for testing.
- * @param result The object resulting from Zod SafeParse
- * @returns An array of objects: { path, message }
- */
-const formatZodErrors = (
-	result: z.SafeParseReturnType<any, any>,
-): { path: string; message: string }[] => {
-	const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
-	return resultJsonParsed.map((item) => ({
-		path: item.path[0],
-		message: item.message,
-	}));
-};
+import { formatZodErrorsForTesting } from '../../src/common/index.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const {
@@ -95,7 +81,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantPhoneNumber: '1234567890',
 				});
 				expect(result.success).false;
-				const fieldErrors = formatZodErrors(result);
+				const fieldErrors = formatZodErrorsForTesting(result);
 				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
 				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
 			});
@@ -106,7 +92,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantPhoneNumber: '',
 				});
 				expect(result.success).false;
-				const fieldErrors = formatZodErrors(result);
+				const fieldErrors = formatZodErrorsForTesting(result);
 				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
 				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
 			});
@@ -123,7 +109,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantPhoneNumber: undefined,
 				});
 				expect(result.success).false;
-				const fieldErrors = formatZodErrors(result);
+				const fieldErrors = formatZodErrorsForTesting(result);
 				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
 				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
 			});
@@ -134,7 +120,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantPhoneNumber: '',
 				});
 				expect(result.success).false;
-				const fieldErrors = formatZodErrors(result);
+				const fieldErrors = formatZodErrorsForTesting(result);
 				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
 				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
 			});
@@ -163,7 +149,7 @@ describe('ParticipantRegistrationRequest', () => {
 				dateOfBirth: lessThanMinimumAgeDateOfBirth,
 			});
 			expect(result.success).false;
-			const fieldErrors = formatZodErrors(result);
+			const fieldErrors = formatZodErrorsForTesting(result);
 			expect(fieldErrors[0].path).toBe('dateOfBirth');
 			expect(fieldErrors[0].message).toBe('participantLessThanMinimumAge');
 		});
@@ -183,7 +169,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: undefined,
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('guardianInfoMissing');
 				expect(errors[1].path).toBe('guardianPhoneNumber');
@@ -198,7 +184,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: undefined,
 				});
 				expect(result.success).false;
-				const fieldErrors = formatZodErrors(result);
+				const fieldErrors = formatZodErrorsForTesting(result);
 				expect(fieldErrors[0].path).toBe('guardianRelationship');
 				expect(fieldErrors[0].message).toBe('guardianInfoMissing');
 			});
@@ -211,7 +197,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: 'F4th3r///',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('Invalid');
 				expect(errors[1].path).toBe('guardianPhoneNumber');
@@ -228,7 +214,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: '',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('guardianInfoMissing');
 				expect(errors[1].path).toBe('guardianPhoneNumber');
@@ -245,7 +231,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: ' ',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('Invalid');
 				expect(errors[1].path).toBe('guardianPhoneNumber');
@@ -266,7 +252,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianPhoneNumber: '1234567890',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianPhoneNumber');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
@@ -277,7 +263,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianPhoneNumber: '',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianPhoneNumber');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
@@ -290,7 +276,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: 'Father',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
 				expect(errors[1].path).toBe('guardianPhoneNumber');
@@ -307,7 +293,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianRelationship: '',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianName');
 				expect(errors[0].message).toBe('participantHasGuardianInfo');
 				expect(errors[1].path).toBe('guardianPhoneNumber');
@@ -330,7 +316,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: 'homer simpson!',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianEmailAddress');
 				expect(errors[0].message).toBe('Invalid email');
 			});
@@ -341,7 +327,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: undefined,
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianEmailAddress');
 				expect(errors[0].message).toBe('guardianEmailMissing');
 			});
@@ -352,7 +338,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: '',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianEmailAddress');
 				expect(errors[0].message).toBe('Invalid email');
 			});
@@ -363,7 +349,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: 'bart@example.com',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('participantEmailAddress');
 				expect(errors[0].message).toBe('guardianHasParticipantEmail');
 			});
@@ -374,7 +360,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: '',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('participantEmailAddress');
 				expect(errors[0].message).toBe('Invalid email');
 			});
@@ -391,7 +377,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: 'homer simpson!',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('participantEmailAddress');
 				expect(errors[0].message).toBe('Invalid email');
 			});
@@ -402,7 +388,7 @@ describe('ParticipantRegistrationRequest', () => {
 					participantEmailAddress: undefined,
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('participantEmailAddress');
 				expect(errors[0].message).toBe('participantEmailMissing');
 			});
@@ -413,7 +399,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: 'bart@example.com',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianEmailAddress');
 				expect(errors[0].message).toBe('participantHasGuardianEmail');
 			});
@@ -424,7 +410,7 @@ describe('ParticipantRegistrationRequest', () => {
 					guardianEmailAddress: '',
 				});
 				expect(result.success).false;
-				const errors = formatZodErrors(result);
+				const errors = formatZodErrorsForTesting(result);
 				expect(errors[0].path).toBe('guardianEmailAddress');
 				expect(errors[0].message).toBe('Invalid email');
 			});

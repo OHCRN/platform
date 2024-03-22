@@ -45,15 +45,16 @@ const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
 	}),
 );
 
-const ParticipantPhoneNumberField = isGuardianField.and(
+const RegisterRequestParticipantPhoneNumberField = isGuardianField.and(
 	z.object({
 		participantPhoneNumber: EmptyOrOptionalPhoneNumber,
 	}),
 );
-export type ParticipantPhoneNumberField = z.infer<typeof ParticipantPhoneNumberField>;
-const ParticipantPhoneNumberFieldRefined = ParticipantPhoneNumberField.superRefine(
-	hasParticipantPhoneNumberForRegistration,
-);
+export type RegisterRequestParticipantPhoneNumberField = z.infer<
+	typeof RegisterRequestParticipantPhoneNumberField
+>;
+const RegisterRequestParticipantPhoneNumberFieldRefined =
+	RegisterRequestParticipantPhoneNumberField.superRefine(hasParticipantPhoneNumberForRegistration);
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
@@ -71,7 +72,7 @@ const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.super
 
 export const RegisterFormStep1NoDateOfBirth = RegisterRequestParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
-).and(ParticipantPhoneNumberFieldRefined);
+).and(RegisterRequestParticipantPhoneNumberFieldRefined);
 
 export const RegisterFormStep1 = RegisterFormStep1NoDateOfBirth.and(DateOfBirthField);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;

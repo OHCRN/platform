@@ -20,7 +20,7 @@
 import { z } from 'zod';
 
 import {
-	ParticipantPhoneNumberField,
+	RegisterRequestParticipantPhoneNumberField,
 	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
 } from '../../services/consentUi/requests/Register.js';
@@ -99,7 +99,7 @@ export const hasRequiredEmailForConsentGroupForRegistration = (
  * @param ctx Zod refinement context
  */
 export const hasParticipantPhoneNumberForRegistration = (
-	props: ParticipantPhoneNumberField,
+	props: RegisterRequestParticipantPhoneNumberField,
 	ctx: z.RefinementCtx,
 ) => {
 	const { isGuardian, participantPhoneNumber } = props;
