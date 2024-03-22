@@ -23,7 +23,7 @@ import { ParticipantIdentification } from '../../src/entities/index.js';
 import { ConsentGroup, LifecycleState, Province } from '../../src/entities/fields/index.js';
 
 describe('ParticipantIdentification', () => {
-	it('should validate if all optional fields except participant contact info are present for a guardian-specific ConsentGroup', () => {
+	it('should validate if all optional fields except participant contact info and assentFormIdentifier are present for a guardian-specific ConsentGroup', () => {
 		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			inviteId: 'CVCFbeKH2Njl1G41vCQre',
@@ -31,7 +31,6 @@ describe('ParticipantIdentification', () => {
 			previousLifecycleState: LifecycleState.enum.IN_PROCESSING,
 			ohipNumber: '1234567890',
 			hasOhip: true,
-			assentFormIdentifier: '1234567890',
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simpson',
@@ -51,13 +50,12 @@ describe('ParticipantIdentification', () => {
 		});
 		expect(result.success).true;
 	});
-	it('Should validate if ALL guardian fields are present for a guardian-specific ConsentGroup', () => {
+	it('Should validate if ALL guardian fields are present except assentFormIdentifier for a guardian-specific ConsentGroup', () => {
 		const result = ParticipantIdentification.safeParse({
 			id: 'CVCFbeKH2Njl1G41vCQme',
 			currentLifecycleState: LifecycleState.enum.REGISTERED,
 			ohipNumber: '1234567890',
 			hasOhip: true,
-			assentFormIdentifier: '1234567890',
 			participantPreferredName: 'Homer',
 			participantOhipFirstName: 'Homer',
 			participantOhipLastName: 'Simpson',
