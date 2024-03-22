@@ -37,7 +37,7 @@ const formatZodErrors = (
 	result: z.SafeParseReturnType<any, any>,
 ): { path: string; message: string }[] => {
 	const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
-	return resultJsonParsed.map((item: ) => ({
+	return resultJsonParsed.map((item) => ({
 		path: item.path[0],
 		message: item.message,
 	}));
@@ -86,17 +86,27 @@ describe('ParticipantRegistrationRequest', () => {
 
 	describe('Participant Phone Number Field', () => {
 		describe('User is a guardian', () => {
-			it('Returns true when participantPhoneNumber is not provided', () => {
+			it('Returns true when participantPhoneNumber is undefined', () => {
 				expect(ParticipantRegistrationRequest.safeParse(guardianConsentTestData).success).true;
 			});
 
-			it('Adds a custom error to participantPhoneNumber if a value is provided', () => {
+			it('Adds custom error if participantPhoneNumber is provided', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
 					participantPhoneNumber: '1234567890',
 				});
 				expect(result.success).false;
+				const fieldErrors = formatZodErrors(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
+			});
 
+			it('Adds custom error if participantPhoneNumber is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					participantPhoneNumber: '',
+				});
+				expect(result.success).false;
 				const fieldErrors = formatZodErrors(result);
 				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
 				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
@@ -108,12 +118,23 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
 
-			it('Adds a custom error to participantPhoneNumber if a value is not provided', () => {
+			it('Adds custom error if participantPhoneNumber is undefined', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					participantPhoneNumber: undefined,
 				});
+				expect(result.success).false;
+				const fieldErrors = formatZodErrors(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
+			});
 
+			it('Adds custom error if participantPhoneNumber is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					participantPhoneNumber: '',
+				});
+				expect(result.success).false;
 				const fieldErrors = formatZodErrors(result);
 				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
 				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
@@ -226,7 +247,7 @@ describe('ParticipantRegistrationRequest', () => {
 		});
 
 		describe('User is a participant', () => {
-			it('Parses correctly when all guardian fields are undefined', () => {
+			it('Returns true when all guardian fields are undefined', () => {
 				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
 
@@ -272,7 +293,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[2].message).toBe('participantHasGuardianInfo');
 			});
 
-			it('Adds custom errors if multiple guardian fields are added to the page and have an empty string value', () => {
+			it('Adds custom errors if multiple guardian fields have an empty string value', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianName: '',
@@ -310,7 +331,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[0].message).toBe('Invalid email');
 			});
 
-			it('Adds a custom error to guardianEmailAddress if the field is missing from form state', () => {
+			it('Adds a custom error if guardian email is undefined', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
 					guardianEmailAddress: undefined,
@@ -322,7 +343,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[0].message).toBe('guardianEmailMissing');
 			});
 
-			it("Throws an invalid error if the user didn't provide a guardian email", () => {
+			it('Throws an invalid error if guardian email is an empty string', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
 					guardianEmailAddress: '',
@@ -334,7 +355,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[0].message).toBe('Invalid email');
 			});
 
-			it('Adds a custom error to participantEmailAddress if user provided a participant email address', () => {
+			it('Adds a custom error if the user provided a participant email address', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...guardianConsentTestData,
 					participantEmailAddress: 'bart@example.com',
@@ -348,7 +369,7 @@ describe('ParticipantRegistrationRequest', () => {
 		});
 
 		describe('User is a participant', () => {
-			it('Returns true if the user has a participant email, and no guardian email', () => {
+			it('Returns true if the user provided a participant email, and no guardian email', () => {
 				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
 
@@ -364,7 +385,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[0].message).toBe('Invalid email');
 			});
 
-			it("Adds a custom error to participantEmailAddress if the user didn't provide a participant email", () => {
+			it("Adds a custom error if the user didn't provide a participant email", () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					participantEmailAddress: undefined,
@@ -376,7 +397,7 @@ describe('ParticipantRegistrationRequest', () => {
 				expect(errors[0].message).toBe('participantEmailMissing');
 			});
 
-			it('Adds a custom error to guardianEmailAddress if user provided a guardian email address', () => {
+			it('Adds a custom error if user provided a guardian email address', () => {
 				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianEmailAddress: 'bart@example.com',
