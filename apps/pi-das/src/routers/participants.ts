@@ -143,7 +143,6 @@ router.post(
 			const participant = await createParticipant({
 				...req.body,
 				dateOfBirth: parsedDateOfBirth,
-				hasOhip: req.body.hasOhip === undefined ? true : req.body.hasOhip,
 			});
 			switch (participant.status) {
 				case 'SUCCESS': {
