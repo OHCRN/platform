@@ -34,6 +34,10 @@ export const PIClinicianInviteResponse = PIClinicianInvite.extend({ id: NanoId }
 	.extend(GuardianNullableResponseFields)
 	.extend({
 		participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
+		assentFormIdentifier: z
+			.string()
+			.nullable()
+			.transform((input) => input ?? undefined),
 	});
 
 export type PIClinicianInviteResponse = z.infer<typeof PIClinicianInviteResponse>;

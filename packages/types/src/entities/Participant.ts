@@ -102,6 +102,10 @@ export type ConsentParticipant = z.infer<typeof ConsentParticipant>;
 
 export const ParticipantNullableFields = {
 	inviteId: NanoId.nullable().transform((input) => input ?? undefined),
+	assentFormIdentifier: z
+		.string()
+		.nullable()
+		.transform((input) => input ?? undefined),
 	participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
 	participantEmailAddress: z
 		.string()
