@@ -24,88 +24,153 @@ import { ConsentClinicianInviteResponse } from '../../src/services/consentDas/in
 import { PIClinicianInviteResponse } from '../../src/services/piDas/index.js';
 import { ClinicianInviteRequest } from '../../src/services/consentApi/requests/ClinicianInvite.js';
 
+const mockInviteRequestData = {
+	clinicianFirstName: 'Homer',
+	clinicianLastName: 'Simpson',
+	clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
+	clinicianTitleOrRole: 'Doctor',
+	participantOhipFirstName: 'Bart',
+	participantOhipLastName: 'Simpson',
+	consentToBeContacted: true,
+};
+
+const mockGuardianInviteRequestData = {
+	...mockInviteRequestData,
+	guardianName: 'Marge Simpson',
+	guardianPhoneNumber: '1234567890',
+	guardianEmailAddress: 'marge.simpson@example.com',
+	guardianRelationship: 'Wife',
+};
+
+const mockParticipantInviteRequestData = {
+	...mockInviteRequestData,
+	participantEmailAddress: 'homer@example.com',
+	participantPhoneNumber: '3824787481',
+};
+
 describe('ClinicianInviteRequest', () => {
-	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all guardian contact fields are provided', () => {
-		const result = ClinicianInviteRequest.safeParse({
-			id: 'CVCFbeKH2Njl1G41vCQme',
-			inviteSentDate: new Date(),
-			clinicianFirstName: 'Homer',
-			clinicianLastName: 'Simpson',
-			clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-			clinicianTitleOrRole: 'Doctor',
-			participantOhipFirstName: 'Bart',
-			participantOhipLastName: 'Simpson',
-			participantEmailAddress: 'bart.simpson@example.com',
-			participantPhoneNumber: '6471234567',
-			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
-			guardianName: 'Marge Simpson',
-			guardianPhoneNumber: '1234567890',
-			guardianEmailAddress: 'marge.simpson@example.com',
-			guardianRelationship: 'Wife',
-			consentToBeContacted: true,
-			assentFormIdentifier: '1234567890',
+	describe('Invite a guardian', () => {
+		it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR, all guardian contact fields are provided, and participant contact fields are undefined', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+			});
+			expect(result.success).true;
 		});
-		expect(result.success).true;
+		it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, all guardian contact fields are provided, and participant contact fields are undefined', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+			});
+			expect(result.success).true;
+		});
+		it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and some guardian contact fields are NOT provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockInviteRequestData,
+				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+				guardianName: 'Marge Simpson',
+				guardianRelationship: 'Wife', // missing guardianEmailAddress and guardianPhoneNumber
+			});
+			expect(result.success).false;
+		});
+		it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are NOT provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockInviteRequestData,
+				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
+			});
+			expect(result.success).false;
+		});
+		it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and one participant contact field is provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				participantEmailAddress: 'homer@example.com',
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
+			});
+			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
+		});
+		it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and all participant contact fields are provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				...mockParticipantInviteRequestData,
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
+			});
+			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
+		});
 	});
-	it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are provided', () => {
-		const result = ClinicianInviteRequest.safeParse({
-			id: 'CVCFbeKH2Njl1G41vCQme',
-			inviteSentDate: new Date(),
-			clinicianFirstName: 'Homer',
-			clinicianLastName: 'Simpson',
-			clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-			clinicianTitleOrRole: 'Doctor',
-			participantOhipFirstName: 'Bart',
-			participantOhipLastName: 'Simpson',
-			participantEmailAddress: 'bart.simpson@example.com',
-			participantPhoneNumber: '6471234567',
-			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-			guardianName: 'Marge Simpson',
-			guardianPhoneNumber: '1234567890',
-			guardianEmailAddress: 'marge.simpson@example.com',
-			guardianRelationship: 'Wife',
-			consentToBeContacted: true,
-			assentFormIdentifier: '1234567890',
+
+	describe('Invite a participant', () => {
+		it('Parses correctly when consentGroup is ADULT_CONSENT, all participant contact fields are provided, and guardian contact fields are undefined', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockParticipantInviteRequestData,
+				consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+			});
+			expect(result.success).true;
 		});
-		expect(result.success).true;
-	});
-	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR and some guardian contact fields are NOT provided', () => {
-		const result = ClinicianInviteRequest.safeParse({
-			id: 'CVCFbeKH2Njl1G41vCQme',
-			inviteSentDate: new Date(),
-			clinicianFirstName: 'Homer',
-			clinicianLastName: 'Simpson',
-			clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-			clinicianTitleOrRole: 'Doctor',
-			participantOhipFirstName: 'Bart',
-			participantOhipLastName: 'Simpson',
-			participantEmailAddress: 'bart.simpson@example.com',
-			participantPhoneNumber: '6471234567',
-			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
-			guardianName: 'Marge Simpson',
-			guardianRelationship: 'Wife', // missing guardianEmailAddress and guardianPhoneNumber
-			consentToBeContacted: true,
-			assentFormIdentifier: '1234567890',
+		it('Parses correctly when consentGroup is YOUNG_ADULT_CONSENT, all participant contact fields are provided, and guardian contact fields are undefined', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockParticipantInviteRequestData,
+				consentGroup: ConsentGroup.enum.YOUNG_ADULT_CONSENT,
+			});
+			expect(result.success).true;
 		});
-		expect(result.success).false;
-	});
-	it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and all guardian contact fields are NOT provided', () => {
-		const result = ClinicianInviteRequest.safeParse({
-			id: 'CVCFbeKH2Njl1G41vCQme',
-			inviteSentDate: new Date(),
-			clinicianFirstName: 'Homer',
-			clinicianLastName: 'Simpson',
-			clinicianInstitutionalEmailAddress: 'homer.simpson@example.com',
-			clinicianTitleOrRole: 'Doctor',
-			participantOhipFirstName: 'Bart',
-			participantOhipLastName: 'Simpson',
-			participantEmailAddress: 'bart.simpson@example.com',
-			participantPhoneNumber: '6471234567',
-			consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
-			consentToBeContacted: true,
-			assentFormIdentifier: '1234567890',
+		it('Fails when consentGroup is ADULT_CONSENT and some participant contact fields are NOT provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockInviteRequestData,
+				consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+				participantEmailAddress: 'homer@example.com',
+			});
+			expect(result.success).false;
 		});
-		expect(result.success).false;
+		it('Fails when consentGroup is YOUNG_ADULT_CONSENT and all participant contact fields are NOT provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockInviteRequestData,
+				consentGroup: ConsentGroup.enum.YOUNG_ADULT_CONSENT,
+			});
+			expect(result.success).false;
+		});
+		it('Fails when consentGroup is ADULT_CONSENT and one guardian field is provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockParticipantInviteRequestData,
+				consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+				guardianPhoneNumber: '1234567890',
+			});
+			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
+		});
+		it('Fails when consentGroup is YOUNG_ADULT_CONSENT and all guardian fields are provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockParticipantInviteRequestData,
+				consentGroup: ConsentGroup.enum.ADULT_CONSENT,
+				guardianName: 'Marge Simpson',
+				guardianPhoneNumber: '1234567890',
+				guardianEmailAddress: 'marge.simpson@example.com',
+				guardianRelationship: 'Wife',
+			});
+			expect(result.success).false;
+			if (!result.success) {
+				expect(result.error).to.not.be.undefined;
+				expect(result.error.issues[0].message).to.equal(
+					'Contact fields must be related to consentGroup',
+				);
+			}
+		});
 	});
 });
 

@@ -29,6 +29,8 @@ import {
 	ConsentReleaseDataResponseSchema as ConsentReleaseDataResponse,
 	ConsentResearchParticipationRequestSchema as ConsentResearchParticipationRequest,
 	ConsentResearchParticipationResponseSchema as ConsentResearchParticipationResponse,
+	CreateParticipantRequestSchema as CreateParticipantRequest,
+	CreateParticipantResponseSchema as CreateParticipantResponse,
 	InformedConsentRequestSchema as InformedConsentRequest,
 	InformedConsentResponseSchema as InformedConsentResponse,
 } from 'types/consentApi';
@@ -93,6 +95,8 @@ const options = swaggerJsdoc({
 				ConsentRecontactRequest,
 				ConsentRecontactResponse,
 				ConsentReviewSignResponse,
+				CreateParticipantRequest,
+				CreateParticipantResponse,
 				User,
 			},
 		},

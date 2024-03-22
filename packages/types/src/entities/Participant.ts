@@ -28,6 +28,7 @@ import {
 	NanoId,
 	OptionalName,
 	OptionalNanoId,
+	OptionalPhoneNumber,
 	OptionalPostalCode,
 	PhoneNumber,
 	PostalCode,
@@ -50,7 +51,7 @@ export type ParticipantBaseOhipNameFields = z.infer<typeof ParticipantBaseOhipNa
 
 export const ParticipantContactFields = z.object({
 	participantEmailAddress: z.string().email().optional(),
-	participantPhoneNumber: PhoneNumber.optional(),
+	participantPhoneNumber: OptionalPhoneNumber,
 });
 export type ParticipantContactFields = z.infer<typeof ParticipantContactFields>;
 
@@ -83,20 +84,18 @@ export const PIParticipantBase = ParticipantIdentityBase.merge(
 );
 export type PIParticipantBase = z.infer<typeof PIParticipantBase>;
 
-export const ConsentParticipantBase = z
-	.object({
-		currentLifecycleState: LifecycleState,
-		consentGroup: ConsentGroup,
-		emailVerified: z.boolean(),
-		isGuardian: z.boolean(),
-	})
-	.merge(ConsentToBeContacted);
+export const ConsentParticipantBase = z.object({
+	currentLifecycleState: LifecycleState,
+	consentGroup: ConsentGroup,
+	emailVerified: z.boolean(),
+	isGuardian: z.boolean(),
+});
 export type ConsentParticipantBase = z.infer<typeof ConsentParticipantBase>;
 
 export const ConsentParticipant = ConsentParticipantBase.merge(
 	z.object({
 		id: NanoId,
-		previousLifecycleState: LifecycleState.optional(),
+		consentToBeContacted: z.boolean(),
 	}),
 );
 export type ConsentParticipant = z.infer<typeof ConsentParticipant>;

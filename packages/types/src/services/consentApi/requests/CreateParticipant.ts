@@ -17,42 +17,21 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { generateSchema } from '@anatine/zod-openapi';
 import { z } from 'zod';
 
-import { OptionalString, hasRequiredInfoForConsentGroup } from '../common/index.js';
-
+import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
 import {
-	ConsentGroup,
-	LifecycleState,
-	NanoId,
-	OhipNumber,
-	OptionalName,
-	OptionalNanoId,
-	OptionalPostalCode,
-	PostalCode,
-	Province,
-} from './fields/index.js';
+	ConsentParticipantBase,
+	ConsentToBeContacted,
+	ParticipantIdentityBase,
+} from '../../../entities/index.js';
 
-import { ParticipantIdentityBase } from './index.js';
+export const CreateParticipantRequest = ParticipantIdentityBase.merge(ConsentParticipantBase)
+	.merge(ConsentToBeContacted)
+	.refine(hasRequiredInfoForConsentGroup, {
+		message: 'Contact fields must be related to consentGroup',
+	});
 
-export const ParticipantIdentification = ParticipantIdentityBase.merge(
-	z.object({
-		id: NanoId,
-		inviteId: OptionalNanoId,
-		currentLifecycleState: LifecycleState,
-		previousLifecycleState: LifecycleState.optional(),
-		ohipNumber: OhipNumber,
-		mailingAddressStreet: OptionalString,
-		mailingAddressCity: OptionalString,
-		mailingAddressProvince: Province.optional(),
-		mailingAddressPostalCode: OptionalPostalCode,
-		residentialPostalCode: PostalCode,
-		consentGroup: ConsentGroup,
-		participantOhipMiddleName: OptionalName,
-		hasOhip: z.boolean().default(true),
-	}),
-).refine(hasRequiredInfoForConsentGroup, {
-	message: 'Contact fields must be related to consentGroup',
-});
-
-export type ParticipantIdentification = z.infer<typeof ParticipantIdentification>;
+export type CreateParticipantRequest = z.infer<typeof CreateParticipantRequest>;
+export const CreateParticipantRequestSchema = generateSchema(CreateParticipantRequest);
