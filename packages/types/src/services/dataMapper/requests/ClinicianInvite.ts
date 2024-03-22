@@ -21,11 +21,14 @@ import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 import { z } from 'zod';
 
-import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
+import {
+	hasRequiredAssentFormIdentifier,
+	hasRequiredInfoForConsentGroup,
+} from '../../../common/index.js';
 import { ClinicianInviteBase } from '../../../entities/ClinicianInvite.js';
 
 export const ClinicianInviteRequest = ClinicianInviteBase.refine(hasRequiredInfoForConsentGroup, {
 	message: 'Contact fields must be related to consentGroup',
-});
+}).refine(hasRequiredAssentFormIdentifier);
 export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteBase>;
 export const ClinicianInviteRequestSchema: SchemaObject = generateSchema(ClinicianInviteBase);

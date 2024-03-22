@@ -64,7 +64,7 @@ export const InviteEntity = z.object({
 	inviteAccepted: z.boolean().default(false),
 });
 
-export const ClinicianInviteBase = InviteClinicianFields.merge(InviteGuardianFields)
-	.merge(InviteParticipantFields)
-	.refine(hasRequiredAssentFormIdentifier);
+export const ClinicianInviteBase =
+	InviteClinicianFields.merge(InviteGuardianFields).merge(InviteParticipantFields);
+
 export type ClinicianInviteBase = z.infer<typeof ClinicianInviteBase>;
