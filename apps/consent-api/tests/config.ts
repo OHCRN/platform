@@ -35,6 +35,9 @@ export const mockEnv = (values?: Partial<AppConfig>) => {
 		recaptcha: {
 			secretKey: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
 		},
+		auth: {
+			keycloakPublicKey: 'public-key',
+		},
 	};
 
 	vi.spyOn(config, 'getAppConfig').mockReturnValue({ ...defaultConfig, ...values });
