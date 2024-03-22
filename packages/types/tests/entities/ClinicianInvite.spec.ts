@@ -61,6 +61,7 @@ describe('ClinicianInviteRequest', () => {
 			const result = ClinicianInviteRequest.safeParse({
 				...mockGuardianInviteRequestData,
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+				assentFormIdentifier: '123',
 			});
 			expect(result.success).true;
 		});
@@ -77,6 +78,7 @@ describe('ClinicianInviteRequest', () => {
 			const result = ClinicianInviteRequest.safeParse({
 				...mockInviteRequestData,
 				consentGroup: ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT, // missing all guardian contact fields
+				assentFormIdentifier: '123',
 			});
 			expect(result.success).false;
 		});
@@ -107,6 +109,38 @@ describe('ClinicianInviteRequest', () => {
 					'Contact fields must be related to consentGroup',
 				);
 			}
+		});
+		it('Parses correctly when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and assentFormIdentifier is provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT',
+				assentFormIdentifier: '123',
+			});
+			expect(result.success).true;
+		});
+		it('Parses correctly when consentGroup is not GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and assentFormIdentifier is not provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
+				assentFormIdentifier: undefined,
+			});
+			expect(result.success).true;
+		});
+		it('Fails when consentGroup is GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and assentFormIdentifier is not provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT',
+				assentFormIdentifier: undefined,
+			});
+			expect(result.success).false;
+		});
+		it('Fails when consentGroup is not GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT and assentFormIdentifier is provided', () => {
+			const result = ClinicianInviteRequest.safeParse({
+				...mockGuardianInviteRequestData,
+				consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
+				assentFormIdentifier: '123',
+			});
+			expect(result.success).false;
 		});
 	});
 
@@ -224,6 +258,7 @@ describe('PIClinicianInviteResponse', () => {
 			guardianPhoneNumber: null,
 			guardianEmailAddress: null,
 			guardianRelationship: null,
+			assentFormIdentifier: null,
 		});
 		expect(parsed.success).true;
 		expect(parsed.success && parsed.data.participantPreferredName).to.equal(undefined);
@@ -231,6 +266,7 @@ describe('PIClinicianInviteResponse', () => {
 		expect(parsed.success && parsed.data.guardianPhoneNumber).to.equal(undefined);
 		expect(parsed.success && parsed.data.guardianEmailAddress).to.equal(undefined);
 		expect(parsed.success && parsed.data.guardianRelationship).to.equal(undefined);
+		expect(parsed.success && parsed.data.assentFormIdentifier).to.equal(undefined);
 	});
 	it('Accepts optional values if not null', () => {
 		const parsed = PIClinicianInviteResponse.safeParse({
@@ -244,6 +280,7 @@ describe('PIClinicianInviteResponse', () => {
 			guardianPhoneNumber: '4155551212',
 			guardianEmailAddress: 'jane.green@example.com',
 			guardianRelationship: 'Mother',
+			assentFormIdentifier: '123',
 		});
 		expect(parsed.success).true;
 		expect(parsed.success && parsed.data.participantOhipFirstName).to.equal('John');
@@ -251,5 +288,6 @@ describe('PIClinicianInviteResponse', () => {
 		expect(parsed.success && parsed.data.guardianPhoneNumber).to.equal('4155551212');
 		expect(parsed.success && parsed.data.guardianEmailAddress).to.equal('jane.green@example.com');
 		expect(parsed.success && parsed.data.guardianRelationship).to.equal('Mother');
+		expect(parsed.success && parsed.data.assentFormIdentifier).to.equal('123');
 	});
 });

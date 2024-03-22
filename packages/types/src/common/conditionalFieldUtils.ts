@@ -152,8 +152,9 @@ export const hasRequiredAssentFormIdentifier = (props: {
 	consentGroup: ConsentGroup;
 }) => {
 	const { assentFormIdentifier, consentGroup } = props;
-	if (consentGroup == GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) {
+	if (consentGroup === GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) {
 		return hasValue(assentFormIdentifier);
 	}
-	return true;
+
+	return !hasValue(assentFormIdentifier);
 };

@@ -19,11 +19,7 @@
 
 import { z } from 'zod';
 
-import {
-	hasRequiredAssentFormIdentifier,
-	NonEmptyString,
-	OptionalString,
-} from '../common/index.js';
+import { NonEmptyString, OptionalString } from '../common/index.js';
 
 import { ConsentGroup, Name, NanoId, OptionalName } from './fields/index.js';
 import { GuardianBaseFields } from './Guardian.js';
