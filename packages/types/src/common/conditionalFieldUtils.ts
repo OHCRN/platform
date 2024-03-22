@@ -49,53 +49,67 @@ const isEmptyString = (arg: any): arg is EmptyString => arg === ''; // empty HTM
 export const isEmptyOrUndefined = (arg: any) => isUndefined(arg) || isEmptyString(arg);
 export const hasValue = <T>(input: T | undefined): input is T => !isUndefined(input);
 
-// TODO: decide if participant contact fields will be excluded in a guardian is present
-// TBD in https://github.com/OHCRN/platform/issues/388
 /**
- * Checks if a Participant schema object contains the required Participant contact fields needed for the ConsentGroup
- *
- * participantEmailAddress and participantPhoneNumber must be defined if ADULT_CONSENT or YOUNG_ADULT_CONSENT was selected
- * @param props consentGroup, participantEmailAddress, participantPhoneNumber
- * @returns {boolean} returns true if all required fields are present
- *
+ * Checks if a Participant schema object contains the appropriate data for the provided consent group,
+ * and doesn't have data pertaining to other consent groups.
+ * ADULT_CONSENT and YOUNG_ADULT_CONSENT must have participantEmailAddress and participantPhoneNumber. Guardian fields
+ * (guardianName, guardianPhoneNumber, guardianEmailAddress, and guardianRelationship) must be undefined.
+ * GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT or ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER must have
+ * guardianName, guardianPhoneNumber, guardianEmailAddress, and guardianRelationship. Participant contact fields
+ * (participantEmailAddress and participantPhoneNumber) must be undefined.
+ * @param props consentGroup, guardianEmailAddress, guardianName, guardianPhoneNumber, guardianRelationship, participantEmailAddress, participantPhoneNumber
+ * @returns {boolean} returns true if all required fields are present, and non-required fields are undefined
  */
-export const hasRequiredParticipantContactInfo = (
-	props: {
-		consentGroup: ConsentGroup;
-	} & ParticipantContactFields,
-) => {
-	const { consentGroup, participantEmailAddress, participantPhoneNumber } = props;
-	return requiresParticipantContactInfo(consentGroup)
-		? [participantEmailAddress, participantPhoneNumber].every(hasValue)
-		: true;
-};
 
-/**
- * Checks if a Participant schema object contains the required Guardian contact fields needed for the ConsentGroup
- *
- * guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship must be defined if
- * GUARDIAN_CONSENT_OF_MINOR, GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT or ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER was selected
- * @param props guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship, consentGroup
- * @returns {boolean} returns true if all required fields are present
- */
-export const hasRequiredGuardianInformation = (
+export const hasRequiredInfoForConsentGroup = (
 	props: {
 		consentGroup: ConsentGroup;
-	} & GuardianBaseFields,
+	} & ParticipantContactFields &
+		GuardianBaseFields,
 ) => {
 	const {
 		consentGroup,
+		guardianEmailAddress,
 		guardianName,
 		guardianPhoneNumber,
-		guardianEmailAddress,
 		guardianRelationship,
+		participantEmailAddress,
+		participantPhoneNumber,
 	} = props;
 
-	return requiresGuardianInformation(consentGroup)
-		? [guardianName, guardianPhoneNumber, guardianEmailAddress, guardianRelationship].every(
-				hasValue,
-		  )
-		: true;
+	const allParticipantContactFieldsProvided = [
+		participantEmailAddress,
+		participantPhoneNumber,
+	].every(hasValue);
+
+	const allGuardianFieldsUndefined = [
+		guardianEmailAddress,
+		guardianName,
+		guardianPhoneNumber,
+		guardianRelationship,
+	].every(isUndefined);
+
+	if (requiresParticipantContactInfo(consentGroup)) {
+		return allParticipantContactFieldsProvided && allGuardianFieldsUndefined;
+	}
+
+	const allGuardianFieldsProvided = [
+		guardianEmailAddress,
+		guardianName,
+		guardianPhoneNumber,
+		guardianRelationship,
+	].every(hasValue);
+
+	const allParticipantContactFieldsUndefined = [
+		participantEmailAddress,
+		participantPhoneNumber,
+	].every(isUndefined);
+
+	if (requiresGuardianInformation(consentGroup)) {
+		return allGuardianFieldsProvided && allParticipantContactFieldsUndefined;
+	}
+
+	return true;
 };
 
 /**

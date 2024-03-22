@@ -18,8 +18,13 @@
  */
 
 import { AxiosError } from 'axios';
-import { ClinicianInviteRequest, ClinicianInviteResponse } from 'types/consentApi';
-import { Result, failure, success } from 'types/httpResponses';
+import {
+	ClinicianInviteRequest,
+	ClinicianInviteResponse,
+	CreateParticipantRequest,
+	CreateParticipantResponse,
+} from 'types/consentApi';
+import { Result, SystemError, failure, success } from 'types/httpResponses';
 import urlJoin from 'url-join';
 
 import { getAppConfig } from '../config.js';
@@ -48,7 +53,7 @@ export const createResponse = async ({
 	return updateObj;
 };
 
-type CreateInviteFailureStatus = 'SYSTEM_ERROR' | 'INVITE_EXISTS';
+type CreateInviteFailureStatus = SystemError | 'INVITE_EXISTS';
 /**
  * Creates clinician invite by sending input to data-mapper, which separates data between
  * Consent and PI DAS and then returns the combined data object from both DB entries
@@ -82,6 +87,51 @@ export const createInvite = async (
 			return failure('SYSTEM_ERROR', data.message);
 		}
 		logger.error('POST /invites', 'Unexpected error handling create invite request.', error);
+		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
+	}
+};
+
+type CreateParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
+/**
+ * Passes a create participant request to, and handles the response from, the data-mapper /participants POST endpoint
+ * @async
+ * @param data CreateParticipantRequest
+ * @returns {CreateParticipantResponse} New participant response object or failure message
+ */
+export const createParticipant = async (
+	request: CreateParticipantRequest,
+): Promise<Result<CreateParticipantResponse, CreateParticipantFailureStatus>> => {
+	const { dataMapperUrl } = getAppConfig();
+	try {
+		const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'participants'), request);
+		const participant = CreateParticipantResponse.safeParse(data);
+
+		if (!participant.success) {
+			logger.error(
+				'POST /participants',
+				'Received invalid data in response.',
+				participant.error.issues,
+			);
+			return failure('SYSTEM_ERROR', participant.error.message);
+		}
+
+		return success(participant.data);
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			const { data, status } = error.response;
+			logger.error('POST /participants', 'AxiosError handling create participant request', data);
+
+			if (status === 409) {
+				return failure('PARTICIPANT_EXISTS', data.message);
+			}
+
+			return failure('SYSTEM_ERROR', data.message);
+		}
+		logger.error(
+			'POST /participants',
+			'Unexpected error handling create participant request.',
+			error,
+		);
 		return failure('SYSTEM_ERROR', 'An unexpected error occurred.');
 	}
 };
