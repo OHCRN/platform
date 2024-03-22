@@ -21,8 +21,10 @@ import { describe, expect, it } from 'vitest';
 import z from 'zod';
 
 import {
-	RegisterFormStep1NoDateOfBirth,
 	RegisterFormStep2,
+	RegisterRequestGuardianFieldsRefined,
+	RegisterRequestParticipantNameFields,
+	RegisterRequestParticipantPhoneNumberFieldRefined,
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
@@ -38,9 +40,12 @@ describe('ParticipantRegistrationRequest', () => {
 
 	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
 	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
-	const RegisterFormStep1 = RegisterFormStep1NoDateOfBirth.and(DateOfBirthField);
+	const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
+		RegisterRequestGuardianFieldsRefined,
+	)
+		.and(RegisterRequestParticipantPhoneNumberFieldRefined)
+		.and(DateOfBirthField);
 	const ParticipantRegistrationRequest = RegisterFormStep1.and(RegisterFormStep2);
-	type ParticipantRegistrationRequest = z.infer<typeof ParticipantRegistrationRequest>;
 
 	const adultConsentTestData = {
 		confirmPassword: 'password',

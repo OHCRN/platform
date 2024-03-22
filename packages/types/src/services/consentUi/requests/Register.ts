@@ -39,12 +39,13 @@ const isGuardianField = z.object({
 
 // STEP 1
 
-const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
+export const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
 	z.object({
 		participantPreferredName: EmptyOrOptionalName,
 	}),
 );
 
+// participant phone number - required for participants, not allowed for guardians
 const RegisterRequestParticipantPhoneNumberField = isGuardianField.and(
 	z.object({
 		participantPhoneNumber: EmptyOrOptionalPhoneNumber,
@@ -53,11 +54,12 @@ const RegisterRequestParticipantPhoneNumberField = isGuardianField.and(
 export type RegisterRequestParticipantPhoneNumberField = z.infer<
 	typeof RegisterRequestParticipantPhoneNumberField
 >;
-const RegisterRequestParticipantPhoneNumberFieldRefined =
+export const RegisterRequestParticipantPhoneNumberFieldRefined =
 	RegisterRequestParticipantPhoneNumberField.superRefine(hasParticipantPhoneNumberForRegistration);
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
+// guardian fields - required for guardians, not allowed for participants
 const RegisterRequestGuardianFields = isGuardianField.and(
 	z.object({
 		guardianName: EmptyOrOptionalName,
@@ -66,15 +68,15 @@ const RegisterRequestGuardianFields = isGuardianField.and(
 	}),
 );
 export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
-const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
+export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	hasRequiredGuardianInfoForRegistration,
 );
 
-export const RegisterFormStep1NoDateOfBirth = RegisterRequestParticipantNameFields.and(
+export const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
-).and(RegisterRequestParticipantPhoneNumberFieldRefined);
-
-export const RegisterFormStep1 = RegisterFormStep1NoDateOfBirth.and(DateOfBirthField);
+)
+	.and(RegisterRequestParticipantPhoneNumberFieldRefined)
+	.and(DateOfBirthField);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2
