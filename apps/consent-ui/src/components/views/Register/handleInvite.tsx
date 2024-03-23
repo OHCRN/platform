@@ -38,18 +38,16 @@ export type MockInviteDataRegisterStep2 = {
 	participantEmailAddress?: string;
 };
 
-export type MockInviteDataInviteId = {
-	inviteId?: string;
-};
-
 export type MockInviteResponseData = MockInviteDataRegisterStep1 &
 	MockInviteDataRegisterStep2 & { id?: string };
 
+export type MockInviteData = {
+	registerStep1: MockInviteDataRegisterStep1;
+	registerStep2: MockInviteDataRegisterStep2;
+};
+
 type HandleInvite = (inviteId?: string) => Promise<{
-	data?: {
-		registerStep1: MockInviteDataRegisterStep1;
-		registerStep2: MockInviteDataRegisterStep2;
-	};
+	data?: MockInviteData;
 	error?: string;
 }>;
 

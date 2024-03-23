@@ -33,6 +33,8 @@ import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFor
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
+import { MockInviteData } from '../handleInvite';
+
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
@@ -51,7 +53,7 @@ const RegisterForm = ({
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
-	inviteData?: Record<string, any>; // TODO
+	inviteData?: MockInviteData;
 	step1LabelsDict: RegisterFormStep1LabelsDictionary;
 	step1TextDict: RegisterFormStep1TextDictionary;
 	step2LabelsDict: RegisterFormStep2LabelsDictionary;
