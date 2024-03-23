@@ -55,7 +55,7 @@ const getPdf = async (pdfUrl: string) => {
 /**
  * Specify user type, to determine which elements to display & their coordinates.
  */
-const getUserType = (consentGroup: ConsentGroup): UserType | undefined => {
+export const getUserType = (consentGroup: ConsentGroup): UserType | undefined => {
 	let userType: UserType | undefined;
 
 	switch (consentGroup) {
