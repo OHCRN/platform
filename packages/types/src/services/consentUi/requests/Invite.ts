@@ -19,11 +19,12 @@
 
 import { z } from 'zod';
 
-import { hasRequiredInfoForConsentGroup } from '../../../common/index.js';
+import { hasRequiredGuardianAndParticipantInfoForInvite } from '../../../common/index.js';
 import { ClinicianInviteBase, EmptyOrOptionalName } from '../../../entities/index.js';
 
+// use superRefine because it supports adding errors to multiple fields
 export const ClinicianInviteRequest = ClinicianInviteBase.extend({
 	participantPreferredName: EmptyOrOptionalName,
-}).refine(hasRequiredInfoForConsentGroup);
+}).superRefine(hasRequiredGuardianAndParticipantInfoForInvite);
 
 export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;

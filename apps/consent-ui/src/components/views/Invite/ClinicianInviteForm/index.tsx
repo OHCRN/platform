@@ -57,6 +57,7 @@ const styles = Object.assign({}, formStyles, layoutStyles);
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 ];
 
 const ClinicianInviteFormComponent = ({
