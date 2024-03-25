@@ -22,12 +22,10 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ConsentGroup, ClinicianInviteBase, EmptyOrOptionalName } from 'types/entities';
-import { ClinicianInviteRequest } from 'types/consentApi';
+import { ConsentGroup } from 'types/entities';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { z } from 'zod';
-import { hasRequiredInfoForConsentGroup } from 'types/common';
+import { ClinicianInviteRequest } from 'types/consentUi';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -55,12 +53,6 @@ import { ConsentGroupOption } from './types';
 import formStyles from './ClinicianInviteForm.module.scss';
 
 const styles = Object.assign({}, formStyles, layoutStyles);
-
-const ClinicianInviteFormRequest = ClinicianInviteBase.extend({
-	participantPreferredName: EmptyOrOptionalName,
-}).refine(hasRequiredInfoForConsentGroup);
-
-type ClinicianInviteFormRequest = z.infer<typeof ClinicianInviteFormRequest>;
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
@@ -93,9 +85,9 @@ const ClinicianInviteFormComponent = ({
 	};
 
 	// setup react-hook-forms
-	const methods = useForm<ClinicianInviteFormRequest>({
+	const methods = useForm<ClinicianInviteRequest>({
 		mode: 'onBlur',
-		resolver: zodResolver(ClinicianInviteFormRequest),
+		resolver: zodResolver(ClinicianInviteRequest),
 		shouldUnregister: true,
 	});
 
