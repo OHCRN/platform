@@ -19,10 +19,13 @@
 
 import { z } from 'zod';
 
-import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
+import {
+	ConsentToBeContacted,
+	ParticipantBaseOhipNameFields,
+} from '../../../entities/Participant.js';
 import {
 	NonEmptyString,
-	createDateOfBirthRequestSchema,
+	hasMinimumAgeForRegistration,
 	hasParticipantPhoneNumberForRegistration,
 	hasRequiredEmailForConsentGroupForRegistration,
 	hasRequiredGuardianInfoForRegistration,
@@ -34,12 +37,12 @@ import {
 } from '../../../entities/fields/index.js';
 
 const isGuardianField = z.object({
-	isGuardian: z.boolean(),
+	isGuardian: z.boolean().optional(),
 });
 
 // STEP 1
 
-export const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
+export const RegisterRequestParticipantNameFields = ParticipantBaseOhipNameFields.and(
 	z.object({
 		participantPreferredName: EmptyOrOptionalName,
 	}),
@@ -57,7 +60,21 @@ export type RegisterRequestParticipantPhoneNumberField = z.infer<
 export const RegisterRequestParticipantPhoneNumberFieldRefined =
 	RegisterRequestParticipantPhoneNumberField.superRefine(hasParticipantPhoneNumberForRegistration);
 
-const DateOfBirthField = createDateOfBirthRequestSchema();
+const IsInvitedField = z.object({
+	isInvited: z.boolean().optional(),
+});
+
+// date of birth - if user doesn't have an invite, they must be at least the minimum age
+export const RegisterRequestAgeCheck = IsInvitedField.and(
+	z.object({
+		dateOfBirth: z.coerce.date(),
+		isInvited: z.boolean(),
+	}),
+);
+export type RegisterRequestAgeCheck = z.infer<typeof RegisterRequestAgeCheck>;
+const RegisterRequestAgeCheckRefined = RegisterRequestAgeCheck.superRefine((props, ctx) =>
+	hasMinimumAgeForRegistration(props, ctx, new Date()),
+);
 
 // guardian fields - required for guardians, not allowed for participants
 const RegisterRequestGuardianFields = isGuardianField.and(
@@ -76,7 +93,7 @@ export const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
 )
 	.and(RegisterRequestParticipantPhoneNumberFieldRefined)
-	.and(DateOfBirthField);
+	.and(RegisterRequestAgeCheckRefined);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 // STEP 2

@@ -18,17 +18,16 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import z from 'zod';
 
 import {
-	RegisterFormStep2,
-	RegisterRequestGuardianFieldsRefined,
-	RegisterRequestParticipantNameFields,
-	RegisterRequestParticipantPhoneNumberFieldRefined,
+	ParticipantRegistrationRequest as ParticipantRegistrationRequestOriginal,
+	RegisterRequestAgeCheck,
 } from '../../src/services/consentUi/requests/Register.js';
-import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
-import { formatZodFieldErrorsForTesting } from '../../src/common/index.js';
+import {
+	formatZodFieldErrorsForTesting,
+	hasMinimumAgeForRegistration,
+} from '../../src/common/index.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const {
@@ -38,14 +37,13 @@ describe('ParticipantRegistrationRequest', () => {
 		olderThanMinimumAgeDateOfBirth,
 	} = setupDateOfBirthTest();
 
-	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
-	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
-	const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
-		RegisterRequestGuardianFieldsRefined,
-	)
-		.and(RegisterRequestParticipantPhoneNumberFieldRefined)
-		.and(DateOfBirthField);
-	const ParticipantRegistrationRequest = RegisterFormStep1.and(RegisterFormStep2);
+	// update date of birth schema with a fixed date for testing
+	const RegisterRequestAgeCheckRefined = RegisterRequestAgeCheck.superRefine((props, ctx) =>
+		hasMinimumAgeForRegistration(props, ctx, mockDate),
+	);
+	const ParticipantRegistrationRequest = ParticipantRegistrationRequestOriginal.and(
+		RegisterRequestAgeCheckRefined,
+	);
 
 	const adultConsentTestData = {
 		confirmPassword: 'password',
@@ -55,9 +53,10 @@ describe('ParticipantRegistrationRequest', () => {
 		guardianPhoneNumber: undefined,
 		guardianRelationship: undefined,
 		isGuardian: false,
+		isInvited: false,
 		participantEmailAddress: 'bart@example.com',
-		participantFirstName: 'Bartholomew',
-		participantLastName: 'Simpson',
+		participantOhipFirstName: 'Bartholomew',
+		participantOhipLastName: 'Simpson',
 		participantPhoneNumber: '2345678901',
 		participantPreferredName: 'Bart',
 		password: 'password',
@@ -70,6 +69,7 @@ describe('ParticipantRegistrationRequest', () => {
 		guardianPhoneNumber: '5492750173',
 		guardianRelationship: 'Father',
 		isGuardian: true,
+		isInvited: true,
 		participantEmailAddress: undefined,
 		participantPhoneNumber: undefined,
 	};
@@ -133,30 +133,59 @@ describe('ParticipantRegistrationRequest', () => {
 	});
 
 	describe('Date of Birth Field', () => {
-		it("Returns true when the user's age is equal to or greater than the minimum", () => {
-			expect(
-				ParticipantRegistrationRequest.safeParse({
-					...adultConsentTestData,
-					dateOfBirth: exactlyMinimumAgeDateOfBirth,
-				}).success,
-			).true;
-			expect(
-				ParticipantRegistrationRequest.safeParse({
-					...adultConsentTestData,
-					dateOfBirth: olderThanMinimumAgeDateOfBirth,
-				}).success,
-			).true;
-		});
-
-		it("Adds custom error to dateOfBirth when user's age is below the minimum", () => {
-			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
-				dateOfBirth: lessThanMinimumAgeDateOfBirth,
+		describe('User is registering with an invite', () => {
+			it("Returns true regardless of the user's age", () => {
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...guardianConsentTestData,
+						dateOfBirth: lessThanMinimumAgeDateOfBirth,
+					}).success,
+				).true;
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...guardianConsentTestData,
+						dateOfBirth: olderThanMinimumAgeDateOfBirth,
+					}).success,
+				).true;
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...adultConsentTestData,
+						dateOfBirth: exactlyMinimumAgeDateOfBirth,
+					}).success,
+				).true;
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...adultConsentTestData,
+						dateOfBirth: olderThanMinimumAgeDateOfBirth,
+					}).success,
+				).true;
 			});
-			expect(result.success).false;
-			const fieldErrors = formatZodFieldErrorsForTesting(result);
-			expect(fieldErrors[0].path).toBe('dateOfBirth');
-			expect(fieldErrors[0].message).toBe('participantLessThanMinimumAge');
+		});
+		describe('User is registering without an invite', () => {
+			it("Returns true when the user's age is equal to or greater than the minimum", () => {
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...adultConsentTestData,
+						dateOfBirth: exactlyMinimumAgeDateOfBirth,
+					}).success,
+				).true;
+				expect(
+					ParticipantRegistrationRequest.safeParse({
+						...adultConsentTestData,
+						dateOfBirth: olderThanMinimumAgeDateOfBirth,
+					}).success,
+				).true;
+			});
+			it("Adds custom error to dateOfBirth when user's age is below the minimum", () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					dateOfBirth: lessThanMinimumAgeDateOfBirth,
+				});
+				expect(result.success).false;
+				const fieldErrors = formatZodFieldErrorsForTesting(result);
+				expect(fieldErrors[0].path).toBe('dateOfBirth');
+				expect(fieldErrors[0].message).toBe('participantLessThanMinimumAge');
+			});
 		});
 	});
 

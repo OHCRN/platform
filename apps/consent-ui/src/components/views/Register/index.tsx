@@ -23,7 +23,19 @@ import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import registerBg from 'src/../public/assets/images/register-bg.jpg';
 
-const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
+import handleInvite from './handleInvite';
+
+const Register = async ({
+	currentLang,
+	inviteId,
+}: {
+	currentLang: ValidLanguage;
+	inviteId?: string;
+}) => {
+	// register from an invite
+	const inviteResult = await handleInvite(inviteId);
+
+	// translation dictionaries
 	const { translateNamespace } = getTranslation(currentLang);
 	const errorsDict = translateNamespace('formErrors');
 	const pageDict = translateNamespace('registerPage');
@@ -34,6 +46,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 	const dateOfBirthModalDict = translateNamespace('registerDateOfBirthErrorModal');
 	const textDict = translateNamespace('registerFormText');
 
+	// step navigation
 	const STEP_COUNT = 2;
 	const stepTitleDict = {
 		step1: replaceParams(textDict.stepCurrentOfTotal, {
@@ -45,6 +58,11 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			total: STEP_COUNT,
 		}),
 	};
+
+	// TODO handle form submission with a server action.
+	// add inviteId to the request. pass server action down to register step 2
+	// const { inviteId } = inviteResult;
+	// omit isInvited & currentDate from step 1
 
 	return (
 		<SideImageLayout
@@ -68,6 +86,7 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			<RegisterForm
 				currentLang={currentLang}
 				errorsDict={errorsDict}
+				inviteData={inviteResult?.data}
 				step1LabelsDict={step1LabelsDict}
 				step1TextDict={step1textDict}
 				step2LabelsDict={step2LabelsDict}
