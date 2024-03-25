@@ -188,7 +188,6 @@ const ClinicianInviteFormComponent = ({
 							name="participantPreferredName"
 							description={textDict.participantPreferredNameTooltip}
 						/>
-
 						<SelectFieldSet
 							error={errors.consentGroup?.type && errorsDict.required}
 							infoButtonProps={{
@@ -201,21 +200,6 @@ const ClinicianInviteFormComponent = ({
 							placeholder={textDict.selectPlaceholder}
 							required
 							description={textDict.consentGroupTooltip}
-						/>
-
-						<TextFieldSet
-							description={textDict.participantPhoneNumberTooltip}
-							error={errors.participantPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.phone}
-							name="participantPhoneNumber"
-							required
-						/>
-						<TextFieldSet
-							error={errors.participantEmailAddress?.type && errorsDict.required}
-							label={labelsDict.email}
-							name="participantEmailAddress"
-							required
-							description={textDict.participantEmailAddressTooltip}
 						/>
 					</FormSection>
 
@@ -265,6 +249,28 @@ const ClinicianInviteFormComponent = ({
 								{textDict.uploadFileDescription2}
 								{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 							</p>
+						</FormSection>
+					)}
+
+					{/* SECTION - PARTICIPANT CONTACT INFO */}
+					{/* show/hide this field with conditional rendering.
+						fields will be removed from form state when hidden. */}
+					{!showGuardianFields && (
+						<FormSection>
+							<TextFieldSet
+								description={textDict.participantPhoneNumberTooltip}
+								error={errors.participantPhoneNumber?.type && errorsDict.required}
+								label={labelsDict.phone}
+								name="participantPhoneNumber"
+								required
+							/>
+							<TextFieldSet
+								error={errors.participantEmailAddress?.type && errorsDict.required}
+								label={labelsDict.email}
+								name="participantEmailAddress"
+								required
+								description={textDict.participantEmailAddressTooltip}
+							/>
 						</FormSection>
 					)}
 
