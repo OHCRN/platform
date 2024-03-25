@@ -17,8 +17,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { find } from 'lodash';
 import { ConsentGroup, NanoId } from 'types/entities';
+
+import { API } from 'src/constants';
+import consentApiFetch from 'src/services/api/axios/consentApiFetch';
 
 export type MockInviteDataRegisterStep1 = {
 	consentGroup?: ConsentGroup;
@@ -55,7 +57,7 @@ const mockInviteResponseData: MockInviteResponseData[] = [
 	{
 		consentGroup: 'ADULT_CONSENT',
 		consentToBeContacted: true,
-		id: 'clmarsvhd000008jngksv',
+		id: 'clmarsvDd000008jngksv',
 		participantEmailAddress: 'homer@example.com',
 		participantOhipFirstName: 'Homer',
 		participantOhipLastName: 'Simpson',
@@ -77,13 +79,20 @@ const mockInviteResponseData: MockInviteResponseData[] = [
 
 const defaultError = { error: 'inviteNotFound' };
 
-const handleInvite: HandleInvite = async (inviteId) => {
+const handleInvite: HandleInvite = async (inviteId = '') => {
 	const validInviteId = NanoId.safeParse(inviteId)?.success;
 	if (!validInviteId) {
 		return defaultError;
 	}
 
-	// TODO GET /invites/:inviteId - will return ClinicianInviteResponse or error
+	const inviteData = await consentApiFetch({
+		method: 'GET',
+		url: `${API.INVITES}/${inviteId}`,
+	})
+		.then((res) => res.data)
+		.catch((e) => {
+			console.log(e);
+		});
 
 	const {
 		consentGroup,
@@ -97,7 +106,7 @@ const handleInvite: HandleInvite = async (inviteId) => {
 		participantOhipLastName,
 		participantPhoneNumber,
 		participantPreferredName,
-	} = find(mockInviteResponseData, { id: inviteId }) || {};
+	} = inviteData;
 
 	const registerStep1 = {
 		consentGroup,
@@ -119,7 +128,6 @@ const handleInvite: HandleInvite = async (inviteId) => {
 
 	return {
 		data: { inviteId, registerStep1, registerStep2 },
-		// error: TBD
 	};
 };
 
