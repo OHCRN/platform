@@ -17,6 +17,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './dateOfBirth.js';
-export * from './guardianFields.js';
-export * from './common.js';
+import z from 'zod';
+
+/**
+ * Add a custom issue/error to the Zod refinement context, programmatically rather than relying on Zod schemas.
+ * @param ctx Zod refinement context
+ * @param message Error message. In UI use, this should be a translation key.
+ * @param path Name of the field where the error will be displayed
+ */
+export const addZodCustomError = (ctx: z.RefinementCtx, path: string, message: string) => {
+	ctx.addIssue({
+		code: 'custom',
+		message,
+		path: [path],
+	});
+};
+
+/**
+ * Format Zod errors for specific form fields, for easier testing.
+ * @param result The object resulting from Zod SafeParse
+ * @returns An array of objects: { path, message }
+ */
+export const formatZodFieldErrorsForTesting = (
+	result: z.SafeParseReturnType<any, any>,
+): { path: string; message: string }[] => {
+	const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
+	return resultJsonParsed.map((item: z.CustomErrorParams) => ({
+		path: (item.path && item.path[0]) || '',
+		message: item.message,
+	}));
+};

@@ -19,8 +19,78 @@
 
 import { z } from 'zod';
 
+import {
+	InviteGuardianFields,
+	ConsentGroup,
+	ParticipantContactFields,
+} from '../../entities/index.js';
 import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
-import { isEmptyOrUndefined } from '../../common/index.js';
+import { addZodCustomError, hasValue, isEmptyOrUndefined } from '../../common/index.js';
+
+const consentGroupsRequiringGuardian: ConsentGroup[] = [
+	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+];
+
+/**
+ * Checks an invite schema object.
+ * If the consent group requires a guardian, then the guardian fields must be defined,
+ * while participant contact fields must be undefined.
+ * If the consent group does not require a guardian, then the guardian fields must be undefined,
+ * while participant contact fields must be defined.
+ * Use with superRefine because it supports validating and adding errors to multiple fields.
+ * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const hasRequiredGuardianAndParticipantInfoForInvite = (
+	props: InviteGuardianFields & ParticipantContactFields & { consentGroup: ConsentGroup },
+	ctx: z.RefinementCtx,
+) => {
+	const {
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+		participantEmailAddress,
+		participantPhoneNumber,
+		consentGroup,
+	} = props;
+
+	const guardianFields = {
+		guardianName,
+		guardianPhoneNumber,
+		guardianEmailAddress,
+		guardianRelationship,
+	};
+	const partipantContactFields = { participantEmailAddress, participantPhoneNumber };
+
+	const guardianRequired = consentGroupsRequiringGuardian.includes(consentGroup);
+	if (guardianRequired) {
+		Object.entries(guardianFields).forEach(([key, value]) => {
+			if (isEmptyOrUndefined(value?.trim())) {
+				addZodCustomError(ctx, key, 'guardianInfoMissing');
+			}
+		});
+
+		Object.entries(partipantContactFields).forEach(([key, value]) => {
+			if (hasValue(value)) {
+				addZodCustomError(ctx, key, 'hasParticipantInfo');
+			}
+		});
+	} else {
+		Object.entries(guardianFields).forEach(([key, value]) => {
+			if (hasValue(value)) {
+				addZodCustomError(ctx, key, 'hasGuardianInfo');
+			}
+		});
+
+		Object.entries(partipantContactFields).forEach(([key, value]) => {
+			if (isEmptyOrUndefined(value?.trim())) {
+				addZodCustomError(ctx, key, 'participantInfoMissing');
+			}
+		});
+	}
+};
 
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
