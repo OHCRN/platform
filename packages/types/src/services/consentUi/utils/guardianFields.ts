@@ -23,10 +23,9 @@ import {
 	RegisterRequestParticipantPhoneNumberField,
 	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
-} from '../../services/consentUi/requests/Register.js';
-import { hasValue, isEmptyOrUndefined } from '../../common/index.js';
-
-import { addZodCustomError } from './common.js';
+} from '../requests/Register.js';
+import { hasValue, isEmptyOrUndefined } from '../../../common/index.js';
+import { addZodCustomError } from './index.js';
 
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
@@ -68,7 +67,7 @@ export const hasRequiredGuardianInfoForRegistration = (
  * @param props isGuardian, guardianEmailAddress, participantEmailAddress
  * @param ctx Zod refinement context
  */
-export const hasRequiredEmailForConsentGroupForRegistration = (
+export const hasRequiredRegistrationEmailForGuardianStatus = (
 	props: RegisterRequestEmailAddressFields,
 	ctx: z.RefinementCtx,
 ) => {
@@ -98,7 +97,7 @@ export const hasRequiredEmailForConsentGroupForRegistration = (
  * @param props isGuardian, participantPhoneNumber
  * @param ctx Zod refinement context
  */
-export const hasParticipantPhoneNumberForRegistration = (
+export const hasRequiredRegistrationPhoneNumberForGuardianStatus = (
 	props: RegisterRequestParticipantPhoneNumberField,
 	ctx: z.RefinementCtx,
 ) => {

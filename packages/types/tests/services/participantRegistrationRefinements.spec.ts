@@ -18,7 +18,6 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import z from 'zod';
 
 import {
 	RegisterFormStep2,
@@ -28,7 +27,7 @@ import {
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
-import { formatZodFieldErrorsForTesting } from '../../src/common/index.js';
+import { formatZodFieldErrorsForTesting } from '../utils/zodUtils.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const {

@@ -20,18 +20,17 @@
 import { z } from 'zod';
 
 import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
-import {
-	NonEmptyString,
-	createDateOfBirthRequestSchema,
-	hasParticipantPhoneNumberForRegistration,
-	hasRequiredEmailForConsentGroupForRegistration,
-	hasRequiredGuardianInfoForRegistration,
-} from '../../../common/index.js';
+import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
 import {
 	EmptyOrOptionalName,
 	EmptyOrOptionalPhoneNumber,
 	hasMatchingPasswords,
 } from '../../../entities/fields/index.js';
+import {
+	hasRequiredRegistrationPhoneNumberForGuardianStatus,
+	hasRequiredRegistrationEmailForGuardianStatus,
+	hasRequiredGuardianInfoForRegistration,
+} from '../utils/index.js';
 
 const isGuardianField = z.object({
 	isGuardian: z.boolean(),
@@ -55,7 +54,9 @@ export type RegisterRequestParticipantPhoneNumberField = z.infer<
 	typeof RegisterRequestParticipantPhoneNumberField
 >;
 export const RegisterRequestParticipantPhoneNumberFieldRefined =
-	RegisterRequestParticipantPhoneNumberField.superRefine(hasParticipantPhoneNumberForRegistration);
+	RegisterRequestParticipantPhoneNumberField.superRefine(
+		hasRequiredRegistrationPhoneNumberForGuardianStatus,
+	);
 
 const DateOfBirthField = createDateOfBirthRequestSchema();
 
@@ -89,7 +90,7 @@ const RegisterRequestEmailAddressFields = isGuardianField.and(
 );
 export type RegisterRequestEmailAddressFields = z.infer<typeof RegisterRequestEmailAddressFields>;
 const RegisterEmailAddressFieldsRefined = RegisterRequestEmailAddressFields.superRefine(
-	hasRequiredEmailForConsentGroupForRegistration,
+	hasRequiredRegistrationEmailForGuardianStatus,
 );
 
 const PasswordFields = z

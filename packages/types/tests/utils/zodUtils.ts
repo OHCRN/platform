@@ -17,21 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import z from 'zod';
-
-/**
- * Add a custom issue/error to the Zod refinement context, programmatically rather than relying on Zod schemas.
- * @param ctx Zod refinement context
- * @param message Error message. In UI use, this should be a translation key.
- * @param path Name of the field where the error will be displayed
- */
-export const addZodCustomError = (ctx: z.RefinementCtx, path: string, message: string) => {
-	ctx.addIssue({
-		code: 'custom',
-		message,
-		path: [path],
-	});
-};
+import { z } from 'zod';
 
 /**
  * Format Zod errors for specific form fields, for easier testing.
