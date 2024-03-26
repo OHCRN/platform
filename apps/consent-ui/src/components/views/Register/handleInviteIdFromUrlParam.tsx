@@ -99,9 +99,7 @@ const formatInviteDataForRegistration = (
 		guardianName,
 		guardianPhoneNumber,
 		guardianRelationship,
-		isGuardian: inviteResponse.consentGroup
-			? getUserType(inviteResponse.consentGroup) !== 'participant'
-			: undefined,
+		isGuardian: getUserType(inviteResponse.consentGroup) !== 'participant',
 		isInvited: true,
 		participantOhipFirstName,
 		participantOhipLastName,

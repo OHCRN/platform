@@ -87,7 +87,8 @@ const FormStep1 = ({
 		handleNextClick(data);
 	};
 
-	// watch isInvited field to determine if the isGuardian radio field should be shown
+	// watch isInvited field to determine whether to show isGuardian as
+	// radio buttons or a prepopulated hidden field
 	const watchIsInvited = watch('isInvited');
 
 	// watch isGuardian field to determine whether to show guardian fields
@@ -123,7 +124,9 @@ const FormStep1 = ({
 					<input disabled hidden={true} {...register('isInvited')} />
 
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
-					{!watchIsInvited && (
+					{watchIsInvited ? (
+						<input disabled hidden={true} {...register('isGuardian')} />
+					) : (
 						<FormSection>
 							<RadioFieldSet
 								description={textDict.isGuardianDescription}
