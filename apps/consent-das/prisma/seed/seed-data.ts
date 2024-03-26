@@ -76,7 +76,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksv',
 		clinicianFirstName: 'Steven',
-		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
+		clinicianInstitutionalEmailAddress: 'doctor.strange2@example.com',
 		clinicianLastName: 'Strange',
 		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: ConsentGroup.ADULT_CONSENT,
@@ -85,7 +85,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksa',
 		clinicianFirstName: 'Steven',
-		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
+		clinicianInstitutionalEmailAddress: 'doctor.strange3@example.com',
 		clinicianLastName: 'Strange',
 		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: ConsentGroup.YOUNG_ADULT_CONSENT,
@@ -94,7 +94,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksb',
 		clinicianFirstName: 'Steven',
-		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
+		clinicianInstitutionalEmailAddress: 'doctor.strange4@example.com',
 		clinicianLastName: 'Strange',
 		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: ConsentGroup.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
@@ -103,7 +103,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksc',
 		clinicianFirstName: 'Steven',
-		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
+		clinicianInstitutionalEmailAddress: 'doctor.strange5@example.com',
 		clinicianLastName: 'Strange',
 		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: ConsentGroup.GUARDIAN_CONSENT_OF_MINOR,
@@ -112,7 +112,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksd',
 		clinicianFirstName: 'Steven',
-		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
+		clinicianInstitutionalEmailAddress: 'doctor.strange6@example.com',
 		clinicianLastName: 'Strange',
 		clinicianTitleOrRole: 'Neurosurgeon',
 		consentGroup: ConsentGroup.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,

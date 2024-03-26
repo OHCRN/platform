@@ -42,14 +42,14 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		id: 'clmarsvhd000008jngksv',
 		participantOhipFirstName: 'Batman',
 		participantOhipLastName: 'Wayne',
-		participantEmailAddress: 'bruce.wayne@example.com',
+		participantEmailAddress: 'bruce.wayne1@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
 		id: 'clmarsvhd000008jngksa',
 		participantOhipFirstName: 'Homer',
 		participantOhipLastName: 'Simpson',
-		participantEmailAddress: 'bruce.wayne@example.com',
+		participantEmailAddress: 'bruce.wayne2@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
@@ -58,10 +58,10 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		participantOhipLastName: 'Drake',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
-		guardianEmailAddress: 'bruce.wayne@example.com',
+		guardianEmailAddress: 'bruce.wayne3@example.com',
 		guardianRelationship: 'Stepfather',
 		// TEMP remove after #480
-		participantEmailAddress: 'bruce.wayne@example.com',
+		participantEmailAddress: 'bruce.wayne6@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
@@ -70,10 +70,10 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		participantOhipLastName: 'Drake',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
-		guardianEmailAddress: 'bruce.wayne@example.com',
+		guardianEmailAddress: 'bruce.wayne4@example.com',
 		guardianRelationship: 'Stepfather',
 		// TEMP remove after #480
-		participantEmailAddress: 'bruce.wayne@example.com',
+		participantEmailAddress: 'bruce.wayne8@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
@@ -82,10 +82,10 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		participantOhipLastName: 'Drake',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
-		guardianEmailAddress: 'bruce.wayne@example.com',
+		guardianEmailAddress: 'bruce.wayn9e@example.com',
 		guardianRelationship: 'Stepfather',
 		// TEMP remove after #480
-		participantEmailAddress: 'bruce.wayne@example.com',
+		participantEmailAddress: 'bruce.wayne7@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 ];
