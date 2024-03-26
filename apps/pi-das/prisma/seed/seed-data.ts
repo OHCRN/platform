@@ -40,44 +40,53 @@ const participants: Prisma.ParticipantCreateInput[] = [
 const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksv',
-		participantOhipFirstName: 'Bruce',
+		participantOhipFirstName: 'Batman',
 		participantOhipLastName: 'Wayne',
 		participantEmailAddress: 'bruce.wayne@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
-		id: 'Cdl3Gj5k9fh8hgs9g8bn3',
+		id: 'clmarsvhd000008jngksa',
 		participantOhipFirstName: 'Homer',
 		participantOhipLastName: 'Simpson',
 		participantEmailAddress: 'bruce.wayne@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
-		id: 'NUF9dN5ZWIfc2TLMG3p2Y',
+		id: 'clmarsvhd000008jngksb',
 		participantOhipFirstName: 'Tim',
 		participantOhipLastName: 'Drake',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
 		guardianEmailAddress: 'bruce.wayne@example.com',
 		guardianRelationship: 'Stepfather',
+		// TEMP remove after #480
+		participantEmailAddress: 'bruce.wayne@example.com',
+		participantPhoneNumber: '6475558123',
 	},
 	{
-		id: 'JHssaG8AdA4kJ4Z1liPlr',
+		id: 'clmarsvhd000008jngksc',
 		participantOhipFirstName: 'Tim',
 		participantOhipLastName: 'Drake',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
 		guardianEmailAddress: 'bruce.wayne@example.com',
 		guardianRelationship: 'Stepfather',
+		// TEMP remove after #480
+		participantEmailAddress: 'bruce.wayne@example.com',
+		participantPhoneNumber: '6475558123',
 	},
 	{
-		id: '8UO4bkXl2pjVoUTsrCDoj',
+		id: 'clmarsvhd000008jngksd',
 		participantOhipFirstName: 'Tim',
 		participantOhipLastName: 'Drake',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
 		guardianEmailAddress: 'bruce.wayne@example.com',
 		guardianRelationship: 'Stepfather',
+		// TEMP remove after #480
+		participantEmailAddress: 'bruce.wayne@example.com',
+		participantPhoneNumber: '6475558123',
 	},
 ];
 

@@ -83,7 +83,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		consentToBeContacted: true,
 	},
 	{
-		id: 'Cdl3Gj5k9fh8hgs9g8bn3',
+		id: 'clmarsvhd000008jngksa',
 		clinicianFirstName: 'Steven',
 		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
 		clinicianLastName: 'Strange',
@@ -92,7 +92,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		consentToBeContacted: true,
 	},
 	{
-		id: 'NUF9dN5ZWIfc2TLMG3p2Y',
+		id: 'clmarsvhd000008jngksb',
 		clinicianFirstName: 'Steven',
 		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
 		clinicianLastName: 'Strange',
@@ -101,7 +101,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		consentToBeContacted: true,
 	},
 	{
-		id: 'JHssaG8AdA4kJ4Z1liPlr',
+		id: 'clmarsvhd000008jngksc',
 		clinicianFirstName: 'Steven',
 		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
 		clinicianLastName: 'Strange',
@@ -110,7 +110,7 @@ const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 		consentToBeContacted: true,
 	},
 	{
-		id: '8UO4bkXl2pjVoUTsrCDoj',
+		id: 'clmarsvhd000008jngksd',
 		clinicianFirstName: 'Steven',
 		clinicianInstitutionalEmailAddress: 'doctor.strange@example.com',
 		clinicianLastName: 'Strange',
