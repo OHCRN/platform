@@ -50,7 +50,7 @@ export const isEmptyOrUndefined = (arg: any) => isUndefined(arg) || isEmptyStrin
 export const hasValue = <T>(input: T | undefined): input is T => !isUndefined(input);
 
 /**
- * Checks if a Participant schema object contains the appropriate data for the provided consent group,
+ * Checks if a Participant schema object contains the appropriate data for the guardian status,
  * and doesn't have data pertaining to other consent groups.
  * ADULT_CONSENT and YOUNG_ADULT_CONSENT must have participantEmailAddress and participantPhoneNumber. Guardian fields
  * (guardianName, guardianPhoneNumber, guardianEmailAddress, and guardianRelationship) must be undefined.

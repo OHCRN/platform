@@ -60,7 +60,7 @@ export const hasRequiredGuardianInfoForRegistration = (
 };
 
 /**
- * Checks if a Participant schema object contains the required email address for the user's consent group.
+ * Checks if a Participant schema object contains the required email address for the user's guardian status.
  * Guardians must have guardianEmailAddress and can't have a participantEmailAddress.
  * Participants must have participantEmailAddress and can't have guardianEmailAddress.
  * Use with superRefine because it supports validating and adding errors to multiple fields.
