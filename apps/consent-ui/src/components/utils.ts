@@ -25,14 +25,6 @@ import { DATE_NUMERIC_FORMAT } from 'src/constants';
 
 type UserType = 'guardian' | 'participant' | 'substitute';
 
-const {
-	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
-	ADULT_CONSENT,
-	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-	GUARDIAN_CONSENT_OF_MINOR,
-	YOUNG_ADULT_CONSENT,
-} = ConsentGroup.enum;
-
 export const scrollToTop = () => window.scroll(0, 0);
 
 /**
@@ -53,6 +45,13 @@ export const handleMouseDownBlur = (e: SyntheticEvent) => {
  */
 export const formatDate = (date: Date) => format(date, DATE_NUMERIC_FORMAT);
 
+const {
+	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+	ADULT_CONSENT,
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+	GUARDIAN_CONSENT_OF_MINOR,
+	YOUNG_ADULT_CONSENT,
+} = ConsentGroup.enum;
 /**
  * Specify user type, to determine which elements to display & their coordinates.
  */
