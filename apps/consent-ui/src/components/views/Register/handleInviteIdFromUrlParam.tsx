@@ -18,11 +18,12 @@
  */
 
 import { ConsentGroup, NanoId } from 'types/entities';
+import { ClinicianInviteResponse } from 'types/consentApi';
 
 import { API } from 'src/constants';
 import consentApiFetch from 'src/services/api/axios/consentApiFetch';
 
-export type MockInviteDataRegisterStep1 = {
+export type InviteDataRegisterStep1 = {
 	consentGroup?: ConsentGroup;
 	guardianName?: string;
 	guardianPhoneNumber?: string;
@@ -34,66 +35,49 @@ export type MockInviteDataRegisterStep1 = {
 	participantPreferredName?: string;
 };
 
-export type MockInviteDataRegisterStep2 = {
+export type InviteDataRegisterStep2 = {
 	consentToBeContacted?: true;
 	guardianEmailAddress?: string;
 	participantEmailAddress?: string;
 };
 
-export type MockInviteResponseData = MockInviteDataRegisterStep1 &
-	MockInviteDataRegisterStep2 & { id?: string };
-
-export type MockInviteData = {
-	registerStep1: MockInviteDataRegisterStep1;
-	registerStep2: MockInviteDataRegisterStep2;
+export type InviteDataForRegistration = {
+	inviteId: NanoId;
+	registerStep1: InviteDataRegisterStep1;
+	registerStep2: InviteDataRegisterStep2;
 };
 
-type HandleInvite = (inviteId?: string) => Promise<{
-	data?: MockInviteData;
-	error?: string;
-}>;
-
-const mockInviteResponseData: MockInviteResponseData[] = [
-	{
-		consentGroup: 'ADULT_CONSENT',
-		consentToBeContacted: true,
-		id: 'clmarsvDd000008jngksv',
-		participantEmailAddress: 'homer@example.com',
-		participantOhipFirstName: 'Homer',
-		participantOhipLastName: 'Simpson',
-		participantPhoneNumber: '1234567890',
-	},
-	{
-		consentGroup: 'GUARDIAN_CONSENT_OF_MINOR',
-		consentToBeContacted: true,
-		guardianEmailAddress: 'homer@example.com',
-		guardianName: 'Homer Simpson',
-		guardianPhoneNumber: '1234567890',
-		guardianRelationship: 'Father',
-		id: 'kH7g7ukHc8BBqWkaDyRaS',
-		participantOhipFirstName: 'Bartholomew',
-		participantOhipLastName: 'Simpson',
-		participantPreferredName: 'Bart',
-	},
-];
-
-const defaultError = { error: 'inviteNotFound' };
-
-const handleInvite: HandleInvite = async (inviteId = '') => {
-	const validInviteId = NanoId.safeParse(inviteId)?.success;
+/**
+ * Fetch user's invite data by invite ID from consent API.
+ * @param inviteId string
+ * @returns ClinicianInviteResponse | null
+ */
+const fetchInvite = async (inviteId?: string): Promise<ClinicianInviteResponse | null> => {
+	const validInviteId = inviteId && NanoId.safeParse(inviteId)?.success;
 	if (!validInviteId) {
-		return defaultError;
+		return null;
 	}
 
-	const inviteData = await consentApiFetch({
-		method: 'GET',
-		url: `${API.INVITES}/${inviteId}`,
-	})
-		.then((res) => res.data)
-		.catch((e) => {
-			console.log(e);
+	try {
+		const inviteData = await consentApiFetch({
+			method: 'GET',
+			url: `${API.INVITES}/${inviteId}`,
 		});
+		return inviteData.data;
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
 
+/**
+ * Format response data from /invites endpoint for the 2-step registration process.
+ * @param inviteResponse ClinicianInviteResponse
+ * @returns InviteDataForRegistration
+ */
+const formatInviteDataForRegistration = (
+	inviteResponse: ClinicianInviteResponse,
+): InviteDataForRegistration => {
 	const {
 		consentGroup,
 		consentToBeContacted,
@@ -101,12 +85,13 @@ const handleInvite: HandleInvite = async (inviteId = '') => {
 		guardianName,
 		guardianPhoneNumber,
 		guardianRelationship,
+		id,
 		participantEmailAddress,
 		participantOhipFirstName,
 		participantOhipLastName,
 		participantPhoneNumber,
 		participantPreferredName,
-	} = inviteData;
+	} = inviteResponse;
 
 	const registerStep1 = {
 		consentGroup,
@@ -127,8 +112,33 @@ const handleInvite: HandleInvite = async (inviteId = '') => {
 	};
 
 	return {
-		data: { inviteId, registerStep1, registerStep2 },
+		inviteId: id,
+		registerStep1,
+		registerStep2,
 	};
 };
 
-export default handleInvite;
+/**
+ * Collect a user's invite data from consent API and format it for the 2-step registration form.
+ * @param inviteId nanoId from the inviteId URL parameter
+ */
+const handleInviteIdFromUrlParam = async (
+	inviteId?: string,
+): Promise<{
+	data?: InviteDataForRegistration;
+	error?: string;
+}> => {
+	const inviteData = await fetchInvite(inviteId);
+
+	if (!inviteData) {
+		return { error: 'inviteNotFound' };
+	}
+
+	const data = formatInviteDataForRegistration(inviteData);
+
+	return {
+		data,
+	};
+};
+
+export default handleInviteIdFromUrlParam;

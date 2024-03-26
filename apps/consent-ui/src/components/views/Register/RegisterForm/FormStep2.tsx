@@ -37,7 +37,7 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 import { ValidLanguage } from 'src/i18n/types';
 
-import { MockInviteDataRegisterStep2 } from '../handleInvite';
+import { InviteDataRegisterStep2 } from '../handleInviteIdFromUrlParam';
 
 import styles from './RegisterForm.module.scss';
 
@@ -45,7 +45,7 @@ interface FormStep2Props {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
-	inviteData?: MockInviteDataRegisterStep2;
+	inviteData?: InviteDataRegisterStep2;
 	labelsDict: RegisterFormStep2LabelsDictionary;
 	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormStep2TextDictionary;
@@ -81,7 +81,6 @@ const FormStep2 = ({
 		handleSubmit,
 		register,
 		setError,
-		setFocus,
 		watch,
 	} = methods;
 

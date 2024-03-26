@@ -40,7 +40,7 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
-import { MockInviteDataRegisterStep1 } from '../handleInvite';
+import { InviteDataRegisterStep1 } from '../handleInviteIdFromUrlParam';
 import { getUserType } from '../../Dashboard/generateConsentPdf';
 
 import styles from './RegisterForm.module.scss';
@@ -51,7 +51,7 @@ interface FormStep1Props {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
-	inviteData?: MockInviteDataRegisterStep1;
+	inviteData?: InviteDataRegisterStep1;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
 	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;

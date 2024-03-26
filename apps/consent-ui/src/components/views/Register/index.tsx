@@ -23,7 +23,7 @@ import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import registerBg from 'src/../public/assets/images/register-bg.jpg';
 
-import handleInvite from './handleInvite';
+import handleInvite from './handleInviteIdFromUrlParam';
 
 const Register = async ({
 	currentLang,
