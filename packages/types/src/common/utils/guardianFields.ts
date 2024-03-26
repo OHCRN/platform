@@ -27,12 +27,6 @@ import {
 import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
 import { addZodCustomError, hasValue, isEmptyOrUndefined } from '../../common/index.js';
 
-const consentGroupsRequiringGuardian: ConsentGroup[] = [
-	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
-	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
-];
-
 /**
  * Checks an invite schema object.
  * If the consent group requires a guardian, then the guardian fields must be defined,
@@ -64,6 +58,12 @@ export const hasRequiredGuardianAndParticipantInfoForInvite = (
 		guardianRelationship,
 	};
 	const partipantContactFields = { participantEmailAddress, participantPhoneNumber };
+
+	const consentGroupsRequiringGuardian: ConsentGroup[] = [
+		ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
+		ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+		ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+	];
 
 	const guardianRequired = consentGroupsRequiringGuardian.includes(consentGroup);
 	if (guardianRequired) {
