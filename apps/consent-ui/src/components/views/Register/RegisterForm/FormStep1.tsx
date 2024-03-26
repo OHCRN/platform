@@ -46,17 +46,6 @@ import { getUserType } from '../../Dashboard/generateConsentPdf';
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
 
-interface FormStep1Props {
-	className?: string;
-	currentLang: ValidLanguage;
-	errorsDict: FormErrorsDictionary;
-	handleNextClick: (data: RegisterFormStep1) => void;
-	inviteData?: InviteDataRegisterStep1;
-	labelsDict: RegisterFormStep1LabelsDictionary;
-	textDict: RegisterFormStep1TextDictionary;
-	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
-}
-
 const FormStep1 = ({
 	className,
 	currentLang,
@@ -66,7 +55,16 @@ const FormStep1 = ({
 	labelsDict,
 	textDict,
 	dateOfBirthModalDict,
-}: FormStep1Props) => {
+}: {
+	className?: string;
+	currentLang: ValidLanguage;
+	errorsDict: FormErrorsDictionary;
+	handleNextClick: (data: RegisterFormStep1) => void;
+	inviteData?: InviteDataRegisterStep1;
+	labelsDict: RegisterFormStep1LabelsDictionary;
+	textDict: RegisterFormStep1TextDictionary;
+	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
+}) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
 		defaultValues: {

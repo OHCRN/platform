@@ -41,16 +41,6 @@ import { InviteDataRegisterStep2 } from '../handleInviteIdFromUrlParam';
 
 import styles from './RegisterForm.module.scss';
 
-interface FormStep2Props {
-	currentLang: ValidLanguage;
-	errorsDict: FormErrorsDictionary;
-	handleBackClick: () => void;
-	inviteData?: InviteDataRegisterStep2;
-	labelsDict: RegisterFormStep2LabelsDictionary;
-	step1Data?: RegisterFormStep1;
-	textDict: RegisterFormStep2TextDictionary;
-}
-
 const FormStep2 = ({
 	currentLang,
 	errorsDict,
@@ -59,7 +49,15 @@ const FormStep2 = ({
 	labelsDict,
 	step1Data,
 	textDict,
-}: FormStep2Props) => {
+}: {
+	currentLang: ValidLanguage;
+	errorsDict: FormErrorsDictionary;
+	handleBackClick: () => void;
+	inviteData?: InviteDataRegisterStep2;
+	labelsDict: RegisterFormStep2LabelsDictionary;
+	step1Data?: RegisterFormStep1;
+	textDict: RegisterFormStep2TextDictionary;
+}) => {
 	// setup submit button enabled status
 	const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
 	const handleEnableSubmit = (isValid: boolean, recaptchaToken: RecaptchaToken) => {

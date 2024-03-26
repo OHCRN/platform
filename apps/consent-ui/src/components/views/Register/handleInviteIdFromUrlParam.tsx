@@ -16,7 +16,7 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+import urlJoin from 'url-join';
 import { ConsentGroup, NanoId } from 'types/entities';
 import { ClinicianInviteResponse } from 'types/consentApi';
 
@@ -61,7 +61,7 @@ const fetchInvite = async (inviteId?: string): Promise<ClinicianInviteResponse |
 	try {
 		const inviteData = await consentApiFetch({
 			method: 'GET',
-			url: `${API.INVITES}/${inviteId}`,
+			url: urlJoin(API.INVITES, inviteId),
 		});
 		return inviteData.data;
 	} catch (e) {
@@ -71,7 +71,7 @@ const fetchInvite = async (inviteId?: string): Promise<ClinicianInviteResponse |
 };
 
 /**
- * Format response data from /invites endpoint for the 2-step registration process.
+ * Format invite response data for the 2-step registration process.
  * @param inviteResponse ClinicianInviteResponse
  * @returns InviteDataForRegistration
  */
