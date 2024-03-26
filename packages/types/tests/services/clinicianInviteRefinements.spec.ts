@@ -60,8 +60,6 @@ describe('Clinician Invite Refinement', () => {
 				const consentGroup = ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR;
 				const testObj = { ...inviteTestData, ...inviteGuardianFields, consentGroup };
 
-				console.log(ClinicianInviteRequest.parse(testObj));
-
 				expect(ClinicianInviteRequest.safeParse(testObj).success).toBe(true);
 			});
 
