@@ -22,6 +22,7 @@ import { ClinicianInviteResponse } from 'types/consentApi';
 
 import { API } from 'src/constants';
 import consentApiFetch from 'src/services/api/axios/consentApiFetch';
+import { getUserType } from 'src/components/utils';
 
 export type InviteDataRegisterStep1 = {
 	consentGroup?: ConsentGroup;
@@ -98,6 +99,9 @@ const formatInviteDataForRegistration = (
 		guardianName,
 		guardianPhoneNumber,
 		guardianRelationship,
+		isGuardian: inviteResponse.consentGroup
+			? getUserType(inviteResponse.consentGroup) !== 'participant'
+			: undefined,
 		isInvited: true,
 		participantOhipFirstName,
 		participantOhipLastName,

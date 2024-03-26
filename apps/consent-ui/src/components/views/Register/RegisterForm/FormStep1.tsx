@@ -41,7 +41,6 @@ import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/reg
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
 import { InviteDataRegisterStep1 } from '../handleInviteIdFromUrlParam';
-import { getUserType } from '../../Dashboard/generateConsentPdf';
 
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
@@ -69,10 +68,6 @@ const FormStep1 = ({
 	const methods = useForm<RegisterFormStep1>({
 		defaultValues: {
 			...(inviteData || {}),
-			isGuardian: inviteData?.consentGroup
-				? getUserType(inviteData.consentGroup) !== 'participant'
-				: undefined,
-			isInvited: !!inviteData,
 		},
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
