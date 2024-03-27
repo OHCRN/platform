@@ -27,7 +27,7 @@ import App from './index.js';
 let server: Server;
 
 (async () => {
-	const appConfig = getAppConfig();
+	const appConfig = await getAppConfig();
 	logger.info('Initializing server.ts');
 
 	const app = App(appConfig);

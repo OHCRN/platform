@@ -64,7 +64,7 @@ type CreateInviteFailureStatus = SystemError | 'INVITE_EXISTS';
 export const createInvite = async (
 	inviteRequest: ClinicianInviteRequest,
 ): Promise<Result<ClinicianInviteResponse, CreateInviteFailureStatus>> => {
-	const { dataMapperUrl } = getAppConfig();
+	const { dataMapperUrl } = await getAppConfig();
 	try {
 		const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'invites'), inviteRequest);
 		const invite = ClinicianInviteResponse.safeParse(data);
@@ -101,7 +101,7 @@ type CreateParticipantFailureStatus = SystemError | 'PARTICIPANT_EXISTS';
 export const createParticipant = async (
 	request: CreateParticipantRequest,
 ): Promise<Result<CreateParticipantResponse, CreateParticipantFailureStatus>> => {
-	const { dataMapperUrl } = getAppConfig();
+	const { dataMapperUrl } = await getAppConfig();
 	try {
 		const { data } = await axiosClient.post(urlJoin(dataMapperUrl, 'participants'), request);
 		const participant = CreateParticipantResponse.safeParse(data);

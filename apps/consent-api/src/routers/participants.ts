@@ -28,9 +28,9 @@ import { createParticipant } from '../services/create.js';
 import logger from '../logger.js';
 import {
 	getLatestParticipantResponseByParticipantIdAndQuestionId,
-	getParticipant,
 	getParticipants,
 } from '../services/search.js';
+import withAuth from '../middleware/auth.js';
 
 /**
  * @openapi
@@ -86,18 +86,19 @@ router.get('/', async (req, res) => {
  *         description: The participant was successfully retrieved.
  *       401:
  *         description: Unauthorized. Authorization information is missing or invalid.
- *       403:
- *         description: Forbidden. Provided Authorization token is valid but has insufficient permissions to make this request.
  */
-router.get('/:id', async (req, res) => {
-	const { id } = req.params;
-	try {
-		const participant = await getParticipant(id);
-		return res.status(200).send({ participant });
-	} catch (error) {
-		logger.error(error);
-		return res.status(404).send({ error: 'Participant not found' });
+router.get('/:id', withAuth, async (req, res) => {
+	if (req.keycloakSubjectId) {
+		try {
+			// TODO: implement getParticipantByKeycloakId
+			// const participant = await getParticipant(id);
+			return res.status(200).send('Successfully received authenticated request');
+		} catch (error) {
+			logger.error(error);
+			return res.status(404).send({ error: 'Participant not found' });
+		}
 	}
+	return res.status(500).json({ error: 'Expected req data not found' });
 });
 
 /**

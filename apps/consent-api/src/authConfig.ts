@@ -19,56 +19,49 @@
 
 import * as dotenv from 'dotenv';
 
-import getAuthConfig from './authConfig.js';
-
-export function checkConfigValueIsDefined<T>(val: T | undefined | null, keyName: string): T {
-	if (val === undefined || val === null || val === '') {
-		throw new Error(`Value for ${keyName} is not defined`);
-	}
-	return val;
-}
-
-export type StaticAppConfig = {
-	isProduction: boolean;
-	dataMapperUrl: string;
-	express: {
-		port: string;
-	};
-	recaptcha: {
-		secretKey: string;
-	};
-};
-
-export type AppConfig = StaticAppConfig & {
+export interface AuthConfig {
 	auth: {
 		keycloakPublicKey: string;
 	};
+}
+
+dotenv.config();
+let authConfig: AuthConfig | undefined;
+
+const fetchPublicKey = async (): Promise<string> => {
+	try {
+		if (process.env.KEYCLOAK_REALM_PATH) {
+			const response = await fetch(process.env.KEYCLOAK_REALM_PATH);
+			const result = await response.json();
+			return `-----BEGIN PUBLIC KEY-----\n${result.public_key}\n-----END PUBLIC KEY-----`;
+		}
+		throw new Error('Keycloak public path not defined');
+	} catch (err) {
+		console.error(err);
+		throw new Error('Failed to fetch public key');
+	}
 };
 
-export const getStaticConfig = (): StaticAppConfig => {
-	return {
-		isProduction: process.env.NODE_ENV === 'production',
-		dataMapperUrl: process.env.DATA_MAPPER_URL || 'http://localhost:8081',
-		express: {
-			port: process.env.PORT || '8080',
-		},
-		recaptcha: {
-			secretKey: process.env.RECAPTCHA_SECRET_KEY || 'MISSING_RECAPTCHA_SECRET_KEY',
-		},
-	};
-};
-
-export const getAppConfig = async (): Promise<AppConfig> => {
-	dotenv.config();
-	const staticConfig = getStaticConfig();
-	const authConfig = await getAuthConfig();
-	return {
-		...staticConfig,
+const buildAppConfig = async (publicKey: string): Promise<AuthConfig> => {
+	console.info('Building auth config...');
+	authConfig = {
 		auth: {
-			keycloakPublicKey: checkConfigValueIsDefined(
-				authConfig?.auth.keycloakPublicKey || process.env.KEYCLOAK_PUBLIC_KEY || '',
-				'auth.keycloakPublicKey',
-			),
+			keycloakPublicKey: publicKey,
 		},
 	};
+	return authConfig;
 };
+
+const getAuthConfig = async () => {
+	if (authConfig !== undefined) {
+		console.info('Auth config already defined, returning...');
+		return authConfig;
+	}
+	if (process.env.AUTH_DISABLED === 'true') {
+		return buildAppConfig('testPublicKey');
+	}
+	const publicKey = await fetchPublicKey();
+	return buildAppConfig(publicKey);
+};
+
+export default getAuthConfig;

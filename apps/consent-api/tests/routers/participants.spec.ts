@@ -69,7 +69,7 @@ describe('POST /participants', () => {
 	});
 
 	it('Valid request - makes a POST request to data-mapper and returns created participant with id', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig))
 			.post('/participants')
 			.send({ data: mocks.createParticipantRequest });
@@ -79,7 +79,7 @@ describe('POST /participants', () => {
 	});
 
 	it('Invalid request - false consentToBeContacted should return RequestValidationError', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig))
 			.post('/participants')
 			.send({ data: { ...mocks.createParticipantRequest, consentToBeContacted: false } });

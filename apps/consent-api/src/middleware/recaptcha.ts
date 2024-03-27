@@ -29,7 +29,7 @@ const logger = serviceLogger.forModule('ReCAPTCHAVerification');
 const { RECAPTCHA_ERROR } = ErrorName;
 
 const verifyRecaptcha = async (recaptchaToken?: string | null) => {
-	const config = getAppConfig();
+	const config = await getAppConfig();
 
 	if (!recaptchaToken) {
 		// token not required for dev, but will be processed if provided.

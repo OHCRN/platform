@@ -50,7 +50,7 @@ describe(`GET ${InformedConsentPath}`, () => {
 	});
 
 	it('Valid request - makes a GET request to data-mapper and returns most recent participant responses for Informed Consent step', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig)).get(InformedConsentPath);
 
 		expect(response.status).toEqual(200);
