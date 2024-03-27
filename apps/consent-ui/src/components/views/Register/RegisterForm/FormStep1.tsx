@@ -86,10 +86,12 @@ const FormStep1 = ({
 		setFocus('isGuardian');
 	}, [setFocus]);
 
+	// watch isGuardian field to determine whether to show guardian fields
+	// and participant phone number
 	const watchIsGuardian = watch('isGuardian');
 
+	// check if user's birthdate meets requirements
 	const { closeModal, openModal, modalIsOpen } = useModal();
-
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
 		if (dateOfBirthValue) {
@@ -175,13 +177,15 @@ const FormStep1 = ({
 							name="participantPreferredName"
 							description={textDict.participantPreferredNameTooltip}
 						/>
-						<TextFieldSet
-							error={errors.participantPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.phone}
-							name="participantPhoneNumber"
-							required
-							description={textDict.participantPhoneNumberTooltip}
-						/>
+						{!watchIsGuardian && (
+							<TextFieldSet
+								error={errors.participantPhoneNumber?.type && errorsDict.required}
+								label={labelsDict.phone}
+								name="participantPhoneNumber"
+								required
+								description={textDict.participantPhoneNumberTooltip}
+							/>
+						)}
 						<CalendarFieldSet
 							currentLang={currentLang}
 							description={textDict.dateOfBirthTooltip}

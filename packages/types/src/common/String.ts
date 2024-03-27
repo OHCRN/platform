@@ -17,7 +17,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import z from 'zod';
+import { z } from 'zod';
 
 export const TrimmedString = z.string().trim();
 export type TrimmedString = z.infer<typeof TrimmedString>;

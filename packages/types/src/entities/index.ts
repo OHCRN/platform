@@ -30,5 +30,6 @@ export * from './InformedConsent.js';
 export * from './Participant.js';
 export * from './ParticipantIdentification.js';
 export * from './ParticipantResponse.js';
+export * from './Register.js';
 export * from './User.js';
 export * from './fields/index.js';
