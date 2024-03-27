@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2024 The Ontario Institute for Cancer Research. All rights reserved
+ *
+ * This program and the accompanying materials are made available under the terms of
+ * the GNU Affero General Public License v3.0. You should have received a copy of the
+ * GNU Affero General Public License along with this program.
+ *  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+ * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 import { Prisma } from '../../src/generated/client/index.js';
 
 const participants: Prisma.ParticipantCreateInput[] = [
@@ -40,21 +59,53 @@ const participants: Prisma.ParticipantCreateInput[] = [
 const clinicianInvites: Prisma.ClinicianInviteCreateInput[] = [
 	{
 		id: 'clmarsvhd000008jngksv',
-		participantOhipFirstName: 'Bruce',
+		participantOhipFirstName: 'Batman',
 		participantOhipLastName: 'Wayne',
-		participantEmailAddress: 'bruce.wayne@example.com',
+		participantEmailAddress: 'bruce.wayne1@example.com',
 		participantPhoneNumber: '6475558123',
 	},
 	{
-		id: 'NUF9dN5ZWIfc2TLMG3p2Y',
+		id: 'clmarsvhd000008jngksa',
+		participantOhipFirstName: 'Homer',
+		participantOhipLastName: 'Simpson',
+		participantEmailAddress: 'bruce.wayne2@example.com',
+		participantPhoneNumber: '6475558123',
+	},
+	{
+		id: 'clmarsvhd000008jngksb',
 		participantOhipFirstName: 'Tim',
 		participantOhipLastName: 'Drake',
-		participantEmailAddress: 'tim.drake@example.com',
-		participantPhoneNumber: '6475558123',
 		guardianName: 'Bruce Wayne',
 		guardianPhoneNumber: '6475558123',
-		guardianEmailAddress: 'bruce.wayne@example.com',
+		guardianEmailAddress: 'bruce.wayne3@example.com',
 		guardianRelationship: 'Stepfather',
+		// TEMP remove after #480
+		participantEmailAddress: 'bruce.wayne6@example.com',
+		participantPhoneNumber: '6475558123',
+	},
+	{
+		id: 'clmarsvhd000008jngksc',
+		participantOhipFirstName: 'Tim',
+		participantOhipLastName: 'Drake',
+		guardianName: 'Bruce Wayne',
+		guardianPhoneNumber: '6475558123',
+		guardianEmailAddress: 'bruce.wayne4@example.com',
+		guardianRelationship: 'Stepfather',
+		// TEMP remove after #480
+		participantEmailAddress: 'bruce.wayne8@example.com',
+		participantPhoneNumber: '6475558123',
+	},
+	{
+		id: 'clmarsvhd000008jngksd',
+		participantOhipFirstName: 'Tim',
+		participantOhipLastName: 'Drake',
+		guardianName: 'Bruce Wayne',
+		guardianPhoneNumber: '6475558123',
+		guardianEmailAddress: 'bruce.wayn9e@example.com',
+		guardianRelationship: 'Stepfather',
+		// TEMP remove after #480
+		participantEmailAddress: 'bruce.wayne7@example.com',
+		participantPhoneNumber: '6475558123',
 	},
 ];
 
