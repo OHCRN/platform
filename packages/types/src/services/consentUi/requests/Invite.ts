@@ -17,6 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export * from './Register.js';
-export * from './ConsentReleaseData.js';
-export * from './Invite.js';
+import { z } from 'zod';
+
+import { hasRequiredGuardianAndParticipantInfoForInvite } from '../utils/guardianFields.js';
+import { ClinicianInviteBase, EmptyOrOptionalName } from '../../../entities/index.js';
+
+// use superRefine because it supports adding errors to multiple fields
+export const ClinicianInviteRequest = ClinicianInviteBase.extend({
+	participantPreferredName: EmptyOrOptionalName,
+}).superRefine(hasRequiredGuardianAndParticipantInfoForInvite);
+
+export type ClinicianInviteRequest = z.infer<typeof ClinicianInviteRequest>;

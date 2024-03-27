@@ -19,34 +19,17 @@
 
 import { z } from 'zod';
 
-import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
-import { isEmptyOrUndefined } from '../../common/index.js';
-
 /**
- * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
- * Use with superRefine because it supports validating and adding errors to multiple fields.
- *
- * guardianName, guardianPhoneNumber, guardianRelationship must be defined if isGuardian was selected
- * @param props guardianName, guardianPhoneNumber, guardianRelationship, isGuardian
- * @returns {boolean} returns true if all required fields are present
+ * Format Zod errors for specific form fields, for easier testing.
+ * @param result The object resulting from Zod SafeParse
+ * @returns An array of objects: { path, message }
  */
-export const hasRequiredGuardianInfoForRegistration = (
-	props: RegisterRequestGuardianFields,
-	ctx: z.RefinementCtx,
-) => {
-	const { guardianName, guardianPhoneNumber, guardianRelationship, isGuardian } = props;
-
-	const fields = { guardianName, guardianPhoneNumber, guardianRelationship };
-
-	if (isGuardian) {
-		Object.entries(fields).forEach(([key, value]) => {
-			if (isEmptyOrUndefined(value?.trim())) {
-				ctx.addIssue({
-					code: 'custom',
-					message: 'guardianInfoMissing',
-					path: [key],
-				});
-			}
-		});
-	}
+export const formatZodFieldErrorsForTesting = (
+	result: z.SafeParseReturnType<any, any>,
+): { path: string; message: string }[] => {
+	const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
+	return resultJsonParsed.map((item: z.CustomErrorParams) => ({
+		path: (item.path && item.path[0]) || '',
+		message: item.message,
+	}));
 };

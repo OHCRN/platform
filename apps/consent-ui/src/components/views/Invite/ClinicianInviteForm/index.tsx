@@ -22,12 +22,10 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { ConsentGroup, ClinicianInviteBase, EmptyOrOptionalName } from 'types/entities';
-import { ClinicianInviteRequest } from 'types/consentApi';
+import { ConsentGroup } from 'types/entities';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { z } from 'zod';
-import { hasRequiredInfoForConsentGroup } from 'types/common';
+import { ClinicianInviteRequest } from 'types/consentUi';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -56,15 +54,10 @@ import formStyles from './ClinicianInviteForm.module.scss';
 
 const styles = Object.assign({}, formStyles, layoutStyles);
 
-const ClinicianInviteFormRequest = ClinicianInviteBase.extend({
-	participantPreferredName: EmptyOrOptionalName,
-}).refine(hasRequiredInfoForConsentGroup);
-
-type ClinicianInviteFormRequest = z.infer<typeof ClinicianInviteFormRequest>;
-
 const consentGroupsRequiringGuardian: ConsentGroup[] = [
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR,
 	ConsentGroup.enum.GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+	ConsentGroup.enum.ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
 ];
 
 const ClinicianInviteFormComponent = ({
@@ -93,9 +86,9 @@ const ClinicianInviteFormComponent = ({
 	};
 
 	// setup react-hook-forms
-	const methods = useForm<ClinicianInviteFormRequest>({
+	const methods = useForm<ClinicianInviteRequest>({
 		mode: 'onBlur',
-		resolver: zodResolver(ClinicianInviteFormRequest),
+		resolver: zodResolver(ClinicianInviteRequest),
 		shouldUnregister: true,
 	});
 
@@ -196,7 +189,6 @@ const ClinicianInviteFormComponent = ({
 							name="participantPreferredName"
 							description={textDict.participantPreferredNameTooltip}
 						/>
-
 						<SelectFieldSet
 							error={errors.consentGroup?.type && errorsDict.required}
 							infoButtonProps={{
@@ -209,21 +201,6 @@ const ClinicianInviteFormComponent = ({
 							placeholder={textDict.selectPlaceholder}
 							required
 							description={textDict.consentGroupTooltip}
-						/>
-
-						<TextFieldSet
-							description={textDict.participantPhoneNumberTooltip}
-							error={errors.participantPhoneNumber?.type && errorsDict.required}
-							label={labelsDict.phone}
-							name="participantPhoneNumber"
-							required
-						/>
-						<TextFieldSet
-							error={errors.participantEmailAddress?.type && errorsDict.required}
-							label={labelsDict.email}
-							name="participantEmailAddress"
-							required
-							description={textDict.participantEmailAddressTooltip}
 						/>
 					</FormSection>
 
@@ -273,6 +250,28 @@ const ClinicianInviteFormComponent = ({
 								{textDict.uploadFileDescription2}
 								{/* TODO upload assent form https://github.com/OHCRN/platform/issues/265 */}
 							</p>
+						</FormSection>
+					)}
+
+					{/* SECTION - PARTICIPANT CONTACT INFO */}
+					{/* show/hide this field with conditional rendering.
+						fields will be removed from form state when hidden. */}
+					{!showGuardianFields && (
+						<FormSection>
+							<TextFieldSet
+								description={textDict.participantPhoneNumberTooltip}
+								error={errors.participantPhoneNumber?.type && errorsDict.required}
+								label={labelsDict.phone}
+								name="participantPhoneNumber"
+								required
+							/>
+							<TextFieldSet
+								error={errors.participantEmailAddress?.type && errorsDict.required}
+								label={labelsDict.email}
+								name="participantEmailAddress"
+								required
+								description={textDict.participantEmailAddressTooltip}
+							/>
 						</FormSection>
 					)}
 
