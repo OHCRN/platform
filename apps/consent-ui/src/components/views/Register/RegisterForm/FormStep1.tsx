@@ -40,7 +40,7 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
-import { InviteDataRegisterStep1 } from '../handleInviteIdFromUrlParam';
+import { InviteDataRegisterStep1 } from './handleFetchInvite';
 
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';

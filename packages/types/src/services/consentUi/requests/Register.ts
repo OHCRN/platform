@@ -68,7 +68,7 @@ const IsInvitedField = z.object({
 export const RegisterRequestAgeCheck = IsInvitedField.and(
 	z.object({
 		dateOfBirth: z.coerce.date(),
-		isInvited: z.boolean(),
+		isInvited: z.boolean().optional(),
 	}),
 );
 export type RegisterRequestAgeCheck = z.infer<typeof RegisterRequestAgeCheck>;

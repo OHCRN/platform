@@ -33,8 +33,7 @@ import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFor
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
-import { InviteDataForRegistration } from '../handleInviteIdFromUrlParam';
-
+import { InviteDataForRegistration } from './handleFetchInvite';
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';

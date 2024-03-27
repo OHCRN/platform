@@ -17,13 +17,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { Suspense } from 'react';
+
 import { getTranslation, ValidLanguage, replaceParams } from 'src/i18n';
-import RegisterForm from 'src/components/views/Register/RegisterForm';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import registerBg from 'src/../public/assets/images/register-bg.jpg';
 
-import handleInvite from './handleInviteIdFromUrlParam';
+import RegisterFormWrapper from './RegisterForm/RegisterFormWrapper';
 
 const Register = async ({
 	currentLang,
@@ -32,18 +33,9 @@ const Register = async ({
 	currentLang: ValidLanguage;
 	inviteId?: string;
 }) => {
-	// register from an invite
-	const inviteResult = await handleInvite(inviteId);
-
 	// translation dictionaries
 	const { translateNamespace } = getTranslation(currentLang);
-	const errorsDict = translateNamespace('formErrors');
 	const pageDict = translateNamespace('registerPage');
-	const step1LabelsDict = translateNamespace('registerFormStep1Labels');
-	const step1textDict = translateNamespace('registerFormStep1Text');
-	const step2LabelsDict = translateNamespace('registerFormStep2Labels');
-	const step2textDict = translateNamespace('registerFormStep2Text');
-	const dateOfBirthModalDict = translateNamespace('registerDateOfBirthErrorModal');
 	const textDict = translateNamespace('registerFormText');
 
 	// step navigation
@@ -58,11 +50,6 @@ const Register = async ({
 			total: STEP_COUNT,
 		}),
 	};
-
-	// TODO handle form submission with a server action.
-	// add inviteId to the request. pass server action down to register step 2
-	// const { inviteId } = inviteResult;
-	// omit isInvited & currentDate from step 1
 
 	return (
 		<SideImageLayout
@@ -83,18 +70,13 @@ const Register = async ({
 			mainTitle={pageDict.registerYourself}
 			navTitle={pageDict.participantRegistration}
 		>
-			<RegisterForm
-				currentLang={currentLang}
-				errorsDict={errorsDict}
-				inviteData={inviteResult?.data}
-				step1LabelsDict={step1LabelsDict}
-				step1TextDict={step1textDict}
-				step2LabelsDict={step2LabelsDict}
-				step2TextDict={step2textDict}
-				textDict={textDict}
-				stepTitleDict={stepTitleDict}
-				dateOfBirthModalDict={dateOfBirthModalDict}
-			/>
+			<Suspense fallback={<h1>LOADING</h1>}>
+				<RegisterFormWrapper
+					currentLang={currentLang}
+					inviteId={inviteId}
+					stepTitleDict={stepTitleDict}
+				/>
+			</Suspense>
 		</SideImageLayout>
 	);
 };

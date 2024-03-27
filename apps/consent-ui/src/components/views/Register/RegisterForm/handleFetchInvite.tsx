@@ -16,6 +16,9 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+'use server';
+
 import urlJoin from 'url-join';
 import { ConsentGroup, NanoId } from 'types/entities';
 import { ClinicianInviteResponse } from 'types/consentApi';
@@ -48,23 +51,28 @@ export type InviteDataForRegistration = {
 	registerStep2: InviteDataRegisterStep2;
 };
 
+export type InviteFetchResult = {
+	data?: InviteDataForRegistration;
+	error?: string;
+};
+
 /**
  * Fetch user's invite data by invite ID from consent API.
  * @param inviteId string
  * @returns ClinicianInviteResponse | null
  */
-const fetchInvite = async (inviteId?: string): Promise<ClinicianInviteResponse | null> => {
-	const validInviteId = inviteId && NanoId.safeParse(inviteId)?.success;
-	if (!validInviteId) {
-		return null;
-	}
-
+const fetchInvite = async (inviteId: string): Promise<ClinicianInviteResponse | null> => {
 	try {
-		const inviteData = await consentApiFetch({
+		const { data } = await consentApiFetch({
 			method: 'GET',
 			url: urlJoin(API.INVITES, inviteId),
+		}).then(async (res) => {
+			const delayRes = await new Promise((resolve) => setTimeout(resolve, 10000)).then(() => {
+				return res;
+			});
+			return delayRes;
 		});
-		return inviteData.data;
+		return data;
 	} catch (e) {
 		console.log(e);
 		return null;
@@ -120,20 +128,22 @@ const formatInviteDataForRegistration = (
 	};
 };
 
+const defaultError = { error: 'inviteNotFound' };
+
 /**
  * Collect a user's invite data from consent API and format it for the 2-step registration form.
  * @param inviteId nanoId from the inviteId URL parameter
  */
-const handleInviteIdFromUrlParam = async (
-	inviteId?: string,
-): Promise<{
-	data?: InviteDataForRegistration;
-	error?: string;
-}> => {
+const handleFetchInvite = async (inviteId?: string): Promise<InviteFetchResult> => {
+	const validInviteId = inviteId && NanoId.safeParse(inviteId)?.success;
+	if (!validInviteId) {
+		return defaultError;
+	}
+
 	const inviteData = await fetchInvite(inviteId);
 
 	if (!inviteData) {
-		return { error: 'inviteNotFound' };
+		return defaultError;
 	}
 
 	const data = formatInviteDataForRegistration(inviteData);
@@ -143,4 +153,4 @@ const handleInviteIdFromUrlParam = async (
 	};
 };
 
-export default handleInviteIdFromUrlParam;
+export default handleFetchInvite;

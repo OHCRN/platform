@@ -37,8 +37,7 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 import { ValidLanguage } from 'src/i18n/types';
 
-import { InviteDataRegisterStep2 } from '../handleInviteIdFromUrlParam';
-
+import { InviteDataRegisterStep2 } from './handleFetchInvite';
 import styles from './RegisterForm.module.scss';
 
 const FormStep2 = ({
