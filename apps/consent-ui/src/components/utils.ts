@@ -19,8 +19,11 @@
 
 import { format } from 'date-fns';
 import { SyntheticEvent } from 'react';
+import { ConsentGroup } from 'types/entities';
 
 import { DATE_NUMERIC_FORMAT } from 'src/constants';
+
+type UserType = 'guardian' | 'participant' | 'substitute';
 
 export const scrollToTop = () => window.scroll(0, 0);
 
@@ -41,3 +44,35 @@ export const handleMouseDownBlur = (e: SyntheticEvent) => {
  * @returns string, ex. 2024-11-15
  */
 export const formatDate = (date: Date) => format(date, DATE_NUMERIC_FORMAT);
+
+const {
+	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
+	ADULT_CONSENT,
+	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+	GUARDIAN_CONSENT_OF_MINOR,
+	YOUNG_ADULT_CONSENT,
+} = ConsentGroup.enum;
+/**
+ * Specify user type, to determine which elements to display & their coordinates.
+ */
+export const getUserType = (consentGroup: ConsentGroup): UserType | undefined => {
+	let userType: UserType | undefined;
+
+	switch (consentGroup) {
+		case GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT:
+		case GUARDIAN_CONSENT_OF_MINOR:
+			userType = 'guardian';
+			break;
+		case ADULT_CONSENT:
+		case YOUNG_ADULT_CONSENT:
+			userType = 'participant';
+			break;
+		case ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
+			userType = 'substitute';
+			break;
+		default:
+			break;
+	}
+
+	return userType;
+};
