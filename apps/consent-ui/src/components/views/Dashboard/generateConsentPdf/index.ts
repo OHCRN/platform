@@ -17,25 +17,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ConsentGroup, LifecycleState } from 'types/entities';
+import { LifecycleState } from 'types/entities';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 
 import { ValidLanguage } from 'src/i18n';
-import { formatDate } from 'src/components/utils';
+import { formatDate, getUserType } from 'src/components/utils';
 
 import { GenerateConsentPdfParams } from './types';
 import { settingsByLang, settingsGeneric } from './settings';
-
-type UserType = 'guardian' | 'participant' | 'substitute';
-
-const {
-	ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER,
-	ADULT_CONSENT,
-	GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
-	GUARDIAN_CONSENT_OF_MINOR,
-	YOUNG_ADULT_CONSENT,
-} = ConsentGroup.enum;
 
 // TEMP not final list
 const PDF_ALLOWED_LIFECYCLE_STATES: LifecycleState[] = [LifecycleState.enum.CONSENTED];
@@ -50,31 +40,6 @@ const getPdf = async (pdfUrl: string) => {
 	const pdfDoc = await PDFDocument.load(bytes);
 	const pdfPages = pdfDoc.getPages();
 	return { pdfDoc, pdfPages };
-};
-
-/**
- * Specify user type, to determine which elements to display & their coordinates.
- */
-const getUserType = (consentGroup: ConsentGroup): UserType | undefined => {
-	let userType: UserType | undefined;
-
-	switch (consentGroup) {
-		case GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT:
-		case GUARDIAN_CONSENT_OF_MINOR:
-			userType = 'guardian';
-			break;
-		case ADULT_CONSENT:
-		case YOUNG_ADULT_CONSENT:
-			userType = 'participant';
-			break;
-		case ADULT_CONSENT_SUBSTITUTE_DECISION_MAKER:
-			userType = 'substitute';
-			break;
-		default:
-			break;
-	}
-
-	return userType;
 };
 
 /**
