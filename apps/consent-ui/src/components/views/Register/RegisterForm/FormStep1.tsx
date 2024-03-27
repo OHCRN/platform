@@ -22,7 +22,6 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { checkIsMinimumAgeOrGreater } from 'types/common';
 import { RegisterFormStep1 } from 'types/consentUi';
 
@@ -41,6 +40,7 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
+import { InviteDataRegisterStep1 } from './handleFetchInvite';
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
 
@@ -49,6 +49,7 @@ const FormStep1 = ({
 	currentLang,
 	errorsDict,
 	handleNextClick,
+	inviteData,
 	labelsDict,
 	textDict,
 	dateOfBirthModalDict,
@@ -57,12 +58,16 @@ const FormStep1 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
+	inviteData?: InviteDataRegisterStep1;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
 	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
+		defaultValues: {
+			...(inviteData || {}),
+		},
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
 		shouldUnregister: true,
@@ -72,7 +77,7 @@ const FormStep1 = ({
 		formState: { errors, isValid },
 		getValues,
 		handleSubmit,
-		setFocus,
+		register,
 		watch,
 	} = methods;
 
@@ -81,20 +86,22 @@ const FormStep1 = ({
 		handleNextClick(data);
 	};
 
-	useEffect(() => {
-		// set focus to first field on mount
-		setFocus('isGuardian');
-	}, [setFocus]);
+	// watch isInvited field to determine whether to show isGuardian as
+	// radio buttons or a prepopulated hidden field, and whether the
+	// user is subject to age requirements
+	const watchIsInvited = watch('isInvited');
 
 	// watch isGuardian field to determine whether to show guardian fields
 	// and participant phone number
 	const watchIsGuardian = watch('isGuardian');
 
-	// check if user's birthdate meets requirements
+	// check if user's birthdate meets age requirements.
+	// if it doesn't, show a warning modal.
+	// invited users are exempt from the age check.
 	const { closeModal, openModal, modalIsOpen } = useModal();
 	const handleDateOfBirthBlur = () => {
 		const dateOfBirthValue = getValues('dateOfBirth');
-		if (dateOfBirthValue) {
+		if (dateOfBirthValue && !watchIsInvited) {
 			const currentDate = new Date();
 			const dateOfBirth = new Date(dateOfBirthValue);
 			const userIsMinimumAgeOrGreater = checkIsMinimumAgeOrGreater(currentDate, dateOfBirth);
@@ -114,24 +121,30 @@ const FormStep1 = ({
 			/>
 			<FormProvider {...methods}>
 				<Form className={className} onSubmit={handleSubmit(onSubmit)}>
+					<input disabled hidden={true} {...register('isInvited')} />
+
 					{/* SECTION - CHECK IF USER IS A GUARDIAN */}
-					<FormSection>
-						<RadioFieldSet
-							description={textDict.isGuardianDescription}
-							error={errors.isGuardian?.type && errorsDict.required}
-							name="isGuardian"
-							noText={labelsDict.no}
-							required
-							yesText={labelsDict.yes}
-						/>
-					</FormSection>
+					{watchIsInvited ? (
+						<input disabled hidden={true} {...register('isGuardian')} />
+					) : (
+						<FormSection>
+							<RadioFieldSet
+								description={textDict.isGuardianDescription}
+								error={errors.isGuardian?.type && errorsDict.required}
+								name="isGuardian"
+								noText={labelsDict.no}
+								required
+								yesText={labelsDict.yes}
+							/>
+						</FormSection>
+					)}
 
 					{/* OPTIONAL SECTION - GUARDIAN INFO */}
 					{/* these fields are conditionally required, i.e. if the user is
 						registering as a guardian */}
 
 					{watchIsGuardian && (
-						<FormSection variant="grey">
+						<FormSection variant={watchIsInvited ? 'white' : 'grey'}>
 							<p className={styles.instructions}>{textDict.enterInfo}</p>
 							<TextFieldSet
 								error={errors.guardianName?.type && errorsDict.required}
@@ -158,16 +171,16 @@ const FormStep1 = ({
 					<FormSection>
 						<p className={styles.instructions}>{textDict.enterParticipantInfo}</p>
 						<TextFieldSet
-							error={errors.participantFirstName?.type && errorsDict.required}
+							error={errors.participantOhipFirstName?.type && errorsDict.required}
 							label={labelsDict.firstName}
-							name="participantFirstName"
+							name="participantOhipFirstName"
 							required
 							description={textDict.participantFirstNameTooltip}
 						/>
 						<TextFieldSet
-							error={errors.participantLastName?.type && errorsDict.required}
+							error={errors.participantOhipLastName?.type && errorsDict.required}
 							label={labelsDict.lastName}
-							name="participantLastName"
+							name="participantOhipLastName"
 							required
 							description={textDict.participantLastNameTooltip}
 						/>

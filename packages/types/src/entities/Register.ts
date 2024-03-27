@@ -19,9 +19,10 @@
 
 import { z } from 'zod';
 
-import { createDateOfBirthRequestSchema } from '../common/index.js';
+import { addZodCustomError } from '../services/consentUi/index.js';
+import { checkIsMinimumAgeOrGreater } from '../common/index.js';
 
-import { ParticipantNameFields } from './Participant.js';
+import { ParticipantBaseOhipNameFields } from './Participant.js';
 import { EmptyOrOptionalName, EmptyOrOptionalPhoneNumber } from './fields/index.js';
 
 export const isGuardianField = z.object({
@@ -30,7 +31,7 @@ export const isGuardianField = z.object({
 
 // STEP 1
 
-export const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
+export const RegisterRequestParticipantNameFields = ParticipantBaseOhipNameFields.and(
 	z.object({
 		participantPreferredName: EmptyOrOptionalName,
 	}),
@@ -46,7 +47,33 @@ export type RegisterRequestParticipantPhoneNumberField = z.infer<
 	typeof RegisterRequestParticipantPhoneNumberField
 >;
 
-export const DateOfBirthField = createDateOfBirthRequestSchema();
+const IsInvitedField = z.object({
+	isInvited: z.boolean().optional(),
+});
+
+// date of birth - if user doesn't have an invite, they must be at least the minimum age
+export const RegisterRequestAgeCheck = IsInvitedField.and(
+	z.object({
+		dateOfBirth: z.coerce.date(),
+		isInvited: z.boolean().optional(),
+	}),
+);
+export type RegisterRequestAgeCheck = z.infer<typeof RegisterRequestAgeCheck>;
+
+export const hasMinimumAgeForRegistration = (
+	props: RegisterRequestAgeCheck,
+	ctx: z.RefinementCtx,
+	comparisonDate: Date,
+) => {
+	const { dateOfBirth, isInvited } = props;
+	if (!(isInvited || checkIsMinimumAgeOrGreater(comparisonDate, dateOfBirth))) {
+		addZodCustomError(ctx, 'dateOfBirth', 'participantLessThanMinimumAge');
+	}
+};
+
+export const RegisterRequestAgeCheckRefined = RegisterRequestAgeCheck.superRefine((props, ctx) =>
+	hasMinimumAgeForRegistration(props, ctx, new Date()),
+);
 
 // guardian fields - required for guardians, not allowed for participants
 export const RegisterRequestGuardianFields = isGuardianField.and(

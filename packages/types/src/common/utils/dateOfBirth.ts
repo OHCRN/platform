@@ -18,7 +18,6 @@
  */
 
 import { differenceInYears } from 'date-fns';
-import { z } from 'zod';
 
 export const MINIMUM_AGE_IN_YEARS = 18;
 
@@ -30,23 +29,4 @@ export const MINIMUM_AGE_IN_YEARS = 18;
 export const checkIsMinimumAgeOrGreater = (comparisonDate: Date, dateOfBirth: Date): boolean => {
 	const age = differenceInYears(comparisonDate, dateOfBirth);
 	return age >= MINIMUM_AGE_IN_YEARS;
-};
-
-/**
- * Create a schema for the dateOfBirth field, with a refinement for checking the user's age.
- * @param comparisonDate: date to compare the dateOfBirth to. default is today's date
- *
- */
-export const createDateOfBirthRequestSchema = (comparisonDate?: Date) => {
-	return z
-		.object({
-			dateOfBirth: z.coerce.date(),
-		})
-		.refine(
-			(props) => checkIsMinimumAgeOrGreater(comparisonDate || new Date(), props.dateOfBirth),
-			{
-				message: 'participantLessThanMinimumAge',
-				path: ['dateOfBirth'],
-			},
-		);
 };

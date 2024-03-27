@@ -22,13 +22,13 @@ import { z } from 'zod';
 import { NonEmptyString } from '../../../common/index.js';
 import {
 	ConsentToBeContacted,
-	DateOfBirthField,
+	RegisterRequestAgeCheckRefined,
 	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
 	RegisterRequestParticipantNameFields,
-	RegisterRequestParticipantPhoneNumberField,
 	hasMatchingPasswords,
 } from '../../../entities/index.js';
+import { RegisterRequestParticipantPhoneNumberField } from '../../../entities/Register.js';
 import {
 	hasRequiredGuardianInfoForRegistration,
 	hasRequiredRegistrationEmailForGuardianStatus,
@@ -48,7 +48,7 @@ export const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
 	RegisterRequestGuardianFieldsRefined,
 )
 	.and(RegisterRequestParticipantPhoneNumberFieldRefined)
-	.and(DateOfBirthField);
+	.and(RegisterRequestAgeCheckRefined);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
 const RegisterEmailAddressFieldsRefined = RegisterRequestEmailAddressFields.superRefine(

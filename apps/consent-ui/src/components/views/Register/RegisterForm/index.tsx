@@ -34,12 +34,14 @@ import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFor
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
 import styles from './RegisterForm.module.scss';
+import { InviteDataForRegistration } from './handleFetchInvite';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
 
 const RegisterForm = ({
 	currentLang,
 	errorsDict,
+	inviteData,
 	step1LabelsDict,
 	step1TextDict,
 	step2LabelsDict,
@@ -50,6 +52,7 @@ const RegisterForm = ({
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
+	inviteData?: InviteDataForRegistration;
 	step1LabelsDict: RegisterFormStep1LabelsDictionary;
 	step1TextDict: RegisterFormStep1TextDictionary;
 	step2LabelsDict: RegisterFormStep2LabelsDictionary;
@@ -88,6 +91,7 @@ const RegisterForm = ({
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
+				inviteData={inviteData?.registerStep1}
 				labelsDict={step1LabelsDict}
 				textDict={step1TextDict}
 				dateOfBirthModalDict={dateOfBirthModalDict}
@@ -98,6 +102,7 @@ const RegisterForm = ({
 					currentLang={currentLang}
 					errorsDict={errorsDict}
 					handleBackClick={handleBackClick}
+					inviteData={inviteData?.registerStep2}
 					labelsDict={step2LabelsDict}
 					step1Data={step1Data}
 					textDict={step2TextDict}

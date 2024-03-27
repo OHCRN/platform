@@ -37,12 +37,14 @@ import RecaptchaCheckbox from 'src/components/common/Form/RecaptchaCheckbox';
 import Notification from 'src/components/common/Notification';
 import { ValidLanguage } from 'src/i18n/types';
 
+import { InviteDataRegisterStep2 } from './handleFetchInvite';
 import styles from './RegisterForm.module.scss';
 
 const FormStep2 = ({
 	currentLang,
 	errorsDict,
 	handleBackClick,
+	inviteData,
 	labelsDict,
 	step1Data,
 	textDict,
@@ -50,6 +52,7 @@ const FormStep2 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleBackClick: () => void;
+	inviteData?: InviteDataRegisterStep2;
 	labelsDict: RegisterFormStep2LabelsDictionary;
 	step1Data?: RegisterFormStep1;
 	textDict: RegisterFormStep2TextDictionary;
@@ -63,9 +66,7 @@ const FormStep2 = ({
 
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
-		defaultValues: {
-			isGuardian: !!step1Data?.isGuardian,
-		},
+		defaultValues: { ...(inviteData || {}), isGuardian: !!step1Data?.isGuardian },
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep2),
 		shouldUnregister: true,
@@ -77,7 +78,6 @@ const FormStep2 = ({
 		handleSubmit,
 		register,
 		setError,
-		setFocus,
 		watch,
 	} = methods;
 
@@ -115,11 +115,6 @@ const FormStep2 = ({
 		const recaptchaToken = getRecaptchaToken();
 		handleEnableSubmit(isValid, recaptchaToken);
 	}, [getRecaptchaToken, isValid]);
-
-	useEffect(() => {
-		// set focus to first field on mount
-		setFocus('participantEmailAddress');
-	}, [setFocus]);
 
 	// set an error on confirmPassword if the 2 password fields are different.
 	// fires on first confirmPassword onBlur validation,
