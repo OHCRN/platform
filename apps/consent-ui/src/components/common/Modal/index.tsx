@@ -32,6 +32,10 @@ export type ModalComponentProps = {
 	closeModal: () => void;
 	currentLang: ValidLanguage;
 	modalIsOpen: boolean;
+	actionButtonText?: ReactNode;
+	cancelButtonText?: ReactNode;
+	contentLabel: string;
+	title?: string;
 };
 
 type ModalProps = {

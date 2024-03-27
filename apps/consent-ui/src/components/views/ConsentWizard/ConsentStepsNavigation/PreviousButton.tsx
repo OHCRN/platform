@@ -37,10 +37,20 @@ const PreviousButton = ({
 	children,
 	currentLang,
 	prevRoute,
+	modalActionButtonText,
+	modalCancelButtonText,
+	modalContentLabel,
+	modalTitle,
+	modalBody,
 }: {
 	children: ReactNode;
 	currentLang: ValidLanguage;
 	prevRoute: ConsentStepRoute;
+	modalActionButtonText: ReactNode;
+	modalCancelButtonText: ReactNode;
+	modalContentLabel: string;
+	modalTitle: string;
+	modalBody: ReactNode;
 }) => {
 	const {
 		formState: { isDirty },
@@ -62,7 +72,15 @@ const PreviousButton = ({
 
 	return (
 		<>
-			<FormEditedModal closeModal={closeModal} modalIsOpen={modalIsOpen} />
+			<FormEditedModal
+				actionButtonText={modalActionButtonText}
+				cancelButtonText={modalCancelButtonText}
+				closeModal={closeModal}
+				contentLabel={modalContentLabel}
+				modalIsOpen={modalIsOpen}
+				title={modalTitle}
+				modalBody={modalBody}
+			/>
 			<Button
 				action="prev"
 				className={styles.button}

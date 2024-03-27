@@ -17,20 +17,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ReactNode } from 'react';
+
 import Modal, { ModalComponentProps } from 'src/components/common/Modal';
 
-const FormEditedModal = ({ closeModal, modalIsOpen }: Omit<ModalComponentProps, 'currentLang'>) => {
-	// TODO add text here https://github.com/OHCRN/platform/issues/402
+const FormEditedModal = ({
+	closeModal,
+	modalIsOpen,
+	actionButtonText,
+	cancelButtonText,
+	contentLabel,
+	title,
+	modalBody,
+}: Omit<ModalComponentProps, 'currentLang'> & { modalBody?: ReactNode }) => {
 	return (
 		<Modal
-			actionButtonText="OK"
-			cancelButtonText="cancel"
+			actionButtonText={actionButtonText}
+			cancelButtonText={cancelButtonText}
 			closeModal={closeModal}
-			contentLabel="my test modal"
+			contentLabel={contentLabel}
 			modalIsOpen={modalIsOpen}
-			title="testing"
+			title={title}
 		>
-			<p>modal text TBD</p>
+			<p>{modalBody}</p>
 		</Modal>
 	);
 };
