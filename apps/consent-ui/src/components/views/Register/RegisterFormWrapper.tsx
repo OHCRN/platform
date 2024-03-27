@@ -20,15 +20,21 @@
 import { ValidLanguage, getTranslation, replaceParams } from 'src/i18n';
 
 import RegisterForm from './RegisterForm';
+import handleFetchInvite from './handleFetchInvite';
 
-const RegisterFormWrapper = ({
+const RegisterFormWrapper = async ({
 	currentLang,
 	inviteId,
 }: {
 	currentLang: ValidLanguage;
 	inviteId?: string;
 }) => {
+	// register from an invite
 	console.log('🌈🌈🌈', inviteId);
+	const inviteResult = await handleFetchInvite(inviteId);
+	console.log('🌈🌈🌈', inviteResult);
+
+	// get translations
 	const { translateNamespace } = getTranslation(currentLang);
 	const errorsDict = translateNamespace('formErrors');
 	const step1LabelsDict = translateNamespace('registerFormStep1Labels');
@@ -38,6 +44,7 @@ const RegisterFormWrapper = ({
 	const dateOfBirthModalDict = translateNamespace('registerDateOfBirthErrorModal');
 	const textDict = translateNamespace('registerFormText');
 
+	// step navigation
 	const STEP_COUNT = 2;
 	const stepTitleDict = {
 		step1: replaceParams(textDict.stepCurrentOfTotal, {
