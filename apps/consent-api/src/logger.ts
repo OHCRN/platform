@@ -19,9 +19,9 @@
 
 import createLogger, { LogLevels } from 'logger';
 
-import { getAppConfig } from './config.js';
+import { getStaticConfig } from './config.js';
 
-const config = getAppConfig();
+const config = getStaticConfig();
 
 const logger = createLogger({
 	logFile: !config.isProduction,

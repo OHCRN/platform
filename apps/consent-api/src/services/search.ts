@@ -54,7 +54,7 @@ export const getInformedConsentResponses = async (
 	participantId: string,
 ): Promise<Result<InformedConsentResponse, GetResponsesFailureStatus>> => {
 	try {
-		const { dataMapperUrl } = getAppConfig();
+		const { dataMapperUrl } = await getAppConfig();
 		const { data } = await axiosClient.get(
 			urlJoin(dataMapperUrl, 'wizard', 'steps', 'informed-consent', participantId),
 		);
@@ -91,7 +91,7 @@ export const getInvite = async (
 	inviteId: string,
 ): Promise<Result<ClinicianInviteResponse, GetInviteFailureStatus>> => {
 	try {
-		const { dataMapperUrl } = getAppConfig();
+		const { dataMapperUrl } = await getAppConfig();
 		const { data } = await axiosClient.get(urlJoin(dataMapperUrl, 'invites', inviteId));
 		const invite = ClinicianInviteResponse.safeParse(data);
 

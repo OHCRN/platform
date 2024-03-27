@@ -25,6 +25,7 @@ import { AppConfig } from '../src/config.js';
 export const mockEnv = (values?: Partial<AppConfig>) => {
 	// Need to set the NODE_ENV since there are currently places in the code checking the process.env.NODE_ENV directly instead of relying on our config.
 	vi.stubEnv('NODE_ENV', values?.isProduction ? 'production' : 'development');
+	vi.stubEnv('AUTH_DISABLED', 'true');
 
 	const defaultConfig: AppConfig = {
 		dataMapperUrl: 'http://localhost:8081',
@@ -40,5 +41,6 @@ export const mockEnv = (values?: Partial<AppConfig>) => {
 		},
 	};
 
-	vi.spyOn(config, 'getAppConfig').mockReturnValue({ ...defaultConfig, ...values });
+	const resolvedConfig = Promise.resolve({ ...defaultConfig, ...values });
+	vi.spyOn(config, 'getAppConfig').mockReturnValue(resolvedConfig);
 };

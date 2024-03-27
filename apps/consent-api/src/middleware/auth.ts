@@ -19,7 +19,7 @@
 
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
-import { ServerErrorResponse, UnauthorizedErrorResponse } from 'types/httpResponses';
+import { UnauthorizedErrorResponse } from 'types/httpResponses';
 
 import { getAppConfig } from '../config.js';
 import serviceLogger from '../logger.js';
@@ -32,15 +32,12 @@ declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace Express {
 		interface Request {
-			keycloakId?: string;
+			keycloakSubjectId?: string;
 		}
 	}
 }
 
 const decodeToken = (publicKey: string, token: string) => {
-	if (!publicKey) {
-		throw Error('Missing public key', { cause: 'missingPublicKey' });
-	}
 	const decoded = verify(token, publicKey, { algorithms: ['RS256'] });
 	if (typeof decoded == 'string' || decoded === null) {
 		throw Error('Invalid JWT format');
@@ -76,18 +73,15 @@ const withAuth: RequestHandler = async (req, res, next) => {
 	const accessToken = parseBearerToken(authHeader);
 	const {
 		auth: { keycloakPublicKey },
-	} = getAppConfig();
+	} = await getAppConfig();
+
 	try {
 		const verifiedToken = decodeToken(keycloakPublicKey, accessToken);
 		// add the sub to the Request obj as keycloakId
-		req.keycloakId = verifiedToken.sub;
+		req.keycloakSubjectId = verifiedToken.sub;
 		return next();
 	} catch (err: unknown) {
 		if (err instanceof Error) {
-			if (err.cause === 'missingPublicKey') {
-				logger.error('Unexpected error', err);
-				return res.status(500).json(ServerErrorResponse('Unexpected error'));
-			}
 			logger.error('Invalid JWT', err.message);
 		}
 		// there are no scopes related to the consent portal so auth validation will always return 401 on error

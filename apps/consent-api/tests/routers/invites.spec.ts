@@ -84,7 +84,7 @@ describe('POST /invites', () => {
 	});
 
 	it('Valid request - makes a POST request to data-mapper and returns created invite with id, inviteAccepted, and inviteSentDate', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig)).post('/invites').send({
 			data: mocks.inviteRequest,
 		});
@@ -94,7 +94,7 @@ describe('POST /invites', () => {
 	});
 
 	it('Invalid request - missing consentToBeContacted should return RequestValidationError', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig))
 			.post('/invites')
 			.send({
@@ -118,7 +118,7 @@ describe('GET /invites/:inviteId', () => {
 	});
 
 	it('Valid request - makes a GET request to data-mapper and returns created invite', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig)).get(`/invites/${mocks.VALID_IDS[0]}`);
 
 		expect(response.status).toEqual(200);
@@ -126,7 +126,7 @@ describe('GET /invites/:inviteId', () => {
 	});
 
 	it('Invalid request - invalid invite ID should return RequestValidationError', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig)).get(`/invites/invalidId`);
 
 		expect(response.status).toEqual(400);
@@ -138,7 +138,7 @@ describe('GET /invites/:inviteId', () => {
 	});
 
 	it('Invalid request - invite ID does not exist should return NotFoundError', async () => {
-		const appConfig = getAppConfig();
+		const appConfig = await getAppConfig();
 		const response = await request(App(appConfig)).get(`/invites/skdkCD1lBpC7Rn1WzwBPP`);
 
 		expect(response.status).toEqual(404);

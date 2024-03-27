@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
  *         description: Unauthorized. Authorization information is missing or invalid.
  */
 router.get('/:id', withAuth, async (req, res) => {
-	if (req.keycloakId) {
+	if (req.keycloakSubjectId) {
 		try {
 			// TODO: implement getParticipantByKeycloakId
 			// const participant = await getParticipant(id);
