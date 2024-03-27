@@ -20,6 +20,12 @@
 import { ValidLanguage } from 'src/i18n';
 import Register from 'src/components/views/Register';
 
-export default async function Page({ params: { lang } }: { params: { lang: ValidLanguage } }) {
-	return <Register currentLang={lang} />;
+export default async function Page({
+	params: { lang },
+	searchParams: { inviteId },
+}: {
+	params: { lang: ValidLanguage };
+	searchParams: { inviteId?: string };
+}) {
+	return <Register currentLang={lang} inviteId={inviteId} />;
 }
