@@ -33,6 +33,8 @@ import { RegisterFormStep2TextDictionary } from 'src/i18n/locales/en/registerFor
 import { RegisterFormStep1TextDictionary } from 'src/i18n/locales/en/registerFormStep1Text';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 
+import { InviteDataForRegistration } from '../handleFetchInvite';
+
 import styles from './RegisterForm.module.scss';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
@@ -40,6 +42,7 @@ import FormStep2 from './FormStep2';
 const RegisterForm = ({
 	currentLang,
 	errorsDict,
+	inviteData,
 	step1LabelsDict,
 	step1TextDict,
 	step2LabelsDict,
@@ -50,6 +53,7 @@ const RegisterForm = ({
 }: {
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
+	inviteData?: InviteDataForRegistration;
 	step1LabelsDict: RegisterFormStep1LabelsDictionary;
 	step1TextDict: RegisterFormStep1TextDictionary;
 	step2LabelsDict: RegisterFormStep2LabelsDictionary;
@@ -58,6 +62,7 @@ const RegisterForm = ({
 	stepTitleDict: Record<'step1' | 'step2', string>;
 	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
+	console.log(inviteData);
 	const [step1Data, setStep1Data] = useState<RegisterFormStep1 | undefined>(undefined);
 
 	// setup 2-step form
@@ -88,6 +93,7 @@ const RegisterForm = ({
 				currentLang={currentLang}
 				errorsDict={errorsDict}
 				handleNextClick={handleNextClick}
+				inviteData={inviteData?.registerStep1}
 				labelsDict={step1LabelsDict}
 				textDict={step1TextDict}
 				dateOfBirthModalDict={dateOfBirthModalDict}
@@ -98,6 +104,7 @@ const RegisterForm = ({
 					currentLang={currentLang}
 					errorsDict={errorsDict}
 					handleBackClick={handleBackClick}
+					inviteData={inviteData?.registerStep2}
 					labelsDict={step2LabelsDict}
 					step1Data={step1Data}
 					textDict={step2TextDict}

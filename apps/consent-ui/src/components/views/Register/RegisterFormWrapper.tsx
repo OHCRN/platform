@@ -61,6 +61,7 @@ const RegisterFormWrapper = async ({
 		<RegisterForm
 			currentLang={currentLang}
 			errorsDict={errorsDict}
+			inviteData={inviteResult?.data}
 			step1LabelsDict={step1LabelsDict}
 			step1TextDict={step1textDict}
 			step2LabelsDict={step2LabelsDict}

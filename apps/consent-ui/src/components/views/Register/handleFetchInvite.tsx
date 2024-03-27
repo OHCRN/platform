@@ -67,7 +67,7 @@ const fetchInvite = async (inviteId: string): Promise<ClinicianInviteResponse | 
 			method: 'GET',
 			url: urlJoin(API.INVITES, inviteId),
 		}).then(async (res) => {
-			const delayRes = await new Promise((resolve) => setTimeout(resolve, 10000)).then(() => {
+			const delayRes = await new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
 				return res;
 			});
 			return delayRes;
