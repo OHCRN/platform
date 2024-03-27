@@ -30,6 +30,7 @@ import {
 	MolecularLab,
 	NanoId,
 	OptionalName,
+	VitalStatus,
 } from './fields/index.js';
 
 export const ClinicalProfile = z
@@ -47,6 +48,7 @@ export const ClinicalProfile = z
 		historyOfCancer: HistoryOfCancer,
 		participantId: NanoId,
 		selfIdentifiedGender: OptionalString,
+		vitalStatus: VitalStatus.optional(),
 	})
 	.refine((input) => {
 		// selfIdentifiedGender must be defined if

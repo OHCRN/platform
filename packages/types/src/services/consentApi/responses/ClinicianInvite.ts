@@ -21,9 +21,12 @@ import { z } from 'zod';
 import { generateSchema } from '@anatine/zod-openapi';
 import type { SchemaObject } from 'openapi3-ts/oas31';
 
+import { hasRequiredAssentFormIdentifier } from '../../../common/index.js';
 import { InviteEntity, ClinicianInviteBase } from '../../../entities/index.js';
 
-export const ClinicianInvite = InviteEntity.merge(ClinicianInviteBase);
+export const ClinicianInvite = InviteEntity.merge(ClinicianInviteBase).refine(
+	hasRequiredAssentFormIdentifier,
+);
 export type ClinicianInvite = z.infer<typeof ClinicianInvite>;
 
 export const ClinicianInviteResponse = ClinicianInvite;

@@ -17,35 +17,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { generateSchema } from '@anatine/zod-openapi';
-import { SchemaObject } from 'openapi3-ts/oas31';
 import { z } from 'zod';
 
-import { GuardianNullableResponseFields } from '../../../entities/Guardian.js';
-import {
-	InviteGuardianFields,
-	InviteParticipantFields,
-} from '../../../entities/ClinicianInvite.js';
-import { Name, NanoId, PhoneNumber } from '../../../entities/fields/index.js';
+const VITAL_STATUSES = ['ALIVE', 'DECEASED'] as const;
 
-export const PIClinicianInvite = InviteParticipantFields.merge(InviteGuardianFields);
-
-export const PIClinicianInviteResponse = PIClinicianInvite.extend({ id: NanoId })
-	.extend({
-		assentFormIdentifier: z
-			.string()
-			.nullable()
-			.transform((input) => input ?? undefined),
-		participantPreferredName: Name.nullable().transform((input) => input ?? undefined),
-		participantEmailAddress: z
-			.string()
-			.email()
-			.nullable()
-			.transform((input) => input ?? undefined),
-		participantPhoneNumber: PhoneNumber.nullable().transform((input) => input ?? undefined),
-	})
-	.extend(GuardianNullableResponseFields);
-
-export type PIClinicianInviteResponse = z.infer<typeof PIClinicianInviteResponse>;
-export const PIClinicianInviteResponseSchema: SchemaObject =
-	generateSchema(PIClinicianInviteResponse);
+export const VitalStatus = z.enum(VITAL_STATUSES);
+export type VitalStatus = z.infer<typeof VitalStatus>;

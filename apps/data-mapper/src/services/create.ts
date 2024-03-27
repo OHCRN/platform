@@ -45,6 +45,7 @@ export const createParticipant = async ({
 	emailVerified,
 	currentLifecycleState,
 	keycloakId,
+	assentFormIdentifier,
 }: CreateParticipantRequest): Promise<
 	Result<CreateParticipantResponse, CreateParticipantFailureStatus>
 > => {
@@ -74,6 +75,7 @@ export const createParticipant = async ({
 			guardianName,
 			consentGroup,
 			keycloakId,
+			assentFormIdentifier,
 		});
 
 		if (participantPiData.status !== 'SUCCESS') {
@@ -151,6 +153,7 @@ export const createInvite = async ({
 	clinicianTitleOrRole,
 	consentGroup,
 	consentToBeContacted,
+	assentFormIdentifier,
 }: ClinicianInviteRequest): Promise<Result<ClinicianInviteResponse, CreateInviteFailureStatus>> => {
 	/**
 	 * Steps:
@@ -174,6 +177,7 @@ export const createInvite = async ({
 			guardianPhoneNumber,
 			guardianEmailAddress,
 			guardianRelationship,
+			assentFormIdentifier,
 		});
 
 		if (piInviteResult.status !== 'SUCCESS') {

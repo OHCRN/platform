@@ -27,7 +27,7 @@ import { ClinicianInviteRequest } from 'types/consentApi';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
-import { hasRequiredInfoForConsentGroup } from 'types/common';
+import { hasRequiredAssentFormIdentifier, hasRequiredInfoForConsentGroup } from 'types/common';
 
 import TextFieldSet from 'src/components/common/Form/fieldsets/TextFieldSet';
 import RequiredAsterisk from 'src/components/common/Form/RequiredAsterisk';
@@ -58,8 +58,9 @@ const styles = Object.assign({}, formStyles, layoutStyles);
 
 const ClinicianInviteFormRequest = ClinicianInviteBase.extend({
 	participantPreferredName: EmptyOrOptionalName,
-}).refine(hasRequiredInfoForConsentGroup);
-
+})
+	.refine(hasRequiredInfoForConsentGroup)
+	.refine(hasRequiredAssentFormIdentifier);
 type ClinicianInviteFormRequest = z.infer<typeof ClinicianInviteFormRequest>;
 
 const consentGroupsRequiringGuardian: ConsentGroup[] = [

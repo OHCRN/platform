@@ -20,6 +20,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+	hasRequiredAssentFormIdentifier,
 	hasRequiredInfoForConsentGroup,
 	hasRequiredOhipFormInfo,
 	hasRequiredOhipInfo,
@@ -232,6 +233,44 @@ describe('Conditional fields utility functions', () => {
 				hasOhip: false,
 			};
 			const result = hasRequiredOhipInfo(testSchemaObj);
+			expect(result).false;
+		});
+	});
+
+	describe('hasRequiredAssentFormIdentifier', () => {
+		it('returns TRUE if consent group includes assent and assentFormIdentifier is provided', () => {
+			const testSchemaObj = {
+				assentFormIdentifier: 'form123',
+				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+			};
+			const result = hasRequiredAssentFormIdentifier(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE if consent group includes assent and assentFormIdentifier is NOT provided', () => {
+			const testSchemaObj = {
+				assentFormIdentifier: undefined,
+				consentGroup: GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT,
+			};
+			const result = hasRequiredAssentFormIdentifier(testSchemaObj);
+			expect(result).false;
+		});
+
+		it('returns TRUE if consent group does not include assent and assentFormIdentifier is NOT provided', () => {
+			const testSchemaObj = {
+				assentFormIdentifier: undefined,
+				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
+			};
+			const result = hasRequiredAssentFormIdentifier(testSchemaObj);
+			expect(result).true;
+		});
+
+		it('returns FALSE if consent group does not include and assentFormIdentifier is provided', () => {
+			const testSchemaObj = {
+				assentFormIdentifier: 'form123',
+				consentGroup: GUARDIAN_CONSENT_OF_MINOR,
+			};
+			const result = hasRequiredAssentFormIdentifier(testSchemaObj);
 			expect(result).false;
 		});
 	});

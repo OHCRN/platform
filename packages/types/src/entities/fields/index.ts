@@ -34,3 +34,4 @@ export * from './PhoneNumber.js';
 export * from './PostalCode.js';
 export * from './Province.js';
 export * from './UserRole.js';
+export * from './VitalStatus.js';

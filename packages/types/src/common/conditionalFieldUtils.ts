@@ -20,7 +20,7 @@
 import { ConsentGroup, EmptyOrOptionalOhipNumber } from '../entities/fields/index.js';
 import { GuardianBaseFields, ParticipantContactFields } from '../entities/index.js';
 
-import { EmptyString } from './String.js';
+import { EmptyString, OptionalString } from './String.js';
 
 const {
 	GUARDIAN_CONSENT_OF_MINOR,
@@ -140,4 +140,21 @@ export const hasRequiredOhipInfo = (props: {
 }) => {
 	const { ohipNumber, hasOhip } = props;
 	return hasOhip ? !isEmptyOrUndefined(ohipNumber) : isEmptyOrUndefined(ohipNumber);
+};
+
+/**
+ * Checks if assentFormIdentifier is present when required by the ConsentGroup
+ *@param props assentFormIdentifier, consentGroup
+ * @returns {boolean} returns true if all required fields are present
+ */
+export const hasRequiredAssentFormIdentifier = (props: {
+	assentFormIdentifier?: OptionalString;
+	consentGroup: ConsentGroup;
+}) => {
+	const { assentFormIdentifier, consentGroup } = props;
+	if (consentGroup === GUARDIAN_CONSENT_OF_MINOR_INCLUDING_ASSENT) {
+		return hasValue(assentFormIdentifier);
+	}
+
+	return !hasValue(assentFormIdentifier);
 };
