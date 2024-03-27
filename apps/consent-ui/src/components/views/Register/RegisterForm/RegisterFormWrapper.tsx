@@ -34,7 +34,7 @@ const RegisterFormWrapper = async ({
 	inviteId?: string;
 	stepTitleDict: any;
 }) => {
-	// register from an invite
+	// fetch data to register from an invite
 	const inviteResult = await handleFetchInvite(inviteId);
 
 	// get translations
