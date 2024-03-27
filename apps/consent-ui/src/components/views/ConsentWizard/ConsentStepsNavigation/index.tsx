@@ -41,13 +41,23 @@ const ConsentStepsNavigation = ({
 }) => {
 	const { nextRoute, prevRoute } = getNextPrevConsentSteps(currentStep);
 
-	const { translate } = getTranslation(currentLang);
+	const { translate, translateNamespace } = getTranslation(currentLang);
+
+	const modalTextDict = translateNamespace('consentModal');
 
 	return (
 		<div className={styles.navWrapper}>
 			<div className={styles.buttonWrapper}>
 				{prevRoute && (
-					<PreviousButton currentLang={currentLang} prevRoute={prevRoute}>
+					<PreviousButton
+						currentLang={currentLang}
+						prevRoute={prevRoute}
+						modalActionButtonText={modalTextDict.actionText}
+						modalCancelButtonText={modalTextDict.cancelText}
+						modalContentLabel={`${modalTextDict.title} ${modalTextDict.body}`}
+						modalTitle={modalTextDict.title}
+						modalBody={modalTextDict.body}
+					>
 						{translate('formText', 'previous')}
 					</PreviousButton>
 				)}

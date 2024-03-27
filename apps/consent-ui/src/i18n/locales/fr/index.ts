@@ -25,6 +25,7 @@ import consentCategoryDictionary from 'src/i18n/locales/fr/consentCategory';
 import consentCompleteNotificationDictionary from 'src/i18n/locales/fr/consentCompleteNotification';
 import consentGroupDictionary from 'src/i18n/locales/fr/consentGroup';
 import consentInProgressNotificationDictionary from 'src/i18n/locales/fr/consentInProgressNotification';
+import consentModalDictionary from 'src/i18n/locales/fr/consentModal';
 import ConsentRecontactFormDictionary from 'src/i18n/locales/fr/consentRecontactForm';
 import ConsentRecontactPageDictionary from 'src/i18n/locales/fr/consentRecontactPage';
 import consentReleaseDataLabelsDictionary from 'src/i18n/locales/fr/consentReleaseDataLabels';
@@ -75,6 +76,7 @@ const dictionaries = {
 	consentCompleteNotification: consentCompleteNotificationDictionary,
 	consentGroup: consentGroupDictionary,
 	consentInProgressNotification: consentInProgressNotificationDictionary,
+	consentModal: consentModalDictionary,
 	consentRecontactForm: ConsentRecontactFormDictionary,
 	consentRecontactPage: ConsentRecontactPageDictionary,
 	consentReleaseDataLabels: consentReleaseDataLabelsDictionary,

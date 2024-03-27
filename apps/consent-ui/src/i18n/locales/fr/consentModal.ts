@@ -17,31 +17,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ReactNode } from 'react';
+import { ConsentModalDictionary } from '../en/consentModal';
 
-import Modal, { ModalComponentProps } from 'src/components/common/Modal';
+const dictionary = {
+	title: 'Souhaitez-vous quitter cette page?',
+	body: "Les modifications que vous avez apportées jusqu'à présent ne seront pas enregistrées.",
+	cancelText: 'Quitter la page',
+	actionText: 'Continuer à modifier',
+} satisfies ConsentModalDictionary;
 
-const FormEditedModal = ({
-	closeModal,
-	modalIsOpen,
-	actionButtonText,
-	cancelButtonText,
-	contentLabel,
-	title,
-	modalBody,
-}: Omit<ModalComponentProps, 'currentLang'> & { modalBody?: ReactNode }) => {
-	return (
-		<Modal
-			actionButtonText={actionButtonText}
-			cancelButtonText={cancelButtonText}
-			closeModal={closeModal}
-			contentLabel={contentLabel}
-			modalIsOpen={modalIsOpen}
-			title={title}
-		>
-			<p>{modalBody}</p>
-		</Modal>
-	);
-};
-
-export default FormEditedModal;
+export default dictionary;
