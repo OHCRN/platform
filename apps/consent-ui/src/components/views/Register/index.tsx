@@ -17,34 +17,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getTranslation, ValidLanguage, replaceParams } from 'src/i18n';
-import RegisterForm from 'src/components/views/Register/RegisterForm';
+import { Suspense } from 'react';
+
+import { getTranslation, ValidLanguage } from 'src/i18n';
 import SideImageLayout from 'src/components/layouts/SideImageLayout';
 import LinkButton from 'src/components/common/Button/LinkButton';
 import registerBg from 'src/../public/assets/images/register-bg.jpg';
 
-const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
-	const { translateNamespace } = getTranslation(currentLang);
-	const errorsDict = translateNamespace('formErrors');
-	const pageDict = translateNamespace('registerPage');
-	const step1LabelsDict = translateNamespace('registerFormStep1Labels');
-	const step1textDict = translateNamespace('registerFormStep1Text');
-	const step2LabelsDict = translateNamespace('registerFormStep2Labels');
-	const step2textDict = translateNamespace('registerFormStep2Text');
-	const dateOfBirthModalDict = translateNamespace('registerDateOfBirthErrorModal');
-	const textDict = translateNamespace('registerFormText');
+import RegisterFormWrapper from './RegisterFormWrapper';
 
-	const STEP_COUNT = 2;
-	const stepTitleDict = {
-		step1: replaceParams(textDict.stepCurrentOfTotal, {
-			current: 1,
-			total: STEP_COUNT,
-		}),
-		step2: replaceParams(textDict.stepCurrentOfTotal, {
-			current: 2,
-			total: STEP_COUNT,
-		}),
-	};
+const Register = async ({
+	currentLang,
+	inviteId,
+}: {
+	currentLang: ValidLanguage;
+	inviteId?: string;
+}) => {
+	const { translateNamespace } = getTranslation(currentLang);
+	const pageDict = translateNamespace('registerPage');
 
 	return (
 		<SideImageLayout
@@ -65,17 +55,9 @@ const Register = async ({ currentLang }: { currentLang: ValidLanguage }) => {
 			mainTitle={pageDict.registerYourself}
 			navTitle={pageDict.participantRegistration}
 		>
-			<RegisterForm
-				currentLang={currentLang}
-				errorsDict={errorsDict}
-				step1LabelsDict={step1LabelsDict}
-				step1TextDict={step1textDict}
-				step2LabelsDict={step2LabelsDict}
-				step2TextDict={step2textDict}
-				textDict={textDict}
-				stepTitleDict={stepTitleDict}
-				dateOfBirthModalDict={dateOfBirthModalDict}
-			/>
+			<Suspense fallback={<h1>LOADING</h1>}>
+				<RegisterFormWrapper currentLang={currentLang} inviteId={inviteId} />
+			</Suspense>
 		</SideImageLayout>
 	);
 };

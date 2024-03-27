@@ -41,6 +41,8 @@ import { ValidLanguage } from 'src/i18n/types';
 import { RegisterDateOfBirthErrorModalDictionary } from 'src/i18n/locales/en/registerDateOfBirthErrorModal';
 import RadioFieldSet from 'src/components/common/Form/fieldsets/RadioFieldSet';
 
+import { InviteDataRegisterStep1 } from '../handleFetchInvite';
+
 import styles from './RegisterForm.module.scss';
 import RegisterDateOfBirthErrorModal from './RegisterDateOfBirthErrorModal';
 
@@ -49,6 +51,7 @@ const FormStep1 = ({
 	currentLang,
 	errorsDict,
 	handleNextClick,
+	inviteData,
 	labelsDict,
 	textDict,
 	dateOfBirthModalDict,
@@ -57,12 +60,15 @@ const FormStep1 = ({
 	currentLang: ValidLanguage;
 	errorsDict: FormErrorsDictionary;
 	handleNextClick: (data: RegisterFormStep1) => void;
+	inviteData?: InviteDataRegisterStep1;
 	labelsDict: RegisterFormStep1LabelsDictionary;
 	textDict: RegisterFormStep1TextDictionary;
 	dateOfBirthModalDict: RegisterDateOfBirthErrorModalDictionary;
 }) => {
+	console.log(inviteData);
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep1>({
+		defaultValues: { ...(inviteData || {}) },
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep1),
 		shouldUnregister: true,
