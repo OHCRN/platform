@@ -63,6 +63,9 @@ const FormStep2 = ({
 
 	// setup react-hook-forms
 	const methods = useForm<RegisterFormStep2>({
+		defaultValues: {
+			isGuardian: !!step1Data?.isGuardian,
+		},
 		mode: 'onBlur',
 		resolver: zodResolver(RegisterFormStep2),
 		shouldUnregister: true,
@@ -72,6 +75,7 @@ const FormStep2 = ({
 		clearErrors,
 		formState: { errors, isValid, touchedFields },
 		handleSubmit,
+		register,
 		setError,
 		setFocus,
 		watch,
@@ -136,17 +140,31 @@ const FormStep2 = ({
 		}
 	}, [clearErrors, setError, touchedFields.confirmPassword, watchConfirmPassword, watchPassword]);
 
+	// watch hidden isGuardian field to determine whether to show
+	// participant or guardian email field
+	const watchIsGuardian = watch('isGuardian');
+
 	return (
 		<FormProvider {...methods}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
+				<input disabled type="hidden" {...register('isGuardian')} />
 				{/* SECTION - EMAIL & PASSWORD */}
 				<FormSection>
-					<TextFieldSet
-						error={errors.participantEmailAddress?.type && errorsDict.required}
-						label={labelsDict.email}
-						name="participantEmailAddress"
-						required
-					/>
+					{watchIsGuardian ? (
+						<TextFieldSet
+							error={errors.guardianEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email}
+							name="guardianEmailAddress"
+							required
+						/>
+					) : (
+						<TextFieldSet
+							error={errors.participantEmailAddress?.type && errorsDict.required}
+							label={labelsDict.email}
+							name="participantEmailAddress"
+							required
+						/>
+					)}
 					<TextFieldSet
 						error={errors.password?.type && errorsDict.required}
 						label={labelsDict.password}

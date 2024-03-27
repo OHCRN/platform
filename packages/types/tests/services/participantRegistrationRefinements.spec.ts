@@ -18,15 +18,16 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { z } from 'zod';
 
 import {
-	RegisterRequestGuardianFieldsRefined,
-	RegisterFormStep1Fields,
 	RegisterFormStep2,
+	RegisterRequestGuardianFieldsRefined,
+	RegisterRequestParticipantPhoneNumberFieldRefined,
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
+import { formatZodFieldErrorsForTesting } from '../utils/zodUtils.js';
+import { RegisterRequestParticipantNameFields } from '../../src/entities/index.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const {
@@ -38,10 +39,12 @@ describe('ParticipantRegistrationRequest', () => {
 
 	// re-create ParticipantRegistrationRequest with a fixed date for judging mock users' ages
 	const DateOfBirthField = createDateOfBirthRequestSchema(mockDate);
-	const RegisterFormStep1 = RegisterFormStep1Fields.and(DateOfBirthField).and(
+	const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
 		RegisterRequestGuardianFieldsRefined,
-	);
-	const ParticipantRegistrationRequest = z.intersection(RegisterFormStep1, RegisterFormStep2);
+	)
+		.and(RegisterRequestParticipantPhoneNumberFieldRefined)
+		.and(DateOfBirthField);
+	const ParticipantRegistrationRequest = RegisterFormStep1.and(RegisterFormStep2);
 
 	const adultConsentTestData = {
 		confirmPassword: 'password',
@@ -59,21 +62,77 @@ describe('ParticipantRegistrationRequest', () => {
 		password: 'password',
 	};
 
-	describe('Date of Birth Field', () => {
-		it("Adds an error to the dateOfBirth field when user's age is below the minimum", () => {
-			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
-				dateOfBirth: lessThanMinimumAgeDateOfBirth,
+	const guardianConsentTestData = {
+		...adultConsentTestData,
+		guardianEmailAddress: 'homer@example.com',
+		guardianName: 'Homer Simpson',
+		guardianPhoneNumber: '5492750173',
+		guardianRelationship: 'Father',
+		isGuardian: true,
+		participantEmailAddress: undefined,
+		participantPhoneNumber: undefined,
+	};
+
+	describe('Participant Phone Number Field', () => {
+		describe('User is a guardian', () => {
+			it('Returns true when participantPhoneNumber is undefined', () => {
+				expect(ParticipantRegistrationRequest.safeParse(guardianConsentTestData).success).true;
 			});
-			const resultParsed = JSON.parse((result as { error: Error }).error.message)[0];
-			const resultMessage = resultParsed.message;
-			const resultPath = resultParsed.path[0];
-			expect(result.success).false;
-			expect(resultMessage).toBe('participantLessThanMinimumAge');
-			expect(resultPath).toBe('dateOfBirth');
+
+			it('Adds custom error if participantPhoneNumber is provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					participantPhoneNumber: '1234567890',
+				});
+				expect(result.success).false;
+				const fieldErrors = formatZodFieldErrorsForTesting(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
+			});
+
+			it('Adds custom error if participantPhoneNumber is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					participantPhoneNumber: '',
+				});
+				expect(result.success).false;
+				const fieldErrors = formatZodFieldErrorsForTesting(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('guardianHasParticipantPhoneNumber');
+			});
 		});
 
-		it("Parses correctly when the user's age is equal to or greater than the minimum", () => {
+		describe('User is a participant', () => {
+			it('Returns true when participantPhoneNumber is provided', () => {
+				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
+			});
+
+			it('Adds custom error if participantPhoneNumber is undefined', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					participantPhoneNumber: undefined,
+				});
+				expect(result.success).false;
+				const fieldErrors = formatZodFieldErrorsForTesting(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
+			});
+
+			it('Adds custom error if participantPhoneNumber is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					participantPhoneNumber: '',
+				});
+				expect(result.success).false;
+				const fieldErrors = formatZodFieldErrorsForTesting(result);
+				expect(fieldErrors[0].path).toBe('participantPhoneNumber');
+				expect(fieldErrors[0].message).toBe('participantMissingPhoneNumber');
+			});
+		});
+	});
+
+	describe('Date of Birth Field', () => {
+		it("Returns true when the user's age is equal to or greater than the minimum", () => {
 			expect(
 				ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
@@ -87,127 +146,278 @@ describe('ParticipantRegistrationRequest', () => {
 				}).success,
 			).true;
 		});
+
+		it("Adds custom error to dateOfBirth when user's age is below the minimum", () => {
+			const result = ParticipantRegistrationRequest.safeParse({
+				...adultConsentTestData,
+				dateOfBirth: lessThanMinimumAgeDateOfBirth,
+			});
+			expect(result.success).false;
+			const fieldErrors = formatZodFieldErrorsForTesting(result);
+			expect(fieldErrors[0].path).toBe('dateOfBirth');
+			expect(fieldErrors[0].message).toBe('participantLessThanMinimumAge');
+		});
 	});
 
 	describe('Conditional Guardian Fields', () => {
-		it('Adds an error to specific fields if the user is a guardian and missing all guardian fields', () => {
-			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
-				guardianRelationship: '',
-				isGuardian: true,
+		describe('User is a guardian', () => {
+			it('Returns true when all guardian fields are valid', () => {
+				expect(ParticipantRegistrationRequest.safeParse(guardianConsentTestData).success).true;
 			});
-			expect(result.success).false;
-			const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-			const resultParsed1 = resultJsonParsed[0];
-			const resultMessage1 = resultParsed1.message;
-			const resultPath1 = resultParsed1.path[0];
-			expect(resultMessage1).toBe('guardianInfoMissing');
-			expect(resultPath1).toBe('guardianName');
+			it('Adds custom errors if all guardian fields are undefined', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianName: undefined,
+					guardianPhoneNumber: undefined,
+					guardianRelationship: undefined,
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('guardianInfoMissing');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('guardianInfoMissing');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('guardianInfoMissing');
+			});
 
-			const resultParsed2 = resultJsonParsed[1];
-			const resultMessage2 = resultParsed2.message;
-			const resultPath2 = resultParsed2.path[0];
-			expect(resultMessage2).toBe('guardianInfoMissing');
-			expect(resultPath2).toBe('guardianPhoneNumber');
+			it('Adds custom error if one guardian field is undefined', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianRelationship: undefined,
+				});
+				expect(result.success).false;
+				const fieldErrors = formatZodFieldErrorsForTesting(result);
+				expect(fieldErrors[0].path).toBe('guardianRelationship');
+				expect(fieldErrors[0].message).toBe('guardianInfoMissing');
+			});
 
-			const resultParsed3 = resultJsonParsed[2];
-			const resultMessage3 = resultParsed3.message;
-			const resultPath3 = resultParsed3.path[0];
-			expect(resultMessage3).toBe('guardianInfoMissing');
-			expect(resultPath3).toBe('guardianRelationship');
+			it('Adds custom errors if guardian fields contain invalid values', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianName: 'Homer Simpson {}',
+					guardianPhoneNumber: '1234 + abc',
+					guardianRelationship: 'F4th3r///',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('Invalid');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('Invalid');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('Invalid');
+			});
+
+			it('Adds custom errors if guardian fields contain empty strings', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianName: '',
+					guardianPhoneNumber: '',
+					guardianRelationship: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('guardianInfoMissing');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('guardianInfoMissing');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('guardianInfoMissing');
+			});
+
+			it('Adds invalid and custom errors if guardian fields contain a mix of undefined and invalid values', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianName: 'Homer ]]]]]',
+					guardianPhoneNumber: undefined,
+					guardianRelationship: ' ',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('Invalid');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('guardianInfoMissing');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('guardianInfoMissing');
+			});
 		});
 
-		it('Adds an error to specific field if the user is a guardian and missing one guardian field', () => {
-			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
-				guardianName: 'Homer Simpson',
-				guardianPhoneNumber: '1234567890',
-				isGuardian: true,
+		describe('User is a participant', () => {
+			it('Returns true when all guardian fields are undefined', () => {
+				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
 			});
-			expect(result.success).false;
-			const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-			const resultParsed = resultJsonParsed[0];
-			const resultMessage = resultParsed.message;
-			const resultPath = resultParsed.path[0];
-			expect(resultMessage).toBe('guardianInfoMissing');
-			expect(resultPath).toBe('guardianRelationship');
-		});
-
-		it('Adds invalid field errors when the user is a guardian and has entered invalid values in guardian fields', () => {
-			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
-				guardianName: 'Homer Simpson {}',
-				guardianPhoneNumber: '1234 + abc',
-				guardianRelationship: 'F4th3r///',
-				isGuardian: true,
+			it('Adds custom error if one guardian field is provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianPhoneNumber: '1234567890',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianPhoneNumber');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
-			expect(result.success).false;
-			const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-			const resultParsed1 = resultJsonParsed[0];
-			const resultMessage1 = resultParsed1.message;
-			const resultPath1 = resultParsed1.path[0];
-			expect(resultMessage1).toBe('Invalid');
-			expect(resultPath1).toBe('guardianName');
-
-			const resultParsed2 = resultJsonParsed[1];
-			const resultMessage2 = resultParsed2.message;
-			const resultPath2 = resultParsed2.path[0];
-			expect(resultMessage2).toBe('Invalid');
-			expect(resultPath2).toBe('guardianPhoneNumber');
-
-			const resultParsed3 = resultJsonParsed[2];
-			const resultMessage3 = resultParsed3.message;
-			const resultPath3 = resultParsed3.path[0];
-			expect(resultMessage3).toBe('Invalid');
-			expect(resultPath3).toBe('guardianRelationship');
-		});
-
-		it('Adds invalid and missing field errors when the user is a guardian and has a mix of invalid and missing values in guardian fields', () => {
-			const result = ParticipantRegistrationRequest.safeParse({
-				...adultConsentTestData,
-				guardianName: 'Homer ]]]]]',
-				guardianRelationship: ' ',
-				isGuardian: true,
+			it('Adds custom error if one guardian field has an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianPhoneNumber: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianPhoneNumber');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
 			});
-			expect(result.success).false;
-			const resultJsonParsed = JSON.parse((result as { error: Error }).error.message);
 
-			const resultParsed1 = resultJsonParsed[0];
-			const resultMessage1 = resultParsed1.message;
-			const resultPath1 = resultParsed1.path[0];
-			expect(resultMessage1).toBe('Invalid');
-			expect(resultPath1).toBe('guardianName');
-
-			const resultParsed2 = resultJsonParsed[1];
-			const resultMessage2 = resultParsed2.message;
-			const resultPath2 = resultParsed2.path[0];
-			expect(resultMessage2).toBe('guardianInfoMissing');
-			expect(resultPath2).toBe('guardianPhoneNumber');
-
-			const resultParsed3 = resultJsonParsed[2];
-			const resultMessage3 = resultParsed3.message;
-			const resultPath3 = resultParsed3.path[0];
-			expect(resultMessage3).toBe('guardianInfoMissing');
-			expect(resultPath3).toBe('guardianRelationship');
-		});
-
-		it('Parses correctly when the user is a guardian and all guardian fields are valid', () => {
-			expect(
-				ParticipantRegistrationRequest.safeParse({
+			it('Adds custom errors if all guardian fields are provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
 					...adultConsentTestData,
 					guardianName: 'Homer Simpson',
-					guardianPhoneNumber: '1234567890',
+					guardianPhoneNumber: '5492750173',
 					guardianRelationship: 'Father',
-					isGuardian: true,
-				}).success,
-			).true;
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('participantHasGuardianInfo');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('participantHasGuardianInfo');
+			});
+
+			it('Adds custom errors if all guardian fields have an empty string value', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianName: '',
+					guardianPhoneNumber: '',
+					guardianRelationship: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianName');
+				expect(errors[0].message).toBe('participantHasGuardianInfo');
+				expect(errors[1].path).toBe('guardianPhoneNumber');
+				expect(errors[1].message).toBe('participantHasGuardianInfo');
+				expect(errors[2].path).toBe('guardianRelationship');
+				expect(errors[2].message).toBe('participantHasGuardianInfo');
+			});
+		});
+	});
+
+	describe('Email Address Field', () => {
+		describe('User is a guardian', () => {
+			it('Returns true if guardianEmailAddress is provided, and participantEmailAddress is undefined', () => {
+				expect(ParticipantRegistrationRequest.safeParse(guardianConsentTestData).success).true;
+			});
+
+			it('Adds invalid error if guardianEmailAddress is invalid', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianEmailAddress: 'homer simpson!',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
+			});
+
+			it('Adds custom error if guardianEmailAddress is undefined', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianEmailAddress: undefined,
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('guardianEmailMissing');
+			});
+
+			it('Adds invalid error if guardianEmailAddress is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					guardianEmailAddress: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
+			});
+
+			it('Adds custom error if participantEmailAddress is provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					participantEmailAddress: 'bart@example.com',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('guardianHasParticipantEmail');
+			});
+
+			it('Adds invalid error if participantEmailAddress is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...guardianConsentTestData,
+					participantEmailAddress: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
+			});
 		});
 
-		it('Parses correctly when the user is not a guardian and all guardian fields are undefined', () => {
-			expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
+		describe('User is a participant', () => {
+			it('Returns true if participantEmailAddress is provided, and guardianEmailAddress is undefined', () => {
+				expect(ParticipantRegistrationRequest.safeParse(adultConsentTestData).success).true;
+			});
+
+			it('Adds invalid error if participantEmailAddress is invalid', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					participantEmailAddress: 'homer simpson!',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
+			});
+
+			it('Adds custom error if participantEmailAddress is undefined', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					participantEmailAddress: undefined,
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('participantEmailAddress');
+				expect(errors[0].message).toBe('participantEmailMissing');
+			});
+
+			it('Adds custom error if guardianEmailAddress is provided', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianEmailAddress: 'bart@example.com',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('participantHasGuardianEmail');
+			});
+
+			it('Adds invalid error if guardianEmailAddress is an empty string', () => {
+				const result = ParticipantRegistrationRequest.safeParse({
+					...adultConsentTestData,
+					guardianEmailAddress: '',
+				});
+				expect(result.success).false;
+				const errors = formatZodFieldErrorsForTesting(result);
+				expect(errors[0].path).toBe('guardianEmailAddress');
+				expect(errors[0].message).toBe('Invalid email');
+			});
 		});
 	});
 });
