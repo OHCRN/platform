@@ -20,9 +20,9 @@
 import { z } from 'zod';
 
 import {
-	RegisterRequestParticipantPhoneNumberField,
 	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
+	RegisterRequestParticipantPhoneNumberField,
 } from '../../../entities/index.js';
 import { hasValue, isEmptyOrUndefined } from '../../../common/index.js';
 

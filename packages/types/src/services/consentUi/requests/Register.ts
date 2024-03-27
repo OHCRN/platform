@@ -26,9 +26,9 @@ import {
 	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
 	RegisterRequestParticipantNameFields,
-	RegisterRequestParticipantPhoneNumberField,
 	hasMatchingPasswords,
 } from '../../../entities/index.js';
+import { RegisterRequestParticipantPhoneNumberField } from '../../../entities/Register.js';
 import {
 	hasRequiredGuardianInfoForRegistration,
 	hasRequiredRegistrationEmailForGuardianStatus,

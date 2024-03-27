@@ -19,11 +19,10 @@
 
 import { z } from 'zod';
 
-import { addZodCustomError } from 'src/services/consentUi/index.js';
-
+import { addZodCustomError } from '../services/consentUi/index.js';
 import { checkIsMinimumAgeOrGreater } from '../common/index.js';
 
-import { ParticipantNameFields } from './Participant.js';
+import { ParticipantBaseOhipNameFields } from './Participant.js';
 import { EmptyOrOptionalName, EmptyOrOptionalPhoneNumber } from './fields/index.js';
 
 export const isGuardianField = z.object({
@@ -32,7 +31,7 @@ export const isGuardianField = z.object({
 
 // STEP 1
 
-export const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
+export const RegisterRequestParticipantNameFields = ParticipantBaseOhipNameFields.and(
 	z.object({
 		participantPreferredName: EmptyOrOptionalName,
 	}),
