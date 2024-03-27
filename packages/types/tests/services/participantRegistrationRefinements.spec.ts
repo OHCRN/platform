@@ -22,12 +22,12 @@ import { describe, expect, it } from 'vitest';
 import {
 	RegisterFormStep2,
 	RegisterRequestGuardianFieldsRefined,
-	RegisterRequestParticipantNameFields,
 	RegisterRequestParticipantPhoneNumberFieldRefined,
 } from '../../src/services/consentUi/requests/Register.js';
 import { createDateOfBirthRequestSchema } from '../../src/common/utils/dateOfBirth.js';
 import { setupDateOfBirthTest } from '../utils/dateOfBirth.spec.js';
 import { formatZodFieldErrorsForTesting } from '../utils/zodUtils.js';
+import { RegisterRequestParticipantNameFields } from '../../src/entities/index.js';
 
 describe('ParticipantRegistrationRequest', () => {
 	const {
