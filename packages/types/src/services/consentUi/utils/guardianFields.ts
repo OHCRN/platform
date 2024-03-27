@@ -21,11 +21,13 @@ import { z } from 'zod';
 
 import {
 	InviteGuardianFields,
-	ConsentGroup,
 	ParticipantContactFields,
-} from '../../entities/index.js';
-import { RegisterRequestGuardianFields } from '../../services/consentUi/requests/Register.js';
-import { addZodCustomError, hasValue, isEmptyOrUndefined } from '../../common/index.js';
+	ConsentGroup,
+} from '../../../entities/index.js';
+import { RegisterRequestGuardianFields } from '../requests/Register.js';
+import { hasValue, isEmptyOrUndefined } from '../../../common/index.js';
+
+import { addZodCustomError } from './index.js';
 
 /**
  * Checks an invite schema object.
@@ -93,6 +95,7 @@ export const hasRequiredGuardianAndParticipantInfoForInvite = (
 	}
 };
 
+// TODO: DELETE WHEN 476 IS MERGED
 /**
  * Checks if a Participant schema object contains the required Guardian contact fields needed for the user's guardian status.
  * Use with superRefine because it supports validating and adding errors to multiple fields.

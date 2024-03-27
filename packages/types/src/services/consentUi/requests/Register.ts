@@ -20,11 +20,8 @@
 import { z } from 'zod';
 
 import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
-import {
-	NonEmptyString,
-	createDateOfBirthRequestSchema,
-	hasRequiredGuardianInfoForRegistration,
-} from '../../../common/index.js';
+import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
+import { hasRequiredGuardianInfoForRegistration } from '../utils/index.js';
 import {
 	EmptyOrOptionalName,
 	EmptyOrOptionalPhoneNumber,

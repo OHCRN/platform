@@ -19,7 +19,7 @@
 
 import { z } from 'zod';
 
-import { hasRequiredGuardianAndParticipantInfoForInvite } from '../../../common/index.js';
+import { hasRequiredGuardianAndParticipantInfoForInvite } from '../utils/guardianFields.js';
 import { ClinicianInviteBase, EmptyOrOptionalName } from '../../../entities/index.js';
 
 // use superRefine because it supports adding errors to multiple fields
