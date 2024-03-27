@@ -19,56 +19,27 @@
 
 import { z } from 'zod';
 
-import { ConsentToBeContacted, ParticipantNameFields } from '../../../entities/Participant.js';
-import { NonEmptyString, createDateOfBirthRequestSchema } from '../../../common/index.js';
+import { NonEmptyString } from '../../../common/index.js';
 import {
-	EmptyOrOptionalName,
-	EmptyOrOptionalPhoneNumber,
+	ConsentToBeContacted,
+	DateOfBirthField,
+	RegisterRequestEmailAddressFields,
+	RegisterRequestGuardianFields,
+	RegisterRequestParticipantNameFields,
+	RegisterRequestParticipantPhoneNumberField,
 	hasMatchingPasswords,
-} from '../../../entities/fields/index.js';
+} from '../../../entities/index.js';
 import {
-	hasRequiredRegistrationPhoneNumberForGuardianStatus,
-	hasRequiredRegistrationEmailForGuardianStatus,
 	hasRequiredGuardianInfoForRegistration,
+	hasRequiredRegistrationEmailForGuardianStatus,
+	hasRequiredRegistrationPhoneNumberForGuardianStatus,
 } from '../utils/index.js';
 
-const isGuardianField = z.object({
-	isGuardian: z.boolean(),
-});
-
-// STEP 1
-
-export const RegisterRequestParticipantNameFields = ParticipantNameFields.and(
-	z.object({
-		participantPreferredName: EmptyOrOptionalName,
-	}),
-);
-
-// participant phone number - required for participants, not allowed for guardians
-const RegisterRequestParticipantPhoneNumberField = isGuardianField.and(
-	z.object({
-		participantPhoneNumber: EmptyOrOptionalPhoneNumber,
-	}),
-);
-export type RegisterRequestParticipantPhoneNumberField = z.infer<
-	typeof RegisterRequestParticipantPhoneNumberField
->;
 export const RegisterRequestParticipantPhoneNumberFieldRefined =
 	RegisterRequestParticipantPhoneNumberField.superRefine(
 		hasRequiredRegistrationPhoneNumberForGuardianStatus,
 	);
 
-const DateOfBirthField = createDateOfBirthRequestSchema();
-
-// guardian fields - required for guardians, not allowed for participants
-const RegisterRequestGuardianFields = isGuardianField.and(
-	z.object({
-		guardianName: EmptyOrOptionalName,
-		guardianPhoneNumber: EmptyOrOptionalPhoneNumber,
-		guardianRelationship: EmptyOrOptionalName,
-	}),
-);
-export type RegisterRequestGuardianFields = z.infer<typeof RegisterRequestGuardianFields>;
 export const RegisterRequestGuardianFieldsRefined = RegisterRequestGuardianFields.superRefine(
 	hasRequiredGuardianInfoForRegistration,
 );
@@ -80,15 +51,6 @@ export const RegisterFormStep1 = RegisterRequestParticipantNameFields.and(
 	.and(DateOfBirthField);
 export type RegisterFormStep1 = z.infer<typeof RegisterFormStep1>;
 
-// STEP 2
-
-const RegisterRequestEmailAddressFields = isGuardianField.and(
-	z.object({
-		guardianEmailAddress: z.string().email().optional(),
-		participantEmailAddress: z.string().email().optional(),
-	}),
-);
-export type RegisterRequestEmailAddressFields = z.infer<typeof RegisterRequestEmailAddressFields>;
 const RegisterEmailAddressFieldsRefined = RegisterRequestEmailAddressFields.superRefine(
 	hasRequiredRegistrationEmailForGuardianStatus,
 );

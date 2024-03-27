@@ -23,8 +23,9 @@ import {
 	RegisterRequestParticipantPhoneNumberField,
 	RegisterRequestEmailAddressFields,
 	RegisterRequestGuardianFields,
-} from '../requests/Register.js';
+} from '../../../entities/index.js';
 import { hasValue, isEmptyOrUndefined } from '../../../common/index.js';
+
 import { addZodCustomError } from './index.js';
 
 /**
