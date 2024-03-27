@@ -21,6 +21,7 @@ import { Router } from 'express';
 import { APIStatus } from 'types/common';
 
 import packageJson from '../../package.json' assert { type: 'json' };
+import { randomAccessMiddleware } from '../middleware/random.js';
 
 /**
  * @openapi
@@ -50,6 +51,14 @@ router.get('/', async (req, res) => {
 	const response: APIStatus = { status: `API is healthy.`, version: packageJson.version };
 
 	return res.json(response);
+});
+
+router.get('/random', randomAccessMiddleware, (req, res) => {
+	if (req.random) {
+		return res.json({ success: true, message: "You're so lucky", result: req.random.randomResult });
+	}
+
+	return res.status(500).json({ success: false, message: 'Did not receive random access check.' });
 });
 
 export default router;
